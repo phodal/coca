@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"os"
+	"strings"
+
+	"./imp"
 )
 
 func main() {
-    fmt.Println(strings.Join(os.Args[1:], " "))
+	imp.Count(1)
+	fmt.Println(strings.Join(os.Args[1:], " "))
 }

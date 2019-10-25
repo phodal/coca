@@ -1,8 +1,5 @@
 package imp
 
-import "fmt"
-
-func Count(x uint64) int {
-	fmt.Println("count")
-	return int(1)
+func Add(x uint64, y uint64) uint64 {
+	return x + y
 }

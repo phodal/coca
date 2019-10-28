@@ -6,7 +6,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
-var node JIdentifier;
+var node *JIdentifier;
 
 type JavaIdentifierListener struct {
 	BaseJavaParserListener
@@ -49,6 +49,6 @@ func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *InterfaceDeclara
 }
 
 func (s *JavaIdentifierListener) InitNode(identifier *JIdentifier) {
-	node = *identifier
+	node = identifier
 }
 

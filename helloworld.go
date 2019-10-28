@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	. "./language/java"
+	. "./visitor"
 )
 
 func main() {
@@ -27,7 +28,7 @@ func analysisPath(codeDir string) {
 
 		context.GetStart()
 
-		v := &BaseJavaParserVisitor{};
+		v := NewJavaCallVisitor()
 		v.Visit(context)
 
 		context.Accept(v);

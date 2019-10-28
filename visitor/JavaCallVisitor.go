@@ -18,6 +18,10 @@ type JavaCallVisitor struct {
 	BaseJavaParserVisitor
 }
 
+func (v *JavaCallVisitor) VisitCompilationUnit(ctx *CompilationUnitContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *JavaCallVisitor) VisitPackageDeclaration(ctx *PackageDeclarationContext) interface{} {
 	text = ctx.QualifiedName().GetText()
 	fmt.Println(text)

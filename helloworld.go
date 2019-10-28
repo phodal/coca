@@ -3,7 +3,6 @@ package main
 import (
 	//"./cmd"
 
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
@@ -15,12 +14,16 @@ import (
 
 func main() {
 	//cmd.Execute()
-	analysisPath("examples/step2-Java")
+	path := "."
+
+	if len(os.Args) > 1 {
+		path = os.Args[1:][0]
+	}
+	analysisPath(path)
 }
 
 func analysisPath(codeDir string) {
 	files := javaFiles(codeDir)
-	fmt.Println(files)
 	for index := range files {
 		file := files[index]
 		parser := processFile(file)
@@ -33,8 +36,7 @@ func analysisPath(codeDir string) {
 
 		context.Accept(v);
 		v.BaseParseTreeVisitor.Visit(context)
-
-		fmt.Println(context.GetText())
+		//fmt.Println(context.GetText())
 	}
 }
 

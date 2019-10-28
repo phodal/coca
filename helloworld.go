@@ -1,10 +1,9 @@
 package main
 
 import (
-	//"./cmd"
 	"os"
 
-	. "./app"
+	. "./adapter/call"
 )
 
 func main() {

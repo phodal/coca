@@ -1,4 +1,4 @@
-package app
+package call
 
 import (
 	"fmt"
@@ -7,8 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "../adapter"
-	. "../language/java"
+	. "../../language/java"
 )
 
 type JavaCallApp struct {

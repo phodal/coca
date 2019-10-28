@@ -1,7 +1,7 @@
-package adapter
+package call
 
 import (
-	. "../language/java"
+	. "../../language/java"
 	. "./models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"

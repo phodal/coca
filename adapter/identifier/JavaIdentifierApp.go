@@ -26,14 +26,14 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
 		parser := (*JavaIdentifierApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		interfaceIdent := &JIdentifier{"", "", ""}
+		interfaceIdent := NewJIdentifier()
 		listener := new(JavaIdentifierListener)
 		listener.InitNode(interfaceIdent)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		if interfaceIdent.Name != "" {
-			fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name)
+			fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name, interfaceIdent.GetMethods())
 		}
 	}
 }

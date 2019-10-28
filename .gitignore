@@ -43,3 +43,4 @@ Makefile
 bc_demo
 bc_demo_test
 cmake_install.cmake
+helloworld

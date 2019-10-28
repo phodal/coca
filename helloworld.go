@@ -3,13 +3,13 @@ package main
 import (
 	//"./cmd"
 
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
 	"strings"
 
 	. "./language/java"
-	. "./visitor"
 )
 
 func main() {
@@ -29,13 +29,7 @@ func analysisPath(codeDir string) {
 		parser := processFile(file)
 		context := parser.CompilationUnit()
 
-		context.GetStart()
-
-		v := NewJavaCallVisitor()
-		v.Visit(context)
-
-		context.Accept(v);
-		//fmt.Println(context.GetText())
+		fmt.Println(context)
 	}
 }
 

@@ -3,6 +3,7 @@ package main
 import (
 	//"./cmd"
 
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
@@ -14,7 +15,7 @@ import (
 
 func main() {
 	//cmd.Execute()
-	path := "."
+	path := "/Users/fdhuang/learn/coca/poc/src/main/"
 
 	if len(os.Args) > 1 {
 		path = os.Args[1:][0]
@@ -26,6 +27,9 @@ func analysisPath(codeDir string) {
 	files := javaFiles(codeDir)
 	for index := range files {
 		file := files[index]
+
+		fmt.Println("Start parse java call: " + file)
+
 		parser := processFile(file)
 		context := parser.CompilationUnit()
 

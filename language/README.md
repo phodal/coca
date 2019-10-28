@@ -1,5 +1,5 @@
 ```
-antlr -Dlanguage=Go -visitor -listener -lib . JavaParser
+antlr -Dlanguage=Go -visitor -listener -lib . JavaParser.g4
 ```
 
 

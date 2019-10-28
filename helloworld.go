@@ -22,7 +22,12 @@ func analysisPath(codeDir string) {
 	files := javaFiles(codeDir)
 	for index := range files {
 		file := files[index]
-		Parser(file)
+		context := processFile(file)
+
+		v := &BaseJavaParserVisitor{}
+		visit := v.Visit(context)
+
+		fmt.Println(visit)
 	}
 }
 
@@ -37,11 +42,11 @@ func javaFiles(codeDir string) []string {
 	return files
 }
 
-func Parser(path string) ICompilationUnitContext {
+func processFile(path string) ICompilationUnitContext {
 	is, _ := antlr.NewFileStream(path)
-	fmt.Println(is)
 	lexer := NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
 	parser := NewJavaParser(stream)
+	parser.BuildParseTrees = true
 	return parser.CompilationUnit()
 }

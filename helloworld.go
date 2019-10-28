@@ -28,7 +28,8 @@ func analysisPath(codeDir string) {
 	for index := range files {
 		file := files[index]
 
-		fmt.Println("Start parse java call: " + file)
+		displayName := filepath.Base(file)
+		fmt.Println("Start parse java call: " + displayName)
 
 		parser := processFile(file)
 		context := parser.CompilationUnit()

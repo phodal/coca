@@ -1,1 +1,45 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.iml
+*.class
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+.idea/
+
+html/
+tequila
+
+*.gch
+
 .idea
+
+.DS_Store
+
+.vscode/
+xml/
+build/
+viz/merged.dot
+viz/merged.svg
+viz/merged_package.dot
+viz/merged_package.svg
+viz/dep.dot
+viz/dep.svg
+dep.dot
+dep.svg
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+Makefile
+bc_demo
+bc_demo_test
+cmake_install.cmake

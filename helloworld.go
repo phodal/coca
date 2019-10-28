@@ -5,6 +5,9 @@ import (
 
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"os"
+	"path/filepath"
+	"strings"
 
 	. "./language/java"
 )
@@ -12,16 +15,33 @@ import (
 func main() {
 	//cmd.Execute()
 
-	// Setup the input
-	//is := antlr.NewInputStream("1 + 2 * 3")
+	analysisPath("examples/step2-Java")
+}
 
-	is, _ := antlr.NewFileStream("examples/step2-Java/domain/AggregateRoot.java")
-	fmt.Println(is);
+func analysisPath(codeDir string) {
+	files := javaFiles(codeDir)
+	for index := range files {
+		file := files[index]
+		Parser(file)
+	}
+}
 
-	lexer := NewJavaLexer(is);
+func javaFiles(codeDir string) []string {
+	files := make([]string, 0)
+	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
+		if (strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java")) {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files
+}
+
+func Parser(path string) ICompilationUnitContext {
+	is, _ := antlr.NewFileStream(path)
+	fmt.Println(is)
+	lexer := NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
-	parser := NewJavaParser(stream);
-	localctx := parser.CompilationUnit();
-
-	fmt.Println(localctx.GetText())
+	parser := NewJavaParser(stream)
+	return parser.CompilationUnit()
 }

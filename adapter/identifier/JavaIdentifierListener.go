@@ -1,9 +1,8 @@
-package call
+package identifier
 
 import (
 	. "../../language/java"
 	. "./models"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 var node *JIdentifier;
@@ -23,20 +22,20 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *ClassDeclarationCont
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().(antlr.TokenSource).GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().(antlr.TokenSource).GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 	node.AddMethod(*method)
 }
 
-func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
+func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().(antlr.TokenSource).GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().(antlr.TokenSource).GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}

@@ -1,4 +1,4 @@
-package call
+package identifier
 
 import (
 	"fmt"
@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	. "../../language/java"
+	. "./models"
 )
 
 type JavaIdentifierApp struct {
@@ -25,15 +26,15 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
 		parser := (*JavaIdentifierApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		//interfaceIdent := &JIdentifier{"", "", ""}
+		interfaceIdent := &JIdentifier{"", "", ""}
 		listener := new(JavaIdentifierListener)
-		//listener.InitNode(interfaceIdent)
+		listener.InitNode(interfaceIdent)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
-		//
-		//if interfaceIdent.Name != "" {
-		//	fmt.Println(interfaceIdent)
-		//}
+
+		if interfaceIdent.Name != "" {
+			fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name)
+		}
 	}
 }
 

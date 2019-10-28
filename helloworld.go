@@ -35,7 +35,6 @@ func analysisPath(codeDir string) {
 		v.Visit(context)
 
 		context.Accept(v);
-		v.BaseParseTreeVisitor.Visit(context)
 		//fmt.Println(context.GetText())
 	}
 }

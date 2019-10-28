@@ -14,20 +14,26 @@ import (
 
 func main() {
 	//cmd.Execute()
-
 	analysisPath("examples/step2-Java")
 }
 
 func analysisPath(codeDir string) {
 	files := javaFiles(codeDir)
+	fmt.Println(files)
 	for index := range files {
 		file := files[index]
-		context := processFile(file)
+		parser := processFile(file)
+		context := parser.CompilationUnit()
 
-		v := &BaseJavaParserVisitor{}
-		visit := v.Visit(context)
+		context.GetStart()
 
-		fmt.Println(visit)
+		v := &BaseJavaParserVisitor{};
+		v.Visit(context)
+
+		context.Accept(v);
+		v.BaseParseTreeVisitor.Visit(context)
+
+		fmt.Println(context.GetText())
 	}
 }
 
@@ -42,11 +48,10 @@ func javaFiles(codeDir string) []string {
 	return files
 }
 
-func processFile(path string) ICompilationUnitContext {
+func processFile(path string) *JavaParser {
 	is, _ := antlr.NewFileStream(path)
 	lexer := NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
 	parser := NewJavaParser(stream)
-	parser.BuildParseTrees = true
-	return parser.CompilationUnit()
+	return parser
 }

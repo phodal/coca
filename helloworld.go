@@ -29,7 +29,7 @@ func analysisPath(codeDir string) {
 func javaFiles(codeDir string) []string {
 	files := make([]string, 0)
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if (strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java")) {
+		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") {
 			files = append(files, path)
 		}
 		return nil

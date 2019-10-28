@@ -3,12 +3,12 @@ package main
 import (
 	//"./cmd"
 
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
 	"strings"
 
+	. "./adapter"
 	. "./language/java"
 )
 
@@ -29,7 +29,9 @@ func analysisPath(codeDir string) {
 		parser := processFile(file)
 		context := parser.CompilationUnit()
 
-		fmt.Println(context)
+		listener := new(JavaCallListener)
+
+		antlr.NewParseTreeWalker().Walk(listener, context)
 	}
 }
 

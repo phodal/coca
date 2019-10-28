@@ -1,7 +1,7 @@
 package visitor;
 
 import (
-	. "../language/java"
+	. "../../language/java"
 	"fmt"
 )
 

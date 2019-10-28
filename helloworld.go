@@ -3,7 +3,8 @@ package main
 import (
 	"os"
 
-	. "./adapter/call"
+	//. "./adapter/call"
+	. "./adapter/identifier"
 )
 
 func main() {
@@ -14,6 +15,9 @@ func main() {
 		path = os.Args[1:][0]
 	}
 
-	app := new(JavaCallApp)
-	app.AnalysisPath(path)
+	//callApp := new(JavaCallApp)
+	//callApp.AnalysisPath(path)
+
+	identifierApp := new(JavaIdentifierApp)
+	identifierApp.AnalysisPath(path)
 }

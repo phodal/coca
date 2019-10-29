@@ -1,4 +1,4 @@
 package wowo.eext.sub;
 
-public class BaseFace {
+public class BaseFace implements IBase, IFace {
 }

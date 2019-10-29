@@ -55,42 +55,44 @@ func (j *RemoveUnusedImportApp) Analysis() {
 }
 
 func handleNode(node *JFullIdentifier) {
-	var fields map[string]JField = node.GetFields()
+	var fields = node.GetFields()
 	var imports []JImport = node.GetImports()
 
-	fmt.Println(node.Pkg+"."+node.Name, imports, node.GetMethods(), fields)
 	if len(fields) == 0 {
 		removeAllImports(imports)
 		return
 	}
 
-	//for index := range fields {
-		//field := fields[index]
-		//errorLine := 0
-		//
-		//for index := range imports {
-		//	imp := imports[index]
-		//	ss := strings.Split(imp.Name, ".")
-		//	lastField := ss[len(ss)-1]
-		//
-		//	if (lastField == field.Name) {
-		//		continue
-		//	} else {
-		//
-		//	}
-		//}
-	//}
+	var errorCount = 0
+	for index := range imports {
+		imp := imports[index]
+		ss := strings.Split(imp.Name, ".")
+		lastField := ss[len(ss)-1]
+
+
+		var isOk = false
+		for _, field := range fields {
+			if field.Name == lastField {
+				isOk = true
+			}
+		}
+
+		if !isOk {
+			removeImportByLineNum(imp, imp.StartLine-1 - errorCount)
+			errorCount++
+		}
+	}
 }
 
 func removeAllImports(imports []JImport) {
 	for index := range imports {
 		imp := imports[index]
-		removeImportByLineNum(imp)
+		removeImportByLineNum(imp, imp.StartLine)
 	}
 }
 
-func removeImportByLineNum(imp JImport) {
-	removeLine(currentFile, imp.StartLine - 1)
+func removeImportByLineNum(imp JImport, line int) {
+	removeLine(currentFile, line)
 }
 
 func removeLine(path string, lineNumber int) {

@@ -20,13 +20,6 @@ var currentFile string
 var moveConfig string
 var configPath string
 
-type JMoveStruct struct {
-	*JFullIdentifier
-
-	path string
-	deps []JImport
-}
-
 var nodes []JMoveStruct
 
 type MoveClassApp struct {
@@ -114,10 +107,10 @@ func updatePackageInfo(structs []JMoveStruct, originImport string, newImport str
 func updateImportSide(originImport string, newImport string) {
 	for index := range nodes {
 		node := nodes[index]
-		for j := range node.deps {
-			dep := node.deps[j]
+		for j := range node.Deps {
+			dep := node.Deps[j]
 			if dep.Name == originImport {
-				updateFile(node.path, dep.StartLine, "import "+newImport+";")
+				updateFile(node.Path, dep.StartLine, "import "+newImport+";")
 			}
 		}
 	}

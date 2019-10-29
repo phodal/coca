@@ -1,4 +1,4 @@
-package base
+package unused
 
 import (
 	"fmt"
@@ -8,17 +8,30 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "./models"
+	. "../base"
+	. "../base/models"
 	. "../utils"
 )
 
 var currentFile string
+var moveConfig string
+var configPath string
 
-type JavaRefactorApp struct {
+type RemoveUnusedImportApp struct {
 }
 
-func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
-	files := GetJavaFiles(codeDir)
+var nodes []JMoveStruct
+
+func NewRemoveUnusedImportApp(config string, pPath string) *RemoveUnusedImportApp {
+	moveConfig = config
+	configPath = pPath
+
+	nodes = nil
+	return &RemoveUnusedImportApp{}
+}
+
+func (j *RemoveUnusedImportApp) Analysis() {
+	files := GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
 
@@ -36,18 +49,18 @@ func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		if node.Name != "" {
-			handleNode()
+			handleNode(node)
 		}
 	}
 }
 
-func handleNode() {
+func handleNode(node *JFullIdentifier) {
 	var fields map[string]JField = node.GetFields()
 	var imports []JImport = node.GetImports()
 
 	fmt.Println(node.Pkg+"."+node.Name, imports, node.GetMethods(), fields)
 	if len(fields) == 0 {
-		//removeAllImports(imports)
+		removeAllImports(imports)
 		return
 	}
 
@@ -69,7 +82,7 @@ func handleNode() {
 	//}
 }
 
-func removeAllImports(imports map[string]JImport) {
+func removeAllImports(imports []JImport) {
 	for index := range imports {
 		imp := imports[index]
 		removeImportByLineNum(imp)

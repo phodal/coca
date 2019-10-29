@@ -1,7 +1,8 @@
 package cmd
 
 import (
-	. "../refactor"
+	//. "../refactor"
+	. "../refactor/unused"
 	"github.com/spf13/cobra"
 )
 
@@ -14,8 +15,11 @@ var refactorCmd *cobra.Command = &cobra.Command{
 		path := cmd.Flag("path").Value.String()
 
 		if moveConfig != "" && path != "" {
-			app := NewMoveClassApp(moveConfig, path)
-			app.Analysis()
+			//app := NewMoveClassApp(moveConfig, path)
+			//app.Analysis()
+
+			app2 := NewRemoveUnusedImportApp(moveConfig, path)
+			app2.Analysis()
 		}
 	},
 }

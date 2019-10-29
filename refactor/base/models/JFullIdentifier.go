@@ -17,12 +17,6 @@ type JField struct {
 	//StopLinePosition  int
 }
 
-type JImport struct {
-	Name   string
-	StartLine         int
-	StopLine          int
-}
-
 type JPkgInfo struct {
 	Name   string
 	StartLine         int

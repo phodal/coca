@@ -140,6 +140,19 @@ func (s *JavaRefactorListener) EnterExpressionList(ctx *ExpressionListContext) {
 	}
 }
 
+
+func (s *JavaRefactorListener) EnterStatement(ctx *StatementContext) {
+	for _, expression := range ctx.AllExpression() {
+		expText := expression.GetText()
+		if isUppercaseText(expText) {
+			startLine := ctx.GetStart().GetLine()
+			stopLine := ctx.GetStop().GetLine()
+			field := &JField{expText, node.Pkg, startLine, stopLine}
+			node.AddField(*field)
+		}
+	}
+}
+
 func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
 	identifiers := ctx.AllIDENTIFIER()
 	for index, _ := range identifiers {

@@ -142,6 +142,23 @@ func (s *JavaRefactorListener) EnterLocalTypeDeclaration(ctx *LocalTypeDeclarati
 func (s *JavaRefactorListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
 	node.Type = "Interface"
 	node.Name = ctx.IDENTIFIER().GetText()
+
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+	field := &JField{node.Name, node.Pkg, startLine, stopLine}
+	node.AddField(*field)
+
+	if ctx.TypeList() != nil {
+		context := ctx.TypeList()
+		startLine := ctx.TypeList().GetStart().GetLine()
+		stopLine := ctx.TypeList().GetStart().GetLine()
+
+		split := strings.Split(context.GetText(), ",")
+		for _, imp := range split {
+			field := &JField{imp, node.Pkg, startLine, stopLine}
+			node.AddField(*field)
+		}
+	}
 }
 
 func (s *JavaRefactorListener) InitNode(identifier *JFullIdentifier) {

@@ -13,3 +13,8 @@ func (s *JavaRefactorCallListener) EnterCompilationUnit(ctx *CompilationUnitCont
 	declaration := ctx.AllImportDeclaration()
 	fmt.Println(declaration)
 }
+
+func (s *JavaRefactorCallListener) EnterImportDeclaration(ctx *ImportDeclarationContext) {
+	importText := ctx.QualifiedName().GetText()
+	fmt.Println(importText)
+}

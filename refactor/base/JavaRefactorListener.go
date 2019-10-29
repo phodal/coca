@@ -3,6 +3,8 @@ package base
 import (
 	. "../../language/java"
 	. "./models"
+	"strings"
+	"unicode"
 )
 
 var node *JFullIdentifier;
@@ -37,6 +39,10 @@ func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationCont
 func (s *JavaRefactorListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	node.Type = "Class"
 	node.Name = ctx.IDENTIFIER().GetText()
+}
+
+func (s *JavaRefactorListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
+
 }
 
 func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
@@ -105,6 +111,40 @@ func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	field := &JField{text, node.Pkg, startLine, stopLine}
 	node.AddField(*field)
+}
+
+func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
+	identifiers := ctx.AllIDENTIFIER()
+	for index, _ := range identifiers {
+		context := ctx.IDENTIFIER(index)
+		name := context.GetText()
+		startLine := ctx.GetStart().GetLine()
+		stopLine := ctx.GetStop().GetLine()
+
+		field := &JField{name, node.Pkg, startLine, stopLine}
+		node.AddField(*field)
+	}
+}
+
+func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
+	if ctx.GetBop() == nil {
+		return
+	}
+
+	if ctx.GetBop().GetText() != "." {
+		return
+	}
+
+	// UUID.toString 形式的直接调用
+	if ctx.Expression(0) != nil && ctx.MethodCall() != nil {
+		text := ctx.Expression(0).GetText()
+		if !strings.Contains(text, ".") && unicode.IsUpper([]rune(text)[0]) {
+			startLine := ctx.GetStart().GetLine()
+			stopLine := ctx.GetStop().GetLine()
+			field := &JField{text, node.Pkg, startLine, stopLine}
+			node.AddField(*field)
+		}
+	}
 }
 
 func (s *JavaRefactorListener) InitNode(identifier *JFullIdentifier) {

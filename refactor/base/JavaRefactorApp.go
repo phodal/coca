@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "../../language/java"
 	. "./models"
+	. "../utils"
 )
 
 var currentFile string
@@ -18,7 +18,7 @@ type JavaRefactorApp struct {
 }
 
 func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
-	files := (*JavaRefactorApp)(nil).javaFiles(codeDir)
+	files := GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]
 
@@ -26,7 +26,7 @@ func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := (*JavaRefactorApp)(nil).processFile(file)
+		parser := ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		node := NewJFullIdentifier()
@@ -92,23 +92,4 @@ func removeLine(path string, lineNumber int) {
 	array := strings.Split(string(file), "\n")
 	array = append(array[:lineNumber], array[lineNumber+1:]...)
 	_ = ioutil.WriteFile(path, []byte(strings.Join(array, "\n")), mode)
-}
-
-func (j *JavaRefactorApp) javaFiles(codeDir string) []string {
-	files := make([]string, 0)
-	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") {
-			files = append(files, path)
-		}
-		return nil
-	})
-	return files
-}
-
-func (j *JavaRefactorApp) processFile(path string) *JavaParser {
-	is, _ := antlr.NewFileStream(path)
-	lexer := NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0);
-	parser := NewJavaParser(stream)
-	return parser
 }

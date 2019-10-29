@@ -56,19 +56,13 @@ func (j *RemoveUnusedImportApp) Analysis() {
 
 func handleNode(node *JFullIdentifier) {
 	var fields = node.GetFields()
-	var imports []JImport = node.GetImports()
+	var imports = node.GetImports()
 
-	if len(fields) == 0 {
-		removeAllImports(imports)
-		return
-	}
-
-	var errorCount = 0
+	var errorLines []int
 	for index := range imports {
 		imp := imports[index]
 		ss := strings.Split(imp.Name, ".")
 		lastField := ss[len(ss)-1]
-
 
 		var isOk = false
 		for _, field := range fields {
@@ -78,16 +72,19 @@ func handleNode(node *JFullIdentifier) {
 		}
 
 		if !isOk {
-			removeImportByLineNum(imp, imp.StartLine-1 - errorCount)
-			errorCount++
+			errorLines = append(errorLines, imp.StartLine)
 		}
 	}
+
+	removeImportByLines(currentFile, errorLines)
 }
 
-func removeAllImports(imports []JImport) {
-	for index := range imports {
-		imp := imports[index]
-		removeImportByLineNum(imp, imp.StartLine)
+func removeImportByLines(file string, errorLines []int) {
+	removedErrorCount := 1
+	for _, line := range errorLines {
+		newStart := line - removedErrorCount
+		removeLine(file, newStart)
+		removedErrorCount++
 	}
 }
 

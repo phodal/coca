@@ -4,6 +4,7 @@ import (
 	. "../../language/java"
 	. "./models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"strings"
 )
 
 var node *JFullIdentifier;
@@ -35,6 +36,25 @@ func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationCont
 func (s *JavaRefactorListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	node.Type = "Class"
 	node.Name = ctx.IDENTIFIER().GetText()
+
+	if ctx.IMPLEMENTS() != nil {
+		context := ctx.TypeList()
+		startLine := ctx.TypeList().GetStart().GetLine()
+		stopLine := ctx.TypeList().GetStart().GetLine()
+
+		split := strings.Split(context.GetText(), ",")
+		for _, imp := range split {
+			field := &JField{imp, node.Pkg, startLine, stopLine}
+			node.AddField(*field)
+		}
+	}
+
+	if ctx.EXTENDS() != nil {
+		startLine := ctx.TypeType().GetStart().GetLine()
+		stopLine := ctx.TypeType().GetStart().GetLine()
+		field := &JField{ctx.TypeType().GetText(), node.Pkg, startLine, stopLine}
+		node.AddField(*field)
+	}
 }
 
 func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {

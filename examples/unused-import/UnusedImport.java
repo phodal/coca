@@ -1,9 +1,21 @@
-package com.phodal;
+package study.huhao.demo.adapters.restapi.providers;
 
-import java.io.IOException;
+import study.huhao.demo.domain.core.excpetions.EntityExistedException;
 
-public class Example {
-    public static void main(String[] args) {
-        System.out.println("Hello World");
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+import java.util.Map;
+
+import static javax.ws.rs.core.Response.Status.CONFLICT;
+import static javax.ws.rs.core.Response.status;
+
+
+@Provider
+public class EntityExistedExceptionMapper implements ExceptionMapper<EntityExistedException> {
+    @Override
+    public Response toResponse(EntityExistedException ex) {
+        var entity = Map.of("message", ex.getMessage());
+        return status(CONFLICT).entity(entity).build();
     }
 }

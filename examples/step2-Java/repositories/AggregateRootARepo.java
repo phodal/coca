@@ -1,6 +1,6 @@
 package repositories;
 
-import domain.*;
+import domain.AggregateRootA;
 
 
 public class AggregateRootARepo extends Repository {

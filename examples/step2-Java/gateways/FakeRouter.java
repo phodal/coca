@@ -1,6 +1,6 @@
 package gateways;
 
-import domain.*;
+import domain.Router;
 
 
 public class FakeRouter extends Router {

@@ -3,6 +3,7 @@ package base
 import (
 	. "../../language/java"
 	. "./models"
+	"fmt"
 )
 
 var node *JFullIdentifier;
@@ -80,6 +81,28 @@ func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
 	stopLine := ctx.GetStop().GetLine()
 
 	field := &JField{annotation, node.Pkg, startLine, stopLine}
+	node.AddField(*field)
+}
+
+func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContext) {
+	identifiers := ctx.AllIDENTIFIER()
+	for index, _ := range identifiers {
+		context := ctx.IDENTIFIER(index)
+		name := context.GetText()
+		startLine := ctx.GetStart().GetLine()
+		stopLine := ctx.GetStop().GetLine()
+
+		field := &JField{name, node.Pkg, startLine, stopLine}
+		node.AddField(*field)
+	}
+}
+
+func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
+	text := ctx.IDENTIFIER().GetText()
+	fmt.Println(ctx.IDENTIFIER().GetText(), "......")
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+	field := &JField{text, node.Pkg, startLine, stopLine}
 	node.AddField(*field)
 }
 

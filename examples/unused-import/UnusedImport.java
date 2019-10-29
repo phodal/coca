@@ -1,21 +1,60 @@
-package study.huhao.demo.adapters.restapi.providers;
+package study.huhao.demo.infrastructure.persistence.blog;
 
-import study.huhao.demo.domain.core.excpetions.EntityExistedException;
+import lombok.*;
+import study.huhao.demo.domain.models.blog.Blog;
+import study.huhao.demo.infrastructure.persistence.PersistenceObject;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
-import java.util.Map;
+import java.time.Instant;
+import java.util.UUID;
 
-import static javax.ws.rs.core.Response.Status.CONFLICT;
-import static javax.ws.rs.core.Response.status;
+// Lombok annotations
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Builder
+public class BlogPO implements PersistenceObject<Blog> {
 
+    private String id;
+    private String title;
+    private String body;
+    private String authorId;
+    private String status;
+    private Instant createdAt;
+    private Instant savedAt;
+    private PublishedBlogPO published;
 
-@Provider
-public class EntityExistedExceptionMapper implements ExceptionMapper<EntityExistedException> {
+    // The persistence object needs to reflect the table structure.
+    // The domain model and persistence object may have much different.
+    // So, manual to convert between them is better than use object mapper like Orika.
     @Override
-    public Response toResponse(EntityExistedException ex) {
-        var entity = Map.of("message", ex.getMessage());
-        return status(CONFLICT).entity(entity).build();
+    public Blog toDomainModel() {
+        return new Blog(
+                UUID.fromString(id),
+                title,
+                body,
+                UUID.fromString(authorId),
+                Blog.Status.valueOf(status),
+                createdAt,
+                savedAt,
+                published == null ? null : published.toDomainModel()
+        );
+    }
+
+    // The persistence object needs to reflect the table structure.
+    // The domain model and persistence object may have much different.
+    // So, manual to convert between them is better than use object mapper like Orika.
+    static BlogPO of(Blog blog) {
+        if (blog == null) return null;
+
+        return BlogPO.builder()
+                .id(blog.getId().toString())
+                .title(blog.getTitle())
+                .body(blog.getBody())
+                .authorId(blog.getAuthorId().toString())
+                .status(blog.getStatus().toString())
+                .createdAt(blog.getCreatedAt())
+                .savedAt(blog.getSavedAt())
+                .published(PublishedBlogPO.of(blog.getPublished()))
+                .build();
     }
 }

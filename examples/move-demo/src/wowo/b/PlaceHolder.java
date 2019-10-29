@@ -1,5 +1,7 @@
 package wowo.b;
 
-public class PlaceHolder {
+import wowo.a.ImportForB;
 
+public class PlaceHolder {
+    private ImportForB importForB;
 }

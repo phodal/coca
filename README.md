@@ -1,6 +1,8 @@
-# learn-go
+# Coca
 
-## 安装 Go
+## Dev
+
+### 安装 Go
 
 ```bash
 brew install go
@@ -14,7 +16,7 @@ export GOPATH=$HOME/.go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 ```
 
-### 安装 Go 依赖管理工具：godep
+#### 安装 Go 依赖管理工具：godep
 
 ```
 brew install dep
@@ -22,13 +24,13 @@ brew install dep
 
 TBD.
 
-## Test
+### Test
 
 ```
 go get github.com/onsi/ginkgo
 go get github.com/onsi/gomega
 ```
 
-## Refs
+### Refs
 
 [https://github.com/MontFerret/ferret](https://github.com/MontFerret/ferret)

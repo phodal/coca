@@ -4,12 +4,11 @@ import (
 	"os"
 
 	. "./adapter/call"
-	. "./adapter/identifier"
 )
 
 func main() {
 	//cmd.Execute()
-	path := "/Users/fdhuang/test/mall"
+	path := "/Users/fdhuang/learn/coca/poc/src/main"
 
 	if len(os.Args) > 1 {
 		path = os.Args[1:][0]
@@ -17,7 +16,7 @@ func main() {
 
 	callApp := new(JavaCallApp)
 	callApp.AnalysisPath(path)
-
-	identifierApp := new(JavaIdentifierApp)
-	identifierApp.AnalysisPath(path)
+	//
+	//identifierApp := new(JavaIdentifierApp)
+	//identifierApp.AnalysisPath(path)
 }

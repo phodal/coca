@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	. "../../language/java"
+	. "./models"
 )
 
 type JavaRefactorApp struct {
@@ -25,9 +26,15 @@ func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
 		parser := (*JavaRefactorApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		listener := new(JavaRefactorCallListener)
+		interfaceIdent := NewJFullIdentifier()
+		listener := new(JavaRefactorListener)
+		listener.InitNode(interfaceIdent)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
+
+		if interfaceIdent.Name != "" {
+			fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name, interfaceIdent.GetMethods())
+		}
 	}
 }
 

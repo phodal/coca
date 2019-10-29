@@ -12,7 +12,6 @@ import (
 )
 
 type JavaRefactorApp struct {
-
 }
 
 func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
@@ -26,16 +25,21 @@ func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
 		parser := (*JavaRefactorApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		interfaceIdent := NewJFullIdentifier()
+		node := NewJFullIdentifier()
 		listener := new(JavaRefactorListener)
-		listener.InitNode(interfaceIdent)
+		listener.InitNode(node)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		if interfaceIdent.Name != "" {
-			fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name, interfaceIdent.GetMethods())
+		if node.Name != "" {
+
+			handleNode(node)
 		}
 	}
+}
+
+func handleNode(identifier *JFullIdentifier) {
+	fmt.Println(node.Pkg+"."+node.Name, node.GetImports(), node.GetMethods(), node.GetFields())
 }
 
 func (j *JavaRefactorApp) javaFiles(codeDir string) []string {

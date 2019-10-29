@@ -41,8 +41,23 @@ func (s *JavaRefactorListener) EnterClassDeclaration(ctx *ClassDeclarationContex
 	node.Name = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaRefactorListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
+// throws
+func (s *JavaRefactorListener) EnterQualifiedNameList(ctx *QualifiedNameListContext) {
+	for _, qualified := range ctx.AllQualifiedName() {
+		startLine := ctx.GetStart().GetLine()
+		stopLine := ctx.GetStop().GetLine()
+		field := &JField{qualified.GetText(), node.Pkg, startLine, stopLine}
+		node.AddField(*field)
+	}
+}
 
+func (s *JavaRefactorListener) EnterCatchType(ctx *CatchTypeContext) {
+	for _, qualified := range ctx.AllQualifiedName() {
+		startLine := ctx.GetStart().GetLine()
+		stopLine := ctx.GetStop().GetLine()
+		field := &JField{qualified.GetText(), node.Pkg, startLine, stopLine}
+		node.AddField(*field)
+	}
 }
 
 func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
@@ -113,6 +128,18 @@ func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
 	node.AddField(*field)
 }
 
+func (s *JavaRefactorListener) EnterExpressionList(ctx *ExpressionListContext) {
+	for _, expression := range ctx.AllExpression() {
+		expText := expression.GetText()
+		if isUppercaseText(expText) {
+			startLine := ctx.GetStart().GetLine()
+			stopLine := ctx.GetStop().GetLine()
+			field := &JField{expText, node.Pkg, startLine, stopLine}
+			node.AddField(*field)
+		}
+	}
+}
+
 func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
 	identifiers := ctx.AllIDENTIFIER()
 	for index, _ := range identifiers {
@@ -127,6 +154,17 @@ func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
 }
 
 func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
+	if ctx.Expression(0) != nil {
+		expText := ctx.Expression(0).GetText()
+
+		if isUppercaseText(expText) {
+			startLine := ctx.GetStart().GetLine()
+			stopLine := ctx.GetStop().GetLine()
+			field := &JField{expText, node.Pkg, startLine, stopLine}
+			node.AddField(*field)
+		}
+	}
+
 	if ctx.GetBop() == nil {
 		return
 	}
@@ -135,16 +173,22 @@ func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
 		return
 	}
 
-	// UUID.toString 形式的直接调用
-	if ctx.Expression(0) != nil && ctx.MethodCall() != nil {
-		text := ctx.Expression(0).GetText()
-		if !strings.Contains(text, ".") && unicode.IsUpper([]rune(text)[0]) {
-			startLine := ctx.GetStart().GetLine()
-			stopLine := ctx.GetStop().GetLine()
-			field := &JField{text, node.Pkg, startLine, stopLine}
-			node.AddField(*field)
+	if ctx.Expression(0) != nil {
+		expText := ctx.Expression(0).GetText()
+		// UUID.toString 形式的直接调用
+		if ctx.MethodCall() != nil {
+			if isUppercaseText(expText) {
+				startLine := ctx.GetStart().GetLine()
+				stopLine := ctx.GetStop().GetLine()
+				field := &JField{expText, node.Pkg, startLine, stopLine}
+				node.AddField(*field)
+			}
 		}
 	}
+}
+
+func isUppercaseText(text string) bool {
+	return !strings.Contains(text, ".") && unicode.IsUpper([]rune(text)[0])
 }
 
 func (s *JavaRefactorListener) InitNode(identifier *JFullIdentifier) {

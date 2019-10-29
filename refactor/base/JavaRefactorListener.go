@@ -73,6 +73,16 @@ func (s *JavaRefactorListener) EnterClassOrInterfaceType(ctx *ClassOrInterfaceTy
 	}
 }
 
+func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
+	annotation := ctx.QualifiedName().GetText()
+
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+
+	field := &JField{annotation, node.Pkg, startLine, stopLine}
+	node.AddField(*field)
+}
+
 func (s *JavaRefactorListener) InitNode(identifier *JFullIdentifier) {
 	node = identifier
 }

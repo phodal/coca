@@ -23,9 +23,16 @@ type JImport struct {
 	StopLine          int
 }
 
+type JPkgInfo struct {
+	Name   string
+	StartLine         int
+	StopLine          int
+}
+
 var methods []JFullMethod
 var fields = make(map[string]JField)
 var imports []JImport
+var pkgInfo JPkgInfo
 
 type JFullIdentifier struct {
 	Pkg  string
@@ -63,4 +70,12 @@ func (identifier *JFullIdentifier) AddImport(jImport JImport) {
 
 func (identifier *JFullIdentifier) GetImports() []JImport {
 	return imports
+}
+
+func (identifier *JFullIdentifier) SetPkgInfo(info JPkgInfo) {
+	pkgInfo = info
+}
+
+func (identifier *JFullIdentifier) GetPkgInfo() JPkgInfo {
+	return pkgInfo
 }

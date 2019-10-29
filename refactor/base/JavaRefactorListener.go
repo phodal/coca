@@ -14,6 +14,12 @@ type JavaRefactorListener struct {
 
 func (s *JavaRefactorListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
 	node.Pkg = ctx.QualifiedName().GetText()
+
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+
+	pkgInfo := &JPkgInfo{node.Pkg, startLine, stopLine}
+	node.SetPkgInfo(*pkgInfo)
 }
 
 func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationContext) {

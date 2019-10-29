@@ -84,15 +84,19 @@ func parseRename() {
 		originFile, _ := filepath.Abs(path + originImport)
 		newFile, _ := filepath.Abs(path + newImport)
 
-		moveClass(originFile, newFile)
+		copyClass(originFile, newFile)
 
-		for index := range nodes {
-			node := nodes[index]
-			for j := range node.deps {
-				dep := node.deps[j]
-				if dep.Name == originImport {
-					updateFile(node.path, dep.StartLine, "import " + newImport + ";")
-				}
+		updateImportSide(originImport, newImport)
+	}
+}
+
+func updateImportSide(originImport string, newImport string) {
+	for index := range nodes {
+		node := nodes[index]
+		for j := range node.deps {
+			dep := node.deps[j]
+			if dep.Name == originImport {
+				updateFile(node.path, dep.StartLine, "import "+newImport+";")
 			}
 		}
 	}
@@ -118,7 +122,7 @@ func updateFile(path string, lineNum int, newImp string) {
 	}
 }
 
-func moveClass(originFile string, newFile string) {
+func copyClass(originFile string, newFile string) {
 	originFile = strings.ReplaceAll(originFile, ".", "/") + ".java"
 	newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
 

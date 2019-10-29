@@ -25,7 +25,7 @@ type JImport struct {
 
 var methods []JFullMethod
 var fields = make(map[string]JField)
-var imports = make(map[string]JImport)
+var imports []JImport
 
 type JFullIdentifier struct {
 	Pkg  string
@@ -37,7 +37,7 @@ func NewJFullIdentifier() *JFullIdentifier {
 	identifier := &JFullIdentifier{"", "", ""}
 	methods = nil
 	fields = make(map[string]JField)
-	imports = make(map[string]JImport)
+	imports = nil
 	return identifier
 }
 
@@ -58,9 +58,9 @@ func (identifier *JFullIdentifier) GetFields() map[string]JField {
 }
 
 func (identifier *JFullIdentifier) AddImport(jImport JImport) {
-	imports[jImport.Name] = jImport
+	imports = append(imports, jImport)
 }
 
-func (identifier *JFullIdentifier) GetImports() map[string]JImport {
+func (identifier *JFullIdentifier) GetImports() []JImport {
 	return imports
 }

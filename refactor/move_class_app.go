@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -18,7 +19,15 @@ import (
 var currentFile string
 var moveConfig string
 var path string
-var nodes map[string]JFullIdentifier
+
+type JMoveStruct struct {
+	*JFullIdentifier
+
+	path string
+	deps []JImport
+}
+
+var nodes []JMoveStruct
 
 type MoveClassApp struct {
 }
@@ -27,7 +36,7 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 	moveConfig = config
 	path = pPath
 
-	nodes = make(map[string]JFullIdentifier)
+	nodes = nil
 	return &MoveClassApp{}
 }
 
@@ -48,12 +57,8 @@ func (j *MoveClassApp) Analysis() {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		pkgPrefix := node.Pkg + "." + node.Name
-		if node.Pkg == "" {
-			pkgPrefix = node.Name
-		}
-
-		nodes[pkgPrefix] = *node
+		moveStruct := &JMoveStruct{node, currentFile, node.GetImports()}
+		nodes = append(nodes, *moveStruct)
 	}
 
 	parseRename()
@@ -68,19 +73,52 @@ func parseRename() {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		moveClass(scanner.Text())
+		splitStr := strings.Split(scanner.Text(), " -> ")
+		if len(splitStr) < 2 {
+			return
+		}
+
+		originImport := splitStr[0]
+		newImport := splitStr[1]
+
+		originFile, _ := filepath.Abs(path + originImport)
+		newFile, _ := filepath.Abs(path + newImport)
+
+		moveClass(originFile, newFile)
+
+		for index := range nodes {
+			node := nodes[index]
+			for j := range node.deps {
+				dep := node.deps[j]
+				if dep.Name == originImport {
+					updateFile(node.path, dep.StartLine, "import " + newImport + ";")
+				}
+			}
+		}
 	}
 }
 
-func moveClass(text string) {
-	splitStr := strings.Split(text, " -> ")
-	if len(splitStr) < 2 {
-		return
+func updateFile(path string, lineNum int, newImp string) {
+	input, err := ioutil.ReadFile(path)
+	if err != nil {
+		log.Fatalln(err)
 	}
 
-	originFile, _ := filepath.Abs(path + splitStr[0])
-	newFile, _ := filepath.Abs(path + splitStr[1])
+	lines := strings.Split(string(input), "\n")
 
+	for i := range lines {
+		if i == lineNum {
+			lines[i - 1] = newImp
+		}
+	}
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(path, []byte(output), 0644)
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func moveClass(originFile string, newFile string) {
 	originFile = strings.ReplaceAll(originFile, ".", "/") + ".java"
 	newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
 

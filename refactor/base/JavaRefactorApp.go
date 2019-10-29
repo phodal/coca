@@ -43,7 +43,7 @@ func (j *JavaRefactorApp) AnalysisPath(codeDir string) {
 
 func handleNode() {
 	var fields map[string]JField = node.GetFields()
-	var imports map[string]JImport = node.GetImports()
+	var imports []JImport = node.GetImports()
 
 	fmt.Println(node.Pkg+"."+node.Name, imports, node.GetMethods(), fields)
 	if len(fields) == 0 {

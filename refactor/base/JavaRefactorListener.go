@@ -3,7 +3,6 @@ package base
 import (
 	. "../../language/java"
 	. "./models"
-	"fmt"
 )
 
 var node *JFullIdentifier;
@@ -24,6 +23,9 @@ func (s *JavaRefactorListener) EnterPackageDeclaration(ctx *PackageDeclarationCo
 
 func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
+	if ctx.MUL() != nil {
+		importText = importText + ".*"
+	}
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
@@ -99,7 +101,6 @@ func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContex
 
 func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
 	text := ctx.IDENTIFIER().GetText()
-	fmt.Println(ctx.IDENTIFIER().GetText(), "......")
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 	field := &JField{text, node.Pkg, startLine, stopLine}

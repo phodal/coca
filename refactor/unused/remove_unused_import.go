@@ -62,11 +62,12 @@ func handleNode(node *JFullIdentifier) {
 	for index := range imports {
 		imp := imports[index]
 		ss := strings.Split(imp.Name, ".")
+		fmt.Println(ss)
 		lastField := ss[len(ss)-1]
 
 		var isOk = false
 		for _, field := range fields {
-			if field.Name == lastField {
+			if field.Name == lastField || lastField == "*" {
 				isOk = true
 			}
 		}

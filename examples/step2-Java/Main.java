@@ -1,8 +1,7 @@
-import domain.*;
-import gateways.*;
-import repositories.*;
+import gateways.FakeRouter;
+import domain.AggregateRootARepo;
+import repositories.AggregateRootA;
 
- 
 public class Main {
 
     public static void main(String[] args) {

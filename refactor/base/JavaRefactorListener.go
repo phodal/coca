@@ -93,6 +93,52 @@ func (s *JavaRefactorListener) EnterFieldDeclaration(ctx *FieldDeclarationContex
 	}
 }
 
+func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
+	annotation := ctx.QualifiedName().GetText()
+
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+
+	field := &JField{annotation, node.Pkg, startLine, stopLine}
+	node.AddField(*field)
+}
+
+func (s *JavaRefactorListener) EnterTypeDeclaration(ctx *TypeDeclarationContext) {
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+	field := &JField{"", node.Pkg, startLine, stopLine}
+
+	if ctx.InterfaceDeclaration() != nil {
+		field.Name = ctx.InterfaceDeclaration().GetText()
+		node.AddField(*field)
+	}
+
+	if ctx.EnumDeclaration() != nil {
+		field.Name = ctx.EnumDeclaration().GetText()
+		node.AddField(*field)
+	}
+
+	if ctx.AnnotationTypeDeclaration() != nil {
+		field.Name = ctx.AnnotationTypeDeclaration().GetText()
+		node.AddField(*field)
+	}
+}
+
+func (s *JavaRefactorListener) EnterLocalTypeDeclaration(ctx *LocalTypeDeclarationContext) {
+	startLine := ctx.GetStart().GetLine()
+	stopLine := ctx.GetStop().GetLine()
+	field := &JField{"", node.Pkg, startLine, stopLine}
+
+	if ctx.ClassDeclaration() != nil {
+		field.Name = ctx.ClassDeclaration().GetText()
+	}
+
+	if ctx.InterfaceDeclaration() != nil {
+		field.Name = ctx.InterfaceDeclaration().GetText()
+	}
+	node.AddField(*field)
+}
+
 func (s *JavaRefactorListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
 	node.Type = "Interface"
 	node.Name = ctx.IDENTIFIER().GetText()

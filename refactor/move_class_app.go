@@ -18,7 +18,7 @@ import (
 
 var currentFile string
 var moveConfig string
-var path string
+var configPath string
 
 type JMoveStruct struct {
 	*JFullIdentifier
@@ -34,14 +34,14 @@ type MoveClassApp struct {
 
 func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 	moveConfig = config
-	path = pPath
+	configPath = pPath
 
 	nodes = nil
 	return &MoveClassApp{}
 }
 
 func (j *MoveClassApp) Analysis() {
-	files := GetJavaFiles(path)
+	files := GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
 
@@ -81,13 +81,34 @@ func parseRename() {
 		originImport := splitStr[0]
 		newImport := splitStr[1]
 
-		originFile, _ := filepath.Abs(path + originImport)
-		newFile, _ := filepath.Abs(path + newImport)
+		originFile, _ := filepath.Abs(configPath + originImport)
+		newFile, _ := filepath.Abs(configPath + newImport)
 
 		copyClass(originFile, newFile)
 
+		updatePackageInfo(nodes, originImport, newImport)
+
 		updateImportSide(originImport, newImport)
 	}
+}
+
+func updatePackageInfo(structs []JMoveStruct, originImport string, newImport string)  {
+	var originNode JMoveStruct
+	for index := range nodes {
+		node := nodes[index]
+		if originImport == node.Pkg + "." + node.Name {
+			originNode = node
+		}
+	}
+
+	if originNode.Name == "" {
+		return
+	}
+	path := buildJavaPath(configPath + newImport)
+	split := strings.Split(newImport, ".")
+	pkg := strings.Join(split[:len(split) - 1], ".")
+	fmt.Println(pkg)
+	updateFile(path, originNode.GetPkgInfo().StartLine, "package " + pkg + ";")
 }
 
 func updateImportSide(originImport string, newImport string) {
@@ -123,7 +144,7 @@ func updateFile(path string, lineNum int, newImp string) {
 }
 
 func copyClass(originFile string, newFile string) {
-	originFile = strings.ReplaceAll(originFile, ".", "/") + ".java"
+	originFile = buildJavaPath(originFile)
 	newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
 
 	fmt.Println(originFile, newFile)
@@ -131,6 +152,10 @@ func copyClass(originFile string, newFile string) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func buildJavaPath(originFile string) string {
+	return strings.ReplaceAll(originFile, ".", "/") + ".java"
 }
 
 func copy(src, dst string) (int64, error) {

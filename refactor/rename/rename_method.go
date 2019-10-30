@@ -51,15 +51,18 @@ func (j *RemoveMethodApp) Start() {
 }
 
 func startParse(nodes []JClassNode, relates []RefactorChangeRelate) {
-	for _, related := range relates {
-		oldInfo := BuildMethodPackageInfo(related.OldObj)
-		//newInfo := BuildMethodPackageInfo(related.NewObj)
 
-		for _, pkgNode := range nodes {
-			fmt.Println(pkgNode.Package+pkgNode.Class, oldInfo.Package+oldInfo.Class)
+	for _, pkgNode := range nodes {
+		for _, related := range relates {
+			oldInfo := BuildMethodPackageInfo(related.OldObj)
+			newInfo := BuildMethodPackageInfo(related.NewObj)
+
 			if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
 				for _, method := range pkgNode.Methods {
-					updateSelfRefs(pkgNode, method)
+					fmt.Println(method.Name, oldInfo.Method)
+					if method.Name == oldInfo.Method {
+						updateSelfRefs(pkgNode, method, newInfo)
+					}
 				}
 			}
 			//
@@ -70,7 +73,7 @@ func startParse(nodes []JClassNode, relates []RefactorChangeRelate) {
 	}
 }
 
-func updateSelfRefs(node JClassNode, method JMethod) {
+func updateSelfRefs(node JClassNode, method JMethod, info *PackageClassInfo) {
 	path := node.Path
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -81,7 +84,9 @@ func updateSelfRefs(node JClassNode, method JMethod) {
 
 	for i, line := range lines {
 		if i == method.StartLine-1 {
-			fmt.Println(line[method.StartLinePosition:])
+			newLine := line[:method.StartLinePosition] + info.Method + line[method.StopLinePosition:]
+			fmt.Println(newLine)
+			lines[i] = newLine
 		}
 	}
 	output := strings.Join(lines, "\n")

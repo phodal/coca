@@ -1,2 +1,3 @@
 study.huhao.demo.infrastructure.persistence.blog.BlogPO.toDomainModel -> study.huhao.demo.infrastructure.persistence.blog.BlogPO.convertDomainModel
+study.huhao.demo.infrastructure.persistence.blog.BlogPO.of -> study.huhao.demo.infrastructure.persistence.blog.BlogPO.saveIt
 study.huhao.demo.domain.models.blog.BlogRepository.save -> study.huhao.demo.domain.models.blog.BlogRepository.saveIt

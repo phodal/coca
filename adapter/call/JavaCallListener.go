@@ -55,10 +55,10 @@ func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationCo
 
 func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
+	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
+	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 
@@ -83,10 +83,10 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
+	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
+	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)

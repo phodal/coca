@@ -1,6 +1,7 @@
 package identifier
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
@@ -33,7 +34,12 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		if interfaceIdent.Name != "" {
-			fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name, interfaceIdent.GetMethods())
+			//fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name, interfaceIdent.GetMethods())
+			methods, _ := json.Marshal(interfaceIdent.GetMethods())
+			fmt.Println(string(methods))
+
+			bytes, _ := json.Marshal(interfaceIdent)
+			fmt.Println(string(bytes))
 		}
 	}
 }

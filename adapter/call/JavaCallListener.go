@@ -59,9 +59,9 @@ func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationCo
 
 func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
@@ -87,9 +87,9 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
@@ -101,9 +101,9 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
 
 	fullType := warpTargetFullType(targetType);
 	if fullType != "" {

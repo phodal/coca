@@ -63,9 +63,9 @@ func (s *JavaRefactorListener) EnterCatchType(ctx *CatchTypeContext) {
 func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	//fmt.Println(ctx.TypeTypeOrVoid())
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JFullMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}

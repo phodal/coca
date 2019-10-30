@@ -22,9 +22,9 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *ClassDeclarationCont
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
@@ -33,9 +33,9 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *InterfaceM
 
 func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}

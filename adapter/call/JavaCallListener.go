@@ -2,7 +2,7 @@ package call
 
 import (
 	. "../../language/java"
-	. "./models"
+	. "../models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"

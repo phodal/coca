@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -17,10 +19,16 @@ var collCmd *cobra.Command = &cobra.Command{
 
 		if importPath != "" {
 			callApp := new(JavaCallApp)
-			callApp.AnalysisPath(importPath)
+			callNodes := callApp.AnalysisPath(importPath)
+
+			cModel, _ := json.Marshal(callNodes)
 
 			identifierApp := new(JavaIdentifierApp)
-			identifierApp.AnalysisPath(importPath)
+			identNodes := identifierApp.AnalysisPath(importPath)
+			iNodes, _ := json.Marshal(identNodes)
+
+			fmt.Println(string(cModel))
+			fmt.Println(string(iNodes))
 		}
 	},
 }

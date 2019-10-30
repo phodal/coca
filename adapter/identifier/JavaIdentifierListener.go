@@ -2,7 +2,7 @@ package identifier
 
 import (
 	. "../../language/java"
-	. "./models"
+	. "../models"
 )
 
 var node *JIdentifier;

@@ -1,7 +1,6 @@
 package call
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
@@ -9,15 +8,20 @@ import (
 	"strings"
 
 	. "../../language/java"
+	. "../models"
 )
+
+var nodeInfos []JClassNode
 
 type JavaCallApp struct {
 
 }
 
-func (j *JavaCallApp) AnalysisPath(codeDir string) {
+func (j *JavaCallApp) AnalysisPath(codeDir string) []JClassNode {
+	nodeInfos = nil
 	files := (*JavaCallApp)(nil).javaFiles(codeDir)
 	for index := range files {
+		nodeInfo := NewClassNode()
 		file := files[index]
 
 		displayName := filepath.Base(file)
@@ -30,10 +34,11 @@ func (j *JavaCallApp) AnalysisPath(codeDir string) {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		nodeInfo := listener.getNodeInfo()
-		bytes, _ := json.Marshal(nodeInfo)
-		fmt.Println(string(bytes))
+		nodeInfo = listener.getNodeInfo()
+		nodeInfos = append(nodeInfos, *nodeInfo)
 	}
+
+	return nodeInfos
 }
 
 func (j *JavaCallApp) javaFiles(codeDir string) []string {

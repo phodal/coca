@@ -1,7 +1,6 @@
 package identifier
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
@@ -9,23 +8,20 @@ import (
 	"strings"
 
 	. "../../language/java"
-	. "./models"
+	. "../models"
 )
 
-type JsonIdentifier struct {
-	Package string
-	Name    string
-	Type    string
-	Methods []JMethod
-}
+var nodeInfos []JsonIdentifier = nil
 
 type JavaIdentifierApp struct {
 }
 
-func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
+func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []JsonIdentifier {
+	nodeInfos = nil
 	files := (*JavaIdentifierApp)(nil).javaFiles(codeDir)
 	for index := range files {
 		file := files[index]
+		node := NewJsonIdentifier()
 
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
@@ -40,11 +36,13 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		if clzInfo.Name != "" {
-			identifier := &JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
-			bytes, _ := json.Marshal(identifier)
-			fmt.Println(string(bytes))
+			node = &JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
+			nodeInfos = append(nodeInfos, *node)
+
 		}
 	}
+
+	return nodeInfos
 }
 
 func (j *JavaIdentifierApp) javaFiles(codeDir string) []string {

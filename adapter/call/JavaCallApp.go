@@ -1,6 +1,7 @@
 package call
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
@@ -25,9 +26,13 @@ func (j *JavaCallApp) AnalysisPath(codeDir string) {
 		parser := (*JavaCallApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		listener := new(JavaCallListener)
+		listener := NewJavaCallListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
+
+		nodeInfo := listener.getNodeInfo()
+		bytes, _ := json.Marshal(nodeInfo)
+		fmt.Println(string(bytes))
 	}
 }
 

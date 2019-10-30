@@ -13,13 +13,28 @@ var currentPkg string
 var currentClz string
 var methodCalls []JMethodCall
 var currentMethodCall *JMethodCall
+var currentType string
 
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 
+var node *JClassNode;
+
+func NewJavaCallListener() *JavaCallListener {
+	currentClz = ""
+	currentPkg = ""
+	currentMethodCall = nil
+	methodCalls = nil
+	return &JavaCallListener{}
+}
+
 type JavaCallListener struct {
 	BaseJavaParserListener
+}
+
+func (s *JavaCallListener) getNodeInfo() *JClassNode {
+	return &JClassNode{currentPkg, currentClz,  currentType, methodCalls}
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
@@ -32,10 +47,12 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 }
 
 func (s *JavaCallListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
+	currentType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
 }
 
 func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
+	currentType = "Interface"
 	currentClz = ctx.IDENTIFIER().GetText()
 }
 

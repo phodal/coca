@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	rename := NewRemoveMethodApp("configs/move.coca", "examples/move-demo/src/")
+	rename := RenameMethodApp("configs/move.coca", "examples/move-demo/src/")
 	rename.Analysis()
 
 	app2 := NewRemoveUnusedImportApp("configs/move.coca", "examples/move-demo/src/")

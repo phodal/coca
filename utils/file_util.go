@@ -11,8 +11,12 @@ func WriteToFile(fileName string, payload string) {
 	_ = ioutil.WriteFile(fileName, []byte(payload), 0644)
 }
 
-func ReadFile(fileName string, payload string) []byte {
-	contents, _ := ioutil.ReadFile(fileName)
+func ReadFile(fileName string) []byte {
+	contents, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		_ = fmt.Errorf("Failed removing original file: %s", err)
+		return nil
+	}
 	return contents
 }
 

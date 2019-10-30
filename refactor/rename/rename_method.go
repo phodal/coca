@@ -1,55 +1,57 @@
 package unused
 
 import (
-	. "../base"
+	. "../../adapter/models"
+	. "../../utils"
+	. "../../utils/models"
 	. "../base/models"
-	. "../utils"
+	"encoding/json"
 	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"path/filepath"
 )
 
-var currentFile string
-var moveConfig string
-var configPath string
+var parsedChange []RefactorChangeRelate
+var nodes []JMoveStruct
 
 type RemoveMethodApp struct {
 }
 
-var nodes []JMoveStruct
+var depsFile string
+var configPath string
+var conf string
+var parsedDeps []JClassNode
 
-func NewRemoveMethodApp(config string, pPath string) *RemoveMethodApp {
-	moveConfig = config
-	configPath = pPath
-
+func RenameMethodApp(dep string, p string) *RemoveMethodApp {
 	nodes = nil
+	depsFile = dep
+	configPath = p
 	return &RemoveMethodApp{}
 }
 
-func (j *RemoveMethodApp) Analysis() {
-	files := GetJavaFiles(configPath)
-	for index := range files {
-		file := files[index]
-
-		currentFile, _ = filepath.Abs(file)
-		displayName := filepath.Base(file)
-		fmt.Println("Start parse java call: " + displayName)
-
-		parser := ProcessFile(file)
-		context := parser.CompilationUnit()
-
-		node := NewJFullIdentifier()
-		listener := new(JavaRefactorListener)
-		listener.InitNode(node)
-
-		antlr.NewParseTreeWalker().Walk(listener, context)
-
-		if node.Name != "" {
-			handleNode(node)
-		}
+func (j *RemoveMethodApp) Start() {
+	file := ReadFile(depsFile)
+	if file == nil {
+		return
 	}
+
+	_ = json.Unmarshal(file, &parsedDeps)
+
+	configBytes := ReadFile(configPath)
+	if configBytes == nil {
+		return
+	}
+
+	conf = string(configBytes)
+
+	parsedChange = ParseRelates(conf)
+
+	startParse(parsedDeps, parsedChange)
 }
 
-func handleNode(node *JFullIdentifier) {
+func startParse(nodes []JClassNode, relates []RefactorChangeRelate) {
+	for _, related := range relates {
+		oldInfo := BuildMethodPackageInfo(related.OldObj)
+		newInfo := BuildMethodPackageInfo(related.NewObj)
 
+		fmt.Print(oldInfo, newInfo)
+	}
 }

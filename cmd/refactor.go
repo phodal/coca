@@ -14,6 +14,7 @@ var refactorCmd *cobra.Command = &cobra.Command{
 		moveConfig := cmd.Flag("move").Value.String()
 		path := cmd.Flag("path").Value.String()
 		rename := cmd.Flag("rename").Value.String()
+		dependence := cmd.Flag("dependence").Value.String()
 
 		if moveConfig != "" && path != "" {
 			//app := NewMoveClassApp(moveConfig, path)
@@ -23,9 +24,9 @@ var refactorCmd *cobra.Command = &cobra.Command{
 			app2.Analysis()
 		}
 
-		if rename != "" && path != "" {
-			renameApp := NewRemoveMethodApp(moveConfig, path)
-			renameApp.Analysis()
+		if dependence != "" && rename != "" {
+			renameApp := RenameMethodApp(dependence, rename)
+			renameApp.Start()
 		}
 	},
 }
@@ -36,4 +37,5 @@ func init() {
 	refactorCmd.PersistentFlags().StringP("path", "p", "", "path")
 	refactorCmd.PersistentFlags().StringP("move", "m", "", "with config example -m config.file")
 	refactorCmd.PersistentFlags().StringP("rename", "R", "", "rename method -R config.file")
+	refactorCmd.PersistentFlags().StringP("dependence", "D", "", "get dependence D")
 }

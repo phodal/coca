@@ -35,6 +35,7 @@ func (j *JavaCallApp) AnalysisPath(codeDir string) []JClassNode {
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		nodeInfo = listener.getNodeInfo()
+		nodeInfo.Path = file
 		nodeInfos = append(nodeInfos, *nodeInfo)
 	}
 

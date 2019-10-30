@@ -31,7 +31,7 @@ type JavaCallListener struct {
 }
 
 func (s *JavaCallListener) getNodeInfo() *JClassNode {
-	return &JClassNode{currentPkg, currentClz, currentType, methods, methodCalls}
+	return &JClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {

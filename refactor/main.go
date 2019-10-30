@@ -1,14 +1,26 @@
 package main
 
 import (
-	. "./rename"
-	. "./unused"
+	. "../adapter/call"
+	. "../adapter/identifier"
+	"encoding/json"
+	"fmt"
 )
 
 func main() {
-	rename := RenameMethodApp("configs/move.coca", "examples/move-demo/src/")
-	rename.Analysis()
+	identifierApp := new(JavaIdentifierApp)
+	iNodes := identifierApp.AnalysisPath("examples/lambda/LambdaExample.java")
 
-	app2 := NewRemoveUnusedImportApp("configs/move.coca", "examples/move-demo/src/")
-	app2.Analysis()
+	var classes []string = nil
+
+	for _, node := range iNodes {
+		classes = append(classes, node.Package+"."+node.Name)
+	}
+
+	callApp := new(JavaCallApp)
+	callNodes := callApp.AnalysisPath("examples/lambda/LambdaExample.java", classes)
+
+	cModel, _ := json.MarshalIndent(callNodes, "", "\t")
+
+	fmt.Println(string(cModel))
 }

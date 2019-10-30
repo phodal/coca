@@ -94,7 +94,8 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
-	var targetType = parseTargetType(ctx)
+	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
+	var targetType = parseTargetType(targetCtx)
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
 	startLine := ctx.GetStart().GetLine()
@@ -111,6 +112,23 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	}
 }
 
+func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
+	if ctx.COLONCOLON() != nil {
+		text := ctx.Expression(0).GetText()
+		targetType := parseTargetType(text)
+		fullType := warpTargetFullType(targetType)
+
+
+		startLine := ctx.GetStart().GetLine()
+		startLinePosition := ctx.GetStart().GetColumn()
+		stopLine := ctx.GetStop().GetLine()
+		stopLinePosition := startLinePosition + len(text)
+
+		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, text, startLine, startLinePosition, stopLine, stopLinePosition}
+		methodCalls = append(methodCalls, *jMethodCall)
+	}
+}
+
 func (s *JavaCallListener) appendClasses(classes []string) {
 	clzs = classes
 }
@@ -120,10 +138,9 @@ func removeTarget(fullType string) string {
 	return strings.Join(split[:len(split)-1], ".")
 }
 
-func parseTargetType(ctx *MethodCallContext) string {
-	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree)
-	targetVar := targetCtx.GetText();
-	targetType := targetVar;
+func parseTargetType(targetCtx string) string {
+	targetVar := targetCtx
+	targetType := targetVar
 
 	//TODO: update this reflect
 	typeOf := reflect.TypeOf(targetCtx).String()

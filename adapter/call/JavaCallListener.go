@@ -99,7 +99,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetColumn()
+	stopLinePosition := startLinePosition + len(callee)
 
 	fullType := warpTargetFullType(targetType)
 	if fullType != "" {

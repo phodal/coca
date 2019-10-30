@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	//. "../refactor"
-	. "../refactor/unused"
 	. "../refactor/rename"
+	. "../refactor/unused"
 	"github.com/spf13/cobra"
 )
 

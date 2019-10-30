@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 
 	. "../adapter/call"
 	. "../adapter/identifier"
@@ -34,7 +33,5 @@ var collCmd *cobra.Command = &cobra.Command{
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p src/main")
-	viper.BindPFlag("path", rootCmd.PersistentFlags().Lookup("path"))
 }

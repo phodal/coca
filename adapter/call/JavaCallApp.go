@@ -17,7 +17,7 @@ type JavaCallApp struct {
 
 }
 
-func (j *JavaCallApp) AnalysisPath(codeDir string) []JClassNode {
+func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string) []JClassNode {
 	nodeInfos = nil
 	files := (*JavaCallApp)(nil).javaFiles(codeDir)
 	for index := range files {
@@ -31,6 +31,7 @@ func (j *JavaCallApp) AnalysisPath(codeDir string) []JClassNode {
 		context := parser.CompilationUnit()
 
 		listener := NewJavaCallListener()
+		listener.appendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

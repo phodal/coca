@@ -6,7 +6,6 @@ import (
 	. "../../utils/models"
 	. "../base/models"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -66,9 +65,7 @@ func startParse(nodes []JClassNode, relates []RefactorChangeRelate) {
 			}
 
 			for _, methodCall := range pkgNode.MethodCalls {
-				fmt.Println(methodCall.Package+methodCall.Class, oldInfo.Package+oldInfo.Class)
-
-				if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
+				if methodCall.Package+methodCall.Class == oldInfo.Package+oldInfo.Class {
 					if methodCall.MethodName == oldInfo.Method {
 						updateSelfRefs(pkgNode, *methodCallToMethodModel(methodCall), newInfo)
 					}

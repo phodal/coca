@@ -9,6 +9,7 @@ import (
 )
 
 var imports []string
+var clzs []string
 var currentPkg string
 var currentClz string
 var methods []JMethod
@@ -93,7 +94,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
-	var targetType = parseTargetType(ctx);
+	var targetType = parseTargetType(ctx)
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
 	startLine := ctx.GetStart().GetLine()
@@ -108,6 +109,10 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	} else {
 
 	}
+}
+
+func (s *JavaCallListener) appendClasses(classes []string) {
+	clzs = classes
 }
 
 func removeTarget(fullType string) string {
@@ -142,8 +147,9 @@ func parseTargetType(ctx *MethodCallContext) string {
 
 func warpTargetFullType(targetType string) string {
 	if strings.EqualFold(currentClz, targetType) {
-		return currentPkg + "." + targetType;
+		return currentPkg + "." + targetType
 	}
+
 	for index := range imports {
 		imp := imports[index]
 		if strings.HasSuffix(imp, targetType) {
@@ -151,5 +157,13 @@ func warpTargetFullType(targetType string) string {
 		}
 	}
 
+	//maybe the same package
+	for _, clz := range clzs {
+		if strings.HasSuffix(clz, "." + targetType) {
+			return clz
+		}
+	}
+
+	//1. current package, 2. import by *
 	return ""
 }

@@ -2,11 +2,10 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/spf13/cobra"
 
 	. "../adapter/call"
-	. "../adapter/identifier"
+	. "../utils"
 )
 
 var collCmd *cobra.Command = &cobra.Command{
@@ -20,14 +19,9 @@ var collCmd *cobra.Command = &cobra.Command{
 			callApp := new(JavaCallApp)
 			callNodes := callApp.AnalysisPath(importPath)
 
-			cModel, _ := json.Marshal(callNodes)
+			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
 
-			identifierApp := new(JavaIdentifierApp)
-			identNodes := identifierApp.AnalysisPath(importPath)
-			iNodes, _ := json.Marshal(identNodes)
-
-			fmt.Println(string(cModel))
-			fmt.Println(string(iNodes))
+			WriteToFile("deps.json", string(cModel))
 		}
 	},
 }

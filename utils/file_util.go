@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func WriteFile(fileName string, payload string) {
+func WriteToFile(fileName string, payload string) {
 	_ = ioutil.WriteFile(fileName, []byte(payload), 0644)
 }
 

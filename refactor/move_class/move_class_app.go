@@ -1,19 +1,18 @@
-package refactor
+package move_class
 
 import (
 	"bufio"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 
-	. "./base"
-	. "./base/models"
-	. "./utils"
+	. "../base"
+	. "../base/models"
+	. "../utils"
 )
 
 var currentFile string
@@ -141,7 +140,7 @@ func copyClass(originFile string, newFile string) {
 	newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
 
 	fmt.Println(originFile, newFile)
-	_, err := copy(originFile, newFile)
+	_, err := CopyFile(originFile, newFile)
 	if err != nil {
 		panic(err)
 	}
@@ -149,53 +148,4 @@ func copyClass(originFile string, newFile string) {
 
 func buildJavaPath(originFile string) string {
 	return strings.ReplaceAll(originFile, ".", "/") + ".java"
-}
-
-func copy(src, dst string) (int64, error) {
-	sourceFileStat, err := os.Stat(src)
-	if err != nil {
-		return 0, err
-	}
-
-	if !sourceFileStat.Mode().IsRegular() {
-		return 0, fmt.Errorf("%s is not a regular file", src)
-	}
-
-	source, err := os.Open(src)
-	if err != nil {
-		return 0, err
-	}
-	defer source.Close()
-
-	destination, err := os.Create(dst)
-	if err != nil {
-		return 0, err
-	}
-	defer destination.Close()
-	nBytes, err := io.Copy(destination, source)
-	return nBytes, err
-}
-
-func MoveFile(sourcePath, destPath string) error {
-	inputFile, err := os.Open(sourcePath)
-	if err != nil {
-		return fmt.Errorf("Couldn't open source file: %s", err)
-	}
-	outputFile, err := os.Create(destPath)
-	if err != nil {
-		inputFile.Close()
-		return fmt.Errorf("Couldn't open dest file: %s", err)
-	}
-	defer outputFile.Close()
-	_, err = io.Copy(outputFile, inputFile)
-	inputFile.Close()
-	if err != nil {
-		return fmt.Errorf("Writing to output file failed: %s", err)
-	}
-	// The copy was successful, so now delete the original file
-	err = os.Remove(sourcePath)
-	if err != nil {
-		return fmt.Errorf("Failed removing original file: %s", err)
-	}
-	return nil
 }

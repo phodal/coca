@@ -100,7 +100,3 @@ func updateSelfRefs(node JClassNode, method JMethod, info *PackageClassInfo) {
 		log.Fatalln(err)
 	}
 }
-
-func updateDepsRefs(node JClassNode, info *PackageClassInfo, info2 *PackageClassInfo) {
-
-}

@@ -20,7 +20,7 @@ func parseRelated(str string) *RefactorChangeRelate {
 
 func ParseRelates(str string) []RefactorChangeRelate {
 	relates = nil
-	lines := strings.Split(string(str), "\n")
+	lines := strings.Split(str, "\n")
 	for _, line := range lines {
 		related := parseRelated(line)
 		relates = append(relates, *related)

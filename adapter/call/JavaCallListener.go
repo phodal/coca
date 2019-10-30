@@ -101,13 +101,18 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
 
-	fullType := warpTargetFullType(targetType);
+	fullType := warpTargetFullType(targetType)
 	if fullType != "" {
-		jMethodCall := &JMethodCall{fullType, targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 
 	}
+}
+
+func removeTarget(fullType string) string {
+	split := strings.Split(fullType, ".")
+	return strings.Join(split[:len(split)-1], ".")
 }
 
 func parseTargetType(ctx *MethodCallContext) string {

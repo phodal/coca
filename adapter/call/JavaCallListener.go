@@ -115,6 +115,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
 	if ctx.COLONCOLON() != nil {
 		text := ctx.Expression(0).GetText()
+		methodName := ctx.IDENTIFIER().GetText()
 		targetType := parseTargetType(text)
 		fullType := warpTargetFullType(targetType)
 
@@ -124,7 +125,7 @@ func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, text, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

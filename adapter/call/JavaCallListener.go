@@ -3,6 +3,7 @@ package call
 import (
 	. "../../language/java"
 	. "../models"
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
@@ -61,6 +62,9 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	name := ctx.IDENTIFIER().GetText()
 	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
+
+	fmt.Println(ctx.TypeTypeOrVoid())
+
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 
 	methods = append(methods, *method)
@@ -89,6 +93,10 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	name := ctx.IDENTIFIER().GetText()
 	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
+
+	typeType := ctx.TypeTypeOrVoid().GetText()
+	fmt.Println(typeType)
+
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)
 }

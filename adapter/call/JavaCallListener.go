@@ -13,19 +13,15 @@ var currentPkg string
 var currentClz string
 var methods []JMethod
 var methodCalls []JMethodCall
-var currentMethodCall *JMethodCall
 var currentType string
 
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 
-var node *JClassNode;
-
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
-	currentMethodCall = nil
 	methods = nil
 	return &JavaCallListener{}
 }
@@ -107,7 +103,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 
 	fullType := warpTargetFullType(targetType);
 	if fullType != "" {
-		jMethodCall := &JMethodCall{targetType, "", callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JMethodCall{fullType, targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 

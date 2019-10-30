@@ -12,8 +12,14 @@ import (
 	. "./models"
 )
 
-type JavaIdentifierApp struct {
+type JsonIdentifier struct {
+	Package string
+	Name    string
+	Type    string
+	Methods []JMethod
+}
 
+type JavaIdentifierApp struct {
 }
 
 func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
@@ -27,18 +33,15 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) {
 		parser := (*JavaIdentifierApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		interfaceIdent := NewJIdentifier()
+		clzInfo := NewJIdentifier()
 		listener := new(JavaIdentifierListener)
-		listener.InitNode(interfaceIdent)
+		listener.InitNode(clzInfo)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		if interfaceIdent.Name != "" {
-			//fmt.Println(interfaceIdent.Type, interfaceIdent.Pkg, interfaceIdent.Name, interfaceIdent.GetMethods())
-			methods, _ := json.Marshal(interfaceIdent.GetMethods())
-			fmt.Println(string(methods))
-
-			bytes, _ := json.Marshal(interfaceIdent)
+		if clzInfo.Name != "" {
+			identifier := &JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
+			bytes, _ := json.Marshal(identifier)
 			fmt.Println(string(bytes))
 		}
 	}

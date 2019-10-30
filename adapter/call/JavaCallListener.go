@@ -11,6 +11,7 @@ import (
 var imports []string
 var currentPkg string
 var currentClz string
+var methods []JMethod
 var methodCalls []JMethodCall
 var currentMethodCall *JMethodCall
 var currentType string
@@ -25,7 +26,7 @@ func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	currentMethodCall = nil
-	methodCalls = nil
+	methods = nil
 	return &JavaCallListener{}
 }
 
@@ -34,7 +35,7 @@ type JavaCallListener struct {
 }
 
 func (s *JavaCallListener) getNodeInfo() *JClassNode {
-	return &JClassNode{currentPkg, currentClz,  currentType, methodCalls}
+	return &JClassNode{currentPkg, currentClz, currentType, methods, methodCalls}
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
@@ -57,9 +58,15 @@ func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationCo
 }
 
 func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
-	methodName := ctx.IDENTIFIER().GetText()
-	currentMethodCall = &JMethodCall{currentPkg, currentClz, methodName}
-	methodCalls = append(methodCalls, *currentMethodCall)
+	startLine := ctx.GetStart().GetLine()
+	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	stopLine := ctx.GetStop().GetLine()
+	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	name := ctx.IDENTIFIER().GetText()
+	//XXX: find the start position of {, not public
+	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
+
+	methods = append(methods, *method)
 }
 
 func (s *JavaCallListener) EnterFormalParameter(ctx *FormalParameterContext) {
@@ -79,23 +86,30 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 }
 
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
-	methodName := ctx.IDENTIFIER().GetText()
-	currentMethodCall = &JMethodCall{currentPkg, currentClz, methodName}
-	methodCalls = append(methodCalls, *currentMethodCall)
+	startLine := ctx.GetStart().GetLine()
+	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	stopLine := ctx.GetStop().GetLine()
+	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
+	name := ctx.IDENTIFIER().GetText()
+	//XXX: find the start position of {, not public
+	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
+	methods = append(methods, *method)
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
-	if currentMethodCall != nil {
-		var targetType = parseTargetType(ctx);
-		callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
+	var targetType = parseTargetType(ctx);
+	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
-		fullType := warpTargetFullType(targetType);
+	startLine := ctx.GetStart().GetLine()
+	startLinePosition := ctx.GetStart().GetTokenSource().GetCharPositionInLine()
+	stopLine := ctx.GetStop().GetLine()
+	stopLinePosition := ctx.GetStop().GetTokenSource().GetCharPositionInLine()
 
-		if fullType != "" {
-			currentMethodCall.AddMethodCall(fullType, callee);
-		} else {
-
-		}
+	fullType := warpTargetFullType(targetType);
+	if fullType != "" {
+		jMethodCall := &JMethodCall{targetType, "", callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		methodCalls = append(methodCalls, *jMethodCall)
+	} else {
 
 	}
 }

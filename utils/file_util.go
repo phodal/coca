@@ -3,8 +3,18 @@ package utils
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 )
+
+func WriteFile(fileName string, payload string) {
+	_ = ioutil.WriteFile(fileName, []byte(payload), 0644)
+}
+
+func ReadFile(fileName string, payload string) []byte {
+	contents, _ := ioutil.ReadFile(fileName)
+	return contents
+}
 
 func CopyFile(src, dst string) (int64, error) {
 	sourceFileStat, err := os.Stat(src)

@@ -4,6 +4,7 @@ type JClassNode struct {
 	Package     string
 	Class       string
 	Type        string
+	Methods     []JMethod
 	MethodCalls []JMethodCall
 }
 
@@ -15,7 +16,7 @@ type JsonIdentifier struct {
 }
 
 func NewClassNode() *JClassNode {
-	return &JClassNode{"", "", "", nil}
+	return &JClassNode{"", "", "", nil, nil}
 }
 
 func NewJsonIdentifier() *JsonIdentifier {

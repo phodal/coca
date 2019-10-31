@@ -24,6 +24,7 @@ func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	methods = nil
+	methodCalls = nil
 	return &JavaCallListener{}
 }
 
@@ -116,7 +117,6 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
-			// current class
 			methodName := ctx.IDENTIFIER().GetText()
 			jMethodCall := &JMethodCall{currentPkg, currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)

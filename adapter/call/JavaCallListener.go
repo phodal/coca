@@ -61,11 +61,10 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	stopLine := ctx.GetStop().GetLine()
 	name := ctx.IDENTIFIER().GetText()
 	stopLinePosition := startLinePosition + len(name)
-	//XXX: find the start position of {, not public
 
-	//fmt.Println(ctx.TypeTypeOrVoid())
+	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
 
 	methods = append(methods, *method)
 }
@@ -94,10 +93,9 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
 
-	//typeType := ctx.TypeTypeOrVoid().GetText()
-	//fmt.Println(typeType)
+	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)
 }
 
@@ -111,20 +109,23 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := startLinePosition + len(callee)
 
+	//typeType := ctx.GetChild(0).(antlr.ParseTree).TypeTypeOrVoid().GetText()
+
 	fullType := warpTargetFullType(targetType)
 	if fullType != "" {
-		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JMethodCall{currentPkg, currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &JMethodCall{currentPkg, "",currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
 }
 
 func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
+	// lambda BlogPO::of
 	if ctx.COLONCOLON() != nil {
 		text := ctx.Expression(0).GetText()
 		methodName := ctx.IDENTIFIER().GetText()
@@ -137,7 +138,7 @@ func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

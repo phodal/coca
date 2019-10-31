@@ -1,0 +1,176 @@
+{
+  "duplicatedCode": {
+    "en": "Duplicated Code",
+    "zh": "重复代码",
+    "suggestions": [
+      {
+        "name": "形成 Template Method"
+      },
+      {
+        "name": "用 Factory Method 引入多态创建"
+      },
+      {
+        "name": "链构建函数"
+      },
+      {
+        "name": "用 Composite 替换一/多之分"
+      },
+      {
+        "name": "提取 Composite"
+      },
+      {
+        "name": "通过 Adapter 统一接口"
+      },
+      {
+        "name": "引入 Null Object"
+      }
+    ]
+  },
+  "longMethod": {
+    "en": "过长函数",
+    "zh": "Long Method",
+    "suggestions": [
+      {
+        "name": "组合方法"
+      },
+      {
+        "name": "将聚集操作搬移到 Collection Parameter"
+      },
+      {
+        "name": "用 Command 替换条件调度程序"
+      },
+      {
+        "name": "将聚集操作搬移到 Visitor"
+      },
+      {
+        "name": "用 Strategy 替换条件逻辑"
+      }
+    ]
+  },
+  "conditionalComplexity": {
+    "en": "Conditional Complexity",
+    "zh": "条件逻辑太复杂",
+    "suggestions": [
+      {
+        "name": "用 Strategy 替换条件逻辑"
+      },
+      {
+        "name": "将装饰功能搬移到 Decorator"
+      },
+      {
+        "name": "用 State 替换状态改变条件语句"
+      },
+      {
+        "name": "引入 Null Object"
+      }
+    ]
+  },
+  "primitiveObsession": {
+    "en": "Primitive Obsession",
+    "zh": "基本类型偏执",
+    "suggestions": [
+      {
+        "name": "用类替换类型代码"
+      },
+      {
+        "name": "用 State 替换状态改变条件语句"
+      },
+      {
+        "name": "用 Strategy 替换条件逻辑"
+      },
+      {
+        "name": "用 Composite 替换隐含树"
+      },
+      {
+        "name": "用 Interpreter 替换隐式语言"
+      },
+      {
+        "name": "将装饰功能搬移到 Decorator"
+      },
+      {
+        "name": "用 Builder 封装 Composite"
+      }
+    ]
+  },
+  "indecentExposure": {
+    "en": "Indecent Exposure",
+    "zh": "不恰当的暴露",
+    "suggestions": [
+      {
+        "name": "用 Factory 封装类"
+      }
+    ]
+  },
+  "solutionSprawl": {
+    "en": "Solution Sprawl",
+    "zh": "解决方案蔓延",
+    "suggestions": [
+      {
+        "name": "将创建知识搬移到 Factory"
+      }
+    ]
+  },
+  "alternativeClasses": {
+    "en": "Alternative Classes with Different Interfaces",
+    "zh": "异曲同工的类",
+    "suggestions": [
+      {
+        "name": "用 Adapter 统一接口"
+      }
+    ]
+  },
+  "lazyClass": {
+    "en": "Lazy Class",
+    "zh": "冗赘类",
+    "suggestions": [
+      {
+        "name": "内联 Singleton"
+      }
+    ]
+  },
+  "largeClass": {
+    "en": "Large Class",
+    "zh": "过大的类",
+    "suggestions": [
+      {
+        "name": "用 Command 替换条件调度程序"
+      },
+      {
+        "name": "用 State 替换状态改变条件语句"
+      },
+      {
+        "name": "用 Interpreter 替换隐式语言"
+      }
+    ]
+  },
+  "switchStatement": {
+    "en": "Switch Statement",
+    "zh": "分支语句",
+    "suggestions": [
+      {
+        "name": "用 Command 替换条件调度程序"
+      },
+      {
+        "name": "将聚集操作搬移到 Visitor"
+      }
+    ]
+  },
+  "combinatorialExplosion": {
+    "en": "Combinatorial Explosion",
+    "zh": "组合爆炸",
+    "suggestions": [
+      {
+        "name": "用 Interpreter 替换隐式语言"
+      }
+    ]
+  },
+  "oddballSolution": {
+    "en": "Combinatorial Explosion",
+    "zh": "组合爆炸",
+    "suggestions": [
+      {
+        "name": "通过 Adapter 统一接口"
+      }
+    ]
+  }
+}

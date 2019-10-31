@@ -3,7 +3,6 @@ package call
 import (
 	. "../../language/java"
 	. "../models"
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
@@ -63,7 +62,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
 
-	fmt.Println(ctx.TypeTypeOrVoid())
+	//fmt.Println(ctx.TypeTypeOrVoid())
 
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 
@@ -94,8 +93,8 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	stopLinePosition := startLinePosition + len(name)
 	//XXX: find the start position of {, not public
 
-	typeType := ctx.TypeTypeOrVoid().GetText()
-	fmt.Println(typeType)
+	//typeType := ctx.TypeTypeOrVoid().GetText()
+	//fmt.Println(typeType)
 
 	method := &JMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)
@@ -116,7 +115,12 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 		jMethodCall := &JMethodCall{removeTarget(fullType), targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
-
+		if ctx.GetText() == targetType {
+			// current class
+			methodName := ctx.IDENTIFIER().GetText()
+			jMethodCall := &JMethodCall{currentPkg, currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			methodCalls = append(methodCalls, *jMethodCall)
+		}
 	}
 }
 

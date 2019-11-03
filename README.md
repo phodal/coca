@@ -1,14 +1,35 @@
 # Coca
 
+## Usage
+
+install 
+
+```
+go get https://github.com/phodal/coca
+```
+
+Analysis
+
+```
+coca analysis -p [PATH]
+```
+
+Refactor
+
+```
+coca refactor -R rename.coca -D deps.json -p src/main
+coca refactor -m move.config -p .
+```
+
 ## Dev
 
-### 安装 Go
+Install Go
 
 ```bash
 brew install go
 ```
 
-配置环境 
+Env
 
 ```bash
 export GOROOT=/usr/local/opt/go/libexec
@@ -16,15 +37,13 @@ export GOPATH=$HOME/.go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 ```
 
-#### 安装 Go 依赖管理工具：godep
+clone
 
 ```
-brew install dep
+go get https://github.com/phodal/coca
 ```
 
-TBD.
-
-### Test
+Test Frameworks
 
 ```
 go get github.com/onsi/ginkgo

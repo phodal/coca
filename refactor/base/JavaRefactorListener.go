@@ -1,8 +1,8 @@
 package base
 
 import (
-	. "../../language/java"
-	. "./models"
+	. "github.com/phodal/coca/language/java"
+	. "github.com/phodal/coca/refactor/base/models"
 	"strings"
 	"unicode"
 )
@@ -139,7 +139,6 @@ func (s *JavaRefactorListener) EnterExpressionList(ctx *ExpressionListContext) {
 		}
 	}
 }
-
 
 func (s *JavaRefactorListener) EnterStatement(ctx *StatementContext) {
 	for _, expression := range ctx.AllExpression() {

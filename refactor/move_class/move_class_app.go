@@ -10,10 +10,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "../../utils"
-	. "../base"
-	. "../base/models"
-	. "../utils"
+	. "github.com/phodal/coca/refactor/base"
+	. "github.com/phodal/coca/refactor/base/models"
+	. "github.com/phodal/coca/refactor/utils"
+	. "github.com/phodal/coca/utils"
 )
 
 var currentFile string

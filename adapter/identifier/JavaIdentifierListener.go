@@ -1,8 +1,8 @@
 package identifier
 
 import (
-	. "../../language/java"
-	. "../models"
+	. "github.com/phodal/coca/adapter/models"
+	. "github.com/phodal/coca/language/java"
 )
 
 var node *JIdentifier;

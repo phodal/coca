@@ -1,9 +1,9 @@
 package call
 
 import (
-	. "../../language/java"
-	. "../models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	. "github.com/phodal/coca/adapter/models"
+	. "github.com/phodal/coca/language/java"
 	"reflect"
 	"strings"
 )

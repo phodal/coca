@@ -1,10 +1,10 @@
 package main
 
 import (
-	. "../adapter/call"
-	. "../adapter/identifier"
 	"encoding/json"
 	"fmt"
+	. "github.com/phodal/coca/adapter/call"
+	. "github.com/phodal/coca/adapter/identifier"
 )
 
 func main() {

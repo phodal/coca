@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	. "../refactor/rename"
-	. "../refactor/unused"
+	. "github.com/phodal/coca/refactor/move_class"
+	. "github.com/phodal/coca/refactor/rename"
+	. "github.com/phodal/coca/refactor/unused"
 	"github.com/spf13/cobra"
 )
 
@@ -17,8 +18,8 @@ var refactorCmd *cobra.Command = &cobra.Command{
 		dependence := cmd.Flag("dependence").Value.String()
 
 		if moveConfig != "" && path != "" {
-			//app := NewMoveClassApp(moveConfig, path)
-			//app.Analysis()
+			app := NewMoveClassApp(moveConfig, path)
+			app.Analysis()
 
 			app2 := NewRemoveUnusedImportApp(moveConfig, path)
 			app2.Analysis()

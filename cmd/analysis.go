@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 
-	. "../adapter/call"
-	. "../adapter/identifier"
-	. "../utils"
+	. "github.com/phodal/coca/adapter/call"
+	. "github.com/phodal/coca/adapter/identifier"
+	. "github.com/phodal/coca/utils"
 )
 
 var collCmd *cobra.Command = &cobra.Command{

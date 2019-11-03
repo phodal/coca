@@ -1,7 +1,7 @@
 package utils
 
 import (
-	. "./models"
+	. "github.com/phodal/coca/utils/models"
 	"strings"
 )
 

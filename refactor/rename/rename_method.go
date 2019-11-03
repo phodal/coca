@@ -1,11 +1,11 @@
 package unused
 
 import (
-	. "../../adapter/models"
-	. "../../utils"
-	. "../../utils/models"
-	. "../base/models"
 	"encoding/json"
+	. "github.com/phodal/coca/adapter/models"
+	. "github.com/phodal/coca/refactor/base/models"
+	. "github.com/phodal/coca/utils"
+	. "github.com/phodal/coca/utils/models"
 	"io/ioutil"
 	"log"
 	"strings"

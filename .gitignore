@@ -51,4 +51,5 @@ language/g4/*.go
 language/g4/*.interp
 coca
 deps.json
+vendor/
 web/

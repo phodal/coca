@@ -34,6 +34,7 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 }
 
 func (j *MoveClassApp) Analysis() {
+	// TODO: 使用 Deps.json 来移动包
 	files := GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
@@ -138,6 +139,7 @@ func updateFile(path string, lineNum int, newImp string) {
 
 func copyClass(originFile string, newFile string) {
 	originFile = buildJavaPath(originFile)
+	// TODO: 适配 Windows
 	newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
 
 	fmt.Println(originFile, newFile)
@@ -148,5 +150,6 @@ func copyClass(originFile string, newFile string) {
 }
 
 func buildJavaPath(originFile string) string {
+	// TODO: 适配 Windows
 	return strings.ReplaceAll(originFile, ".", "/") + ".java"
 }

@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	. "github.com/phodal/coca/refactor/base"
@@ -36,6 +37,7 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 func (j *MoveClassApp) Analysis() {
 	// TODO: 使用 Deps.json 来移动包
 	files := GetJavaFiles(configPath)
+	fmt.Println(files)
 	for index := range files {
 		file := files[index]
 
@@ -140,7 +142,11 @@ func updateFile(path string, lineNum int, newImp string) {
 func copyClass(originFile string, newFile string) {
 	originFile = buildJavaPath(originFile)
 	// TODO: 适配 Windows
-	newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
+	if runtime.GOOS == "windows" {
+		newFile = strings.ReplaceAll(newFile, ".", "\\") + ".java"
+	} else {
+		newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
+	}
 
 	fmt.Println(originFile, newFile)
 	_, err := CopyFile(originFile, newFile)
@@ -151,5 +157,12 @@ func copyClass(originFile string, newFile string) {
 
 func buildJavaPath(originFile string) string {
 	// TODO: 适配 Windows
-	return strings.ReplaceAll(originFile, ".", "/") + ".java"
+
+	str := ""
+	if runtime.GOOS == "windows" {
+		str = strings.ReplaceAll(originFile, ".", "\\") + ".java"
+	} else {
+		str = strings.ReplaceAll(originFile, ".", "/") + ".java"
+	}
+	return str
 }

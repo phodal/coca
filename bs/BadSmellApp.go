@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	. "github.com/phodal/coca/adapter/models"
+	. "github.com/phodal/coca/bs/models"
 	. "github.com/phodal/coca/language/java"
 )
 
-var nodeInfos []JClassNode
+var nodeInfos []JFullClassNode
 
 type BadSmellModel struct {
 	File string
@@ -27,7 +27,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) []BadSmellModel {
 	nodeInfos = nil
 	files := (*BadSmellApp)(nil).javaFiles(codeDir)
 	for index := range files {
-		nodeInfo := NewClassNode()
+		nodeInfo := NewJFullClassNode()
 		file := files[index]
 
 		displayName := filepath.Base(file)
@@ -50,7 +50,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) []BadSmellModel {
 	return bsList
 }
 
-func analysisBadSmell(nodes []JClassNode) []BadSmellModel {
+func analysisBadSmell(nodes []JFullClassNode) []BadSmellModel {
 	var badSmellList []BadSmellModel
 	for _, node := range nodes {
 		// To be Defined number

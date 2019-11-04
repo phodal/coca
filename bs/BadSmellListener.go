@@ -2,7 +2,7 @@ package call
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "github.com/phodal/coca/adapter/models"
+	. "github.com/phodal/coca/bs/models"
 	. "github.com/phodal/coca/language/java"
 	"reflect"
 	"strings"
@@ -12,8 +12,8 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
-var methods []JMethod
-var methodCalls []JMethodCall
+var methods []JFullMethod
+var methodCalls []JFullMethodCall
 var currentType string
 
 var fields = make(map[string]string)
@@ -32,8 +32,8 @@ type BadSmellListener struct {
 	BaseJavaParserListener
 }
 
-func (s *BadSmellListener) getNodeInfo() *JClassNode {
-	return &JClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
+func (s *BadSmellListener) getNodeInfo() *JFullClassNode {
+	return &JFullClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
 }
 
 func (s *BadSmellListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
@@ -64,7 +64,15 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JFullMethod{
+		name,
+		typeType,
+		startLine,
+		startLinePosition,
+		stopLine,
+		stopLinePosition,
+		nil,
+	}
 
 	methods = append(methods, *method)
 }
@@ -95,7 +103,15 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JFullMethod{
+		name,
+		typeType,
+		startLine,
+		startLinePosition,
+		stopLine,
+		stopLinePosition,
+		nil,
+	}
 	methods = append(methods, *method)
 }
 
@@ -113,12 +129,12 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 
 	fullType := warpTargetFullType(targetType)
 	if fullType != "" {
-		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JFullMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JMethodCall{currentPkg, "",currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &JFullMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
@@ -132,13 +148,12 @@ func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 		targetType := parseTargetType(text)
 		fullType := warpTargetFullType(targetType)
 
-
 		startLine := ctx.GetStart().GetLine()
 		startLinePosition := ctx.GetStart().GetColumn()
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &JFullMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }
@@ -190,7 +205,7 @@ func warpTargetFullType(targetType string) string {
 
 	//maybe the same package
 	for _, clz := range clzs {
-		if strings.HasSuffix(clz, "." + targetType) {
+		if strings.HasSuffix(clz, "."+targetType) {
 			return clz
 		}
 	}

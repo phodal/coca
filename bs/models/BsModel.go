@@ -27,6 +27,7 @@ type JFullMethod struct {
 	StartLinePosition int
 	StopLine          int
 	StopLinePosition  int
+	MethodBody        string
 	Parameters        []JFullParameter
 }
 
@@ -36,5 +37,5 @@ type JFullParameter struct {
 }
 
 func NewJFullClassNode() *JFullClassNode {
-	return &JFullClassNode{"", "", "",  "", nil, nil}
+	return &JFullClassNode{"", "", "", "", nil, nil}
 }

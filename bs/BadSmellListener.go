@@ -61,8 +61,14 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	stopLine := ctx.GetStop().GetLine()
 	name := ctx.IDENTIFIER().GetText()
 	stopLinePosition := startLinePosition + len(name)
+	methodBody := ctx.MethodBody().GetText()
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
+	var params []JFullParameter = nil
+	parameters := ctx.FormalParameters()
+	if parameters != nil {
+
+	}
 
 	method := &JFullMethod{
 		name,
@@ -71,7 +77,8 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		startLinePosition,
 		stopLine,
 		stopLinePosition,
-		nil,
+		methodBody,
+		params,
 	}
 
 	methods = append(methods, *method)
@@ -102,6 +109,12 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	//XXX: find the start position of {, not public
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
+	methodBody := ctx.MethodBody().GetText()
+
+	parameters := ctx.FormalParameters()
+	if parameters != nil {
+
+	}
 
 	method := &JFullMethod{
 		name,
@@ -110,6 +123,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		startLinePosition,
 		stopLine,
 		stopLinePosition,
+		methodBody,
 		nil,
 	}
 	methods = append(methods, *method)

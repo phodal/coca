@@ -53,9 +53,13 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) []BadSmellModel {
 func analysisBadSmell(nodes []JClassNode) []BadSmellModel {
 	var badSmellList []BadSmellModel
 	for _, node := range nodes {
-		// To be Defined
+		// To be Defined number
 		if node.Type == "Class" && len(node.Methods) < 1 {
 			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "lazyElement"})
+		}
+
+		if node.Type == "Class" && len(node.Methods) > 30 {
+			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass"})
 		}
 
 		// Long Method

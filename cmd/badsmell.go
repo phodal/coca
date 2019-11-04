@@ -21,7 +21,7 @@ var badsmellCmd *cobra.Command = &cobra.Command{
 
 			bsModel, _ := json.MarshalIndent(bsList, "", "\t")
 
-			WriteToFile("deps.json", string(bsModel))
+			WriteToFile("bs.json", string(bsModel))
 		}
 	},
 }

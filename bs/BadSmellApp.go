@@ -5,6 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	. "github.com/phodal/coca/adapter/models"
@@ -53,15 +54,14 @@ func analysisBadSmell(nodes []JClassNode) []BadSmellModel {
 	var badSmellList []BadSmellModel
 	for _, node := range nodes {
 		for _, method := range node.Methods {
-			if method.StartLine - method.StopLine > 50 {
-				longMethod := &BadSmellModel{node.Path, string(method.StartLine), "longMethod"}
+			if method.StopLine - method.StartLine > 50 {
+				longMethod := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longMethod"}
 				badSmellList = append(badSmellList, *longMethod)
 			}
 		}
 	}
 
-	return badSmellList;
-	return nil
+	return badSmellList
 }
 
 func (j *BadSmellApp) javaFiles(codeDir string) []string {

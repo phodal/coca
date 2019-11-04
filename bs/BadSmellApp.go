@@ -13,6 +13,7 @@ import (
 )
 
 var nodeInfos []JClassNode
+
 type BadSmellModel struct {
 	File string
 	Line string
@@ -20,7 +21,6 @@ type BadSmellModel struct {
 }
 
 type BadSmellApp struct {
-
 }
 
 func (j *BadSmellApp) AnalysisPath(codeDir string) []BadSmellModel {
@@ -53,8 +53,14 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) []BadSmellModel {
 func analysisBadSmell(nodes []JClassNode) []BadSmellModel {
 	var badSmellList []BadSmellModel
 	for _, node := range nodes {
+		// To be Defined
+		if node.Type == "Class" && len(node.Methods) < 1 {
+			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "lazyElement"})
+		}
+
+		// Long Method
 		for _, method := range node.Methods {
-			if method.StopLine - method.StartLine > 50 {
+			if method.StopLine-method.StartLine > 50 {
 				longMethod := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longMethod"}
 				badSmellList = append(badSmellList, *longMethod)
 			}

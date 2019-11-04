@@ -54,3 +54,4 @@ deps.json
 vendor/
 web/
 bs.json
+nodeInfos.json

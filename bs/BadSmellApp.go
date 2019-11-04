@@ -1,6 +1,7 @@
 package call
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
@@ -10,6 +11,7 @@ import (
 
 	. "github.com/phodal/coca/bs/models"
 	. "github.com/phodal/coca/language/java"
+	. "github.com/phodal/coca/utils"
 )
 
 var nodeInfos []JFullClassNode
@@ -44,6 +46,9 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) []BadSmellModel {
 		nodeInfo.Path = file
 		nodeInfos = append(nodeInfos, *nodeInfo)
 	}
+
+	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
+	WriteToFile("nodeInfos.json", string(bsModel))
 
 	bsList := analysisBadSmell(nodeInfos)
 

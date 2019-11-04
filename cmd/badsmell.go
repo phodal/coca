@@ -1,20 +1,27 @@
 package cmd
 
 import (
-	. "github.com/phodal/coca/bs"
+	"encoding/json"
 	"github.com/spf13/cobra"
+
+	. "github.com/phodal/coca/bs"
+	. "github.com/phodal/coca/utils"
 )
 
 var badsmellCmd *cobra.Command = &cobra.Command{
 	Use:   "badsmell",
-	Short: "badsmell recognized",
+	Short: "Bad Code Smell",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		depFile := cmd.Flag("dependence").Value.String()
+		importPath := cmd.Flag("path").Value.String()
 
-		if depFile != "" {
-			bsApp := NewBadSmellApp(depFile)
-			bsApp.Start()
+		if importPath != "" {
+			bsApp := new(BadSmellApp)
+			bsList := bsApp.AnalysisPath(importPath)
+
+			bsModel, _ := json.MarshalIndent(bsList, "", "\t")
+
+			WriteToFile("deps.json", string(bsModel))
 		}
 	},
 }
@@ -22,5 +29,5 @@ var badsmellCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(badsmellCmd)
 
-	badsmellCmd.PersistentFlags().StringP("dependence", "d", "", "dependence path")
+	badsmellCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p src/main")
 }

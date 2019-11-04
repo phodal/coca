@@ -1,6 +1,7 @@
-package call
+package main
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/bs/models"
 	. "github.com/phodal/coca/language/java"
@@ -67,7 +68,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	var params []JFullParameter = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
-
+		fmt.Println(parameters.GetChild(2).(antlr.ParseTree).GetText())
 	}
 
 	method := &JFullMethod{
@@ -113,7 +114,9 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
-
+		//parameters.GetBaseRuleContext().(antlr.BaseParserRuleContext).(FormalParameterListContext)
+		//context := parameters.GetBaseRuleContext()
+		//fmt.Println(parameters.GetChild(1).(antlr.RuleNode).GetText())
 	}
 
 	method := &JFullMethod{
@@ -127,6 +130,11 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		nil,
 	}
 	methods = append(methods, *method)
+}
+
+func (s *BadSmellListener) EnterFormalParameterList(ctx *FormalParameterListContext) {
+	//fmt.Println(ctx.GetParent().GetParent().(antlr.RuleNode).get)
+	//fmt.Println(ctx.AllFormalParameter()
 }
 
 func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {

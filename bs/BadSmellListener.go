@@ -19,6 +19,7 @@ var currentType string
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
+var currentClassBs ClassBadSmellInfo
 
 func NewBadSmellListener() *BadSmellListener {
 	currentClz = ""
@@ -33,7 +34,15 @@ type BadSmellListener struct {
 }
 
 func (s *BadSmellListener) getNodeInfo() *JFullClassNode {
-	return &JFullClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
+	return &JFullClassNode{
+		currentPkg,
+		currentClz,
+		currentType,
+		"",
+		methods,
+		methodCalls,
+		currentClassBs,
+	}
 }
 
 func (s *BadSmellListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
@@ -80,6 +89,8 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		}
 	}
 
+	methodBSInfo := *&MethodBadSmellInfo{0, 0}
+
 	method := &JFullMethod{
 		name,
 		typeType,
@@ -89,6 +100,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		stopLinePosition,
 		methodBody,
 		methodParams,
+		methodBSInfo,
 	}
 
 	methods = append(methods, *method)
@@ -136,6 +148,8 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		}
 	}
 
+	methodBSInfo := *&MethodBadSmellInfo{0, 0}
+
 	method := &JFullMethod{
 		name,
 		typeType,
@@ -145,6 +159,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		stopLinePosition,
 		methodBody,
 		methodParams,
+		methodBSInfo,
 	}
 	methods = append(methods, *method)
 }
@@ -152,6 +167,12 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 func (s *BadSmellListener) EnterFormalParameterList(ctx *FormalParameterListContext) {
 	//fmt.Println(ctx.GetParent().GetParent().(antlr.RuleNode).get)
 	//fmt.Println(ctx.AllFormalParameter()
+}
+
+func (s *BadSmellListener) EnterAnnotation(ctx *AnnotationContext) {
+	if currentType == "Class" && ctx.QualifiedName().GetText() == "Override" {
+
+	}
 }
 
 func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {

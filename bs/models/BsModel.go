@@ -7,6 +7,7 @@ type JFullClassNode struct {
 	Path        string
 	Methods     []JFullMethod
 	MethodCalls []JFullMethodCall
+	ClassBS     ClassBadSmellInfo
 }
 
 type JFullMethodCall struct {
@@ -29,6 +30,17 @@ type JFullMethod struct {
 	StopLinePosition  int
 	MethodBody        string
 	Parameters        []JFullParameter
+	MethodBs          MethodBadSmellInfo
+}
+
+type MethodBadSmellInfo struct {
+	SwitchSize int
+	IfSize     int
+}
+
+type ClassBadSmellInfo struct {
+	OverrideSize  int
+	PublicVarSize int
 }
 
 type JFullParameter struct {
@@ -36,6 +48,8 @@ type JFullParameter struct {
 	Type string
 }
 
+
 func NewJFullClassNode() *JFullClassNode {
-	return &JFullClassNode{"", "", "", "", nil, nil}
+	info := &ClassBadSmellInfo{0, 0};
+	return &JFullClassNode{"", "", "", "", nil, nil, *info}
 }

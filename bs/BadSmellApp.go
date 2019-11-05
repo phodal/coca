@@ -70,12 +70,14 @@ func analysisBadSmell(nodes []JFullClassNode) []BadSmellModel {
 				badSmellList = append(badSmellList, *longMethod)
 			}
 
+			// longParameterList
 			if len(method.Parameters) > 6 {
 				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longParameterList"}
 				badSmellList = append(badSmellList, *longParams)
 			}
 		}
 
+		// LargeClass
 		if node.Type == "Class" && len(node.Methods) > 30 {
 			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass"})
 		}

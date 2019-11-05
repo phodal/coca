@@ -63,16 +63,21 @@ func analysisBadSmell(nodes []JFullClassNode) []BadSmellModel {
 			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "lazyElement"})
 		}
 
-		if node.Type == "Class" && len(node.Methods) > 30 {
-			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass"})
-		}
-
 		// Long Method
 		for _, method := range node.Methods {
 			if method.StopLine-method.StartLine > 50 {
 				longMethod := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longMethod"}
 				badSmellList = append(badSmellList, *longMethod)
 			}
+
+			if len(method.Parameters) > 6 {
+				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longParameterList"}
+				badSmellList = append(badSmellList, *longParams)
+			}
+		}
+
+		if node.Type == "Class" && len(node.Methods) > 30 {
+			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass"})
 		}
 	}
 

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/bs/models"
 	. "github.com/phodal/coca/language/java"
@@ -65,10 +64,20 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	methodBody := ctx.MethodBody().GetText()
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
-	var params []JFullParameter = nil
+
+	var methodParams []JFullParameter = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
-		fmt.Println(parameters.GetChild(2).(antlr.ParseTree).GetText())
+		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
+			allFormal := parameters.GetChild(1).(*FormalParameterListContext)
+			formalParameter := allFormal.AllFormalParameter()
+			for _, param := range formalParameter {
+				paramContext := param.(*FormalParameterContext)
+				paramType := paramContext.TypeType().GetText()
+				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+				methodParams = append(methodParams, *&JFullParameter{paramType, paramValue})
+			}
+		}
 	}
 
 	method := &JFullMethod{
@@ -79,7 +88,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		stopLine,
 		stopLinePosition,
 		methodBody,
-		params,
+		methodParams,
 	}
 
 	methods = append(methods, *method)
@@ -112,11 +121,19 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	typeType := ctx.TypeTypeOrVoid().GetText()
 	methodBody := ctx.MethodBody().GetText()
 
+	var methodParams []JFullParameter = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
-		//parameters.GetBaseRuleContext().(antlr.BaseParserRuleContext).(FormalParameterListContext)
-		//context := parameters.GetBaseRuleContext()
-		//fmt.Println(parameters.GetChild(1).(antlr.RuleNode).GetText())
+		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
+			allFormal := parameters.GetChild(1).(*FormalParameterListContext)
+			formalParameter := allFormal.AllFormalParameter()
+			for _, param := range formalParameter {
+				paramContext := param.(*FormalParameterContext)
+				paramType := paramContext.TypeType().GetText()
+				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+				methodParams = append(methodParams, *&JFullParameter{paramType, paramValue})
+			}
+		}
 	}
 
 	method := &JFullMethod{
@@ -127,7 +144,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		stopLine,
 		stopLinePosition,
 		methodBody,
-		nil,
+		methodParams,
 	}
 	methods = append(methods, *method)
 }

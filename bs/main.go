@@ -7,7 +7,7 @@ import (
 
 func main()  {
 		bsApp := new(BadSmellApp)
-		bsList := bsApp.AnalysisPath("examples")
+		bsList := bsApp.AnalysisPath("examples/")
 
 		bsModel, _ := json.MarshalIndent(bsList, "", "\t")
 

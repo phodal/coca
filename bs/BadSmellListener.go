@@ -1,4 +1,4 @@
-package main
+package bs
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -12,9 +12,13 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
+var currentClzType string
+
+var currentClzExtends string
+var currentClzImplements []string
+
 var methods []JFullMethod
 var methodCalls []JFullMethodCall
-var currentType string
 
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
@@ -26,6 +30,8 @@ func NewBadSmellListener() *BadSmellListener {
 	currentPkg = ""
 	methods = nil
 	methodCalls = nil
+	currentClzImplements = nil
+	currentClzExtends = ""
 	return &BadSmellListener{}
 }
 
@@ -37,8 +43,10 @@ func (s *BadSmellListener) getNodeInfo() *JFullClassNode {
 	return &JFullClassNode{
 		currentPkg,
 		currentClz,
-		currentType,
+		currentClzType,
 		"",
+		currentClzExtends,
+		currentClzImplements,
 		methods,
 		methodCalls,
 		currentClassBs,
@@ -55,12 +63,35 @@ func (s *BadSmellListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 }
 
 func (s *BadSmellListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
-	currentType = "Class"
+	currentClzType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
+
+	if ctx.EXTENDS() != nil {
+		currentClzExtends = ctx.TypeType().GetText()
+	}
+
+	if ctx.IMPLEMENTS() != nil {
+		typeList := ctx.TypeList().(*TypeListContext)
+		for _, typ := range typeList.AllTypeType() {
+			typeData := getTypeDATA(typ.(*TypeTypeContext))
+			currentClzImplements = append(currentClzImplements, typeData)
+		}
+	}
+}
+
+func getTypeDATA(typ *TypeTypeContext) string {
+	var typeData string
+	classOrInterface := typ.ClassOrInterfaceType().(*ClassOrInterfaceTypeContext)
+	if classOrInterface != nil {
+		identifiers := classOrInterface.AllIDENTIFIER()
+		typeData = identifiers[len(identifiers)-1].GetText()
+	}
+
+	return typeData
 }
 
 func (s *BadSmellListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
-	currentType = "Interface"
+	currentClzType = "Interface"
 	currentClz = ctx.IDENTIFIER().GetText()
 }
 
@@ -149,6 +180,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	}
 
 	methodBSInfo := *&MethodBadSmellInfo{0, 0}
+	methodBadSmellInfo := buildMethodBSInfo(ctx, methodBSInfo)
 
 	method := &JFullMethod{
 		name,
@@ -159,9 +191,38 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		stopLinePosition,
 		methodBody,
 		methodParams,
-		methodBSInfo,
+		methodBadSmellInfo,
 	}
 	methods = append(methods, *method)
+}
+
+func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo MethodBadSmellInfo) MethodBadSmellInfo {
+	methodBody := context.MethodBody()
+	blockContext := methodBody.GetChild(0)
+	if reflect.TypeOf(blockContext).String() == "*parser.BlockContext" {
+		blcStatement := blockContext.(*BlockContext).AllBlockStatement()
+		for _, statement := range blcStatement {
+			if reflect.TypeOf(statement.GetChild(0)).String() == "*parser.StatementContext" {
+				if len(statement.GetChild(0).(*StatementContext).GetChildren()) < 3 {
+					continue
+				}
+
+				statementCtx := statement.GetChild(0).(*StatementContext)
+				if (reflect.TypeOf(statementCtx.GetChild(1)).String()) == "*parser.ParExpressionContext" {
+					if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "if" {
+						bsInfo.IfSize = bsInfo.IfSize + 1
+					}
+
+					if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "switch" {
+						bsInfo.SwitchSize = bsInfo.SwitchSize + 1
+					}
+
+				}
+			}
+		}
+	}
+
+	return bsInfo
 }
 
 func (s *BadSmellListener) EnterFormalParameterList(ctx *FormalParameterListContext) {
@@ -170,8 +231,8 @@ func (s *BadSmellListener) EnterFormalParameterList(ctx *FormalParameterListCont
 }
 
 func (s *BadSmellListener) EnterAnnotation(ctx *AnnotationContext) {
-	if currentType == "Class" && ctx.QualifiedName().GetText() == "Override" {
-
+	if currentClzType == "Class" && ctx.QualifiedName().GetText() == "Override" {
+		currentClassBs.OverrideSize++
 	}
 }
 

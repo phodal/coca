@@ -1,4 +1,4 @@
-package main
+package bs
 
 import (
 	"encoding/json"
@@ -63,6 +63,7 @@ func analysisBadSmell(nodes []JFullClassNode) []BadSmellModel {
 			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "lazyElement"})
 		}
 
+		onlyHaveGetterAndSetter := true
 		// Long Method
 		for _, method := range node.Methods {
 			if method.StopLine-method.StartLine > 50 {
@@ -70,10 +71,40 @@ func analysisBadSmell(nodes []JFullClassNode) []BadSmellModel {
 				badSmellList = append(badSmellList, *longMethod)
 			}
 
+			if strings.Contains(method.Name, "get") && strings.Contains(method.Name, "set") {
+				onlyHaveGetterAndSetter = false
+			}
+
 			// longParameterList
 			if len(method.Parameters) > 6 {
 				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longParameterList"}
 				badSmellList = append(badSmellList, *longParams)
+			}
+
+			// longParameterList
+			if method.MethodBs.IfSize > 8 || method.MethodBs.SwitchSize > 8 {
+				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches"}
+				badSmellList = append(badSmellList, *longParams)
+			}
+		}
+
+		fmt.Println(onlyHaveGetterAndSetter, node.Type, len(node.Methods))
+		if onlyHaveGetterAndSetter && node.Type == "Class" && len(node.Methods) > 0 {
+			dataClass := &BadSmellModel{node.Path, "", "dataClass"}
+			badSmellList = append(badSmellList, *dataClass)
+		}
+
+		//Refused Bequest
+		if node.Extends != "" {
+			hasCallParentMethod := false
+			for _, methodCall := range node.MethodCalls {
+				if methodCall.Class == node.Extends {
+					hasCallParentMethod = true
+				}
+			}
+
+			if !hasCallParentMethod {
+				badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "refusedBequest"})
 			}
 		}
 

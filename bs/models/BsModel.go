@@ -5,6 +5,8 @@ type JFullClassNode struct {
 	Class       string
 	Type        string
 	Path        string
+	Extends     string
+	Implements  []string
 	Methods     []JFullMethod
 	MethodCalls []JFullMethodCall
 	ClassBS     ClassBadSmellInfo
@@ -34,8 +36,8 @@ type JFullMethod struct {
 }
 
 type MethodBadSmellInfo struct {
-	SwitchSize int
 	IfSize     int
+	SwitchSize int
 }
 
 type ClassBadSmellInfo struct {
@@ -48,8 +50,16 @@ type JFullParameter struct {
 	Type string
 }
 
-
 func NewJFullClassNode() *JFullClassNode {
 	info := &ClassBadSmellInfo{0, 0};
-	return &JFullClassNode{"", "", "", "", nil, nil, *info}
+	return &JFullClassNode{
+		"",
+		"",
+		"",
+		"",
+		"",
+		nil,
+		nil,
+		nil,
+		*info}
 }

@@ -1,6 +1,7 @@
 package call
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -76,7 +77,10 @@ func (s *JavaCallListener) EnterFormalParameter(ctx *FormalParameterContext) {
 func (s *JavaCallListener) EnterFieldDeclaration(ctx *FieldDeclarationContext) {
 	declarators := ctx.VariableDeclarators()
 	variableName := declarators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	fields[variableName] = ctx.TypeType().GetText()
+	for _, declarator := range  declarators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
+		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		fields[value] = variableName
+	}
 }
 
 func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDeclarationContext) {
@@ -91,22 +95,37 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	stopLine := ctx.GetStop().GetLine()
 	name := ctx.IDENTIFIER().GetText()
 	stopLinePosition := startLinePosition + len(name)
-	//XXX: find the start position of {, not public
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)
+
+	if ctx.FormalParameters() != nil {
+		if ctx.FormalParameters().GetChild(0) == nil {
+			return
+		}
+
+		parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
+		formalParameter := parameterList.AllFormalParameter()
+		for _, param := range formalParameter {
+			paramContext := param.(*FormalParameterContext)
+			paramType := paramContext.TypeType().GetText()
+			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+
+			localVars[paramValue] = paramType
+		}
+	}
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	localVars[variableName] = ctx.CreatedName().GetText()
 }
-//
-//func (s *JavaCallListener) EnterVariableDeclarators(ctx *VariableDeclaratorsContext) {
-//	//fmt.Println(ctx.GetText())
-//}
+
+func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *LocalTypeDeclarationContext) {
+
+}
 
 func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
@@ -118,9 +137,8 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := startLinePosition + len(callee)
 
-	//typeType := ctx.GetChild(0).(antlr.ParseTree).TypeTypeOrVoid().GetText()
-
 	fullType := warpTargetFullType(targetType)
+	fmt.Println("callee: " + callee + " targetType: -> " + targetType + "  fulltype: " + fullType)
 	if fullType != "" {
 		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
@@ -130,7 +148,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			jMethodCall := &JMethodCall{currentPkg, "",currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
-			//fmt.Println(ctx.GetParent().(antlr.ParseTree).GetText())
+
 		}
 	}
 }
@@ -170,7 +188,7 @@ func parseTargetType(targetCtx string) string {
 	//TODO: update this reflect
 	typeOf := reflect.TypeOf(targetCtx).String()
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
-		targetType = currentClz;
+		targetType = currentClz
 	} else {
 		fieldType := fields[targetVar]
 		formalType := formalParameters[targetVar]
@@ -178,9 +196,9 @@ func parseTargetType(targetCtx string) string {
 		if fieldType != "" {
 			targetType = fieldType
 		} else if formalType != "" {
-			targetType = formalType;
+			targetType = formalType
 		} else if localVarType != "" {
-			targetType = localVarType;
+			targetType = localVarType
 		}
 	}
 
@@ -192,9 +210,13 @@ func warpTargetFullType(targetType string) string {
 		return currentPkg + "." + targetType
 	}
 
+	// for array
+	split := strings.Split(targetType, ".")
+	str := split[len(split)-1]
+	pureTargetType :=  strings.ReplaceAll(strings.ReplaceAll(str, "[", ""), "]", "")
 	for index := range imports {
 		imp := imports[index]
-		if strings.HasSuffix(imp, targetType) {
+		if strings.HasSuffix(imp, pureTargetType) {
 			return imp
 		}
 	}

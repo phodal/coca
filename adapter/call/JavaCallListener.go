@@ -99,6 +99,15 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methods = append(methods, *method)
 }
 
+func (s *JavaCallListener) EnterCreator(ctx *CreatorContext) {
+	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
+	localVars[variableName] = ctx.CreatedName().GetText()
+}
+//
+//func (s *JavaCallListener) EnterVariableDeclarators(ctx *VariableDeclaratorsContext) {
+//	//fmt.Println(ctx.GetText())
+//}
+
 func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	var targetType = parseTargetType(targetCtx)
@@ -120,6 +129,8 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			methodName := ctx.IDENTIFIER().GetText()
 			jMethodCall := &JMethodCall{currentPkg, "",currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
+		} else {
+			//fmt.Println(ctx.GetParent().(antlr.ParseTree).GetText())
 		}
 	}
 }

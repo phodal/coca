@@ -1,7 +1,6 @@
 package call
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -20,6 +19,7 @@ var currentType string
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
+var currentClzExtends = ""
 
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
@@ -49,6 +49,10 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 func (s *JavaCallListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	currentType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
+
+	if ctx.EXTENDS() != nil {
+		currentClzExtends = ctx.TypeType().GetText()
+	}
 }
 
 func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
@@ -66,7 +70,6 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
-
 	methods = append(methods, *method)
 }
 
@@ -77,7 +80,7 @@ func (s *JavaCallListener) EnterFormalParameter(ctx *FormalParameterContext) {
 func (s *JavaCallListener) EnterFieldDeclaration(ctx *FieldDeclarationContext) {
 	declarators := ctx.VariableDeclarators()
 	variableName := declarators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	for _, declarator := range  declarators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
+	for _, declarator := range declarators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
 		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		fields[value] = variableName
 	}
@@ -138,14 +141,19 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	stopLinePosition := startLinePosition + len(callee)
 
 	fullType := warpTargetFullType(targetType)
-	fmt.Println("callee: " + callee + " targetType: -> " + targetType + "  fulltype: " + fullType)
+	//fmt.Println("callee: " + callee + " targetType: -> " + targetType + "  fulltype: " + fullType)
+	// TODO: 处理链试调用
+	if targetType == "super" {
+		targetType = currentClzExtends
+	}
+
 	if fullType != "" {
 		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JMethodCall{currentPkg, "",currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
 
@@ -160,7 +168,6 @@ func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
 		methodName := ctx.IDENTIFIER().GetText()
 		targetType := parseTargetType(text)
 		fullType := warpTargetFullType(targetType)
-
 
 		startLine := ctx.GetStart().GetLine()
 		startLinePosition := ctx.GetStart().GetColumn()
@@ -210,10 +217,11 @@ func warpTargetFullType(targetType string) string {
 		return currentPkg + "." + targetType
 	}
 
-	// for array
+	// TODO: update for array
 	split := strings.Split(targetType, ".")
-	str := split[len(split)-1]
-	pureTargetType :=  strings.ReplaceAll(strings.ReplaceAll(str, "[", ""), "]", "")
+	str := split[0]
+	pureTargetType := strings.ReplaceAll(strings.ReplaceAll(str, "[", ""), "]", "")
+
 	for index := range imports {
 		imp := imports[index]
 		if strings.HasSuffix(imp, pureTargetType) {
@@ -223,11 +231,20 @@ func warpTargetFullType(targetType string) string {
 
 	//maybe the same package
 	for _, clz := range clzs {
-		if strings.HasSuffix(clz, "." + targetType) {
+		if strings.HasSuffix(clz, "."+pureTargetType) {
 			return clz
 		}
 	}
 
 	//1. current package, 2. import by *
+	if pureTargetType == "super" {
+		for index := range imports {
+			imp := imports[index]
+			if strings.HasSuffix(imp, currentClzExtends) {
+				return imp
+			}
+		}
+	}
+
 	return ""
 }

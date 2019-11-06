@@ -156,7 +156,9 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			jMethodCall := &JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
-
+			methodName := ctx.IDENTIFIER().GetText()
+			jMethodCall := &JMethodCall{currentPkg, "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
 }

@@ -140,13 +140,17 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := startLinePosition + len(callee)
 
-	fullType := warpTargetFullType(targetType)
-	//fmt.Println("callee: " + callee + " targetType: -> " + targetType + "  fulltype: " + fullType)
 	// TODO: 处理链试调用
+	if strings.Contains(targetType, "()") && strings.Contains(targetType, ".") {
+		split := strings.Split(targetType, ".")
+		sourceTarget := split[0]
+		targetType = localVars[sourceTarget]
+	}
+
+	fullType := warpTargetFullType(targetType)
 	if targetType == "super" {
 		targetType = currentClzExtends
 	}
-
 	if fullType != "" {
 		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
@@ -157,7 +161,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JMethodCall{currentPkg, "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}

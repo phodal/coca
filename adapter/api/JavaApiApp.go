@@ -29,7 +29,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, classes []JClassNode) []JClass
 		parser := (*JavaApiApp)(nil).ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaAPIListener()
+		listener := NewJavaApiListener()
 		listener.appendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

@@ -25,20 +25,20 @@ var baseApiUrlName = ""
 var currentRestApi RestApi
 var RestApis []RestApi
 
-func NewJavaAPIListener() *JavaAPIListener {
+func NewJavaApiListener() *JavaApiListener {
 	isSpringRestController = false
-	return &JavaAPIListener{}
+	return &JavaApiListener{}
 }
 
-type JavaAPIListener struct {
+type JavaApiListener struct {
 	BaseJavaParserListener
 }
 
-func (s *JavaAPIListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
+func (s *JavaApiListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	hasEnterClass = true
 }
 
-func (s *JavaAPIListener) EnterAnnotation(ctx *AnnotationContext) {
+func (s *JavaApiListener) EnterAnnotation(ctx *AnnotationContext) {
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "RestController" {
 		isSpringRestController = true
@@ -90,19 +90,19 @@ func (s *JavaAPIListener) EnterAnnotation(ctx *AnnotationContext) {
 	}
 }
 
-func (s *JavaAPIListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
+func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	if hasEnterRestController {
 		RestApis = append(RestApis, currentRestApi)
 		hasEnterRestController = false
 	}
 }
 
-func (s *JavaAPIListener) appendClasses(classes []models.JClassNode) {
+func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
 	clz = classes
 }
 
 
-func (s *JavaAPIListener) getApis() []RestApi {
+func (s *JavaApiListener) getApis() []RestApi {
 	return RestApis
 }
 

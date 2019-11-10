@@ -187,7 +187,6 @@ func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
 		isSpringRestController = true
 	}
 
-
 	if !hasEnterClass {
 		if annotationName == "RequestMapping" {
 			if ctx.ElementValuePairs() != nil {
@@ -206,14 +205,15 @@ func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
 	}
 
 	uri := ""
-	if ctx.ElementValuePairs() != nil {
-		firstPair := ctx.ElementValuePairs().GetChild(0).(*ElementValuePairContext)
-		if firstPair.IDENTIFIER().GetText() == "value" {
-			uri = baseApiUrlName + firstPair.ElementValue().GetText()
-		}
+	if ctx.ElementValue() != nil {
+		uri = baseApiUrlName + ctx.ElementValue().GetText()
+	} else {
+		uri = baseApiUrlName
 	}
 
-	restApi := &RestApi{uri, "", "", nil}
+	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
+
+	restApi := &RestApi{uriRemoveQuote, "", "", nil}
 	if hasEnterClass {
 		switch annotationName {
 		case "GetMapping":

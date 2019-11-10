@@ -105,7 +105,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methods = append(methods, *method)
 
 	if ctx.FormalParameters() != nil {
-		if ctx.FormalParameters().GetChild(0) == nil {
+		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
 			return
 		}
 

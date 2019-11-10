@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
+	"reflect"
 	"strings"
 )
 
@@ -13,7 +14,7 @@ type RestApi struct {
 	HttpMethod     string
 	MethodName     string
 	ResponseStatus string
-	Body           []string
+	Body           string
 	MethodParams   map[string]string
 }
 
@@ -21,6 +22,7 @@ var hasEnterClass = false
 var isSpringRestController = false
 var hasEnterRestController = false
 var baseApiUrlName = ""
+var localVars = make(map[string]string)
 
 var currentRestApi RestApi
 var RestApis []RestApi
@@ -75,7 +77,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestApi = RestApi{uriRemoveQuote, "", "", "", nil, nil}
+	currentRestApi = RestApi{uriRemoveQuote, "", "", "", "", nil}
 	if hasEnterClass {
 		switch annotationName {
 		case "GetMapping":
@@ -90,10 +92,48 @@ func (s *JavaApiListener) EnterAnnotation(ctx *AnnotationContext) {
 	}
 }
 
+var requestBodyClass string
+
 func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
-	if hasEnterRestController {
-		RestApis = append(RestApis, currentRestApi)
+	if hasEnterRestController && ctx.FormalParameters() != nil {
+		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
+			return
+		}
+
+		parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
+		formalParameter := parameterList.AllFormalParameter()
+		for _, param := range formalParameter {
+			paramContext := param.(*FormalParameterContext)
+
+			modifiers := paramContext.AllVariableModifier()
+			hasRequestBody := false
+			for _, modifier := range modifiers {
+				childType := reflect.TypeOf(modifier.GetChild(0))
+				if childType.String() == "*parser.AnnotationContext" {
+					qualifiedName := modifier.GetChild(0).(*AnnotationContext).QualifiedName().GetText()
+					if qualifiedName == "RequestBody" {
+						hasRequestBody = true
+					}
+				}
+			}
+
+			paramType := paramContext.TypeType().GetText()
+			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+
+			if hasRequestBody {
+				requestBodyClass = paramType
+			}
+
+			localVars[paramValue] = paramType
+		}
+
+		currentRestApi.Body = requestBodyClass
+
+		//currentRestApi.Body
 		hasEnterRestController = false
+		requestBodyClass = ""
+
+		RestApis = append(RestApis, currentRestApi)
 	}
 }
 
@@ -101,8 +141,6 @@ func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
 	clz = classes
 }
 
-
 func (s *JavaApiListener) getApis() []RestApi {
 	return RestApis
 }
-

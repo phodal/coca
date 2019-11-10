@@ -1,7 +1,6 @@
 package call
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -35,7 +34,6 @@ type JavaCallListener struct {
 }
 
 func (s *JavaCallListener) getNodeInfo() *JClassNode {
-	fmt.Println(RestApis)
 	return &JClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
 }
 
@@ -106,9 +104,8 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)
 
-	methodParams := make(map[string]string)
 	if ctx.FormalParameters() != nil {
-		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
+		if ctx.FormalParameters().GetChild(0) == nil {
 			return
 		}
 
@@ -120,7 +117,6 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 			localVars[paramValue] = paramType
-			methodParams[paramValue] = paramType
 		}
 	}
 }

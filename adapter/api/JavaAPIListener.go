@@ -1,10 +1,12 @@
 package api
 
 import (
-	"fmt"
+	"github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
 	"strings"
 )
+
+var clz []models.JClassNode
 
 type RestApi struct {
 	Uri            string
@@ -31,7 +33,6 @@ func NewJavaAPIListener() *JavaAPIListener {
 type JavaAPIListener struct {
 	BaseJavaParserListener
 }
-
 
 func (s *JavaAPIListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	hasEnterClass = true
@@ -94,6 +95,14 @@ func (s *JavaAPIListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) 
 		RestApis = append(RestApis, currentRestApi)
 		hasEnterRestController = false
 	}
-
-	fmt.Println(RestApis)
 }
+
+func (s *JavaAPIListener) appendClasses(classes []models.JClassNode) {
+	clz = classes
+}
+
+
+func (s *JavaAPIListener) getApis() []RestApi {
+	return RestApis
+}
+

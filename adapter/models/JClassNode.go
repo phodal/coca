@@ -5,8 +5,14 @@ type JClassNode struct {
 	Class       string
 	Type        string
 	Path        string
+	Fields      []JAppField
 	Methods     []JMethod
 	MethodCalls []JMethodCall
+}
+
+type JAppField struct {
+	Type  string
+	Value string
 }
 
 type JsonIdentifier struct {
@@ -17,7 +23,7 @@ type JsonIdentifier struct {
 }
 
 func NewClassNode() *JClassNode {
-	return &JClassNode{"", "", "",  "", nil, nil}
+	return &JClassNode{"", "", "", "", nil, nil, nil}
 }
 
 func NewJsonIdentifier() *JsonIdentifier {

@@ -1,6 +1,7 @@
 package call
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -12,11 +13,12 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
+var fields []JAppField
 var methods []JMethod
 var methodCalls []JMethodCall
 var currentType string
 
-var fields = make(map[string]string)
+var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtends = ""
@@ -34,7 +36,7 @@ type JavaCallListener struct {
 }
 
 func (s *JavaCallListener) getNodeInfo() *JClassNode {
-	return &JClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
+	return &JClassNode{currentPkg, currentClz, currentType, "", fields, methods, methodCalls}
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
@@ -78,11 +80,12 @@ func (s *JavaCallListener) EnterFormalParameter(ctx *FormalParameterContext) {
 }
 
 func (s *JavaCallListener) EnterFieldDeclaration(ctx *FieldDeclarationContext) {
-	declarators := ctx.VariableDeclarators()
-	variableName := declarators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	for _, declarator := range declarators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
+	decelerators := ctx.VariableDeclarators()
+	typeType := decelerators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
+	for _, declarator := range decelerators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
 		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-		fields[value] = variableName
+		mapFields[value] = typeType
+		fields = append(fields, *&JAppField{Type: value, Value: typeType})
 	}
 }
 
@@ -90,6 +93,8 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
 	localVars[variableName] = typ
+
+	fmt.Println(typ, variableName)
 }
 
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
@@ -203,7 +208,7 @@ func parseTargetType(targetCtx string) string {
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
 		targetType = currentClz
 	} else {
-		fieldType := fields[targetVar]
+		fieldType := mapFields[targetVar]
 		formalType := formalParameters[targetVar]
 		localVarType := localVars[targetVar]
 		if fieldType != "" {

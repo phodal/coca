@@ -1,6 +1,7 @@
 package call
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -20,6 +21,9 @@ var fields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtends = ""
+
+var hasEnterClass = false
+var isSpringRestController = false
 
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
@@ -47,6 +51,7 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 }
 
 func (s *JavaCallListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
+	hasEnterClass = true
 	currentType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
 
@@ -105,7 +110,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methods = append(methods, *method)
 
 	if ctx.FormalParameters() != nil {
-		if ctx.FormalParameters().GetChild(0) == nil {
+		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
 			return
 		}
 
@@ -165,6 +170,64 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
+}
+
+var baseApiUrlName = ""
+
+type RestApi struct {
+	Uri            string
+	Method         string
+	ResponseStatus string
+	Body           []string
+}
+
+func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
+	annotationName := ctx.QualifiedName().GetText()
+	if annotationName == "RestController" {
+		isSpringRestController = true
+	}
+
+
+	if !hasEnterClass {
+		if annotationName == "RequestMapping" {
+			if ctx.ElementValuePairs() != nil {
+				firstPair := ctx.ElementValuePairs().GetChild(0).(*ElementValuePairContext)
+				if firstPair.IDENTIFIER().GetText() == "value" {
+					baseApiUrlName = firstPair.ElementValue().GetText()
+				}
+			} else {
+				baseApiUrlName = "/"
+			}
+		}
+	}
+
+	if !(annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping") {
+		return
+	}
+
+	uri := ""
+	if ctx.ElementValuePairs() != nil {
+		firstPair := ctx.ElementValuePairs().GetChild(0).(*ElementValuePairContext)
+		if firstPair.IDENTIFIER().GetText() == "value" {
+			uri = baseApiUrlName + firstPair.ElementValue().GetText()
+		}
+	}
+
+	restApi := &RestApi{uri, "", "", nil}
+	if hasEnterClass {
+		switch annotationName {
+		case "GetMapping":
+			restApi.Method = "GET"
+		case "PutMapping":
+			restApi.Method = "PUT"
+		case "PostMapping":
+			restApi.Method = "POST"
+		case "DeleteMapping":
+			restApi.Method = "DELETE"
+		}
+	}
+
+	fmt.Println(restApi)
 }
 
 func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {

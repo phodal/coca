@@ -85,7 +85,7 @@ func (s *JavaCallListener) EnterFieldDeclaration(ctx *FieldDeclarationContext) {
 	for _, declarator := range decelerators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
 		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeType
-		fields = append(fields, *&JAppField{Type: value, Value: typeType})
+		fields = append(fields, *&JAppField{Type: typeType, Value: value})
 	}
 }
 

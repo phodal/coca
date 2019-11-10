@@ -22,29 +22,11 @@ var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtends = ""
 
-var hasEnterClass = false
-var isSpringRestController = false
-var hasEnterRestController = false
-var baseApiUrlName = ""
-
-type RestApi struct {
-	Uri            string
-	HttpMethod     string
-	MethodName     string
-	ResponseStatus string
-	Body           []string
-	MethodParams   map[string]string
-}
-
-var currentRestApi RestApi
-var RestApis []RestApi
-
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	methods = nil
 	methodCalls = nil
-	isSpringRestController = false
 	return &JavaCallListener{}
 }
 
@@ -67,7 +49,6 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 }
 
 func (s *JavaCallListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
-	hasEnterClass = true
 	currentType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
 
@@ -142,13 +123,6 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 			methodParams[paramValue] = paramType
 		}
 	}
-
-	if hasEnterRestController {
-		currentRestApi.MethodName = name
-		currentRestApi.MethodParams = methodParams
-		RestApis = append(RestApis, currentRestApi)
-		hasEnterRestController = false
-	}
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *CreatorContext) {
@@ -193,58 +167,6 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			methodName := ctx.IDENTIFIER().GetText()
 			jMethodCall := &JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
-		}
-	}
-}
-
-func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
-	annotationName := ctx.QualifiedName().GetText()
-	if annotationName == "RestController" {
-		isSpringRestController = true
-	}
-
-	if !isSpringRestController {
-		return
-	}
-
-	if !hasEnterClass {
-		if annotationName == "RequestMapping" {
-			if ctx.ElementValuePairs() != nil {
-				firstPair := ctx.ElementValuePairs().GetChild(0).(*ElementValuePairContext)
-				if firstPair.IDENTIFIER().GetText() == "value" {
-					baseApiUrlName = firstPair.ElementValue().GetText()
-				}
-			} else {
-				baseApiUrlName = "/"
-			}
-		}
-	}
-
-	if !(annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping") {
-		return
-	}
-
-	hasEnterRestController = true
-	uri := ""
-	if ctx.ElementValue() != nil {
-		uri = baseApiUrlName + ctx.ElementValue().GetText()
-	} else {
-		uri = baseApiUrlName
-	}
-
-	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
-
-	currentRestApi = RestApi{uriRemoveQuote, "", "", "", nil, nil}
-	if hasEnterClass {
-		switch annotationName {
-		case "GetMapping":
-			currentRestApi.HttpMethod = "GET"
-		case "PutMapping":
-			currentRestApi.HttpMethod = "PUT"
-		case "PostMapping":
-			currentRestApi.HttpMethod = "POST"
-		case "DeleteMapping":
-			currentRestApi.HttpMethod = "DELETE"
 		}
 	}
 }

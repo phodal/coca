@@ -24,12 +24,27 @@ var currentClzExtends = ""
 
 var hasEnterClass = false
 var isSpringRestController = false
+var hasEnterRestController = false
+var baseApiUrlName = ""
+
+type RestApi struct {
+	Uri            string
+	HttpMethod     string
+	MethodName     string
+	ResponseStatus string
+	Body           []string
+	MethodParams   map[string]string
+}
+
+var currentRestApi RestApi
+var RestApis []RestApi
 
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	methods = nil
 	methodCalls = nil
+	isSpringRestController = false
 	return &JavaCallListener{}
 }
 
@@ -38,6 +53,7 @@ type JavaCallListener struct {
 }
 
 func (s *JavaCallListener) getNodeInfo() *JClassNode {
+	fmt.Println(RestApis)
 	return &JClassNode{currentPkg, currentClz, currentType, "", methods, methodCalls}
 }
 
@@ -109,6 +125,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
 	methods = append(methods, *method)
 
+	methodParams := make(map[string]string)
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
 			return
@@ -122,7 +139,15 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 			localVars[paramValue] = paramType
+			methodParams[paramValue] = paramType
 		}
+	}
+
+	if hasEnterRestController {
+		currentRestApi.MethodName = name
+		currentRestApi.MethodParams = methodParams
+		RestApis = append(RestApis, currentRestApi)
+		hasEnterRestController = false
 	}
 }
 
@@ -172,19 +197,14 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 	}
 }
 
-var baseApiUrlName = ""
-
-type RestApi struct {
-	Uri            string
-	Method         string
-	ResponseStatus string
-	Body           []string
-}
-
 func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "RestController" {
 		isSpringRestController = true
+	}
+
+	if !isSpringRestController {
+		return
 	}
 
 	if !hasEnterClass {
@@ -204,6 +224,7 @@ func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
 		return
 	}
 
+	hasEnterRestController = true
 	uri := ""
 	if ctx.ElementValue() != nil {
 		uri = baseApiUrlName + ctx.ElementValue().GetText()
@@ -213,21 +234,19 @@ func (s *JavaCallListener) EnterAnnotation(ctx *AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	restApi := &RestApi{uriRemoveQuote, "", "", nil}
+	currentRestApi = RestApi{uriRemoveQuote, "", "", "", nil, nil}
 	if hasEnterClass {
 		switch annotationName {
 		case "GetMapping":
-			restApi.Method = "GET"
+			currentRestApi.HttpMethod = "GET"
 		case "PutMapping":
-			restApi.Method = "PUT"
+			currentRestApi.HttpMethod = "PUT"
 		case "PostMapping":
-			restApi.Method = "POST"
+			currentRestApi.HttpMethod = "POST"
 		case "DeleteMapping":
-			restApi.Method = "DELETE"
+			currentRestApi.HttpMethod = "DELETE"
 		}
 	}
-
-	fmt.Println(restApi)
 }
 
 func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {

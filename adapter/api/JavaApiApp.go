@@ -14,12 +14,13 @@ import (
 )
 
 var parsedDeps []JClassNode
+var allApis []RestApi
 
 type JavaApiApp struct {
 
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []JClassNode {
+func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	parsedDeps = nil
 	file := ReadFile(depPath)
 	if file == nil {
@@ -43,11 +44,13 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []JClassNode {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		apis := listener.getApis()
-		fmt.Println(apis)
+		apis := listener.getClassApis()
+		allApis = append(allApis, apis...)
 	}
 
-	return parsedDeps
+	fmt.Println(allApis)
+
+	return allApis
 }
 
 func (j *JavaApiApp) JavaFiles(codeDir string) []string {

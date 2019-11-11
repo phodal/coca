@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -119,7 +118,7 @@ func filterMethodCall(blockContext antlr.Tree) {
 			statement := rangeStatement.GetChild(0).(*StatementContext)
 			if reflect.TypeOf(statement.GetChild(0)).String() == "*parser.ExpressionContext" {
 				express := statement.GetChild(0).(*ExpressionContext)
-				fmt.Println(reflect.TypeOf(express.GetChild(0)).String())
+				reflect.TypeOf(express.GetChild(0))
 			}
 		}
 	}
@@ -153,7 +152,7 @@ func buildRestApi(ctx *MethodDeclarationContext) {
 		localVars[paramValue] = paramType
 	}
 	currentRestApi.Body = requestBodyClass
-	//currentRestApi.Body
+
 	hasEnterRestController = false
 	requestBodyClass = ""
 	RestApis = append(RestApis, currentRestApi)
@@ -161,9 +160,8 @@ func buildRestApi(ctx *MethodDeclarationContext) {
 
 func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
 	clz = classes
-	//fmt.Println(clz)
 }
 
-func (s *JavaApiListener) getApis() []RestApi {
+func (s *JavaApiListener) getClassApis() []RestApi {
 	return RestApis
 }

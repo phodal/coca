@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"encoding/json"
 	. "github.com/phodal/coca/adapter/api"
+	. "github.com/phodal/coca/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +17,10 @@ var apiCmd *cobra.Command = &cobra.Command{
 
 		if path != "" {
 			app := new(JavaApiApp)
-			app.AnalysisPath(path, dependence)
+			restApis := app.AnalysisPath(path, dependence)
+
+			cModel, _ := json.MarshalIndent(restApis, "", "\t")
+			WriteToFile("apis.json", string(cModel))
 		}
 	},
 }

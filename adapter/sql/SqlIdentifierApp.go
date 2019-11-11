@@ -23,7 +23,12 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
 		}
 
 		parsedXml := ParseXml(xmlFile)
-		fmt.Println(parsedXml)
+		for _, attr := range parsedXml.Attrs {
+
+			if strings.Contains(attr.Name.Local, "namespace") {
+				fmt.Println(attr.Value)
+			}
+		}
 	}
 
 	files := (*SqlIdentifierApp)(nil).sqlFiles(codeDir)

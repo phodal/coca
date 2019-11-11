@@ -8,15 +8,15 @@ import (
 	"strings"
 )
 
-var clz []models.JClassNode
+var jClassNodes []models.JClassNode
 
 type RestApi struct {
-	Uri            string
-	HttpMethod     string
-	MethodName     string
-	ResponseStatus string
-	Body           string
-	MethodParams   map[string]string
+	Uri              string
+	HttpMethod       string
+	MethodName       string
+	ResponseStatus   string
+	RequestBodyClass string
+	MethodParams     map[string]string
 }
 
 var hasEnterClass = false
@@ -30,6 +30,8 @@ var RestApis []RestApi
 
 func NewJavaApiListener() *JavaApiListener {
 	isSpringRestController = false
+	params := make(map[string]string)
+	currentRestApi = *&RestApi{"", "", "", "", "", params}
 	return &JavaApiListener{}
 }
 
@@ -151,15 +153,30 @@ func buildRestApi(ctx *MethodDeclarationContext) {
 
 		localVars[paramValue] = paramType
 	}
-	currentRestApi.Body = requestBodyClass
+	currentRestApi.RequestBodyClass = requestBodyClass
+
+	buildMethodParameters(requestBodyClass)
 
 	hasEnterRestController = false
 	requestBodyClass = ""
 	RestApis = append(RestApis, currentRestApi)
 }
 
+func buildMethodParameters(requestBodyClass string) {
+	params := make(map[string]string)
+	for _, clz := range jClassNodes {
+		if clz.Class == requestBodyClass {
+			for _, field := range clz.Fields {
+				params[field.Value] = field.Type
+			}
+		}
+	}
+
+	currentRestApi.MethodParams = params
+}
+
 func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
-	clz = classes
+	jClassNodes = classes
 }
 
 func (s *JavaApiListener) getClassApis() []RestApi {

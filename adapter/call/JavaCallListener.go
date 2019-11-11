@@ -27,6 +27,7 @@ func NewJavaCallListener() *JavaCallListener {
 	currentPkg = ""
 	methods = nil
 	methodCalls = nil
+	fields = nil
 	return &JavaCallListener{}
 }
 

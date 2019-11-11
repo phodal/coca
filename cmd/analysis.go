@@ -4,13 +4,12 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 
-	. "github.com/phodal/coca/adapter/api"
 	. "github.com/phodal/coca/adapter/call"
 	. "github.com/phodal/coca/adapter/identifier"
 	. "github.com/phodal/coca/utils"
 )
 
-var collCmd *cobra.Command = &cobra.Command{
+var analysisCmd *cobra.Command = &cobra.Command{
 	Use:   "analysis",
 	Short: "analysis package",
 	Long:  ``,
@@ -31,15 +30,13 @@ var collCmd *cobra.Command = &cobra.Command{
 			callNodes := callApp.AnalysisPath(importPath, classes)
 
 			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
-
-			apiApp := new(JavaApiApp)
-			apiApp.AnalysisPath(importPath, callNodes)
-
 			WriteToFile("deps.json", string(cModel))
 		}
 	},
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p src/main")
+	rootCmd.AddCommand(analysisCmd)
+
+	analysisCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p src/main")
 }

@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
 )
 
@@ -16,14 +15,12 @@ var (
 	}
 )
 
-// Execute executes the root command.
 func Execute() error {
-	fmt.Println(rootCmd.Flag("config").Value.String())
 	return rootCmd.Execute()
 }
 
 func init() {
-	rootCmd.AddCommand(collCmd)
+	rootCmd.AddCommand(analysisCmd)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
 }

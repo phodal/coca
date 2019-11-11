@@ -161,6 +161,7 @@ func buildRestApi(ctx *MethodDeclarationContext) {
 
 func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
 	clz = classes
+	//fmt.Println(clz)
 }
 
 func (s *JavaApiListener) getApis() []RestApi {

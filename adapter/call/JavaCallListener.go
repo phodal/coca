@@ -1,7 +1,6 @@
 package call
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -93,8 +92,6 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
 	localVars[variableName] = typ
-
-	fmt.Println(typ, variableName)
 }
 
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {

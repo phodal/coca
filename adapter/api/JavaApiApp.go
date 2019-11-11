@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
@@ -9,16 +10,24 @@ import (
 
 	. "github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
+	. "github.com/phodal/coca/utils"
 )
 
-var nodeInfos []JClassNode
+var parsedDeps []JClassNode
 
 type JavaApiApp struct {
 
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, classes []JClassNode) []JClassNode {
-	nodeInfos = nil
+func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []JClassNode {
+	parsedDeps = nil
+	file := ReadFile(depPath)
+	if file == nil {
+		return nil
+	}
+
+	_ = json.Unmarshal(file, &parsedDeps)
+
 	files := (*JavaApiApp)(nil).JavaFiles(codeDir)
 	for index := range files {
 		file := files[index]
@@ -30,18 +39,15 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, classes []JClassNode) []JClass
 		context := parser.CompilationUnit()
 
 		listener := NewJavaApiListener()
-		listener.appendClasses(classes)
+		listener.appendClasses(parsedDeps)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		apis := listener.getApis()
 		fmt.Println(apis)
-		//nodeInfo = listener.getNodeInfo()
-		//nodeInfo.Path = file
-		//nodeInfos = append(nodeInfos, *nodeInfo)
 	}
 
-	return nodeInfos
+	return parsedDeps
 }
 
 func (j *JavaApiApp) JavaFiles(codeDir string) []string {

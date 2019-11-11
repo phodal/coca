@@ -18,8 +18,3 @@ var sqlCmd *cobra.Command = &cobra.Command{
 	},
 }
 
-func init() {
-	rootCmd.AddCommand(sqlCmd)
-
-	sqlCmd.PersistentFlags().StringP("path", "p", "", "path")
-}

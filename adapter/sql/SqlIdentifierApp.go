@@ -24,7 +24,6 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
 
 		parsedXml := ParseXml(xmlFile)
 		for _, attr := range parsedXml.Attrs {
-
 			if strings.Contains(attr.Name.Local, "namespace") {
 				fmt.Println(attr.Value)
 			}

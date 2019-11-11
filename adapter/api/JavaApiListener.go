@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
@@ -27,6 +28,7 @@ var localVars = make(map[string]string)
 
 var currentRestApi RestApi
 var RestApis []RestApi
+var pathVars = make(map[string]string)
 
 func NewJavaApiListener() *JavaApiListener {
 	isSpringRestController = false
@@ -103,6 +105,7 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) 
 			return
 		}
 
+		currentRestApi.MethodName = ctx.IDENTIFIER().GetText()
 		buildRestApi(ctx)
 	}
 
@@ -140,6 +143,10 @@ func buildRestApi(ctx *MethodDeclarationContext) {
 				qualifiedName := modifier.GetChild(0).(*AnnotationContext).QualifiedName().GetText()
 				if qualifiedName == "RequestBody" {
 					hasRequestBody = true
+				}
+
+				if qualifiedName == "PathVariable" {
+					fmt.Println()
 				}
 			}
 		}

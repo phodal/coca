@@ -48,8 +48,6 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 		allApis = append(allApis, apis...)
 	}
 
-	fmt.Println(allApis)
-
 	return allApis
 }
 

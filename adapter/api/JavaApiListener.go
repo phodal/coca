@@ -100,41 +100,42 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) 
 			return
 		}
 
-		parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
-		formalParameter := parameterList.AllFormalParameter()
-		for _, param := range formalParameter {
-			paramContext := param.(*FormalParameterContext)
+		buildRestApi(ctx)
+	}
+}
 
-			modifiers := paramContext.AllVariableModifier()
-			hasRequestBody := false
-			for _, modifier := range modifiers {
-				childType := reflect.TypeOf(modifier.GetChild(0))
-				if childType.String() == "*parser.AnnotationContext" {
-					qualifiedName := modifier.GetChild(0).(*AnnotationContext).QualifiedName().GetText()
-					if qualifiedName == "RequestBody" {
-						hasRequestBody = true
-					}
+func buildRestApi(ctx *MethodDeclarationContext) {
+	parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
+	formalParameter := parameterList.AllFormalParameter()
+	for _, param := range formalParameter {
+		paramContext := param.(*FormalParameterContext)
+
+		modifiers := paramContext.AllVariableModifier()
+		hasRequestBody := false
+		for _, modifier := range modifiers {
+			childType := reflect.TypeOf(modifier.GetChild(0))
+			if childType.String() == "*parser.AnnotationContext" {
+				qualifiedName := modifier.GetChild(0).(*AnnotationContext).QualifiedName().GetText()
+				if qualifiedName == "RequestBody" {
+					hasRequestBody = true
 				}
 			}
-
-			paramType := paramContext.TypeType().GetText()
-			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-
-			if hasRequestBody {
-				requestBodyClass = paramType
-			}
-
-			localVars[paramValue] = paramType
 		}
 
-		currentRestApi.Body = requestBodyClass
+		paramType := paramContext.TypeType().GetText()
+		paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
-		//currentRestApi.Body
-		hasEnterRestController = false
-		requestBodyClass = ""
+		if hasRequestBody {
+			requestBodyClass = paramType
+		}
 
-		RestApis = append(RestApis, currentRestApi)
+		localVars[paramValue] = paramType
 	}
+	currentRestApi.Body = requestBodyClass
+	//currentRestApi.Body
+	hasEnterRestController = false
+	requestBodyClass = ""
+	RestApis = append(RestApis, currentRestApi)
 }
 
 func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {

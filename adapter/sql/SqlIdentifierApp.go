@@ -1,7 +1,9 @@
 package sql
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	. "github.com/phodal/coca/adapter/sql/parse"
 	parser "github.com/phodal/coca/language/sql"
 	"os"
 	"path/filepath"
@@ -13,6 +15,17 @@ type SqlIdentifierApp struct {
 }
 
 func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
+	xmlFiles := (*SqlIdentifierApp)(nil).xmlFiles(codeDir)
+	for _, xmlFile := range xmlFiles {
+		xmlFile, err := os.Open(xmlFile)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		parsedXml := ParseXml(xmlFile)
+		fmt.Println(parsedXml)
+	}
+
 	files := (*SqlIdentifierApp)(nil).sqlFiles(codeDir)
 	for index := range files {
 		file := files[index]
@@ -24,6 +37,17 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 	}
+}
+
+func (j *SqlIdentifierApp) xmlFiles(codeDir string) []string {
+	files := make([]string, 0)
+	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
+		if strings.HasSuffix(path, "Mapper.xml") {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files
 }
 
 func (j *SqlIdentifierApp) sqlFiles(codeDir string) []string {

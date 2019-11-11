@@ -22,5 +22,21 @@ func (s *SqlIdentifierListener) EnterSelect_or_values(ctx *Select_or_valuesConte
 }
 
 func (s *SqlIdentifierListener) EnterSelect_core(ctx *Select_coreContext) {
-	fmt.Println(ctx.GetText())
+	columns := ctx.AllResult_column()
+	for _, col := range columns {
+		column := col.(*Result_columnContext)
+		column.GetText()
+	}
+	if ctx.K_FROM() != nil {
+		subqueries := ctx.AllTable_or_subquery()
+		for _, subquery := range subqueries {
+			subqueryCtx := subquery.(*Table_or_subqueryContext)
+			if subqueryCtx.Table_name() != nil {
+				fmt.Println(subqueryCtx.Table_name().GetText())
+			}
+			if subqueryCtx.Database_name() != nil {
+				fmt.Println(subqueryCtx.Database_name().GetText())
+			}
+		}
+	}
 }

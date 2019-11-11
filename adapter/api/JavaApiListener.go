@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/adapter/models"
 	. "github.com/phodal/coca/language/java"
 	"reflect"
@@ -101,6 +103,25 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) 
 		}
 
 		buildRestApi(ctx)
+	}
+
+	methodBody := ctx.MethodBody()
+	blockContext := methodBody.GetChild(0)
+	if reflect.TypeOf(blockContext).String() == "*parser.BlockContext" {
+		filterMethodCall(blockContext)
+	}
+}
+
+func filterMethodCall(blockContext antlr.Tree) {
+	blcStatement := blockContext.(*BlockContext).AllBlockStatement()
+	for _, rangeStatement := range blcStatement {
+		if reflect.TypeOf(rangeStatement.GetChild(0)).String() == "*parser.StatementContext" {
+			statement := rangeStatement.GetChild(0).(*StatementContext)
+			if reflect.TypeOf(statement.GetChild(0)).String() == "*parser.ExpressionContext" {
+				express := statement.GetChild(0).(*ExpressionContext)
+				fmt.Println(reflect.TypeOf(express.GetChild(0)).String())
+			}
+		}
 	}
 }
 

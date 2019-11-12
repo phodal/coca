@@ -7,6 +7,7 @@ type JMethod struct {
 	StartLinePosition int
 	StopLine          int
 	StopLinePosition  int
+	Parameters        []JParameter
 }
 
 type JParameter struct {

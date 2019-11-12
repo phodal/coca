@@ -71,7 +71,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 	methods = append(methods, *method)
 }
 
@@ -104,14 +104,14 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
-	methods = append(methods, *method)
+	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
 			return
 		}
 
+		var methodParams []JParameter = nil
 		parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
 		formalParameter := parameterList.AllFormalParameter()
 		for _, param := range formalParameter {
@@ -120,8 +120,13 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 			localVars[paramValue] = paramType
+			methodParams = append(methodParams, *&JParameter{paramType, paramValue})
 		}
+
+		method.Parameters = methodParams;
 	}
+
+	methods = append(methods, *method)
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *CreatorContext) {

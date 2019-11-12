@@ -29,7 +29,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *InterfaceM
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 	node.AddMethod(*method)
 }
 
@@ -43,7 +43,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *MethodDeclarationCo
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 	node.AddMethod(*method)
 }
 

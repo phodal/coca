@@ -164,10 +164,25 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
+			targetType = buildSpecificTarget(targetType)
+
 			jMethodCall := &JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
+}
+
+func buildSpecificTarget(targetType string) string {
+	isSelfFieldCall := strings.Contains(targetType, "this.")
+	if isSelfFieldCall {
+		targetType = strings.ReplaceAll(targetType, "this.", "")
+		for _, field := range fields {
+			if field.Value == targetType {
+				targetType = field.Type
+			}
+		}
+	}
+	return targetType
 }
 
 func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {

@@ -5,7 +5,6 @@ import (
 	"strings"
 )
 
-
 type ConceptSegmenter struct {
 }
 

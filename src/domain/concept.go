@@ -18,7 +18,7 @@ func (c ConceptAnalyser) run()  {
 
 }
 
-func (c ConceptAnalyser) Analysis(path string, clzs *[]models.JClassNode) {
+func (c ConceptAnalyser) Analysis(clzs *[]models.JClassNode) {
 	buildMethodsFromDeps(*clzs)
 }
 

@@ -9,17 +9,18 @@ import (
 	"log"
 )
 
-var parsedDeps []models.JClassNode
 
-var conceptCmd *cobra.Command = &cobra.Command{
-	Use:   "concept",
-	Short: "concept api",
+var callGraphCmd *cobra.Command = &cobra.Command{
+	Use:   "call",
+	Short: "call graph api",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		var parsedDeps []models.JClassNode
+		className := cmd.Flag("className").Value.String()
 		dependence := cmd.Flag("dependence").Value.String()
 
 		if dependence != "" {
-			analyser := NewConceptAnalyser()
+			analyser := NewCallGraph()
 			file := ReadFile(dependence)
 			if file == nil {
 				log.Fatal("lost file:" + dependence)
@@ -27,13 +28,14 @@ var conceptCmd *cobra.Command = &cobra.Command{
 
  			_ = json.Unmarshal(file, &parsedDeps)
 
-			analyser.Analysis(&parsedDeps)
+			analyser.Analysis(className, &parsedDeps)
 		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(conceptCmd)
+	rootCmd.AddCommand(callGraphCmd)
 
-	conceptCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	callGraphCmd.PersistentFlags().StringP("class", "c", "", "path")
+	callGraphCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
 }

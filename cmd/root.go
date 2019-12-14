@@ -5,9 +5,6 @@ import (
 )
 
 var (
-	// Used for flags.
-	cfgFile string
-
 	rootCmd = &cobra.Command{
 		Use:   "coca",
 		Short: "A generator for Cobra based Applications",
@@ -17,11 +14,5 @@ var (
 
 func Execute() error {
 	return rootCmd.Execute()
-}
-
-func init() {
-	rootCmd.AddCommand(analysisCmd)
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.cobra.yaml)")
 }
 

@@ -28,6 +28,6 @@ var apiCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(apiCmd)
 
-	rootCmd.PersistentFlags().StringP("path", "p", "", "path")
-	rootCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
+	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
 }

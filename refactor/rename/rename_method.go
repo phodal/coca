@@ -1,17 +1,17 @@
 package unused
 
 import (
-	"encoding/json"
 	. "coca/adapter/models"
 	. "coca/refactor/base/models"
+	"coca/refactor/rename/support"
 	. "coca/utils"
-	. "coca/utils/models"
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"strings"
 )
 
-var parsedChange []RefactorChangeRelate
+var parsedChange []support.RefactorChangeRelate
 var nodes []JMoveStruct
 
 type RemoveMethodApp struct {
@@ -44,17 +44,17 @@ func (j *RemoveMethodApp) Start() {
 
 	conf = string(configBytes)
 
-	parsedChange = ParseRelates(conf)
+	parsedChange = support.ParseRelates(conf)
 
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []JClassNode, relates []RefactorChangeRelate) {
+func startParse(nodes []JClassNode, relates []support.RefactorChangeRelate) {
 
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
-			oldInfo := BuildMethodPackageInfo(related.OldObj)
-			newInfo := BuildMethodPackageInfo(related.NewObj)
+			oldInfo := support.BuildMethodPackageInfo(related.OldObj)
+			newInfo := support.BuildMethodPackageInfo(related.NewObj)
 
 			if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
 				for _, method := range pkgNode.Methods {
@@ -79,7 +79,7 @@ func methodCallToMethodModel(call JMethodCall) *JMethod {
 	return &JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil}
 }
 
-func updateSelfRefs(node JClassNode, method JMethod, info *PackageClassInfo) {
+func updateSelfRefs(node JClassNode, method JMethod, info *support.PackageClassInfo) {
 	path := node.Path
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

@@ -1,7 +1,6 @@
-package utils
+package support
 
 import (
-	. "coca/utils/models"
 	"strings"
 )
 

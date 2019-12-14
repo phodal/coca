@@ -1,26 +1,26 @@
 package identifier
 
 import (
-	. "coca/adapter/models"
-	. "coca/language/java"
+	"coca/src/adapter/models"
+	"coca/src/language/java"
 )
 
-var node *JIdentifier;
+var node *models.JIdentifier;
 
 type JavaIdentifierListener struct {
-	BaseJavaParserListener
+	parser.BaseJavaParserListener
 }
 
-func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
+func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
 	node.Pkg = ctx.QualifiedName().GetText()
 }
 
-func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
+func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	node.Type = "Class"
 	node.Name = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
+func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -29,11 +29,11 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *InterfaceM
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 	node.AddMethod(*method)
 }
 
-func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
+func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -43,16 +43,16 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *MethodDeclarationCo
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 	node.AddMethod(*method)
 }
 
-func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
+func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	node.Type = "Interface"
 	node.Name = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaIdentifierListener) InitNode(identifier *JIdentifier) {
+func (s *JavaIdentifierListener) InitNode(identifier *models.JIdentifier) {
 	node = identifier
 }
 

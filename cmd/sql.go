@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	. "coca/adapter/sql"
+	. "coca/src/adapter/sql"
 	"github.com/spf13/cobra"
 )
 

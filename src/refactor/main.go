@@ -1,10 +1,10 @@
 package main
 
 import (
+	. "coca/src/adapter/call"
+	. "coca/src/adapter/identifier"
 	"encoding/json"
 	"fmt"
-	. "coca/adapter/call"
-	. "coca/adapter/identifier"
 )
 
 func main() {

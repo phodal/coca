@@ -1,15 +1,15 @@
 package api
 
 import (
+	models2 "coca/src/adapter/models"
+	"coca/src/language/java"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"coca/adapter/models"
-	. "coca/language/java"
 	"reflect"
 	"strings"
 )
 
-var jClassNodes []models.JClassNode
+var jClassNodes []models2.JClassNode
 
 type RestApi struct {
 	Uri              string
@@ -38,14 +38,14 @@ func NewJavaApiListener() *JavaApiListener {
 }
 
 type JavaApiListener struct {
-	BaseJavaParserListener
+	parser.BaseJavaParserListener
 }
 
-func (s *JavaApiListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
+func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
 }
 
-func (s *JavaApiListener) EnterAnnotation(ctx *AnnotationContext) {
+func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "RestController" {
 		isSpringRestController = true
@@ -58,7 +58,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *AnnotationContext) {
 	if !hasEnterClass {
 		if annotationName == "RequestMapping" {
 			if ctx.ElementValuePairs() != nil {
-				firstPair := ctx.ElementValuePairs().GetChild(0).(*ElementValuePairContext)
+				firstPair := ctx.ElementValuePairs().GetChild(0).(*parser.ElementValuePairContext)
 				if firstPair.IDENTIFIER().GetText() == "value" {
 					baseApiUrlName = firstPair.ElementValue().GetText()
 				}
@@ -99,7 +99,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *AnnotationContext) {
 
 var requestBodyClass string
 
-func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
+func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	if hasEnterRestController && ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
 			return
@@ -117,30 +117,30 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) 
 }
 
 func filterMethodCall(blockContext antlr.Tree) {
-	blcStatement := blockContext.(*BlockContext).AllBlockStatement()
+	blcStatement := blockContext.(*parser.BlockContext).AllBlockStatement()
 	for _, rangeStatement := range blcStatement {
 		if reflect.TypeOf(rangeStatement.GetChild(0)).String() == "*parser.StatementContext" {
-			statement := rangeStatement.GetChild(0).(*StatementContext)
+			statement := rangeStatement.GetChild(0).(*parser.StatementContext)
 			if reflect.TypeOf(statement.GetChild(0)).String() == "*parser.ExpressionContext" {
-				express := statement.GetChild(0).(*ExpressionContext)
+				express := statement.GetChild(0).(*parser.ExpressionContext)
 				reflect.TypeOf(express.GetChild(0))
 			}
 		}
 	}
 }
 
-func buildRestApi(ctx *MethodDeclarationContext) {
-	parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
+func buildRestApi(ctx *parser.MethodDeclarationContext) {
+	parameterList := ctx.FormalParameters().GetChild(1).(*parser.FormalParameterListContext)
 	formalParameter := parameterList.AllFormalParameter()
 	for _, param := range formalParameter {
-		paramContext := param.(*FormalParameterContext)
+		paramContext := param.(*parser.FormalParameterContext)
 
 		modifiers := paramContext.AllVariableModifier()
 		hasRequestBody := false
 		for _, modifier := range modifiers {
 			childType := reflect.TypeOf(modifier.GetChild(0))
 			if childType.String() == "*parser.AnnotationContext" {
-				qualifiedName := modifier.GetChild(0).(*AnnotationContext).QualifiedName().GetText()
+				qualifiedName := modifier.GetChild(0).(*parser.AnnotationContext).QualifiedName().GetText()
 				if qualifiedName == "RequestBody" {
 					hasRequestBody = true
 				}
@@ -152,7 +152,7 @@ func buildRestApi(ctx *MethodDeclarationContext) {
 		}
 
 		paramType := paramContext.TypeType().GetText()
-		paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 		if hasRequestBody {
 			requestBodyClass = paramType
@@ -182,7 +182,7 @@ func buildMethodParameters(requestBodyClass string) {
 	currentRestApi.MethodParams = params
 }
 
-func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
+func (s *JavaApiListener) appendClasses(classes []models2.JClassNode) {
 	jClassNodes = classes
 }
 

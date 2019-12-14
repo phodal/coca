@@ -1,9 +1,9 @@
 package call
 
 import (
+	"coca/src/adapter/models"
+	"coca/src/language/java"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "coca/adapter/models"
-	. "coca/language/java"
 	"reflect"
 	"strings"
 )
@@ -12,9 +12,9 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
-var fields []JAppField
-var methods []JMethod
-var methodCalls []JMethodCall
+var fields []models.JAppField
+var methods []models.JMethod
+var methodCalls []models.JMethodCall
 var currentType string
 
 var mapFields = make(map[string]string)
@@ -32,23 +32,23 @@ func NewJavaCallListener() *JavaCallListener {
 }
 
 type JavaCallListener struct {
-	BaseJavaParserListener
+	parser.BaseJavaParserListener
 }
 
-func (s *JavaCallListener) getNodeInfo() *JClassNode {
-	return &JClassNode{currentPkg, currentClz, currentType, "", fields, methods, methodCalls}
+func (s *JavaCallListener) getNodeInfo() *models.JClassNode {
+	return &models.JClassNode{currentPkg, currentClz, currentType, "", fields, methods, methodCalls}
 }
 
-func (s *JavaCallListener) EnterPackageDeclaration(ctx *PackageDeclarationContext) {
+func (s *JavaCallListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
 	currentPkg = ctx.QualifiedName().GetText()
 }
 
-func (s *JavaCallListener) EnterImportDeclaration(ctx *ImportDeclarationContext) {
+func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
 	imports = append(imports, importText)
 }
 
-func (s *JavaCallListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
+func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	currentType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
 
@@ -57,12 +57,12 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	}
 }
 
-func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
+func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	currentType = "Interface"
 	currentClz = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
+func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -71,31 +71,31 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 	methods = append(methods, *method)
 }
 
-func (s *JavaCallListener) EnterFormalParameter(ctx *FormalParameterContext) {
+func (s *JavaCallListener) EnterFormalParameter(ctx *parser.FormalParameterContext) {
 	formalParameters[ctx.VariableDeclaratorId().GetText()] = ctx.TypeType().GetText()
 }
 
-func (s *JavaCallListener) EnterFieldDeclaration(ctx *FieldDeclarationContext) {
+func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationContext) {
 	decelerators := ctx.VariableDeclarators()
 	typeType := decelerators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	for _, declarator := range decelerators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
-		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+	for _, declarator := range decelerators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
+		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeType
-		fields = append(fields, *&JAppField{Type: typeType, Value: value})
+		fields = append(fields, *&models.JAppField{Type: typeType, Value: value})
 	}
 }
 
-func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *LocalVariableDeclarationContext) {
+func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariableDeclarationContext) {
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
 	localVars[variableName] = typ
 }
 
-func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
+func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -104,23 +104,23 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
 			return
 		}
 
-		var methodParams []JParameter = nil
-		parameterList := ctx.FormalParameters().GetChild(1).(*FormalParameterListContext)
+		var methodParams []models.JParameter = nil
+		parameterList := ctx.FormalParameters().GetChild(1).(*parser.FormalParameterListContext)
 		formalParameter := parameterList.AllFormalParameter()
 		for _, param := range formalParameter {
-			paramContext := param.(*FormalParameterContext)
+			paramContext := param.(*parser.FormalParameterContext)
 			paramType := paramContext.TypeType().GetText()
-			paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+			paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 			localVars[paramValue] = paramType
-			methodParams = append(methodParams, *&JParameter{paramType, paramValue})
+			methodParams = append(methodParams, *&models.JParameter{paramType, paramValue})
 		}
 
 		method.Parameters = methodParams;
@@ -129,16 +129,16 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methods = append(methods, *method)
 }
 
-func (s *JavaCallListener) EnterCreator(ctx *CreatorContext) {
+func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	localVars[variableName] = ctx.CreatedName().GetText()
 }
 
-func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *LocalTypeDeclarationContext) {
+func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {
 
 }
 
-func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
+func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	var targetType = parseTargetType(targetCtx)
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
@@ -160,18 +160,18 @@ func (s *JavaCallListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &models.JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
 			targetType = buildSpecificTarget(targetType)
 
-			jMethodCall := &JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &models.JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
@@ -190,7 +190,7 @@ func buildSpecificTarget(targetType string) string {
 	return targetType
 }
 
-func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
+func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 	// lambda BlogPO::of
 	if ctx.COLONCOLON() != nil {
 		text := ctx.Expression(0).GetText()
@@ -203,7 +203,7 @@ func (s *JavaCallListener) EnterExpression(ctx *ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &JMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

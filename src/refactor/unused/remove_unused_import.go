@@ -1,16 +1,15 @@
 package unused
 
 import (
+	"coca/src/refactor/base"
+	"coca/src/refactor/base/models"
+	"coca/src/refactor/utils"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-
-	. "coca/refactor/base"
-	. "coca/refactor/base/models"
-	. "coca/refactor/utils"
 )
 
 var currentFile string
@@ -20,7 +19,7 @@ var configPath string
 type RemoveUnusedImportApp struct {
 }
 
-var nodes []JMoveStruct
+var nodes []models.JMoveStruct
 
 func NewRemoveUnusedImportApp(config string, pPath string) *RemoveUnusedImportApp {
 	moveConfig = config
@@ -31,7 +30,7 @@ func NewRemoveUnusedImportApp(config string, pPath string) *RemoveUnusedImportAp
 }
 
 func (j *RemoveUnusedImportApp) Analysis() {
-	files := GetJavaFiles(configPath)
+	files := utils.GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
 
@@ -39,11 +38,11 @@ func (j *RemoveUnusedImportApp) Analysis() {
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := ProcessFile(file)
+		parser := utils.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		node := NewJFullIdentifier()
-		listener := new(JavaRefactorListener)
+		node := models.NewJFullIdentifier()
+		listener := new(base.JavaRefactorListener)
 		listener.InitNode(node)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
@@ -54,7 +53,7 @@ func (j *RemoveUnusedImportApp) Analysis() {
 	}
 }
 
-func handleNode(node *JFullIdentifier) {
+func handleNode(node *models.JFullIdentifier) {
 	var fields = node.GetFields()
 	var imports = node.GetImports()
 
@@ -88,7 +87,7 @@ func removeImportByLines(file string, errorLines []int) {
 	}
 }
 
-func removeImportByLineNum(imp JImport, line int) {
+func removeImportByLineNum(imp models.JImport, line int) {
 	removeLine(currentFile, line)
 }
 

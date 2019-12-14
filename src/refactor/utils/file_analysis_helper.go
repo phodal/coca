@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "coca/language/java"
+	. "coca/src/language/java"
 )
 
 func GetJavaFiles(codeDir string) []string {

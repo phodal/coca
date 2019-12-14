@@ -1,18 +1,18 @@
 package unused
 
 import (
-	. "coca/adapter/models"
-	. "coca/refactor/base/models"
-	"coca/refactor/rename/support"
-	. "coca/utils"
+	. "coca/src/adapter/models"
+	"coca/src/refactor/base/models"
+	support2 "coca/src/refactor/rename/support"
+	"coca/src/utils"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"strings"
 )
 
-var parsedChange []support.RefactorChangeRelate
-var nodes []JMoveStruct
+var parsedChange []support2.RefactorChangeRelate
+var nodes []models.JMoveStruct
 
 type RemoveMethodApp struct {
 }
@@ -30,31 +30,31 @@ func RenameMethodApp(dep string, p string) *RemoveMethodApp {
 }
 
 func (j *RemoveMethodApp) Start() {
-	file := ReadFile(depsFile)
+	file := utils.ReadFile(depsFile)
 	if file == nil {
 		return
 	}
 
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	configBytes := ReadFile(configPath)
+	configBytes := utils.ReadFile(configPath)
 	if configBytes == nil {
 		return
 	}
 
 	conf = string(configBytes)
 
-	parsedChange = support.ParseRelates(conf)
+	parsedChange = support2.ParseRelates(conf)
 
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []JClassNode, relates []support.RefactorChangeRelate) {
+func startParse(nodes []JClassNode, relates []support2.RefactorChangeRelate) {
 
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
-			oldInfo := support.BuildMethodPackageInfo(related.OldObj)
-			newInfo := support.BuildMethodPackageInfo(related.NewObj)
+			oldInfo := support2.BuildMethodPackageInfo(related.OldObj)
+			newInfo := support2.BuildMethodPackageInfo(related.NewObj)
 
 			if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
 				for _, method := range pkgNode.Methods {
@@ -79,7 +79,7 @@ func methodCallToMethodModel(call JMethodCall) *JMethod {
 	return &JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil}
 }
 
-func updateSelfRefs(node JClassNode, method JMethod, info *support.PackageClassInfo) {
+func updateSelfRefs(node JClassNode, method JMethod, info *support2.PackageClassInfo) {
 	path := node.Path
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

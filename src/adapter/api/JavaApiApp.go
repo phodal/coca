@@ -1,19 +1,18 @@
 package api
 
 import (
+	"coca/src/adapter/models"
+	parser2 "coca/src/language/java"
+	"coca/src/utils"
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
 	"strings"
-
-	. "coca/adapter/models"
-	. "coca/language/java"
-	. "coca/utils"
 )
 
-var parsedDeps []JClassNode
+var parsedDeps []models.JClassNode
 var allApis []RestApi
 
 type JavaApiApp struct {
@@ -22,7 +21,7 @@ type JavaApiApp struct {
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	parsedDeps = nil
-	file := ReadFile(depPath)
+	file := utils.ReadFile(depPath)
 	if file == nil {
 		return nil
 	}
@@ -62,10 +61,10 @@ func (j *JavaApiApp) JavaFiles(codeDir string) []string {
 	return files
 }
 
-func (j *JavaApiApp) ProcessFile(path string) *JavaParser {
+func (j *JavaApiApp) ProcessFile(path string) *parser2.JavaParser {
 	is, _ := antlr.NewFileStream(path)
-	lexer := NewJavaLexer(is)
+	lexer := parser2.NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
-	parser := NewJavaParser(stream)
+	parser := parser2.NewJavaParser(stream)
 	return parser
 }

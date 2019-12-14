@@ -1,10 +1,10 @@
 package sql
 
 import (
+	"coca/src/adapter/sql/parse"
+	parser2 "coca/src/language/sql"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "coca/adapter/sql/parse"
-	parser "coca/language/sql"
 	"os"
 	"path/filepath"
 	"strings"
@@ -22,7 +22,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
 			fmt.Println(err)
 		}
 
-		parsedXml := ParseXml(xmlFile)
+		parsedXml := parse.ParseXml(xmlFile)
 		for _, attr := range parsedXml.Attrs {
 			if strings.Contains(attr.Name.Local, "namespace") {
 				fmt.Println(attr.Value)
@@ -65,10 +65,10 @@ func (j *SqlIdentifierApp) sqlFiles(codeDir string) []string {
 	return files
 }
 
-func (j *SqlIdentifierApp) processFile(path string) *parser.SqlParser {
+func (j *SqlIdentifierApp) processFile(path string) *parser2.SqlParser {
 	is, _ := antlr.NewFileStream(path)
-	lexer := parser.NewSqlLexer(is)
+	lexer := parser2.NewSqlLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
-	parser := parser.NewSqlParser(stream)
+	parser := parser2.NewSqlParser(stream)
 	return parser
 }

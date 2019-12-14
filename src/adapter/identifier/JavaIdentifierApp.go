@@ -1,27 +1,26 @@
 package identifier
 
 import (
+	"coca/src/adapter/models"
+	parser2 "coca/src/language/java"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
 	"strings"
-
-	. "coca/adapter/models"
-	. "coca/language/java"
 )
 
-var nodeInfos []JsonIdentifier = nil
+var nodeInfos []models.JsonIdentifier = nil
 
 type JavaIdentifierApp struct {
 }
 
-func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []JsonIdentifier {
+func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JsonIdentifier {
 	nodeInfos = nil
 	files := (*JavaIdentifierApp)(nil).javaFiles(codeDir)
 	for index := range files {
 		file := files[index]
-		node := NewJsonIdentifier()
+		node := models.NewJsonIdentifier()
 
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
@@ -29,14 +28,14 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []JsonIdentifier {
 		parser := (*JavaIdentifierApp)(nil).processFile(file)
 		context := parser.CompilationUnit()
 
-		clzInfo := NewJIdentifier()
+		clzInfo := models.NewJIdentifier()
 		listener := new(JavaIdentifierListener)
 		listener.InitNode(clzInfo)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		if clzInfo.Name != "" {
-			node = &JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
+			node = &models.JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
 			nodeInfos = append(nodeInfos, *node)
 
 		}
@@ -56,10 +55,10 @@ func (j *JavaIdentifierApp) javaFiles(codeDir string) []string {
 	return files
 }
 
-func (j *JavaIdentifierApp) processFile(path string) *JavaParser {
+func (j *JavaIdentifierApp) processFile(path string) *parser2.JavaParser {
 	is, _ := antlr.NewFileStream(path)
-	lexer := NewJavaLexer(is)
+	lexer := parser2.NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
-	parser := NewJavaParser(stream)
+	parser := parser2.NewJavaParser(stream)
 	return parser
 }

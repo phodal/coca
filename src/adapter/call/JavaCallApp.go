@@ -1,27 +1,26 @@
 package call
 
 import (
+	"coca/src/adapter/models"
+	parser2 "coca/src/language/java"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
 	"strings"
-
-	. "coca/adapter/models"
-	. "coca/language/java"
 )
 
-var nodeInfos []JClassNode
+var nodeInfos []models.JClassNode
 
 type JavaCallApp struct {
 
 }
 
-func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string) []JClassNode {
+func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string) []models.JClassNode {
 	nodeInfos = nil
 	files := (*JavaCallApp)(nil).javaFiles(codeDir)
 	for index := range files {
-		nodeInfo := NewClassNode()
+		nodeInfo := models.NewClassNode()
 		file := files[index]
 
 		displayName := filepath.Base(file)
@@ -54,10 +53,10 @@ func (j *JavaCallApp) javaFiles(codeDir string) []string {
 	return files
 }
 
-func (j *JavaCallApp) processFile(path string) *JavaParser {
+func (j *JavaCallApp) processFile(path string) *parser2.JavaParser {
 	is, _ := antlr.NewFileStream(path)
-	lexer := NewJavaLexer(is)
+	lexer := parser2.NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0);
-	parser := NewJavaParser(stream)
+	parser := parser2.NewJavaParser(stream)
 	return parser
 }

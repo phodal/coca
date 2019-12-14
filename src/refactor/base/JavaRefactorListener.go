@@ -1,13 +1,13 @@
 package base
 
 import (
-	. "coca/language/java"
-	. "coca/refactor/base/models"
+	. "coca/src/language/java"
+	"coca/src/refactor/base/models"
 	"strings"
 	"unicode"
 )
 
-var node *JFullIdentifier;
+var node *models.JFullIdentifier;
 
 type JavaRefactorListener struct {
 	BaseJavaParserListener
@@ -19,7 +19,7 @@ func (s *JavaRefactorListener) EnterPackageDeclaration(ctx *PackageDeclarationCo
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	pkgInfo := &JPkgInfo{node.Pkg, startLine, stopLine}
+	pkgInfo := &models.JPkgInfo{node.Pkg, startLine, stopLine}
 	node.SetPkgInfo(*pkgInfo)
 }
 
@@ -31,7 +31,7 @@ func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationCont
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	jImport := &JImport{importText, startLine, stopLine}
+	jImport := &models.JImport{importText, startLine, stopLine}
 
 	node.AddImport(*jImport)
 }
@@ -46,7 +46,7 @@ func (s *JavaRefactorListener) EnterQualifiedNameList(ctx *QualifiedNameListCont
 	for _, qualified := range ctx.AllQualifiedName() {
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
-		field := &JField{qualified.GetText(), node.Pkg, startLine, stopLine}
+		field := &models.JField{qualified.GetText(), node.Pkg, startLine, stopLine}
 		node.AddField(*field)
 	}
 }
@@ -55,7 +55,7 @@ func (s *JavaRefactorListener) EnterCatchType(ctx *CatchTypeContext) {
 	for _, qualified := range ctx.AllQualifiedName() {
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
-		field := &JField{qualified.GetText(), node.Pkg, startLine, stopLine}
+		field := &models.JField{qualified.GetText(), node.Pkg, startLine, stopLine}
 		node.AddField(*field)
 	}
 }
@@ -68,7 +68,7 @@ func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMet
 	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
 	//XXX: find the start position of {, not public
-	method := &JFullMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := &models.JFullMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
 	node.AddMethod(*method)
 }
 
@@ -80,7 +80,7 @@ func (s *JavaRefactorListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarati
 func (s *JavaRefactorListener) EnterTypeType(ctx *TypeTypeContext) {
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
-	field := &JField{ctx.GetText(), node.Pkg, startLine, stopLine}
+	field := &models.JField{ctx.GetText(), node.Pkg, startLine, stopLine}
 	node.AddField(*field)
 }
 
@@ -92,7 +92,7 @@ func (s *JavaRefactorListener) EnterClassOrInterfaceType(ctx *ClassOrInterfaceTy
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
 
-		field := &JField{name, node.Pkg, startLine, stopLine}
+		field := &models.JField{name, node.Pkg, startLine, stopLine}
 		node.AddField(*field)
 	}
 }
@@ -103,7 +103,7 @@ func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	field := &JField{annotation, node.Pkg, startLine, stopLine}
+	field := &models.JField{annotation, node.Pkg, startLine, stopLine}
 	node.AddField(*field)
 }
 
@@ -115,7 +115,7 @@ func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContex
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
 
-		field := &JField{name, node.Pkg, startLine, stopLine}
+		field := &models.JField{name, node.Pkg, startLine, stopLine}
 		node.AddField(*field)
 	}
 }
@@ -124,7 +124,7 @@ func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
 	text := ctx.IDENTIFIER().GetText()
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
-	field := &JField{text, node.Pkg, startLine, stopLine}
+	field := &models.JField{text, node.Pkg, startLine, stopLine}
 	node.AddField(*field)
 }
 
@@ -134,7 +134,7 @@ func (s *JavaRefactorListener) EnterExpressionList(ctx *ExpressionListContext) {
 		if isUppercaseText(expText) {
 			startLine := ctx.GetStart().GetLine()
 			stopLine := ctx.GetStop().GetLine()
-			field := &JField{expText, node.Pkg, startLine, stopLine}
+			field := &models.JField{expText, node.Pkg, startLine, stopLine}
 			node.AddField(*field)
 		}
 	}
@@ -146,7 +146,7 @@ func (s *JavaRefactorListener) EnterStatement(ctx *StatementContext) {
 		if isUppercaseText(expText) {
 			startLine := ctx.GetStart().GetLine()
 			stopLine := ctx.GetStop().GetLine()
-			field := &JField{expText, node.Pkg, startLine, stopLine}
+			field := &models.JField{expText, node.Pkg, startLine, stopLine}
 			node.AddField(*field)
 		}
 	}
@@ -160,7 +160,7 @@ func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
 
-		field := &JField{name, node.Pkg, startLine, stopLine}
+		field := &models.JField{name, node.Pkg, startLine, stopLine}
 		node.AddField(*field)
 	}
 }
@@ -172,7 +172,7 @@ func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
 		if isUppercaseText(expText) {
 			startLine := ctx.GetStart().GetLine()
 			stopLine := ctx.GetStop().GetLine()
-			field := &JField{expText, node.Pkg, startLine, stopLine}
+			field := &models.JField{expText, node.Pkg, startLine, stopLine}
 			node.AddField(*field)
 		}
 	}
@@ -192,7 +192,7 @@ func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
 			if isUppercaseText(expText) {
 				startLine := ctx.GetStart().GetLine()
 				stopLine := ctx.GetStop().GetLine()
-				field := &JField{expText, node.Pkg, startLine, stopLine}
+				field := &models.JField{expText, node.Pkg, startLine, stopLine}
 				node.AddField(*field)
 			}
 		}
@@ -203,6 +203,6 @@ func isUppercaseText(text string) bool {
 	return !strings.Contains(text, ".") && unicode.IsUpper([]rune(text)[0])
 }
 
-func (s *JavaRefactorListener) InitNode(identifier *JFullIdentifier) {
+func (s *JavaRefactorListener) InitNode(identifier *models.JFullIdentifier) {
 	node = identifier
 }

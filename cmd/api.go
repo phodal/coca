@@ -1,9 +1,9 @@
 package cmd
 
 import (
+	. "coca/src/adapter/api"
+	. "coca/src/utils"
 	"encoding/json"
-	. "coca/adapter/api"
-	. "coca/utils"
 	"github.com/spf13/cobra"
 )
 

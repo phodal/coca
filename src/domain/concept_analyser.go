@@ -7,14 +7,13 @@ import (
 )
 
 type ConceptAnalyser struct {
-
 }
 
 func NewConceptAnalyser() ConceptAnalyser {
 	return *&ConceptAnalyser{}
 }
 
-func (c ConceptAnalyser) run()  {
+func (c ConceptAnalyser) run() {
 
 }
 
@@ -33,8 +32,51 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 		}
 	}
 
-	camelcase := support.SegmentConceptCamelcase(methodsName)
+	words := support.SegmentConceptCamelcase(methodsName)
 
-	count := support.RankByWordCount(camelcase)
-	fmt.Println(count)
+	words = removeNormalWords(words)
+
+	wordCounts := support.RankByWordCount(words)
+	for _, word := range wordCounts[0:20] {
+		fmt.Println(word.Key, word.Value)
+	}
+}
+
+var normalWords = []string{
+	"get",
+	"create",
+	"update",
+	"delete",
+	"save",
+
+	"exist",
+	"find",
+	"new",
+	"parse",
+
+	"set",
+	"get",
+
+	"type",
+
+	"all",
+	"by",
+	"id",
+	"is",
+	"of",
+	"not",
+	"with",
+	"main",
+}
+
+func removeNormalWords(words map[string]int) map[string]int {
+	var newWords = words
+	for _, normalWord := range normalWords {
+		if newWords[normalWord] > 0 {
+			delete(newWords, normalWord)
+		}
+	}
+
+	fmt.Println(newWords)
+	return newWords
 }

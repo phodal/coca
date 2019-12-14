@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/phodal/coca/adapter/models"
-	. "github.com/phodal/coca/language/java"
+	. "coca/adapter/models"
+	. "coca/language/java"
 )
 
 var nodeInfos []JClassNode

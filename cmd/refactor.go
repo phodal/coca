@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	. "github.com/phodal/coca/refactor/move_class"
-	. "github.com/phodal/coca/refactor/rename"
-	. "github.com/phodal/coca/refactor/unused"
+	. "coca/refactor/move_class"
+	. "coca/refactor/rename"
+	. "coca/refactor/unused"
 	"github.com/spf13/cobra"
 )
 

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/phodal/coca/language/java"
+	. "coca/language/java"
 )
 
 func GetJavaFiles(codeDir string) []string {

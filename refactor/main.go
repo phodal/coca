@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	. "github.com/phodal/coca/adapter/call"
-	. "github.com/phodal/coca/adapter/identifier"
+	. "coca/adapter/call"
+	. "coca/adapter/identifier"
 )
 
 func main() {

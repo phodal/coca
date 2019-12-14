@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/phodal/coca/cmd"
+	"coca/cmd"
 )
 
 func main() {

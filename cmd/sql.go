@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	. "github.com/phodal/coca/adapter/sql"
+	. "coca/adapter/sql"
 	"github.com/spf13/cobra"
 )
 

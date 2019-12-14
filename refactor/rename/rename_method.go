@@ -2,10 +2,10 @@ package unused
 
 import (
 	"encoding/json"
-	. "github.com/phodal/coca/adapter/models"
-	. "github.com/phodal/coca/refactor/base/models"
-	. "github.com/phodal/coca/utils"
-	. "github.com/phodal/coca/utils/models"
+	. "coca/adapter/models"
+	. "coca/refactor/base/models"
+	. "coca/utils"
+	. "coca/utils/models"
 	"io/ioutil"
 	"log"
 	"strings"

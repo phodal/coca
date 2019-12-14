@@ -1,4 +1,4 @@
-module github.com/phodal/coca
+module coca
 
 go 1.13
 

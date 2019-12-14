@@ -11,10 +11,10 @@ import (
 	"runtime"
 	"strings"
 
-	. "github.com/phodal/coca/refactor/base"
-	. "github.com/phodal/coca/refactor/base/models"
-	. "github.com/phodal/coca/refactor/utils"
-	. "github.com/phodal/coca/utils"
+	. "coca/refactor/base"
+	. "coca/refactor/base/models"
+	. "coca/refactor/utils"
+	. "coca/utils"
 )
 
 var currentFile string

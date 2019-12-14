@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	. "github.com/phodal/coca/adapter/models"
-	. "github.com/phodal/coca/utils"
+	. "coca/adapter/models"
+	. "coca/utils"
 	"sort"
 	"strings"
 )

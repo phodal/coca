@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/phodal/coca/refactor/base"
-	. "github.com/phodal/coca/refactor/base/models"
-	. "github.com/phodal/coca/refactor/utils"
+	. "coca/refactor/base"
+	. "coca/refactor/base/models"
+	. "coca/refactor/utils"
 )
 
 var currentFile string

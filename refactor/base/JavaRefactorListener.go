@@ -1,8 +1,8 @@
 package base
 
 import (
-	. "github.com/phodal/coca/language/java"
-	. "github.com/phodal/coca/refactor/base/models"
+	. "coca/language/java"
+	. "coca/refactor/base/models"
 	"strings"
 	"unicode"
 )

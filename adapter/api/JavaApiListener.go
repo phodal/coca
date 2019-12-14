@@ -3,8 +3,8 @@ package api
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/adapter/models"
-	. "github.com/phodal/coca/language/java"
+	"coca/adapter/models"
+	. "coca/language/java"
 	"reflect"
 	"strings"
 )

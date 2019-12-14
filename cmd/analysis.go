@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 
-	. "github.com/phodal/coca/adapter/call"
-	. "github.com/phodal/coca/adapter/identifier"
-	. "github.com/phodal/coca/utils"
+	. "coca/adapter/call"
+	. "coca/adapter/identifier"
+	. "coca/utils"
 )
 
 var analysisCmd *cobra.Command = &cobra.Command{

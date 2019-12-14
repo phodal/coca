@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/phodal/coca/adapter/models"
-	. "github.com/phodal/coca/language/java"
-	. "github.com/phodal/coca/utils"
+	. "coca/adapter/models"
+	. "coca/language/java"
+	. "coca/utils"
 )
 
 var parsedDeps []JClassNode

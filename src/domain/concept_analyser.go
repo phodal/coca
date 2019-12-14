@@ -34,5 +34,7 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 	}
 
 	camelcase := support.SegmentConceptCamelcase(methodsName)
-	fmt.Println(camelcase)
+
+	count := support.RankByWordCount(camelcase)
+	fmt.Println(count)
 }

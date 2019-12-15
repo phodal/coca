@@ -145,7 +145,37 @@ coca ga -t -b
 +----------------------------------------------+-----------+-------------+
 ```
 
-### Refactor
+### Concept Analyser
+
+```
+coca concept -d deps.json
+```
+
+Results Examples:
+
+```
+product 874
+time 541
+member 405
+like 404
+example 371
+order 328
+primary 288
+criterion 222
+price 214
+selective 212
+promotion 198
+list 196
+category 184
+icon 160
+note 159
+pic 147
+point 143
+brand 131
+receiver 121
+```
+
+### Auto Refactor
 
 support: 
 

@@ -17,10 +17,13 @@ Usage:
 Available Commands:
   analysis    analysis package
   api         scan api
+  bs          Bad Code Smell
   call        call graph api
   concept     concept api
   help        Help about any command
   refactor    auto refactor code
+  scc         scc [FILE or DIRECTORY]
+
 
 ```
 

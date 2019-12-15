@@ -50,6 +50,7 @@ func (c CallGraph) AnalysisByFiles(callers []string, deps []models.JClassNode) s
 	for _, caller := range callers {
 		fmt.Println(caller)
 		chain := BuildCallChain(caller, methodMap)
+		fmt.Println(chain)
 		results = results + "\n" + chain
 	}
 	return results + "}\n"

@@ -114,14 +114,22 @@ var requestBodyClass string
 
 func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	if hasEnterRestController && ctx.FormalParameters() != nil {
-		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
+		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetChild(1) == nil {
 			return
+
 		}
 
 		currentRestApi.PackageName = currentPkg
 		currentRestApi.ClassName = currentClz
 		currentRestApi.MethodName = ctx.IDENTIFIER().GetText()
-		buildRestApi(ctx)
+		if ctx.FormalParameters().GetText() == "()" {
+			currentRestApi.RequestBodyClass = requestBodyClass
+			hasEnterRestController = false
+			requestBodyClass = ""
+			RestApis = append(RestApis, currentRestApi)
+		} else {
+			buildRestApi(ctx)
+		}
 	}
 
 	methodBody := ctx.MethodBody()

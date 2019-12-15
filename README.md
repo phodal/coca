@@ -43,20 +43,20 @@ Examples Result:
 
 ```
 {
-	"dataClass": [
-		{
-			"File": "examples/api/BookController.java",
-			"BS": "dataClass"
-		}
-        ...
-	],
-	"lazyElement": [
-		{
-			"File": "examples/api/model/BookRepresentaion.java",
-			"BS": "lazyElement"
-		}
-        ...
-	]
+   "dataClass": [
+      {
+         "File": "examples/api/BookController.java",
+         "BS": "dataClass"
+      }
+      ...
+   ],
+   "lazyElement": [
+      {
+         "File": "examples/api/model/BookRepresentaion.java",
+         "BS": "lazyElement"
+      }
+      ...
+   ]
 }
 ```
 

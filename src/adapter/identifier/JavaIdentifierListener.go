@@ -31,7 +31,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
 	node.AddMethod(*method)
 }
 
@@ -45,7 +45,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
 	node.AddMethod(*method)
 }
 

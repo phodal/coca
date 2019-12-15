@@ -21,10 +21,13 @@ var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtends = ""
+var currentMethod models.JMethod
 
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
+	currentMethod = models.NewJMethod()
+
 	methods = nil
 	methodCalls = nil
 	fields = nil
@@ -73,7 +76,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
 	methods = append(methods, *method)
 }
 
@@ -94,7 +97,7 @@ func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariableDeclarationContext) {
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	if ctx.GetChild(1) != nil {
-		if ctx.GetChild(1).GetChild(0) != nil  && ctx.GetChild(1).GetChild(0).GetChild(0) != nil{
+		if ctx.GetChild(1).GetChild(0) != nil && ctx.GetChild(1).GetChild(0).GetChild(0) != nil {
 
 			variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
 			localVars[variableName] = typ
@@ -111,7 +114,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
@@ -130,10 +133,17 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 			methodParams = append(methodParams, *&models.JParameter{paramType, paramValue})
 		}
 
-		method.Parameters = methodParams;
+		method.Parameters = methodParams
 	}
 
-	methods = append(methods, *method)
+	currentMethod = *method
+	//methods = append(methods, *method)
+}
+
+func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	methods = append(methods, currentMethod)
+	//fmt.Println(currentMethod)
+	currentMethod = models.NewJMethod()
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
@@ -183,7 +193,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	}
 
 	methodCalls = append(methodCalls, *jMethodCall)
-
+	currentMethod.MethodCalls = append(currentMethod.MethodCalls, *jMethodCall)
 }
 
 func buildSpecificTarget(targetType string) string {

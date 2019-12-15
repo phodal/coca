@@ -8,6 +8,20 @@ type JMethod struct {
 	StopLine          int
 	StopLinePosition  int
 	Parameters        []JParameter
+	MethodCalls       []JMethodCall
+}
+
+func NewJMethod() JMethod {
+	return *&JMethod{
+		Name:              "",
+		Type:              "",
+		StartLine:         0,
+		StartLinePosition: 0,
+		StopLine:          0,
+		StopLinePosition:  0,
+		Parameters:        nil,
+		MethodCalls:       nil,
+	}
 }
 
 type JParameter struct {
@@ -19,5 +33,5 @@ type JMethodInfo struct {
 	Name       string
 	Type       string
 	Parameters []JParameter
-	Length  	string
+	Length     string
 }

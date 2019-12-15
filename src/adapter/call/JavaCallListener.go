@@ -182,8 +182,18 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 		jMethodCall = &models.JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 	} else {
 		if ctx.GetText() == targetType {
+			//fmt.Println(ctx.IDENTIFIER().GetText())
+			//fmt.Println(imports)
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall = &models.JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			pkg := currentPkg
+			clz := currentClz
+			for _, imp := range imports {
+				if strings.HasSuffix(imp, "."+methodName) {
+					pkg = imp
+					clz = ""
+				}
+			}
+			jMethodCall = &models.JMethodCall{pkg, "", clz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
 			targetType = buildSpecificTarget(targetType)

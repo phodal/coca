@@ -50,7 +50,9 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 
 func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	currentType = "Class"
-	currentClz = ctx.IDENTIFIER().GetText()
+	if ctx.IDENTIFIER() != nil {
+		currentClz = ctx.IDENTIFIER().GetText()
+	}
 
 	if ctx.EXTENDS() != nil {
 		currentClzExtends = ctx.TypeType().GetText()
@@ -91,8 +93,13 @@ func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 
 func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariableDeclarationContext) {
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
-	variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
-	localVars[variableName] = typ
+	if ctx.GetChild(1) != nil {
+		if ctx.GetChild(1).GetChild(0) != nil  && ctx.GetChild(1).GetChild(0).GetChild(0) != nil{
+
+			variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
+			localVars[variableName] = typ
+		}
+	}
 }
 
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
@@ -193,6 +200,10 @@ func buildSpecificTarget(targetType string) string {
 func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 	// lambda BlogPO::of
 	if ctx.COLONCOLON() != nil {
+		if ctx.Expression(0) == nil {
+			return
+		}
+
 		text := ctx.Expression(0).GetText()
 		methodName := ctx.IDENTIFIER().GetText()
 		targetType := parseTargetType(text)

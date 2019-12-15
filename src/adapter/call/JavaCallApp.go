@@ -13,7 +13,6 @@ import (
 var nodeInfos []models.JClassNode
 
 type JavaCallApp struct {
-
 }
 
 func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string) []models.JClassNode {
@@ -45,7 +44,7 @@ func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string) []models.JC
 func (j *JavaCallApp) javaFiles(codeDir string) []string {
 	files := make([]string, 0)
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") {
+		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") && !strings.Contains(path, "Tests.java") {
 			files = append(files, path)
 		}
 		return nil
@@ -56,7 +55,7 @@ func (j *JavaCallApp) javaFiles(codeDir string) []string {
 func (j *JavaCallApp) processFile(path string) *parser2.JavaParser {
 	is, _ := antlr.NewFileStream(path)
 	lexer := parser2.NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0);
+	stream := antlr.NewCommonTokenStream(lexer, 0)
 	parser := parser2.NewJavaParser(stream)
 	return parser
 }

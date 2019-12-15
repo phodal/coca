@@ -166,22 +166,24 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	if targetType == "super" {
 		targetType = currentClzExtends
 	}
+
+	var jMethodCall = &models.JMethodCall{}
 	if fullType != "" {
-		jMethodCall := &models.JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
-		methodCalls = append(methodCalls, *jMethodCall)
+		jMethodCall = &models.JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &models.JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
-			methodCalls = append(methodCalls, *jMethodCall)
+			jMethodCall = &models.JMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
 			targetType = buildSpecificTarget(targetType)
 
-			jMethodCall := &models.JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
-			methodCalls = append(methodCalls, *jMethodCall)
+			jMethodCall = &models.JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		}
 	}
+
+	methodCalls = append(methodCalls, *jMethodCall)
+
 }
 
 func buildSpecificTarget(targetType string) string {

@@ -28,7 +28,7 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 
  			_ = json.Unmarshal(file, &parsedDeps)
 
-			analyser.Analysis(className, &parsedDeps)
+			analyser.Analysis(className, *&parsedDeps)
 		}
 	},
 }
@@ -36,6 +36,6 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(callGraphCmd)
 
-	callGraphCmd.PersistentFlags().StringP("class", "c", "", "path")
+	callGraphCmd.PersistentFlags().StringP("className", "c", "", "path")
 	callGraphCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
 }

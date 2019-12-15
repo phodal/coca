@@ -56,3 +56,4 @@ web/
 bs.json
 nodeInfos.json
 apis.json
+output.dot

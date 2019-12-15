@@ -33,10 +33,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 		for _, child := range methodMap[funcName] {
 			if len(methodMap[child]) > 0 {
 				arrayResult = arrayResult + BuildCallChain(child, methodMap)
-				arrayResult = arrayResult + "\"" + funcName + "\" -> \"" + child + "\";\n"
-			} else {
-				arrayResult = arrayResult + "\"" + funcName + "\" -> \"" + child + "\";\n"
 			}
+			arrayResult = arrayResult + "\"" + funcName + "\" -> \"" + child + "\";\n"
+
 		}
 
 		return arrayResult

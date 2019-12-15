@@ -35,7 +35,6 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 				content = strings.ReplaceAll(content, remove, "")
 			}
 
-
 			WriteToFile("call.dot", content)
 
 			cmd := exec.Command("dot", []string{"-Tsvg", "call.dot", "-o", "call_demo.svg"}...)

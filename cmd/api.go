@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"log"
 	"os/exec"
+	"strings"
 )
 
 var apiCmd *cobra.Command = &cobra.Command{
@@ -18,6 +19,7 @@ var apiCmd *cobra.Command = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path := cmd.Flag("path").Value.String()
 		dependence := cmd.Flag("dependence").Value.String()
+		remove := cmd.Flag("remove").Value.String()
 
 		if path != "" {
 			app := new(JavaApiApp)
@@ -42,6 +44,10 @@ var apiCmd *cobra.Command = &cobra.Command{
 			analyser := domain.NewCallGraph()
 			dotContent := analyser.AnalysisByFiles(apiCallers, parsedDeps)
 
+			if remove != "" {
+				dotContent = strings.ReplaceAll(dotContent, remove, "")
+			}
+
 			WriteToFile("api.dot", dotContent)
 
 			cmd := exec.Command("dot", []string{"-Tsvg", "api.dot", "-o", "api.svg"}...)
@@ -58,4 +64,5 @@ func init() {
 
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
 	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	apiCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
 }

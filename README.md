@@ -8,7 +8,6 @@ install
 go get https://github.com/phodal/coca
 ```
 
-
 help:
 
 ```
@@ -25,14 +24,34 @@ Available Commands:
 
 ```
 
-
-Analysis
+### Analysis
 
 ```
 coca analysis -p [PATH]
 ```
 
-Refactor
+### Build Deps Tree
+
+```
+coca call -c com.phodal.pholedge.book.BookController.createBook -d deps.json -r com.phodal.pholedge.
+```
+
+![Call Demo](docs/sample/call_demo.svg)
+
+### Identify Spring API
+
+```
+coca api -p examples/api -d deps.json
+```
+
+### Refactor
+
+support: 
+
+ - rename
+ - move
+ - remove unused import
+ - remove unused class
 
 ```
 coca refactor -R rename.coca -D deps.json -p src/main

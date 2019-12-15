@@ -35,7 +35,6 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 				arrayResult = arrayResult + BuildCallChain(child, methodMap)
 			}
 			arrayResult = arrayResult + "\"" + funcName + "\" -> \"" + child + "\";\n"
-
 		}
 
 		return arrayResult

@@ -8,8 +8,8 @@ import (
 	"github.com/spf13/cobra"
 	"log"
 	"os/exec"
+	"strings"
 )
-
 
 var callGraphCmd *cobra.Command = &cobra.Command{
 	Use:   "call",
@@ -19,6 +19,7 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 		var parsedDeps []models.JClassNode
 		className := cmd.Flag("className").Value.String()
 		dependence := cmd.Flag("dependence").Value.String()
+		remove := cmd.Flag("remove").Value.String()
 
 		if dependence != "" {
 			analyser := NewCallGraph()
@@ -27,9 +28,14 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 				log.Fatal("lost file:" + dependence)
 			}
 
- 			_ = json.Unmarshal(file, &parsedDeps)
+			_ = json.Unmarshal(file, &parsedDeps)
 
 			content := analyser.Analysis(className, *&parsedDeps)
+			if remove != "" {
+				content = strings.ReplaceAll(content, remove, "")
+			}
+
+
 			WriteToFile("call.dot", content)
 
 			cmd := exec.Command("dot", []string{"-Tsvg", "call.dot", "-o", "call.svg"}...)
@@ -46,4 +52,5 @@ func init() {
 
 	callGraphCmd.PersistentFlags().StringP("className", "c", "", "path")
 	callGraphCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	callGraphCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
 }

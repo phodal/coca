@@ -3,6 +3,7 @@ package call
 import (
 	"coca/src/adapter/models"
 	"coca/src/language/java"
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
@@ -22,11 +23,14 @@ var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtends = ""
 var currentMethod models.JMethod
+var methodMap = make(map[string]models.JMethod)
 
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	currentMethod = models.NewJMethod()
+
+	methodMap = make(map[string]models.JMethod)
 
 	methods = nil
 	methodCalls = nil
@@ -39,7 +43,11 @@ type JavaCallListener struct {
 }
 
 func (s *JavaCallListener) getNodeInfo() *models.JClassNode {
-	return &models.JClassNode{currentPkg, currentClz, currentType, "", fields, methods, methodCalls}
+	var methodsArray []models.JMethod
+	for _, value := range methodMap {
+		methodsArray = append(methodsArray, value)
+	}
+	return &models.JClassNode{currentPkg, currentClz, currentType, "", fields, methodsArray, methodCalls}
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
@@ -138,11 +146,11 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	}
 
 	currentMethod = *method
+	methodMap[getMethodMapName(*method)] = *method
 }
 
-func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	methods = append(methods, currentMethod)
-	currentMethod = models.NewJMethod()
+func getMethodMapName(method models.JMethod) string {
+	return currentPkg + "." + currentClz + "." + method.Name
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
@@ -151,7 +159,7 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 }
 
 func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {
-
+	// TODO
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
@@ -208,7 +216,10 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	}
 
 	methodCalls = append(methodCalls, *jMethodCall)
-	currentMethod.MethodCalls = append(currentMethod.MethodCalls, *jMethodCall)
+
+	method := methodMap[getMethodMapName(currentMethod)]
+	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
+	methodMap[getMethodMapName(currentMethod)] = method
 }
 
 func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {

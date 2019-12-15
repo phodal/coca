@@ -17,7 +17,9 @@ func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDecl
 
 func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	node.Type = "Class"
-	node.Name = ctx.IDENTIFIER().GetText()
+	if ctx.IDENTIFIER() != nil {
+		node.Name = ctx.IDENTIFIER().GetText()
+	}
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {

@@ -38,8 +38,10 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 	words = removeNormalWords(words)
 
 	wordCounts := support.RankByWordCount(words)
-	for _, word := range wordCounts[0:20] {
-		fmt.Println(word.Key, word.Value)
+	for _, word := range wordCounts {
+		if word.Value > 0 {
+			fmt.Println(word.Key, word.Value)
+		}
 	}
 }
 
@@ -49,6 +51,10 @@ var itStopWords = []string{
 	"update",
 	"delete",
 	"save",
+
+	"add",
+	"insert",
+	"select",
 
 	"exist",
 	"find",
@@ -61,6 +67,11 @@ var itStopWords = []string{
 	"last",
 
 	"type",
+	"key",
+	"value",
+	"equal",
+	"greater",
+	"greater",
 
 	"all",
 	"by",
@@ -70,6 +81,13 @@ var itStopWords = []string{
 	"not",
 	"with",
 	"main",
+
+	"status",
+	"count",
+	"equals",
+	"start",
+	"config",
+	"sort",
 }
 
 func removeNormalWords(words map[string]int) map[string]int {

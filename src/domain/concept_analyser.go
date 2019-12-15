@@ -53,6 +53,7 @@ var itStopWords = []string{
 	"save",
 
 	"add",
+	"remove",
 	"insert",
 	"select",
 
@@ -88,6 +89,29 @@ var itStopWords = []string{
 	"start",
 	"config",
 	"sort",
+	"handle",
+	"handler",
+	"internal",
+	"cache",
+	"request",
+	"process",
+
+	"parameter",
+	"method",
+	"class",
+	"default",
+	"object",
+	"annotation",
+
+	"read",
+	"write",
+
+	"bean",
+	"message",
+	"factory",
+	"error",
+	"error",
+	"exception",
 }
 
 func removeNormalWords(words map[string]int) map[string]int {

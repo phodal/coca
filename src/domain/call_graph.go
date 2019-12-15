@@ -2,7 +2,6 @@ package domain
 
 import (
 	"coca/src/adapter/models"
-	"fmt"
 )
 
 type CallGraph struct {
@@ -12,12 +11,20 @@ func NewCallGraph() CallGraph {
 	return *&CallGraph{}
 }
 
-func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) {
+func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 	methodMap := c.BuildMethodMap(clzs)
 
 	BuildCallChain(funcName, methodMap)
 	chain := BuildCallChain(funcName, methodMap)
-	fmt.Println(chain)
+	dotContent := toGraphviz(chain)
+	return dotContent
+}
+
+func toGraphviz(chain string) string {
+	var result = "digraph G { \n"
+	result = result + chain
+	result = result + "}\n"
+	return result
 }
 
 func BuildCallChain(funcName string, methodMap map[string][]string) string {

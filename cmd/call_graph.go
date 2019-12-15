@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"
+	"os/exec"
 )
 
 
@@ -28,7 +29,14 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 
  			_ = json.Unmarshal(file, &parsedDeps)
 
-			analyser.Analysis(className, *&parsedDeps)
+			content := analyser.Analysis(className, *&parsedDeps)
+			WriteToFile("call.dot", content)
+
+			cmd := exec.Command("dot", []string{"-Tsvg", "call.dot", "-o", "call.svg"}...)
+			_, err := cmd.CombinedOutput()
+			if err != nil {
+				log.Fatalf("cmd.Run() failed with %s\n", err)
+			}
 		}
 	},
 }

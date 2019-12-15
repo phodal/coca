@@ -179,14 +179,18 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	var jMethodCall = &models.JMethodCall{}
 	if fullType != "" {
+		if targetType == "" {
+			// 处理自调用
+			targetType = currentClz
+		}
+
 		jMethodCall = &models.JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 	} else {
 		if ctx.GetText() == targetType {
-			//fmt.Println(ctx.IDENTIFIER().GetText())
-			//fmt.Println(imports)
 			methodName := ctx.IDENTIFIER().GetText()
 			pkg := currentPkg
 			clz := currentClz
+			// 处理 static 方法，如 now()
 			for _, imp := range imports {
 				if strings.HasSuffix(imp, "."+methodName) {
 					pkg = imp

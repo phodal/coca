@@ -30,6 +30,18 @@ Available Commands:
 coca analysis -p [PATH]
 ```
 
+### Find Bad Smells
+
+```
+coca bs -p examples/api -s type
+```
+
+### Code Line Count
+
+```
+coca cloc
+```
+
 ### Build Deps Tree
 
 ```

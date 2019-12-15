@@ -1,7 +1,6 @@
 package support
 
 import (
-	"fmt"
 	"github.com/iancoleman/strcase"
 	"strings"
 )
@@ -12,11 +11,10 @@ type ConceptSegmenter struct {
 var strMap map[string]int
 
 func SegmentConceptCamelcase(methodsName []string) map[string]int {
-	// get, set
 	strMap = make(map[string]int)
 	for _, name := range methodsName {
-		fmt.Println(name)
-		if strings.HasSuffix("set", name) || strings.HasSuffix("get", name) && len(name) > 3 {
+		// get, set
+		if (strings.HasSuffix("set", name) || strings.HasSuffix("get", name)) && len(name) > 3 {
 			domainName := name[3:]
 			if strMap[domainName] == 0 {
 				strMap[domainName] = 1

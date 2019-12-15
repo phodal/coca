@@ -2,6 +2,7 @@ package domain
 
 import (
 	"coca/src/adapter/models"
+	"coca/src/domain/stop_words/languages"
 	"coca/src/domain/support"
 	"fmt"
 )
@@ -42,7 +43,7 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 	}
 }
 
-var normalWords = []string{
+var itStopWords = []string{
 	"get",
 	"create",
 	"update",
@@ -56,6 +57,8 @@ var normalWords = []string{
 
 	"set",
 	"get",
+	"first",
+	"last",
 
 	"type",
 
@@ -71,7 +74,9 @@ var normalWords = []string{
 
 func removeNormalWords(words map[string]int) map[string]int {
 	var newWords = words
-	for _, normalWord := range normalWords {
+	var stopwords = languages.ENGLISH_STOP_WORDS
+	stopwords = append(stopwords, itStopWords...)
+	for _, normalWord := range stopwords {
 		if newWords[normalWord] > 0 {
 			delete(newWords, normalWord)
 		}

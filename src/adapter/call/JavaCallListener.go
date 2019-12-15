@@ -201,12 +201,33 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 			methodName := ctx.IDENTIFIER().GetText()
 			targetType = buildSpecificTarget(targetType)
 
+			targetType = buildMethodNameForBuilder(ctx, targetType)
+
 			jMethodCall = &models.JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		}
 	}
 
 	methodCalls = append(methodCalls, *jMethodCall)
 	currentMethod.MethodCalls = append(currentMethod.MethodCalls, *jMethodCall)
+}
+
+func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
+	// TODO: refactor
+	if reflect.TypeOf(ctx.GetParent()).String() == "*parser.ExpressionContext" {
+		parentCtx := ctx.GetParent().(*parser.ExpressionContext)
+		if reflect.TypeOf(parentCtx.GetParent()).String() == "*parser.VariableInitializerContext" {
+			varParent := parentCtx.GetParent().(*parser.VariableInitializerContext).GetParent()
+			if reflect.TypeOf(varParent).String() == "*parser.VariableDeclaratorContext" {
+				varDeclParent := varParent.(*parser.VariableDeclaratorContext).GetParent()
+				if reflect.TypeOf(varDeclParent).String() == "*parser.VariableDeclaratorsContext" {
+					parent := varDeclParent.(*parser.VariableDeclaratorsContext).GetParent()
+					targetType = parent.(*parser.LocalVariableDeclarationContext).TypeType().GetText()
+				}
+			}
+		}
+	}
+
+	return targetType
 }
 
 func buildSpecificTarget(targetType string) string {

@@ -124,6 +124,5 @@ func removeNormalWords(words map[string]int) map[string]int {
 		}
 	}
 
-	fmt.Println(newWords)
 	return newWords
 }

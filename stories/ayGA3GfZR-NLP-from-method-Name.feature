@@ -1,9 +1,9 @@
 # id: ayGA3GfZR
 # startDate: 2019-12-14T12:30:55Z
-# endDate: 2019-12-14T12:30:55Z
+# endDate: 2019-12-15T01:20:26Z
 # priority: 
-# status: 
-# author: 
+# status: done
+# author: phodal
 # title: NLP from method Name
 # language: zh-CN
 @math

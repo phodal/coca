@@ -118,6 +118,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
+			currentMethod = *method
 			return
 		}
 
@@ -137,12 +138,10 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	}
 
 	currentMethod = *method
-	//methods = append(methods, *method)
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	methods = append(methods, currentMethod)
-	//fmt.Println(currentMethod)
 	currentMethod = models.NewJMethod()
 }
 

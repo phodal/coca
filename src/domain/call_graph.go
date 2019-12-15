@@ -45,7 +45,9 @@ func (c CallGraph) BuildMethodMap(clzs []models.JClassNode) map[string][]string 
 			var methodName = clz.Package + "." + clz.Class + "." + method.Name
 			var calls []string
 			for _, call := range method.MethodCalls {
-				calls = append(calls, call.Package+"."+call.Class+"."+call.MethodName)
+				if call.Class != "" {
+					calls = append(calls, call.Package+"."+call.Class+"."+call.MethodName)
+				}
 			}
 			methodMap[methodName] = calls
 		}

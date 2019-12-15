@@ -108,6 +108,8 @@ Examples Results:
 coca api -p examples/api -d deps.json
 ```
 
+![API Demo](docs/sample/api.svg)
+
 ### Git Analysis
 
 ```

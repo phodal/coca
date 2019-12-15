@@ -16,7 +16,7 @@ func SegmentConceptCamelcase(methodsName []string) map[string]int {
 	strMap = make(map[string]int)
 	for _, name := range methodsName {
 		fmt.Println(name)
-		if strings.HasSuffix("set", name) || strings.HasSuffix("get", name) {
+		if strings.HasSuffix("set", name) || strings.HasSuffix("get", name) && len(name) > 3 {
 			domainName := name[3:]
 			if strMap[domainName] == 0 {
 				strMap[domainName] = 1
@@ -38,4 +38,3 @@ func SegmentConceptCamelcase(methodsName []string) map[string]int {
 
 	return strMap
 }
-

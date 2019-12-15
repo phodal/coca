@@ -43,8 +43,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		apis := listener.getClassApis()
-		allApis = append(allApis, apis...)
+		allApis = listener.getClassApis()
 	}
 
 	return allApis

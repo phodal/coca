@@ -30,7 +30,6 @@ var localVars = make(map[string]string)
 
 var currentRestApi RestApi
 var RestApis []RestApi
-var pathVars = make(map[string]string)
 var currentClz string
 var currentPkg string
 
@@ -204,4 +203,8 @@ func (s *JavaApiListener) appendClasses(classes []models2.JClassNode) {
 
 func (s *JavaApiListener) getClassApis() []RestApi {
 	return RestApis
+}
+
+func (s *JavaApiListener) getCurrentApi() RestApi {
+	return currentRestApi
 }

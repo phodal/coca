@@ -18,6 +18,8 @@ type RestApi struct {
 	ResponseStatus   string
 	RequestBodyClass string
 	MethodParams     map[string]string
+	PackageName      string
+	ClassName        string
 }
 
 var hasEnterClass = false
@@ -29,11 +31,16 @@ var localVars = make(map[string]string)
 var currentRestApi RestApi
 var RestApis []RestApi
 var pathVars = make(map[string]string)
+var currentClz string
+var currentPkg string
 
 func NewJavaApiListener() *JavaApiListener {
 	isSpringRestController = false
+	currentClz = ""
+	currentPkg = ""
+
 	params := make(map[string]string)
-	currentRestApi = *&RestApi{"", "", "", "", "", params}
+	currentRestApi = *&RestApi{"", "", "", "", "", params, "", ""}
 	return &JavaApiListener{}
 }
 
@@ -41,8 +48,15 @@ type JavaApiListener struct {
 	parser.BaseJavaParserListener
 }
 
+func (s *JavaApiListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
+	currentPkg = ctx.QualifiedName().GetText()
+}
+
 func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
+	if ctx.IDENTIFIER() != nil {
+		currentClz = ctx.IDENTIFIER().GetText()
+	}
 }
 
 func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
@@ -82,7 +96,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestApi = RestApi{uriRemoveQuote, "", "", "", "", nil}
+	currentRestApi = RestApi{uriRemoveQuote, "", "", "", "", nil, "", ""}
 	if hasEnterClass {
 		switch annotationName {
 		case "GetMapping":
@@ -105,6 +119,8 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 			return
 		}
 
+		currentRestApi.PackageName = currentPkg
+		currentRestApi.ClassName = currentClz
 		currentRestApi.MethodName = ctx.IDENTIFIER().GetText()
 		buildRestApi(ctx)
 	}

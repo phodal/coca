@@ -25,6 +25,8 @@ var currentMethod models.JMethod
 var methodMap = make(map[string]models.JMethod)
 
 var methodQueue []models.JMethod
+var classQueue []string
+
 var identNodes []models.JsonIdentifier
 
 func NewJavaCallListener(nodes []models.JsonIdentifier) *JavaCallListener {
@@ -154,10 +156,26 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	if len(methodQueue) > 1 {
+	if len(methodQueue) <= 2 {
+		currentMethod = methodQueue[0]
+	} else {
 		methodQueue = methodQueue[0 : len(methodQueue)-1]
+		currentMethod = models.NewJMethod()
 	}
-	currentMethod = models.NewJMethod()
+}
+
+// TODO: add inner creator examples
+func (s *JavaCallListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
+	currentClz = ctx.IDENTIFIER().GetText()
+	classQueue = append(classQueue, currentClz)
+}
+
+// TODO: add inner creator examples
+func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
+	if len(classQueue) > 1 {
+		classQueue = classQueue[0 : len(classQueue)-1]
+	}
+	currentClz = classQueue[len(classQueue)]
 }
 
 func getMethodMapName(method models.JMethod) string {
@@ -177,9 +195,7 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 		return
 	}
 
-	defer func() {
-		buildCreatedCall(createdName, ctx)
-	}()
+	buildCreatedCall(createdName, ctx)
 }
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
@@ -201,6 +217,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 		StopLine:          stopLine,
 		StopLinePosition:  stopLinePosition,
 	}
+
 	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method
 }

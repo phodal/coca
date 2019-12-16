@@ -15,6 +15,15 @@ import (
 	"strings"
 )
 
+type ApiCmdConfig struct {
+	ShowCount         bool
+	RemovePackageName string
+}
+
+var (
+	apiCmdConfig ApiCmdConfig
+)
+
 var apiCmd *cobra.Command = &cobra.Command{
 	Use:   "api",
 	Short: "scan api",
@@ -22,8 +31,6 @@ var apiCmd *cobra.Command = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path := cmd.Flag("path").Value.String()
 		dependence := cmd.Flag("dependence").Value.String()
-		remove := cmd.Flag("remove").Value.String()
-		isShowApiCount := cmd.Flag("count").Value.String()
 
 		if path != "" {
 			app := new(JavaApiApp)
@@ -42,20 +49,20 @@ var apiCmd *cobra.Command = &cobra.Command{
 			analyser := domain.NewCallGraph()
 			dotContent, counts := analyser.AnalysisByFiles(restApis, parsedDeps)
 
-			if isShowApiCount == "true" {
+			if apiCmdConfig.ShowCount {
 				table := tablewriter.NewWriter(os.Stdout)
 
 				table.SetHeader([]string{"Size", "API", "Caller"})
 
 				for _, v := range counts {
-					replaceCaller := strings.ReplaceAll(v.Caller, remove, "")
+					replaceCaller := strings.ReplaceAll(v.Caller, apiCmdConfig.RemovePackageName, "")
 					table.Append([]string{strconv.Itoa(v.Size), v.ApiName, replaceCaller})
 				}
 				table.Render()
 			}
 
-			if remove != "" {
-				dotContent = strings.ReplaceAll(dotContent, remove, "")
+			if apiCmdConfig.RemovePackageName != "" {
+				dotContent = strings.ReplaceAll(dotContent, apiCmdConfig.RemovePackageName, "")
 			}
 
 			WriteToFile("api.dot", dotContent)
@@ -74,6 +81,6 @@ func init() {
 
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
 	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
-	apiCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
-	apiCmd.PersistentFlags().BoolP("count", "c", false, "count api size")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageName, "remove", "r", "", "remove package name")
+	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
 }

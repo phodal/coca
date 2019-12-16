@@ -28,7 +28,7 @@ func BuildCommitMessage() []CommitMessage {
 
 	splitStr := strings.Split(string(out), "\n");
 	for _, str := range splitStr {
-		parseLog(str)
+		ParseLog(str)
 	}
 
 	return commitMessages
@@ -199,12 +199,11 @@ func BasicSummary(commitMessages []CommitMessage) *GitSummary {
 	return gitSummary
 }
 
-func parseLog(text string) {
+func ParseLog(text string) CommitMessage {
 	// TODO 支持多行提交
-	rev := `\[([\d|a-f]{5,8})\]`
+	rev := `\[([\d|a-f]{5,12})\]`
 	author := `(.*?)\s\d{4}-\d{2}-\d{2}`
 	date := `\d{4}-\d{2}-\d{2}`
-	// added <tab> deleted <tab> file <nl>
 	changes := `([\d-])*\t([\d-]*)\t(.*)`
 
 	revReg := regexp.MustCompile(rev)
@@ -240,6 +239,7 @@ func parseLog(text string) {
 			currentCommitMessage = *&CommitMessage{"", "", "", "", nil}
 			currentFileChanges = nil
 		}
-
 	}
+
+	return currentCommitMessage
 }

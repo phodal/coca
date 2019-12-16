@@ -2,7 +2,7 @@
 GitLogs
 
 ```
-git log --all --numstat --date=short --pretty=format:'--%h--%ad--%aN' --no-renames
+git log --all --numstat --date=short --pretty="format:[%h] %aN %ad %s" --numstat
 ```
 
 Related Projects: [https://github.com/bast/gitink](https://github.com/bast/gitink)

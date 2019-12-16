@@ -140,30 +140,30 @@ coca ga -t -b
 ```
 
 ```
-+----------------------------------------------+-----------+-------------+
-|                  ENTITYNAME                  | REVSCOUNT | AUTHORCOUNT |
-+----------------------------------------------+-----------+-------------+
-| adapter/call/JavaCallListener.go             |        35 |           2 |
-| helloworld.go                                |        22 |           1 |
-| refactor/base/JavaRefactorListener.go        |        16 |           2 |
-| .gitignore                                   |        14 |           2 |
-| refactor/rename/rename_method.go             |        12 |           2 |
-| bs/BadSmellApp.go                            |        11 |           1 |
-| cmd/analysis.go                              |        10 |           2 |
-| README.md                                    |        10 |           2 |
-| adapter/identifier/JavaIdentifierListener.go |         9 |           2 |
-| bs/BadSmellListener.go                       |         8 |           1 |
-| adapter/api/JavaApiListener.go               |         8 |           1 |
-| cmd/refactor.go                              |         8 |           2 |
-| adapter/identifier/JavaIdentifierApp.go      |         8 |           2 |
-| refactor/main.go                             |         7 |           2 |
-| src/domain/call_graph.go                     |         7 |           1 |
-| refactor/base/JavaRefactorApp.go             |         7 |           1 |
-| go.mod                                       |         7 |           1 |
-| src/domain/concept_analyser.go               |         6 |           1 |
-| cmd/root.go                                  |         6 |           2 |
-| refactor/move_class_app.go                   |         6 |           1 |
-+----------------------------------------------+-----------+-------------+
++---------------------------------------------------------------------------------------------------------------------+-----------+-------------+
+|                                                     ENTITYNAME                                                      | REVSCOUNT | AUTHORCOUNT |
++---------------------------------------------------------------------------------------------------------------------+-----------+-------------+
+| build.gradle                                                                                                        |      1326 |          36 |
+| src/asciidoc/index.adoc                                                                                             |       239 |          20 |
+| build-spring-framework/resources/changelog.txt                                                                      |       187 |          10 |
+| spring-core/src/main/java/org/springframework/core/annotation/AnnotationUtils.java                                  |       170 |          10 |
+| spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java                |       159 |          15 |
+| src/docs/asciidoc/web/webmvc.adoc                                                                                   |       121 |          24 |
+| spring-context/src/main/java/org/springframework/context/annotation/ConfigurationClassParser.java                   |       118 |           9 |
+| src/dist/changelog.txt                                                                                              |       118 |           9 |
+| spring-webmvc/src/main/java/org/springframework/web/servlet/config/annotation/WebMvcConfigurationSupport.java       |       116 |          15 |
+| spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java        |       113 |          15 |
+| spring-web/src/main/java/org/springframework/http/HttpHeaders.java                                                  |       111 |          18 |
+| src/docs/asciidoc/web/webflux.adoc                                                                                  |       108 |          21 |
+| spring-core/src/main/java/org/springframework/core/annotation/AnnotatedElementUtils.java                            |       107 |           9 |
+| spring-test/spring-test.gradle                                                                                      |       105 |           7 |
+| spring-webmvc/src/main/java/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.java |       105 |          13 |
+| spring-messaging/src/main/java/org/springframework/messaging/simp/stomp/StompBrokerRelayMessageHandler.java         |       101 |          12 |
+| spring-web/src/main/java/org/springframework/web/client/RestTemplate.java                                           |        98 |          17 |
+| spring-webmvc/src/main/java/org/springframework/web/servlet/resource/ResourceHttpRequestHandler.java                |        96 |          14 |
+| org.springframework.core/src/main/java/org/springframework/core/convert/TypeDescriptor.java                         |        93 |           4 |
+| spring-core/src/main/java/org/springframework/core/ResolvableType.java                                              |        92 |          10 |
++---------------------------------------------------------------------------------------------------------------------+-----------+-------------+
 ```
 
 ### Concept Analyser

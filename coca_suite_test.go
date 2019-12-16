@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestLearnGo(t *testing.T) {
+func TestCoca(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "LearnGo Suite")
+	RunSpecs(t, "Coca Suite")
 }

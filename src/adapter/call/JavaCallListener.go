@@ -175,7 +175,6 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 		return
 	}
 
-	fmt.Println(createdName)
 	defer buildCreatedCall(createdName)
 }
 
@@ -211,7 +210,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	stopLinePosition := startLinePosition + len(callee)
 
 	// TODO: 处理链试调用
-	if strings.Contains(targetType, "()") && strings.Contains(targetType, ".") {
+	if strings.Contains(targetType, "(") && strings.Contains(targetType, ")") && strings.Contains(targetType, ".") {
 		split := strings.Split(targetType, ".")
 		sourceTarget := split[0]
 		targetType = localVars[sourceTarget]

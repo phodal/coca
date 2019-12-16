@@ -218,10 +218,6 @@ go get github.com/onsi/ginkgo
 go get github.com/onsi/gomega
 ```
 
-### Refs
-
-[https://github.com/MontFerret/ferret](https://github.com/MontFerret/ferret)
-
 License
 ---
 

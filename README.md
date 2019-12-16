@@ -25,7 +25,7 @@ Available Commands:
   ga          git analysis
   help        Help about any command
   refactor    auto refactor code
-  scc         scc [FILE or DIRECTORY]
+  cloc        cloc [FILE or DIRECTORY]
 
 ```
 
@@ -65,7 +65,7 @@ Examples Result:
 ### Code Line Count
 
 ```
-coca scc
+coca cloc
 ```
 
 Results:
@@ -92,6 +92,12 @@ Estimated Cost to Develop $803,822
 Estimated Schedule Effort 14.120551 months
 Estimated People Required 6.743156
 ───────────────────────────────────────────────────────────────────────────────s
+```
+
+Results to json
+
+```
+coca cloc --by-file --format json
 ```
 
 ### Build Deps Tree

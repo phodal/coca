@@ -7,8 +7,8 @@ import (
 )
 
 var clocCmd = &cobra.Command{
-	Use:     "scc",
-	Short:   "scc [FILE or DIRECTORY]",
+	Use:     "cloc",
+	Short:   "cloc [FILE or DIRECTORY]",
 	Long:    fmt.Sprintf("Sloc, Cloc and Code. Count lines of code in a directory with complexity estimation.\nVersion %s\nBen Boyter <ben@boyter.org> + Contributors", processor.Version),
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {

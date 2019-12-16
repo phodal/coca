@@ -160,7 +160,7 @@ func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationCo
 
 func getMethodMapName(method models.JMethod) string {
 	name := method.Name
-	if name == "" {
+	if name == "" && len(methodQueue) > 1 {
 		name = methodQueue[len(methodQueue)-1 ].Name
 	}
 	return currentPkg + "." + currentClz + "." + name
@@ -168,7 +168,32 @@ func getMethodMapName(method models.JMethod) string {
 
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	localVars[variableName] = ctx.CreatedName().GetText()
+	createdName := ctx.CreatedName().GetText()
+	localVars[variableName] = createdName
+
+	if currentMethod.Name == "" {
+		return
+	}
+
+	fmt.Println(createdName)
+	defer buildCreatedCall(createdName)
+}
+
+func buildCreatedCall(createdName string) {
+	method := methodMap[getMethodMapName(currentMethod)]
+	fullType := warpTargetFullType(createdName)
+	jMethodCall := &models.JMethodCall{
+		Package:           removeTarget(fullType),
+		Type:              "",
+		Class:             createdName,
+		MethodName:        "",
+		StartLine:         0,
+		StartLinePosition: 0,
+		StopLine:          0,
+		StopLinePosition:  0,
+	}
+	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
+	methodMap[getMethodMapName(currentMethod)] = method
 }
 
 func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {

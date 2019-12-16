@@ -152,7 +152,9 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	methodQueue = methodQueue[0 : len(methodQueue)-1]
+	if len(methodQueue) > 1 {
+		methodQueue = methodQueue[0 : len(methodQueue)-1]
+	}
 	currentMethod = models.NewJMethod()
 }
 

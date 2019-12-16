@@ -156,6 +156,10 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	if len(methodQueue)  < 1 {
+		return
+	}
+
 	if len(methodQueue) <= 2 {
 		currentMethod = methodQueue[0]
 	} else {

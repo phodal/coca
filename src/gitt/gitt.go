@@ -200,6 +200,7 @@ func BasicSummary(commitMessages []CommitMessage) *GitSummary {
 }
 
 func parseLog(text string) {
+	// TODO 支持多行提交
 	rev := `\[([\d|a-f]{5,8})\]`
 	author := `(.*?)\s\d{4}-\d{2}-\d{2}`
 	date := `\d{4}-\d{2}-\d{2}`

@@ -10,23 +10,23 @@ import (
 	"strconv"
 )
 
+type GitCmdConfig struct {
+	Size int
+}
+
 var (
 	relatedConfig string
+	gitCmdConfig  GitCmdConfig
 )
 
 var gitCmd *cobra.Command = &cobra.Command{
-	Use:   "ga",
+	Use:   "git",
 	Short: "git analysis",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		message := BuildCommitMessage()
 		isFullMessage := cmd.Flag("basic").Value.String() == "true"
-		size := cmd.Flag("size").Value.String()
-
-		intSize, err := strconv.Atoi(size)
-		if err != nil {
-			intSize = 20
-		}
+		size := gitCmdConfig.Size
 
 		if cmd.Flag("basic").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)
@@ -46,8 +46,8 @@ var gitCmd *cobra.Command = &cobra.Command{
 			teamSummary := GetTeamSummary(message)
 			table.SetHeader([]string{"EntityName", "RevsCount", "AuthorCount"})
 
-			if len(teamSummary) > intSize && isFullMessage {
-				teamSummary = teamSummary[:intSize]
+			if len(teamSummary) > size && isFullMessage {
+				teamSummary = teamSummary[:size]
 			}
 			for _, v := range teamSummary {
 				table.Append([]string{v.EntityName, strconv.Itoa(v.RevsCount), strconv.Itoa(v.AuthorCount)})
@@ -61,8 +61,8 @@ var gitCmd *cobra.Command = &cobra.Command{
 			age := CalculateCodeAge(message)
 			table.SetHeader([]string{"File", "Month"})
 
-			if len(age) > intSize && isFullMessage {
-				age = age[:intSize]
+			if len(age) > size && isFullMessage {
+				age = age[:size]
 			}
 			for _, v := range age {
 				table.Append([]string{v.File, v.Month})
@@ -76,8 +76,8 @@ var gitCmd *cobra.Command = &cobra.Command{
 			authors := GetTopAuthors(message)
 			table.SetHeader([]string{"Author", "CommitCount", "LineCount"})
 
-			if len(authors) > intSize && isFullMessage {
-				authors = authors[:intSize]
+			if len(authors) > size && isFullMessage {
+				authors = authors[:size]
 			}
 			for _, v := range authors {
 				table.Append([]string{v.Name, strconv.Itoa(v.CommitCount), strconv.Itoa(v.LineCount)})
@@ -107,6 +107,6 @@ func init() {
 	gitCmd.PersistentFlags().BoolP("age", "a", false, "Code Age")
 	gitCmd.PersistentFlags().BoolP("top", "o", false, "Top Authors")
 	gitCmd.PersistentFlags().BoolP("full", "f", false, "full")
-	gitCmd.PersistentFlags().IntP("size", "s", 20, "full")
+	gitCmd.PersistentFlags().IntVarP(&gitCmdConfig.Size, "size", "s", 20, "full")
 	gitCmd.PersistentFlags().StringVar(&relatedConfig, "r", "", "related")
 }

@@ -3,7 +3,6 @@ package identifier
 import (
 	"coca/src/adapter/models"
 	parser2 "coca/src/language/java"
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"
@@ -21,9 +20,6 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JsonIdentifier
 	for index := range files {
 		file := files[index]
 		node := models.NewJsonIdentifier()
-
-		displayName := filepath.Base(file)
-		fmt.Println("Start parse java call: " + displayName)
 
 		parser := (*JavaIdentifierApp)(nil).processFile(file)
 		context := parser.CompilationUnit()

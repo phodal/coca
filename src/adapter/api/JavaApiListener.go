@@ -60,7 +60,7 @@ func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCont
 
 func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	annotationName := ctx.QualifiedName().GetText()
-	if annotationName == "RestController" {
+	if annotationName == "RestController" || annotationName == "Controller" {
 		isSpringRestController = true
 	}
 
@@ -81,7 +81,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		}
 	}
 
-	if !(annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping") {
+	if !(annotationName == "RequestMapping" || annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping") {
 		return
 	}
 
@@ -96,17 +96,42 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
 	currentRestApi = RestApi{uriRemoveQuote, "", "", "", "", nil, "", ""}
-	if hasEnterClass {
-		switch annotationName {
-		case "GetMapping":
-			currentRestApi.HttpMethod = "GET"
-		case "PutMapping":
-			currentRestApi.HttpMethod = "PUT"
-		case "PostMapping":
-			currentRestApi.HttpMethod = "POST"
-		case "DeleteMapping":
-			currentRestApi.HttpMethod = "DELETE"
+	if annotationName == "RequestMapping" {
+		if ctx.ElementValuePairs() != nil {
+			allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
+			for _, valuePair := range allValuePair {
+				pair := valuePair.(*parser.ElementValuePairContext)
+				if pair.IDENTIFIER().GetText() == "method" {
+					addApiMethod(currentRestApi, pair.ElementValue().GetText())
+				}
+			}
 		}
+		return
+	}
+
+	if hasEnterClass {
+		addApiMethod(currentRestApi, annotationName)
+	}
+}
+
+func addApiMethod(api RestApi, annotationName string) {
+	switch annotationName {
+	case "GetMapping":
+	case "RequestMethod.GET":
+	case "GET":
+		api.HttpMethod = "GET"
+	case "PutMapping":
+	case "RequestMethod.PUT":
+	case "PUT":
+		api.HttpMethod = "PUT"
+	case "PostMapping":
+	case "RequestMethod.POST":
+	case "POST":
+		api.HttpMethod = "POST"
+	case "DeleteMapping":
+	case "RequestMethod.DELETE":
+	case "DELETE":
+		api.HttpMethod = "DELETE"
 	}
 }
 

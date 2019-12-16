@@ -181,9 +181,11 @@ func (s *JavaCallListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
 
 // TODO: add inner creator examples
 func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
-	if len(classQueue) > 1 {
-		classQueue = classQueue[0 : len(classQueue)-1]
+	if len(classQueue) <= 1 {
+		return
 	}
+
+	classQueue = classQueue[0 : len(classQueue)-1]
 	currentClz = classQueue[len(classQueue)]
 }
 
@@ -305,7 +307,10 @@ func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 				varDeclParent := varParent.(*parser.VariableDeclaratorContext).GetParent()
 				if reflect.TypeOf(varDeclParent).String() == "*parser.VariableDeclaratorsContext" {
 					parent := varDeclParent.(*parser.VariableDeclaratorsContext).GetParent()
-					targetType = parent.(*parser.LocalVariableDeclarationContext).TypeType().GetText()
+					if reflect.TypeOf(parent).String() == "*parser.LocalVariableDeclarationContext" {
+						context := parent.(*parser.LocalVariableDeclarationContext)
+						targetType = context.TypeType().GetText()
+					}
 				}
 			}
 		}

@@ -16,8 +16,8 @@ import (
 )
 
 type ApiCmdConfig struct {
-	ShowCount         bool
-	RemovePackageName string
+	ShowCount          bool
+	RemovePackageNames string
 }
 
 var (
@@ -55,14 +55,13 @@ var apiCmd *cobra.Command = &cobra.Command{
 				table.SetHeader([]string{"Size", "API", "Caller"})
 
 				for _, v := range counts {
-					replaceCaller := strings.ReplaceAll(v.Caller, apiCmdConfig.RemovePackageName, "")
-					table.Append([]string{strconv.Itoa(v.Size), v.ApiName, replaceCaller})
+					table.Append([]string{strconv.Itoa(v.Size), v.ApiName, replacePackage(v.Caller)})
 				}
 				table.Render()
 			}
 
-			if apiCmdConfig.RemovePackageName != "" {
-				dotContent = strings.ReplaceAll(dotContent, apiCmdConfig.RemovePackageName, "")
+			if apiCmdConfig.RemovePackageNames != "" {
+				dotContent = replacePackage(dotContent)
 			}
 
 			WriteToFile("api.dot", dotContent)
@@ -76,11 +75,15 @@ var apiCmd *cobra.Command = &cobra.Command{
 	},
 }
 
+func replacePackage(content string) string {
+	return strings.ReplaceAll(content, apiCmdConfig.RemovePackageNames, "")
+}
+
 func init() {
 	rootCmd.AddCommand(apiCmd)
 
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
 	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
-	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageName, "remove", "r", "", "remove package name")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
 }

@@ -1,8 +1,8 @@
 package domain
 
 import (
+	"coca/src/adapter/api"
 	"coca/src/adapter/models"
-	"fmt"
 )
 
 type CallGraph struct {
@@ -43,14 +43,16 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(callers []string, deps []models.JClassNode) string {
+func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) string {
 	methodMap := c.BuildMethodMap(deps)
 
 	results := "digraph G { \n"
-	for _, caller := range callers {
-		fmt.Println(caller)
-		chain := BuildCallChain(caller, methodMap)
-		fmt.Println(chain)
+
+	for _, restApi := range restApis {
+		caller := restApi.PackageName + "." + restApi.ClassName + "." + restApi.MethodName
+
+		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + caller + "\";\n"
+		chain = chain + BuildCallChain(caller, methodMap)
 		results = results + "\n" + chain
 	}
 	return results + "}\n"

@@ -35,14 +35,8 @@ var apiCmd *cobra.Command = &cobra.Command{
 			}
 			_ = json.Unmarshal(file, &parsedDeps)
 
-			var apiCallers []string
-			for _, api := range restApis {
-				apiCaller := api.PackageName + "." + api.ClassName + "." + api.MethodName
-				apiCallers = append(apiCallers, apiCaller)
-			}
-
 			analyser := domain.NewCallGraph()
-			dotContent := analyser.AnalysisByFiles(apiCallers, parsedDeps)
+			dotContent := analyser.AnalysisByFiles(restApis, parsedDeps)
 
 			if remove != "" {
 				dotContent = strings.ReplaceAll(dotContent, remove, "")

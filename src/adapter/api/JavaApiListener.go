@@ -24,7 +24,7 @@ type RestApi struct {
 var hasEnterClass = false
 var isSpringRestController = false
 var hasEnterRestController = false
-var baseApiUrlName = ""
+var baseApiUrlName string
 var localVars = make(map[string]string)
 
 var currentRestApi RestApi
@@ -57,6 +57,10 @@ func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCont
 	}
 }
 
+func (s *JavaApiListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	hasEnterClass = false
+}
+
 func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "RestController" || annotationName == "Controller" {
@@ -70,9 +74,13 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	if !hasEnterClass {
 		if annotationName == "RequestMapping" {
 			if ctx.ElementValuePairs() != nil {
-				firstPair := ctx.ElementValuePairs().GetChild(0).(*parser.ElementValuePairContext)
-				if firstPair.IDENTIFIER().GetText() == "value" {
-					baseApiUrlName = firstPair.ElementValue().GetText()
+				allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
+				for _, valuePair := range allValuePair {
+					pair := valuePair.(*parser.ElementValuePairContext)
+					if pair.IDENTIFIER().GetText() == "value" {
+						text := pair.ElementValue().GetText()
+						baseApiUrlName = text[1 : len(text)-1]
+					}
 				}
 			} else {
 				baseApiUrlName = "/"
@@ -99,6 +107,8 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		if hasEnterClass {
 			addApiMethod(annotationName)
 		}
+
+		return
 	}
 
 	if ctx.ElementValuePairs() != nil {
@@ -110,7 +120,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 			}
 			if pair.IDENTIFIER().GetText() == "value" {
 				text := pair.ElementValue().GetText()
-				currentRestApi.Uri = text[1 : len(text)-1]
+				currentRestApi.Uri = baseApiUrlName + text[1 : len(text)-1]
 			}
 		}
 	}

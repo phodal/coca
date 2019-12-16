@@ -3,7 +3,7 @@ package domain
 import (
 	"coca/src/adapter/api"
 	"coca/src/adapter/models"
-	"coca/src/algo"
+	"sort"
 	"strings"
 )
 
@@ -53,9 +53,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 }
 
 
-func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) (string, algo.PairList) {
+func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) (string, []CallApiCount) {
 	methodMap := c.BuildMethodMap(deps)
-	apiCallSizeMap := make(map[string]int)
+	var apiCallSCounts []CallApiCount
 
 	results := "digraph G { \n"
 
@@ -67,11 +67,21 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 		apiCallChain := BuildCallChain(caller, methodMap)
 		chain = chain + apiCallChain
 
-		apiCallSizeMap[caller + " " + restApi.HttpMethod + " " + restApi.Uri] = len(strings.Split(apiCallChain, " -> "))
+		count := &CallApiCount{
+			Caller:  caller,
+			ApiName: restApi.HttpMethod + " " + restApi.Uri,
+			Size:    len(strings.Split(apiCallChain, " -> ")),
+		}
+		apiCallSCounts = append(apiCallSCounts, *count)
+
 		results = results + "\n" + chain
 	}
-	byWordCount := algo.RankByWordCount(apiCallSizeMap)
-	return results + "}\n", byWordCount
+
+	sort.Slice(apiCallSCounts, func(i, j int) bool {
+		return apiCallSCounts[i].Size < apiCallSCounts[j].Size
+	})
+
+	return results + "}\n", apiCallSCounts
 }
 
 func (c CallGraph) BuildMethodMap(clzs []models.JClassNode) map[string][]string {

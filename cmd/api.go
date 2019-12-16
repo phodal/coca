@@ -6,10 +6,12 @@ import (
 	"coca/src/domain"
 	. "coca/src/utils"
 	"encoding/json"
-	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"log"
+	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -38,12 +40,18 @@ var apiCmd *cobra.Command = &cobra.Command{
 			_ = json.Unmarshal(file, &parsedDeps)
 
 			analyser := domain.NewCallGraph()
-			dotContent, countMap := analyser.AnalysisByFiles(restApis, parsedDeps)
+			dotContent, counts := analyser.AnalysisByFiles(restApis, parsedDeps)
 
-			if isShowApiCount != "" {
-				for _, count := range countMap {
-					fmt.Println(count.Value, count.Key)
+			if isShowApiCount == "true" {
+				table := tablewriter.NewWriter(os.Stdout)
+
+				table.SetHeader([]string{"Size", "API", "Caller"})
+
+				for _, v := range counts {
+					replaceCaller := strings.ReplaceAll(v.Caller, remove, "")
+					table.Append([]string{strconv.Itoa(v.Size), v.ApiName, replaceCaller})
 				}
+				table.Render()
 			}
 
 			if remove != "" {
@@ -67,5 +75,5 @@ func init() {
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
 	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
 	apiCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
-	apiCmd.PersistentFlags().StringP("count", "c", "", "count api size")
+	apiCmd.PersistentFlags().BoolP("count", "c", false, "count api size")
 }

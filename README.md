@@ -112,6 +112,27 @@ coca api -p examples/api -d deps.json
 
 ![API Demo](docs/sample/api.svg)
 
+With Count
+
+```
+coca api -p . -d deps.json -c true -r com.macro.mall.
+``` 
+
+```
++------+------------------------------------------------+------------------------------------------------------------------------+
+| SIZE |                      API                       |                                 CALLER                                 |
++------+------------------------------------------------+------------------------------------------------------------------------+
+|   17 | GET /returnReason/list                         | controller.OmsOrderReturnReasonController.list                         |
+|   17 | GET /returnApply/list                          | controller.OmsOrderReturnApplyController.list                          |
+|   17 | GET /order/list                                | controller.OmsOrderController.list                                     |
+|   17 | GET /subject/list                              | controller.CmsSubjectController.getList                                |
+|   17 | GET /esProduct/search/simple                   | search.controller.EsProductController.search                           |
+|   17 | GET /flash/{id}                                | controller.SmsFlashPromotionController.getItem                         |
+|   21 | POST /aliyun/osscallback                       | controller.OssController.callback                                      |
+|   36 | GET /aliyun/oss/policy                         | controller.OssController.policy                                        |
++------+------------------------------------------------+------------------------------------------------------------------------+
+```
+
 ### Git Analysis
 
 ```

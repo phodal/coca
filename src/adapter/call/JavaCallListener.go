@@ -175,21 +175,29 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 		return
 	}
 
-	defer buildCreatedCall(createdName)
+	defer func() {
+		buildCreatedCall(createdName, ctx)
+	}()
 }
 
-func buildCreatedCall(createdName string) {
+func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType := warpTargetFullType(createdName)
+
+	startLine := ctx.GetStart().GetLine()
+	startLinePosition := ctx.GetStart().GetColumn()
+	stopLine := ctx.GetStop().GetLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
+
 	jMethodCall := &models.JMethodCall{
 		Package:           removeTarget(fullType),
-		Type:              "",
+		Type:              "Creator",
 		Class:             createdName,
 		MethodName:        "",
-		StartLine:         0,
-		StartLinePosition: 0,
-		StopLine:          0,
-		StopLinePosition:  0,
+		StartLine:         startLine,
+		StartLinePosition: startLinePosition,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
 	}
 	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method

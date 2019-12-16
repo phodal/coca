@@ -82,6 +82,9 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 						baseApiUrlName = text[1 : len(text)-1]
 					}
 				}
+			} else if ctx.ElementValue() != nil{
+				text := ctx.ElementValue().GetText()
+				baseApiUrlName = text[1 : len(text)-1]
 			} else {
 				baseApiUrlName = "/"
 			}

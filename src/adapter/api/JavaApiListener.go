@@ -3,7 +3,6 @@ package api
 import (
 	models2 "coca/src/adapter/models"
 	"coca/src/language/java"
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
@@ -96,21 +95,24 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
 	currentRestApi = RestApi{uriRemoveQuote, "", "", "", "", nil, "", ""}
-	if annotationName == "RequestMapping" {
-		if ctx.ElementValuePairs() != nil {
-			allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
-			for _, valuePair := range allValuePair {
-				pair := valuePair.(*parser.ElementValuePairContext)
-				if pair.IDENTIFIER().GetText() == "method" {
-					addApiMethod(pair.ElementValue().GetText())
-				}
-			}
+	if annotationName != "RequestMapping" {
+		if hasEnterClass {
+			addApiMethod(annotationName)
 		}
-		return
 	}
 
-	if hasEnterClass {
-		addApiMethod(annotationName)
+	if ctx.ElementValuePairs() != nil {
+		allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
+		for _, valuePair := range allValuePair {
+			pair := valuePair.(*parser.ElementValuePairContext)
+			if pair.IDENTIFIER().GetText() == "method" {
+				addApiMethod(pair.ElementValue().GetText())
+			}
+			if pair.IDENTIFIER().GetText() == "value" {
+				text := pair.ElementValue().GetText()
+				currentRestApi.Uri = text[1 : len(text)-1]
+			}
+		}
 	}
 }
 
@@ -201,7 +203,7 @@ func buildRestApi(ctx *parser.MethodDeclarationContext) {
 				}
 
 				if qualifiedName == "PathVariable" {
-					fmt.Println()
+					//fmt.Println()
 				}
 			}
 		}

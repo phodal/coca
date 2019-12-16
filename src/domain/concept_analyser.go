@@ -2,6 +2,7 @@ package domain
 
 import (
 	"coca/src/adapter/models"
+	"coca/src/algo"
 	"coca/src/domain/stop_words/languages"
 	"coca/src/domain/support"
 	"fmt"
@@ -37,7 +38,7 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 
 	words = removeNormalWords(words)
 
-	wordCounts := support.RankByWordCount(words)
+	wordCounts := algo.RankByWordCount(words)
 	for _, word := range wordCounts {
 		if word.Value > 0 {
 			fmt.Println(word.Key, word.Value)

@@ -1,4 +1,4 @@
-package support
+package algo
 
 import "sort"
 

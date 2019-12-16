@@ -6,6 +6,7 @@ import (
 	"coca/src/domain"
 	. "coca/src/utils"
 	"encoding/json"
+	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 	"os/exec"
@@ -20,6 +21,7 @@ var apiCmd *cobra.Command = &cobra.Command{
 		path := cmd.Flag("path").Value.String()
 		dependence := cmd.Flag("dependence").Value.String()
 		remove := cmd.Flag("remove").Value.String()
+		isShowApiCount := cmd.Flag("count").Value.String()
 
 		if path != "" {
 			app := new(JavaApiApp)
@@ -36,7 +38,13 @@ var apiCmd *cobra.Command = &cobra.Command{
 			_ = json.Unmarshal(file, &parsedDeps)
 
 			analyser := domain.NewCallGraph()
-			dotContent := analyser.AnalysisByFiles(restApis, parsedDeps)
+			dotContent, countMap := analyser.AnalysisByFiles(restApis, parsedDeps)
+
+			if isShowApiCount != "" {
+				for _, count := range countMap {
+					fmt.Println(count.Value, count.Key)
+				}
+			}
 
 			if remove != "" {
 				dotContent = strings.ReplaceAll(dotContent, remove, "")
@@ -59,4 +67,5 @@ func init() {
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
 	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
 	apiCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
+	apiCmd.PersistentFlags().StringP("count", "c", "", "count api size")
 }

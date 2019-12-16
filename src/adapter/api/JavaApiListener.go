@@ -72,6 +72,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	}
 
 	if !hasEnterClass {
+		// 类声明处的注解
 		if annotationName == "RequestMapping" {
 			if ctx.ElementValuePairs() != nil {
 				allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()

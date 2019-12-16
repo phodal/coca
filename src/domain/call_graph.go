@@ -3,6 +3,8 @@ package domain
 import (
 	"coca/src/adapter/api"
 	"coca/src/adapter/models"
+	"coca/src/algo"
+	"strings"
 )
 
 type CallGraph struct {
@@ -50,8 +52,10 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) string {
+
+func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) (string, algo.PairList) {
 	methodMap := c.BuildMethodMap(deps)
+	apiCallSizeMap := make(map[string]int)
 
 	results := "digraph G { \n"
 
@@ -60,10 +64,14 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 
 		loopCount = 0
 		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + caller + "\";\n"
-		chain = chain + BuildCallChain(caller, methodMap)
+		apiCallChain := BuildCallChain(caller, methodMap)
+		chain = chain + apiCallChain
+
+		apiCallSizeMap[caller + " " + restApi.HttpMethod + " " + restApi.Uri] = len(strings.Split(apiCallChain, " -> "))
 		results = results + "\n" + chain
 	}
-	return results + "}\n"
+	byWordCount := algo.RankByWordCount(apiCallSizeMap)
+	return results + "}\n", byWordCount
 }
 
 func (c CallGraph) BuildMethodMap(clzs []models.JClassNode) map[string][]string {

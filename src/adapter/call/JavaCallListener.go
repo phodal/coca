@@ -3,7 +3,6 @@ package call
 import (
 	"coca/src/adapter/models"
 	"coca/src/language/java"
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
@@ -24,6 +23,8 @@ var formalParameters = make(map[string]string)
 var currentClzExtends = ""
 var currentMethod models.JMethod
 var methodMap = make(map[string]models.JMethod)
+
+var methodQueue []models.JMethod
 
 func NewJavaCallListener() *JavaCallListener {
 	currentClz = ""
@@ -145,12 +146,22 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 		method.Parameters = methodParams
 	}
 
+	methodQueue = append(methodQueue, *method)
 	currentMethod = *method
 	methodMap[getMethodMapName(*method)] = *method
 }
 
+func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	methodQueue = methodQueue[0 : len(methodQueue)-1]
+	currentMethod = models.NewJMethod()
+}
+
 func getMethodMapName(method models.JMethod) string {
-	return currentPkg + "." + currentClz + "." + method.Name
+	name := method.Name
+	if name == "" {
+		name = methodQueue[len(methodQueue)-1 ].Name
+	}
+	return currentPkg + "." + currentClz + "." + name
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {

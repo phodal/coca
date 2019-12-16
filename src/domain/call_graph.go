@@ -27,7 +27,14 @@ func toGraphviz(chain string) string {
 	return result
 }
 
+var loopCount = 0
+
 func BuildCallChain(funcName string, methodMap map[string][]string) string {
+	if loopCount > 6 {
+		return "\n"
+	}
+	loopCount++
+
 	if len(methodMap[funcName]) > 0 {
 		var arrayResult = ""
 		for _, child := range methodMap[funcName] {
@@ -51,6 +58,7 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 	for _, restApi := range restApis {
 		caller := restApi.PackageName + "." + restApi.ClassName + "." + restApi.MethodName
 
+		loopCount = 0
 		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + caller + "\";\n"
 		chain = chain + BuildCallChain(caller, methodMap)
 		results = results + "\n" + chain

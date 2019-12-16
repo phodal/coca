@@ -102,7 +102,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 			for _, valuePair := range allValuePair {
 				pair := valuePair.(*parser.ElementValuePairContext)
 				if pair.IDENTIFIER().GetText() == "method" {
-					addApiMethod(currentRestApi, pair.ElementValue().GetText())
+					addApiMethod(pair.ElementValue().GetText())
 				}
 			}
 		}
@@ -110,28 +110,36 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	}
 
 	if hasEnterClass {
-		addApiMethod(currentRestApi, annotationName)
+		addApiMethod(annotationName)
 	}
 }
 
-func addApiMethod(api RestApi, annotationName string) {
+func addApiMethod(annotationName string) {
 	switch annotationName {
-	case "GetMapping":
-	case "RequestMethod.GET":
-	case "GET":
-		api.HttpMethod = "GET"
-	case "PutMapping":
-	case "RequestMethod.PUT":
-	case "PUT":
-		api.HttpMethod = "PUT"
-	case "PostMapping":
-	case "RequestMethod.POST":
-	case "POST":
-		api.HttpMethod = "POST"
-	case "DeleteMapping":
-	case "RequestMethod.DELETE":
-	case "DELETE":
-		api.HttpMethod = "DELETE"
+	case
+		"GetMapping",
+		"RequestMethod.GET",
+		"GET":
+		currentRestApi.HttpMethod = "GET"
+
+	case
+		"PutMapping",
+		"RequestMethod.PUT",
+		"PUT":
+		currentRestApi.HttpMethod = "PUT"
+
+	case
+		"PostMapping",
+		"RequestMethod.POST",
+		"POST":
+		currentRestApi.HttpMethod = "POST"
+
+	case
+		"DeleteMapping",
+		"RequestMethod.DELETE",
+		"DELETE":
+
+		currentRestApi.HttpMethod = "DELETE"
 	}
 }
 
@@ -141,7 +149,6 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 	if hasEnterRestController && ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetChild(1) == nil {
 			return
-
 		}
 
 		currentRestApi.PackageName = currentPkg

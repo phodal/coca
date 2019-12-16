@@ -207,6 +207,13 @@ func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclar
 	// TODO
 }
 
+func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+	annotationName := ctx.QualifiedName().GetText()
+	if annotationName == "Override" {
+
+	}
+}
+
 func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	var targetType = parseTargetType(targetCtx)

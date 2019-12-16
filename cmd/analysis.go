@@ -27,7 +27,7 @@ var analysisCmd *cobra.Command = &cobra.Command{
 			}
 
 			callApp := new(JavaCallApp)
-			callNodes := callApp.AnalysisPath(importPath, classes)
+			callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 
 			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
 			WriteToFile("deps.json", string(cModel))

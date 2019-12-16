@@ -37,7 +37,6 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JsonIdentifier
 		if clzInfo.Name != "" {
 			node = &models.JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
 			nodeInfos = append(nodeInfos, *node)
-
 		}
 	}
 

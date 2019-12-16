@@ -18,7 +18,7 @@ func main() {
 	}
 
 	callApp := new(JavaCallApp)
-	callNodes := callApp.AnalysisPath("examples/lambda/LambdaExample.java", classes)
+	callNodes := callApp.AnalysisPath("examples/lambda/LambdaExample.java", classes, nil)
 
 	cModel, _ := json.MarshalIndent(callNodes, "", "\t")
 

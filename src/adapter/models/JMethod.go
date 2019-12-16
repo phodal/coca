@@ -9,6 +9,7 @@ type JMethod struct {
 	StopLinePosition  int
 	Parameters        []JParameter
 	MethodCalls       []JMethodCall
+	Override          bool
 }
 
 func NewJMethod() JMethod {

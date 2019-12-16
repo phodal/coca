@@ -31,9 +31,11 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, isOverrideMethod}
 	node.AddMethod(*method)
 }
+
+var isOverrideMethod = false
 
 func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
@@ -45,8 +47,18 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, isOverrideMethod}
 	node.AddMethod(*method)
+
+	isOverrideMethod = false
+}
+
+func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+	// Todo: support override method
+	annotationName := ctx.QualifiedName().GetText()
+	if annotationName == "Override" {
+		isOverrideMethod = true
+	}
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

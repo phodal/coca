@@ -25,11 +25,13 @@ var currentMethod models.JMethod
 var methodMap = make(map[string]models.JMethod)
 
 var methodQueue []models.JMethod
+var identNodes []models.JsonIdentifier
 
-func NewJavaCallListener() *JavaCallListener {
+func NewJavaCallListener(nodes []models.JsonIdentifier) *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	currentMethod = models.NewJMethod()
+	identNodes = nodes
 
 	methodMap = make(map[string]models.JMethod)
 
@@ -85,7 +87,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false}
 	methods = append(methods, *method)
 }
 
@@ -123,7 +125,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false}
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
@@ -205,13 +207,6 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 
 func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {
 	// TODO
-}
-
-func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
-	annotationName := ctx.QualifiedName().GetText()
-	if annotationName == "Override" {
-
-	}
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {

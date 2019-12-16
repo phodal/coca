@@ -131,7 +131,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
-			currentMethod = *method
+			updateMethod(method)
 			return
 		}
 
@@ -150,13 +150,18 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 		method.Parameters = methodParams
 	}
 
-	methodQueue = append(methodQueue, *method)
+	updateMethod(method)
+}
+
+func updateMethod(method *models.JMethod) {
 	currentMethod = *method
+	methodQueue = append(methodQueue, *method)
 	methodMap[getMethodMapName(*method)] = *method
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	if len(methodQueue)  < 1 {
+	if len(methodQueue) < 1 {
+		currentMethod = models.NewJMethod()
 		return
 	}
 
@@ -185,7 +190,7 @@ func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
 func getMethodMapName(method models.JMethod) string {
 	name := method.Name
 	if name == "" && len(methodQueue) > 1 {
-		name = methodQueue[len(methodQueue)-1 ].Name
+		name = methodQueue[len(methodQueue)-1].Name
 	}
 	return currentPkg + "." + currentClz + "." + name
 }

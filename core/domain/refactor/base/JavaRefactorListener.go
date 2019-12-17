@@ -2,7 +2,7 @@ package base
 
 import (
 	models2 "coca/core/domain/refactor/base/models"
-	. "coca/core/language/java"
+	. "coca/core/languages/java"
 	"strings"
 	"unicode"
 )

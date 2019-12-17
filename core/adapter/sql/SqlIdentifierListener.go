@@ -1,7 +1,7 @@
 package sql
 
 import (
-	"coca/core/language/sql"
+	"coca/core/languages/sql"
 	"fmt"
 )
 

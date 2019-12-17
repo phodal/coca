@@ -2,7 +2,7 @@ package bs
 
 import (
 	"coca/core/domain/bs/models"
-	. "coca/core/language/java"
+	. "coca/core/languages/java"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"

@@ -1,7 +1,7 @@
 package identifier
 
 import (
-	"coca/core/language/java"
+	"coca/core/languages/java"
 	"coca/core/models"
 )
 

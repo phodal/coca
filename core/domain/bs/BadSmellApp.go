@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	. "coca/core/language/java"
+	. "coca/core/languages/java"
 )
 
 var nodeInfos []models.JFullClassNode

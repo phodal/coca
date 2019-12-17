@@ -33,7 +33,7 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 		}
 	}
 
-	words := support.SegmentConceptCamelcase(methodsName)
+	words := SegmentConceptCamelcase(methodsName)
 
 	words = removeNormalWords(words)
 

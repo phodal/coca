@@ -1,7 +1,7 @@
 package call
 
 import (
-	"coca/core/language/java"
+	"coca/core/languages/java"
 	"coca/core/models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"

@@ -1,7 +1,7 @@
 package api
 
 import (
-	parser2 "coca/core/language/java"
+	parser2 "coca/core/languages/java"
 	"coca/core/models"
 	"coca/core/support"
 	"encoding/json"

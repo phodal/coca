@@ -1,7 +1,7 @@
 package call
 
 import (
-	parser2 "coca/core/language/java"
+	parser2 "coca/core/languages/java"
 	"coca/core/models"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"

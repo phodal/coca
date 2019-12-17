@@ -6,13 +6,14 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "coca/core/language/java"
+	. "coca/core/languages/java"
 )
 
 func GetJavaFiles(codeDir string) []string {
 	files := make([]string, 0)
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") {
+		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java")&& !strings.Contains(path, "Tests.java"){
+
 			files = append(files, path)
 		}
 		return nil

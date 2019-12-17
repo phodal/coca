@@ -1,4 +1,4 @@
-package support
+package concept
 
 import (
 	"github.com/iancoleman/strcase"

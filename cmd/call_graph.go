@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"coca/config"
 	. "coca/core/domain/call_graph"
 	"coca/core/models"
 	. "coca/core/support"
@@ -37,7 +38,7 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 
 			WriteToFile("call.dot", content)
 
-			cmd := exec.Command("dot", []string{"-Tsvg", "coca_reporter/call.dot", "-o", "coca_reporter/call.svg"}...)
+			cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/call.dot", "-o", config.CocaConfig.ReporterPath + "/call.svg"}...)
 			_, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Fatalf("cmd.Run() failed with %s\n", err)

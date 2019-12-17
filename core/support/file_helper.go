@@ -1,6 +1,7 @@
 package support
 
 import (
+	"coca/config"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -8,7 +9,7 @@ import (
 )
 
 func WriteToFile(fileName string, payload string) {
-	reporterPath := "coca_reporter"
+	reporterPath := config.CocaConfig.ReporterPath
 	if _, err := os.Stat(reporterPath); os.IsNotExist(err) {
 
 		err := os.Mkdir(reporterPath, os.ModePerm)

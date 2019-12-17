@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"coca/config"
 	. "coca/core/adapter/api"
 	"coca/core/domain/call_graph"
 	"coca/core/models"
@@ -67,7 +68,7 @@ var apiCmd *cobra.Command = &cobra.Command{
 
 			WriteToFile("api.dot", dotContent)
 
-			cmd := exec.Command("dot", []string{"-Tsvg", "coca_reporter/api.dot", "-o", "coca_reporter/api.svg"}...)
+			cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/api.dot", "-o", config.CocaConfig.ReporterPath + "/api.svg"}...)
 			_, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Fatalf("cmd.Run() failed with %s\n", err)
@@ -81,13 +82,12 @@ func replacePackage(content string) string {
 	packageNameArray := strings.Split(apiCmdConfig.RemovePackageNames, ",")
 	for index, name := range packageNameArray {
 		packagegsReggex = packagegsReggex + strings.ReplaceAll(name, ".", "\\.")
-		if index != len(packageNameArray) - 1 {
+		if index != len(packageNameArray)-1 {
 			packagegsReggex = packagegsReggex + "|"
 		}
 	}
 
 	re, _ := regexp.Compile(packagegsReggex)
-
 
 	return re.ReplaceAllString(content, "")
 }
@@ -96,7 +96,7 @@ func init() {
 	rootCmd.AddCommand(apiCmd)
 
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
-	apiCmd.PersistentFlags().StringP("dependence", "d", "coca_reporter/deps.json", "get dependence file")
+	apiCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
 }

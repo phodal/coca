@@ -8,7 +8,15 @@ import (
 )
 
 func WriteToFile(fileName string, payload string) {
-	_ = ioutil.WriteFile(fileName, []byte(payload), 0644)
+	reporterPath := "coca_reporter"
+	if _, err := os.Stat(reporterPath); os.IsNotExist(err) {
+
+		err := os.Mkdir(reporterPath, os.ModePerm)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	_ = ioutil.WriteFile(reporterPath+"/"+fileName, []byte(payload), os.ModePerm)
 }
 
 func ReadFile(fileName string) []byte {

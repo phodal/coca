@@ -3,7 +3,6 @@ package domain
 import (
 	"coca/src/adapter/models"
 	"coca/src/domain/stop_words/languages"
-	"coca/src/domain/support"
 	"coca/src/support"
 	"fmt"
 )

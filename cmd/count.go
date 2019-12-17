@@ -37,13 +37,23 @@ var countCmd *cobra.Command = &cobra.Command{
 
 		_ = json.Unmarshal(file, &cparsedDeps)
 
+		var projectMethods = make(map[string]bool)
+		for _, clz := range cparsedDeps {
+			for _, method := range clz.Methods {
+				projectMethods[clz.Package+"."+clz.Class+"."+method.Name] = true
+			}
+		}
+
 		var callMap = make(map[string]int)
 		for _, clz := range cparsedDeps {
 			for _, call := range clz.MethodCalls {
-				if callMap[call.Package+"."+call.Class+"."+call.MethodName] == 0 {
-					callMap[call.Package+"."+call.Class+"."+call.MethodName] = 1
-				} else {
-					callMap[call.Package+"."+call.Class+"."+call.MethodName]++
+				callMethod := call.Package + "." + call.Class + "." + call.MethodName
+				if projectMethods[callMethod] {
+					if callMap[callMethod] == 0 {
+						callMap[callMethod] = 1
+					} else {
+						callMap[callMethod]++
+					}
 				}
 			}
 		}

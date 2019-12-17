@@ -3,7 +3,7 @@ package cmd
 import (
 	. "coca/src/adapter/api"
 	"coca/src/adapter/models"
-	"coca/src/domain"
+	"coca/src/call_graph"
 	. "coca/src/support"
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
@@ -47,7 +47,7 @@ var apiCmd *cobra.Command = &cobra.Command{
 			}
 			_ = json.Unmarshal(file, &parsedDeps)
 
-			analyser := domain.NewCallGraph()
+			analyser := call_graph.NewCallGraph()
 			dotContent, counts := analyser.AnalysisByFiles(restApis, parsedDeps)
 
 			if apiCmdConfig.ShowCount {

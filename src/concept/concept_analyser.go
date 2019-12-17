@@ -1,8 +1,8 @@
-package domain
+package concept
 
 import (
 	"coca/src/adapter/models"
-	"coca/src/domain/stop_words/languages"
+	"coca/src/call_graph/stop_words/languages"
 	"coca/src/support"
 	"fmt"
 )

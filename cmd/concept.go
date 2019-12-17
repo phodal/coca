@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"coca/src/adapter/models"
-	. "coca/src/domain"
+	"coca/src/concept"
 	. "coca/src/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
@@ -19,7 +19,7 @@ var conceptCmd *cobra.Command = &cobra.Command{
 		dependence := cmd.Flag("dependence").Value.String()
 
 		if dependence != "" {
-			analyser := NewConceptAnalyser()
+			analyser := concept.NewConceptAnalyser()
 			file := ReadFile(dependence)
 			if file == nil {
 				log.Fatal("lost file:" + dependence)

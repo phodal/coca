@@ -1,4 +1,4 @@
-package domain
+package call_graph
 
 import (
 	"coca/src/adapter/api"

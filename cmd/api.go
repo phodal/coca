@@ -11,6 +11,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -76,7 +77,20 @@ var apiCmd *cobra.Command = &cobra.Command{
 }
 
 func replacePackage(content string) string {
-	return strings.ReplaceAll(content, apiCmdConfig.RemovePackageNames, "")
+	var packagegsReggex string
+	packageNameArray := strings.Split(apiCmdConfig.RemovePackageNames, ",")
+	for index, name := range packageNameArray {
+		packagegsReggex = packagegsReggex + strings.ReplaceAll(name, ".", "\\.")
+		if index != len(packageNameArray) - 1 {
+			packagegsReggex = packagegsReggex + "|"
+		}
+	}
+
+	re, _ := regexp.Compile(packagegsReggex)
+
+
+	return re.ReplaceAllString(content, "")
+	//return strings.ReplaceAll(content, apiCmdConfig.RemovePackageNames, "")
 }
 
 func init() {

@@ -1,9 +1,9 @@
 package unused
 
 import (
-	. "coca/src/adapter/models"
 	models2 "coca/src/domain/refactor/base/models"
 	support3 "coca/src/domain/refactor/rename/support"
+	. "coca/src/models"
 	"coca/src/support"
 	"encoding/json"
 	"io/ioutil"

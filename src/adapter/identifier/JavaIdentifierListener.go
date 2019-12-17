@@ -1,8 +1,8 @@
 package identifier
 
 import (
-	"coca/src/adapter/models"
 	"coca/src/language/java"
+	"coca/src/models"
 )
 
 var node *models.JIdentifier;

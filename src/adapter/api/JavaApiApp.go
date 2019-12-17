@@ -1,8 +1,8 @@
 package api
 
 import (
-	"coca/src/adapter/models"
 	parser2 "coca/src/language/java"
+	"coca/src/models"
 	"coca/src/support"
 	"encoding/json"
 	"fmt"

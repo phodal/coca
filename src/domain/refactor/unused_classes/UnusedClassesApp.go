@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "coca/src/adapter/models"
+	. "coca/src/models"
 	"coca/src/support"
 	"encoding/json"
 	"fmt"

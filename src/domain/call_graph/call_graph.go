@@ -2,7 +2,7 @@ package call_graph
 
 import (
 	"coca/src/adapter/api"
-	"coca/src/adapter/models"
+	"coca/src/models"
 	"sort"
 	"strings"
 )

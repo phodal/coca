@@ -1,8 +1,8 @@
 package concept
 
 import (
-	"coca/src/adapter/models"
 	languages2 "coca/src/domain/call_graph/stop_words/languages"
+	"coca/src/models"
 	"coca/src/support"
 	"fmt"
 )

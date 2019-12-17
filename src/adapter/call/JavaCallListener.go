@@ -1,8 +1,8 @@
 package call
 
 import (
-	"coca/src/adapter/models"
 	"coca/src/language/java"
+	"coca/src/models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"

@@ -1,8 +1,8 @@
 package identifier
 
 import (
-	"coca/src/adapter/models"
 	parser2 "coca/src/language/java"
+	"coca/src/models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"
 	"path/filepath"

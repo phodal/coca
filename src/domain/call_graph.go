@@ -52,7 +52,6 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 	return "\n"
 }
 
-
 func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) (string, []CallApiCount) {
 	methodMap := c.BuildMethodMap(deps)
 	var apiCallSCounts []CallApiCount
@@ -68,9 +67,10 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 		chain = chain + apiCallChain
 
 		count := &CallApiCount{
-			Caller:  caller,
-			ApiName: restApi.HttpMethod + " " + restApi.Uri,
-			Size:    len(strings.Split(apiCallChain, " -> ")),
+			HttpMethod: restApi.HttpMethod,
+			Caller:     caller,
+			Uri:        restApi.Uri,
+			Size:       len(strings.Split(apiCallChain, " -> ")),
 		}
 		apiCallSCounts = append(apiCallSCounts, *count)
 
@@ -101,4 +101,3 @@ func (c CallGraph) BuildMethodMap(clzs []models.JClassNode) map[string][]string 
 
 	return methodMap
 }
-

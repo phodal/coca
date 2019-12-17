@@ -53,10 +53,10 @@ var apiCmd *cobra.Command = &cobra.Command{
 			if apiCmdConfig.ShowCount {
 				table := tablewriter.NewWriter(os.Stdout)
 
-				table.SetHeader([]string{"Size", "API", "Caller"})
+				table.SetHeader([]string{"Size", "Method", "Uri", "Caller"})
 
 				for _, v := range counts {
-					table.Append([]string{strconv.Itoa(v.Size), v.ApiName, replacePackage(v.Caller)})
+					table.Append([]string{strconv.Itoa(v.Size), v.HttpMethod, v.Uri, replacePackage(v.Caller)})
 				}
 				table.Render()
 			}
@@ -90,7 +90,6 @@ func replacePackage(content string) string {
 
 
 	return re.ReplaceAllString(content, "")
-	//return strings.ReplaceAll(content, apiCmdConfig.RemovePackageNames, "")
 }
 
 func init() {

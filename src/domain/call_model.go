@@ -1,7 +1,8 @@
 package domain
 
 type CallApiCount struct {
-	Caller  string
-	ApiName string
-	Size    int
+	HttpMethod string
+	Uri        string
+	Caller     string
+	Size       int
 }

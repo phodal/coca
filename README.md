@@ -16,16 +16,18 @@ help:
 Usage:
   coca [command]
 
+
 Available Commands:
   analysis    analysis package
   api         scan api
   bs          Bad Code Smell
   call        call graph api
+  cloc        cloc [FILE or DIRECTORY]
   concept     concept api
-  ga          git analysis
+  count       count code
+  git         git analysis
   help        Help about any command
   refactor    auto refactor code
-  cloc        cloc [FILE or DIRECTORY]
 
 ```
 
@@ -205,6 +207,29 @@ pic 147
 point 143
 brand 131
 receiver 121
+```
+
+### Count Refs
+
+```
+coca count -d deps.json
+```
+
+Results:
+
+```
+4 study.huhao.demo.domain.contexts.blogcontext.blog.BlogRepository.findById
+3 study.huhao.demo.adapters.inbound.rest.handlers.GlobalExceptionHandler.handleDomainException
+3 study.huhao.demo.domain.contexts.blogcontext.blog.BlogRepository.save
+3 study.huhao.demo.adapters.inbound.rest.resources.blog.BlogDto.of
+2 study.huhao.demo.adapters.inbound.rest.resources.publishedblog.PublishedBlogDto.of
+2 study.huhao.demo.adapters.outbound.persistence.blog.BlogPO.toDomainModel
+2 study.huhao.demo.adapters.outbound.persistence.blog.BlogMapper.findById
+2 study.huhao.demo.domain.contexts.blogcontext.blog.Blog.validateTitle
+1 study.huhao.demo.application.usecases.QueryBlogUseCase.query
+1 study.huhao.demo.domain.contexts.blogcontext.blog.BlogService.get
+1 study.huhao.demo.domain.contexts.blogcontext.blog.Blog.saveDraft
+1 study.huhao.demo.domain.core.common.Page.getConvertedContent
 ```
 
 ### Auto Refactor

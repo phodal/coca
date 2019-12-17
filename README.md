@@ -7,7 +7,7 @@
 install 
 
 ```bash
-go get https://github.com/phodal/coca
+go get -u github.com/phodal/coca
 ```
 
 help:

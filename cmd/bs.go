@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"coca/src/bs"
+	"coca/src/domain/bs"
 	"coca/src/support"
 	"encoding/json"
 	"github.com/spf13/cobra"

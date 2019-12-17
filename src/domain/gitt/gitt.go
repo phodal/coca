@@ -2,7 +2,7 @@ package gitt
 
 import (
 	"bytes"
-	. "coca/src/gitt/apriori"
+	"coca/src/domain/gitt/apriori"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -103,7 +103,7 @@ type TopAuthor struct {
 	LineCount   int
 }
 
-func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []RelationRecord {
+func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []apriori.RelationRecord {
 	var dataset [][]string
 	for _, commitMessage := range commitMessages {
 		var set []string
@@ -123,7 +123,7 @@ func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []Rel
 		}
 	}
 
-	var newOptions Options = NewOptions(0.1, 0.9, 0, 0)
+	var newOptions apriori.Options = apriori.NewOptions(0.1, 0.9, 0, 0)
 
 	decoder := json.NewDecoder(bytes.NewReader(relatedConfig))
 	decoder.UseNumber()
@@ -134,7 +134,7 @@ func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []Rel
 	}
 
 	fmt.Println(newOptions)
-	apriori := NewApriori(dataset)
+	apriori := apriori.NewApriori(dataset)
 	result := apriori.Calculate(newOptions)
 
 	for _, res := range result {

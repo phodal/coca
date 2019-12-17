@@ -2,7 +2,7 @@ package concept
 
 import (
 	"coca/src/adapter/models"
-	"coca/src/call_graph/stop_words/languages"
+	languages2 "coca/src/domain/call_graph/stop_words/languages"
 	"coca/src/support"
 	"fmt"
 )
@@ -116,7 +116,7 @@ var itStopWords = []string{
 
 func removeNormalWords(words map[string]int) map[string]int {
 	var newWords = words
-	var stopwords = languages.ENGLISH_STOP_WORDS
+	var stopwords = languages2.ENGLISH_STOP_WORDS
 	stopwords = append(stopwords, itStopWords...)
 	for _, normalWord := range stopwords {
 		if newWords[normalWord] > 0 {

@@ -2,9 +2,9 @@ package move_class
 
 import (
 	"bufio"
-	"coca/src/refactor/base"
-	"coca/src/refactor/base/models"
-	"coca/src/refactor/utils"
+	base2 "coca/src/domain/refactor/base"
+	models2 "coca/src/domain/refactor/base/models"
+	utils3 "coca/src/domain/refactor/utils"
 	utils2 "coca/src/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -20,7 +20,7 @@ var currentFile string
 var moveConfig string
 var configPath string
 
-var nodes []models.JMoveStruct
+var nodes []models2.JMoveStruct
 
 type MoveClassApp struct {
 }
@@ -35,7 +35,7 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 
 func (j *MoveClassApp) Analysis() {
 	// TODO: 使用 Deps.json 来移动包
-	files := utils.GetJavaFiles(configPath)
+	files := utils3.GetJavaFiles(configPath)
 	fmt.Println(files)
 	for index := range files {
 		file := files[index]
@@ -43,16 +43,16 @@ func (j *MoveClassApp) Analysis() {
 		currentFile, _ = filepath.Abs(file)
 		//displayName := filepath.Base(file)
 
-		parser := utils.ProcessFile(file)
+		parser := utils3.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		node := models.NewJFullIdentifier()
-		listener := new(base.JavaRefactorListener)
+		node := models2.NewJFullIdentifier()
+		listener := new(base2.JavaRefactorListener)
 		listener.InitNode(node)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		moveStruct := &models.JMoveStruct{node, currentFile, node.GetImports()}
+		moveStruct := &models2.JMoveStruct{node, currentFile, node.GetImports()}
 		nodes = append(nodes, *moveStruct)
 	}
 
@@ -87,8 +87,8 @@ func parseRename() {
 	}
 }
 
-func updatePackageInfo(structs []models.JMoveStruct, originImport string, newImport string)  {
-	var originNode models.JMoveStruct
+func updatePackageInfo(structs []models2.JMoveStruct, originImport string, newImport string)  {
+	var originNode models2.JMoveStruct
 	for index := range nodes {
 		node := nodes[index]
 		if originImport == node.Pkg + "." + node.Name {

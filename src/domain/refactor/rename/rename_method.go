@@ -2,8 +2,8 @@ package unused
 
 import (
 	. "coca/src/adapter/models"
-	"coca/src/refactor/base/models"
-	support2 "coca/src/refactor/rename/support"
+	models2 "coca/src/domain/refactor/base/models"
+	support3 "coca/src/domain/refactor/rename/support"
 	"coca/src/support"
 	"encoding/json"
 	"io/ioutil"
@@ -11,8 +11,8 @@ import (
 	"strings"
 )
 
-var parsedChange []support2.RefactorChangeRelate
-var nodes []models.JMoveStruct
+var parsedChange []support3.RefactorChangeRelate
+var nodes []models2.JMoveStruct
 
 type RemoveMethodApp struct {
 }
@@ -44,17 +44,17 @@ func (j *RemoveMethodApp) Start() {
 
 	conf = string(configBytes)
 
-	parsedChange = support2.ParseRelates(conf)
+	parsedChange = support3.ParseRelates(conf)
 
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []JClassNode, relates []support2.RefactorChangeRelate) {
+func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
 
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
-			oldInfo := support2.BuildMethodPackageInfo(related.OldObj)
-			newInfo := support2.BuildMethodPackageInfo(related.NewObj)
+			oldInfo := support3.BuildMethodPackageInfo(related.OldObj)
+			newInfo := support3.BuildMethodPackageInfo(related.NewObj)
 
 			if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
 				for _, method := range pkgNode.Methods {
@@ -79,7 +79,7 @@ func methodCallToMethodModel(call JMethodCall) *JMethod {
 	return &JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil, nil, false}
 }
 
-func updateSelfRefs(node JClassNode, method JMethod, info *support2.PackageClassInfo) {
+func updateSelfRefs(node JClassNode, method JMethod, info *support3.PackageClassInfo) {
 	path := node.Path
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

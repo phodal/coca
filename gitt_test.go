@@ -2,7 +2,7 @@ package main_test
 
 
 import (
-	"coca/src/gitt"
+	"coca/src/domain/gitt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

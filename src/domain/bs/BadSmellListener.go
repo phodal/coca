@@ -1,7 +1,7 @@
 package bs
 
 import (
-	. "coca/src/bs/models"
+	"coca/src/domain/bs/models"
 	. "coca/src/language/java"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
@@ -17,13 +17,13 @@ var currentClzType string
 var currentClzExtends string
 var currentClzImplements []string
 
-var methods []JFullMethod
-var methodCalls []JFullMethodCall
+var methods []models.JFullMethod
+var methodCalls []models.JFullMethodCall
 
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
-var currentClassBs ClassBadSmellInfo
+var currentClassBs models.ClassBadSmellInfo
 
 func NewBadSmellListener() *BadSmellListener {
 	currentClz = ""
@@ -39,8 +39,8 @@ type BadSmellListener struct {
 	BaseJavaParserListener
 }
 
-func (s *BadSmellListener) getNodeInfo() *JFullClassNode {
-	return &JFullClassNode{
+func (s *BadSmellListener) getNodeInfo() *models.JFullClassNode {
+	return &models.JFullClassNode{
 		currentPkg,
 		currentClz,
 		currentClzType,
@@ -105,7 +105,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	var methodParams []JFullParameter = nil
+	var methodParams []models.JFullParameter = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
 		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
@@ -115,14 +115,14 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, *&JFullParameter{paramType, paramValue})
+				methodParams = append(methodParams, *&models.JFullParameter{paramType, paramValue})
 			}
 		}
 	}
 
-	methodBSInfo := *&MethodBadSmellInfo{0, 0}
+	methodBSInfo := *&models.MethodBadSmellInfo{0, 0}
 
-	method := &JFullMethod{
+	method := &models.JFullMethod{
 		name,
 		typeType,
 		startLine,
@@ -168,7 +168,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	typeType := ctx.TypeTypeOrVoid().GetText()
 	methodBody := ctx.MethodBody().GetText()
 
-	var methodParams []JFullParameter = nil
+	var methodParams []models.JFullParameter = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
 		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
@@ -178,17 +178,17 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, *&JFullParameter{paramType, paramValue})
+				methodParams = append(methodParams, *&models.JFullParameter{paramType, paramValue})
 
 				localVars[paramValue] = paramType
 			}
 		}
 	}
 
-	methodBSInfo := *&MethodBadSmellInfo{0, 0}
+	methodBSInfo := *&models.MethodBadSmellInfo{0, 0}
 	methodBadSmellInfo := buildMethodBSInfo(ctx, methodBSInfo)
 
-	method := &JFullMethod{
+	method := &models.JFullMethod{
 		name,
 		typeType,
 		startLine,
@@ -202,7 +202,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methods = append(methods, *method)
 }
 
-func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo MethodBadSmellInfo) MethodBadSmellInfo {
+func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo models.MethodBadSmellInfo) models.MethodBadSmellInfo {
 	methodBody := context.MethodBody()
 	blockContext := methodBody.GetChild(0)
 	if reflect.TypeOf(blockContext).String() == "*parser.BlockContext" {
@@ -275,16 +275,16 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := &JFullMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JFullMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JFullMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &models.JFullMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &JFullMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &models.JFullMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
@@ -303,7 +303,7 @@ func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &JFullMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JFullMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

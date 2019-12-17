@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"coca/src/adapter/models"
-	. "coca/src/call_graph"
+	. "coca/src/domain/call_graph"
 	. "coca/src/support"
 	"encoding/json"
 	"github.com/spf13/cobra"

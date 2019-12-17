@@ -124,19 +124,24 @@ With Count
 coca api -p . -d deps.json -c true -r com.macro.mall.
 ``` 
 
+or multi package:
+
+`coca.go api -p examples -d deps.json -r com.macro.mall.demo.controller.,com.zheng.cms.admin.,com.phodal.pholedge -c` 
+
 ```
-+------+------------------------------------------------+------------------------------------------------------------------------+
-| SIZE |                      API                       |                                 CALLER                                 |
-+------+------------------------------------------------+------------------------------------------------------------------------+
-|   17 | GET /returnReason/list                         | controller.OmsOrderReturnReasonController.list                         |
-|   17 | GET /returnApply/list                          | controller.OmsOrderReturnApplyController.list                          |
-|   17 | GET /order/list                                | controller.OmsOrderController.list                                     |
-|   17 | GET /subject/list                              | controller.CmsSubjectController.getList                                |
-|   17 | GET /esProduct/search/simple                   | search.controller.EsProductController.search                           |
-|   17 | GET /flash/{id}                                | controller.SmsFlashPromotionController.getItem                         |
-|   21 | POST /aliyun/osscallback                       | controller.OssController.callback                                      |
-|   36 | GET /aliyun/oss/policy                         | controller.OssController.policy                                        |
-+------+------------------------------------------------+------------------------------------------------------------------------+
++------+--------+------------------------------------------------+------------------------------------------------------------------------+
+| SIZE | METHOD |                      URI                       |                                 CALLER                                 |
++------+--------+------------------------------------------------+------------------------------------------------------------------------+
+|   36 | GET    | /aliyun/oss/policy                             | controller.OssController.policy                                        |
+|   21 | POST   | /aliyun/osscallback                            | controller.OssController.callback                                      |
+|   17 | GET    | /subject/list                                  | controller.CmsSubjectController.getList                                |
+|   17 | GET    | /esProduct/search                              | search.controller.EsProductController.search                           |
+|   17 | GET    | /order/list                                    | controller.OmsOrderController.list                                     |
+|   17 | GET    | /productAttribute/list/{cid}                   | controller.PmsProductAttributeController.getList                       |
+|   17 | GET    | /productCategory/list/{parentId}               | controller.PmsProductCategoryController.getList                        |
+|   17 | GET    | /brand/list                                    | controller.PmsBrandController.getList                                  |
+|   17 | GET    | /esProduct/search/simple                       | search.controller.EsProductController.search                           |
++------+--------+------------------------------------------------+------------------------------------------------------------------------+
 ```
 
 ### Git Analysis

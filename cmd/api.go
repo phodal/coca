@@ -67,7 +67,7 @@ var apiCmd *cobra.Command = &cobra.Command{
 
 			WriteToFile("api.dot", dotContent)
 
-			cmd := exec.Command("dot", []string{"-Tsvg", "api.dot", "-o", "api.svg"}...)
+			cmd := exec.Command("dot", []string{"-Tsvg", "coca_reporter/api.dot", "-o", "coca_reporter/api.svg"}...)
 			_, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Fatalf("cmd.Run() failed with %s\n", err)
@@ -96,7 +96,7 @@ func init() {
 	rootCmd.AddCommand(apiCmd)
 
 	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
-	apiCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	apiCmd.PersistentFlags().StringP("dependence", "d", "coca_reporter/deps.json", "get dependence file")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
 }

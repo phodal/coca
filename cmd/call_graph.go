@@ -37,7 +37,7 @@ var callGraphCmd *cobra.Command = &cobra.Command{
 
 			WriteToFile("call.dot", content)
 
-			cmd := exec.Command("dot", []string{"-Tsvg", "call.dot", "-o", "call_demo.svg"}...)
+			cmd := exec.Command("dot", []string{"-Tsvg", "coca_reporter/call.dot", "-o", "coca_reporter/call.svg"}...)
 			_, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Fatalf("cmd.Run() failed with %s\n", err)

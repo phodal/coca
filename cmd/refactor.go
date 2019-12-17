@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"coca/config"
 	. "coca/core/domain/refactor/move_class"
 	. "coca/core/domain/refactor/rename"
 	. "coca/core/domain/refactor/unused"
@@ -38,5 +39,5 @@ func init() {
 	refactorCmd.PersistentFlags().StringP("path", "p", "", "path")
 	refactorCmd.PersistentFlags().StringP("move", "m", "", "with config example -m config.file")
 	refactorCmd.PersistentFlags().StringP("rename", "R", "", "rename method -R config.file")
-	refactorCmd.PersistentFlags().StringP("dependence", "D", "", "get dependence D")
+	refactorCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence D")
 }

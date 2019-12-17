@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"coca/config"
 	"coca/core/models"
 	"coca/core/support"
 	"encoding/json"
@@ -69,6 +70,5 @@ var countCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(countCmd)
 
-	countCmd.PersistentFlags().StringVarP(&countCmdConfig.DependencePath, "dependence", "d", "", "get dependence file")
-	//countCmd.PersistentFlags().BoolVarP(&countCmdConfig.Refs, "refs", "s", false, "count refs")
+	countCmd.PersistentFlags().StringVarP(&countCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 }

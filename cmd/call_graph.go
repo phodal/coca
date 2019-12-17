@@ -51,6 +51,6 @@ func init() {
 	rootCmd.AddCommand(callGraphCmd)
 
 	callGraphCmd.PersistentFlags().StringP("className", "c", "", "path")
-	callGraphCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	callGraphCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	callGraphCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
 }

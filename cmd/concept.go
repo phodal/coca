@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"coca/config"
 	"coca/core/domain/concept"
 	"coca/core/models"
 	. "coca/core/support"
@@ -35,5 +36,5 @@ var conceptCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(conceptCmd)
 
-	conceptCmd.PersistentFlags().StringP("dependence", "d", "", "get dependence file")
+	conceptCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 }

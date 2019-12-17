@@ -10,7 +10,7 @@ import (
 
 var badsmellCmd *cobra.Command = &cobra.Command{
 	Use:   "bs",
-	Short: "Bad Code Smell",
+	Short: "bad smell analysis",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := cmd.Flag("path").Value.String()

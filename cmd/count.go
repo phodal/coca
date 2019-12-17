@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"coca/src/models"
-	"coca/src/support"
+	"coca/core/models"
+	"coca/core/support"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"

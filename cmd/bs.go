@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"coca/src/domain/bs"
-	"coca/src/support"
+	"coca/core/domain/bs"
+	"coca/core/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"strings"
@@ -47,7 +47,7 @@ func sortSmellByType(models []bs.BadSmellModel) map[string][]bs.BadSmellModel {
 func init() {
 	rootCmd.AddCommand(badsmellCmd)
 
-	badsmellCmd.PersistentFlags().StringP("path", "p", "", "example -p src/main")
+	badsmellCmd.PersistentFlags().StringP("path", "p", "", "example -p core/main")
 	badsmellCmd.PersistentFlags().StringP("ignore", "x", "", "-x=dataClass,lazyElement,longMethod,refusedBequest")
 	badsmellCmd.PersistentFlags().StringP("sort", "s", "", "sort bad smell -s=type")
 }

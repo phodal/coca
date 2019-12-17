@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	. "coca/src/domain/call_graph"
-	"coca/src/models"
-	. "coca/src/support"
+	. "coca/core/domain/call_graph"
+	"coca/core/models"
+	. "coca/core/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"

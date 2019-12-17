@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 
-	. "coca/src/adapter/call"
-	. "coca/src/adapter/identifier"
-	. "coca/src/support"
+	. "coca/core/adapter/call"
+	. "coca/core/adapter/identifier"
+	. "coca/core/support"
 )
 
 var analysisCmd *cobra.Command = &cobra.Command{
@@ -38,5 +38,5 @@ var analysisCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(analysisCmd)
 
-	analysisCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p src/main")
+	analysisCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p core/main")
 }

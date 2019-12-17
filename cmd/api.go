@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	. "coca/src/adapter/api"
-	"coca/src/domain/call_graph"
-	"coca/src/models"
-	. "coca/src/support"
+	. "coca/core/adapter/api"
+	"coca/core/domain/call_graph"
+	"coca/core/models"
+	. "coca/core/support"
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"

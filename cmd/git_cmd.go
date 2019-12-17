@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	. "coca/src/domain/gitt"
+	. "coca/core/domain/gitt"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"

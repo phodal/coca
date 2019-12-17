@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"coca/src/domain/concept"
-	"coca/src/models"
-	. "coca/src/support"
+	"coca/core/domain/concept"
+	"coca/core/models"
+	. "coca/core/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"

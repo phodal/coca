@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	. "coca/src/domain/refactor/move_class"
-	. "coca/src/domain/refactor/rename"
-	. "coca/src/domain/refactor/unused"
+	. "coca/core/domain/refactor/move_class"
+	. "coca/core/domain/refactor/rename"
+	. "coca/core/domain/refactor/unused"
 	"github.com/spf13/cobra"
 )
 

@@ -5,7 +5,7 @@ import (
 	"coca/src/refactor/base"
 	"coca/src/refactor/base/models"
 	"coca/src/refactor/utils"
-	utils2 "coca/src/utils"
+	utils2 "coca/src/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"

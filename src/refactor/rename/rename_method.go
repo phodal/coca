@@ -4,7 +4,7 @@ import (
 	. "coca/src/adapter/models"
 	"coca/src/refactor/base/models"
 	support2 "coca/src/refactor/rename/support"
-	"coca/src/utils"
+	"coca/src/support"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -30,14 +30,14 @@ func RenameMethodApp(dep string, p string) *RemoveMethodApp {
 }
 
 func (j *RemoveMethodApp) Start() {
-	file := utils.ReadFile(depsFile)
+	file := support.ReadFile(depsFile)
 	if file == nil {
 		return
 	}
 
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	configBytes := utils.ReadFile(configPath)
+	configBytes := support.ReadFile(configPath)
 	if configBytes == nil {
 		return
 	}

@@ -6,7 +6,7 @@ import (
 
 	. "coca/src/adapter/call"
 	. "coca/src/adapter/identifier"
-	. "coca/src/utils"
+	. "coca/src/support"
 )
 
 var analysisCmd *cobra.Command = &cobra.Command{

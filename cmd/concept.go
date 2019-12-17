@@ -3,7 +3,7 @@ package cmd
 import (
 	"coca/src/adapter/models"
 	. "coca/src/domain"
-	. "coca/src/utils"
+	. "coca/src/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"

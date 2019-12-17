@@ -3,7 +3,7 @@ package api
 import (
 	"coca/src/adapter/models"
 	parser2 "coca/src/language/java"
-	"coca/src/utils"
+	"coca/src/support"
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -21,7 +21,7 @@ type JavaApiApp struct {
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	parsedDeps = nil
-	file := utils.ReadFile(depPath)
+	file := support.ReadFile(depPath)
 	if file == nil {
 		return nil
 	}

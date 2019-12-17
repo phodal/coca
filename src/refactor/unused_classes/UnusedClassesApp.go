@@ -2,7 +2,7 @@ package main
 
 import (
 	. "coca/src/adapter/models"
-	"coca/src/utils"
+	"coca/src/support"
 	"encoding/json"
 	"fmt"
 	"sort"
@@ -13,7 +13,7 @@ var parsedDeps []JClassNode
 
 func main()  {
 	var analysisPackage = ""
-	file := utils.ReadFile("deps.json")
+	file := support.ReadFile("deps.json")
 	if file == nil {
 		return
 	}

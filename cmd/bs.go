@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"coca/src/bs"
-	"coca/src/utils"
+	"coca/src/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"strings"
@@ -30,7 +30,7 @@ var badsmellCmd *cobra.Command = &cobra.Command{
 				bsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
 			}
 
-			utils.WriteToFile("bs.json", string(bsModel))
+			support.WriteToFile("bs.json", string(bsModel))
 		}
 	},
 }

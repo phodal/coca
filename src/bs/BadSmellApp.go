@@ -1,7 +1,7 @@
 package bs
 
 import (
-	"coca/src/utils"
+	"coca/src/support"
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -49,7 +49,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []BadSm
 	}
 
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
-	utils.WriteToFile("nodeInfos.json", string(bsModel))
+	support.WriteToFile("nodeInfos.json", string(bsModel))
 
 	bsList := analysisBadSmell(nodeInfos)
 

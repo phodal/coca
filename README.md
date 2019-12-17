@@ -6,13 +6,13 @@
 
 install 
 
-```
+```bash
 go get https://github.com/phodal/coca
 ```
 
 help:
 
-```
+```bash
 Usage:
   coca [command]
 
@@ -39,13 +39,13 @@ coca analysis -p [PATH]
 
 ### Find Bad Smells
 
-```
+```bash
 coca bs -p examples/api -s type
 ```
 
 Examples Result:
 
-```
+```json
 {
    "dataClass": [
       {
@@ -130,7 +130,7 @@ or multi package:
 
 `coca.go api -p examples -d deps.json -r com.macro.mall.demo.controller.,com.zheng.cms.admin.,com.phodal.pholedge -c` 
 
-```
+```bash
 +------+--------+------------------------------------------------+------------------------------------------------------------------------+
 | SIZE | METHOD |                      URI                       |                                 CALLER                                 |
 +------+--------+------------------------------------------------+------------------------------------------------------------------------+
@@ -152,7 +152,9 @@ or multi package:
 coca ga -t -b 
 ```
 
-```
+Results: 
+
+```bash
 +---------------------------------------------------------------------------------------------------------------------+-----------+-------------+
 |                                                     ENTITYNAME                                                      | REVSCOUNT | AUTHORCOUNT |
 +---------------------------------------------------------------------------------------------------------------------+-----------+-------------+

@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"coca/config"
-	"coca/core/domain/concept"
 	"coca/core/domain/evaluate"
 	. "coca/core/support"
 	"encoding/json"

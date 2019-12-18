@@ -1,7 +1,6 @@
 package identifier
 
 import (
-	parser2 "coca/core/languages/java"
 	"coca/core/models"
 	"coca/core/support"
 	"github.com/antlr/antlr4/runtime/Go/antlr"

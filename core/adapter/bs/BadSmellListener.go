@@ -108,7 +108,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	methodModifierLen := len(allModifier)
 	for index, modifier := range allModifier {
 		modifiers = modifiers + modifier.GetText()
-		if index < methodModifierLen - 1 {
+		if index < methodModifierLen-1 {
 			modifiers = modifiers + ","
 		}
 	}
@@ -174,7 +174,8 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	stopLine := ctx.GetStop().GetLine()
 	name := ctx.IDENTIFIER().GetText()
 	stopLinePosition := startLinePosition + len(name)
-	//XXX: find the start position of {, not public
+
+	modifier := getModifier(ctx)
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 	methodBody := ctx.MethodBody().GetText()
@@ -207,10 +208,26 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		StopLine:          stopLine,
 		StopLinePosition:  stopLinePosition,
 		MethodBody:        methodBody,
+		Modifier:          modifier,
 		Parameters:        methodParams,
 		MethodBs:          methodBadSmellInfo,
 	}
 	methods = append(methods, *method)
+}
+
+func getModifier(ctx *MethodDeclarationContext) string {
+	var modifier = ""
+	if reflect.TypeOf(ctx.GetParent()).String() == "*parser.MemberDeclarationContext" {
+		firstChild := ctx.GetParent().(*MemberDeclarationContext).GetParent().GetChild(0)
+		if reflect.TypeOf(firstChild).String() == "*parser.ModifierContext" {
+			modifierCtx := firstChild.(*ModifierContext)
+			if reflect.TypeOf(modifierCtx.GetChild(0)).String() == "*parser.ClassOrInterfaceModifierContext" {
+				context := modifierCtx.GetChild(0).(*ClassOrInterfaceModifierContext)
+				modifier = context.GetText()
+			}
+		}
+	}
+	return modifier
 }
 
 func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo models2.MethodBadSmellInfo) models2.MethodBadSmellInfo {

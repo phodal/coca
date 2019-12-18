@@ -11,8 +11,8 @@ import (
 )
 
 type CountCmdConfig struct {
-	Refs           bool
 	DependencePath string
+	Top            int
 }
 
 var (
@@ -61,6 +61,10 @@ var countCmd = &cobra.Command{
 
 		callMapSort := support.RankByWordCount(callMap)
 
+		if *&countCmdConfig.Top > 0 {
+			callMapSort = callMapSort[:*&countCmdConfig.Top]
+		}
+
 		for _, count := range callMapSort {
 			fmt.Println(count.Value, count.Key)
 		}
@@ -71,4 +75,5 @@ func init() {
 	rootCmd.AddCommand(countCmd)
 
 	countCmd.PersistentFlags().StringVarP(&countCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
+	countCmd.PersistentFlags().IntVarP(&countCmdConfig.Top, "top", "t", 0, "top x")
 }

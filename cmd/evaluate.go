@@ -18,8 +18,8 @@ var (
 )
 
 var evaluateCmd = &cobra.Command{
-	Use:   "concept",
-	Short: "concept api",
+	Use:   "evaluate",
+	Short: "evaluate refactor effort",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		dependence := *&evaluateConfig.DependencePath

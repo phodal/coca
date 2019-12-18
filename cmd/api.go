@@ -18,6 +18,8 @@ import (
 )
 
 type ApiCmdConfig struct {
+	Path               string
+	DependencePath     string
 	ShowCount          bool
 	RemovePackageNames string
 }
@@ -31,8 +33,8 @@ var apiCmd *cobra.Command = &cobra.Command{
 	Short: "scan api",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		path := cmd.Flag("path").Value.String()
-		dependence := cmd.Flag("dependence").Value.String()
+		path := *&apiCmdConfig.Path
+		dependence := *&apiCmdConfig.DependencePath
 
 		if path != "" {
 			app := new(JavaApiApp)
@@ -78,16 +80,16 @@ var apiCmd *cobra.Command = &cobra.Command{
 }
 
 func replacePackage(content string) string {
-	var packagegsReggex string
+	var packageRegex string
 	packageNameArray := strings.Split(apiCmdConfig.RemovePackageNames, ",")
 	for index, name := range packageNameArray {
-		packagegsReggex = packagegsReggex + strings.ReplaceAll(name, ".", "\\.")
+		packageRegex = packageRegex + strings.ReplaceAll(name, ".", "\\.")
 		if index != len(packageNameArray)-1 {
-			packagegsReggex = packagegsReggex + "|"
+			packageRegex = packageRegex + "|"
 		}
 	}
 
-	re, _ := regexp.Compile(packagegsReggex)
+	re, _ := regexp.Compile(packageRegex)
 
 	return re.ReplaceAllString(content, "")
 }
@@ -95,8 +97,8 @@ func replacePackage(content string) string {
 func init() {
 	rootCmd.AddCommand(apiCmd)
 
-	apiCmd.PersistentFlags().StringP("path", "p", "", "path")
-	apiCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.Path, "path", "p", "", "path")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
 }

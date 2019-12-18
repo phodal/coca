@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"coca/core/models"
 	"encoding/json"
 	"github.com/spf13/cobra"
 
@@ -10,12 +9,20 @@ import (
 	. "coca/core/support"
 )
 
-var analysisCmd *cobra.Command = &cobra.Command{
+type AnalysisCmdConfig struct {
+	Path string
+}
+
+var (
+	analysisCmdConfig AnalysisCmdConfig
+)
+
+var analysisCmd = &cobra.Command{
 	Use:   "analysis",
 	Short: "analysis package",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		importPath := cmd.Flag("path").Value.String()
+		importPath := *&analysisCmdConfig.Path
 
 		if importPath != "" {
 			identifierApp := new(JavaIdentifierApp)
@@ -24,17 +31,12 @@ var analysisCmd *cobra.Command = &cobra.Command{
 			var classes []string = nil
 
 			for _, node := range iNodes {
-				classes = append(classes, node.Package + "." + node.Name)
+				classes = append(classes, node.Package+"."+node.Name)
 			}
 
 			callApp := new(JavaCallApp)
 
-			var callNodes []models.JClassNode
-
-			defer func() {
-				callNodes = callApp.AnalysisPath(importPath, classes, iNodes)
-			}()
-
+			callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
 			WriteToFile("deps.json", string(cModel))
 		}
@@ -44,5 +46,5 @@ var analysisCmd *cobra.Command = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(analysisCmd)
 
-	analysisCmd.PersistentFlags().StringP("path", "p", "Code Path", "example -p core/main")
+	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Path, "path", "p", ".", "example -p core/main")
 }

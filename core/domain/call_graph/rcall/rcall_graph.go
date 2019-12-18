@@ -24,6 +24,8 @@ func (c RCallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 
 	chain := c.buildRCallChain(funcName, rcallMap)
 
+	graphvizReverse := "rankdir = LR;\nedge [dir=\"back\"];\n"
+	chain = graphvizReverse + chain
 	dotContent := call_graph.ToGraphviz(chain)
 	return dotContent
 }

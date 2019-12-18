@@ -3,7 +3,7 @@ package unused
 import (
 	base2 "coca/core/domain/refactor/base"
 	models2 "coca/core/domain/refactor/base/models"
-	utils2 "coca/core/domain/refactor/utils"
+	"coca/core/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"
@@ -30,7 +30,7 @@ func NewRemoveUnusedImportApp(config string, pPath string) *RemoveUnusedImportAp
 }
 
 func (j *RemoveUnusedImportApp) Analysis() {
-	files := utils2.GetJavaFiles(configPath)
+	files := support.GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
 
@@ -38,7 +38,7 @@ func (j *RemoveUnusedImportApp) Analysis() {
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := utils2.ProcessFile(file)
+		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

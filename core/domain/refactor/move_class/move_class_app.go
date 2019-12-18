@@ -4,7 +4,6 @@ import (
 	"bufio"
 	base2 "coca/core/domain/refactor/base"
 	models2 "coca/core/domain/refactor/base/models"
-	utils3 "coca/core/domain/refactor/utils"
 	utils2 "coca/core/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -35,7 +34,7 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 
 func (j *MoveClassApp) Analysis() {
 	// TODO: 使用 Deps.json 来移动包
-	files := utils3.GetJavaFiles(configPath)
+	files := utils2.GetJavaFiles(configPath)
 	fmt.Println(files)
 	for index := range files {
 		file := files[index]
@@ -43,7 +42,7 @@ func (j *MoveClassApp) Analysis() {
 		currentFile, _ = filepath.Abs(file)
 		//displayName := filepath.Base(file)
 
-		parser := utils3.ProcessFile(file)
+		parser := utils2.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

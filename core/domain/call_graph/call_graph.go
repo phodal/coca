@@ -15,14 +15,14 @@ func NewCallGraph() CallGraph {
 }
 
 func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
-	methodMap := c.BuildMethodMap(clzs)
+	methodMap := BuildMethodMap(clzs)
 
 	chain := BuildCallChain(funcName, methodMap)
-	dotContent := toGraphviz(chain)
+	dotContent := ToGraphviz(chain)
 	return dotContent
 }
 
-func toGraphviz(chain string) string {
+func ToGraphviz(chain string) string {
 	var result = "digraph G { \n"
 	result = result + chain
 	result = result + "}\n"
@@ -53,7 +53,7 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 }
 
 func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) (string, []CallApiCount) {
-	methodMap := c.BuildMethodMap(deps)
+	methodMap := BuildMethodMap(deps)
 	var apiCallSCounts []CallApiCount
 
 	results := "digraph G { \n"
@@ -84,7 +84,7 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 	return results + "}\n", apiCallSCounts
 }
 
-func (c CallGraph) BuildMethodMap(clzs []models.JClassNode) map[string][]string {
+func BuildMethodMap(clzs []models.JClassNode) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range clzs {
 		for _, method := range clz.Methods {

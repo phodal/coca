@@ -30,6 +30,8 @@ var evaluateCmd = &cobra.Command{
 			log.Fatal("lost file:" + dependence)
 		}
 
+		// util
+
 		_ = json.Unmarshal(file, &parsedDeps)
 
 		analyser.Analysis(&parsedDeps)

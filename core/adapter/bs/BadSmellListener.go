@@ -103,6 +103,16 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	stopLinePosition := startLinePosition + len(name)
 	methodBody := ctx.MethodBody().GetText()
 
+	var modifiers = ""
+	allModifier := ctx.AllInterfaceMethodModifier()
+	methodModifierLen := len(allModifier)
+	for index, modifier := range allModifier {
+		modifiers = modifiers + modifier.GetText()
+		if index < methodModifierLen - 1 {
+			modifiers = modifiers + ","
+		}
+	}
+
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	var methodParams []models2.JFullParameter = nil
@@ -123,15 +133,16 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	methodBSInfo := *&models2.MethodBadSmellInfo{0, 0}
 
 	method := &models2.BsJMethod{
-		name,
-		typeType,
-		startLine,
-		startLinePosition,
-		stopLine,
-		stopLinePosition,
-		methodBody,
-		methodParams,
-		methodBSInfo,
+		Name:              name,
+		Type:              typeType,
+		StartLine:         startLine,
+		StartLinePosition: startLinePosition,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+		MethodBody:        methodBody,
+		Modifier:          modifiers,
+		Parameters:        methodParams,
+		MethodBs:          methodBSInfo,
 	}
 
 	methods = append(methods, *method)
@@ -189,15 +200,15 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methodBadSmellInfo := buildMethodBSInfo(ctx, methodBSInfo)
 
 	method := &models2.BsJMethod{
-		name,
-		typeType,
-		startLine,
-		startLinePosition,
-		stopLine,
-		stopLinePosition,
-		methodBody,
-		methodParams,
-		methodBadSmellInfo,
+		Name:              name,
+		Type:              typeType,
+		StartLine:         startLine,
+		StartLinePosition: startLinePosition,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+		MethodBody:        methodBody,
+		Parameters:        methodParams,
+		MethodBs:          methodBadSmellInfo,
 	}
 	methods = append(methods, *method)
 }
@@ -324,7 +335,7 @@ func parseTargetType(targetCtx string) string {
 	//TODO: update this reflect
 	typeOf := reflect.TypeOf(targetCtx).String()
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
-		targetType = currentClz;
+		targetType = currentClz
 	} else {
 		fieldType := fields[targetVar]
 		formalType := formalParameters[targetVar]
@@ -332,9 +343,9 @@ func parseTargetType(targetCtx string) string {
 		if fieldType != "" {
 			targetType = fieldType
 		} else if formalType != "" {
-			targetType = formalType;
+			targetType = formalType
 		} else if localVarType != "" {
-			targetType = localVarType;
+			targetType = localVarType
 		}
 	}
 

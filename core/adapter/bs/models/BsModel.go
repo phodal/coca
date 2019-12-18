@@ -31,6 +31,7 @@ type BsJMethod struct {
 	StopLine          int
 	StopLinePosition  int
 	MethodBody        string
+	Modifier          string
 	Parameters        []JFullParameter
 	MethodBs          MethodBadSmellInfo
 }
@@ -51,7 +52,7 @@ type JFullParameter struct {
 }
 
 func NewJFullClassNode() *BsJClass {
-	info := &ClassBadSmellInfo{0, 0};
+	info := &ClassBadSmellInfo{0, 0}
 	return &BsJClass{
 		"",
 		"",

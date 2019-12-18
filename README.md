@@ -234,6 +234,26 @@ Results:
 1 study.huhao.demo.domain.core.common.Page.getConvertedContent
 ```
 
+### Reverse Call Graph
+
+```
+coca rcall -c org.bytedeco.javacpp.tools.TokenIndexer.get
+```
+
+Results:
+
+```
+digraph G { 
+edge [dir="back"];
+
+"org.bytedeco.javacpp.tools.Parser.extern" -> "org.bytedeco.javacpp.tools.Parser.declarations";
+"org.bytedeco.javacpp.tools.Parser.declarations" -> "org.bytedeco.javacpp.tools.Parser.extern";
+...
+}
+```
+
+![RCall Demo](docs/sample/rcall.svg)
+
 ### Auto Refactor
 
 support: 

@@ -22,7 +22,9 @@ func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 	return dotContent
 }
 
+// TODO: be a utils
 func ToGraphviz(chain string) string {
+	//rankdir = LR;
 	var result = "digraph G { \n"
 	result = result + chain
 	result = result + "}\n"

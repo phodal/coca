@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var refactorCmd *cobra.Command = &cobra.Command{
+var refactorCmd = &cobra.Command{
 	Use:   "refactor",
 	Short: "auto refactor code",
 	Long:  ``,

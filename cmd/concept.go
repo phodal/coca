@@ -12,7 +12,7 @@ import (
 
 var parsedDeps []models.JClassNode
 
-var conceptCmd *cobra.Command = &cobra.Command{
+var conceptCmd = &cobra.Command{
 	Use:   "concept",
 	Short: "concept api",
 	Long:  ``,

@@ -28,7 +28,7 @@ var (
 	apiCmdConfig ApiCmdConfig
 )
 
-var apiCmd *cobra.Command = &cobra.Command{
+var apiCmd = &cobra.Command{
 	Use:   "api",
 	Short: "scan api",
 	Long:  ``,
@@ -97,7 +97,7 @@ func replacePackage(content string) string {
 func init() {
 	rootCmd.AddCommand(apiCmd)
 
-	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.Path, "path", "p", "", "path")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.Path, "path", "p", ".", "path")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")

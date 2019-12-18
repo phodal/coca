@@ -21,7 +21,7 @@ var (
 
 var cparsedDeps []models.JClassNode
 
-var countCmd *cobra.Command = &cobra.Command{
+var countCmd = &cobra.Command{
 	Use:   "count",
 	Short: "count code",
 	Long:  ``,

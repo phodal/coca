@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-var callGraphCmd *cobra.Command = &cobra.Command{
+var callGraphCmd = &cobra.Command{
 	Use:   "call",
 	Short: "call graph api",
 	Long:  ``,

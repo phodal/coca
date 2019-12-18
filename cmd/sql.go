@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var sqlCmd *cobra.Command = &cobra.Command{
+var sqlCmd = &cobra.Command{
 	Use:   "sql",
 	Short: "scan sql",
 	Long:  ``,

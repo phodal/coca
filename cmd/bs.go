@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var badsmellCmd *cobra.Command = &cobra.Command{
+var badsmellCmd = &cobra.Command{
 	Use:   "bs",
 	Short: "bad smell analysis",
 	Long:  ``,

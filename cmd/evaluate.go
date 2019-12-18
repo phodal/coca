@@ -9,29 +9,35 @@ import (
 	"log"
 )
 
-var evaluateCmd *cobra.Command = &cobra.Command{
+type EvaluateConfig struct {
+	DependencePath string
+}
+
+var (
+	evaluateConfig EvaluateConfig
+)
+
+var evaluateCmd = &cobra.Command{
 	Use:   "concept",
 	Short: "concept api",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		dependence := cmd.Flag("dependence").Value.String()
+		dependence := *&evaluateConfig.DependencePath
 
-		if dependence != "" {
-			analyser := evaluate.NewEvaluateAnalyser()
-			file := ReadFile(dependence)
-			if file == nil {
-				log.Fatal("lost file:" + dependence)
-			}
-
-			_ = json.Unmarshal(file, &parsedDeps)
-
-			analyser.Analysis(&parsedDeps)
+		analyser := evaluate.NewEvaluateAnalyser()
+		file := ReadFile(dependence)
+		if file == nil {
+			log.Fatal("lost file:" + dependence)
 		}
+
+		_ = json.Unmarshal(file, &parsedDeps)
+
+		analyser.Analysis(&parsedDeps)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(evaluateCmd)
 
-	evaluateCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
+	evaluateCmd.PersistentFlags().StringVarP(&evaluateConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 }

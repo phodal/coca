@@ -22,6 +22,7 @@ type ApiCmdConfig struct {
 	DependencePath     string
 	ShowCount          bool
 	RemovePackageNames string
+	AggregateApi       string
 }
 
 var (
@@ -35,6 +36,7 @@ var apiCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path := *&apiCmdConfig.Path
 		dependence := *&apiCmdConfig.DependencePath
+		apiPrefix := *&apiCmdConfig.AggregateApi
 
 		if path != "" {
 			app := new(JavaApiApp)
@@ -50,8 +52,10 @@ var apiCmd = &cobra.Command{
 			}
 			_ = json.Unmarshal(file, &parsedDeps)
 
+			restFieldsApi := filterApi(apiPrefix, restApis)
+
 			analyser := call_graph.NewCallGraph()
-			dotContent, counts := analyser.AnalysisByFiles(restApis, parsedDeps)
+			dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps)
 
 			if apiCmdConfig.ShowCount {
 				table := tablewriter.NewWriter(os.Stdout)
@@ -79,6 +83,21 @@ var apiCmd = &cobra.Command{
 	},
 }
 
+func filterApi(apiPrefix string, apis []RestApi, ) []RestApi {
+	var restFieldsApi []RestApi
+	if apiPrefix != "" {
+		for _, api := range apis {
+			if strings.HasPrefix(api.Uri, apiPrefix) {
+				restFieldsApi = append(restFieldsApi, api)
+			}
+		}
+	} else {
+		restFieldsApi = apis
+	}
+
+	return restFieldsApi
+}
+
 func replacePackage(content string) string {
 	var packageRegex string
 	packageNameArray := strings.Split(apiCmdConfig.RemovePackageNames, ",")
@@ -101,4 +120,5 @@ func init() {
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.AggregateApi, "aggregate", "a", "", "count api size")
 }

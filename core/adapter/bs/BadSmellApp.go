@@ -1,7 +1,7 @@
 package bs
 
 import (
-	"coca/core/domain/bs/models"
+	models2 "coca/core/adapter/bs/models"
 	"coca/core/support"
 	"encoding/json"
 	"fmt"
@@ -14,7 +14,7 @@ import (
 	. "coca/core/languages/java"
 )
 
-var nodeInfos []models.JFullClassNode
+var nodeInfos []models2.JFullClassNode
 
 type BadSmellModel struct {
 	File        string `json:"File,omitempty"`
@@ -30,7 +30,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []BadSm
 	nodeInfos = nil
 	files := (*BadSmellApp)(nil).javaFiles(codeDir)
 	for index := range files {
-		nodeInfo := models.NewJFullClassNode()
+		nodeInfo := models2.NewJFullClassNode()
 		file := files[index]
 
 		displayName := filepath.Base(file)
@@ -72,7 +72,7 @@ func filterBadsmellList(models []BadSmellModel, ignoreRules map[string]bool) []B
 	return results
 }
 
-func analysisBadSmell(nodes []models.JFullClassNode) []BadSmellModel {
+func analysisBadSmell(nodes []models2.JFullClassNode) []BadSmellModel {
 	var badSmellList []BadSmellModel
 	for _, node := range nodes {
 		// To be Defined number
@@ -140,7 +140,7 @@ func analysisBadSmell(nodes []models.JFullClassNode) []BadSmellModel {
 	return badSmellList
 }
 
-func withOutGetterSetterClass(fullMethods []models.JFullMethod) int {
+func withOutGetterSetterClass(fullMethods []models2.JFullMethod) int {
 	var normalMethodSize = 0
 	for _, method := range fullMethods {
 		if !strings.Contains(method.Name, "get") && !strings.Contains(method.Name, "set") {

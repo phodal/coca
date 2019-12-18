@@ -1,7 +1,9 @@
 package support
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	ignore "github.com/sabhiram/go-gitignore"
 	"os"
 	"path/filepath"
 	"strings"
@@ -11,9 +13,16 @@ import (
 
 func GetJavaFiles(codeDir string) []string {
 	files := make([]string, 0)
+	gitignore, err := ignore.CompileIgnoreFile(".gitignore")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if strings.HasPrefix(path, ".git") {
-			return nil
+		if gitignore != nil {
+			if gitignore.MatchesPath(path) {
+				return nil
+			}
 		}
 		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java")&& !strings.Contains(path, "Tests.java"){
 			files = append(files, path)

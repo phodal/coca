@@ -3,6 +3,9 @@ package rcall
 import (
 	"coca/core/domain/call_graph"
 	"coca/core/models"
+	"coca/core/support"
+	"encoding/json"
+	"fmt"
 )
 
 type RCallGraph struct {
@@ -13,36 +16,54 @@ func NewRCallGraph() RCallGraph {
 }
 
 func (c RCallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
-	methodMap := BuildRCallMethodMap(clzs)
+	var projectMethodMap map[string]int = BuildProjectMethodMap(clzs)
+	rcallMap := BuildRCallMethodMap(clzs, projectMethodMap)
 
-	chain := c.buildRCallChain(funcName, methodMap)
+
+	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
+	support.WriteToFile("rcallmap.json", string(mapJson))
+
+	fmt.Println(rcallMap)
+
+	chain := c.buildRCallChain(funcName, rcallMap)
 
 	dotContent := call_graph.ToGraphviz(chain)
 	return dotContent
 }
 
-func BuildRCallMethodMap(clzs []models.JClassNode) map[string][]string {
+func BuildProjectMethodMap(clzs []models.JClassNode) map[string]int {
+	var maps = make(map[string]int)
+	for _, clz := range clzs {
+		for _, method := range clz.Methods {
+			maps[clz.Package+"."+clz.Class+"."+method.Name] = 1
+		}
+	}
+
+	return maps
+}
+
+func BuildRCallMethodMap(clzs []models.JClassNode, projectMaps map[string]int) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range clzs {
 		for _, method := range clz.Methods {
 			var caller = clz.Package + "." + clz.Class + "." + method.Name
 			for _, call := range method.MethodCalls {
 				if call.Class != "" {
-					callee := call.Package + "." + call.Class + "." + call.MethodName
-					if len(methodMap[callee]) == 0 {
-						methodMap[callee] = append(methodMap[callee], caller)
+					callee := buildMethodFullName(call)
+					if projectMaps[callee] < 1 {
+						continue
 					}
-					for _, cacheCaller := range methodMap[callee] {
-						if cacheCaller != caller {
-							methodMap[callee] = append(methodMap[callee], caller)
-						}
-					}
+					methodMap[callee] = append(methodMap[callee], caller)
 				}
 			}
 		}
 	}
 
 	return methodMap
+}
+
+func buildMethodFullName(call models.JMethodCall) string {
+	return call.Package + "." + call.Class + "." + call.MethodName
 }
 
 var loopCount = 0

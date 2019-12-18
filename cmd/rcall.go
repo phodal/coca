@@ -5,6 +5,7 @@ import (
 	"coca/core/domain/call_graph/rcall"
 	. "coca/core/support"
 	"encoding/json"
+	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 	"os/exec"
@@ -42,6 +43,7 @@ var reverseCmd = &cobra.Command{
 
 		_ = json.Unmarshal(file, &parsedDeps)
 
+		fmt.Println("start rcall class :", className)
 		content := analyser.Analysis(className, *&parsedDeps)
 
 		if remove != "" {
@@ -61,7 +63,7 @@ var reverseCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(reverseCmd)
 
-	reverseCmd.PersistentFlags().StringVarP(&reverseConfig.RemovePackage,"remove", "r", "", "remove package name")
+	reverseCmd.PersistentFlags().StringVarP(&reverseConfig.RemovePackage, "remove", "r", "", "remove package name")
 	reverseCmd.PersistentFlags().StringVarP(&reverseConfig.ClassName, "className", "c", "", "path")
 	reverseCmd.PersistentFlags().StringVarP(&reverseConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 }

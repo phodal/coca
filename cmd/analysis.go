@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"coca/core/models"
 	"encoding/json"
 	"github.com/spf13/cobra"
 
@@ -27,7 +28,12 @@ var analysisCmd *cobra.Command = &cobra.Command{
 			}
 
 			callApp := new(JavaCallApp)
-			callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
+
+			var callNodes []models.JClassNode
+
+			defer func() {
+				callNodes = callApp.AnalysisPath(importPath, classes, iNodes)
+			}()
 
 			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
 			WriteToFile("deps.json", string(cModel))

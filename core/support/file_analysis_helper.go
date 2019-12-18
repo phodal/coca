@@ -13,17 +13,18 @@ import (
 
 func GetJavaFiles(codeDir string) []string {
 	files := make([]string, 0)
-	gitignore, err := ignore.CompileIgnoreFile(".gitignore")
+	gitIgnore, err := ignore.CompileIgnoreFile(".gitIgnore")
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if gitignore != nil {
-			if gitignore.MatchesPath(path) {
+		if gitIgnore != nil {
+			if gitIgnore.MatchesPath(path) {
 				return nil
 			}
 		}
+
 		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java")&& !strings.Contains(path, "Tests.java"){
 			files = append(files, path)
 		}

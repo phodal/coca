@@ -18,6 +18,11 @@ Gradle 可以用： https://github.com/groovy/groovy-core/blob/master/src/main/o
 or Find in Code ?
 
 
+2. NLP 分层 Utils
+
+Util 方法通过 NLP 聚合，再进行分层
+
+通过聚类算法分析某个方法的相关功能。
 
 ## Decision
 

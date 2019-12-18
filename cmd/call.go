@@ -12,14 +12,23 @@ import (
 	"strings"
 )
 
+type CallCmdConfig struct {
+	Path string
+}
+
+var (
+	callCmdConfig CallCmdConfig
+)
+
 var callGraphCmd = &cobra.Command{
 	Use:   "call",
 	Short: "call graph api",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		var parsedDeps []models.JClassNode
+		dependence := *&callCmdConfig.Path
+
 		className := cmd.Flag("className").Value.String()
-		dependence := cmd.Flag("dependence").Value.String()
 		remove := cmd.Flag("remove").Value.String()
 
 		if dependence != "" {
@@ -51,6 +60,6 @@ func init() {
 	rootCmd.AddCommand(callGraphCmd)
 
 	callGraphCmd.PersistentFlags().StringP("className", "c", "", "path")
-	callGraphCmd.PersistentFlags().StringP("dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
+	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.Path, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	callGraphCmd.PersistentFlags().StringP("remove", "r", "", "remove package name")
 }

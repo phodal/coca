@@ -17,8 +17,8 @@ var currentClzType string
 var currentClzExtends string
 var currentClzImplements []string
 
-var methods []models2.JFullMethod
-var methodCalls []models2.JFullMethodCall
+var methods []models2.BsJMethod
+var methodCalls []models2.BsJMethodCall
 
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
@@ -39,8 +39,8 @@ type BadSmellListener struct {
 	BaseJavaParserListener
 }
 
-func (s *BadSmellListener) getNodeInfo() *models2.JFullClassNode {
-	return &models2.JFullClassNode{
+func (s *BadSmellListener) getNodeInfo() *models2.BsJClass {
+	return &models2.BsJClass{
 		currentPkg,
 		currentClz,
 		currentClzType,
@@ -122,7 +122,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	methodBSInfo := *&models2.MethodBadSmellInfo{0, 0}
 
-	method := &models2.JFullMethod{
+	method := &models2.BsJMethod{
 		name,
 		typeType,
 		startLine,
@@ -188,7 +188,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methodBSInfo := *&models2.MethodBadSmellInfo{0, 0}
 	methodBadSmellInfo := buildMethodBSInfo(ctx, methodBSInfo)
 
-	method := &models2.JFullMethod{
+	method := &models2.BsJMethod{
 		name,
 		typeType,
 		startLine,
@@ -275,16 +275,16 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := &models2.JFullMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models2.BsJMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &models2.JFullMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &models2.BsJMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &models2.JFullMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := &models2.BsJMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, *jMethodCall)
 		}
 	}
@@ -303,7 +303,7 @@ func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &models2.JFullMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models2.BsJMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

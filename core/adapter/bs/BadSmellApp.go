@@ -14,7 +14,7 @@ import (
 	. "coca/core/languages/java"
 )
 
-var nodeInfos []models2.JFullClassNode
+var nodeInfos []models2.BsJClass
 
 type BadSmellModel struct {
 	File        string `json:"File,omitempty"`
@@ -72,7 +72,7 @@ func filterBadsmellList(models []BadSmellModel, ignoreRules map[string]bool) []B
 	return results
 }
 
-func analysisBadSmell(nodes []models2.JFullClassNode) []BadSmellModel {
+func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 	var badSmellList []BadSmellModel
 	for _, node := range nodes {
 		// To be Defined number
@@ -140,7 +140,7 @@ func analysisBadSmell(nodes []models2.JFullClassNode) []BadSmellModel {
 	return badSmellList
 }
 
-func withOutGetterSetterClass(fullMethods []models2.JFullMethod) int {
+func withOutGetterSetterClass(fullMethods []models2.BsJMethod) int {
 	var normalMethodSize = 0
 	for _, method := range fullMethods {
 		if !strings.Contains(method.Name, "get") && !strings.Contains(method.Name, "set") {

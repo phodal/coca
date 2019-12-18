@@ -1,18 +1,18 @@
 package models
 
-type JFullClassNode struct {
+type BsJClass struct {
 	Package     string
 	Class       string
 	Type        string
 	Path        string
 	Extends     string
 	Implements  []string
-	Methods     []JFullMethod
-	MethodCalls []JFullMethodCall
+	Methods     []BsJMethod
+	MethodCalls []BsJMethodCall
 	ClassBS     ClassBadSmellInfo
 }
 
-type JFullMethodCall struct {
+type BsJMethodCall struct {
 	Package           string
 	Type              string
 	Class             string
@@ -23,7 +23,7 @@ type JFullMethodCall struct {
 	StopLinePosition  int
 }
 
-type JFullMethod struct {
+type BsJMethod struct {
 	Name              string
 	Type              string
 	StartLine         int
@@ -50,9 +50,9 @@ type JFullParameter struct {
 	Type string
 }
 
-func NewJFullClassNode() *JFullClassNode {
+func NewJFullClassNode() *BsJClass {
 	info := &ClassBadSmellInfo{0, 0};
-	return &JFullClassNode{
+	return &BsJClass{
 		"",
 		"",
 		"",

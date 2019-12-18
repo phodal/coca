@@ -5,7 +5,6 @@ import (
 	"coca/core/models"
 	"coca/core/support"
 	"encoding/json"
-	"fmt"
 )
 
 type RCallGraph struct {
@@ -22,8 +21,6 @@ func (c RCallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 
 	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
 	support.WriteToFile("rcallmap.json", string(mapJson))
-
-	fmt.Println(rcallMap)
 
 	chain := c.buildRCallChain(funcName, rcallMap)
 

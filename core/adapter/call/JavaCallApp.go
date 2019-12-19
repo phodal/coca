@@ -1,6 +1,7 @@
 package call
 
 import (
+	"coca/core/adapter/identifier"
 	"coca/core/models"
 	"coca/core/support"
 	"fmt"
@@ -13,7 +14,7 @@ var nodeInfos []models.JClassNode
 type JavaCallApp struct {
 }
 
-func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []models.JsonIdentifier) []models.JClassNode {
+func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []identifier.JIdentifier) []models.JClassNode {
 	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)
 	for index := range files {

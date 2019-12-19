@@ -1,35 +1,33 @@
 package identifier
 
 import (
-	"coca/core/models"
 	"coca/core/support"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
-var nodeInfos []models.JsonIdentifier = nil
+var nodeInfos []JIdentifier = nil
 
 type JavaIdentifierApp struct {
 }
 
-func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JsonIdentifier {
+func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []JIdentifier {
 	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]
-		node := models.NewJsonIdentifier()
 
 		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		clzInfo := models.NewJIdentifier()
+		clzInfo := NewJIdentifier()
 		listener := new(JavaIdentifierListener)
 		listener.InitNode(clzInfo)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		if clzInfo.Name != "" {
-			node = &models.JsonIdentifier{clzInfo.Pkg, clzInfo.Name, clzInfo.Type, clzInfo.GetMethods()}
-			nodeInfos = append(nodeInfos, *node)
+			clzInfo.Methods = clzInfo.GetMethods()
+			nodeInfos = append(nodeInfos, *clzInfo)
 		}
 	}
 

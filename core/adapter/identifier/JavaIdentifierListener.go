@@ -5,20 +5,24 @@ import (
 	"coca/core/models"
 )
 
-var node *models.JIdentifier;
+var node *JIdentifier;
 
 type JavaIdentifierListener struct {
 	parser.BaseJavaParserListener
 }
 
 func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
-	node.Pkg = ctx.QualifiedName().GetText()
+	node.Package = ctx.QualifiedName().GetText()
 }
 
 func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	node.Type = "Class"
 	if ctx.IDENTIFIER() != nil {
 		node.Name = ctx.IDENTIFIER().GetText()
+	}
+
+	if ctx.EXTENDS() != nil {
+		node.ExtendsName = ctx.TypeType().GetText()
 	}
 }
 
@@ -66,7 +70,7 @@ func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.Interface
 	node.Name = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaIdentifierListener) InitNode(identifier *models.JIdentifier) {
+func (s *JavaIdentifierListener) InitNode(identifier *JIdentifier) {
 	node = identifier
 }
 

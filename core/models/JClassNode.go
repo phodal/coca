@@ -26,6 +26,3 @@ func NewClassNode() *JClassNode {
 	return &JClassNode{"", "", "", "", nil, nil, nil}
 }
 
-func NewJsonIdentifier() *JsonIdentifier {
-	return &JsonIdentifier{"", "", "", nil}
-}

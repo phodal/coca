@@ -16,7 +16,7 @@ type JavaApiApp struct {
 
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) *[]RestApi {
+func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	parsedDeps = nil
 	file := support.ReadFile(depPath)
 	if file == nil {
@@ -43,6 +43,6 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) *[]RestApi {
 		allApis = listener.getClassApis()
 	}
 
-	return &allApis
+	return *&allApis
 }
 

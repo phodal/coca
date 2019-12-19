@@ -44,7 +44,7 @@ var apiCmd = &cobra.Command{
 			if *&apiCmdConfig.ForceUpdate {
 				app := new(JavaApiApp)
 				// TODO: 如果已有 API 时，不再重新生成
-				restApis := app.AnalysisPath(path, dependence)
+				restApis = app.AnalysisPath(path, dependence)
 				cModel, _ := json.MarshalIndent(restApis, "", "\t")
 				WriteToCocaFile("apis.json", string(cModel))
 			} else {

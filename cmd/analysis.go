@@ -28,6 +28,9 @@ var analysisCmd = &cobra.Command{
 			identifierApp := new(JavaIdentifierApp)
 			iNodes := identifierApp.AnalysisPath(importPath)
 
+			identModel, _ := json.MarshalIndent(iNodes, "", "\t")
+			WriteToCocaFile("identify.json", string(identModel))
+
 			var classes []string = nil
 
 			for _, node := range iNodes {

@@ -20,7 +20,7 @@ func (c RCallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 
 
 	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
-	support.WriteToFile("rcallmap.json", string(mapJson))
+	support.WriteToCocaFile("rcallmap.json", string(mapJson))
 
 	chain := c.buildRCallChain(funcName, rcallMap)
 

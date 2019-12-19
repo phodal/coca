@@ -38,7 +38,7 @@ var analysisCmd = &cobra.Command{
 
 			callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
-			WriteToFile("deps.json", string(cModel))
+			WriteToCocaFile("deps.json", string(cModel))
 		}
 	},
 }

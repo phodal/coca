@@ -45,7 +45,7 @@ var callGraphCmd = &cobra.Command{
 				content = strings.ReplaceAll(content, remove, "")
 			}
 
-			WriteToFile("call.dot", content)
+			WriteToCocaFile("call.dot", content)
 
 			cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/call.dot", "-o", config.CocaConfig.ReporterPath + "/call.svg"}...)
 			_, err := cmd.CombinedOutput()

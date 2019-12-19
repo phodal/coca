@@ -8,8 +8,9 @@ import (
 	"os"
 )
 
-func WriteToFile(fileName string, payload string) {
-	reporterPath := config.CocaConfig.ReporterPath
+var reporterPath = config.CocaConfig.ReporterPath
+
+func WriteToCocaFile(fileName string, payload string) {
 	if _, err := os.Stat(reporterPath); os.IsNotExist(err) {
 
 		err := os.Mkdir(reporterPath, os.ModePerm)
@@ -18,6 +19,10 @@ func WriteToFile(fileName string, payload string) {
 		}
 	}
 	_ = ioutil.WriteFile(reporterPath+"/"+fileName, []byte(payload), os.ModePerm)
+}
+
+func ReadCocaFile(fileName string) []byte {
+	return ReadFile(reporterPath + "/" + fileName)
 }
 
 func ReadFile(fileName string) []byte {

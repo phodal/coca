@@ -23,6 +23,7 @@ type ApiCmdConfig struct {
 	ShowCount          bool
 	RemovePackageNames string
 	AggregateApi       string
+	ForceUpdate        bool
 }
 
 var (
@@ -37,13 +38,22 @@ var apiCmd = &cobra.Command{
 		path := *&apiCmdConfig.Path
 		dependence := *&apiCmdConfig.DependencePath
 		apiPrefix := *&apiCmdConfig.AggregateApi
+		var restApis []RestApi
 
 		if path != "" {
-			app := new(JavaApiApp)
-			restApis := app.AnalysisPath(path, dependence)
-
-			cModel, _ := json.MarshalIndent(restApis, "", "\t")
-			WriteToFile("apis.json", string(cModel))
+			if *&apiCmdConfig.ForceUpdate {
+				app := new(JavaApiApp)
+				// TODO: 如果已有 API 时，不再重新生成
+				restApis := app.AnalysisPath(path, dependence)
+				cModel, _ := json.MarshalIndent(restApis, "", "\t")
+				WriteToCocaFile("apis.json", string(cModel))
+			} else {
+				apiContent := ReadCocaFile("apis.json")
+				if apiContent == nil {
+					log.Fatal("lost file:")
+				}
+				_ = json.Unmarshal(apiContent, &restApis)
+			}
 
 			var parsedDeps []models.JClassNode
 			file := ReadFile(dependence)
@@ -72,7 +82,7 @@ var apiCmd = &cobra.Command{
 				dotContent = replacePackage(dotContent)
 			}
 
-			WriteToFile("api.dot", dotContent)
+			WriteToCocaFile("api.dot", dotContent)
 
 			cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/api.dot", "-o", config.CocaConfig.ReporterPath + "/api.svg"}...)
 			_, err := cmd.CombinedOutput()
@@ -120,5 +130,6 @@ func init() {
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
-	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.AggregateApi, "aggregate", "a", "", "count api size")
+	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ForceUpdate, "force", "f", false, "force api update")
+	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.AggregateApi, "aggregate", "a", "", "aggregate api")
 }

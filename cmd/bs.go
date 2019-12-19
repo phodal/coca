@@ -37,7 +37,7 @@ var badsmellCmd = &cobra.Command{
 			bsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
 		}
 
-		support.WriteToFile("bs.json", string(bsModel))
+		support.WriteToCocaFile("bs.json", string(bsModel))
 	},
 }
 

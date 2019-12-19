@@ -49,7 +49,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []BadSm
 	}
 
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
-	support.WriteToFile("nodeInfos.json", string(bsModel))
+	support.WriteToCocaFile("nodeInfos.json", string(bsModel))
 
 	bsList := analysisBadSmell(nodeInfos)
 

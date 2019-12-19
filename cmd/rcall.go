@@ -50,7 +50,7 @@ var reverseCmd = &cobra.Command{
 			content = strings.ReplaceAll(content, remove, "")
 		}
 
-		WriteToFile("rcall.dot", content)
+		WriteToCocaFile("rcall.dot", content)
 
 		acmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/rcall.dot", "-o", config.CocaConfig.ReporterPath + "/rcall.svg"}...)
 		output, err := acmd.CombinedOutput()

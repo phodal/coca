@@ -5,7 +5,7 @@ import (
 	"coca/core/models"
 )
 
-var node *JIdentifier;
+var node *JIdentifier
 
 type JavaIdentifierListener struct {
 	parser.BaseJavaParserListener
@@ -35,7 +35,16 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, isOverrideMethod}
+	method := &models.JMethod{
+		Name: name,
+		Type: typeType,
+		StartLine: startLine,
+		StartLinePosition: startLinePosition,
+		StopLine: stopLine,
+		StopLinePosition: stopLinePosition,
+		Override: isOverrideMethod,
+		Annotation: nil,
+	}
 	node.AddMethod(*method)
 }
 
@@ -51,7 +60,17 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, isOverrideMethod}
+	method := &models.JMethod{
+		Name: name,
+		Type: typeType,
+		StartLine: startLine,
+		StartLinePosition: startLinePosition,
+		StopLine: stopLine,
+		StopLinePosition: stopLinePosition,
+		Override: isOverrideMethod,
+		Annotation: nil,
+	}
+
 	node.AddMethod(*method)
 
 	isOverrideMethod = false
@@ -73,4 +92,3 @@ func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.Interface
 func (s *JavaIdentifierListener) InitNode(identifier *JIdentifier) {
 	node = identifier
 }
-

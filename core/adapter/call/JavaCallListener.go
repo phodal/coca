@@ -90,7 +90,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil}
 	methods = append(methods, *method)
 }
 
@@ -128,7 +128,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil}
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {

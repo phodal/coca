@@ -26,16 +26,16 @@ var methodMap = make(map[string]models.JMethod)
 var methodQueue []models.JMethod
 var classQueue []string
 
-var identNodes []models.JIdentifier
+var identMap map[string]models.JIdentifier
 var currentNode models.JClassNode
 
-func NewJavaCallListener(nodes []models.JIdentifier) *JavaCallListener {
+func NewJavaCallListener(nodes map[string]models.JIdentifier) *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	currentMethod = models.NewJMethod()
 	currentNode = models.NewClassNode()
 
-	identNodes = nodes
+	identMap = nodes
 
 	methodMap = make(map[string]models.JMethod)
 
@@ -63,6 +63,7 @@ func (s *JavaCallListener) getNodeInfo() models.JClassNode {
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
 	currentNode.Package = ctx.QualifiedName().GetText()
+	currentPkg = ctx.QualifiedName().GetText()
 }
 
 func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
@@ -286,6 +287,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 		split := strings.Split(targetType, ".")
 		sourceTarget := split[0]
 		targetType = localVars[sourceTarget]
+
 	}
 
 	fullType := warpTargetFullType(targetType)
@@ -447,12 +449,15 @@ func warpTargetFullType(targetType string) string {
 
 	//1. current package, 2. import by *
 	if pureTargetType == "super" {
-		for index := range imports {
-			imp := imports[index]
+		for _, imp := range imports {
 			if strings.HasSuffix(imp, currentClzExtend) {
 				return imp
 			}
 		}
+	}
+
+	if _, ok := identMap[currentPkg + "." + targetType]; ok {
+		return currentPkg + "." + targetType
 	}
 
 	return ""

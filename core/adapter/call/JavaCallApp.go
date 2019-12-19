@@ -16,6 +16,12 @@ type JavaCallApp struct {
 func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []models.JIdentifier) []models.JClassNode {
 	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)
+
+	var identMap = make(map[string]models.JIdentifier)
+	for _, ident := range identNodes {
+		identMap[ident.Package + "." + ident.ClassName] = ident
+	}
+
 	for index := range files {
 		nodeInfo := models.NewClassNode()
 		file := files[index]
@@ -26,7 +32,7 @@ func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes 
 		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaCallListener(identNodes)
+		listener := NewJavaCallListener(identMap)
 		listener.appendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

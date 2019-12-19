@@ -13,7 +13,6 @@ var clzs []string
 var currentPkg string
 var currentClz string
 var fields []models.JAppField
-var methods []models.JMethod
 var methodCalls []models.JMethodCall
 var currentType string
 
@@ -40,7 +39,6 @@ func NewJavaCallListener(nodes []models.JIdentifier) *JavaCallListener {
 
 	methodMap = make(map[string]models.JMethod)
 
-	methods = nil
 	methodCalls = nil
 	fields = nil
 	return &JavaCallListener{}
@@ -112,7 +110,7 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 
 func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	currentType = "Interface"
-	currentClz = ctx.IDENTIFIER().GetText()
+	currentNode.Class = ctx.IDENTIFIER().GetText()
 }
 
 func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
@@ -125,7 +123,8 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil}
-	methods = append(methods, *method)
+
+	updateMethod(method)
 }
 
 func (s *JavaCallListener) EnterFormalParameter(ctx *parser.FormalParameterContext) {

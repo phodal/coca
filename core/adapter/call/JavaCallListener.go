@@ -146,7 +146,6 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariab
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	if ctx.GetChild(1) != nil {
 		if ctx.GetChild(1).GetChild(0) != nil && ctx.GetChild(1).GetChild(0).GetChild(0) != nil {
-
 			variableName := ctx.GetChild(1).GetChild(0).GetChild(0).(antlr.ParseTree).GetText()
 			localVars[variableName] = typ
 		}
@@ -282,14 +281,6 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := startLinePosition + len(callee)
 
-	// TODO: 处理链试调用
-	if strings.Contains(targetType, "(") && strings.Contains(targetType, ")") && strings.Contains(targetType, ".") {
-		split := strings.Split(targetType, ".")
-		sourceTarget := split[0]
-		targetType = localVars[sourceTarget]
-
-	}
-
 	fullType := warpTargetFullType(targetType)
 	if targetType == "super" {
 		targetType = currentClzExtend
@@ -331,6 +322,10 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method
+}
+
+func isChainCall(targetType string) bool {
+	return strings.Contains(targetType, "(") && strings.Contains(targetType, ")") && strings.Contains(targetType, ".")
 }
 
 func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
@@ -408,6 +403,11 @@ func parseTargetType(targetCtx string) string {
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
 		targetType = currentClz
 	} else {
+		if isChainCall(targetVar) {
+			split := strings.Split(targetType, ".")
+			targetVar = split[0]
+		}
+
 		fieldType := mapFields[targetVar]
 		formalType := formalParameters[targetVar]
 		localVarType := localVars[targetVar]

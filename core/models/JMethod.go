@@ -10,14 +10,14 @@ type JMethod struct {
 	Parameters        []JParameter
 	MethodCalls       []JMethodCall
 	Override          bool
-	Annotation        []string
+	Annotations       []string
 }
 
 func NewJMethod() JMethod {
 	return *&JMethod{
 		Name:              "",
 		Type:              "",
-		Annotation:        nil,
+		Annotations:       nil,
 		StartLine:         0,
 		StartLinePosition: 0,
 		StopLine:          0,

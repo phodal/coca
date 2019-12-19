@@ -7,6 +7,10 @@ import (
 
 var node *JIdentifier
 
+var currentMethod models.JMethod
+var hasEnterClass = false
+var hasEnterMethod = false
+
 type JavaIdentifierListener struct {
 	parser.BaseJavaParserListener
 }
@@ -16,6 +20,8 @@ func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDecl
 }
 
 func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	hasEnterClass = true
+
 	node.Type = "Class"
 	if ctx.IDENTIFIER() != nil {
 		node.Name = ctx.IDENTIFIER().GetText()
@@ -26,7 +32,14 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	}
 }
 
+
+func (s *JavaIdentifierListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	hasEnterClass = false
+}
+
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
+	hasEnterMethod = true
+
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -35,22 +48,31 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{
-		Name: name,
-		Type: typeType,
-		StartLine: startLine,
+	annotations := currentMethod.Annotations
+	currentMethod = *&models.JMethod{
+		Name:              name,
+		Type:              typeType,
+		StartLine:         startLine,
 		StartLinePosition: startLinePosition,
-		StopLine: stopLine,
-		StopLinePosition: stopLinePosition,
-		Override: isOverrideMethod,
-		Annotation: nil,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+		Override:          isOverrideMethod,
+		Annotations:       annotations,
 	}
-	node.AddMethod(*method)
+}
+
+func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+	hasEnterMethod = false
+
+	node.AddMethod(currentMethod)
+	currentMethod = models.NewJMethod()
 }
 
 var isOverrideMethod = false
 
 func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	hasEnterMethod = true
+
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -60,20 +82,26 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{
-		Name: name,
-		Type: typeType,
-		StartLine: startLine,
+	annotations := currentMethod.Annotations
+	currentMethod = *&models.JMethod{
+		Name:              name,
+		Type:              typeType,
+		StartLine:         startLine,
 		StartLinePosition: startLinePosition,
-		StopLine: stopLine,
-		StopLinePosition: stopLinePosition,
-		Override: isOverrideMethod,
-		Annotation: nil,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+		Override:          isOverrideMethod,
+		Annotations:       annotations,
 	}
 
-	node.AddMethod(*method)
-
 	isOverrideMethod = false
+}
+
+func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	hasEnterMethod = false
+
+	node.AddMethod(currentMethod)
+	currentMethod = models.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
@@ -81,6 +109,11 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "Override" {
 		isOverrideMethod = true
+	}
+	if hasEnterClass {
+		if !hasEnterMethod {
+			currentMethod.Annotations = append(currentMethod.Annotations, annotationName)
+		}
 	}
 }
 

@@ -3,7 +3,6 @@ package identifier
 import (
 	"coca/core/languages/java"
 	"coca/core/models"
-	"fmt"
 	"reflect"
 )
 
@@ -39,13 +38,11 @@ func (s *JavaIdentifierListener) ExitClassDeclaration(ctx *parser.ClassDeclarati
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
-	fmt.Println(ctx.GetText())
-
 	for _, modifier := range ctx.AllModifier() {
 		modifier := modifier.(*parser.ModifierContext).GetChild(0)
 		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {
 			annotationContext := modifier.GetChild(0).(*parser.AnnotationContext)
-			currentMethod.Annotations = append(currentMethod.Annotations, annotationContext.QualifiedName().GetText())
+			buildAnnotation(annotationContext)
 		}
 	}
 }
@@ -125,8 +122,26 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 	}
 
 	if hasEnterClass {
-		currentMethod.Annotations = append(currentMethod.Annotations, annotationName)
+		buildAnnotation(ctx)
 	}
+}
+
+func buildAnnotation(ctx *parser.AnnotationContext) {
+	annotationName := ctx.QualifiedName().GetText()
+	annotation := models.NewAnnotation()
+	annotation.QualifiedName = annotationName
+	if ctx.ElementValuePairs() != nil {
+		pairs := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
+		for _, pair := range pairs {
+			pairCtx := pair.(*parser.ElementValuePairContext)
+			pairCtx.ElementValue()
+			annotation.ValuePairs = append(annotation.ValuePairs, *&models.AnnotationKeyValue{
+				Key:   pairCtx.IDENTIFIER().GetText(),
+				Value: pairCtx.ElementValue().GetText(),
+			})
+		}
+	}
+	currentMethod.Annotations = append(currentMethod.Annotations, annotation)
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

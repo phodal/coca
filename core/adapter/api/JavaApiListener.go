@@ -210,13 +210,15 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 		if _, ok := identMap[superClz]; ok {
 			for _, method := range identMap[superClz].Methods {
 				if method.Name == methodName {
-					if contains(method.Annotations, "ServiceMethod") {
-						currentRestApi.PackageName = currentPkg
-						currentRestApi.ClassName = currentClz
-						currentRestApi.MethodName = methodName
+					for _, annotation := range method.Annotations {
+						if annotation.QualifiedName == "ServiceMethod" {
+							currentRestApi.PackageName = currentPkg
+							currentRestApi.ClassName = currentClz
+							currentRestApi.MethodName = methodName
 
-						RestApis = append(RestApis, currentRestApi)
-						return
+							RestApis = append(RestApis, currentRestApi)
+							return
+						}
 					}
 				}
 			}

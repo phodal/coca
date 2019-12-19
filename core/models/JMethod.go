@@ -10,7 +10,24 @@ type JMethod struct {
 	Parameters        []JParameter
 	MethodCalls       []JMethodCall
 	Override          bool
-	Annotations       []string
+	Annotations       []Annotation
+}
+
+type Annotation struct {
+	QualifiedName string
+	ValuePairs    []AnnotationKeyValue
+}
+
+type AnnotationKeyValue struct {
+	Key   string
+	Value string
+}
+
+func NewAnnotation() Annotation {
+	return *&Annotation{
+		QualifiedName: "",
+		ValuePairs:    nil,
+	}
 }
 
 // TODO support annnotation

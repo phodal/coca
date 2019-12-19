@@ -15,13 +15,6 @@ type JAppField struct {
 	Value string
 }
 
-type JsonIdentifier struct {
-	Package string
-	Name    string
-	Type    string
-	Methods []JMethod
-}
-
 func NewClassNode() *JClassNode {
 	return &JClassNode{"", "", "", "", nil, nil, nil}
 }

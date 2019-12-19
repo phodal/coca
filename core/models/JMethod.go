@@ -13,6 +13,8 @@ type JMethod struct {
 	Annotations       []string
 }
 
+// TODO support annnotation
+
 func NewJMethod() JMethod {
 	return *&JMethod{
 		Name:              "",

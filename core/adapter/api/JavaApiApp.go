@@ -1,6 +1,7 @@
 package api
 
 import (
+	"coca/core/adapter/identifier"
 	"coca/core/models"
 	"coca/core/support"
 	"encoding/json"
@@ -25,6 +26,13 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 
 	_ = json.Unmarshal(file, &parsedDeps)
 
+	identifiers := LoadIdentify(depPath)
+	var identifiersMap = make(map[string]models.JIdentifier)
+
+	for _, ident := range identifiers {
+		identifiersMap[ident.Package + "." + ident.ClassName] = ident
+	}
+
 	files := support.GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]
@@ -35,7 +43,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaApiListener()
+		listener := NewJavaApiListener(identifiersMap)
 		listener.appendClasses(parsedDeps)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
@@ -46,3 +54,21 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	return *&allApis
 }
 
+
+func LoadIdentify(importPath string) []models.JIdentifier {
+	var identifiers []models.JIdentifier
+
+	apiContent := support.ReadCocaFile("identify.json")
+	if apiContent == nil {
+		identifierApp := new(identifier.JavaIdentifierApp)
+		ident := identifierApp.AnalysisPath(importPath)
+
+		identModel, _ := json.MarshalIndent(ident, "", "\t")
+		support.WriteToCocaFile("identify.json", string(identModel))
+
+		return *&ident
+	}
+	_ = json.Unmarshal(apiContent, &identifiers)
+
+	return *&identifiers
+}

@@ -32,10 +32,21 @@ var RestApis []RestApi
 var currentClz string
 var currentPkg string
 
-func NewJavaApiListener() *JavaApiListener {
+var identMap map[string]models2.JIdentifier
+var imports []string
+var currentExtends = ""
+var currentImplements = ""
+
+func NewJavaApiListener(ident map[string]models2.JIdentifier) *JavaApiListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""
+	currentExtends = ""
+	currentImplements = ""
+
+	imports = nil
+
+	identMap = ident
 
 	params := make(map[string]string)
 	currentRestApi = *&RestApi{"", "", "", "", "", params, "", ""}
@@ -46,6 +57,11 @@ type JavaApiListener struct {
 	parser.BaseJavaParserListener
 }
 
+func (s *JavaApiListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
+	importText := ctx.QualifiedName().GetText()
+	imports = append(imports, importText)
+}
+
 func (s *JavaApiListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
 	currentPkg = ctx.QualifiedName().GetText()
 }
@@ -54,6 +70,14 @@ func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCont
 	hasEnterClass = true
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
+	}
+
+	if ctx.EXTENDS() != nil {
+		currentExtends = ctx.TypeType().GetText()
+	}
+
+	if ctx.IMPLEMENTS() != nil {
+		currentImplements = ctx.TypeList().GetText()
 	}
 }
 
@@ -83,7 +107,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 						baseApiUrlName = text[1 : len(text)-1]
 					}
 				}
-			} else if ctx.ElementValue() != nil{
+			} else if ctx.ElementValue() != nil {
 				text := ctx.ElementValue().GetText()
 				baseApiUrlName = text[1 : len(text)-1]
 			} else {
@@ -124,7 +148,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 			}
 			if pair.IDENTIFIER().GetText() == "value" {
 				text := pair.ElementValue().GetText()
-				currentRestApi.Uri = baseApiUrlName + text[1 : len(text)-1]
+				currentRestApi.Uri = baseApiUrlName + text[1:len(text)-1]
 			}
 		}
 	}
@@ -161,7 +185,44 @@ func addApiMethod(annotationName string) {
 
 var requestBodyClass string
 
+func contains(slice []string, item string) bool {
+	set := make(map[string]struct{}, len(slice))
+	for _, s := range slice {
+		set[s] = struct{}{}
+	}
+
+	_, ok := set[item]
+	return ok
+}
+
 func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	methodName := ctx.IDENTIFIER().GetText()
+
+	if currentImplements != "" {
+		var superClz = ""
+		for index := range imports {
+			imp := imports[index]
+			if strings.HasSuffix(imp, "."+currentImplements) {
+				superClz = imp
+			}
+		}
+
+		if _, ok := identMap[superClz]; ok {
+			for _, method := range identMap[superClz].Methods {
+				if method.Name == methodName {
+					if contains(method.Annotations, "ServiceMethod") {
+						currentRestApi.PackageName = currentPkg
+						currentRestApi.ClassName = currentClz
+						currentRestApi.MethodName = methodName
+
+						RestApis = append(RestApis, currentRestApi)
+						return
+					}
+				}
+			}
+		}
+	}
+
 	if hasEnterRestController && ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetChild(1) == nil {
 			return
@@ -169,7 +230,7 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 
 		currentRestApi.PackageName = currentPkg
 		currentRestApi.ClassName = currentClz
-		currentRestApi.MethodName = ctx.IDENTIFIER().GetText()
+		currentRestApi.MethodName = methodName
 		if ctx.FormalParameters().GetText() == "()" {
 			currentRestApi.RequestBodyClass = requestBodyClass
 			hasEnterRestController = false

@@ -1,7 +1,6 @@
 package call
 
 import (
-	"coca/core/adapter/identifier"
 	"coca/core/languages/java"
 	"coca/core/models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -28,9 +27,9 @@ var methodMap = make(map[string]models.JMethod)
 var methodQueue []models.JMethod
 var classQueue []string
 
-var identNodes []identifier.JIdentifier
+var identNodes []models.JIdentifier
 
-func NewJavaCallListener(nodes []identifier.JIdentifier) *JavaCallListener {
+func NewJavaCallListener(nodes []models.JIdentifier) *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	currentMethod = models.NewJMethod()

@@ -3,9 +3,11 @@ package identifier
 import (
 	"coca/core/languages/java"
 	"coca/core/models"
+	"fmt"
+	"reflect"
 )
 
-var node *JIdentifier
+var node *models.JIdentifier
 
 var currentMethod models.JMethod
 var hasEnterClass = false
@@ -24,7 +26,7 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 
 	node.Type = "Class"
 	if ctx.IDENTIFIER() != nil {
-		node.Name = ctx.IDENTIFIER().GetText()
+		node.ClassName = ctx.IDENTIFIER().GetText()
 	}
 
 	if ctx.EXTENDS() != nil {
@@ -32,9 +34,20 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	}
 }
 
-
 func (s *JavaIdentifierListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = false
+}
+
+func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
+	fmt.Println(ctx.GetText())
+
+	for _, modifier := range ctx.AllModifier() {
+		modifier := modifier.(*parser.ModifierContext).GetChild(0)
+		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {
+			annotationContext := modifier.GetChild(0).(*parser.AnnotationContext)
+			currentMethod.Annotations = append(currentMethod.Annotations, annotationContext.QualifiedName().GetText())
+		}
+	}
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
@@ -61,7 +74,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	}
 }
 
-func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	hasEnterMethod = false
 
 	node.AddMethod(currentMethod)
@@ -110,18 +123,17 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 	if annotationName == "Override" {
 		isOverrideMethod = true
 	}
+
 	if hasEnterClass {
-		if !hasEnterMethod {
-			currentMethod.Annotations = append(currentMethod.Annotations, annotationName)
-		}
+		currentMethod.Annotations = append(currentMethod.Annotations, annotationName)
 	}
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	node.Type = "Interface"
-	node.Name = ctx.IDENTIFIER().GetText()
+	node.ClassName = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaIdentifierListener) InitNode(identifier *JIdentifier) {
+func (s *JavaIdentifierListener) InitNode(identifier *models.JIdentifier) {
 	node = identifier
 }

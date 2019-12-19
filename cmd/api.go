@@ -36,14 +36,14 @@ var apiCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		path := *&apiCmdConfig.Path
-		dependence := *&apiCmdConfig.DependencePath
+		depPath := *&apiCmdConfig.DependencePath
 		apiPrefix := *&apiCmdConfig.AggregateApi
 		var restApis []RestApi
 
 		if path != "" {
 			if *&apiCmdConfig.ForceUpdate {
 				app := new(JavaApiApp)
-				restApis = app.AnalysisPath(path, dependence)
+				restApis = app.AnalysisPath(path, depPath)
 				cModel, _ := json.MarshalIndent(restApis, "", "\t")
 				WriteToCocaFile("apis.json", string(cModel))
 			} else {
@@ -55,9 +55,9 @@ var apiCmd = &cobra.Command{
 			}
 
 			var parsedDeps []models.JClassNode
-			file := ReadFile(dependence)
+			file := ReadFile(depPath)
 			if file == nil {
-				log.Fatal("lost file:" + dependence)
+				log.Fatal("lost file:" + depPath)
 			}
 			_ = json.Unmarshal(file, &parsedDeps)
 

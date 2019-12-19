@@ -1,16 +1,14 @@
-package identifier
+package models
 
-import "coca/core/models"
-
-var methods []models.JMethod
+var methods []JMethod
 
 type JIdentifier struct {
 	Package     string
-	Name        string
+	ClassName   string
 	Type        string
 	ExtendsName string
 	Extends     []JIdentifier
-	Methods     []models.JMethod
+	Methods     []JMethod
 }
 
 func NewJIdentifier() *JIdentifier {
@@ -19,10 +17,10 @@ func NewJIdentifier() *JIdentifier {
 	return identifier
 }
 
-func (identifier *JIdentifier) AddMethod(method models.JMethod) {
+func (identifier *JIdentifier) AddMethod(method JMethod) {
 	methods = append(methods, method)
 }
 
-func (identifier *JIdentifier) GetMethods() []models.JMethod {
+func (identifier *JIdentifier) GetMethods() []JMethod {
 	return methods
 }

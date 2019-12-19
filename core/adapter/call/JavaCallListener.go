@@ -73,6 +73,8 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	if ctx.EXTENDS() != nil {
 		currentClzExtends = ctx.TypeType().GetText()
 	}
+
+	// TODO: 支持依赖注入
 }
 
 func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

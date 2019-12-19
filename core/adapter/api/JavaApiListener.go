@@ -185,16 +185,6 @@ func addApiMethod(annotationName string) {
 
 var requestBodyClass string
 
-func contains(slice []string, item string) bool {
-	set := make(map[string]struct{}, len(slice))
-	for _, s := range slice {
-		set[s] = struct{}{}
-	}
-
-	_, ok := set[item]
-	return ok
-}
-
 func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	methodName := ctx.IDENTIFIER().GetText()
 
@@ -205,6 +195,7 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 			if strings.HasSuffix(imp, "."+currentImplements) {
 				superClz = imp
 			}
+			// TODO: 支持 interface 在同一个包内
 		}
 
 		if _, ok := identMap[superClz]; ok {

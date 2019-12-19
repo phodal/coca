@@ -7,12 +7,13 @@ type JIdentifier struct {
 	ClassName   string
 	Type        string
 	ExtendsName string
-	Extends     []JIdentifier
+	Extends     []string
+	Implements     []string
 	Methods     []JMethod
 }
 
 func NewJIdentifier() *JIdentifier {
-	identifier := &JIdentifier{"", "", "", "", nil, nil}
+	identifier := &JIdentifier{"", "", "", "", nil,  nil, nil}
 	methods = nil
 	return identifier
 }

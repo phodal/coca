@@ -4,6 +4,7 @@ import (
 	"coca/core/languages/java"
 	"coca/core/models"
 	"reflect"
+	"strings"
 )
 
 var node *models.JIdentifier
@@ -11,9 +12,15 @@ var node *models.JIdentifier
 var currentMethod models.JMethod
 var hasEnterClass = false
 var hasEnterMethod = false
+var imports []string
 
 type JavaIdentifierListener struct {
 	parser.BaseJavaParserListener
+}
+
+func (s *JavaIdentifierListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
+	importText := ctx.QualifiedName().GetText()
+	imports = append(imports, importText)
 }
 
 func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
@@ -30,6 +37,18 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 
 	if ctx.EXTENDS() != nil {
 		node.ExtendsName = ctx.TypeType().GetText()
+	}
+
+	if ctx.IMPLEMENTS() != nil {
+		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
+		for _, typ := range types {
+			typeText := typ.GetText()
+			for _, imp := range imports {
+				if strings.HasSuffix(imp, "."+typeText) {
+					node.Implements = append(node.Implements, imp)
+				}
+			}
+		}
 	}
 }
 

@@ -20,7 +20,7 @@ var currentType string
 var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
-var currentClzExtends = ""
+var currentClzExtend = ""
 var currentMethod models.JMethod
 var methodMap = make(map[string]models.JMethod)
 
@@ -28,11 +28,14 @@ var methodQueue []models.JMethod
 var classQueue []string
 
 var identNodes []models.JIdentifier
+var currentNode models.JClassNode
 
 func NewJavaCallListener(nodes []models.JIdentifier) *JavaCallListener {
 	currentClz = ""
 	currentPkg = ""
 	currentMethod = models.NewJMethod()
+	currentNode = models.NewClassNode()
+
 	identNodes = nodes
 
 	methodMap = make(map[string]models.JMethod)
@@ -47,16 +50,21 @@ type JavaCallListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaCallListener) getNodeInfo() *models.JClassNode {
+func (s *JavaCallListener) getNodeInfo() models.JClassNode {
 	var methodsArray []models.JMethod
 	for _, value := range methodMap {
 		methodsArray = append(methodsArray, value)
 	}
-	return &models.JClassNode{currentPkg, currentClz, currentType, "", fields, methodsArray, methodCalls}
+
+	currentNode.MethodCalls = methodCalls
+	currentNode.Fields = fields
+	currentNode.Type = currentType
+	currentNode.Methods = methodsArray
+	return currentNode
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
-	currentPkg = ctx.QualifiedName().GetText()
+	currentNode.Package = ctx.QualifiedName().GetText()
 }
 
 func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
@@ -68,10 +76,35 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	currentType = "Class"
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
+		currentNode.Class = currentClz
 	}
 
+
 	if ctx.EXTENDS() != nil {
-		currentClzExtends = ctx.TypeType().GetText()
+		currentClzExtend = ctx.TypeType().GetText()
+		for _, imp := range imports {
+			if strings.HasSuffix(imp, "."+currentClzExtend) {
+				currentNode.Extend = currentClzExtend
+			}
+		}
+	}
+
+	if ctx.IMPLEMENTS() != nil {
+		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
+		for _, typ := range types {
+			typeText := typ.GetText()
+			var hasSetImplement = false
+			for _, imp := range imports {
+				if strings.HasSuffix(imp, "."+typeText) {
+					hasSetImplement = true
+					currentNode.Implements = append(currentNode.Implements, imp)
+				}
+			}
+			// 同一个包下的类
+			if !hasSetImplement {
+				currentNode.Implements = append(currentNode.Implements, currentPkg + "." + typeText )
+			}
+		}
 	}
 
 	// TODO: 支持依赖注入
@@ -258,7 +291,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	fullType := warpTargetFullType(targetType)
 	if targetType == "super" {
-		targetType = currentClzExtends
+		targetType = currentClzExtend
 	}
 
 	var jMethodCall = &models.JMethodCall{}
@@ -417,7 +450,7 @@ func warpTargetFullType(targetType string) string {
 	if pureTargetType == "super" {
 		for index := range imports {
 			imp := imports[index]
-			if strings.HasSuffix(imp, currentClzExtends) {
+			if strings.HasSuffix(imp, currentClzExtend) {
 				return imp
 			}
 		}

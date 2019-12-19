@@ -33,7 +33,7 @@ func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes 
 
 		nodeInfo = listener.getNodeInfo()
 		nodeInfo.Path = file
-		nodeInfos = append(nodeInfos, *nodeInfo)
+		nodeInfos = append(nodeInfos, nodeInfo)
 	}
 
 	return nodeInfos

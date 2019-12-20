@@ -1,5 +1,7 @@
 # Coca
 
+[![Build Status](https://travis-ci.org/phodal/coca.svg?branch=master)](https://travis-ci.org/phodal/coca)
+
 > Coca 是一个用于遗留系统重构的瑞士军刀。它可以分析代码中的 badsmell，行数统计，分析调用与依赖，进行 Git 分析，以及自动化重构等。
 
 ## Usage

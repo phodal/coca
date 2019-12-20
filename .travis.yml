@@ -6,10 +6,21 @@ go:
 
 env: GO111MODULE=on GOFLAGS='-mod vendor'
 
-install:
-  - go build
-  - go install github.com/onsi/ginkgo/ginkgo
-  - export PATH=$PATH:$HOME/gopath/bin
+before_install:
+  - go get github.com/onsi/gomega
+  - go get github.com/onsi/ginkgo/ginkgo
+  - go get github.com/modocache/gover
 
-script: $HOME/gopath/bin/ginkgo -r --randomizeAllSpecs --randomizeSuites --race --trace && go vet
+git:
+  depth: 1
 
+install: true
+
+script:
+  - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
+
+after_success:
+  - gover . coverage.txt
+  - ls -al
+  - cat coverage.txt
+  - bash <(curl -s https://codecov.io/bash)

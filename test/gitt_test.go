@@ -15,11 +15,14 @@ var _ = Describe("Git Parser", func() {
 1       1       spring-webflux/core/main/java/org/springframework/web/reactive/function/client/DefaultWebClient.java
 9       3       spring-webflux/core/main/java/org/springframework/web/reactive/function/client/WebClient.java
 6       11      core/docs/asciidoc/web/webflux-webclient.adoc
+
 `)
 			Expect(result[0].Rev).To(Equal("828fe39523"))
 			Expect(result[0].Date).To(Equal("2019-12-04"))
 			Expect(result[0].Author).To(Equal("Rossen Stoyanchev"))
 			Expect(result[0].Message).To(Equal("Consistently use releaseBody in DefaultWebClient"))
+			Expect(len(result[0].Changes)).To(Equal(4))
+			Expect(result[0].Changes[0].File).To(Equal("spring-webflux/core/main/java/org/springframework/web/reactive/function/client/ClientResponse.java"))
 		})
 	})
 //

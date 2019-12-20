@@ -209,7 +209,7 @@ func ParseLog(text string) {
 	rev := `\[([\d|a-f]{5,12})\]`
 	author := `(.*?)\s\d{4}-\d{2}-\d{2}`
 	date := `\d{4}-\d{2}-\d{2}`
-	changes := `([\d-])*\t([\d-]*)\t(.*)`
+	changes := `([\d-]+)[\t\s]+([\d-]+)[\t\s]+(.*)`
 
 	revReg := regexp.MustCompile(rev)
 	authorReg := regexp.MustCompile(author)

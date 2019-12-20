@@ -6,10 +6,11 @@ go:
 
 env: GO111MODULE=on GOFLAGS='-mod vendor'
 
-before_install:
+before_script:
   - go get github.com/onsi/gomega
   - go get github.com/onsi/ginkgo/ginkgo
   - go get github.com/modocache/gover
+  - go get github.com/mattn/goveralls
 
 git:
   depth: 1
@@ -17,7 +18,12 @@ git:
 install: true
 
 script:
-  - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
+  - $HOME/gopath/bin/ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
+
+os:
+  - linux
+  - osx
+  - windows
 
 after_success:
   - gover . coverage.txt

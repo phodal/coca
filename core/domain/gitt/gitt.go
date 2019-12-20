@@ -26,7 +26,12 @@ func BuildCommitMessage() []CommitMessage {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 
-	splitStr := strings.Split(string(out), "\n");
+	return BuildMessageByInput(string(out))
+}
+
+func BuildMessageByInput(inputStr string) []CommitMessage {
+	commitMessages = nil
+	splitStr := strings.Split(inputStr, "\n")
 	for _, str := range splitStr {
 		ParseLog(str)
 	}
@@ -199,7 +204,7 @@ func BasicSummary(commitMessages []CommitMessage) *GitSummary {
 	return gitSummary
 }
 
-func ParseLog(text string) CommitMessage {
+func ParseLog(text string) {
 	// TODO 支持多行提交
 	rev := `\[([\d|a-f]{5,12})\]`
 	author := `(.*?)\s\d{4}-\d{2}-\d{2}`
@@ -223,7 +228,7 @@ func ParseLog(text string) CommitMessage {
 		msg := strings.Split(str, dat[0])[1]
 		msg = msg[1:]
 
-		currentCommitMessage = *&CommitMessage{id[1], auth[1], dat[0], msg, nil}
+		currentCommitMessage = *&CommitMessage{id[1], auth[1][1:], dat[0], msg, nil}
 	} else if changesReg.MatchString(text) {
 		changes := changesReg.FindStringSubmatch(text)
 		deleted, _ := strconv.Atoi(changes[2])
@@ -240,6 +245,4 @@ func ParseLog(text string) CommitMessage {
 			currentFileChanges = nil
 		}
 	}
-
-	return currentCommitMessage
 }

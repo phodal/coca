@@ -22,13 +22,15 @@ Usage:
 Available Commands:
   analysis    analysis package
   api         scan api
-  bs          Bad Code Smell
+  bs          bad smell analysis
   call        call graph api
   cloc        cloc [FILE or DIRECTORY]
   concept     concept api
   count       count code
+  evaluate    evaluate refactor effort
   git         git analysis
   help        Help about any command
+  rcall       reverse call
   refactor    auto refactor code
 
 ```

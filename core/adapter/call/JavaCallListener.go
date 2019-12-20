@@ -285,6 +285,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	fullType, callType := warpTargetFullType(targetType)
 	if targetType == "super" {
+		callType = "super"
 		targetType = currentClzExtend
 	}
 	jMethodCall.Type = callType
@@ -390,7 +391,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &models.JMethodCall{removeTarget(fullType), "Lambda", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JMethodCall{removeTarget(fullType), "lambda", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

@@ -438,7 +438,6 @@ func warpTargetFullType(targetType string) string {
 	if pureTargetType != "" {
 		for _, imp := range imports {
 			if strings.HasSuffix(imp, pureTargetType) {
-				fmt.Println(".....", pureTargetType)
 				return imp
 			}
 		}

@@ -46,7 +46,7 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 			if len(methodMap[child]) > 0 {
 				arrayResult = arrayResult + BuildCallChain(child, methodMap, diMap)
 			}
-			arrayResult = arrayResult + "\"" + funcName + "\" -> \"" + child + "\";\n"
+			arrayResult = arrayResult + "\"" + escapeStr(funcName) + "\" -> \"" + escapeStr(child) + "\";\n"
 		}
 
 		return arrayResult
@@ -75,7 +75,7 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 		caller := restApi.PackageName + "." + restApi.ClassName + "." + restApi.MethodName
 
 		loopCount = 0
-		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + caller + "\";\n"
+		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + escapeStr(caller) + "\";\n"
 		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
@@ -91,6 +91,10 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 	}
 
 	return results + "}\n", apiCallSCounts
+}
+
+func escapeStr(caller string) string {
+	return strings.ReplaceAll(caller, "\"", "\\\"")
 }
 
 func BuildMethodMap(clzs []models.JClassNode) map[string][]string {

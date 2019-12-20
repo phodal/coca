@@ -38,13 +38,13 @@ Available Commands:
 ### Analysis
 
 ```
-coca analysis -p [PATH]
+coca analysis
 ```
 
 ### Find Bad Smells
 
 ```bash
-coca bs -p examples/api -s type
+coca bs -s type
 ```
 
 Examples Result:
@@ -109,7 +109,7 @@ coca cloc --by-file --format json
 ### Build Deps Tree
 
 ```
-coca call -c com.phodal.pholedge.book.BookController.createBook -d deps.json -r com.phodal.pholedge.
+coca call -c com.phodal.pholedge.book.BookController.createBook -r com.phodal.pholedge.
 ```
 
 Examples Results:
@@ -119,7 +119,7 @@ Examples Results:
 ### Identify Spring API
 
 ```
-coca api -p examples/api -d deps.json
+coca api -f
 ```
 
 ![API Demo](docs/sample/api.svg)
@@ -127,12 +127,12 @@ coca api -p examples/api -d deps.json
 With Count
 
 ```
-coca api -p . -d deps.json -c true -r com.macro.mall.
+coca api -r com.phodal.pholedge. -c 
 ``` 
 
 or multi package:
 
-`coca.go api -p examples -d deps.json -r com.macro.mall.demo.controller.,com.zheng.cms.admin.,com.phodal.pholedge -c` 
+`coca api  -r com.macro.mall.demo.controller.,com.zheng.cms.admin.,com.phodal.pholedge -c` 
 
 ```bash
 +------+--------+------------------------------------------------+------------------------------------------------------------------------+
@@ -153,7 +153,7 @@ or multi package:
 ### Git Analysis
 
 ```
-coca ga -t -b 
+coca git -t
 ```
 
 Results: 
@@ -188,7 +188,7 @@ Results:
 ### Concept Analyser
 
 ```
-coca concept -d deps.json
+coca concept
 ```
 
 Results Examples:
@@ -218,7 +218,7 @@ receiver 121
 ### Count Refs
 
 ```
-coca count -d deps.json
+coca count
 ```
 
 Results:
@@ -268,7 +268,7 @@ support:
  - remove unused class
 
 ```
-coca refactor -R rename.coca -D deps.json -p src/main
+coca refactor -R rename.coca -p src/main
 coca refactor -m move.config -p .
 ```
 

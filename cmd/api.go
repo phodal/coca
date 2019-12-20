@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"coca/config"
+	"coca/core/adapter"
 	. "coca/core/adapter/api"
 	"coca/core/domain/call_graph"
 	"coca/core/models"
@@ -41,9 +42,13 @@ var apiCmd = &cobra.Command{
 		var restApis []RestApi
 
 		if path != "" {
+			identifiers := adapter.LoadIdentify(depPath)
+			identifiersMap := adapter.BuildIdentifierMap(identifiers)
+			diMap := adapter.BuildDIMap(identifiers, identifiersMap)
+
 			if *&apiCmdConfig.ForceUpdate {
 				app := new(JavaApiApp)
-				restApis = app.AnalysisPath(path, depPath)
+				restApis = app.AnalysisPath(path, depPath, identifiersMap, diMap)
 				cModel, _ := json.MarshalIndent(restApis, "", "\t")
 				WriteToCocaFile("apis.json", string(cModel))
 			} else {
@@ -64,7 +69,7 @@ var apiCmd = &cobra.Command{
 			restFieldsApi := filterApi(apiPrefix, restApis)
 
 			analyser := call_graph.NewCallGraph()
-			dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps)
+			dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
 
 			if apiCmdConfig.ShowCount {
 				table := tablewriter.NewWriter(os.Stdout)

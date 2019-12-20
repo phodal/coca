@@ -54,7 +54,7 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode) (string, []CallApiCount) {
+func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode, diMap map[string]string) (string, []CallApiCount) {
 	methodMap := BuildMethodMap(deps)
 	var apiCallSCounts []CallApiCount
 

@@ -245,7 +245,7 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
-	fullType := warpTargetFullType(createdName)
+	fullType, _ := warpTargetFullType(createdName)
 
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
@@ -254,7 +254,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 
 	jMethodCall := &models.JMethodCall{
 		Package:           removeTarget(fullType),
-		Type:              "Creator",
+		Type:              "creator",
 		Class:             createdName,
 		MethodName:        "",
 		StartLine:         startLine,
@@ -281,7 +281,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := startLinePosition + len(callee)
 
-	fullType := warpTargetFullType(targetType)
+	fullType, callType := warpTargetFullType(targetType)
 	if targetType == "super" {
 		targetType = currentClzExtend
 	}
@@ -293,7 +293,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 			targetType = currentClz
 		}
 
-		jMethodCall = &models.JMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall = &models.JMethodCall{removeTarget(fullType), callType, targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
@@ -306,14 +306,14 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 					clz = ""
 				}
 			}
-			jMethodCall = &models.JMethodCall{pkg, "", clz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall = &models.JMethodCall{pkg, callType, clz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
 			targetType = buildSpecificTarget(targetType)
 
 			targetType = buildMethodNameForBuilder(ctx, targetType)
 
-			jMethodCall = &models.JMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall = &models.JMethodCall{currentPkg, callType, targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		}
 	}
 
@@ -374,7 +374,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		methodName := ctx.IDENTIFIER().GetText()
 		targetType := parseTargetType(text)
 
-		fullType := warpTargetFullType(targetType)
+		fullType, _ := warpTargetFullType(targetType)
 
 		startLine := ctx.GetStart().GetLine()
 		startLinePosition := ctx.GetStart().GetColumn()
@@ -424,9 +424,11 @@ func parseTargetType(targetCtx string) string {
 	return targetType
 }
 
-func warpTargetFullType(targetType string) string {
+func warpTargetFullType(targetType string) (string, string) {
+	callType := ""
 	if strings.EqualFold(currentClz, targetType) {
-		return currentPkg + "." + targetType
+		callType = "self"
+		return currentPkg + "." + targetType, ""
 	}
 
 	// TODO: update for array
@@ -437,7 +439,8 @@ func warpTargetFullType(targetType string) string {
 	if pureTargetType != "" {
 		for _, imp := range imports {
 			if strings.HasSuffix(imp, pureTargetType) {
-				return imp
+				callType = "chain"
+				return imp, callType
 			}
 		}
 	}
@@ -445,7 +448,8 @@ func warpTargetFullType(targetType string) string {
 	//maybe the same package
 	for _, clz := range clzs {
 		if strings.HasSuffix(clz, "."+pureTargetType) {
-			return clz
+			callType = "same package"
+			return clz, callType
 		}
 	}
 
@@ -453,14 +457,16 @@ func warpTargetFullType(targetType string) string {
 	if pureTargetType == "super" {
 		for _, imp := range imports {
 			if strings.HasSuffix(imp, currentClzExtend) {
-				return imp
+				callType = "super"
+				return imp, callType
 			}
 		}
 	}
 
 	if _, ok := identMap[currentPkg + "." + targetType]; ok {
-		return currentPkg + "." + targetType
+		callType = "same package 2"
+		return currentPkg + "." + targetType, callType
 	}
 
-	return ""
+	return "", callType
 }

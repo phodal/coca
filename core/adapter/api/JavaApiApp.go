@@ -2,6 +2,7 @@ package api
 
 import (
 	"coca/core/adapter/identifier"
+	"coca/core/domain/di"
 	"coca/core/models"
 	"coca/core/support"
 	"encoding/json"
@@ -14,7 +15,6 @@ var parsedDeps []models.JClassNode
 var allApis []RestApi
 
 type JavaApiApp struct {
-
 }
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
@@ -27,11 +27,9 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	identifiers := LoadIdentify(depPath)
-	var identifiersMap = make(map[string]models.JIdentifier)
-
-	for _, ident := range identifiers {
-		identifiersMap[ident.Package + "." + ident.ClassName] = ident
-	}
+	identifiersMap := BuildIdentifierMap(identifiers)
+	diMap := di.BuildDIMap(identifiers, identifiersMap)
+	fmt.Println(diMap)
 
 	files := support.GetJavaFiles(codeDir)
 	for index := range files {
@@ -54,6 +52,14 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string) []RestApi {
 	return *&allApis
 }
 
+func BuildIdentifierMap(identifiers []models.JIdentifier) map[string]models.JIdentifier {
+	var identifiersMap = make(map[string]models.JIdentifier)
+
+	for _, ident := range identifiers {
+		identifiersMap[ident.Package+"."+ident.ClassName] = ident
+	}
+	return identifiersMap
+}
 
 func LoadIdentify(importPath string) []models.JIdentifier {
 	var identifiers []models.JIdentifier

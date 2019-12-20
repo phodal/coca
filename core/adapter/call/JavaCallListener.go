@@ -78,7 +78,6 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 		currentNode.Class = currentClz
 	}
 
-
 	if ctx.EXTENDS() != nil {
 		currentClzExtend = ctx.TypeType().GetText()
 		for _, imp := range imports {
@@ -101,7 +100,7 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 			}
 			// 同一个包下的类
 			if !hasSetImplement {
-				currentNode.Implements = append(currentNode.Implements, currentPkg + "." + typeText )
+				currentNode.Implements = append(currentNode.Implements, currentPkg+"."+typeText)
 			}
 		}
 	}
@@ -321,6 +320,13 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
+
+
+	// TODO: 处理链试调用
+	if strings.Contains(targetType, "()") && strings.Contains(targetType, ".") {
+		split := strings.Split(targetType, ".")
+		targetType = split[0]
+	}
 	jMethodCall.Class = targetType
 
 	methodCalls = append(methodCalls, jMethodCall)
@@ -410,10 +416,10 @@ func parseTargetType(targetCtx string) string {
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
 		targetType = currentClz
 	} else {
-		if isChainCall(targetVar) {
-			split := strings.Split(targetType, ".")
-			targetVar = split[0]
-		}
+		//if isChainCall(targetVar) {
+		//	split := strings.Split(targetType, ".")
+		//	targetVar = split[0]
+		//}
 
 		fieldType := mapFields[targetVar]
 		formalType := formalParameters[targetVar]
@@ -469,7 +475,7 @@ func warpTargetFullType(targetType string) (string, string) {
 		}
 	}
 
-	if _, ok := identMap[currentPkg + "." + targetType]; ok {
+	if _, ok := identMap[currentPkg+"."+targetType]; ok {
 		callType = "same package 2"
 		return currentPkg + "." + targetType, callType
 	}

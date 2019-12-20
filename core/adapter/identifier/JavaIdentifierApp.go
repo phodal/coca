@@ -21,7 +21,7 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JIdentifier {
 		context := parser.CompilationUnit()
 
 		clzInfo := models.NewJIdentifier()
-		listener := new(JavaIdentifierListener)
+		listener := NewJavaIdentifierListener()
 		listener.InitNode(clzInfo)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

@@ -38,7 +38,7 @@ var currentExtends = ""
 var currentImplements = ""
 var depInjectMap map[string]string
 
-func NewJavaApiListener(ident map[string]models2.JIdentifier, diMap map[string]string) *JavaApiListener {
+func NewJavaApiListener(jIdentMap map[string]models2.JIdentifier, diMap map[string]string) *JavaApiListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""
@@ -47,7 +47,7 @@ func NewJavaApiListener(ident map[string]models2.JIdentifier, diMap map[string]s
 
 	imports = nil
 
-	identMap = ident
+	identMap = jIdentMap
 	depInjectMap = diMap
 
 	params := make(map[string]string)

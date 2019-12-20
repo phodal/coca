@@ -14,6 +14,11 @@ var hasEnterClass = false
 var hasEnterMethod = false
 var imports []string
 
+func NewJavaIdentifierListener() *JavaIdentifierListener {
+	hasEnterClass = false
+	return &JavaIdentifierListener{}
+}
+
 type JavaIdentifierListener struct {
 	parser.BaseJavaParserListener
 }
@@ -52,7 +57,7 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	}
 }
 
-func (s *JavaIdentifierListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
+func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	hasEnterClass = false
 }
 
@@ -100,6 +105,7 @@ func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.Inte
 var isOverrideMethod = false
 
 func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	hasEnterClass = true
 	hasEnterMethod = true
 
 	startLine := ctx.GetStart().GetLine()
@@ -169,6 +175,7 @@ func buildAnnotation(ctx *parser.AnnotationContext) models.Annotation {
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+	hasEnterClass = true
 	node.Type = "Interface"
 	node.ClassName = ctx.IDENTIFIER().GetText()
 }

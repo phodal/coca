@@ -55,7 +55,7 @@ var reverseCmd = &cobra.Command{
 		acmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/rcall.dot", "-o", config.CocaConfig.ReporterPath + "/rcall.svg"}...)
 		output, err := acmd.CombinedOutput()
 		if err != nil {
-			log.Fatalf("cmd.Run() failed with %s\n", err, string(output))
+			log.Fatalf("cmd.Run() failed with %s%s\n", err, string(output))
 		}
 	},
 }

@@ -23,7 +23,7 @@ install: true
 
 script:
   - go test -v ./...
-  - $HOME/gopath/bin/ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
+  - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
 
 #
 #os:

@@ -88,7 +88,7 @@ var gitCmd *cobra.Command = &cobra.Command{
 		if relatedConfig != "" {
 			config, err := ioutil.ReadFile(relatedConfig)
 			if err != nil {
-				_ = fmt.Errorf("🥯  🦆 🦉 🥓 🦄 🦀 🖕 🍣 🍤 🍥 , lost related json", err)
+				_ = fmt.Errorf("lost related json %s", err)
 				return
 			}
 

@@ -16,7 +16,6 @@ func NewCallGraph() CallGraph {
 
 func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 	methodMap := BuildMethodMap(clzs)
-
 	chain := BuildCallChain(funcName, methodMap, nil)
 	dotContent := ToGraphviz(chain)
 	return dotContent
@@ -25,7 +24,7 @@ func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 // TODO: be a utils
 func ToGraphviz(chain string) string {
 	//rankdir = LR;
-	var result = "digraph G { \n"
+	var result = "digraph G {\n"
 	result = result + chain
 	result = result + "}\n"
 	return result

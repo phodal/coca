@@ -25,19 +25,26 @@ var _ = Describe("Git Parser", func() {
 			Expect(result[0].Changes[0].File).To(Equal("spring-webflux/core/main/java/org/springframework/web/reactive/function/client/ClientResponse.java"))
 		})
 	})
-//
-//	Context("Test for Move file", func() {
-//		It("should have a current file move update", func() {
-//			result := gitt.BuildMessageByInput(`
-//[d00f04b] Phodal Huang 2019-12-18 refactor: move bs to adapter
-//1       1       cmd/bs.go
-//5       5       core/{domain => adapter}/bs/BadSmellApp.go
-//19      19      core/{domain => adapter}/bs/BadSmellListener.go
-//0       0       core/{domain => adapter}/bs/models/BsModel.go
-//`)
-//			Expect(result).To(Equal("2019-12-04"))
-//		})
-//
+
+	Context("Test for Move file", func() {
+		It("should have a current file move update", func() {
+			messages := gitt.BuildMessageByInput(`
+[d00f0124b] Phodal Huang 2019-12-19 update files
+1       1       cmd/bs.go
+0       0       core/bs/models/BadSmellApp.go
+
+[d00f0234b] Phodal Huang 2019-12-19 update files
+12       0       core/bs/models/BadSmellApp.go
+
+[d00f04b] Phodal Huang 2019-12-18 refactor: move bs to adapter
+1       1       cmd/bs.go
+5       5       core/{domain => adapter}/bs/BadSmellApp.go
+`)
+			summary := gitt.GetTeamSummary(messages)
+			Expect(summary[2].EntityName).To(Equal("core/{domain => adapter}/bs/BadSmellApp.go"))
+		})
+
+
 //		It("should update child", func() {
 //			result := gitt.BuildMessageByInput(`
 //[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
@@ -48,5 +55,5 @@ var _ = Describe("Git Parser", func() {
 //`)
 //			Expect(result).To(Equal("2019-12-04"))
 //		})
-//	})
+	})
 })

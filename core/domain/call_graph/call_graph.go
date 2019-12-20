@@ -17,7 +17,7 @@ func NewCallGraph() CallGraph {
 func (c CallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 	methodMap := BuildMethodMap(clzs)
 
-	chain := BuildCallChain(funcName, methodMap)
+	chain := BuildCallChain(funcName, methodMap, nil)
 	dotContent := ToGraphviz(chain)
 	return dotContent
 }
@@ -33,7 +33,7 @@ func ToGraphviz(chain string) string {
 
 var loopCount = 0
 
-func BuildCallChain(funcName string, methodMap map[string][]string) string {
+func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[string]string) string {
 	if loopCount > 6 {
 		return "\n"
 	}
@@ -42,8 +42,11 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 	if len(methodMap[funcName]) > 0 {
 		var arrayResult = ""
 		for _, child := range methodMap[funcName] {
+			if _, ok := diMap[getClz(child)]; ok {
+				child = diMap[getClz(child)] + "." + getMethodName(child)
+			}
 			if len(methodMap[child]) > 0 {
-				arrayResult = arrayResult + BuildCallChain(child, methodMap)
+				arrayResult = arrayResult + BuildCallChain(child, methodMap, diMap)
 			}
 			arrayResult = arrayResult + "\"" + funcName + "\" -> \"" + child + "\";\n"
 		}
@@ -52,6 +55,16 @@ func BuildCallChain(funcName string, methodMap map[string][]string) string {
 
 	}
 	return "\n"
+}
+
+func getClz(child string) string {
+	split := strings.Split(child, ".")
+	return strings.Join(split[:len(split)-1], ".")
+}
+
+func getMethodName(child string) string {
+	split := strings.Split(child, ".")
+	return strings.Join(split[len(split)-1:], ".")
 }
 
 func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassNode, diMap map[string]string) (string, []CallApiCount) {
@@ -65,7 +78,7 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 
 		loopCount = 0
 		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + caller + "\";\n"
-		apiCallChain := BuildCallChain(caller, methodMap)
+		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
 		count := &CallApiCount{

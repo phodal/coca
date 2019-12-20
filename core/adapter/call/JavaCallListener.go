@@ -290,42 +290,38 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	}
 	jMethodCall.Type = callType
 
+	methodName := ctx.IDENTIFIER().GetText()
+	packageName := currentPkg
+
 	if fullType != "" {
 		if targetType == "" {
 			// 处理自调用
 			targetType = currentClz
 		}
 
-		jMethodCall.Package = removeTarget(fullType)
-		jMethodCall.Class = targetType
-		jMethodCall.MethodName = callee
+		packageName = removeTarget(fullType)
+		methodName = callee
 	} else {
-		methodName := ctx.IDENTIFIER().GetText()
-
 		if ctx.GetText() == targetType {
-			pkg := currentPkg
 			clz := currentClz
 			// 处理 static 方法，如 now()
 			for _, imp := range imports {
 				if strings.HasSuffix(imp, "."+methodName) {
-					pkg = imp
+					packageName = imp
 					clz = ""
 				}
 			}
 
-			jMethodCall.Package = pkg
-			jMethodCall.Class = clz
-			jMethodCall.MethodName = methodName
+			targetType = clz
 		} else {
 			targetType = buildSpecificTarget(targetType)
-
 			targetType = buildMethodNameForBuilder(ctx, targetType)
-
-			jMethodCall.Package = currentPkg
-			jMethodCall.Class = targetType
-			jMethodCall.MethodName = methodName
 		}
 	}
+
+	jMethodCall.Package = packageName
+	jMethodCall.MethodName = methodName
+	jMethodCall.Class = targetType
 
 	methodCalls = append(methodCalls, jMethodCall)
 

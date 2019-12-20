@@ -8,7 +8,6 @@ go:
 env:
   global:
     - GO111MODULE=on
-    - GOFLAGS='-mod vendor'
     - PATH=${TRAVIS_BUILD_DIR}/bin:${PATH}
 
 before_script:
@@ -23,7 +22,9 @@ git:
 install: true
 
 script:
+  - go test -v ./...
   - $HOME/gopath/bin/ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
+
 #
 #os:
 #  - linux

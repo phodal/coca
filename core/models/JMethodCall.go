@@ -10,3 +10,16 @@ type JMethodCall struct {
 	StopLine          int
 	StopLinePosition  int
 }
+
+func NewJMethodCall() JMethodCall {
+	return *&JMethodCall{
+		Package:           "",
+		Type:              "",
+		Class:             "",
+		MethodName:        "",
+		StartLine:         0,
+		StartLinePosition: 0,
+		StopLine:          0,
+		StopLinePosition:  0,
+	}
+}

@@ -272,31 +272,36 @@ func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclar
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
+	var jMethodCall = models.NewJMethodCall()
+
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	var targetType = parseTargetType(targetCtx)
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := startLinePosition + len(callee)
+	jMethodCall.StartLine = ctx.GetStart().GetLine()
+	jMethodCall.StartLinePosition = ctx.GetStart().GetColumn()
+	jMethodCall.StopLine = ctx.GetStop().GetLine()
+	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
 
 	fullType, callType := warpTargetFullType(targetType)
 	if targetType == "super" {
 		targetType = currentClzExtend
 	}
+	jMethodCall.Type = callType
 
-	var jMethodCall = &models.JMethodCall{}
 	if fullType != "" {
 		if targetType == "" {
 			// 处理自调用
 			targetType = currentClz
 		}
 
-		jMethodCall = &models.JMethodCall{removeTarget(fullType), callType, targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall.Package = removeTarget(fullType)
+		jMethodCall.Class = targetType
+		jMethodCall.MethodName = callee
 	} else {
+		methodName := ctx.IDENTIFIER().GetText()
+
 		if ctx.GetText() == targetType {
-			methodName := ctx.IDENTIFIER().GetText()
 			pkg := currentPkg
 			clz := currentClz
 			// 处理 static 方法，如 now()
@@ -306,21 +311,25 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 					clz = ""
 				}
 			}
-			jMethodCall = &models.JMethodCall{pkg, callType, clz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+
+			jMethodCall.Package = pkg
+			jMethodCall.Class = clz
+			jMethodCall.MethodName = methodName
 		} else {
-			methodName := ctx.IDENTIFIER().GetText()
 			targetType = buildSpecificTarget(targetType)
 
 			targetType = buildMethodNameForBuilder(ctx, targetType)
 
-			jMethodCall = &models.JMethodCall{currentPkg, callType, targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall.Package = currentPkg
+			jMethodCall.Class = targetType
+			jMethodCall.MethodName = methodName
 		}
 	}
 
-	methodCalls = append(methodCalls, *jMethodCall)
+	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
-	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
+	method.MethodCalls = append(method.MethodCalls, jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method
 }
 

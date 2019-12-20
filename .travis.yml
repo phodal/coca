@@ -5,6 +5,7 @@ go:
   - tip
 
 install:
+  - go mod init
   - go get
   - go install github.com/onsi/ginkgo/ginkgo
   - export PATH=$PATH:$HOME/gopath/bin

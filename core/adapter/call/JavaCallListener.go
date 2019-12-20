@@ -374,6 +374,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		text := ctx.Expression(0).GetText()
 		methodName := ctx.IDENTIFIER().GetText()
 		targetType := parseTargetType(text)
+
 		fullType := warpTargetFullType(targetType)
 
 		startLine := ctx.GetStart().GetLine()
@@ -381,9 +382,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		fullType = warpTargetFullType(fullType)
-
-		jMethodCall := &models.JMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JMethodCall{removeTarget(fullType), "Lambda", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

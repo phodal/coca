@@ -141,11 +141,15 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 	}
 
 	if hasEnterClass {
-		buildAnnotation(ctx)
+		annotation := buildAnnotation(ctx)
+		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
+	} else {
+		annotation := buildAnnotation(ctx)
+		node.Annotations = append(node.Annotations, annotation)
 	}
 }
 
-func buildAnnotation(ctx *parser.AnnotationContext) {
+func buildAnnotation(ctx *parser.AnnotationContext) models.Annotation {
 	annotationName := ctx.QualifiedName().GetText()
 	annotation := models.NewAnnotation()
 	annotation.QualifiedName = annotationName
@@ -160,7 +164,8 @@ func buildAnnotation(ctx *parser.AnnotationContext) {
 			})
 		}
 	}
-	currentMethod.Annotations = append(currentMethod.Annotations, annotation)
+
+	return annotation
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

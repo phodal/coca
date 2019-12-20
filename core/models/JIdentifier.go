@@ -8,12 +8,13 @@ type JIdentifier struct {
 	Type        string
 	ExtendsName string
 	Extends     []string
-	Implements     []string
+	Implements  []string
 	Methods     []JMethod
+	Annotations []Annotation
 }
 
 func NewJIdentifier() *JIdentifier {
-	identifier := &JIdentifier{"", "", "", "", nil,  nil, nil}
+	identifier := &JIdentifier{"", "", "", "", nil, nil, nil, nil}
 	methods = nil
 	return identifier
 }

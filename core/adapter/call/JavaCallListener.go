@@ -3,6 +3,7 @@ package call
 import (
 	"coca/core/languages/java"
 	"coca/core/models"
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
@@ -380,6 +381,8 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
+		fullType = warpTargetFullType(fullType)
+
 		jMethodCall := &models.JMethodCall{removeTarget(fullType), "", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
@@ -433,10 +436,12 @@ func warpTargetFullType(targetType string) string {
 	str := split[0]
 	pureTargetType := strings.ReplaceAll(strings.ReplaceAll(str, "[", ""), "]", "")
 
-	for index := range imports {
-		imp := imports[index]
-		if strings.HasSuffix(imp, pureTargetType) {
-			return imp
+	if pureTargetType != "" {
+		for _, imp := range imports {
+			if strings.HasSuffix(imp, pureTargetType) {
+				fmt.Println(".....", pureTargetType)
+				return imp
+			}
 		}
 	}
 

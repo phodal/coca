@@ -3,7 +3,6 @@ package call_graph
 import (
 	"coca/core/adapter/api"
 	"coca/core/models"
-	"sort"
 	"strings"
 )
 
@@ -90,10 +89,6 @@ func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []models.JClassN
 
 		results = results + "\n" + chain
 	}
-
-	sort.Slice(apiCallSCounts, func(i, j int) bool {
-		return apiCallSCounts[i].Size < apiCallSCounts[j].Size
-	})
 
 	return results + "}\n", apiCallSCounts
 }

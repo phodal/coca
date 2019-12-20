@@ -14,6 +14,7 @@ import (
 	"os"
 	"os/exec"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -25,6 +26,7 @@ type ApiCmdConfig struct {
 	RemovePackageNames string
 	AggregateApi       string
 	ForceUpdate        bool
+	Sort               bool
 }
 
 var (
@@ -70,6 +72,12 @@ var apiCmd = &cobra.Command{
 
 			analyser := call_graph.NewCallGraph()
 			dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
+
+			if *&apiCmdConfig.Sort {
+				sort.Slice(counts, func(i, j int) bool {
+					return counts[i].Size < counts[j].Size
+				})
+			}
 
 			if apiCmdConfig.ShowCount {
 				table := tablewriter.NewWriter(os.Stdout)
@@ -135,5 +143,6 @@ func init() {
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.RemovePackageNames, "remove", "r", "", "remove package name")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ShowCount, "count", "c", false, "count api size")
 	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.ForceUpdate, "force", "f", false, "force api update")
+	apiCmd.PersistentFlags().BoolVarP(&apiCmdConfig.Sort, "sort", "s", false, "sort api")
 	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.AggregateApi, "aggregate", "a", "", "aggregate api")
 }

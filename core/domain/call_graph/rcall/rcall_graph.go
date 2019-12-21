@@ -15,9 +15,8 @@ func NewRCallGraph() RCallGraph {
 }
 
 func (c RCallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
-	var projectMethodMap map[string]int = BuildProjectMethodMap(clzs)
+	var projectMethodMap = BuildProjectMethodMap(clzs)
 	rcallMap := BuildRCallMethodMap(clzs, projectMethodMap)
-
 
 	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
 	support.WriteToCocaFile("rcallmap.json", string(mapJson))

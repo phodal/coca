@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	"coca/config"
-	"coca/core/adapter"
-	. "coca/core/adapter/api"
-	"coca/core/domain/call_graph"
-	"coca/core/models"
-	. "coca/core/support"
+	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/adapter"
+	. "github.com/phodal/coca/core/adapter/api"
+	"github.com/phodal/coca/core/domain/call_graph"
+	"github.com/phodal/coca/core/models"
+	. "github.com/phodal/coca/core/support"
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"

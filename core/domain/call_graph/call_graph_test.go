@@ -1,9 +1,9 @@
 package call_graph_test
 
 import (
-	"coca/core/domain/call_graph"
-	"coca/core/models"
-	"coca/core/support"
+	"github.com/phodal/coca/core/domain/call_graph"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"testing"

@@ -1,9 +1,9 @@
 package concept
 
 import (
-	languages2 "coca/core/domain/call_graph/stop_words/languages"
-	"coca/core/models"
-	"coca/core/support"
+	languages2 "github.com/phodal/coca/core/domain/call_graph/stop_words/languages"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 )
 
 type ConceptAnalyser struct {

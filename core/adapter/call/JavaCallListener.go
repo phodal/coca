@@ -1,8 +1,8 @@
 package call
 
 import (
-	"coca/core/languages/java"
-	"coca/core/models"
+	"github.com/phodal/coca/core/languages/java"
+	"github.com/phodal/coca/core/models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"

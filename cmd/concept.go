@@ -1,10 +1,10 @@
 package cmd
 
 import (
-	"coca/config"
-	"coca/core/domain/concept"
-	"coca/core/models"
-	. "coca/core/support"
+	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/domain/concept"
+	"github.com/phodal/coca/core/models"
+	. "github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"

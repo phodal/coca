@@ -1,7 +1,7 @@
 package sql
 
 import (
-	"coca/core/languages/sql"
+	"github.com/phodal/coca/core/languages/sql"
 	"fmt"
 )
 

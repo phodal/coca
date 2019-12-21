@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"coca/config"
-	"coca/core/domain/evaluate"
-	. "coca/core/support"
+	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/domain/evaluate"
+	. "github.com/phodal/coca/core/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"

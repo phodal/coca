@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"github.com/spf13/cobra"
 
-	. "coca/core/adapter/call"
-	. "coca/core/adapter/identifier"
-	. "coca/core/support"
+	. "github.com/phodal/coca/core/adapter/call"
+	. "github.com/phodal/coca/core/adapter/identifier"
+	. "github.com/phodal/coca/core/support"
 )
 
 type AnalysisCmdConfig struct {

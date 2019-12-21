@@ -1,8 +1,8 @@
 package bs
 
 import (
-	models2 "coca/core/adapter/bs/models"
-	. "coca/core/languages/java"
+	models2 "github.com/phodal/coca/core/adapter/bs/models"
+	. "github.com/phodal/coca/core/languages/java"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"

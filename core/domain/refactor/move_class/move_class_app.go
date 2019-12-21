@@ -2,9 +2,9 @@ package move_class
 
 import (
 	"bufio"
-	base2 "coca/core/domain/refactor/base"
-	models2 "coca/core/domain/refactor/base/models"
-	utils2 "coca/core/support"
+	base2 "github.com/phodal/coca/core/domain/refactor/base"
+	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
+	utils2 "github.com/phodal/coca/core/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"

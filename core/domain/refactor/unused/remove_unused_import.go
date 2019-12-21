@@ -1,9 +1,9 @@
 package unused
 
 import (
-	base2 "coca/core/domain/refactor/base"
-	models2 "coca/core/domain/refactor/base/models"
-	"coca/core/support"
+	base2 "github.com/phodal/coca/core/domain/refactor/base"
+	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
+	"github.com/phodal/coca/core/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"

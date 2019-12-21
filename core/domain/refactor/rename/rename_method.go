@@ -1,10 +1,10 @@
 package unused
 
 import (
-	models2 "coca/core/domain/refactor/base/models"
-	support3 "coca/core/domain/refactor/rename/support"
-	. "coca/core/models"
-	"coca/core/support"
+	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
+	support3 "github.com/phodal/coca/core/domain/refactor/rename/support"
+	. "github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"io/ioutil"
 	"log"

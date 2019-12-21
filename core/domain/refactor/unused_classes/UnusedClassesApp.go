@@ -1,8 +1,8 @@
 package main
 
 import (
-	. "coca/core/models"
-	"coca/core/support"
+	. "github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
 	"sort"

@@ -1,7 +1,7 @@
 package support
 
 import (
-	"coca/config"
+	"github.com/phodal/coca/config"
 	"fmt"
 	"io"
 	"io/ioutil"

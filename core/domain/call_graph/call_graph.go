@@ -1,8 +1,8 @@
 package call_graph
 
 import (
-	"coca/core/adapter/api"
-	"coca/core/models"
+	"github.com/phodal/coca/core/adapter/api"
+	"github.com/phodal/coca/core/models"
 	"strings"
 )
 

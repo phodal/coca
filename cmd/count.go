@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"coca/config"
-	"coca/core/models"
-	"coca/core/support"
+	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"

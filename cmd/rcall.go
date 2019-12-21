@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"coca/config"
-	"coca/core/domain/call_graph/rcall"
-	. "coca/core/support"
+	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/domain/call_graph/rcall"
+	. "github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"

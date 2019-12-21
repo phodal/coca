@@ -1,6 +1,6 @@
 package evaluate
 
-import "coca/core/models"
+import "github.com/phodal/coca/core/models"
 
 type EvaluateAnalyser struct {
 

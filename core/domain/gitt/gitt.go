@@ -2,7 +2,7 @@ package gitt
 
 import (
 	"bytes"
-	"coca/core/domain/gitt/apriori"
+	"github.com/phodal/coca/core/domain/gitt/apriori"
 	"encoding/json"
 	"fmt"
 	"log"

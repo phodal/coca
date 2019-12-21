@@ -1,8 +1,8 @@
 package sql
 
 import (
-	"coca/core/adapter/sql/parse"
-	parser2 "coca/core/languages/sql"
+	"github.com/phodal/coca/core/adapter/sql/parse"
+	parser2 "github.com/phodal/coca/core/languages/sql"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"os"

@@ -1,8 +1,8 @@
 package bs
 
 import (
-	models2 "coca/core/adapter/bs/models"
-	"coca/core/support"
+	models2 "github.com/phodal/coca/core/adapter/bs/models"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	. "coca/core/languages/java"
+	. "github.com/phodal/coca/core/languages/java"
 )
 
 var nodeInfos []models2.BsJClass

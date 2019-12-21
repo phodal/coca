@@ -1,7 +1,7 @@
 package call
 
 import (
-	"coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/adapter/identifier"
 	. "github.com/onsi/gomega"
 	"testing"
 )

@@ -2,9 +2,9 @@ package api
 
 
 import (
-	"coca/core/adapter"
-	"coca/core/adapter/call"
-	"coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/adapter"
+	"github.com/phodal/coca/core/adapter/call"
+	"github.com/phodal/coca/core/adapter/identifier"
 	. "github.com/onsi/gomega"
 	"testing"
 )

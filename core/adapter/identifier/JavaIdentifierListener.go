@@ -1,8 +1,8 @@
 package identifier
 
 import (
-	"coca/core/languages/java"
-	"coca/core/models"
+	"github.com/phodal/coca/core/languages/java"
+	"github.com/phodal/coca/core/models"
 	"reflect"
 	"strings"
 )

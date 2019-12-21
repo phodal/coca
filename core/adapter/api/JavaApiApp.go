@@ -1,8 +1,8 @@
 package api
 
 import (
-	"coca/core/models"
-	"coca/core/support"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"path/filepath"

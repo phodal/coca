@@ -1,9 +1,9 @@
 package adapter
 
 import (
-	"coca/core/adapter/identifier"
-	"coca/core/models"
-	"coca/core/support"
+	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 )
 

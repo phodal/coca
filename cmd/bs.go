@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"coca/core/adapter/bs"
-	"coca/core/support"
+	"github.com/phodal/coca/core/adapter/bs"
+	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
 	"strings"

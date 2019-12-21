@@ -1,8 +1,8 @@
 package identifier
 
 import (
-	"coca/core/models"
-	"coca/core/support"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 

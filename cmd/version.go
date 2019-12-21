@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"coca/config"
+	"github.com/phodal/coca/config"
 	"fmt"
 	"github.com/spf13/cobra"
 )

@@ -16,7 +16,7 @@ var _ = Describe("Git Parser", func() {
 			var parsedDeps []models.JClassNode
 			analyser := call_graph.NewCallGraph()
 
-			file := support.ReadFile("test_data/call_api_test.json")
+			file := support.ReadFile("_fixtures/call_api_test.json")
 			if file == nil {
 				log.Fatal("lost file:")
 			}

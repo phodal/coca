@@ -2,7 +2,6 @@ package call
 
 import (
 	"coca/core/adapter/identifier"
-	"fmt"
 	. "github.com/onsi/gomega"
 	"testing"
 )

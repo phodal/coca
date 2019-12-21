@@ -3,26 +3,17 @@ package api
 import (
 	"coca/core/models"
 	"coca/core/support"
-	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"path/filepath"
 )
 
-var parsedDeps []models.JClassNode
 var allApis []RestApi
 
 type JavaApiApp struct {
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, depPath string, identifiersMap map[string]models.JIdentifier, diMap map[string]string) []RestApi {
-	parsedDeps = nil
-	file := support.ReadFile(depPath)
-	if file == nil {
-		return nil
-	}
-
-	_ = json.Unmarshal(file, &parsedDeps)
+func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []models.JClassNode, identifiersMap map[string]models.JIdentifier, diMap map[string]string) []RestApi {
 
 	files := support.GetJavaFiles(codeDir)
 	for index := range files {

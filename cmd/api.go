@@ -48,9 +48,17 @@ var apiCmd = &cobra.Command{
 			identifiersMap := adapter.BuildIdentifierMap(identifiers)
 			diMap := adapter.BuildDIMap(identifiers, identifiersMap)
 
+			parsedDeps = nil
+			depFile := ReadFile(depPath)
+			if depFile == nil {
+				log.Fatal("lost deps")
+			}
+
+			_ = json.Unmarshal(depFile, &parsedDeps)
+
 			if *&apiCmdConfig.ForceUpdate {
 				app := new(JavaApiApp)
-				restApis = app.AnalysisPath(path, depPath, identifiersMap, diMap)
+				restApis = app.AnalysisPath(path, parsedDeps, identifiersMap, diMap)
 				cModel, _ := json.MarshalIndent(restApis, "", "\t")
 				WriteToCocaFile("apis.json", string(cModel))
 			} else {

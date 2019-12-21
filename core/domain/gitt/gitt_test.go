@@ -114,7 +114,7 @@ func TestCalculateCodeAge(t *testing.T) {
 
 `)
 	summary := CalculateCodeAge(result)
-	g.Expect(len(summary)).To(Equal(2))
+	g.Expect(len(summary)).To(Equal(1))
 }
 
 func TestGetTopAuthors(t *testing.T) {

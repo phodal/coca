@@ -3,13 +3,13 @@ package gitt
 import "time"
 
 type CodeAge struct {
-	File string
-	Age  time.Time
+	EntityName string
+	Age        time.Time
 }
 
 type CodeAgeDisplay struct {
-	File  string
-	Month string
+	EntityName string
+	Month      string
 }
 
 type TeamSummary struct {
@@ -22,6 +22,7 @@ type ProjectInfo struct {
 	EntityName string
 	Authors    map[string]string
 	Revs       map[string]string
+	Age        time.Time
 }
 
 type GitSummary struct {

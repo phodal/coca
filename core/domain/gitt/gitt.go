@@ -56,41 +56,41 @@ func BuildMessageByInput(inputStr string) []CommitMessage {
 	return commitMessages
 }
 
-func CalculateCodeAge(messages []CommitMessage) []CodeAgeDisplay {
-	timeFormat := "2006-01-02"
+func CalculateCodeAge(messages []CommitMessage) []ProjectInfo {
+	infos := make(map[string]ProjectInfo)
+	buildCommitMessageMap(messages, infos)
 
-	ages := make(map[string]CodeAge)
-	for _, commitMessage := range messages {
-		for _, change := range commitMessage.Changes {
-			if ages[change.File].File == "" {
-				date, _ := time.Parse(timeFormat, commitMessage.Date)
-				ages[change.File] = *&CodeAge{change.File, date}
-			}
-		}
-	}
-
-	var agesArray []CodeAge
-	for _, info := range ages {
-		agesArray = append(agesArray, *&CodeAge{info.File, info.Age})
+	var agesArray []ProjectInfo
+	for _, info := range infos {
+		agesArray = append(agesArray, info)
 	}
 
 	sort.Slice(agesArray, func(i, j int) bool {
 		return agesArray[i].Age.Before(agesArray[j].Age)
 	})
 
-	var agesDisplay []CodeAgeDisplay
-	for _, info := range agesArray {
-		const secondsOfOneMonth = 2600640
-		month := time.Now().Sub(info.Age).Seconds() / secondsOfOneMonth
-		displayMonth := strconv.FormatFloat(month, 'f', 2, 64)
-		agesDisplay = append(agesDisplay, *&CodeAgeDisplay{info.File, displayMonth})
-	}
-
-	return agesDisplay
+	return agesArray
 }
 
 func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 	infos := make(map[string]ProjectInfo)
+	infos = buildCommitMessageMap(messages, infos)
+
+	var sortInfos []TeamSummary
+	for _, info := range infos {
+		sortInfos = append(sortInfos, *&TeamSummary{info.EntityName, len(info.Authors), len(info.Revs)})
+	}
+
+	sort.Slice(sortInfos, func(i, j int) bool {
+		return sortInfos[i].RevsCount > sortInfos[j].RevsCount
+	})
+
+	return sortInfos
+}
+
+func buildCommitMessageMap(messages []CommitMessage, infos map[string]ProjectInfo) map[string]ProjectInfo {
+	timeFormat := "2006-01-02"
+
 	for _, commitMessage := range messages {
 		for _, change := range commitMessage.Changes {
 			fileName := change.File
@@ -106,24 +106,15 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 				revs := make(map[string]string)
 				revs[commitMessage.Rev] = commitMessage.Rev
 
-				infos[fileName] = *&ProjectInfo{fileName, authors, revs}
+				date, _ := time.Parse(timeFormat, commitMessage.Date)
+				infos[fileName] = *&ProjectInfo{fileName, authors, revs, date}
 			} else {
 				infos[fileName].Authors[commitMessage.Author] = commitMessage.Author
 				infos[fileName].Revs[commitMessage.Rev] = commitMessage.Rev
 			}
 		}
 	}
-
-	var sortInfos []TeamSummary
-	for _, info := range infos {
-		sortInfos = append(sortInfos, *&TeamSummary{info.EntityName, len(info.Authors), len(info.Revs)})
-	}
-
-	sort.Slice(sortInfos, func(i, j int) bool {
-		return sortInfos[i].RevsCount > sortInfos[j].RevsCount
-	})
-
-	return sortInfos
+	return infos
 }
 
 // 反向查询

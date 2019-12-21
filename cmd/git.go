@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"time"
 )
 
 type GitCmdConfig struct {
@@ -58,14 +59,22 @@ var gitCmd *cobra.Command = &cobra.Command{
 		if cmd.Flag("age").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)
 
-			age := CalculateCodeAge(message)
-			table.SetHeader([]string{"File", "Month"})
-
-			if len(age) > size && isFullMessage {
-				age = age[:size]
+			ages := CalculateCodeAge(message)
+			var agesDisplay []CodeAgeDisplay
+			for _, info := range ages {
+				const secondsOfOneMonth = 2600640
+				month := time.Since(info.Age).Seconds() / secondsOfOneMonth
+				displayMonth := strconv.FormatFloat(month, 'f', 2, 64)
+				agesDisplay = append(agesDisplay, *&CodeAgeDisplay{info.EntityName, displayMonth})
 			}
-			for _, v := range age {
-				table.Append([]string{v.File, v.Month})
+
+			table.SetHeader([]string{"EntityName", "Month"})
+
+			if len(agesDisplay) > size && isFullMessage {
+				agesDisplay = agesDisplay[:size]
+			}
+			for _, v := range agesDisplay {
+				table.Append([]string{v.EntityName, v.Month})
 			}
 			table.Render()
 		}

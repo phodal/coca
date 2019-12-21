@@ -17,7 +17,7 @@ import (
 var nodeInfos []models2.BsJClass
 
 type BadSmellModel struct {
-	File        string `json:"File,omitempty"`
+	File        string `json:"EntityName,omitempty"`
 	Line        string `json:"Line,omitempty"`
 	Bs          string `json:"BS,omitempty"`
 	Description string `json:"Description,omitempty"`

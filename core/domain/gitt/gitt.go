@@ -18,6 +18,21 @@ var currentCommitMessage CommitMessage
 var currentFileChanges []FileChange
 var commitMessages []CommitMessage
 
+
+var (
+	rev       = `\[([\d|a-f]{5,12})\]`
+	author    = `(.*?)\s\d{4}-\d{2}-\d{2}`
+	date      = `\d{4}-\d{2}-\d{2}`
+	changes   = `([\d-]+)[\t\s]+([\d-]+)[\t\s]+(.*)`
+	moveRegSt = `(.*)\{(.*)\s=>\s(.*)\}(.*)`
+
+	revReg     = regexp.MustCompile(rev)
+	authorReg  = regexp.MustCompile(author)
+	dateReg    = regexp.MustCompile(date)
+	changesReg = regexp.MustCompile(changes)
+	moveReg    = regexp.MustCompile(moveRegSt)
+)
+
 func BuildCommitMessage() []CommitMessage {
 	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat"}
 	cmd := exec.Command("git", historyArgs...)
@@ -205,17 +220,6 @@ func BasicSummary(commitMessages []CommitMessage) *GitSummary {
 }
 
 func ParseLog(text string) {
-	// TODO 支持多行提交
-	rev := `\[([\d|a-f]{5,12})\]`
-	author := `(.*?)\s\d{4}-\d{2}-\d{2}`
-	date := `\d{4}-\d{2}-\d{2}`
-	changes := `([\d-]+)[\t\s]+([\d-]+)[\t\s]+(.*)`
-
-	revReg := regexp.MustCompile(rev)
-	authorReg := regexp.MustCompile(author)
-	dateReg := regexp.MustCompile(date)
-	changesReg := regexp.MustCompile(changes)
-
 	allString := revReg.FindAllString(text, -1)
 	if len(allString) == 1 {
 		str := ""

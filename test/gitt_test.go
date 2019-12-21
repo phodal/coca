@@ -29,19 +29,24 @@ var _ = Describe("Git Parser", func() {
 	Context("Test for Move file", func() {
 		It("should have a current file move update", func() {
 			messages := gitt.BuildMessageByInput(`
-[d00f0124b] Phodal Huang 2019-12-19 update files
+[d00f01214b] Phodal Huang 2019-12-19 update files
 1       1       cmd/bs.go
-0       0       core/bs/models/BadSmellApp.go
+0       0       core/adapter/bs/BadSmellApp.go
 
-[d00f0234b] Phodal Huang 2019-12-19 update files
-12       0       core/bs/models/BadSmellApp.go
-
-[d00f04b] Phodal Huang 2019-12-18 refactor: move bs to adapter
+[d00f04111b] Phodal Huang 2019-12-18 refactor: move bs to adapter
 1       1       cmd/bs.go
 5       5       core/{domain => adapter}/bs/BadSmellApp.go
+
+[1d00f0124b] Phodal Huang 2019-12-19 update files
+1       1       cmd/bs.go
+0       0       core/domain/bs/BadSmellApp.go
+
+[d00f0124d] Phodal Huang 2019-12-19 update files
+0       0       core/domain/bs/BadSmellApp.go
 `)
 			summary := gitt.GetTeamSummary(messages)
-			Expect(summary[2].EntityName).To(Equal("core/{domain => adapter}/bs/BadSmellApp.go"))
+			Expect(summary[0].EntityName).To(Equal("cmd/bs.go"))
+			Expect(summary[1].EntityName).To(Equal("core/domain/bs/BadSmellApp.go"))
 		})
 
 

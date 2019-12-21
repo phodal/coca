@@ -18,7 +18,6 @@ var currentCommitMessage CommitMessage
 var currentFileChanges []FileChange
 var commitMessages []CommitMessage
 
-
 var (
 	rev       = `\[([\d|a-f]{5,12})\]`
 	author    = `(.*?)\s\d{4}-\d{2}-\d{2}`
@@ -34,7 +33,7 @@ var (
 )
 
 func BuildCommitMessage() []CommitMessage {
-	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat"}
+	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat", "--reverse"}
 	cmd := exec.Command("git", historyArgs...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -91,20 +90,21 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 	infos := make(map[string]TeamInformation)
 	for _, commitMessage := range messages {
 		for _, change := range commitMessage.Changes {
-			if moveReg.MatchString(change.File) {
-				infos = switchFile(infos, change.File)
+			fileName := change.File
+			if moveReg.MatchString(fileName) {
+				infos, fileName = switchFile(infos, fileName)
 			}
 
-			if infos[change.File].EntityName == "" {
+			if infos[fileName].EntityName == "" {
 				authors := make(map[string]string)
 				authors[commitMessage.Author] = commitMessage.Author
 				revs := make(map[string]string)
 				revs[commitMessage.Rev] = commitMessage.Rev
 
-				infos[change.File] = *&TeamInformation{change.File, authors, revs}
+				infos[fileName] = *&TeamInformation{fileName, authors, revs}
 			} else {
-				infos[change.File].Authors[commitMessage.Author] = commitMessage.Author
-				infos[change.File].Revs[commitMessage.Rev] = commitMessage.Rev
+				infos[fileName].Authors[commitMessage.Author] = commitMessage.Author
+				infos[fileName].Revs[commitMessage.Rev] = commitMessage.Rev
 			}
 		}
 	}
@@ -122,22 +122,24 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 }
 
 // 反向查询
-func switchFile(infos map[string]TeamInformation, changedFile string) map[string]TeamInformation {
+func switchFile(infos map[string]TeamInformation, changedFile string) (map[string]TeamInformation, string) {
 	changed := moveReg.FindStringSubmatch(changedFile)
 	// examples: cmd/{call_graph.go => call.go}
 	if len(changed) >= 5 {
 		oldFileName := changed[1] + changed[2] + changed[4]
 		newFileName := changed[1] + changed[3] + changed[4]
 
-		fmt.Println(infos, oldFileName, newFileName)
 		if _, ok := infos[oldFileName]; ok {
 			oldInfo := infos[oldFileName]
 			delete(infos, oldFileName)
+			oldInfo.EntityName = newFileName
 			infos[newFileName] = oldInfo
+
+			changedFile = newFileName
 		}
 	}
 
-	return infos
+	return infos, changedFile
 }
 
 type TopAuthor struct {

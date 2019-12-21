@@ -2,7 +2,6 @@ package test_test
 
 import (
 	"coca/core/domain/gitt"
-	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -30,25 +29,39 @@ var _ = Describe("Git Parser", func() {
 	Context("Test for Move file", func() {
 		It("should have a current file move update", func() {
 			messages := gitt.BuildMessageByInput(`
-[d00f01214b] Phodal Huang 2019-12-19 update files
-1       1       cmd/bs.go
-0       0       core/adapter/bs/BadSmellApp.go
-
-[d00f04111b] Phodal Huang 2019-12-18 refactor: move bs to adapter
-1       1       cmd/bs.go
-5       5       core/{domain => adapter}/bs/BadSmellApp.go
+[d00f0124d] Phodal Huang 2019-12-19 update files
+0       0       core/domain/bs/BadSmellApp.go
 
 [1d00f0124b] Phodal Huang 2019-12-19 update files
 1       1       cmd/bs.go
 0       0       core/domain/bs/BadSmellApp.go
 
-[d00f0124d] Phodal Huang 2019-12-19 update files
-0       0       core/domain/bs/BadSmellApp.go
+[d00f04111b] Phodal Huang 2019-12-18 refactor: move bs to adapter
+1       1       cmd/bs.go
+5       5       core/{domain => adapter}/bs/BadSmellApp.go
+
+[d00f01214b] Phodal Huang 2019-12-19 update files
+1       1       cmd/bs.go
+0       0       core/adapter/bs/BadSmellApp.go
 `)
 			summary := gitt.GetTeamSummary(messages)
-			fmt.Println(summary)
-			Expect(summary[0].EntityName).To(Equal("cmd/bs.go"))
-			Expect(summary[1].EntityName).To(Equal("core/domain/bs/BadSmellApp.go"))
+			Expect(summary[0].EntityName).To(Equal("core/adapter/bs/BadSmellApp.go"))
+			Expect(summary[1].EntityName).To(Equal("cmd/bs.go"))
+			Expect(len(summary)).To(Equal(2))
+		})
+
+		It("support for first path change", func() {
+			messages := gitt.BuildMessageByInput(`
+[333] Phodal Huang 2019-12-19 update files
+0       0       src/domain/gitt/README.md
+
+[d00f0124d] Phodal Huang 2019-12-19 update files
+0       0       {src => core}/domain/gitt/README.md
+
+`)
+			summary := gitt.GetTeamSummary(messages)
+			Expect(summary[0].EntityName).To(Equal("core/domain/gitt/README.md"))
+			Expect(len(summary)).To(Equal(1))
 		})
 
 

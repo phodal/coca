@@ -1,4 +1,4 @@
-package test_test
+package call_graph_test
 
 import (
 	"coca/core/domain/call_graph"
@@ -15,7 +15,7 @@ func Test_should_generate_correct_files(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := call_graph.NewCallGraph()
-	file := support.ReadFile("_fixtures/call_api_test.json")
+	file := support.ReadFile("../../../_fixtures/call_api_test.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	dotContent := analyser.Analysis("com.phodal.pholedge.book.BookController.createBook", *&parsedDeps)

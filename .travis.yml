@@ -25,7 +25,7 @@ before_install:
   - go get -t -v ./...
 
 script:
-  - ./scripts/go.test.sh
+  - go test -v ./...  -race -coverprofile=coverage.txt -covermode=atomic
 
 #
 #os:

@@ -11,8 +11,7 @@ BINARY_MACOS=$(BINARY_DIR)/$(PACKAGE_NAME)_macos
 BINARY_WINDOWS=$(BINARY_DIR)/$(PACKAGE_NAME)_windows.exe
 
 all: test build
-build:
-	$(GOBUILD) -o $(BINARY_DIR) -v
+build: build-linux build-windows build-macos
 test:
 	$(GOTEST) -v ./...
 clean:

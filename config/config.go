@@ -7,3 +7,5 @@ type TypeCocaConfig struct {
 var CocaConfig = &TypeCocaConfig{
 	ReporterPath: "coca_reporter",
 }
+
+const VERSION = "0.2.0"

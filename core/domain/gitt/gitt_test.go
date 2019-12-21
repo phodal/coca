@@ -101,3 +101,51 @@ func Test_identify_direct_move(t *testing.T) {
 	g.Expect(len(summary)).To(Equal(1))
 	g.Expect(summary[0].EntityName).To(Equal("src/language/java/JavaLexer.tokens"))
 }
+
+func TestCalculateCodeAge(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	result := BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens
+
+[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens => src/language/java/JavaLexer.tokens
+
+`)
+	summary := CalculateCodeAge(result)
+	g.Expect(len(summary)).To(Equal(2))
+}
+
+func TestGetTopAuthors(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	result := BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens
+
+[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens => src/language/java/JavaLexer.tokens
+
+`)
+	summary := GetTopAuthors(result)
+	g.Expect(len(summary)).To(Equal(1))
+	g.Expect(summary[0].Name).To(Equal("Phodal Huang"),)
+
+}
+
+func TestBasicSummary(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	result := BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens
+
+[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens => src/language/java/JavaLexer.tokens
+
+`)
+	summary := BasicSummary(result)
+	g.Expect(summary.Authors).To(Equal(1))
+	g.Expect(summary.Entities).To(Equal(2))
+}

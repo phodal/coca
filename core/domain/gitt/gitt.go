@@ -91,6 +91,10 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 	infos := make(map[string]TeamInformation)
 	for _, commitMessage := range messages {
 		for _, change := range commitMessage.Changes {
+			if moveReg.MatchString(change.File) {
+				infos = switchFile(infos, change.File)
+			}
+
 			if infos[change.File].EntityName == "" {
 				authors := make(map[string]string)
 				authors[commitMessage.Author] = commitMessage.Author
@@ -105,16 +109,35 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 		}
 	}
 
-	var informations []TeamSummary
+	var sortInfos []TeamSummary
 	for _, info := range infos {
-		informations = append(informations, *&TeamSummary{info.EntityName, len(info.Authors), len(info.Revs)})
+		sortInfos = append(sortInfos, *&TeamSummary{info.EntityName, len(info.Authors), len(info.Revs)})
 	}
 
-	sort.Slice(informations, func(i, j int) bool {
-		return informations[i].RevsCount > informations[j].RevsCount
+	sort.Slice(sortInfos, func(i, j int) bool {
+		return sortInfos[i].RevsCount > sortInfos[j].RevsCount
 	})
 
-	return informations
+	return sortInfos
+}
+
+// 反向查询
+func switchFile(infos map[string]TeamInformation, changedFile string) map[string]TeamInformation {
+	changed := moveReg.FindStringSubmatch(changedFile)
+	// examples: cmd/{call_graph.go => call.go}
+	if len(changed) >= 5 {
+		oldFileName := changed[1] + changed[2] + changed[4]
+		newFileName := changed[1] + changed[3] + changed[4]
+
+		fmt.Println(infos, oldFileName, newFileName)
+		if _, ok := infos[oldFileName]; ok {
+			oldInfo := infos[oldFileName]
+			delete(infos, oldFileName)
+			infos[newFileName] = oldInfo
+		}
+	}
+
+	return infos
 }
 
 type TopAuthor struct {

@@ -2,6 +2,7 @@ package test_test
 
 import (
 	"coca/core/domain/gitt"
+	"fmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -45,6 +46,7 @@ var _ = Describe("Git Parser", func() {
 0       0       core/domain/bs/BadSmellApp.go
 `)
 			summary := gitt.GetTeamSummary(messages)
+			fmt.Println(summary)
 			Expect(summary[0].EntityName).To(Equal("cmd/bs.go"))
 			Expect(summary[1].EntityName).To(Equal("core/domain/bs/BadSmellApp.go"))
 		})

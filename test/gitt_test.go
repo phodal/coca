@@ -64,7 +64,6 @@ var _ = Describe("Git Parser", func() {
 			Expect(len(summary)).To(Equal(1))
 		})
 
-
 		It("should update child", func() {
 			result := gitt.BuildMessageByInput(`
 [ef9165d] Phodal Huang 2019-12-18 fefactor: extract vars
@@ -77,6 +76,20 @@ var _ = Describe("Git Parser", func() {
 			summary := gitt.GetTeamSummary(result)
 			Expect(summary[0].EntityName).To(Equal("adapter/call/JavaCallListener.go"))
 			Expect(len(summary)).To(Equal(1))
+		})
+
+		It("should enable handle start move", func() {
+			result := gitt.BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens
+
+[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       language/java/JavaParser.tokens => src/language/java/JavaLexer.tokens
+
+`)
+			summary := gitt.GetTeamSummary(result)
+			Expect(len(summary)).To(Equal(1))
+			Expect(summary[0].EntityName).To(Equal("src/language/java/JavaLexer.tokens"))
 		})
 	})
 })

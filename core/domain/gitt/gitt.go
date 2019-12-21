@@ -19,17 +19,19 @@ var currentFileChanges []FileChange
 var commitMessages []CommitMessage
 
 var (
-	rev       = `\[([\d|a-f]{5,12})\]`
-	author    = `(.*?)\s\d{4}-\d{2}-\d{2}`
-	date      = `\d{4}-\d{2}-\d{2}`
-	changes   = `([\d-]+)[\t\s]+([\d-]+)[\t\s]+(.*)`
-	moveRegSt = `(.*)\{(.*)\s=>\s(.*)\}(.*)`
+	rev               = `\[([\d|a-f]{5,12})\]`
+	author            = `(.*?)\s\d{4}-\d{2}-\d{2}`
+	date              = `\d{4}-\d{2}-\d{2}`
+	changes           = `([\d-]+)[\t\s]+([\d-]+)[\t\s]+(.*)`
+	complexMoveRegStr = `(.*)\{(.*)\s=>\s(.*)\}(.*)`
+	basicMoveRegStr   = `(.*)\s=>\s(.*)`
 
-	revReg     = regexp.MustCompile(rev)
-	authorReg  = regexp.MustCompile(author)
-	dateReg    = regexp.MustCompile(date)
-	changesReg = regexp.MustCompile(changes)
-	moveReg    = regexp.MustCompile(moveRegSt)
+	revReg         = regexp.MustCompile(rev)
+	authorReg      = regexp.MustCompile(author)
+	dateReg        = regexp.MustCompile(date)
+	changesReg     = regexp.MustCompile(changes)
+	complexMoveReg = regexp.MustCompile(complexMoveRegStr)
+	basicMvReg = regexp.MustCompile(basicMoveRegStr)
 )
 
 func BuildCommitMessage() []CommitMessage {
@@ -91,9 +93,10 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 	for _, commitMessage := range messages {
 		for _, change := range commitMessage.Changes {
 			fileName := change.File
-			if moveReg.MatchString(fileName) {
-				infos, fileName = switchFile(infos, fileName)
-				fmt.Println(fileName, infos[fileName].EntityName)
+			if complexMoveReg.MatchString(fileName) {
+				infos, fileName = handleMoveInDirectory(infos, fileName)
+			} else if basicMvReg.MatchString(fileName) {
+				infos, fileName = handleMoveFullPath(infos, fileName)
 			}
 
 			if infos[fileName].EntityName == "" {
@@ -123,8 +126,8 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 }
 
 // 反向查询
-func switchFile(infos map[string]ProjectInfo, changedFile string) (map[string]ProjectInfo, string) {
-	changed := moveReg.FindStringSubmatch(changedFile)
+func handleMoveInDirectory(infos map[string]ProjectInfo, changedFile string) (map[string]ProjectInfo, string) {
+	changed := complexMoveReg.FindStringSubmatch(changedFile)
 	// examples: cmd/{call_graph.go => call.go}
 	SUCCESS_MATCH_LENGTH := 5
 	if len(changed) == SUCCESS_MATCH_LENGTH {
@@ -139,17 +142,37 @@ func switchFile(infos map[string]ProjectInfo, changedFile string) (map[string]Pr
 		oldFileName := changed[1] + changed[2] + oldLastChanged
 		newFileName := changed[1] + changed[3] + changed[4]
 
-		if _, ok := infos[oldFileName]; ok {
-			oldInfo := infos[oldFileName]
-			delete(infos, oldFileName)
-			oldInfo.EntityName = newFileName
-			infos[newFileName] = oldInfo
+		infos = switchMapFile(infos, oldFileName, newFileName)
 
-			changedFile = newFileName
-		}
+		changedFile = newFileName
 	}
 
 	return infos, changedFile
+}
+
+
+func handleMoveFullPath(infos map[string]ProjectInfo, changedFile string) (map[string]ProjectInfo, string) {
+	fileName := changedFile
+	changed := basicMvReg.FindStringSubmatch(changedFile)
+
+	if len(changed) == 3 {
+		infos = switchMapFile(infos, changed[1], changed[2])
+		fileName = changed[2]
+	}
+
+	return infos, fileName
+}
+
+
+func switchMapFile(infos map[string]ProjectInfo, oldFileName string, newFileName string) map[string]ProjectInfo {
+	if _, ok := infos[oldFileName]; ok {
+		oldInfo := infos[oldFileName]
+		delete(infos, oldFileName)
+		oldInfo.EntityName = newFileName
+		infos[newFileName] = oldInfo
+	}
+
+	return infos
 }
 
 type TopAuthor struct {

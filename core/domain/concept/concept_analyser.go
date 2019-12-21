@@ -4,7 +4,6 @@ import (
 	languages2 "coca/core/domain/call_graph/stop_words/languages"
 	"coca/core/models"
 	"coca/core/support"
-	"fmt"
 )
 
 type ConceptAnalyser struct {
@@ -18,11 +17,11 @@ func (c ConceptAnalyser) run() {
 
 }
 
-func (c ConceptAnalyser) Analysis(clzs *[]models.JClassNode) {
-	buildMethodsFromDeps(*clzs)
+func (c ConceptAnalyser) Analysis(clzs *[]models.JClassNode) support.PairList {
+	return buildMethodsFromDeps(*clzs)
 }
 
-func buildMethodsFromDeps(clzs []models.JClassNode) {
+func buildMethodsFromDeps(clzs []models.JClassNode) support.PairList {
 	var methodsName []string
 	var methodStr string
 	for _, clz := range clzs {
@@ -38,11 +37,7 @@ func buildMethodsFromDeps(clzs []models.JClassNode) {
 	words = removeNormalWords(words)
 
 	wordCounts := support.RankByWordCount(words)
-	for _, word := range wordCounts {
-		if word.Value > 0 {
-			fmt.Println(word.Key, word.Value)
-		}
-	}
+	return wordCounts
 }
 
 var itStopWords = []string{

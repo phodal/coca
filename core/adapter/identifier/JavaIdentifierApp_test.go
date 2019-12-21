@@ -9,9 +9,11 @@ func TestJavaIdentifierApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	identApp := new(JavaIdentifierApp)
-	identifiers := identApp.AnalysisPath("../../../examples/method-call")
+	identifiers := identApp.AnalysisPath("../../../_fixtures/call")
 
 	g.Expect(len(identifiers)).To(Equal(1))
-	g.Expect(identifiers[0].ClassName).To(Equal("BlogRepositoryImpl"))
-	g.Expect(identifiers[0].Methods[0].Name).To(Equal("save"))
+	g.Expect(identifiers[0].ClassName).To(Equal("BookController"))
+	g.Expect(identifiers[0].Methods[0].Name).To(Equal("createBook"))
+
+	g.Expect(identifiers[0].Annotations[0].QualifiedName).To(Equal("RestController"))
 }

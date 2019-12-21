@@ -6,6 +6,7 @@ import (
 	"coca/core/models"
 	. "coca/core/support"
 	"encoding/json"
+	"fmt"
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -28,7 +29,12 @@ var conceptCmd = &cobra.Command{
 
  			_ = json.Unmarshal(file, &parsedDeps)
 
-			analyser.Analysis(&parsedDeps)
+			wordCounts := analyser.Analysis(&parsedDeps)
+			for _, word := range wordCounts {
+				if word.Value > 0 {
+					fmt.Println(word.Key, word.Value)
+				}
+			}
 		}
 	},
 }

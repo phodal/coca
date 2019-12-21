@@ -6,7 +6,9 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"io/ioutil"
+	"log"
 	"os"
+	"os/exec"
 	"strconv"
 	"time"
 )
@@ -25,7 +27,8 @@ var gitCmd *cobra.Command = &cobra.Command{
 	Short: "git analysis",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		message := BuildCommitMessage()
+		message := BuildMessageByInput(getCommitMessage())
+
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
 		size := *&gitCmdConfig.Size
 
@@ -106,6 +109,17 @@ var gitCmd *cobra.Command = &cobra.Command{
 			//fmt.Println(results)
 		}
 	},
+}
+
+func getCommitMessage() string {
+	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat", "--reverse"}
+	cmd := exec.Command("git", historyArgs...)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
+	}
+
+	return string(out)
 }
 
 func init() {

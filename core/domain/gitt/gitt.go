@@ -2,11 +2,10 @@ package gitt
 
 import (
 	"bytes"
-	"github.com/phodal/coca/core/domain/gitt/apriori"
 	"encoding/json"
 	"fmt"
+	"github.com/phodal/coca/core/domain/gitt/apriori"
 	"log"
-	"os/exec"
 	"regexp"
 	"sort"
 	"strconv"
@@ -33,17 +32,6 @@ var (
 	complexMoveReg = regexp.MustCompile(complexMoveRegStr)
 	basicMvReg = regexp.MustCompile(basicMoveRegStr)
 )
-
-func BuildCommitMessage() []CommitMessage {
-	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat", "--reverse"}
-	cmd := exec.Command("git", historyArgs...)
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
-
-	return BuildMessageByInput(string(out))
-}
 
 func BuildMessageByInput(inputStr string) []CommitMessage {
 	currentFileChanges = nil

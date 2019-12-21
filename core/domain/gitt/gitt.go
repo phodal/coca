@@ -46,6 +46,7 @@ func BuildCommitMessage() []CommitMessage {
 }
 
 func BuildMessageByInput(inputStr string) []CommitMessage {
+	currentFileChanges = nil
 	commitMessages = nil
 	splitStr := strings.Split(inputStr, "\n")
 	for _, str := range splitStr {

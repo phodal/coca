@@ -21,9 +21,11 @@ git:
 
 install: true
 
+before_install:
+  - go get -t -v ./...
+
 script:
-  - go test -v ./...
-  - ginkgo -r --randomizeAllSpecs --randomizeSuites --failOnPending --coverpkg gitserver --trace --race --compilers=2
+  - ./scripts/go.test.sh
 
 #
 #os:
@@ -32,7 +34,4 @@ script:
 #  - windows
 
 after_success:
-  - gover . coverage.txt
-  - ls -al
-  - cat coverage.txt
   - bash <(curl -s https://codecov.io/bash)

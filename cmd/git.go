@@ -52,7 +52,7 @@ var gitCmd *cobra.Command = &cobra.Command{
 			for _, v := range teamSummary {
 				table.Append([]string{v.EntityName, strconv.Itoa(v.RevsCount), strconv.Itoa(v.AuthorCount)})
 			}
-			table.Render()
+			//table.Render()
 		}
 
 		if cmd.Flag("age").Value.String() == "true" {

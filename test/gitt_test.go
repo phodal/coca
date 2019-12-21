@@ -65,15 +65,18 @@ var _ = Describe("Git Parser", func() {
 		})
 
 
-//		It("should update child", func() {
-//			result := gitt.BuildMessageByInput(`
-//[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
-//13      11      cmd/analysis.go
-//10      8       cmd/api.go
-//0       0       cmd/{call_graph.go => call.go}
-//0       0       cmd/{git_cmd.go => git.go}
-//`)
-//			Expect(result).To(Equal("2019-12-04"))
-//		})
+		It("should update child", func() {
+			result := gitt.BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       adapter/JavaCallListener.go
+
+[ef9165c] Phodal Huang 2019-12-18 fefactor: extract vars
+0       0       adapter/{ => call}/JavaCallListener.go
+
+`)
+			summary := gitt.GetTeamSummary(result)
+			Expect(summary[0].EntityName).To(Equal("adapter/call/JavaCallListener.go"))
+			Expect(len(summary)).To(Equal(1))
+		})
 	})
 })

@@ -18,7 +18,7 @@ type TeamSummary struct {
 	RevsCount   int
 }
 
-type TeamInformation struct {
+type ProjectInfo struct {
 	EntityName string
 	Authors    map[string]string
 	Revs       map[string]string

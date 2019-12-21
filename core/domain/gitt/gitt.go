@@ -87,12 +87,13 @@ func CalculateCodeAge(messages []CommitMessage) []CodeAgeDisplay {
 }
 
 func GetTeamSummary(messages []CommitMessage) []TeamSummary {
-	infos := make(map[string]TeamInformation)
+	infos := make(map[string]ProjectInfo)
 	for _, commitMessage := range messages {
 		for _, change := range commitMessage.Changes {
 			fileName := change.File
 			if moveReg.MatchString(fileName) {
 				infos, fileName = switchFile(infos, fileName)
+				fmt.Println(fileName, infos[fileName].EntityName)
 			}
 
 			if infos[fileName].EntityName == "" {
@@ -101,7 +102,7 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 				revs := make(map[string]string)
 				revs[commitMessage.Rev] = commitMessage.Rev
 
-				infos[fileName] = *&TeamInformation{fileName, authors, revs}
+				infos[fileName] = *&ProjectInfo{fileName, authors, revs}
 			} else {
 				infos[fileName].Authors[commitMessage.Author] = commitMessage.Author
 				infos[fileName].Revs[commitMessage.Rev] = commitMessage.Rev
@@ -122,11 +123,20 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 }
 
 // 反向查询
-func switchFile(infos map[string]TeamInformation, changedFile string) (map[string]TeamInformation, string) {
+func switchFile(infos map[string]ProjectInfo, changedFile string) (map[string]ProjectInfo, string) {
 	changed := moveReg.FindStringSubmatch(changedFile)
 	// examples: cmd/{call_graph.go => call.go}
-	if len(changed) >= 5 {
-		oldFileName := changed[1] + changed[2] + changed[4]
+	SUCCESS_MATCH_LENGTH := 5
+	if len(changed) == SUCCESS_MATCH_LENGTH {
+		var oldLastChanged = changed[4]
+		// TODO: support for Windows rename
+		if changed[2] == "" {
+			if strings.HasPrefix(oldLastChanged, "/") {
+				oldLastChanged = oldLastChanged[1:]
+			}
+		}
+
+		oldFileName := changed[1] + changed[2] + oldLastChanged
 		newFileName := changed[1] + changed[3] + changed[4]
 
 		if _, ok := infos[oldFileName]; ok {

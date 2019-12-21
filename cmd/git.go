@@ -26,8 +26,8 @@ var gitCmd *cobra.Command = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		message := BuildCommitMessage()
-		isFullMessage := cmd.Flag("basic").Value.String() == "true"
-		size := gitCmdConfig.Size
+		isFullMessage := cmd.Flag("full").Value.String() == "true"
+		size := *&gitCmdConfig.Size
 
 		if cmd.Flag("basic").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)

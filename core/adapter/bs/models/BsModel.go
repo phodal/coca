@@ -51,9 +51,9 @@ type JFullParameter struct {
 	Type string
 }
 
-func NewJFullClassNode() *BsJClass {
+func NewJFullClassNode() BsJClass {
 	info := &ClassBadSmellInfo{0, 0}
-	return &BsJClass{
+	return *&BsJClass{
 		"",
 		"",
 		"",

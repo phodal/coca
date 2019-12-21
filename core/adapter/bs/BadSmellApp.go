@@ -45,7 +45,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []BadSm
 
 		nodeInfo = listener.getNodeInfo()
 		nodeInfo.Path = file
-		nodeInfos = append(nodeInfos, *nodeInfo)
+		nodeInfos = append(nodeInfos, nodeInfo)
 	}
 
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")

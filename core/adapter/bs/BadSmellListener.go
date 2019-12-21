@@ -39,8 +39,8 @@ type BadSmellListener struct {
 	BaseJavaParserListener
 }
 
-func (s *BadSmellListener) getNodeInfo() *models2.BsJClass {
-	return &models2.BsJClass{
+func (s *BadSmellListener) getNodeInfo() models2.BsJClass {
+	return *&models2.BsJClass{
 		currentPkg,
 		currentClz,
 		currentClzType,
@@ -190,7 +190,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, *&models2.JFullParameter{paramType, paramValue})
+				methodParams = append(methodParams, models2.JFullParameter{paramType, paramValue})
 
 				localVars[paramValue] = paramType
 			}
@@ -303,17 +303,17 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := &models2.BsJMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
-		methodCalls = append(methodCalls, *jMethodCall)
+		jMethodCall := *&models2.BsJMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		methodCalls = append(methodCalls, jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &models2.BsJMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
-			methodCalls = append(methodCalls, *jMethodCall)
+			jMethodCall := *&models2.BsJMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			methodCalls = append(methodCalls, jMethodCall)
 		} else {
 			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := &models2.BsJMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
-			methodCalls = append(methodCalls, *jMethodCall)
+			jMethodCall := *&models2.BsJMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			methodCalls = append(methodCalls, jMethodCall)
 		}
 	}
 }

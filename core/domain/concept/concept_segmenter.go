@@ -2,6 +2,7 @@ package concept
 
 import (
 	"github.com/iancoleman/strcase"
+	"regexp"
 	"strings"
 )
 
@@ -25,6 +26,9 @@ func SegmentConceptCamelcase(methodsName []string) map[string]int {
 			delimited := strcase.ToDelimited(name, '.')
 			split := strings.Split(delimited, ".")
 			for _, word := range split {
+				if FilterString(word) == "" {
+					continue
+				}
 				if strMap[word] == 0 {
 					strMap[word] = 1
 				} else {
@@ -35,4 +39,14 @@ func SegmentConceptCamelcase(methodsName []string) map[string]int {
 	}
 
 	return strMap
+}
+
+func FilterString(str string) string {
+	var digitCheck = regexp.MustCompile(`^[0-9]+$`)
+
+	if digitCheck.MatchString(str) {
+		return ""
+	}
+
+	return strings.TrimSpace(str)
 }

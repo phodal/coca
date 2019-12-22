@@ -46,6 +46,7 @@ var itStopWords = []string{
 	"update",
 	"delete",
 	"save",
+	"post",
 
 	"add",
 	"remove",
@@ -105,8 +106,17 @@ var itStopWords = []string{
 	"message",
 	"factory",
 	"error",
-	"error",
+	"errors",
 	"exception",
+	"null",
+	"string",
+	"init",
+	"data",
+	"hash",
+	"convert",
+	"size",
+	"build",
+	"return",
 }
 
 func removeNormalWords(words map[string]int) map[string]int {

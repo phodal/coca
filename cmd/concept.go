@@ -1,14 +1,16 @@
 package cmd
 
 import (
+	"encoding/json"
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/concept"
 	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
-	"encoding/json"
-	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os"
+	"strconv"
 )
 
 var parsedDeps []models.JClassNode
@@ -27,14 +29,20 @@ var conceptCmd = &cobra.Command{
 				log.Fatal("lost file:" + dependence)
 			}
 
- 			_ = json.Unmarshal(file, &parsedDeps)
+			_ = json.Unmarshal(file, &parsedDeps)
 
 			wordCounts := analyser.Analysis(&parsedDeps)
+
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader([]string{"Words", "Counts"})
+
 			for _, word := range wordCounts {
 				if word.Value > 0 {
-					fmt.Println(word.Key, word.Value)
+					table.Append([]string{word.Key, strconv.Itoa(word.Value)})
 				}
 			}
+
+			table.Render()
 		}
 	},
 }

@@ -1,13 +1,15 @@
 package cmd
 
 import (
+	"encoding/json"
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
-	"encoding/json"
-	"fmt"
 	"github.com/spf13/cobra"
 	"log"
+	"os"
+	"strconv"
 )
 
 type CountCmdConfig struct {
@@ -65,9 +67,14 @@ var countCmd = &cobra.Command{
 			callMapSort = callMapSort[:*&countCmdConfig.Top]
 		}
 
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Refs Count", "method"})
+
 		for _, count := range callMapSort {
-			fmt.Println(count.Value, count.Key)
+			table.Append([]string{strconv.Itoa(count.Value), count.Key})
 		}
+
+		table.Render()
 	},
 }
 

@@ -222,18 +222,29 @@ coca count
 Results:
 
 ```
-4 study.huhao.demo.domain.contexts.blogcontext.blog.BlogRepository.findById
-3 study.huhao.demo.adapters.inbound.rest.handlers.GlobalExceptionHandler.handleDomainException
-3 study.huhao.demo.domain.contexts.blogcontext.blog.BlogRepository.save
-3 study.huhao.demo.adapters.inbound.rest.resources.blog.BlogDto.of
-2 study.huhao.demo.adapters.inbound.rest.resources.publishedblog.PublishedBlogDto.of
-2 study.huhao.demo.adapters.outbound.persistence.blog.BlogPO.toDomainModel
-2 study.huhao.demo.adapters.outbound.persistence.blog.BlogMapper.findById
-2 study.huhao.demo.domain.contexts.blogcontext.blog.Blog.validateTitle
-1 study.huhao.demo.application.usecases.QueryBlogUseCase.query
-1 study.huhao.demo.domain.contexts.blogcontext.blog.BlogService.get
-1 study.huhao.demo.domain.contexts.blogcontext.blog.Blog.saveDraft
-1 study.huhao.demo.domain.core.common.Page.getConvertedContent
++------------+--------------------------------------------------------------------------+
+| REFS COUNT |                                  METHOD                                  |
++------------+--------------------------------------------------------------------------+
+|          2 | com.phodal.pholedge.book.BookRepository.byId                             |
+|          2 | com.phodal.pholedge.book.model.Book.toRepresentation                     |
+|          2 | com.phodal.pholedge.book.BookRepository.save                             |
+|          2 | com.phodal.coca.analysis.JavaCallApp.parse                               |
+|          2 | com.phodal.pholedge.book.BookRepository.save                             |
+|          2 | com.phodal.coca.analysis.JavaCallApp.parse                               |
+|          1 | com.phodal.pholedge.book.model.Book.save                                 |
+|          1 | evolution.analysis.jv.calls.JavaCallVisitor.parseNewType                 |
+|          1 | evolution.analysis.jv.calls.JavaCallVisitor.isNotSpecialNewWord          |
+|          1 | com.phodal.pholedge.book.BookMapper.byId                                 |
+|          1 | com.phodal.pholedge.book.BookService.updateBook                          |
+|          1 | com.phodal.pholedge.book.BookService.getBooksLists                       |
+|          1 | com.phodal.pholedge.book.BookService.getBookById                         |
+|          1 | com.phodal.pholedge.book.BookMapper.doSave                               |
+|          1 | com.phodal.pholedge.book.BookMapper.list                                 |
+|          1 | com.phodal.pholedge.book.BookService.createBook                          |
+|          1 | com.phodal.pholedge.book.BookFactory.create                              |
+|          1 | com.phodal.pholedge.book.BookRepository.list                             |
+|          1 | com.phodal.pholedge.book.model.Book.create                               |
++------------+--------------------------------------------------------------------------+
 ```
 
 ### Reverse Call Graph

@@ -46,7 +46,7 @@ func BuildMessageByInput(inputStr string) []CommitMessage {
 
 func CalculateCodeAge(messages []CommitMessage) []ProjectInfo {
 	infos := make(map[string]ProjectInfo)
-	buildCommitMessageMap(messages, infos)
+	BuildCommitMessageMap(messages, infos)
 
 	var agesArray []ProjectInfo
 	for _, info := range infos {
@@ -62,7 +62,7 @@ func CalculateCodeAge(messages []CommitMessage) []ProjectInfo {
 
 func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 	infos := make(map[string]ProjectInfo)
-	infos = buildCommitMessageMap(messages, infos)
+	infos = BuildCommitMessageMap(messages, infos)
 
 	var sortInfos []TeamSummary
 	for _, info := range infos {
@@ -76,7 +76,7 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 	return sortInfos
 }
 
-func buildCommitMessageMap(messages []CommitMessage, infos map[string]ProjectInfo) map[string]ProjectInfo {
+func BuildCommitMessageMap(messages []CommitMessage, infos map[string]ProjectInfo) map[string]ProjectInfo {
 	timeFormat := "2006-01-02"
 
 	for _, commitMessage := range messages {

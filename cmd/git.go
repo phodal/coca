@@ -1,9 +1,11 @@
 package cmd
 
 import (
+	"encoding/json"
 	. "github.com/phodal/coca/core/domain/gitt"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
+	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
@@ -22,12 +24,14 @@ var (
 	gitCmdConfig  GitCmdConfig
 )
 
-var gitCmd *cobra.Command = &cobra.Command{
+var gitCmd = &cobra.Command{
 	Use:   "git",
 	Short: "git analysis",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		message := BuildMessageByInput(getCommitMessage())
+		commitMessages := BuildMessageByInput(getCommitMessage())
+		cModel, _ := json.MarshalIndent(commitMessages, "", "\t")
+		support.WriteToCocaFile("commits.json", string(cModel))
 
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
 		size := *&gitCmdConfig.Size
@@ -35,7 +39,7 @@ var gitCmd *cobra.Command = &cobra.Command{
 		if cmd.Flag("basic").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)
 
-			basicSummary := BasicSummary(message)
+			basicSummary := BasicSummary(commitMessages)
 			table.SetHeader([]string{"Statistic", "Number"})
 			table.Append([]string{"Commits", strconv.Itoa(basicSummary.Commits)})
 			table.Append([]string{"Entities", strconv.Itoa(basicSummary.Entities)})
@@ -47,7 +51,7 @@ var gitCmd *cobra.Command = &cobra.Command{
 		if cmd.Flag("team").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)
 
-			teamSummary := GetTeamSummary(message)
+			teamSummary := GetTeamSummary(commitMessages)
 			table.SetHeader([]string{"EntityName", "RevsCount", "AuthorCount"})
 
 			if len(teamSummary) > size && isFullMessage {
@@ -62,7 +66,7 @@ var gitCmd *cobra.Command = &cobra.Command{
 		if cmd.Flag("age").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)
 
-			ages := CalculateCodeAge(message)
+			ages := CalculateCodeAge(commitMessages)
 			var agesDisplay []CodeAgeDisplay
 			for _, info := range ages {
 				const secondsOfOneMonth = 2600640
@@ -85,7 +89,7 @@ var gitCmd *cobra.Command = &cobra.Command{
 		if cmd.Flag("top").Value.String() == "true" {
 			table := tablewriter.NewWriter(os.Stdout)
 
-			authors := GetTopAuthors(message)
+			authors := GetTopAuthors(commitMessages)
 			table.SetHeader([]string{"Author", "CommitCount", "LineCount"})
 
 			if len(authors) > size && isFullMessage {
@@ -104,8 +108,8 @@ var gitCmd *cobra.Command = &cobra.Command{
 				return
 			}
 
-			GetRelatedFiles(message, config)
-			//results := GetRelatedFiles(message, config)
+			GetRelatedFiles(commitMessages, config)
+			//results := GetRelatedFiles(commitMessages, config)
 			//fmt.Println(results)
 		}
 	},

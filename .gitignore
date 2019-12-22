@@ -64,3 +64,4 @@ api.dot
 api.svg
 !docs/sample/api.svg
 coca_reporter
+*.coverprofile

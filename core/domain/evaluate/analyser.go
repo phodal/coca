@@ -18,6 +18,11 @@ func (a Analyser) Analysis(nodes []models.JClassNode) {
 	var servicesNode []models.JClassNode = nil
 	var evaluation Evaluation
 
+	var nodeMap = make(map[string]models.JClassNode)
+	for _, node := range nodes {
+		nodeMap[node.Package + "." + node.Class] = node
+	}
+
 	for _, node := range nodes {
 		if strings.Contains(strings.ToLower(node.Class), "service") {
 			servicesNode = append(servicesNode, node)
@@ -27,5 +32,5 @@ func (a Analyser) Analysis(nodes []models.JClassNode) {
 	}
 
 	evaluation = Evaluation{evaluator.Service{}}
-	evaluation.EvaluateList(servicesNode)
+	evaluation.EvaluateList(servicesNode, nodeMap)
 }

@@ -12,6 +12,6 @@ func (Empty) Evaluate(models.JClassNode) {
 
 }
 
-func (Empty) EvaluateList([] models.JClassNode) {
+func (Empty) EvaluateList([]models.JClassNode, map[string]models.JClassNode) {
 
 }

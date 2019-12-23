@@ -9,8 +9,14 @@ import (
 type Service struct {
 }
 
-func (s Service) EvaluateList(nodes []models.JClassNode) {
+var nodeMap = make(map[string]models.JClassNode)
+var returnTypeMap = make(map[string][]models.JClassNode)
 
+func (s Service) EvaluateList(nodes []models.JClassNode, classNodeMap map[string]models.JClassNode) {
+	nodeMap = classNodeMap
+	for _, node := range nodes {
+		s.Evaluate(node)
+	}
 }
 
 func (s Service) Evaluate(node models.JClassNode) {
@@ -20,7 +26,8 @@ func (s Service) Evaluate(node models.JClassNode) {
 	}
 
 	lifecycleMap := s.buildLifecycle(methodNameArray)
-	if len(lifecycleMap) > 0 {
+	hasLifecycle := len(lifecycleMap) > 0
+	if hasLifecycle {
 		for key, value := range lifecycleMap {
 			fmt.Println(key, value)
 		}
@@ -30,8 +37,8 @@ func (s Service) Evaluate(node models.JClassNode) {
 
 	}
 
-	if s.hasModelLike() {
-
+	if s.hasAbstractParameters() {
+		// parameters
 	}
 
 	if s.hasSameReturnType() {
@@ -59,7 +66,7 @@ func (s Service) hasSameBehavior() bool {
 	return false
 }
 
-func (s Service) hasModelLike() bool {
+func (s Service) hasAbstractParameters() bool {
 	return false
 }
 

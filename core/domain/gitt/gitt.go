@@ -85,6 +85,10 @@ func BuildCommitMessageMap(messages []CommitMessage, infos map[string]ProjectInf
 				infos[fileName].Authors[commitMessage.Author] = commitMessage.Author
 				infos[fileName].Revs[commitMessage.Rev] = commitMessage.Rev
 			}
+
+			if change.Mode == "delete" {
+				delete(infos, fileName)
+			}
 		}
 	}
 	return infos

@@ -1,7 +1,6 @@
 package gitt
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"testing"
 )
@@ -85,6 +84,25 @@ func Test_identify_move_to_directory(t *testing.T) {
 	g.Expect(len(summary)).To(Equal(1))
 }
 
+func Test_handle_for_delete(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	result := BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 refactor: extract vars
+0       0       adapter/JavaCallListener.go
+0       0       adapter/JavaCallListener2.go
+
+[ef9165c] Phodal Huang 2019-12-18 refactor: extract vars
+0       0       adapter/JavaCallListener2.go
+ delete mode 100644 adapter/JavaCallListener2.go
+
+`)
+	summary := GetTeamSummary(result)
+	g.Expect(len(summary)).To(Equal(1))
+	g.Expect(summary[0].EntityName).To(Equal("adapter/JavaCallListener.go"))
+}
+
 func Test_identify_direct_move(t *testing.T) {
 	//t.Parallel()
 	g := NewGomegaWithT(t)
@@ -130,7 +148,7 @@ func TestGetTopAuthors(t *testing.T) {
 `)
 	summary := GetTopAuthors(result)
 	g.Expect(len(summary)).To(Equal(1))
-	g.Expect(summary[0].Name).To(Equal("Phodal Huang"),)
+	g.Expect(summary[0].Name).To(Equal("Phodal Huang"), )
 
 }
 
@@ -153,7 +171,6 @@ func TestBasicSummary(t *testing.T) {
 func TestChangeModel(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-
 	result := BuildMessageByInput(`
 [c24069b] Phodal HUANG 2019-10-25 fix: fix test
 7       0       README.md
@@ -165,7 +182,6 @@ func TestChangeModel(t *testing.T) {
 
 `)
 
-	fmt.Println(result[0].Changes)
 	g.Expect(result[0].Changes[0].File).To(Equal("adapter/call/visitor/JavaCallVisitor.go"))
 	g.Expect(result[0].Changes[0].Mode).To(Equal("delete"))
 	//g.Expect(result[0].Changes[2].File).To(Equal("learn_go_suite_test.go"))

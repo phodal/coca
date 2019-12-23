@@ -2,6 +2,7 @@ package gitt
 
 import (
 	"fmt"
+	"github.com/phodal/coca/core/support"
 	"regexp"
 )
 
@@ -9,9 +10,25 @@ var (
 	changeLogRegex = `^(\w*)(?:\((.*)\))?: (.*)$`
 )
 
+// high fix
+// high features
+//
 func ShowChangeLogSummary(commits []CommitMessage) {
 	changeMap := BuildChangeMap(commits)
-	fmt.Println(changeMap)
+	for key, value := range changeMap {
+		sortValue := support.RankByWordCount(value)
+		maxSize := len(sortValue)
+		if maxSize > 10 {
+			maxSize = 10
+		}
+
+		fmt.Println(key  + ":")
+		fmt.Println("---------------------")
+		for _, val := range sortValue[:maxSize] {
+			fmt.Println(val.Key, val.Value)
+		}
+		fmt.Println("=====================")
+	}
 }
 
 func BuildChangeMap(commits []CommitMessage) map[string]map[string]int {
@@ -26,12 +43,19 @@ func BuildChangeMap(commits []CommitMessage) map[string]map[string]int {
 				keyword := matchs[1]
 				//message := matchs[3]
 
+
 				if _, ok := czMap[keyword];!ok {
 					czMap[keyword] = make(map[string]int)
 				}
 
 				for _, change := range commit.Changes {
-					czMap[keyword][change.File]++
+					file := change.File
+					file, oldFile, newFile := UpdateMessageForChange(file)
+					if file != oldFile {
+						file = newFile
+					}
+
+					czMap[keyword][file]++
 				}
 			}
 		}

@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/phodal/coca/core/domain/gitt/apriori"
 	"log"
-	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -16,22 +15,6 @@ import (
 var currentCommitMessage CommitMessage
 var currentFileChanges []FileChange
 var commitMessages []CommitMessage
-
-var (
-	rev               = `\[([\d|a-f]{5,12})\]`
-	author            = `(.*?)\s\d{4}-\d{2}-\d{2}`
-	date              = `\d{4}-\d{2}-\d{2}`
-	changes           = `([\d-]+)[\t\s]+([\d-]+)[\t\s]+(.*)`
-	complexMoveRegStr = `(.*)\{(.*)\s=>\s(.*)\}(.*)`
-	basicMoveRegStr   = `(.*)\s=>\s(.*)`
-
-	revReg         = regexp.MustCompile(rev)
-	authorReg      = regexp.MustCompile(author)
-	dateReg        = regexp.MustCompile(date)
-	changesReg     = regexp.MustCompile(changes)
-	complexMoveReg = regexp.MustCompile(complexMoveRegStr)
-	basicMvReg = regexp.MustCompile(basicMoveRegStr)
-)
 
 func BuildMessageByInput(inputStr string) []CommitMessage {
 	currentFileChanges = nil
@@ -107,29 +90,13 @@ func BuildCommitMessageMap(messages []CommitMessage, infos map[string]ProjectInf
 
 // 反向查询
 func handleMoveInDirectory(infos map[string]ProjectInfo, changedFile string) (map[string]ProjectInfo, string) {
-	changed := complexMoveReg.FindStringSubmatch(changedFile)
-	// examples: cmd/{call_graph.go => call.go}
-	SUCCESS_MATCH_LENGTH := 5
-	if len(changed) == SUCCESS_MATCH_LENGTH {
-		var oldLastChanged = changed[4]
-		// TODO: support for Windows rename
-		if changed[2] == "" {
-			if strings.HasPrefix(oldLastChanged, "/") {
-				oldLastChanged = oldLastChanged[1:]
-			}
-		}
+	changedFile, oldFileName, newFileName := UpdateMessageForChange(changedFile)
 
-		oldFileName := changed[1] + changed[2] + oldLastChanged
-		newFileName := changed[1] + changed[3] + changed[4]
-
+	if changedFile != oldFileName {
 		infos = switchMapFile(infos, oldFileName, newFileName)
-
-		changedFile = newFileName
 	}
-
 	return infos, changedFile
 }
-
 
 func handleMoveFullPath(infos map[string]ProjectInfo, changedFile string) (map[string]ProjectInfo, string) {
 	fileName := changedFile
@@ -142,7 +109,6 @@ func handleMoveFullPath(infos map[string]ProjectInfo, changedFile string) (map[s
 
 	return infos, fileName
 }
-
 
 func switchMapFile(infos map[string]ProjectInfo, oldFileName string, newFileName string) map[string]ProjectInfo {
 	if _, ok := infos[oldFileName]; ok {

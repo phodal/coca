@@ -29,7 +29,8 @@ var gitCmd = &cobra.Command{
 	Short: "git analysis",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		commitMessages := BuildMessageByInput(getCommitMessage())
+		message := getCommitMessage()
+		commitMessages := BuildMessageByInput(message)
 		cModel, _ := json.MarshalIndent(commitMessages, "", "\t")
 		support.WriteToCocaFile("commits.json", string(cModel))
 

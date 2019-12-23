@@ -5,6 +5,18 @@ GitLogs
 git log --all --numstat --date=short --pretty="format:[%h] %aN %ad %s" --numstat --reverse
 ```
 
+Delete
+
+```
+git log --pretty=%H --name-status
+```
+
+```
+git log --pretty=format:"[%h] %aN %ad %s" --reverse --summary --numstat --encoding=UTF-8 --no-renames
+```
+
+
+
 Related Projects: [https://github.com/bast/gitink](https://github.com/bast/gitink)
 
 

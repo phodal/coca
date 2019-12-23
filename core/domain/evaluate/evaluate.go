@@ -9,8 +9,10 @@ type Evaluation struct {
 	Evaluator Evaluator
 }
 
+func (o *Evaluation) IsMatch() bool {
+	return o.Evaluator.IsMatch()
+}
+
 func (o *Evaluation) Evaluate() {
-	 if o.Evaluator.IsMatch() {
-		 o.Evaluator.Evaluate()
-	 }
+	o.Evaluator.Evaluate()
 }

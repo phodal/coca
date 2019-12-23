@@ -164,9 +164,12 @@ func TestChangeModel(t *testing.T) {
  delete mode 100644 adapter/call/visitor/JavaCallVisitor.go
 
 `)
+
 	fmt.Println(result[0].Changes)
-	g.Expect(result[0].Changes[1].File).To(Equal("learn_go_suite_test.go"))
-	g.Expect(result[0].Changes[1].Mode).To(Equal("create"))
+	g.Expect(result[0].Changes[0].File).To(Equal("adapter/call/visitor/JavaCallVisitor.go"))
+	g.Expect(result[0].Changes[0].Mode).To(Equal("delete"))
+	g.Expect(result[0].Changes[2].File).To(Equal("learn_go_suite_test.go"))
+	g.Expect(result[0].Changes[2].Mode).To(Equal("create"))
 	//g.Expect(result[0].Changes[1].Mode).To(Equal("create"))
 	//g.Expect(result[0].Changes[2].Mode).To(Equal("create"))
 }

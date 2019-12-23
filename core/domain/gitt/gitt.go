@@ -14,10 +14,13 @@ import (
 var currentCommitMessage CommitMessage
 var currentFileChangeMap map[string]FileChange
 var commitMessages []CommitMessage
+var currentFileChanges []FileChange
 
 func BuildMessageByInput(inputStr string) []CommitMessage {
 	currentFileChangeMap = make(map[string]FileChange)
 	commitMessages = nil
+	currentFileChanges = nil
+
 	splitStr := strings.Split(inputStr, "\n")
 	for _, str := range splitStr {
 		ParseLog(str)

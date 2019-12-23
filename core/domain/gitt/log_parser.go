@@ -78,16 +78,28 @@ func ParseLog(text string) {
 		matches := changeModelReg.FindStringSubmatch(text)
 
 		if len(matches) > 4 {
+			mode := matches[1]
+
 			if _, ok := currentFileChangeMap[matches[4]]; ok {
 				change := currentFileChangeMap[matches[4]]
-				change.Mode = matches[1]
+				change.Mode = mode
 				currentFileChangeMap[matches[4]] = change
+			} else {
+				if mode == "delete" {
+					deleteFile := *&FileChange{
+						Added:   0,
+						Deleted: 0,
+						File:    matches[4],
+						Mode:    "delete",
+					}
+
+					currentFileChanges = append(currentFileChanges, deleteFile)
+				}
+
 			}
 		}
 	} else {
 		if currentCommitMessage.Rev != "" {
-			var currentFileChanges []FileChange
-
 			for _, value := range currentFileChangeMap {
 				currentFileChanges = append(currentFileChanges, value)
 			}

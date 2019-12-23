@@ -38,11 +38,10 @@ func BuildChangeMap(commits []CommitMessage) map[string]map[string]int {
 	for _, commit := range commits {
 		message := commit.Message
 		if logRegexp.MatchString(message) {
-			matchs := logRegexp.FindStringSubmatch(message)
-			if len(matchs) > 3 {
-				keyword := matchs[1]
-				//message := matchs[3]
-
+			matches := logRegexp.FindStringSubmatch(message)
+			if len(matches) > 3 {
+				keyword := matches[1]
+				//message := matches[3]
 
 				if _, ok := czMap[keyword];!ok {
 					czMap[keyword] = make(map[string]int)

@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"encoding/json"
-	. "github.com/phodal/coca/core/domain/gitt"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
+	. "github.com/phodal/coca/core/domain/gitt"
 	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -32,6 +32,8 @@ var gitCmd = &cobra.Command{
 		commitMessages := BuildMessageByInput(getCommitMessage())
 		cModel, _ := json.MarshalIndent(commitMessages, "", "\t")
 		support.WriteToCocaFile("commits.json", string(cModel))
+
+		ShowChangeLogSummary(commitMessages)
 
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
 		size := *&gitCmdConfig.Size

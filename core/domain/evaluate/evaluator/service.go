@@ -9,6 +9,10 @@ import (
 type Service struct {
 }
 
+func (s Service) EvaluateList(nodes []models.JClassNode) {
+
+}
+
 func (s Service) Evaluate(node models.JClassNode) {
 	var methodNameArray [][]string
 	for _, method := range node.Methods {
@@ -25,9 +29,11 @@ func (s Service) Evaluate(node models.JClassNode) {
 	if s.hasSameBehavior() {
 
 	}
+
 	if s.hasModelLike() {
 
 	}
+
 	if s.hasSameReturnType() {
 
 	}

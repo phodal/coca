@@ -7,6 +7,7 @@ import (
 )
 
 type Analyser struct {
+
 }
 
 func NewEvaluateAnalyser() Analyser {
@@ -14,14 +15,17 @@ func NewEvaluateAnalyser() Analyser {
 }
 
 func (a Analyser) Analysis(nodes []models.JClassNode) {
+	var servicesNode []models.JClassNode = nil
+	var evaluation Evaluation
+
 	for _, node := range nodes {
-		var evaluation Evaluation
 		if strings.Contains(strings.ToLower(node.Class), "service") {
-			evaluation = Evaluation{evaluator.Service{}}
+			servicesNode = append(servicesNode, node)
 		} else {
 			evaluation = Evaluation{evaluator.Empty{}}
 		}
-
-		evaluation.Evaluate(node)
 	}
+
+	evaluation = Evaluation{evaluator.Service{}}
+	evaluation.EvaluateList(servicesNode)
 }

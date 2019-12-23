@@ -11,3 +11,7 @@ type Empty struct {
 func (Empty) Evaluate(models.JClassNode) {
 
 }
+
+func (Empty) EvaluateList([] models.JClassNode) {
+
+}

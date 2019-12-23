@@ -6,3 +6,4 @@
 * [4. handidraw-graphviz](0004-handidraw-graphviz.md)
 * [5. evaluate-api](0005-evaluate-api.md)
 * [6. support-adapter-to-cli-framework](0006-support-adapter-to-cli-framework.md)
+* [7. practise-go-patterns-in-coca](0007-practise-go-patterns-in-coca.md)

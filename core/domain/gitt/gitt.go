@@ -7,7 +7,6 @@ import (
 	"github.com/phodal/coca/core/domain/gitt/apriori"
 	"log"
 	"sort"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -223,34 +222,3 @@ func BasicSummary(commitMessages []CommitMessage) *GitSummary {
 	return gitSummary
 }
 
-func ParseLog(text string) {
-	allString := revReg.FindAllString(text, -1)
-	if len(allString) == 1 {
-		str := ""
-
-		id := revReg.FindStringSubmatch(text)
-		str = strings.Split(text, id[0])[1]
-		auth := authorReg.FindStringSubmatch(str)
-		str = strings.Split(str, auth[1])[1]
-		dat := dateReg.FindStringSubmatch(str)
-		msg := strings.Split(str, dat[0])[1]
-		msg = msg[1:]
-
-		currentCommitMessage = *&CommitMessage{id[1], auth[1][1:], dat[0], msg, nil}
-	} else if changesReg.MatchString(text) {
-		changes := changesReg.FindStringSubmatch(text)
-		deleted, _ := strconv.Atoi(changes[2])
-		added, _ := strconv.Atoi(changes[1])
-		change := &FileChange{added, deleted, changes[3]}
-
-		currentFileChanges = append(currentFileChanges, *change)
-	} else {
-		if currentCommitMessage.Rev != "" {
-			currentCommitMessage.Changes = currentFileChanges
-			commitMessages = append(commitMessages, currentCommitMessage)
-
-			currentCommitMessage = *&CommitMessage{"", "", "", "", nil}
-			currentFileChanges = nil
-		}
-	}
-}

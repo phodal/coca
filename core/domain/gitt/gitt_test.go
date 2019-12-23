@@ -68,7 +68,6 @@ func Test_identify_first_file_move(t *testing.T) {
 }
 
 func Test_identify_move_to_directory(t *testing.T) {
-	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	result := BuildMessageByInput(`
@@ -85,7 +84,6 @@ func Test_identify_move_to_directory(t *testing.T) {
 }
 
 func Test_handle_for_delete(t *testing.T) {
-	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	result := BuildMessageByInput(`

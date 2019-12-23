@@ -16,7 +16,8 @@ import (
 )
 
 type GitCmdConfig struct {
-	Size int
+	Size        int
+	ShowSummary bool
 }
 
 var (
@@ -34,7 +35,9 @@ var gitCmd = &cobra.Command{
 		cModel, _ := json.MarshalIndent(commitMessages, "", "\t")
 		support.WriteToCocaFile("commits.json", string(cModel))
 
-		ShowChangeLogSummary(commitMessages)
+		if *&gitCmdConfig.ShowSummary {
+			ShowChangeLogSummary(commitMessages)
+		}
 
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
 		size := *&gitCmdConfig.Size
@@ -137,6 +140,7 @@ func init() {
 	gitCmd.PersistentFlags().BoolP("age", "a", false, "Code Age")
 	gitCmd.PersistentFlags().BoolP("top", "o", false, "Top Authors")
 	gitCmd.PersistentFlags().BoolP("full", "f", false, "full")
+	gitCmd.PersistentFlags().BoolVarP(&gitCmdConfig.ShowSummary, "summary", "m", true, "full")
 	gitCmd.PersistentFlags().IntVarP(&gitCmdConfig.Size, "size", "s", 20, "full")
 	gitCmd.PersistentFlags().StringVar(&relatedConfig, "r", "", "related")
 }

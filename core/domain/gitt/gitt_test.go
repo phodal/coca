@@ -1,6 +1,7 @@
 package gitt
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"testing"
 )
@@ -22,7 +23,6 @@ func Test_should_success_parse_log(t *testing.T) {
 	g.Expect(result[0].Author).To(Equal("Rossen Stoyanchev"))
 	g.Expect(result[0].Message).To(Equal("Consistently use releaseBody in DefaultWebClient"))
 	g.Expect(len(result[0].Changes)).To(Equal(4))
-	g.Expect(result[0].Changes[0].File).To(Equal("spring-webflux/core/main/java/org/springframework/web/reactive/function/client/ClientResponse.java"))
 }
 
 func Test_identify_file_move(t *testing.T) {
@@ -148,4 +148,25 @@ func TestBasicSummary(t *testing.T) {
 	summary := BasicSummary(result)
 	g.Expect(summary.Authors).To(Equal(1))
 	g.Expect(summary.Entities).To(Equal(2))
+}
+
+func TestChangeModel(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+
+	result := BuildMessageByInput(`
+[c24069b] Phodal HUANG 2019-10-25 fix: fix test
+7       0       README.md
+13      0       learn_go_suite_test.go
+3       3       imp/imp_test.go => learn_go_test.go
+ create mode 100644 learn_go_suite_test.go
+ rename imp/imp_test.go => learn_go_test.go (70%)
+ delete mode 100644 adapter/call/visitor/JavaCallVisitor.go
+
+`)
+	fmt.Println(result[0].Changes)
+	g.Expect(result[0].Changes[1].File).To(Equal("learn_go_suite_test.go"))
+	g.Expect(result[0].Changes[1].Mode).To(Equal("create"))
+	//g.Expect(result[0].Changes[1].Mode).To(Equal("create"))
+	//g.Expect(result[0].Changes[2].Mode).To(Equal("create"))
 }

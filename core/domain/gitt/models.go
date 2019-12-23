@@ -44,4 +44,5 @@ type FileChange struct {
 	Added   int
 	Deleted int
 	File    string
+	Mode    string
 }

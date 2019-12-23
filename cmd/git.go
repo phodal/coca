@@ -122,7 +122,7 @@ var gitCmd = &cobra.Command{
 }
 
 func getCommitMessage() string {
-	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat", "--reverse"}
+	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat", "--reverse", "--summary"}
 	cmd := exec.Command("git", historyArgs...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -140,7 +140,7 @@ func init() {
 	gitCmd.PersistentFlags().BoolP("age", "a", false, "Code Age")
 	gitCmd.PersistentFlags().BoolP("top", "o", false, "Top Authors")
 	gitCmd.PersistentFlags().BoolP("full", "f", false, "full")
-	gitCmd.PersistentFlags().BoolVarP(&gitCmdConfig.ShowSummary, "summary", "m", true, "full")
+	gitCmd.PersistentFlags().BoolVarP(&gitCmdConfig.ShowSummary, "summary", "m", false, "full")
 	gitCmd.PersistentFlags().IntVarP(&gitCmdConfig.Size, "size", "s", 20, "full")
 	gitCmd.PersistentFlags().StringVar(&relatedConfig, "r", "", "related")
 }

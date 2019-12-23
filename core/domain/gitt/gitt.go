@@ -12,11 +12,11 @@ import (
 )
 
 var currentCommitMessage CommitMessage
-var currentFileChanges []FileChange
+var currentFileChangeMap map[string]FileChange
 var commitMessages []CommitMessage
 
 func BuildMessageByInput(inputStr string) []CommitMessage {
-	currentFileChanges = nil
+	currentFileChangeMap = make(map[string]FileChange)
 	commitMessages = nil
 	splitStr := strings.Split(inputStr, "\n")
 	for _, str := range splitStr {
@@ -221,4 +221,3 @@ func BasicSummary(commitMessages []CommitMessage) *GitSummary {
 	gitSummary := &GitSummary{commits, entitySummary, changes, authorSummary}
 	return gitSummary
 }
-

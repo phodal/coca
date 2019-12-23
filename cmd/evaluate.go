@@ -34,7 +34,7 @@ var evaluateCmd = &cobra.Command{
 
 		_ = json.Unmarshal(file, &parsedDeps)
 
-		analyser.Analysis(&parsedDeps)
+		analyser.Analysis(*&parsedDeps)
 	},
 }
 

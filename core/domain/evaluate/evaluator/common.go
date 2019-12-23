@@ -1,14 +1,15 @@
 package evaluator
 
+import (
+	"fmt"
+	"github.com/phodal/coca/core/models"
+)
+
 type Common struct {
 
 }
 
-func (Common) IsMatch() bool {
-	return true
-}
-
-func (Common) Evaluate()  {
-
+func (Common) Evaluate(models.JClassNode) {
+	fmt.Println("common")
 }
 

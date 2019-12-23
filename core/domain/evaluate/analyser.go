@@ -3,23 +3,25 @@ package evaluate
 import (
 	"github.com/phodal/coca/core/domain/evaluate/evaluator"
 	"github.com/phodal/coca/core/models"
+	"strings"
 )
 
-type EvaluateAnalyser struct {
-
+type Analyser struct {
 }
 
-
-func NewEvaluateAnalyser() EvaluateAnalyser {
-	return *&EvaluateAnalyser{}
+func NewEvaluateAnalyser() Analyser {
+	return *&Analyser{}
 }
 
+func (a Analyser) Analysis(nodes []models.JClassNode) {
+	for _, node := range nodes {
+		var evaluation Evaluation
+		if strings.Contains(strings.ToLower(node.Class), "service") {
+			evaluation = Evaluation{evaluator.Service{}}
+		} else {
+			evaluation = Evaluation{evaluator.Empty{}}
+		}
 
-func (a EvaluateAnalyser) Analysis(nodes *[]models.JClassNode) {
-	evaluation := Evaluation{evaluator.Service{}}
-	match := evaluation.IsMatch()
-	if match {
-		evaluation.Evaluate()
+		evaluation.Evaluate(node)
 	}
-
 }

@@ -1,18 +1,15 @@
 package evaluate
 
+import "github.com/phodal/coca/core/models"
+
 type Evaluator interface {
-	IsMatch() bool
-	Evaluate()
+	Evaluate(node models.JClassNode)
 }
 
 type Evaluation struct {
 	Evaluator Evaluator
 }
 
-func (o *Evaluation) IsMatch() bool {
-	return o.Evaluator.IsMatch()
-}
-
-func (o *Evaluation) Evaluate() {
-	o.Evaluator.Evaluate()
+func (o *Evaluation) Evaluate(node models.JClassNode) {
+	o.Evaluator.Evaluate(node)
 }

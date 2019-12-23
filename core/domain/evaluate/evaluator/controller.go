@@ -1,13 +1,14 @@
 package evaluator
 
+import (
+	"fmt"
+	"github.com/phodal/coca/core/models"
+)
+
 type Controller struct {
 
 }
 
-func (Controller) IsMatch() bool {
-	return true
-}
-
-func (Controller) Evaluate()  {
-
+func (Controller) Evaluate(node models.JClassNode) {
+	fmt.Println("controller")
 }

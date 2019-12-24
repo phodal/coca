@@ -79,3 +79,13 @@ var TechStopWords = []string{
 	"return",
 }
 
+func IsTechStopWords(firstWord string) bool {
+	for _, word := range TechStopWords {
+		if word == firstWord {
+			return true;
+		}
+	}
+
+	return false;
+}
+

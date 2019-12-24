@@ -45,7 +45,6 @@ func findRelatedMethodParameter(list []models.JMethod) {
 		items := res.GetSupportRecord().GetItems()
 		if len(items) >= 4 {
 			fmt.Println(items)
-			fmt.Println(res.GetSupportRecord().GetSupport())
 		}
 	}
 }
@@ -105,7 +104,7 @@ func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string 
 		}
 
 		firstWord := nameArray[0]
-		if !(s.isTechStopWords(firstWord)) {
+		if !(support.IsTechStopWords(firstWord)) {
 			nameMap[firstWord] = append(nameMap[firstWord], strings.Join(nameArray, ""))
 		}
 		if len(nameMap[firstWord]) > 1 {
@@ -114,16 +113,6 @@ func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string 
 	}
 
 	return hadLifecycle
-}
-
-func (s Service) isTechStopWords(firstWord string) bool {
-	for _, word := range support.TechStopWords {
-		if word == firstWord {
-			return true;
-		}
-	}
-
-	return false;
 }
 
 func (s Service) enableLifecycle() bool {

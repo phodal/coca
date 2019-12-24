@@ -11,15 +11,22 @@ type Service struct {
 
 var nodeMap map[string]models.JClassNode
 var returnTypeMap map[string][]string
+var longParameterList []models.JMethod
 
 func (s Service) EvaluateList(nodes []models.JClassNode, classNodeMap map[string]models.JClassNode) {
 	nodeMap = classNodeMap
+	longParameterList = nil
 	returnTypeMap = make(map[string][]string)
+
 	for _, node := range nodes {
 		s.Evaluate(node)
 	}
 
-	fmt.Println(returnTypeMap)
+	findRelatedMethodParameter(longParameterList)
+}
+
+func findRelatedMethodParameter(list []models.JMethod) {
+	fmt.Println(list)
 }
 
 func (s Service) Evaluate(node models.JClassNode) {
@@ -43,7 +50,11 @@ func (s Service) Evaluate(node models.JClassNode) {
 	}
 
 	if s.enableAbstractParameters() {
-		// parameters
+		for _, method := range node.Methods {
+			if len(method.Parameters) >= 4 {
+				longParameterList = append(longParameterList, method)
+			}
+		}
 	}
 
 	if s.enableSameReturnType() {
@@ -63,15 +74,6 @@ func (s Service) Evaluate(node models.JClassNode) {
 func (s Service) isJavaType(method models.JMethod) bool {
 	return method.Type == "String" || method.Type == "int"
 }
-
-//func (s Service) getReturnTypeFullPackage(method models.JMethod) string {
-//	for _, call := range method.MethodCalls {
-//		if call.Class == method.Type {
-//			return call.Class
-//		}
-//	}
-//	return ""
-//}
 
 func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string {
 	var hadLifecycle = make(map[string][]string)

@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/phodal/coca/core/domain/gitt/apriori"
+	"github.com/phodal/coca/core/support/apriori"
 	"log"
 	"sort"
 	"strings"

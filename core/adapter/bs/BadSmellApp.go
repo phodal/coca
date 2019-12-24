@@ -139,7 +139,7 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 		normalClassLength := withOutGetterSetterClass(node.Methods)
 		if node.Type == "Class" && normalClassLength > 20 {
 			description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
-			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass", description, 0})
+			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass", description, normalClassLength})
 		}
 	}
 

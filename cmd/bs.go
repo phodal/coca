@@ -5,6 +5,7 @@ import (
 	"github.com/phodal/coca/core/adapter/bs"
 	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
+	"sort"
 	"strings"
 )
 
@@ -47,7 +48,33 @@ func sortSmellByType(models []bs.BadSmellModel) map[string][]bs.BadSmellModel {
 		sortSmells[model.Bs] = append(sortSmells[model.Bs], model)
 	}
 
+	for key, smells := range sortSmells {
+		if isSmellHaveSize(key) {
+			sort.Slice(smells, func(i, j int) bool {
+				return smells[i].Size > (smells[j].Size)
+			})
+
+			sortSmells[key] = smells
+		}
+	}
+
 	return sortSmells
+}
+
+func isSmellHaveSize(key string) bool {
+	var smellList = []string{
+		"largeClass",
+		"repeatedSwitches",
+		"longParameterList",
+		"longMethod",
+		"dataClass",
+	}
+	return contains(smellList, key)
+}
+
+func contains(s []string, searchterm string) bool {
+	i := sort.SearchStrings(s, searchterm)
+	return i < len(s) && s[i] == searchterm
 }
 
 func init() {

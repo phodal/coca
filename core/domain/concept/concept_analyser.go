@@ -40,89 +40,10 @@ func buildMethodsFromDeps(clzs []models.JClassNode) support.PairList {
 	return wordCounts
 }
 
-var itStopWords = []string{
-	"get",
-	"create",
-	"update",
-	"delete",
-	"save",
-	"post",
-
-	"add",
-	"remove",
-	"insert",
-	"select",
-
-	"exist",
-	"find",
-	"new",
-	"parse",
-
-	"set",
-	"get",
-	"first",
-	"last",
-
-	"type",
-	"key",
-	"value",
-	"equal",
-	"greater",
-	"greater",
-
-	"all",
-	"by",
-	"id",
-	"is",
-	"of",
-	"not",
-	"with",
-	"main",
-
-	"status",
-	"count",
-	"equals",
-	"start",
-	"config",
-	"sort",
-	"handle",
-	"handler",
-	"internal",
-	"cache",
-	"request",
-	"process",
-
-	"parameter",
-	"method",
-	"class",
-	"default",
-	"object",
-	"annotation",
-
-	"read",
-	"write",
-
-	"bean",
-	"message",
-	"factory",
-	"error",
-	"errors",
-	"exception",
-	"null",
-	"string",
-	"init",
-	"data",
-	"hash",
-	"convert",
-	"size",
-	"build",
-	"return",
-}
-
 func removeNormalWords(words map[string]int) map[string]int {
 	var newWords = words
 	var stopwords = languages2.ENGLISH_STOP_WORDS
-	stopwords = append(stopwords, itStopWords...)
+	stopwords = append(stopwords, support.TechStopWords...)
 	for _, normalWord := range stopwords {
 		if newWords[normalWord] > 0 {
 			delete(newWords, normalWord)

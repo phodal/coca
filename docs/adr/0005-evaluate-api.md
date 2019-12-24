@@ -24,6 +24,10 @@ Util 方法通过 NLP 聚合，再进行分层
 
 通过聚类算法分析某个方法的相关功能。
 
+3. 输入参数 + 返回类型
+
+1. 如存在多个输入参数 date, time, eventName, blabla，关联 bad smell 中的 
+
 ## Decision
 
 Decision here...

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="835px" height="525px" viewBox="0 0 835 525" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>model</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#000000" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path id="Line" d="M543,270 L557,277 L543,284 L543,278 L154,278 L154,276 L543,276 L543,270 Z" fill="#979797" fill-rule="nonzero"></path>
+        <path id="Line" d="M355,77 L362,91 L356,91 L356,478 L354,478 L354,91 L348,91 L355,77 Z" fill="#979797" fill-rule="nonzero"></path>
+        <text id="Layered-Refactoring" font-family="PingFangSC-Regular, PingFang SC" font-size="20" font-weight="normal" fill="#000000">
+            <tspan x="419" y="105">Layered  Refactoring</tspan>
+        </text>
+        <text id="Micro-Refactoring" font-family="PingFangSC-Regular, PingFang SC" font-size="20" font-weight="normal" fill="#000000">
+            <tspan x="155" y="459">Micro Refactoring</tspan>
+        </text>
+        <text id="Model-Refactoring" font-family="PingFangSC-Regular, PingFang SC" font-size="20" font-weight="normal" fill="#000000">
+            <tspan x="155" y="105">Model Refactoring</tspan>
+        </text>
+        <text id="Refactoring-to-Patte" font-family="PingFangSC-Regular, PingFang SC" font-size="20" font-weight="normal" fill="#000000">
+            <tspan x="411" y="459">Refactoring to Pattern</tspan>
+        </text>
+        <text id="💳💳💳" font-family="AppleColorEmoji, Apple Color Emoji" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="573" y="284">💳💳💳</tspan>
+        </text>
+        <text id="⭐⭐⭐" font-family="AppleColorEmoji, Apple Color Emoji" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="327" y="67">⭐⭐⭐</tspan>
+        </text>
+        <text id="Clean-Architecture" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="398" y="152">Clean Architecture</tspan>
+        </text>
+        <text id="DDD" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="458" y="208">DDD</tspan>
+        </text>
+        <text id="DCI" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="517" y="177">DCI</tspan>
+        </text>
+        <text id="Factory" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="411" y="346">Factory</tspan>
+        </text>
+        <text id="Strategy" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="442" y="381">Strategy</tspan>
+        </text>
+        <text id="Extract-Method" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="193" y="346">Extract Method</tspan>
+        </text>
+        <text id="Parameter-object" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="172" y="391">Parameter object</tspan>
+        </text>
+        <text id="Inline-…" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="172" y="317">Inline … </tspan>
+        </text>
+        <text id="Make-Static---Instan" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="133" y="423">Make Static - Instance Method</tspan>
+        </text>
+        <text id="Behavior-Drivent" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="200" y="177">Behavior Drivent</tspan>
+        </text>
+        <text id="TypeTypet" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="184" y="208">TypeTypet</tspan>
+        </text>
+        <text id="Parameters" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="172" y="243">Parameters </tspan>
+        </text>
+        <text id="Builder" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="384" y="413">Builder</tspan>
+        </text>
+        <text id="Adapter" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="515" y="338">Adapter</tspan>
+        </text>
+        <text id="Observer" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="488" y="413">Observer</tspan>
+        </text>
+        <text id="REST-API-Designt" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
+            <tspan x="685" y="19">REST API Designt</tspan>
+        </text>
+        <text id="God-Services" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
+            <tspan x="0" y="19">God Services</tspan>
+        </text>
+        <text id="Bad-Code-Smell" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
+            <tspan x="0" y="519">Bad Code Smell</tspan>
+        </text>
+        <text id="Entity" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
+            <tspan x="685" y="519">Entity </tspan>
+        </text>
+        <text id="Utils" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
+            <tspan x="0" y="278">Utils</tspan>
+        </text>
+    </g>
+</svg>

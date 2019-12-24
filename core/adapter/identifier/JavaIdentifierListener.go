@@ -35,7 +35,7 @@ func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDecl
 func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
 
-	node.Type = "Class"
+	node.ClassType = "Class"
 	if ctx.IDENTIFIER() != nil {
 		node.ClassName = ctx.IDENTIFIER().GetText()
 	}
@@ -176,7 +176,7 @@ func buildAnnotation(ctx *parser.AnnotationContext) models.Annotation {
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = true
-	node.Type = "Interface"
+	node.ClassType = "Interface"
 	node.ClassName = ctx.IDENTIFIER().GetText()
 }
 

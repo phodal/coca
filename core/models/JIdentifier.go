@@ -5,7 +5,7 @@ var methods []JMethod
 type JIdentifier struct {
 	Package     string
 	ClassName   string
-	Type        string
+	ClassType   string
 	ExtendsName string
 	Extends     []string
 	Implements  []string

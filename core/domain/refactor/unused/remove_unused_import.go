@@ -87,10 +87,6 @@ func removeImportByLines(file string, errorLines []int) {
 	}
 }
 
-func removeImportByLineNum(imp models2.JImport, line int) {
-	removeLine(currentFile, line)
-}
-
 func removeLine(path string, lineNumber int) {
 	file, err := ioutil.ReadFile(path)
 	if err != nil {

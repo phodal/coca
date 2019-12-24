@@ -67,7 +67,7 @@ func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
 			for _, methodCall := range pkgNode.MethodCalls {
 				if methodCall.Package+methodCall.Class == oldInfo.Package+oldInfo.Class {
 					if methodCall.MethodName == oldInfo.Method {
-						updateSelfRefs(pkgNode, *methodCallToMethodModel(methodCall), newInfo)
+						updateSelfRefs(pkgNode, methodCallToMethodModel(methodCall), newInfo)
 					}
 				}
 			}
@@ -75,8 +75,8 @@ func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
 	}
 }
 
-func methodCallToMethodModel(call JMethodCall) *JMethod {
-	return &JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil, nil, false, nil}
+func methodCallToMethodModel(call JMethodCall) JMethod {
+	return *&JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil, nil, false, nil}
 }
 
 func updateSelfRefs(node JClassNode, method JMethod, info *support3.PackageClassInfo) {

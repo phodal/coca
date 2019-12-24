@@ -91,7 +91,7 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 				badSmellList = append(badSmellList, *longMethod)
 			}
 
-			if strings.Contains(method.Name, "get") && strings.Contains(method.Name, "set") {
+			if !(strings.Contains(method.Name, "get") || strings.Contains(method.Name, "set")) {
 				onlyHaveGetterAndSetter = false
 			}
 
@@ -115,8 +115,9 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 				badSmellList = append(badSmellList, *longParams)
 			}
 
+			// complex if
 			for _, info := range method.MethodBs.IfInfo {
-				if info.EndLine - info.StartLine >= 3 {
+				if info.EndLine - info.StartLine >= 2 {
 					longParams := &BadSmellModel{node.Path, strconv.Itoa(info.StartLine), "complexCondition", "complexCondition", 0}
 					badSmellList = append(badSmellList, *longParams)
 				}

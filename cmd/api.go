@@ -31,6 +31,11 @@ type ApiCmdConfig struct {
 
 var (
 	apiCmdConfig ApiCmdConfig
+	restApis []RestApi
+
+	identifiers = adapter.LoadIdentify(apiCmdConfig.DependencePath)
+	identifiersMap = adapter.BuildIdentifierMap(identifiers)
+	diMap = adapter.BuildDIMap(identifiers, identifiersMap)
 )
 
 var apiCmd = &cobra.Command{
@@ -38,15 +43,11 @@ var apiCmd = &cobra.Command{
 	Short: "scan api",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		path := *&apiCmdConfig.Path
-		depPath := *&apiCmdConfig.DependencePath
-		apiPrefix := *&apiCmdConfig.AggregateApi
-		var restApis []RestApi
+		path := apiCmdConfig.Path
+		depPath := apiCmdConfig.DependencePath
+		apiPrefix := apiCmdConfig.AggregateApi
 
 		if path != "" {
-			identifiers := adapter.LoadIdentify(depPath)
-			identifiersMap := adapter.BuildIdentifierMap(identifiers)
-			diMap := adapter.BuildDIMap(identifiers, identifiersMap)
 
 			parsedDeps = nil
 			depFile := ReadFile(depPath)
@@ -57,14 +58,11 @@ var apiCmd = &cobra.Command{
 			_ = json.Unmarshal(depFile, &parsedDeps)
 
 			if *&apiCmdConfig.ForceUpdate {
-				app := new(JavaApiApp)
-				restApis = app.AnalysisPath(path, parsedDeps, identifiersMap, diMap)
-				cModel, _ := json.MarshalIndent(restApis, "", "\t")
-				WriteToCocaFile("apis.json", string(cModel))
+				forceUpdateApi()
 			} else {
 				apiContent := ReadCocaFile("apis.json")
 				if apiContent == nil {
-					log.Fatal("lost file:")
+					forceUpdateApi()
 				}
 				_ = json.Unmarshal(apiContent, &restApis)
 			}
@@ -111,6 +109,13 @@ var apiCmd = &cobra.Command{
 			}
 		}
 	},
+}
+
+func forceUpdateApi() {
+	app := new(JavaApiApp)
+	restApis = app.AnalysisPath(apiCmdConfig.Path, parsedDeps, identifiersMap, diMap)
+	cModel, _ := json.MarshalIndent(restApis, "", "\t")
+	WriteToCocaFile("apis.json", string(cModel))
 }
 
 func filterApi(apiPrefix string, apis []RestApi, ) []RestApi {

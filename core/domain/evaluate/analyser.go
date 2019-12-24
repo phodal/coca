@@ -20,7 +20,7 @@ func (a Analyser) Analysis(nodes []models.JClassNode) {
 
 	var nodeMap = make(map[string]models.JClassNode)
 	for _, node := range nodes {
-		nodeMap[node.Package + "." + node.Class] = node
+		nodeMap[node.Class] = node
 	}
 
 	for _, node := range nodes {

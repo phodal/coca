@@ -63,5 +63,25 @@
     "Implements": [
       "com.phodal.pholedge.core.domain.Service"
     ]
+  },
+  {
+    "Package": "com.phodal.pholedge.book.model",
+    "Class": "BookRepresentaion",
+    "Type": "Class",
+    "Path": "examples/api/model/BookRepresentaion.java",
+    "Fields": [
+      {
+        "Type": "String",
+        "Value": "id"
+      },
+      {
+        "Type": "String",
+        "Value": "name"
+      }
+    ],
+    "Methods": null,
+    "MethodCalls": null,
+    "Extend": "",
+    "Implements": null
   }
 ]

@@ -46,13 +46,12 @@ func (s Service) Evaluate(node models.JClassNode) {
 
 	if s.hasSameReturnType() {
 		for _, method := range node.Methods {
-			fmt.Println(method)
+			if !s.isJavaType(method) {
+				methodType := method.Type
 
-			if s.isJavaType(method) {
-				fullPackage := s.getReturnTypeFullPackage(method)
-				if _, ok := nodeMap[fullPackage]; ok {
+				if _, ok := nodeMap[methodType]; ok {
 					fullMethodName := node.Package + "." + node.Class + "." + method.Name
-					returnTypeMap[fullPackage] = append(returnTypeMap[fullPackage], fullMethodName)
+					returnTypeMap[methodType] = append(returnTypeMap[methodType], fullMethodName)
 				}
 			}
 		}
@@ -63,14 +62,14 @@ func (s Service) isJavaType(method models.JMethod) bool {
 	return method.Type == "String" || method.Type == "int"
 }
 
-func (s Service) getReturnTypeFullPackage(method models.JMethod) string {
-	for _, call := range method.MethodCalls {
-		if call.Class == method.Type {
-			return call.Class
-		}
-	}
-	return ""
-}
+//func (s Service) getReturnTypeFullPackage(method models.JMethod) string {
+//	for _, call := range method.MethodCalls {
+//		if call.Class == method.Type {
+//			return call.Class
+//		}
+//	}
+//	return ""
+//}
 
 func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string {
 	var hadLifecycle = make(map[string][]string)

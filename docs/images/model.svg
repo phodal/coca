@@ -34,7 +34,7 @@
             <tspan x="398" y="152">Clean Architecture</tspan>
         </text>
         <text id="DDD" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
-            <tspan x="458" y="208">DDD</tspan>
+            <tspan x="458" y="208">DDD ...</tspan>
         </text>
         <text id="DCI" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="517" y="177">DCI</tspan>
@@ -43,7 +43,7 @@
             <tspan x="411" y="346">Factory</tspan>
         </text>
         <text id="Strategy" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
-            <tspan x="442" y="381">Strategy</tspan>
+            <tspan x="442" y="381">Strategy ...</tspan>
         </text>
         <text id="Extract-Method" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="193" y="346">Extract Method</tspan>
@@ -57,11 +57,11 @@
         <text id="Make-Static---Instan" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="133" y="423">Make Static - Instance Method</tspan>
         </text>
-        <text id="Behavior-Drivent" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
-            <tspan x="200" y="177">Behavior Drivent</tspan>
+        <text id="Behavior-Driven" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="200" y="177">Behavior Driven</tspan>
         </text>
-        <text id="TypeTypet" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
-            <tspan x="184" y="208">TypeTypet</tspan>
+        <text id="TypeType" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
+            <tspan x="184" y="208">TypeType ...</tspan>
         </text>
         <text id="Parameters" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="172" y="243">Parameters </tspan>

@@ -2,10 +2,10 @@ package api
 
 
 import (
+	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
-	. "github.com/onsi/gomega"
 	"testing"
 )
 

@@ -75,8 +75,8 @@
         <text id="Observer" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="488" y="413">Observer</tspan>
         </text>
-        <text id="REST-API-Designt" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
-            <tspan x="685" y="19">REST API Designt</tspan>
+        <text id="REST-API-Design" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
+            <tspan x="685" y="19">REST API Design</tspan>
         </text>
         <text id="God-Services" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#000000">
             <tspan x="0" y="19">God Services</tspan>

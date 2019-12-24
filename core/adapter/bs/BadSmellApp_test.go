@@ -9,8 +9,8 @@ func TestBadSmellApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	bsApp := new(BadSmellApp)
-	codePath := "../../../_fixtures/call"
+	codePath := "../../../_fixtures/bs"
 	bsList := bsApp.AnalysisPath(codePath, nil)
 
-	g.Expect(len(bsList)).To(Equal(1))
+	g.Expect(len(bsList)).To(Equal(4))
 }

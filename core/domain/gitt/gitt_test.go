@@ -51,7 +51,6 @@ func Test_identify_file_move(t *testing.T) {
 }
 
 func Test_identify_first_file_move(t *testing.T) {
-	//t.Parallel()
 	g := NewGomegaWithT(t)
 
 	messages := BuildMessageByInput(`

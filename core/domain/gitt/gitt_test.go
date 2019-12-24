@@ -50,22 +50,6 @@ func Test_identify_file_move(t *testing.T) {
 	g.Expect(len(summary)).To(Equal(2))
 }
 
-func Test_identify_first_file_move(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	messages := BuildMessageByInput(`
-[333] Phodal Huang 2019-12-19 update files
-0       0       src/domain/gitt/README.md
-
-[d00f0124d] Phodal Huang 2019-12-19 update files
-0       0       {src => core}/domain/gitt/README.md
-
-`)
-	summary := GetTeamSummary(messages)
-	g.Expect(summary[0].EntityName).To(Equal("core/domain/gitt/README.md"))
-	g.Expect(len(summary)).To(Equal(1))
-}
-
 func Test_identify_move_to_directory(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -165,6 +149,22 @@ func TestBasicSummary(t *testing.T) {
 	g.Expect(summary.Entities).To(Equal(2))
 }
 
+func Test_identify_first_file_move(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	messages := BuildMessageByInput(`
+[333333333] Phodal Huang 2019-12-19 update files
+0       0       src/domain/gitt/README.md
+
+[d00f0124d] Phodal Huang 2019-12-19 update files
+0       0       {src => core}/domain/gitt/README.md
+
+`)
+	summary := GetTeamSummary(messages)
+	g.Expect(summary[0].EntityName).To(Equal("core/domain/gitt/README.md"))
+	g.Expect(len(summary)).To(Equal(1))
+}
+
 func TestChangeModel(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -184,3 +184,4 @@ func TestChangeModel(t *testing.T) {
 	//g.Expect(result[0].Changes[2].File).To(Equal("learn_go_suite_test.go"))
 	//g.Expect(result[0].Changes[2].Mode).To(Equal("create"))
 }
+

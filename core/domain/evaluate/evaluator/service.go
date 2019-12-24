@@ -3,6 +3,7 @@ package evaluator
 import (
 	"fmt"
 	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support/apriori"
 	"strings"
 )
 
@@ -26,7 +27,26 @@ func (s Service) EvaluateList(nodes []models.JClassNode, classNodeMap map[string
 }
 
 func findRelatedMethodParameter(list []models.JMethod) {
-	fmt.Println(list)
+	var dataset [][]string
+	for _, method := range list {
+		var methodlist []string
+		for _, param := range method.Parameters {
+			methodlist = append(methodlist, param.Type)
+		}
+		dataset = append(dataset, methodlist)
+	}
+
+	var newOptions = apriori.NewOptions(0.8, 0.8, 0, 0)
+	apriori := apriori.NewApriori(dataset)
+	result := apriori.Calculate(newOptions)
+
+	for _, res := range result {
+		items := res.GetSupportRecord().GetItems()
+		if len(items) >= 4 {
+			fmt.Println(items)
+			fmt.Println(res.GetSupportRecord().GetSupport())
+		}
+	}
 }
 
 func (s Service) Evaluate(node models.JClassNode) {

@@ -1,9 +1,9 @@
 package call
 
 import (
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/languages/java"
 	"github.com/phodal/coca/core/models"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
 )
@@ -177,7 +177,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 			paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 			localVars[paramValue] = paramType
-			methodParams = append(methodParams, *&models.JParameter{paramType, paramValue})
+			methodParams = append(methodParams, *&models.JParameter{Name: paramValue, Type: paramType})
 		}
 
 		method.Parameters = methodParams
@@ -320,7 +320,6 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
-
 
 	// TODO: 处理链试调用
 	if strings.Contains(targetType, "()") && strings.Contains(targetType, ".") {

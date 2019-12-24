@@ -109,9 +109,17 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 				badSmellList = append(badSmellList, *longParams)
 			}
 
+			// repeatedSwitches
 			if method.MethodBs.SwitchSize > 8 {
 				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "switchSize", method.MethodBs.SwitchSize}
 				badSmellList = append(badSmellList, *longParams)
+			}
+
+			for _, info := range method.MethodBs.IfInfo {
+				if info.EndLine - info.StartLine >= 3 {
+					longParams := &BadSmellModel{node.Path, strconv.Itoa(info.StartLine), "complexCondition", "complexCondition", 0}
+					badSmellList = append(badSmellList, *longParams)
+				}
 			}
 		}
 

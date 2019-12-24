@@ -39,6 +39,27 @@ type BsJMethod struct {
 type MethodBadSmellInfo struct {
 	IfSize     int
 	SwitchSize int
+	IfInfo     []IfParInfo
+}
+
+type IfParInfo struct {
+	StartLine int
+	EndLine   int
+}
+
+func NewIfPairInfo() IfParInfo {
+	return *&IfParInfo{
+		StartLine: 0,
+		EndLine:   0,
+	}
+}
+
+func NewMethodBadSmellInfo() MethodBadSmellInfo {
+	return *&MethodBadSmellInfo{
+		IfSize:     0,
+		SwitchSize: 0,
+		IfInfo:     nil,
+	}
 }
 
 type ClassBadSmellInfo struct {

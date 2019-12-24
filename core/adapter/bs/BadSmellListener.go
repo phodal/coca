@@ -1,9 +1,9 @@
 package bs
 
 import (
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	models2 "github.com/phodal/coca/core/adapter/bs/models"
 	. "github.com/phodal/coca/core/languages/java"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"reflect"
 	"strings"
 )
@@ -130,7 +130,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		}
 	}
 
-	methodBSInfo := *&models2.MethodBadSmellInfo{0, 0}
+	methodBSInfo := models2.NewMethodBadSmellInfo()
 
 	method := &models2.BsJMethod{
 		Name:              name,
@@ -197,7 +197,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		}
 	}
 
-	methodBSInfo := *&models2.MethodBadSmellInfo{0, 0}
+	methodBSInfo := models2.NewMethodBadSmellInfo()
 	methodBadSmellInfo := buildMethodBSInfo(ctx, methodBSInfo)
 
 	method := &models2.BsJMethod{
@@ -244,6 +244,17 @@ func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo models2.MethodB
 				statementCtx := statement.GetChild(0).(*StatementContext)
 				if (reflect.TypeOf(statementCtx.GetChild(1)).String()) == "*parser.ParExpressionContext" {
 					if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "if" {
+						if reflect.TypeOf(statementCtx.GetChild(1)).String() == "*parser.ParExpressionContext" {
+							parCtx := statementCtx.GetChild(1).(*ParExpressionContext)
+							startLine := parCtx.GetStart().GetLine()
+							endLine := parCtx.GetStop().GetLine()
+
+							info := models2.NewIfPairInfo()
+							info.StartLine = startLine
+							info.EndLine = endLine
+							bsInfo.IfInfo = append(bsInfo.IfInfo, info)
+						}
+
 						bsInfo.IfSize = bsInfo.IfSize + 1
 					}
 

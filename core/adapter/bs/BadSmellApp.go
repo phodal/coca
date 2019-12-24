@@ -1,11 +1,11 @@
 package bs
 
 import (
-	models2 "github.com/phodal/coca/core/adapter/bs/models"
-	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	models2 "github.com/phodal/coca/core/adapter/bs/models"
+	"github.com/phodal/coca/core/support"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -21,6 +21,7 @@ type BadSmellModel struct {
 	Line        string `json:"Line,omitempty"`
 	Bs          string `json:"BS,omitempty"`
 	Description string `json:"Description,omitempty"`
+	Size        int    `size:"Description,omitempty"`
 }
 
 type BadSmellApp struct {
@@ -77,7 +78,7 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 	for _, node := range nodes {
 		// To be Defined number
 		if node.Type == "Class" && len(node.Methods) < 1 {
-			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "lazyElement", ""})
+			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "lazyElement", "", 0})
 		}
 
 		onlyHaveGetterAndSetter := true
@@ -86,7 +87,7 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 			methodLength := method.StopLine - method.StartLine
 			if methodLength > 30 {
 				description := "method length: " + strconv.Itoa(methodLength)
-				longMethod := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longMethod", description}
+				longMethod := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longMethod", description, methodLength}
 				badSmellList = append(badSmellList, *longMethod)
 			}
 
@@ -95,23 +96,28 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 			}
 
 			// longParameterList
-			if len(method.Parameters) > 6 {
+			if len(method.Parameters) > 5 {
 				paramsJson, _ := json.Marshal(method.Parameters)
 				str := string(paramsJson[:])
-				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longParameterList", str}
+				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longParameterList", str, len(method.Parameters)}
 				badSmellList = append(badSmellList, *longParams)
 			}
 
 			// repeatedSwitches
-			if method.MethodBs.IfSize > 8 || method.MethodBs.SwitchSize > 8 {
-				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", ""}
+			if method.MethodBs.IfSize > 8 {
+				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "ifSize", method.MethodBs.IfSize}
+				badSmellList = append(badSmellList, *longParams)
+			}
+
+			if method.MethodBs.SwitchSize > 8 {
+				longParams := &BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "switchSize", method.MethodBs.SwitchSize}
 				badSmellList = append(badSmellList, *longParams)
 			}
 		}
 
 		// dataClass
 		if onlyHaveGetterAndSetter && node.Type == "Class" && len(node.Methods) > 0 {
-			dataClass := &BadSmellModel{node.Path, "", "dataClass", ""}
+			dataClass := &BadSmellModel{node.Path, "", "dataClass", "", len(node.Methods)}
 			badSmellList = append(badSmellList, *dataClass)
 		}
 
@@ -125,7 +131,7 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 			}
 
 			if !hasCallParentMethod {
-				badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "refusedBequest", ""})
+				badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "refusedBequest", "", 0})
 			}
 		}
 
@@ -133,7 +139,7 @@ func analysisBadSmell(nodes []models2.BsJClass) []BadSmellModel {
 		normalClassLength := withOutGetterSetterClass(node.Methods)
 		if node.Type == "Class" && normalClassLength > 20 {
 			description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
-			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass", description})
+			badSmellList = append(badSmellList, *&BadSmellModel{node.Path, "", "largeClass", description, 0})
 		}
 	}
 
@@ -165,7 +171,7 @@ func (j *BadSmellApp) javaFiles(codeDir string) []string {
 func (j *BadSmellApp) processFile(path string) *JavaParser {
 	is, _ := antlr.NewFileStream(path)
 	lexer := NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0);
+	stream := antlr.NewCommonTokenStream(lexer, 0)
 	parser := NewJavaParser(stream)
 	return parser
 }

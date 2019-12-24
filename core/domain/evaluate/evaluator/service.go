@@ -28,23 +28,25 @@ func (s Service) Evaluate(node models.JClassNode) {
 		methodNameArray = append(methodNameArray, SplitCamelcase(method.Name))
 	}
 
-	lifecycleMap := s.buildLifecycle(methodNameArray)
-	hasLifecycle := len(lifecycleMap) > 0
-	if hasLifecycle {
-		for key, value := range lifecycleMap {
-			fmt.Println(key, value)
+	if s.enableLifecycle() {
+		lifecycleMap := s.buildLifecycle(methodNameArray)
+		hasLifecycle := len(lifecycleMap) > 0
+		if hasLifecycle {
+			for key, value := range lifecycleMap {
+				fmt.Println(key, value)
+			}
 		}
 	}
 
-	if s.hasSameBehavior() {
+	if s.enableSameBehavior() {
 
 	}
 
-	if s.hasAbstractParameters() {
+	if s.enableAbstractParameters() {
 		// parameters
 	}
 
-	if s.hasSameReturnType() {
+	if s.enableSameReturnType() {
 		for _, method := range node.Methods {
 			if !s.isJavaType(method) {
 				methodType := method.Type
@@ -87,14 +89,18 @@ func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string 
 	return hadLifecycle
 }
 
-func (s Service) hasSameBehavior() bool {
-	return false
+func (s Service) enableLifecycle() bool {
+	return true
 }
 
-func (s Service) hasAbstractParameters() bool {
-	return false
+func (s Service) enableSameBehavior() bool {
+	return true
 }
 
-func (s Service) hasSameReturnType() bool {
+func (s Service) enableAbstractParameters() bool {
+	return true
+}
+
+func (s Service) enableSameReturnType() bool {
 	return true
 }

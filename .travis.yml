@@ -22,10 +22,10 @@ git:
 install: true
 
 before_install:
-  - go get -t -v ./...
+  - go get -t -v  $(go list ./... | grep -v /languages/)
 
 script:
-  - go test -v ./...  -race -coverprofile=coverage.txt -covermode=atomic
+  - go test -v  $(go list ./... | grep -v /languages/)  -race -coverprofile=coverage.txt -covermode=atomic
 
 #
 #os:

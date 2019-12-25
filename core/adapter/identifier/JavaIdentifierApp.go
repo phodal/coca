@@ -24,16 +24,12 @@ func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JIdentifier {
 		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		clzInfo := models.NewJIdentifier()
 		listener := NewJavaIdentifierListener()
-		listener.InitNode(clzInfo)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		if clzInfo.ClassName != "" {
-			clzInfo.Methods = clzInfo.GetMethods()
-			nodeInfos = append(nodeInfos, *clzInfo)
-		}
+		identifiers := listener.getNodes()
+		nodeInfos = append(nodeInfos, identifiers...)
 	}
 
 	return nodeInfos

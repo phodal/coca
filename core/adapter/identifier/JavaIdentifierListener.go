@@ -7,7 +7,8 @@ import (
 	"strings"
 )
 
-var node *models.JIdentifier
+var currentNode *models.JIdentifier
+var nodes []models.JIdentifier
 
 var currentMethod models.JMethod
 var hasEnterClass = false
@@ -15,7 +16,9 @@ var hasEnterMethod = false
 var imports []string
 
 func NewJavaIdentifierListener() *JavaIdentifierListener {
-	hasEnterClass = false
+	nodes = nil
+	currentNode = models.NewJIdentifier()
+	currentMethod = models.NewJMethod()
 	return &JavaIdentifierListener{}
 }
 
@@ -29,19 +32,19 @@ func (s *JavaIdentifierListener) EnterImportDeclaration(ctx *parser.ImportDeclar
 }
 
 func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
-	node.Package = ctx.QualifiedName().GetText()
+	currentNode.Package = ctx.QualifiedName().GetText()
 }
 
 func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
 
-	node.ClassType = "Class"
+	currentNode.ClassType = "Class"
 	if ctx.IDENTIFIER() != nil {
-		node.ClassName = ctx.IDENTIFIER().GetText()
+		currentNode.ClassName = ctx.IDENTIFIER().GetText()
 	}
 
 	if ctx.EXTENDS() != nil {
-		node.ExtendsName = ctx.TypeType().GetText()
+		currentNode.ExtendsName = ctx.TypeType().GetText()
 	}
 
 	if ctx.IMPLEMENTS() != nil {
@@ -50,7 +53,7 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 			typeText := typ.GetText()
 			for _, imp := range imports {
 				if strings.HasSuffix(imp, "."+typeText) {
-					node.Implements = append(node.Implements, imp)
+					currentNode.Implements = append(currentNode.Implements, imp)
 				}
 			}
 		}
@@ -59,6 +62,11 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 
 func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	hasEnterClass = false
+	if currentNode.ClassName != "" {
+		currentNode.Methods = currentNode.GetMethods()
+		nodes = append(nodes, *currentNode)
+	}
+	currentNode = models.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
@@ -98,7 +106,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	hasEnterMethod = false
 
-	node.AddMethod(currentMethod)
+	currentNode.AddMethod(currentMethod)
 	currentMethod = models.NewJMethod()
 }
 
@@ -135,7 +143,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	hasEnterMethod = false
 
-	node.AddMethod(currentMethod)
+	currentNode.AddMethod(currentMethod)
 	currentMethod = models.NewJMethod()
 }
 
@@ -151,7 +159,7 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
 	} else {
 		annotation := buildAnnotation(ctx)
-		node.Annotations = append(node.Annotations, annotation)
+		currentNode.Annotations = append(currentNode.Annotations, annotation)
 	}
 }
 
@@ -176,10 +184,10 @@ func buildAnnotation(ctx *parser.AnnotationContext) models.Annotation {
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = true
-	node.ClassType = "Interface"
-	node.ClassName = ctx.IDENTIFIER().GetText()
+	currentNode.ClassType = "Interface"
+	currentNode.ClassName = ctx.IDENTIFIER().GetText()
 }
 
-func (s *JavaIdentifierListener) InitNode(identifier *models.JIdentifier) {
-	node = identifier
+func (s *JavaIdentifierListener) getNodes() []models.JIdentifier {
+	return nodes
 }

@@ -13,7 +13,7 @@ Refs: https://stackoverflow.com/questions/9935379/git-show-all-of-the-various-ch
 Show Line History:
 
 ```
-git log -3,5:README.md
+git log -L3,5:README.md
 ```
 
 Show String History

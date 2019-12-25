@@ -13,6 +13,10 @@ var nodeInfos []models.JClassNode
 type JavaCallApp struct {
 }
 
+func NewJavaCallApp() JavaCallApp {
+	return *&JavaCallApp{}
+}
+
 func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []models.JIdentifier) []models.JClassNode {
 	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)

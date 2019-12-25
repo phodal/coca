@@ -383,6 +383,10 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	}
 	jMethodCall.Class = targetType
 
+	addMethodCall(jMethodCall)
+}
+
+func addMethodCall(jMethodCall models.JMethodCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
@@ -448,7 +452,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLinePosition := startLinePosition + len(text)
 
 		jMethodCall := &models.JMethodCall{removeTarget(fullType), "lambda", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
-		methodCalls = append(methodCalls, *jMethodCall)
+		addMethodCall(*jMethodCall)
 	}
 }
 

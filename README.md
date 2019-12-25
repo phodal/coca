@@ -352,7 +352,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 clone
 
 ```
-go get https://github.com/phodal/coca
+git clone https://github.com/phodal/coca
 ```
 
 Test Frameworks

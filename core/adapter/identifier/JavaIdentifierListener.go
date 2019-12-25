@@ -69,6 +69,36 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	currentNode = models.NewJIdentifier()
 }
 
+func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
+	hasEnterMethod = true
+
+	startLine := ctx.GetStart().GetLine()
+	startLinePosition := ctx.GetStart().GetColumn()
+	stopLine := ctx.GetStop().GetLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
+	name := ctx.IDENTIFIER().GetText()
+
+	annotations := currentMethod.Annotations
+	currentMethod = *&models.JMethod{
+		Name:              name,
+		Type:              "",
+		StartLine:         startLine,
+		StartLinePosition: startLinePosition,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+		Override:          isOverrideMethod,
+		Annotations:       annotations,
+		IsConstructor:     true,
+	}
+}
+
+func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
+	hasEnterMethod = false
+
+	currentNode.AddMethod(currentMethod)
+	currentMethod = models.NewJMethod()
+}
+
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
 	for _, modifier := range ctx.AllModifier() {
 		modifier := modifier.(*parser.ModifierContext).GetChild(0)

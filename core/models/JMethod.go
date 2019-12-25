@@ -11,6 +11,7 @@ type JMethod struct {
 	MethodCalls       []JMethodCall
 	Override          bool
 	Annotations       []Annotation
+	IsConstructor     bool
 }
 
 type Annotation struct {
@@ -31,7 +32,6 @@ func NewAnnotation() Annotation {
 }
 
 // TODO support annnotation
-
 func NewJMethod() JMethod {
 	return *&JMethod{
 		Name:              "",
@@ -43,6 +43,7 @@ func NewJMethod() JMethod {
 		StopLinePosition:  0,
 		Parameters:        nil,
 		MethodCalls:       nil,
+		IsConstructor:     false,
 	}
 }
 

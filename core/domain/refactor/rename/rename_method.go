@@ -1,11 +1,11 @@
 package unused
 
 import (
+	"encoding/json"
 	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
 	support3 "github.com/phodal/coca/core/domain/refactor/rename/support"
 	. "github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
-	"encoding/json"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -76,7 +76,7 @@ func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
 }
 
 func methodCallToMethodModel(call JMethodCall) JMethod {
-	return *&JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil, nil, false, nil}
+	return *&JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil, nil, false, nil, false}
 }
 
 func updateSelfRefs(node JClassNode, method JMethod, info *support3.PackageClassInfo) {

@@ -37,6 +37,7 @@ func TestPolymorphism_Constructor(t *testing.T) {
 	identApp := new(JavaIdentifierApp)
 	identifiers := identApp.AnalysisPath("../../../_fixtures/suggest/factory")
 
+	fmt.Println(identifiers)
 	g.Expect(len(identifiers)).To(Equal(2))
 	g.Expect(identifiers[0].ClassName).To(Equal("Insect"))
 	g.Expect(identifiers[1].ClassName).To(Equal("Bee"))

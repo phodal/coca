@@ -12,7 +12,8 @@ Refactoring Modeling:
 
 Todo:
 
- - [ ] Show all todos and history
+ - [x] Show all todos and history
+ - [ ] Suggest API 
 
 ## Usage
 

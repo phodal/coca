@@ -1,0 +1,7 @@
+exclude_patterns:
+  - "languages/"
+  - "_fixtures/"
+  - "examples/"
+  - "examples/"
+  - "docs/"
+  - "stories/"

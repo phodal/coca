@@ -65,6 +65,7 @@ func (s Service) Evaluate(node models.JClassNode) {
 		}
 	}
 
+	// TODO: support for same end words
 	if s.enableSameBehavior() {
 
 	}

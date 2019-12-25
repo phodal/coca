@@ -8,3 +8,4 @@
 * [6. support-adapter-to-cli-framework](0006-support-adapter-to-cli-framework.md)
 * [7. practise-go-patterns-in-coca](0007-practise-go-patterns-in-coca.md)
 * [8. testable-evaluate](0008-testable-evaluate.md)
+* [9. git-tell-file-history](0009-git-tell-file-history.md)

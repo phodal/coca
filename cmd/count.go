@@ -47,6 +47,7 @@ var countCmd = &cobra.Command{
 			}
 		}
 
+		// TODO: support identify data class
 		var callMap = make(map[string]int)
 		for _, clz := range cparsedDeps {
 			for _, call := range clz.MethodCalls {

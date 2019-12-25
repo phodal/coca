@@ -10,6 +10,10 @@ Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)
 
+Todo:
+
+ - [ ] Show all todos and history
+
 ## Usage
 
 install 
@@ -283,6 +287,25 @@ support:
 ```
 coca refactor -R rename.coca -p src/main
 coca refactor -m move.config -p .
+```
+
+### Evaluate
+
+```
+coca evaluate
+```
+
+```
+custom [customKeyGenerator customCacheManager]
+throw [throwUnchecked throwCheckedSync throwUncheckedSync throwChecked]
+evict [evictWithException evictAllEarly evictAll evict evictEarly]
+multi [multiCacheAndEvict multiCache multiUpdate multiEvict multiConditionalCacheAndEvict]
+conditional [conditional conditionalUpdate conditionalSync]
+unknown [unknownCustomCacheManager unknownCustomKeyGenerator]
+throw [throwException throwCheckedException]
+put [putWithException put]
+early [earlyRemoveWithException earlyRemoveAllWithException earlyRemoveAll earlyPut earlyPutWithException earlyRemove]
+evict [evictAll evictWithException evict evictEarly evictAllEarly]
 ```
 
 ## Dev

@@ -1,7 +1,6 @@
 package todo
 
 import (
-	"fmt"
 	"github.com/phodal/coca/core/domain/gitt"
 	"github.com/phodal/coca/core/domain/todo/astitodo"
 	"log"
@@ -19,7 +18,17 @@ func NewTodoApp() TodoApp {
 	}
 }
 
-func (a TodoApp) AnalysisPath(path string) {
+type TodoDetail struct {
+	Date     string
+	FileName string
+	Author   string
+	Line     string
+	Assignee string
+	Message  []string
+}
+
+func (a TodoApp) AnalysisPath(path string) []TodoDetail {
+	var todoList []TodoDetail = nil
 	todos, err := astitodo.Extract(path)
 	if err != nil {
 		log.Fatal(err)
@@ -27,12 +36,25 @@ func (a TodoApp) AnalysisPath(path string) {
 	for _, todo := range todos {
 		lineOutput := runGitGetLog(todo.Line, todo.Filename)
 
+		todoDetail := &TodoDetail{
+			Date:     "",
+			FileName: todo.Filename,
+			Author:   "",
+			Line:     strconv.Itoa(todo.Line),
+			Assignee: todo.Assignee,
+			Message:  todo.Message,
+		}
 		commitMessages := gitt.BuildMessageByInput(lineOutput)
+
 		if len(commitMessages) > 0 {
 			commit := commitMessages[0]
-			fmt.Println(commit.Date, todo.Filename, commit.Author, todo.Line)
+			todoDetail.Date = commit.Date
+			todoDetail.Author = commit.Author
 		}
+		todoList = append(todoList, *todoDetail)
 	}
+
+	return todoList
 }
 
 func runGitGetLog(line int, fileName string) string {

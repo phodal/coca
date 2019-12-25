@@ -1,8 +1,11 @@
 package cmd
 
 import (
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/core/domain/todo"
 	"github.com/spf13/cobra"
+	"os"
+	"strings"
 )
 
 type RootCmdConfig struct {
@@ -21,7 +24,15 @@ var todoCmd = &cobra.Command{
 		path := cmd.Flag("path").Value.String()
 		if path != "" {
 			app := todo.NewTodoApp()
-			app.AnalysisPath(path)
+			todos := app.AnalysisPath(path)
+
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
+			for _, todo := range todos {
+				table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
+			}
+
+			table.Render()
 		}
 	},
 }

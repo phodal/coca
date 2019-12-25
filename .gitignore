@@ -46,6 +46,7 @@ cmake_install.cmake
 helloworld
 core/languages/java_refactor
 core/languages/java
+core/languages/sql
 language/g4/*.tokens
 language/g4/*.go
 language/g4/*.interp

@@ -25,7 +25,7 @@ var analysisCmd = &cobra.Command{
 		importPath := *&analysisCmdConfig.Path
 
 		if importPath != "" {
-			identifierApp := new(JavaIdentifierApp)
+			identifierApp := NewJavaIdentifierApp()
 			iNodes := identifierApp.AnalysisPath(importPath)
 
 			identModel, _ := json.MarshalIndent(iNodes, "", "\t")

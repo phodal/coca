@@ -11,6 +11,10 @@ var nodeInfos []models.JIdentifier = nil
 type JavaIdentifierApp struct {
 }
 
+func NewJavaIdentifierApp() JavaIdentifierApp {
+	return *&JavaIdentifierApp{}
+}
+
 func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JIdentifier {
 	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)

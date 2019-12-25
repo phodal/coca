@@ -28,6 +28,7 @@ var classQueue []string
 
 var identMap map[string]models.JIdentifier
 var currentNode models.JClassNode
+var isOverrideMethod = false
 
 func NewJavaCallListener(nodes map[string]models.JIdentifier) *JavaCallListener {
 	currentClz = ""
@@ -41,6 +42,7 @@ func NewJavaCallListener(nodes map[string]models.JIdentifier) *JavaCallListener 
 
 	methodCalls = nil
 	fields = nil
+	isOverrideMethod = false
 	return &JavaCallListener{}
 }
 
@@ -151,6 +153,37 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariab
 	}
 }
 
+func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+	// Todo: support override method
+	annotationName := ctx.QualifiedName().GetText()
+	if annotationName == "Override" {
+		isOverrideMethod = true
+	} else {
+		isOverrideMethod = false
+	}
+}
+
+func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
+	method := &models.JMethod{
+		Name:              ctx.IDENTIFIER().GetText(),
+		Type:              "",
+		StartLine:         ctx.GetStart().GetLine(),
+		StartLinePosition: ctx.GetStart().GetColumn(),
+		StopLine:          ctx.GetStop().GetLine(),
+		StopLinePosition:  ctx.GetStop().GetColumn(),
+		Override:          isOverrideMethod,
+		Annotations:       currentMethod.Annotations,
+		IsConstructor:     true,
+	}
+
+	updateMethod(method)
+}
+
+func (s *JavaCallListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
+	exitMethod()
+	isOverrideMethod = false
+}
+
 func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
@@ -193,6 +226,10 @@ func updateMethod(method *models.JMethod) {
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+	exitMethod()
+}
+
+func exitMethod() {
 	if len(methodQueue) < 1 {
 		currentMethod = models.NewJMethod()
 		return
@@ -246,20 +283,15 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType, _ := warpTargetFullType(createdName)
 
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetColumn()
-
 	jMethodCall := &models.JMethodCall{
 		Package:           removeTarget(fullType),
 		Type:              "creator",
 		Class:             createdName,
 		MethodName:        "",
-		StartLine:         startLine,
-		StartLinePosition: startLinePosition,
-		StopLine:          stopLine,
-		StopLinePosition:  stopLinePosition,
+		StartLine:         ctx.GetStart().GetLine(),
+		StartLinePosition: ctx.GetStart().GetColumn(),
+		StopLine:          ctx.GetStop().GetLine(),
+		StopLinePosition:  ctx.GetStop().GetColumn(),
 	}
 
 	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
@@ -322,7 +354,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	jMethodCall.MethodName = methodName
 
 	// TODO: 处理链试调用
-	if strings.Contains(targetType, "()") && strings.Contains(targetType, ".") {
+	if isChainCall(targetType) {
 		split := strings.Split(targetType, ".")
 		targetType = split[0]
 	}

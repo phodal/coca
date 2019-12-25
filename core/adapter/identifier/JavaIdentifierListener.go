@@ -71,23 +71,15 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 	hasEnterMethod = true
-
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.IDENTIFIER().GetText()
-
-	annotations := currentMethod.Annotations
 	currentMethod = *&models.JMethod{
-		Name:              name,
+		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
-		StartLine:         startLine,
-		StartLinePosition: startLinePosition,
-		StopLine:          stopLine,
-		StopLinePosition:  stopLinePosition,
+		StartLine:         ctx.GetStart().GetLine(),
+		StartLinePosition: ctx.GetStart().GetColumn(),
+		StopLine:          ctx.GetStop().GetLine(),
+		StopLinePosition:  ctx.GetStop().GetColumn(),
 		Override:          isOverrideMethod,
-		Annotations:       annotations,
+		Annotations:       currentMethod.Annotations,
 		IsConstructor:     true,
 	}
 }

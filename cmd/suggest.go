@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/suggest"
 	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
@@ -9,7 +10,7 @@ import (
 )
 
 var (
-	suggetConfig ApiCmdConfig
+	suggestConfig ApiCmdConfig
 )
 
 var suggestCmd = &cobra.Command{
@@ -37,5 +38,5 @@ var suggestCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(suggestCmd)
 
-	suggestCmd.PersistentFlags().StringVarP(&suggetConfig.Path, "path", "p", ".", "path")
+	suggestCmd.PersistentFlags().StringVarP(&suggestConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence D")
 }

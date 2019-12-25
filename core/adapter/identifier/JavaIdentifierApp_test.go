@@ -14,7 +14,8 @@ func TestJavaIdentifierApp_AnalysisPath(t *testing.T) {
 
 	g.Expect(len(identifiers)).To(Equal(1))
 	g.Expect(identifiers[0].ClassName).To(Equal("BookController"))
-	g.Expect(identifiers[0].Methods[0].Name).To(Equal("createBook"))
+	g.Expect(identifiers[0].Methods[0].Name).To(Equal("BookController"))
+	g.Expect(identifiers[0].Methods[1].Name).To(Equal("createBook"))
 
 	g.Expect(identifiers[0].Annotations[0].QualifiedName).To(Equal("RestController"))
 }

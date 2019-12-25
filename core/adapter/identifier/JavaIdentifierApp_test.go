@@ -17,3 +17,14 @@ func TestJavaIdentifierApp_AnalysisPath(t *testing.T) {
 
 	g.Expect(identifiers[0].Annotations[0].QualifiedName).To(Equal("RestController"))
 }
+
+func TestPolymorphism_Constructor(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	identApp := new(JavaIdentifierApp)
+	identifiers := identApp.AnalysisPath("../../../_fixtures/suggest/polymorphism")
+
+	g.Expect(len(identifiers)).To(Equal(1))
+	g.Expect(identifiers[0].ClassName).To(Equal("Overload"))
+	g.Expect(len(identifiers[0].Methods)).To(Equal(3))
+}

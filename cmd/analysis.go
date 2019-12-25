@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/domain/suggest"
-	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
-	"log"
+
+	. "github.com/phodal/coca/core/adapter/call"
+	. "github.com/phodal/coca/core/adapter/identifier"
+	. "github.com/phodal/coca/core/support"
 )
 
 type AnalysisCmdConfig struct {
@@ -24,17 +24,24 @@ var analysisCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := *&analysisCmdConfig.Path
 
-		parsedDeps = nil
-		depFile := support.ReadFile(apiCmdConfig.DependencePath)
-		if depFile == nil {
-			log.Fatal("lost deps")
-		}
-
-		_ = json.Unmarshal(depFile, &parsedDeps)
-
 		if importPath != "" {
-			app := suggest.NewSuggestApp()
-			 app.AnalysisPath(parsedDeps)
+			identifierApp := new(JavaIdentifierApp)
+			iNodes := identifierApp.AnalysisPath(importPath)
+
+			identModel, _ := json.MarshalIndent(iNodes, "", "\t")
+			WriteToCocaFile("identify.json", string(identModel))
+
+			var classes []string = nil
+
+			for _, node := range iNodes {
+				classes = append(classes, node.Package+"."+node.ClassName)
+			}
+
+			callApp := new(JavaCallApp)
+
+			callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
+			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
+			WriteToCocaFile("deps.json", string(cModel))
 		}
 	},
 }
@@ -42,5 +49,5 @@ var analysisCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(analysisCmd)
 
-	apiCmd.PersistentFlags().StringVarP(&apiCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
+	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Path, "path", "p", ".", "example -p core/main")
 }

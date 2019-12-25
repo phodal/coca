@@ -5,6 +5,7 @@ import (
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -27,40 +28,61 @@ var methodQueue []models.JMethod
 var classQueue []string
 
 var identMap map[string]models.JIdentifier
-var currentNode models.JClassNode
 var isOverrideMethod = false
 
-func NewJavaCallListener(nodes map[string]models.JIdentifier) *JavaCallListener {
-	currentClz = ""
-	currentPkg = ""
-	currentMethod = models.NewJMethod()
-	currentNode = models.NewClassNode()
+var currentNode models.JClassNode
+var classNodes []models.JClassNode
+var fileName = ""
 
+func NewJavaCallListener(nodes map[string]models.JIdentifier, file string) *JavaCallListener {
 	identMap = nodes
+	imports = nil
+	fileName = file
+	currentPkg = ""
+	classNodes = nil
+	currentNode = models.NewClassNode()
+	classQueue = nil
+	methodQueue = nil
+
+	initClass()
+	return &JavaCallListener{}
+}
+
+func initClass() {
+	currentClz = ""
+	currentClzExtend = ""
+	currentMethod = models.NewJMethod()
 
 	methodMap = make(map[string]models.JMethod)
-
 	methodCalls = nil
 	fields = nil
 	isOverrideMethod = false
-	return &JavaCallListener{}
 }
 
 type JavaCallListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaCallListener) getNodeInfo() models.JClassNode {
-	var methodsArray []models.JMethod
-	for _, value := range methodMap {
-		methodsArray = append(methodsArray, value)
-	}
+func (s *JavaCallListener) getNodeInfo() []models.JClassNode {
+	return classNodes
+}
 
-	currentNode.MethodCalls = methodCalls
-	currentNode.Fields = fields
-	currentNode.Type = currentType
-	currentNode.Methods = methodsArray
-	return currentNode
+func (s *JavaCallListener) ExitClassBody(ctx *parser.ClassBodyContext) {
+	if currentNode.Class != "" {
+		var methodsArray []models.JMethod
+		for _, value := range methodMap {
+			methodsArray = append(methodsArray, value)
+		}
+
+		currentNode.MethodCalls = methodCalls
+		currentNode.Fields = fields
+		currentNode.Type = currentType
+		currentNode.Methods = methodsArray
+		currentNode.Path = fileName
+		classNodes = append(classNodes, currentNode)
+	}
+	currentNode = models.NewClassNode()
+	initClass()
 }
 
 func (s *JavaCallListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
@@ -74,6 +96,7 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 }
 
 func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	currentClzExtend = ""
 	currentType = "Class"
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
@@ -180,7 +203,7 @@ func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 }
 
 func (s *JavaCallListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	exitMethod()
+	currentMethod = models.NewJMethod()
 	isOverrideMethod = false
 }
 
@@ -264,7 +287,7 @@ func getMethodMapName(method models.JMethod) string {
 	if name == "" && len(methodQueue) > 1 {
 		name = methodQueue[len(methodQueue)-1].Name
 	}
-	return currentPkg + "." + currentClz + "." + name
+	return currentPkg + "." + currentClz + "." + name + ":" + strconv.Itoa(method.StartLine)
 }
 
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
@@ -315,7 +338,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
 
 	fullType, callType := warpTargetFullType(targetType)
-	if targetType == "super" || callee == "this" || callee == "super" {
+	if targetType == "super" || callee == "super" {
 		callType = "super"
 		targetType = currentClzExtend
 	}

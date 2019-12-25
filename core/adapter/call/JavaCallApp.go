@@ -23,7 +23,6 @@ func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes 
 	}
 
 	for index := range files {
-		nodeInfo := models.NewClassNode()
 		file := files[index]
 
 		displayName := filepath.Base(file)
@@ -32,14 +31,13 @@ func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes 
 		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaCallListener(identMap)
+		listener := NewJavaCallListener(identMap, file)
 		listener.appendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		nodeInfo = listener.getNodeInfo()
-		nodeInfo.Path = file
-		nodeInfos = append(nodeInfos, nodeInfo)
+		nodes := listener.getNodeInfo()
+		nodeInfos = append(nodeInfos, nodes...)
 	}
 
 	return nodeInfos

@@ -2,11 +2,13 @@ package cmd
 
 import (
 	"encoding/json"
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/suggest"
 	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 	"log"
+	"os"
 )
 
 var (
@@ -18,8 +20,6 @@ var suggestCmd = &cobra.Command{
 	Short: "simple holmes",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		importPath := *&analysisCmdConfig.Path
-
 		parsedDeps = nil
 		depFile := support.ReadFile(apiCmdConfig.DependencePath)
 		if depFile == nil {
@@ -28,10 +28,17 @@ var suggestCmd = &cobra.Command{
 
 		_ = json.Unmarshal(depFile, &parsedDeps)
 
-		if importPath != "" {
-			app := suggest.NewSuggestApp()
-			app.AnalysisPath(parsedDeps)
+		app := suggest.NewSuggestApp()
+		results := app.AnalysisPath(parsedDeps)
+
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Class", "Pattern", "Reason"})
+
+		for _, result := range results {
+			table.Append([]string{result.Class, result.Pattern, result.Reason})
 		}
+
+		table.Render()
 	},
 }
 

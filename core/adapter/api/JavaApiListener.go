@@ -1,9 +1,9 @@
 package api
 
 import (
-	"github.com/phodal/coca/core/languages/java"
-	models2 "github.com/phodal/coca/core/models"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	models2 "github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strings"
 )

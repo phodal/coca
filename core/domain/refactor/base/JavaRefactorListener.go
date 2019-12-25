@@ -2,7 +2,7 @@ package base
 
 import (
 	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
-	. "github.com/phodal/coca/core/languages/java"
+	. "github.com/phodal/coca/languages/java"
 	"strings"
 	"unicode"
 )

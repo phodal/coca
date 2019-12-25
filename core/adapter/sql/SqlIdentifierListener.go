@@ -1,8 +1,8 @@
 package sql
 
 import (
-	"github.com/phodal/coca/core/languages/sql"
 	"fmt"
+	"github.com/phodal/coca/languages/sql"
 )
 
 type SqlIdentifierListener struct {

@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	. "github.com/phodal/coca/core/languages/java"
+	. "github.com/phodal/coca/languages/java"
 )
 
 var nodeInfos []models2.BsJClass

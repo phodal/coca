@@ -3,7 +3,7 @@ package bs
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	models2 "github.com/phodal/coca/core/adapter/bs/models"
-	. "github.com/phodal/coca/core/languages/java"
+	. "github.com/phodal/coca/languages/java"
 	"reflect"
 	"strings"
 )

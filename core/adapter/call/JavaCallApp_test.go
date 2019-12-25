@@ -60,3 +60,19 @@ func TestLambda_Express(t *testing.T) {
 	g.Expect(methodMap["save"].MethodCalls[0].MethodName).To(Equal("of"))
 	g.Expect(methodMap["findById"].MethodCalls[3].MethodName).To(Equal("toDomainModel"))
 }
+
+func TestInterface(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/grammar/interface"
+	callNodes := getCallNodes(codePath)
+
+	g.Expect(true).To(Equal(true))
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+
+	g.Expect(len(callNodes[0].Methods)).To(Equal(6))
+	g.Expect(methodMap["count"].Name).To(Equal("count"))
+}

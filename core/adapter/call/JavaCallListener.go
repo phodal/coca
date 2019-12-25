@@ -68,6 +68,14 @@ func (s *JavaCallListener) getNodeInfo() []models.JClassNode {
 }
 
 func (s *JavaCallListener) ExitClassBody(ctx *parser.ClassBodyContext) {
+	s.exitBody()
+}
+
+func (s *JavaCallListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
+	s.exitBody()
+}
+
+func (s *JavaCallListener) exitBody() {
 	if currentNode.Class != "" {
 		var methodsArray []models.JMethod
 		for _, value := range methodMap {
@@ -150,6 +158,10 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil, false}
 
 	updateMethod(method)
+}
+
+func (s *JavaCallListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+
 }
 
 func (s *JavaCallListener) EnterFormalParameter(ctx *parser.FormalParameterContext) {

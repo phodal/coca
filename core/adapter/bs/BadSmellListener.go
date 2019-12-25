@@ -318,12 +318,10 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		methodCalls = append(methodCalls, jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
-			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := *&models2.BsJMethodCall{currentPkg, "", currentClz, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := *&models2.BsJMethodCall{currentPkg, "", currentClz, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, jMethodCall)
 		} else {
-			methodName := ctx.IDENTIFIER().GetText()
-			jMethodCall := *&models2.BsJMethodCall{currentPkg, "NEEDFIX", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := *&models2.BsJMethodCall{currentPkg, "NEEDFIX", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, jMethodCall)
 		}
 	}

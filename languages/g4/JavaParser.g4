@@ -461,6 +461,8 @@ expressionList
 
 methodCall
     : IDENTIFIER '(' expressionList? ')'
+    | THIS '(' expressionList? ')'
+    | SUPER '(' expressionList? ')'
     ;
 
 expression
@@ -491,7 +493,7 @@ expression
     | expression bop='|' expression
     | expression bop='&&' expression
     | expression bop='||' expression
-    | expression bop='?' expression ':' expression
+    | <assoc=right> expression bop='?' expression ':' expression
     | <assoc=right> expression
       bop=('=' | '+=' | '-=' | '*=' | '/=' | '&=' | '|=' | '^=' | '>>=' | '>>>=' | '<<=' | '%=')
       expression

@@ -122,7 +122,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil, false}
 
 	updateMethod(method)
 }
@@ -160,7 +160,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil}
+	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil, false}
 
 	if ctx.FormalParameters() != nil {
 		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
@@ -283,13 +283,13 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
 
 	fullType, callType := warpTargetFullType(targetType)
-	if targetType == "super" {
+	if targetType == "super" || callee == "this" || callee == "super" {
 		callType = "super"
 		targetType = currentClzExtend
 	}
 	jMethodCall.Type = callType
 
-	methodName := ctx.IDENTIFIER().GetText()
+	methodName := callee
 	packageName := currentPkg
 
 	if fullType != "" {
@@ -465,10 +465,10 @@ func warpTargetFullType(targetType string) (string, string) {
 	}
 
 	//1. current package, 2. import by *
-	if pureTargetType == "super" {
+	if pureTargetType == "super" || pureTargetType == "this" {
 		for _, imp := range imports {
 			if strings.HasSuffix(imp, currentClzExtend) {
-				callType = "super"
+				callType = pureTargetType
 				return imp, callType
 			}
 		}

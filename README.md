@@ -349,12 +349,14 @@ coca suggest
 results:
 
 ```
-+--------+---------+---------------------+
-| CLASS  | PATTERN |       REASON        |
-+--------+---------+---------------------+
-| Insect | factory | to many constructor |
-| Bee    | factory | to many constructor |
-+--------+---------+---------------------+
++--------+------------------+--------------------------------+
+| CLASS  |     PATTERN      |             REASON             |
++--------+------------------+--------------------------------+
+| Insect | factory          | too many constructor           |
+| Bee    | factory, builder | complex constructor, too       |
+|        |                  | many constructor, too many     |
+|        |                  | parameters                     |
++--------+------------------+--------------------------------+
 ```
 
 ## Dev

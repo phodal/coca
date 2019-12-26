@@ -1,17 +1,17 @@
 package main
 
 import (
-	. "github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
 	"encoding/json"
 	"fmt"
+	. "github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"sort"
 	"strings"
 )
 
 var parsedDeps []JClassNode
 
-func main()  {
+func main() {
 	var analysisPackage = ""
 	file := support.ReadFile("deps.json")
 	if file == nil {
@@ -20,7 +20,7 @@ func main()  {
 
 	_ = json.Unmarshal(file, &parsedDeps)
 	sourceClasses := make(map[string]string)
-	targetlasses := make(map[string]string)
+	targetClasses := make(map[string]string)
 
 	for _, node := range parsedDeps {
 		if strings.Contains(node.Package, analysisPackage) {
@@ -31,14 +31,14 @@ func main()  {
 		for _, methodCall := range node.MethodCalls {
 			if strings.Contains(methodCall.Package, analysisPackage) {
 				className := methodCall.Package + "." + methodCall.Class
-				targetlasses[className] = className
+				targetClasses[className] = className
 			}
 		}
 	}
 
 	var excludePackage []string = nil
 	for _, clz := range sourceClasses {
-		if targetlasses[clz] != clz {
+		if targetClasses[clz] != clz {
 			excludePackage = append(excludePackage, clz)
 		}
 	}

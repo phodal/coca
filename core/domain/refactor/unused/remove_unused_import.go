@@ -13,7 +13,6 @@ import (
 )
 
 var currentFile string
-var moveConfig string
 var configPath string
 
 type RemoveUnusedImportApp struct {

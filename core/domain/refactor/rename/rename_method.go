@@ -2,7 +2,6 @@ package unused
 
 import (
 	"encoding/json"
-	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
 	support3 "github.com/phodal/coca/core/domain/refactor/rename/support"
 	. "github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
@@ -12,7 +11,6 @@ import (
 )
 
 var parsedChange []support3.RefactorChangeRelate
-var nodes []models2.JMoveStruct
 
 type RemoveMethodApp struct {
 }
@@ -23,7 +21,6 @@ var conf string
 var parsedDeps []JClassNode
 
 func RenameMethodApp(dep string, p string) *RemoveMethodApp {
-	nodes = nil
 	depsFile = dep
 	configPath = p
 	return &RemoveMethodApp{}
@@ -50,7 +47,6 @@ func (j *RemoveMethodApp) Start() {
 }
 
 func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
-
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
 			oldInfo := support3.BuildMethodPackageInfo(related.OldObj)

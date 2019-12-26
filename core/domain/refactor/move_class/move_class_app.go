@@ -39,7 +39,6 @@ func (j *MoveClassApp) Analysis() {
 		file := files[index]
 
 		currentFile, _ = filepath.Abs(file)
-		//displayName := filepath.Base(file)
 
 		parser := utils2.ProcessFile(file)
 		context := parser.CompilationUnit()

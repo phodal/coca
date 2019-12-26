@@ -329,7 +329,7 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 
 func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 	// lambda BlogPO::of
-	if ctx.COLONCOLON() != nil {
+	if ctx.COLONCOLON() != nil && ctx.Expression(0) != nil {
 		text := ctx.Expression(0).GetText()
 		methodName := ctx.IDENTIFIER().GetText()
 		targetType := parseTargetType(text)

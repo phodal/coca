@@ -1,6 +1,8 @@
 package identifier
 
 import (
+	"fmt"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
@@ -143,7 +145,6 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
-	//XXX: find the start position of {, not public
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
@@ -208,6 +209,17 @@ func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.Interface
 	hasEnterClass = true
 	currentNode.ClassType = "Interface"
 	currentNode.ClassName = ctx.IDENTIFIER().GetText()
+}
+
+func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) {
+	if reflect.TypeOf(ctx.GetParent()).String() == "*parser.StatementContext" {
+		statementCtx := ctx.GetParent().(*parser.StatementContext)
+		firstChild := statementCtx.GetChild(0).(antlr.ParseTree).GetText()
+		if strings.ToLower(firstChild) == "return" {
+			hasNull := strings.Contains(ctx.GetText(), "null")
+			currentMethod.ReturnNull = hasNull
+		}
+	}
 }
 
 func (s *JavaIdentifierListener) getNodes() []models.JIdentifier {

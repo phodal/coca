@@ -12,6 +12,7 @@ type JMethod struct {
 	Override          bool
 	Annotations       []Annotation
 	IsConstructor     bool
+	//ReturnNull        bool
 }
 
 type Annotation struct {

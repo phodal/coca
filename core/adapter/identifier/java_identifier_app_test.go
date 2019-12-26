@@ -26,7 +26,6 @@ func TestPolymorphism_Method(t *testing.T) {
 	identApp := NewJavaIdentifierApp()
 	identifiers := identApp.AnalysisPath("../../../_fixtures/suggest/polymorphism")
 
-	fmt.Println(identifiers)
 	g.Expect(len(identifiers)).To(Equal(1))
 	g.Expect(identifiers[0].ClassName).To(Equal("Overload"))
 	g.Expect(len(identifiers[0].Methods)).To(Equal(3))
@@ -35,11 +34,20 @@ func TestPolymorphism_Method(t *testing.T) {
 func TestPolymorphism_Constructor(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	identApp := new(JavaIdentifierApp)
+	identApp := NewJavaIdentifierApp()
 	identifiers := identApp.AnalysisPath("../../../_fixtures/suggest/factory")
 
-	fmt.Println(identifiers)
 	g.Expect(len(identifiers)).To(Equal(2))
 	g.Expect(identifiers[0].ClassName).To(Equal("Insect"))
 	g.Expect(identifiers[1].ClassName).To(Equal("Bee"))
+}
+
+func TestAddReturnNull(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	identApp := NewJavaIdentifierApp()
+	identifiers := identApp.AnalysisPath("../../../_fixtures/evaluate/null")
+
+	fmt.Println(identifiers)
+	g.Expect(true).To(Equal(true))
 }

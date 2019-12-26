@@ -1,4 +1,4 @@
-# Coca - toolbox for system refactoring and analaysis
+# Coca - toolbox for system refactoring and analysis
 
 [![Build Status](https://travis-ci.org/phodal/coca.svg?branch=master)](https://travis-ci.org/phodal/coca)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d5a5e060522403b1f79b/maintainability)](https://codeclimate.com/github/phodal/coca/maintainability)

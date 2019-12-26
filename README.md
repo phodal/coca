@@ -13,7 +13,9 @@ Refactoring Modeling:
 Todo:
 
  - [x] Show all todos and history
- - [ ] Suggest API 
+ - [ ] Suggest API for Design Patterns
+   - [x] factory pattern
+   - [ ] strategy 
 
 ## Usage
 
@@ -43,6 +45,10 @@ Available Commands:
   help        Help about any command
   rcall       reverse call
   refactor    auto refactor code
+  suggest     simple holmes
+  todo        scan todo
+  version     print the version number of Coca
+
 
 ```
 
@@ -333,6 +339,22 @@ results:
 +------------+--------------+--------------------------------+---------------------------------------------------+-------+
 ```
 
+### Suggest
+
+```
+coca suggest
+```
+
+results:
+
+```
++--------+---------+---------------------+
+| CLASS  | PATTERN |       REASON        |
++--------+---------+---------------------+
+| Insect | factory | to many constructor |
+| Bee    | factory | to many constructor |
++--------+---------+---------------------+
+```
 
 ## Dev
 

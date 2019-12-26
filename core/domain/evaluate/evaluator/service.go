@@ -11,17 +11,17 @@ import (
 type Service struct {
 }
 
-var nodeMap map[string]models.JClassNode
+var serviceNodeMap map[string]models.JClassNode
 var returnTypeMap map[string][]string
 var longParameterList []models.JMethod
 
-func (s Service) EvaluateList(nodes []models.JClassNode, classNodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
-	nodeMap = classNodeMap
+func (s Service) EvaluateList(evaluateModel EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
+	serviceNodeMap = nodeMap
 	longParameterList = nil
 	returnTypeMap = make(map[string][]string)
 
 	for _, node := range nodes {
-		s.Evaluate(node)
+		s.Evaluate(evaluateModel, node)
 	}
 
 	findRelatedMethodParameter(longParameterList)
@@ -49,7 +49,7 @@ func findRelatedMethodParameter(list []models.JMethod) {
 	}
 }
 
-func (s Service) Evaluate(node models.JClassNode) {
+func (s Service) Evaluate(result EvaluateModel, node models.JClassNode) {
 	var methodNameArray [][]string
 	for _, method := range node.Methods {
 		methodNameArray = append(methodNameArray, SplitCamelcase(method.Name))
@@ -83,7 +83,7 @@ func (s Service) Evaluate(node models.JClassNode) {
 			if !s.isJavaType(method) {
 				methodType := method.Type
 
-				if _, ok := nodeMap[methodType]; ok {
+				if _, ok := serviceNodeMap[methodType]; ok {
 					fullMethodName := node.Package + "." + node.Class + "." + method.Name
 					returnTypeMap[methodType] = append(returnTypeMap[methodType], fullMethodName)
 				}

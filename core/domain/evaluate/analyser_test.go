@@ -29,6 +29,7 @@ func Test_Service_LifeCycle(t *testing.T) {
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	analyser.Analysis(parsedDeps, nil)
+	// Todo Refactoring use read/write file
 	g.Expect(true).To(Equal(true))
 }
 
@@ -41,6 +42,8 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	analyser.Analysis(parsedDeps, nil)
+
+	// Todo Refactoring use read/write file
 	g.Expect(true).To(Equal(true))
 }
 
@@ -53,5 +56,7 @@ func Test_Long_Parameters(t *testing.T) {
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	analyser.Analysis(parsedDeps, nil)
+
+	// Todo Refactoring use read/write file
 	g.Expect(true).To(Equal(true))
 }

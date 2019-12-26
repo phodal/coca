@@ -8,10 +8,10 @@ type Empty struct {
 
 }
 
-func (Empty) Evaluate(models.JClassNode) {
+func (Empty) Evaluate(EvaluateModel, models.JClassNode) {
 
 }
 
-func (Empty) EvaluateList([]models.JClassNode, map[string]models.JClassNode, []models.JIdentifier) {
+func (Empty) EvaluateList(EvaluateModel, []models.JClassNode, map[string]models.JClassNode, []models.JIdentifier) {
 
 }

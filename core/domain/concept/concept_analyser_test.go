@@ -1,9 +1,9 @@
 package concept
 
 import (
+	"encoding/json"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
-	"encoding/json"
 	"log"
 	"testing"
 

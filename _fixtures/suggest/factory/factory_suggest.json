@@ -1,0 +1,366 @@
+[
+	{
+		"Package": "factory",
+		"Class": "Insect",
+		"Type": "Class",
+		"Path": "_fixtures/suggest/factory/Bee.java",
+		"Fields": null,
+		"Methods": [
+			{
+				"Name": "Insect",
+				"Type": "",
+				"StartLine": 4,
+				"StartLinePosition": 11,
+				"StopLine": 7,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "Insect",
+						"MethodName": "this",
+						"StartLine": 5,
+						"StartLinePosition": 8,
+						"StopLine": 5,
+						"StopLinePosition": 12
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 6,
+						"StartLinePosition": 19,
+						"StopLine": 6,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			},
+			{
+				"Name": "Insect",
+				"Type": "",
+				"StartLine": 9,
+				"StartLinePosition": 11,
+				"StopLine": 11,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					},
+					{
+						"Name": "height",
+						"Type": "int"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 10,
+						"StartLinePosition": 19,
+						"StopLine": 10,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			},
+			{
+				"Name": "Insect",
+				"Type": "",
+				"StartLine": 13,
+				"StartLinePosition": 11,
+				"StopLine": 15,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					},
+					{
+						"Name": "height",
+						"Type": "int"
+					},
+					{
+						"Name": "color",
+						"Type": "String"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 14,
+						"StartLinePosition": 19,
+						"StopLine": 14,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			}
+		],
+		"MethodCalls": [
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "Insect",
+				"MethodName": "this",
+				"StartLine": 5,
+				"StartLinePosition": 8,
+				"StopLine": 5,
+				"StopLinePosition": 12
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 6,
+				"StartLinePosition": 19,
+				"StopLine": 6,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 10,
+				"StartLinePosition": 19,
+				"StopLine": 10,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 14,
+				"StartLinePosition": 19,
+				"StopLine": 14,
+				"StopLinePosition": 26
+			}
+		],
+		"Extend": "",
+		"Implements": null
+	},
+	{
+		"Package": "",
+		"Class": "Bee",
+		"Type": "Class",
+		"Path": "_fixtures/suggest/factory/Bee.java",
+		"Fields": null,
+		"Methods": [
+			{
+				"Name": "Bee",
+				"Type": "",
+				"StartLine": 29,
+				"StartLinePosition": 11,
+				"StopLine": 32,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					},
+					{
+						"Name": "height",
+						"Type": "int"
+					},
+					{
+						"Name": "color",
+						"Type": "String"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "super",
+						"Class": "Insect",
+						"MethodName": "super",
+						"StartLine": 30,
+						"StartLinePosition": 8,
+						"StopLine": 30,
+						"StopLinePosition": 13
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 31,
+						"StartLinePosition": 19,
+						"StopLine": 31,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			},
+			{
+				"Name": "Bee",
+				"Type": "",
+				"StartLine": 19,
+				"StartLinePosition": 11,
+				"StopLine": 22,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "super",
+						"Class": "Insect",
+						"MethodName": "super",
+						"StartLine": 20,
+						"StartLinePosition": 8,
+						"StopLine": 20,
+						"StopLinePosition": 13
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 21,
+						"StartLinePosition": 19,
+						"StopLine": 21,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			},
+			{
+				"Name": "Bee",
+				"Type": "",
+				"StartLine": 24,
+				"StartLinePosition": 11,
+				"StopLine": 27,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					},
+					{
+						"Name": "height",
+						"Type": "int"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "super",
+						"Class": "Insect",
+						"MethodName": "super",
+						"StartLine": 25,
+						"StartLinePosition": 8,
+						"StopLine": 25,
+						"StopLinePosition": 13
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 26,
+						"StartLinePosition": 19,
+						"StopLine": 26,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			}
+		],
+		"MethodCalls": [
+			{
+				"Package": "factory",
+				"Type": "super",
+				"Class": "Insect",
+				"MethodName": "super",
+				"StartLine": 20,
+				"StartLinePosition": 8,
+				"StopLine": 20,
+				"StopLinePosition": 13
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 21,
+				"StartLinePosition": 19,
+				"StopLine": 21,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "super",
+				"Class": "Insect",
+				"MethodName": "super",
+				"StartLine": 25,
+				"StartLinePosition": 8,
+				"StopLine": 25,
+				"StopLinePosition": 13
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 26,
+				"StartLinePosition": 19,
+				"StopLine": 26,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "super",
+				"Class": "Insect",
+				"MethodName": "super",
+				"StartLine": 30,
+				"StartLinePosition": 8,
+				"StopLine": 30,
+				"StopLinePosition": 13
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 31,
+				"StartLinePosition": 19,
+				"StopLine": 31,
+				"StopLinePosition": 26
+			}
+		],
+		"Extend": "",
+		"Implements": null
+	}
+]

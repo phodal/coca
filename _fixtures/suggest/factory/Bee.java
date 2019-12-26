@@ -30,4 +30,18 @@ public class Bee extends Insect {
         super(size, height);
         System.out.println("Constructor: Bee size, height, color");
     }
+
+    public Bee(int size, int height, String color, int x, int y, int z) {
+        super(size, height);
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+        System.out.println("Constructor: Bee size, height, color");
+    }
 }

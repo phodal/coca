@@ -171,53 +171,6 @@
 			{
 				"Name": "Bee",
 				"Type": "",
-				"StartLine": 29,
-				"StartLinePosition": 11,
-				"StopLine": 32,
-				"StopLinePosition": 4,
-				"Parameters": [
-					{
-						"Name": "size",
-						"Type": "int"
-					},
-					{
-						"Name": "height",
-						"Type": "int"
-					},
-					{
-						"Name": "color",
-						"Type": "String"
-					}
-				],
-				"MethodCalls": [
-					{
-						"Package": "factory",
-						"Type": "super",
-						"Class": "Insect",
-						"MethodName": "super",
-						"StartLine": 30,
-						"StartLinePosition": 8,
-						"StopLine": 30,
-						"StopLinePosition": 13
-					},
-					{
-						"Package": "factory",
-						"Type": "",
-						"Class": "System.out",
-						"MethodName": "println",
-						"StartLine": 31,
-						"StartLinePosition": 19,
-						"StopLine": 31,
-						"StopLinePosition": 26
-					}
-				],
-				"Override": false,
-				"Annotations": null,
-				"IsConstructor": true
-			},
-			{
-				"Name": "Bee",
-				"Type": "",
 				"StartLine": 19,
 				"StartLinePosition": 11,
 				"StopLine": 22,
@@ -296,6 +249,202 @@
 				"Override": false,
 				"Annotations": null,
 				"IsConstructor": true
+			},
+			{
+				"Name": "Bee",
+				"Type": "",
+				"StartLine": 29,
+				"StartLinePosition": 11,
+				"StopLine": 32,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					},
+					{
+						"Name": "height",
+						"Type": "int"
+					},
+					{
+						"Name": "color",
+						"Type": "String"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "super",
+						"Class": "Insect",
+						"MethodName": "super",
+						"StartLine": 30,
+						"StartLinePosition": 8,
+						"StopLine": 30,
+						"StopLinePosition": 13
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 31,
+						"StartLinePosition": 19,
+						"StopLine": 31,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
+			},
+			{
+				"Name": "Bee",
+				"Type": "",
+				"StartLine": 34,
+				"StartLinePosition": 11,
+				"StopLine": 46,
+				"StopLinePosition": 4,
+				"Parameters": [
+					{
+						"Name": "size",
+						"Type": "int"
+					},
+					{
+						"Name": "height",
+						"Type": "int"
+					},
+					{
+						"Name": "color",
+						"Type": "String"
+					},
+					{
+						"Name": "x",
+						"Type": "int"
+					},
+					{
+						"Name": "y",
+						"Type": "int"
+					},
+					{
+						"Name": "z",
+						"Type": "int"
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "super",
+						"Class": "Insect",
+						"MethodName": "super",
+						"StartLine": 35,
+						"StartLinePosition": 8,
+						"StopLine": 35,
+						"StopLinePosition": 13
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 36,
+						"StartLinePosition": 19,
+						"StopLine": 36,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 37,
+						"StartLinePosition": 19,
+						"StopLine": 37,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 38,
+						"StartLinePosition": 19,
+						"StopLine": 38,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 39,
+						"StartLinePosition": 19,
+						"StopLine": 39,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 40,
+						"StartLinePosition": 19,
+						"StopLine": 40,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 41,
+						"StartLinePosition": 19,
+						"StopLine": 41,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 42,
+						"StartLinePosition": 19,
+						"StopLine": 42,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 43,
+						"StartLinePosition": 19,
+						"StopLine": 43,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 44,
+						"StartLinePosition": 19,
+						"StopLine": 44,
+						"StopLinePosition": 26
+					},
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"StartLine": 45,
+						"StartLinePosition": 19,
+						"StopLine": 45,
+						"StopLinePosition": 26
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true
 			}
 		],
 		"MethodCalls": [
@@ -357,6 +506,116 @@
 				"StartLine": 31,
 				"StartLinePosition": 19,
 				"StopLine": 31,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "super",
+				"Class": "Insect",
+				"MethodName": "super",
+				"StartLine": 35,
+				"StartLinePosition": 8,
+				"StopLine": 35,
+				"StopLinePosition": 13
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 36,
+				"StartLinePosition": 19,
+				"StopLine": 36,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 37,
+				"StartLinePosition": 19,
+				"StopLine": 37,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 38,
+				"StartLinePosition": 19,
+				"StopLine": 38,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 39,
+				"StartLinePosition": 19,
+				"StopLine": 39,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 40,
+				"StartLinePosition": 19,
+				"StopLine": 40,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 41,
+				"StartLinePosition": 19,
+				"StopLine": 41,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 42,
+				"StartLinePosition": 19,
+				"StopLine": 42,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 43,
+				"StartLinePosition": 19,
+				"StopLine": 43,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 44,
+				"StartLinePosition": 19,
+				"StopLine": 44,
+				"StopLinePosition": 26
+			},
+			{
+				"Package": "factory",
+				"Type": "",
+				"Class": "System.out",
+				"MethodName": "println",
+				"StartLine": 45,
+				"StartLinePosition": 19,
+				"StopLine": 45,
 				"StopLinePosition": 26
 			}
 		],

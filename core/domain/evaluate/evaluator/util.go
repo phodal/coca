@@ -1,14 +1,16 @@
 package evaluator
 
 import (
-	"fmt"
 	"github.com/phodal/coca/core/models"
 )
 
 type Util struct {
+}
+
+func (Util) Evaluate(result *EvaluateModel, node models.JClassNode) {
 
 }
 
-func (Util) Evaluate(models.JClassNode) {
-	fmt.Println("util")
+func (s Util) EvaluateList(evaluateModel *EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
+
 }

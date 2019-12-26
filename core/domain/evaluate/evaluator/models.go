@@ -15,6 +15,7 @@ type NormalIssues struct {
 }
 
 type Summary struct {
+	UtilsCount  int
 	ClassCount  int
 	MethodCount int
 }

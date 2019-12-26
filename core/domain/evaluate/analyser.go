@@ -24,6 +24,13 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 	for _, node := range classNodes {
 		nodeMap[node.Class] = node
 
+		if strings.Contains(strings.ToLower(node.Class), "util") {
+			result.Summary.UtilsCount++
+
+			evaluation = Evaluation{evaluator.Util{}}
+			evaluation.Evaluate(&result, node)
+		}
+
 		if strings.Contains(strings.ToLower(node.Class), "service") {
 			servicesNode = append(servicesNode, node)
 		} else {

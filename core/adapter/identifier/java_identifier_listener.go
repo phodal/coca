@@ -1,7 +1,6 @@
 package identifier
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"

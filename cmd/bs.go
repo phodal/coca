@@ -69,12 +69,7 @@ func isSmellHaveSize(key string) bool {
 		"longMethod",
 		"dataClass",
 	}
-	return contains(smellList, key)
-}
-
-func contains(s []string, searchterm string) bool {
-	i := sort.SearchStrings(s, searchterm)
-	return i < len(s) && s[i] == searchterm
+	return support.Contains(smellList, key)
 }
 
 func init() {

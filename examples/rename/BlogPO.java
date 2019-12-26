@@ -27,7 +27,7 @@ public class BlogPO implements PersistenceObject<Blog> {
     // The domain model and persistence object may have much different.
     // So, manual to convert between them is better than use object mapper like Orika.
     @Override
-    public Blog convertDomainModelModelModelModel() {
+    public Blog convertDomain() {
         return new Blog(
                 UUID.fromString(id),
                 title,

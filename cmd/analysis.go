@@ -2,10 +2,8 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	. "github.com/phodal/coca/core/adapter/call"
 	. "github.com/phodal/coca/core/adapter/identifier"
-	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 )
@@ -27,19 +25,19 @@ var analysisCmd = &cobra.Command{
 		importPath := analysisCmdConfig.Path
 
 		if importPath != "" {
-			var iNodes []models.JIdentifier
-			if IsExistCocaFile("identify.json") && !analysisCmdConfig.ForceUpdate {
-				fmt.Println("use exist identify")
-				identContent := ReadCocaFile("identify.json")
-				_ = json.Unmarshal(identContent, &iNodes)
-			} else {
-				fmt.Println("force update identify")
-				identifierApp := NewJavaIdentifierApp()
-				iNodes := identifierApp.AnalysisPath(importPath)
+			//var iNodes []models.JIdentifier
+			//if IsExistCocaFile("identify.json") && !analysisCmdConfig.ForceUpdate {
+			//	fmt.Println("use exist identify")
+			//	identContent := ReadCocaFile("identify.json")
+			//	_ = json.Unmarshal(identContent, &iNodes)
+			//} else {
+			//	fmt.Println("force update identify")
+			identifierApp := NewJavaIdentifierApp()
+			iNodes := identifierApp.AnalysisPath(importPath)
 
-				identModel, _ := json.MarshalIndent(iNodes, "", "\t")
-				WriteToCocaFile("identify.json", string(identModel))
-			}
+			identModel, _ := json.MarshalIndent(iNodes, "", "\t")
+			WriteToCocaFile("identify.json", string(identModel))
+			//}
 
 			var classes []string = nil
 

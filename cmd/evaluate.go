@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/evaluate"
 	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
-	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -37,7 +38,18 @@ var evaluateCmd = &cobra.Command{
 		_ = json.Unmarshal(identContent, &identifiers)
 		_ = json.Unmarshal(file, &parsedDeps)
 
-		analyser.Analysis(parsedDeps, identifiers)
+		result := analyser.Analysis(parsedDeps, identifiers)
+
+		cModel, _ := json.MarshalIndent(result, "", "\t")
+		WriteToCocaFile("evaluate.json", string(cModel))
+
+		fmt.Println(" ----- same type in service ------ ")
+		fmt.Println(result.ServiceIssues.ReturnTypeMap)
+
+		fmt.Println("-------- Null -------- Method")
+		for _, nullItem := range result.Nullable.Items {
+			fmt.Println(nullItem)
+		}
 	},
 }
 

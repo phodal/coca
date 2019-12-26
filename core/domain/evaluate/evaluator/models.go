@@ -10,9 +10,20 @@ type ServiceIssues struct {
 	RelatedMethod []string
 }
 
+type NormalIssues struct {
+	StaticMethodCount int
+}
+
+type Summary struct {
+	ClassCount  int
+	MethodCount int
+}
+
 type EvaluateModel struct {
 	Nullable      Nullable
 	ServiceIssues ServiceIssues
+	NormalIssues  NormalIssues
+	Summary       Summary
 }
 
 func NewEvaluateModel() EvaluateModel {

@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/evaluate"
+	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
 	"encoding/json"
 	"github.com/spf13/cobra"
@@ -30,11 +31,13 @@ var evaluateCmd = &cobra.Command{
 			log.Fatal("lost file:" + dependence)
 		}
 
-		// util
+		var identifiers []models.JIdentifier
+		identContent := ReadCocaFile("identify.json")
 
+		_ = json.Unmarshal(identContent, &identifiers)
 		_ = json.Unmarshal(file, &parsedDeps)
 
-		analyser.Analysis(*&parsedDeps)
+		analyser.Analysis(parsedDeps, identifiers)
 	},
 }
 

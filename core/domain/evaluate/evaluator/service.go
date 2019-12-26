@@ -15,7 +15,7 @@ var nodeMap map[string]models.JClassNode
 var returnTypeMap map[string][]string
 var longParameterList []models.JMethod
 
-func (s Service) EvaluateList(nodes []models.JClassNode, classNodeMap map[string]models.JClassNode) {
+func (s Service) EvaluateList(nodes []models.JClassNode, classNodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
 	nodeMap = classNodeMap
 	longParameterList = nil
 	returnTypeMap = make(map[string][]string)

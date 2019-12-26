@@ -16,7 +16,7 @@ func TestAnalyser_Analysis(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps)
+	analyser.Analysis(parsedDeps, nil)
 	g.Expect(true).To(Equal(true))
 }
 
@@ -28,7 +28,7 @@ func Test_Service_LifeCycle(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service_lifecycle.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps)
+	analyser.Analysis(parsedDeps, nil)
 	g.Expect(true).To(Equal(true))
 }
 
@@ -40,7 +40,7 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service_same_return_type.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps)
+	analyser.Analysis(parsedDeps, nil)
 	g.Expect(true).To(Equal(true))
 }
 
@@ -52,6 +52,6 @@ func Test_Long_Parameters(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service_long_parameters.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps)
+	analyser.Analysis(parsedDeps, nil)
 	g.Expect(true).To(Equal(true))
 }

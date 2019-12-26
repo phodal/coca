@@ -17,6 +17,8 @@ Todo:
    - [x] factory pattern
    - [ ] strategy 
    - [ ] builder
+ - [ ] Docs
+   - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring () 
 
 ## Usage
 

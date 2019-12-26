@@ -13,6 +13,7 @@ type JMethod struct {
 	Annotations       []Annotation
 	IsConstructor     bool
 	IsReturnNull      bool
+	Modifiers         []string
 }
 
 type Annotation struct {

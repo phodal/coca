@@ -50,3 +50,13 @@ func TestAddReturnNull(t *testing.T) {
 	g.Expect(identifiers[0].Methods[1].IsReturnNull).To(Equal(true))
 	g.Expect(identifiers[0].Methods[2].IsReturnNull).To(Equal(true))
 }
+
+func TestStaticMethod(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	identApp := NewJavaIdentifierApp()
+	identifiers := identApp.AnalysisPath("../../../_fixtures/suggest/static")
+
+	g.Expect(identifiers[0].Methods[0].Modifiers[0]).To(Equal("public"))
+	g.Expect(identifiers[0].Methods[0].Modifiers[1]).To(Equal("static"))
+}

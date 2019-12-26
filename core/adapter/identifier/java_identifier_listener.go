@@ -1,6 +1,7 @@
 package identifier
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"
@@ -159,6 +160,13 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 		StopLinePosition:  stopLinePosition,
 		Override:          isOverrideMethod,
 		Annotations:       annotations,
+	}
+
+	if reflect.TypeOf(ctx.GetParent().GetParent()).String() == "*parser.ClassBodyDeclarationContext" {
+		bodyCtx := ctx.GetParent().GetParent().(*parser.ClassBodyDeclarationContext)
+		for _, modifier := range bodyCtx.AllModifier() {
+			currentMethod.Modifiers = append(currentMethod.Modifiers, modifier.GetText())
+		}
 	}
 
 	isOverrideMethod = false

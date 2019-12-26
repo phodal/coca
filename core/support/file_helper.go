@@ -1,8 +1,8 @@
 package support
 
 import (
-	"github.com/phodal/coca/config"
 	"fmt"
+	"github.com/phodal/coca/config"
 	"io"
 	"io/ioutil"
 	"os"
@@ -19,6 +19,13 @@ func WriteToCocaFile(fileName string, payload string) {
 		}
 	}
 	_ = ioutil.WriteFile(reporterPath+"/"+fileName, []byte(payload), os.ModePerm)
+}
+
+func IsExistCocaFile(fileName string) bool {
+	if _, err := os.Stat(reporterPath + "/" + fileName); os.IsNotExist(err) {
+		return false
+	}
+	return true
 }
 
 func ReadCocaFile(fileName string) []byte {

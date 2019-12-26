@@ -59,6 +59,8 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 			}
 		}
 	}
+
+	currentMethod = models.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
@@ -215,8 +217,7 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 		statementCtx := ctx.GetParent().(*parser.StatementContext)
 		firstChild := statementCtx.GetChild(0).(antlr.ParseTree).GetText()
 		if strings.ToLower(firstChild) == "return" {
-			hasNull := strings.Contains(ctx.GetText(), "null")
-			currentMethod.IsReturnNull = hasNull
+			currentMethod.IsReturnNull = strings.Contains(ctx.GetText(), "null")
 		}
 	}
 }

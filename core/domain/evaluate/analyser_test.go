@@ -81,5 +81,5 @@ func TestNullPointException(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	result := analyser.Analysis(callNodes, identifiers)
 
-	g.Expect(result.Nullable.Items[0]).To(Equal("nonnull.Name.orElseNull"))
+	g.Expect(len(result.Nullable.Items)).To(Equal(2))
 }

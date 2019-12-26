@@ -19,7 +19,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := new(call.JavaCallApp)
+	callApp := call.NewJavaCallApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	identifiersMap := adapter.BuildIdentifierMap(identifiers)

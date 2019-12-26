@@ -3,6 +3,8 @@ package evaluate
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/core/adapter/call"
+	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
 	"testing"
@@ -59,4 +61,24 @@ func Test_Long_Parameters(t *testing.T) {
 
 	// Todo Refactoring use read/write file
 	g.Expect(true).To(Equal(true))
+}
+
+func TestNullPointException(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/evaluate/null"
+	identifierApp := new(identifier.JavaIdentifierApp)
+	identifiers := identifierApp.AnalysisPath(codePath)
+	var classes []string = nil
+	for _, node := range identifiers {
+		classes = append(classes, node.Package+"."+node.ClassName)
+	}
+
+	callApp := call.NewJavaCallApp()
+	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
+
+	analyser := NewEvaluateAnalyser()
+	result := analyser.Analysis(callNodes, identifiers)
+
+	g.Expect(result.Nullable.Items[0]).To(Equal("nonnull.Name.orElseNull"))
 }

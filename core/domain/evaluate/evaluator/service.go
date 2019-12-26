@@ -15,13 +15,13 @@ var serviceNodeMap map[string]models.JClassNode
 var returnTypeMap map[string][]string
 var longParameterList []models.JMethod
 
-func (s Service) EvaluateList(evaluateModel EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
+func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
 	serviceNodeMap = nodeMap
 	longParameterList = nil
 	returnTypeMap = make(map[string][]string)
 
 	for _, node := range nodes {
-		s.Evaluate(evaluateModel, node)
+		s.Evaluate(*evaluateModel, node)
 	}
 
 	findRelatedMethodParameter(longParameterList)

@@ -17,7 +17,7 @@ func NewEvaluateAnalyser() Analyser {
 func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.JIdentifier) evaluator.EvaluateModel {
 	var servicesNode []models.JClassNode = nil
 	var evaluation Evaluation
-	var result evaluator.EvaluateModel = evaluator.NewEvaluateModel()
+	var result = evaluator.NewEvaluateModel()
 
 	var nodeMap = make(map[string]models.JClassNode)
 	for _, node := range classNodes {
@@ -33,10 +33,10 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 	}
 
 	evaluation = Evaluation{evaluator.Service{}}
-	evaluation.EvaluateList(result, servicesNode, nodeMap, identifiers)
+	evaluation.EvaluateList(&result, servicesNode, nodeMap, identifiers)
 
-	nullableEva := Evaluation{evaluator.NullException{}}
-	nullableEva.EvaluateList(result, servicesNode, nodeMap, identifiers)
+	nullableEva := Evaluation{evaluator.NullPointException{}}
+	nullableEva.EvaluateList(&result, servicesNode, nodeMap, identifiers)
 
 	return result
 }

@@ -4,14 +4,14 @@ import (
 	"github.com/phodal/coca/core/models"
 )
 
-type NullException struct {
+type NullPointException struct {
 }
 
-func (NullException) Evaluate(EvaluateModel, models.JClassNode) {
+func (NullPointException) Evaluate(EvaluateModel, models.JClassNode) {
 
 }
 
-func (n NullException) EvaluateList(evaluateModel EvaluateModel, nodes []models.JClassNode, classNodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
+func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
 	var nullableList []string
 	for _, ident := range identifiers {
 		for _, method := range ident.Methods {

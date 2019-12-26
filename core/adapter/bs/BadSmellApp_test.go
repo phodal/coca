@@ -1,7 +1,6 @@
 package bs
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"testing"
 )

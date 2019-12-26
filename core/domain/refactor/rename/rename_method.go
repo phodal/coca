@@ -1,7 +1,6 @@
 package unused
 
 import (
-	"encoding/json"
 	support3 "github.com/phodal/coca/core/domain/refactor/rename/support"
 	. "github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
@@ -15,25 +14,17 @@ var parsedChange []support3.RefactorChangeRelate
 type RemoveMethodApp struct {
 }
 
-var depsFile string
 var configPath string
 var conf string
 var parsedDeps []JClassNode
 
-func RenameMethodApp(dep string, p string) *RemoveMethodApp {
-	depsFile = dep
+func RenameMethodApp(deps []JClassNode, p string) *RemoveMethodApp {
+	parsedDeps = deps
 	configPath = p
 	return &RemoveMethodApp{}
 }
 
 func (j *RemoveMethodApp) Start() {
-	file := support.ReadFile(depsFile)
-	if file == nil {
-		return
-	}
-
-	_ = json.Unmarshal(file, &parsedDeps)
-
 	configBytes := support.ReadFile(configPath)
 	if configBytes == nil {
 		return

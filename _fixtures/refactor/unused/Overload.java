@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class Overload {
-    void demo(int a) {
+    void demoA(int a) {
         System.out.println("a: " + a);
     }
 }

@@ -8,6 +8,8 @@ type Suggest struct {
 	Class   string
 	Pattern string
 	Reason  string
+	Size    int
+	Line    int
 }
 
 func NewSuggest(clz models.JClassNode, pattern, reason string) Suggest {

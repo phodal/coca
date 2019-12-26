@@ -16,6 +16,7 @@ Todo:
  - [ ] Suggest API for Design Patterns
    - [x] factory pattern
    - [ ] strategy 
+   - [ ] builder
 
 ## Usage
 

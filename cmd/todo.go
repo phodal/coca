@@ -22,18 +22,16 @@ var todoCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		path := cmd.Flag("path").Value.String()
-		if path != "" {
-			app := todo.NewTodoApp()
-			todos := app.AnalysisPath(path)
+		app := todo.NewTodoApp()
+		todos := app.AnalysisPath(path)
 
-			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
-			for _, todo := range todos {
-				table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
-			}
-
-			table.Render()
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
+		for _, todo := range todos {
+			table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
 		}
+
+		table.Render()
 	},
 }
 

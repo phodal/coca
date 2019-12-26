@@ -207,8 +207,15 @@ func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 		StopLine:          ctx.GetStop().GetLine(),
 		StopLinePosition:  ctx.GetStop().GetColumn(),
 		Override:          isOverrideMethod,
+		Parameters: 		nil,
 		Annotations:       currentMethod.Annotations,
 		IsConstructor:     true,
+	}
+
+
+	parameters := ctx.FormalParameters()
+	if buildMethodParameters(parameters, method) {
+		return
 	}
 
 	updateMethod(method)
@@ -230,14 +237,23 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	method := &models.JMethod{name, typeType, startLine, startLinePosition, stopLine, stopLinePosition, nil, nil, false, nil, false}
 
-	if ctx.FormalParameters() != nil {
-		if ctx.FormalParameters().GetChild(0) == nil || ctx.FormalParameters().GetText() == "()" || ctx.FormalParameters().GetChild(1) == nil {
+	parameters := ctx.FormalParameters()
+	if buildMethodParameters(parameters, method) {
+		return
+	}
+
+	updateMethod(method)
+}
+
+func buildMethodParameters(parameters parser.IFormalParametersContext, method *models.JMethod) bool {
+	if parameters != nil {
+		if parameters.GetChild(0) == nil || parameters.GetText() == "()" || parameters.GetChild(1) == nil {
 			updateMethod(method)
-			return
+			return true
 		}
 
 		var methodParams []models.JParameter = nil
-		parameterList := ctx.FormalParameters().GetChild(1).(*parser.FormalParameterListContext)
+		parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
 		formalParameter := parameterList.AllFormalParameter()
 		for _, param := range formalParameter {
 			paramContext := param.(*parser.FormalParameterContext)
@@ -250,8 +266,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 		method.Parameters = methodParams
 	}
-
-	updateMethod(method)
+	return false
 }
 
 func updateMethod(method *models.JMethod) {
@@ -265,7 +280,7 @@ func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationCo
 }
 
 func exitMethod() {
-	if len(methodQueue) < 1 {
+	if methodQueue == nil || len(methodQueue) < 1 {
 		currentMethod = models.NewJMethod()
 		return
 	}
@@ -280,18 +295,20 @@ func exitMethod() {
 
 // TODO: add inner creator examples
 func (s *JavaCallListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
-	currentClz = ctx.IDENTIFIER().GetText()
-	classQueue = append(classQueue, currentClz)
+	if ctx.IDENTIFIER() != nil {
+		currentClz = ctx.IDENTIFIER().GetText()
+		classQueue = append(classQueue, currentClz)
+	}
 }
 
 // TODO: add inner creator examples
 func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
-	if len(classQueue) <= 1 {
+	if classQueue == nil || len(classQueue) <= 1 {
 		return
 	}
 
 	classQueue = classQueue[0 : len(classQueue)-1]
-	currentClz = classQueue[len(classQueue)]
+	currentClz = classQueue[len(classQueue) - 1]
 }
 
 func getMethodMapName(method models.JMethod) string {

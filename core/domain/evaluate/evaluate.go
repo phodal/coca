@@ -6,7 +6,7 @@ import (
 )
 
 type Evaluator interface {
-	Evaluate(result evaluator.EvaluateModel, node models.JClassNode)
+	Evaluate(result *evaluator.EvaluateModel, node models.JClassNode)
 	EvaluateList(evaluateModel *evaluator.EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier)
 }
 
@@ -14,7 +14,7 @@ type Evaluation struct {
 	Evaluator Evaluator
 }
 
-func (o *Evaluation) Evaluate(result evaluator.EvaluateModel, node models.JClassNode) {
+func (o *Evaluation) Evaluate(result *evaluator.EvaluateModel, node models.JClassNode) {
 	o.Evaluator.Evaluate(result, node)
 }
 

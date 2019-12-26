@@ -30,9 +30,10 @@ func Test_Service_LifeCycle(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service_lifecycle.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps, nil)
-	// Todo Refactoring use read/write file
-	g.Expect(true).To(Equal(true))
+	result := analyser.Analysis(parsedDeps, nil)
+	g.Expect(len(result.ServiceIssues.LifecycleMap["do"])).To(Equal(2))
+	g.Expect(result.ServiceIssues.LifecycleMap["do"][0]).To(Equal("doSave"))
+	g.Expect(result.ServiceIssues.LifecycleMap["do"][1]).To(Equal("doUpdate"))
 }
 
 func Test_Service_Same_Return_Type(t *testing.T) {
@@ -43,10 +44,8 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service_same_return_type.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps, nil)
-
-	// Todo Refactoring use read/write file
-	g.Expect(true).To(Equal(true))
+	results := analyser.Analysis(parsedDeps, nil)
+	g.Expect(len(results.ServiceIssues.ReturnTypeMap)).To(Equal(1))
 }
 
 func Test_Long_Parameters(t *testing.T) {
@@ -57,10 +56,12 @@ func Test_Long_Parameters(t *testing.T) {
 	file := support.ReadFile("../../../_fixtures/evaluate/service_long_parameters.json")
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	analyser.Analysis(parsedDeps, nil)
+	result := analyser.Analysis(parsedDeps, nil)
 
-	// Todo Refactoring use read/write file
-	g.Expect(true).To(Equal(true))
+	g.Expect(result.ServiceIssues.RelatedMethod[0]).To(Equal("address"))
+	g.Expect(result.ServiceIssues.RelatedMethod[1]).To(Equal("age"))
+	g.Expect(result.ServiceIssues.RelatedMethod[2]).To(Equal("firstname"))
+	g.Expect(result.ServiceIssues.RelatedMethod[3]).To(Equal("lastname"))
 }
 
 func TestNullPointException(t *testing.T) {

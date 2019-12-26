@@ -1,7 +1,6 @@
 package evaluator
 
 import (
-	"fmt"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
 	"github.com/phodal/coca/core/support/apriori"
@@ -21,13 +20,14 @@ func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []models.JClas
 	returnTypeMap = make(map[string][]string)
 
 	for _, node := range nodes {
-		s.Evaluate(*evaluateModel, node)
+		s.Evaluate(evaluateModel, node)
 	}
 
-	findRelatedMethodParameter(longParameterList)
+	evaluateModel.ServiceIssues.ReturnTypeMap = returnTypeMap
+	findRelatedMethodParameter(evaluateModel, longParameterList)
 }
 
-func findRelatedMethodParameter(list []models.JMethod) {
+func findRelatedMethodParameter(model *EvaluateModel, list []models.JMethod) {
 	var dataset [][]string
 	for _, method := range list {
 		var methodlist []string
@@ -44,12 +44,12 @@ func findRelatedMethodParameter(list []models.JMethod) {
 	for _, res := range result {
 		items := res.GetSupportRecord().GetItems()
 		if len(items) >= 4 {
-			fmt.Println(items)
+			model.ServiceIssues.RelatedMethod = items
 		}
 	}
 }
 
-func (s Service) Evaluate(result EvaluateModel, node models.JClassNode) {
+func (s Service) Evaluate(result *EvaluateModel, node models.JClassNode) {
 	var methodNameArray [][]string
 	for _, method := range node.Methods {
 		methodNameArray = append(methodNameArray, SplitCamelcase(method.Name))
@@ -59,9 +59,7 @@ func (s Service) Evaluate(result EvaluateModel, node models.JClassNode) {
 		lifecycleMap := s.buildLifecycle(methodNameArray)
 		hasLifecycle := len(lifecycleMap) > 0
 		if hasLifecycle {
-			for key, value := range lifecycleMap {
-				fmt.Println(key, value)
-			}
+			result.ServiceIssues.LifecycleMap = lifecycleMap
 		}
 	}
 

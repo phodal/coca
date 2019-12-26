@@ -5,7 +5,9 @@ type Nullable struct {
 }
 
 type ServiceIssues struct {
-	LifecycleMap map[string]string
+	LifecycleMap  map[string][]string
+	ReturnTypeMap map[string][]string
+	RelatedMethod []string
 }
 
 type EvaluateModel struct {

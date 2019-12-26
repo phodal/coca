@@ -7,7 +7,7 @@ import (
 type NullPointException struct {
 }
 
-func (NullPointException) Evaluate(EvaluateModel, models.JClassNode) {
+func (NullPointException) Evaluate(*EvaluateModel, models.JClassNode) {
 
 }
 

@@ -8,7 +8,7 @@ type Empty struct {
 
 }
 
-func (Empty) Evaluate(EvaluateModel, models.JClassNode) {
+func (Empty) Evaluate(*EvaluateModel, models.JClassNode) {
 
 }
 

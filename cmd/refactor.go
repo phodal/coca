@@ -23,7 +23,8 @@ var refactorCmd = &cobra.Command{
 			app.Analysis()
 
 			app2 := NewRemoveUnusedImportApp(path)
-			app2.Analysis()
+			results := app2.Analysis()
+			app2.Refactoring(results)
 		}
 
 		if dependence != "" && rename != "" {

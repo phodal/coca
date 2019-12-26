@@ -7,7 +7,7 @@ import (
 	"unicode"
 )
 
-var node *models2.JFullIdentifier;
+var node models2.JFullIdentifier;
 
 type JavaRefactorListener struct {
 	BaseJavaParserListener
@@ -203,6 +203,10 @@ func isUppercaseText(text string) bool {
 	return !strings.Contains(text, ".") && unicode.IsUpper([]rune(text)[0])
 }
 
-func (s *JavaRefactorListener) InitNode(identifier *models2.JFullIdentifier) {
+func (s *JavaRefactorListener) InitNode(identifier models2.JFullIdentifier) {
 	node = identifier
+}
+
+func (s *JavaRefactorListener) GetNodeInfo() models2.JFullIdentifier {
+	return node
 }

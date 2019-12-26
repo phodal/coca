@@ -19,17 +19,16 @@ var configPath string
 type RemoveUnusedImportApp struct {
 }
 
-var nodes []models2.JMoveStruct
-
 func NewRemoveUnusedImportApp(pPath string) *RemoveUnusedImportApp {
 	configPath = pPath
 
-	nodes = nil
 	return &RemoveUnusedImportApp{}
 }
 
-func (j *RemoveUnusedImportApp) Analysis() {
+func (j *RemoveUnusedImportApp) Analysis() []models2.JFullIdentifier {
 	files := support.GetJavaFiles(configPath)
+
+	var nodes []models2.JFullIdentifier = nil
 	for index := range files {
 		file := files[index]
 
@@ -46,13 +45,22 @@ func (j *RemoveUnusedImportApp) Analysis() {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
+		nodes = append(nodes, listener.GetNodeInfo())
+	}
+
+	return nodes
+}
+
+func (j *RemoveUnusedImportApp) Refactoring(resultNodes []models2.JFullIdentifier) {
+	for _, node := range resultNodes {
 		if node.Name != "" {
-			handleNode(node)
+			errorLines := BuildErrorLines(node)
+			removeImportByLines(currentFile, errorLines)
 		}
 	}
 }
 
-func handleNode(node *models2.JFullIdentifier) {
+func BuildErrorLines(node models2.JFullIdentifier) []int {
 	var fields = node.GetFields()
 	var imports = node.GetImports()
 
@@ -74,7 +82,7 @@ func handleNode(node *models2.JFullIdentifier) {
 		}
 	}
 
-	removeImportByLines(currentFile, errorLines)
+	return errorLines
 }
 
 func removeImportByLines(file string, errorLines []int) {

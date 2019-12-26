@@ -34,8 +34,8 @@ type JFullIdentifier struct {
 	Type string
 }
 
-func NewJFullIdentifier() *JFullIdentifier {
-	identifier := &JFullIdentifier{"", "", ""}
+func NewJFullIdentifier() JFullIdentifier {
+	identifier := *&JFullIdentifier{"", "", ""}
 	methods = nil
 	fields = make(map[string]JField)
 	imports = nil

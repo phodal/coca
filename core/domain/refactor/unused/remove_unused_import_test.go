@@ -11,8 +11,10 @@ func TestRemoveUnusedImportApp_Analysis(t *testing.T) {
 
 	codePath := "../../../../_fixtures/refactor/unused"
 	app := NewRemoveUnusedImportApp(codePath)
-	app.Analysis()
+	results := app.Analysis()
 
+	g.Expect(len(results)).To(Equal(1))
 
-	g.Expect(true).To(Equal(true))
+	errorLines := BuildErrorLines(results[0])
+	g.Expect(errorLines).To(Equal([]int{3,4,5}))
 }

@@ -2,11 +2,11 @@ package move_class
 
 import (
 	"bufio"
+	"fmt"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	base2 "github.com/phodal/coca/core/domain/refactor/base"
 	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
 	utils2 "github.com/phodal/coca/core/support"
-	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"
 	"log"
 	"os"
@@ -35,7 +35,6 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 func (j *MoveClassApp) Analysis() {
 	// TODO: 使用 Deps.json 来移动包
 	files := utils2.GetJavaFiles(configPath)
-	fmt.Println(files)
 	for index := range files {
 		file := files[index]
 
@@ -86,11 +85,11 @@ func parseRename() {
 	}
 }
 
-func updatePackageInfo(structs []models2.JMoveStruct, originImport string, newImport string)  {
+func updatePackageInfo(structs []models2.JMoveStruct, originImport string, newImport string) {
 	var originNode models2.JMoveStruct
 	for index := range nodes {
 		node := nodes[index]
-		if originImport == node.Pkg + "." + node.Name {
+		if originImport == node.Pkg+"."+node.Name {
 			originNode = node
 		}
 	}
@@ -100,9 +99,9 @@ func updatePackageInfo(structs []models2.JMoveStruct, originImport string, newIm
 	}
 	path := buildJavaPath(configPath + newImport)
 	split := strings.Split(newImport, ".")
-	pkg := strings.Join(split[:len(split) - 1], ".")
+	pkg := strings.Join(split[:len(split)-1], ".")
 	fmt.Println(pkg)
-	updateFile(path, originNode.GetPkgInfo().StartLine, "package " + pkg + ";")
+	updateFile(path, originNode.GetPkgInfo().StartLine, "package "+pkg+";")
 }
 
 func updateImportSide(originImport string, newImport string) {
@@ -127,7 +126,7 @@ func updateFile(path string, lineNum int, newImp string) {
 
 	for i := range lines {
 		if i == lineNum {
-			lines[i - 1] = newImp
+			lines[i-1] = newImp
 		}
 	}
 	output := strings.Join(lines, "\n")

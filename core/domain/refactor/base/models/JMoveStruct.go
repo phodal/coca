@@ -8,7 +8,7 @@ type JImport struct {
 }
 
 type JMoveStruct struct {
-	*JFullIdentifier
+	JFullIdentifier
 
 	Path string
 	Deps []JImport

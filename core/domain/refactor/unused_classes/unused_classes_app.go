@@ -1,4 +1,4 @@
-package main
+package unused_classes
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 
 var parsedDeps []JClassNode
 
-func main() {
+func Refactoring() {
 	var analysisPackage = ""
 	file := support.ReadFile("deps.json")
 	if file == nil {

@@ -9,6 +9,15 @@ type SqlIdentifierListener struct {
 	parser.BaseSqlListener
 }
 
+type SqlNode struct {
+}
+
+var sqlNode SqlNode
+
+func init() {
+	sqlNode = *&SqlNode{}
+}
+
 func NewSqlIdentifierListener() *SqlIdentifierListener {
 	return &SqlIdentifierListener{}
 }
@@ -39,4 +48,8 @@ func (s *SqlIdentifierListener) EnterSelect_core(ctx *parser.Select_coreContext)
 			}
 		}
 	}
+}
+
+func (s *SqlIdentifierListener) GetNodeInfo() SqlNode {
+	return sqlNode
 }

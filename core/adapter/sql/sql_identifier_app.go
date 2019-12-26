@@ -14,7 +14,11 @@ type SqlIdentifierApp struct {
 
 }
 
-func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
+func NewSqlIdentifierApp() SqlIdentifierApp {
+	return *&SqlIdentifierApp{}
+}
+
+func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []SqlNode {
 	xmlFiles := (*SqlIdentifierApp)(nil).xmlFiles(codeDir)
 	for _, xmlFile := range xmlFiles {
 		xmlFile, err := os.Open(xmlFile)
@@ -30,6 +34,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
 		}
 	}
 
+	var infos []SqlNode
 	files := (*SqlIdentifierApp)(nil).sqlFiles(codeDir)
 	for index := range files {
 		file := files[index]
@@ -40,7 +45,12 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) {
 		listener := NewSqlIdentifierListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
+
+		info := listener.GetNodeInfo()
+		infos = append(infos, info)
 	}
+
+	return infos
 }
 
 func (j *SqlIdentifierApp) xmlFiles(codeDir string) []string {

@@ -1,7 +1,6 @@
 package identifier
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"
@@ -90,7 +89,7 @@ func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.Construc
 	hasEnterMethod = false
 
 	currentNode.AddMethod(currentMethod)
-	currentMethod = models.NewJMethod()
+	_ = models.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
@@ -131,7 +130,7 @@ func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.Inte
 	hasEnterMethod = false
 
 	currentNode.AddMethod(currentMethod)
-	currentMethod = models.NewJMethod()
+	_ = models.NewJMethod()
 }
 
 var isOverrideMethod = false
@@ -167,7 +166,7 @@ func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclara
 	hasEnterMethod = false
 
 	currentNode.AddMethod(currentMethod)
-	currentMethod = models.NewJMethod()
+	_ = models.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
@@ -217,7 +216,7 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 		firstChild := statementCtx.GetChild(0).(antlr.ParseTree).GetText()
 		if strings.ToLower(firstChild) == "return" {
 			hasNull := strings.Contains(ctx.GetText(), "null")
-			currentMethod.ReturnNull = hasNull
+			currentMethod.IsReturnNull = hasNull
 		}
 	}
 }

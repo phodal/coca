@@ -1,7 +1,6 @@
 package identifier
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"testing"
 )
@@ -48,6 +47,6 @@ func TestAddReturnNull(t *testing.T) {
 	identApp := NewJavaIdentifierApp()
 	identifiers := identApp.AnalysisPath("../../../_fixtures/evaluate/null")
 
-	fmt.Println(identifiers)
-	g.Expect(true).To(Equal(true))
+	g.Expect(identifiers[0].Methods[1].IsReturnNull).To(Equal(true))
+	g.Expect(identifiers[0].Methods[2].IsReturnNull).To(Equal(true))
 }

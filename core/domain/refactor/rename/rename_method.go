@@ -72,7 +72,7 @@ func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
 }
 
 func methodCallToMethodModel(call JMethodCall) JMethod {
-	return *&JMethod{call.MethodName, call.Type, call.StartLine, call.StartLinePosition, call.StopLine, call.StopLinePosition, nil, nil, false, nil, false}
+	return *&JMethod{Name: call.MethodName, Type: call.Type, StartLine: call.StartLine, StartLinePosition: call.StartLinePosition, StopLine: call.StopLine, StopLinePosition: call.StopLinePosition}
 }
 
 func updateSelfRefs(node JClassNode, method JMethod, info *support3.PackageClassInfo) {

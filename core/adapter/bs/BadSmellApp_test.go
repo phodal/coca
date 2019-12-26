@@ -13,7 +13,6 @@ func TestBadSmellApp_AnalysisPath(t *testing.T) {
 	codePath := "../../../_fixtures/bs"
 	bsList := bsApp.AnalysisPath(codePath, nil)
 
-	fmt.Println(bsList)
 	g.Expect(len(bsList)).To(Equal(4))
 	g.Expect(bsList[0].Bs).To(Equal("complexCondition"))
 }

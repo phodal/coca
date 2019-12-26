@@ -1,6 +1,5 @@
 package api
 
-
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter"

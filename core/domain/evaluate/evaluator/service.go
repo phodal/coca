@@ -23,7 +23,7 @@ func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []models.JClas
 		s.Evaluate(evaluateModel, node)
 	}
 
-	evaluateModel.ServiceIssues.ReturnTypeMap = returnTypeMap
+	evaluateModel.ServiceSummary.ReturnTypeMap = returnTypeMap
 	findRelatedMethodParameter(evaluateModel, longParameterList)
 }
 
@@ -44,7 +44,7 @@ func findRelatedMethodParameter(model *EvaluateModel, list []models.JMethod) {
 	for _, res := range result {
 		items := res.GetSupportRecord().GetItems()
 		if len(items) >= 4 {
-			model.ServiceIssues.RelatedMethod = items
+			model.ServiceSummary.RelatedMethod = items
 		}
 	}
 }
@@ -59,7 +59,7 @@ func (s Service) Evaluate(result *EvaluateModel, node models.JClassNode) {
 		lifecycleMap := s.buildLifecycle(methodNameArray)
 		hasLifecycle := len(lifecycleMap) > 0
 		if hasLifecycle {
-			result.ServiceIssues.LifecycleMap = lifecycleMap
+			result.ServiceSummary.LifecycleMap = lifecycleMap
 		}
 	}
 

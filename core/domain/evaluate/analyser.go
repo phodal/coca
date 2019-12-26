@@ -24,7 +24,7 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 	for _, node := range classNodes {
 		nodeMap[node.Class] = node
 
-		if strings.Contains(strings.ToLower(node.Class), "util") {
+		if strings.Contains(strings.ToLower(node.Class), "util") || strings.Contains(strings.ToLower(node.Class), "utils") {
 			result.Summary.UtilsCount++
 
 			evaluation = Evaluation{evaluator.Util{}}
@@ -44,7 +44,7 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 			result.Summary.MethodCount++
 
 			if support.Contains(method.Modifiers, "static") {
-				result.NormalIssues.StaticMethodCount++
+				result.Summary.StaticMethodCount++
 			}
 		}
 	}

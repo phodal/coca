@@ -44,7 +44,7 @@ var evaluateCmd = &cobra.Command{
 		WriteToCocaFile("evaluate.json", string(cModel))
 
 		fmt.Println(" ----- same type in service ------ ")
-		fmt.Println(result.ServiceIssues.ReturnTypeMap)
+		fmt.Println(result.ServiceSummary.ReturnTypeMap)
 
 		fmt.Println("-------- Null -------- Method")
 		for _, nullItem := range result.Nullable.Items {

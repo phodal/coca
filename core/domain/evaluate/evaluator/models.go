@@ -4,27 +4,30 @@ type Nullable struct {
 	Items []string
 }
 
-type ServiceIssues struct {
+type ServiceSummary struct {
 	LifecycleMap  map[string][]string
 	ReturnTypeMap map[string][]string
 	RelatedMethod []string
 }
 
 type NormalIssues struct {
-	StaticMethodCount int
+}
+
+type UtilsSummary struct {
 }
 
 type Summary struct {
-	UtilsCount  int
-	ClassCount  int
-	MethodCount int
+	UtilsCount        int
+	ClassCount        int
+	MethodCount       int
+	StaticMethodCount int
 }
 
 type EvaluateModel struct {
-	Nullable      Nullable
-	ServiceIssues ServiceIssues
-	NormalIssues  NormalIssues
-	Summary       Summary
+	Nullable       Nullable
+	ServiceSummary ServiceSummary
+	UtilsSummary   UtilsSummary
+	Summary        Summary
 }
 
 func NewEvaluateModel() EvaluateModel {

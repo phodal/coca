@@ -31,9 +31,9 @@ func Test_Service_LifeCycle(t *testing.T) {
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)
-	g.Expect(len(result.ServiceIssues.LifecycleMap["do"])).To(Equal(2))
-	g.Expect(result.ServiceIssues.LifecycleMap["do"][0]).To(Equal("doSave"))
-	g.Expect(result.ServiceIssues.LifecycleMap["do"][1]).To(Equal("doUpdate"))
+	g.Expect(len(result.ServiceSummary.LifecycleMap["do"])).To(Equal(2))
+	g.Expect(result.ServiceSummary.LifecycleMap["do"][0]).To(Equal("doSave"))
+	g.Expect(result.ServiceSummary.LifecycleMap["do"][1]).To(Equal("doUpdate"))
 }
 
 func Test_Service_Same_Return_Type(t *testing.T) {
@@ -45,7 +45,7 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := analyser.Analysis(parsedDeps, nil)
-	g.Expect(len(results.ServiceIssues.ReturnTypeMap)).To(Equal(1))
+	g.Expect(len(results.ServiceSummary.ReturnTypeMap)).To(Equal(1))
 }
 
 func Test_Long_Parameters(t *testing.T) {
@@ -58,10 +58,10 @@ func Test_Long_Parameters(t *testing.T) {
 
 	result := analyser.Analysis(parsedDeps, nil)
 
-	g.Expect(result.ServiceIssues.RelatedMethod[0]).To(Equal("address"))
-	g.Expect(result.ServiceIssues.RelatedMethod[1]).To(Equal("age"))
-	g.Expect(result.ServiceIssues.RelatedMethod[2]).To(Equal("firstname"))
-	g.Expect(result.ServiceIssues.RelatedMethod[3]).To(Equal("lastname"))
+	g.Expect(result.ServiceSummary.RelatedMethod[0]).To(Equal("address"))
+	g.Expect(result.ServiceSummary.RelatedMethod[1]).To(Equal("age"))
+	g.Expect(result.ServiceSummary.RelatedMethod[2]).To(Equal("firstname"))
+	g.Expect(result.ServiceSummary.RelatedMethod[3]).To(Equal("lastname"))
 }
 
 func TestNullPointException(t *testing.T) {

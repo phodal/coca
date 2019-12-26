@@ -1,11 +1,11 @@
 package unused
 
 import (
+	"fmt"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	base2 "github.com/phodal/coca/core/domain/refactor/base"
 	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
 	"github.com/phodal/coca/core/support"
-	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -21,8 +21,7 @@ type RemoveUnusedImportApp struct {
 
 var nodes []models2.JMoveStruct
 
-func NewRemoveUnusedImportApp(config string, pPath string) *RemoveUnusedImportApp {
-	moveConfig = config
+func NewRemoveUnusedImportApp(pPath string) *RemoveUnusedImportApp {
 	configPath = pPath
 
 	nodes = nil

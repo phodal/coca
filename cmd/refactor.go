@@ -22,7 +22,7 @@ var refactorCmd = &cobra.Command{
 			app := NewMoveClassApp(moveConfig, path)
 			app.Analysis()
 
-			app2 := NewRemoveUnusedImportApp(moveConfig, path)
+			app2 := NewRemoveUnusedImportApp(path)
 			app2.Analysis()
 		}
 

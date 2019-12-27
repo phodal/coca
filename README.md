@@ -18,7 +18,10 @@ Todo:
    - [ ] strategy 
    - [ ] builder
  - [ ] Docs
-   - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring () 
+    - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
+ -  Evaluate API
+    - [ ] Average Method Length
+    - [ ] Average Class Method Count
 
 ## Usage
 

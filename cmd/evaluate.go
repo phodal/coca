@@ -3,12 +3,15 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/evaluate"
 	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 	"log"
+	"os"
+	"strconv"
 )
 
 type EvaluateConfig struct {
@@ -43,14 +46,28 @@ var evaluateCmd = &cobra.Command{
 		cModel, _ := json.MarshalIndent(result, "", "\t")
 		WriteToCocaFile("evaluate.json", string(cModel))
 
-		fmt.Println(" ----- same type in service ------ ")
-		fmt.Println(result.ServiceSummary.ReturnTypeMap)
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})
 
-		fmt.Println("-------- Null -------- Method")
-		for _, nullItem := range result.Nullable.Items {
-			fmt.Println(nullItem)
-		}
+		classCount := result.Summary.ClassCount
+		methodCount := result.Summary.MethodCount
+
+		nullItemsLength := len(result.Nullable.Items)
+		table.Append([]string{"Nullable / Return Null", strconv.Itoa(nullItemsLength), "Method", strconv.Itoa(methodCount), Percent(nullItemsLength, methodCount)})
+
+		utilsCount := result.Summary.UtilsCount
+		table.Append([]string{"Utils", strconv.Itoa(utilsCount), "Class", strconv.Itoa(classCount), Percent(utilsCount, classCount)})
+
+		staticCount := result.Summary.StaticMethodCount
+		table.Append([]string{"Static Method", strconv.Itoa(staticCount), "Method", strconv.Itoa(methodCount), Percent(utilsCount, methodCount)})
+
+		table.Render()
 	},
+}
+
+func Percent(pcent int, all int) string {
+	percent := 100.0 * float64(pcent) / float64(all)
+	return fmt.Sprintf("%3.2f%%", percent)
 }
 
 func init() {

@@ -306,16 +306,49 @@ coca evaluate
 ```
 
 ```
-custom [customKeyGenerator customCacheManager]
-throw [throwUnchecked throwCheckedSync throwUncheckedSync throwChecked]
-evict [evictWithException evictAllEarly evictAll evict evictEarly]
-multi [multiCacheAndEvict multiCache multiUpdate multiEvict multiConditionalCacheAndEvict]
-conditional [conditional conditionalUpdate conditionalSync]
-unknown [unknownCustomCacheManager unknownCustomKeyGenerator]
-throw [throwException throwCheckedException]
-put [putWithException put]
-early [earlyRemoveWithException earlyRemoveAllWithException earlyRemoveAll earlyPut earlyPutWithException earlyRemove]
-evict [evictAll evictWithException evict evictEarly evictAllEarly]
++------------------------+-------+--------+-------+-------+
+|          TYPE          | COUNT | LEVEL  | TOTAL | RATE  |
++------------------------+-------+--------+-------+-------+
+| Nullable / Return Null |     8 | Method |   161 | 4.97% |
+| Utils                  |     1 | Class  |    64 | 1.56% |
+| Static Method          |    19 | Method |    19 | 0.62% |
++------------------------+-------+--------+-------+-------+
+```
+
+Evaluate.json examples
+
+```json
+{
+	"Nullable": {
+		"Items": [
+			"nonnull.Name.testNull",
+			"nonnull.Name.orElseNull",
+			"org.ofbiz.base.util.UtilURL.fromResource",
+			"org.ofbiz.base.util.UtilURL.getOfbizHomeRelativeLocationFromFilePath",
+			"study.huhao.demo.adapters.outbound.persistence.blog.BlogPO.toDomainModel",
+			"study.huhao.demo.adapters.outbound.persistence.blog.BlogPO.toDomainModel",
+			"study.huhao.demo.adapters.outbound.persistence.blog.BlogPO.of",
+			"study.huhao.demo.infrastructure.persistence.blog.BlogPO.convertDomain"
+		]
+	},
+	"ServiceSummary": {
+		"LifecycleMap": null,
+		"ReturnTypeMap": {
+			"BookRepresentaion": [
+				"com.phodal.pholedge.book.BookService.getBookById",
+				"com.phodal.pholedge.book.BookService.updateBook"
+			]
+		},
+		"RelatedMethod": null
+	},
+	"UtilsSummary": {},
+	"Summary": {
+		"UtilsCount": 1,
+		"ClassCount": 64,
+		"MethodCount": 161,
+		"StaticMethodCount": 19
+	}
+}
 ```
 
 ### Todo

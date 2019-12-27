@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	//defer profile.Start().Stop()
+	//defer profile.Start(profile.MemProfile, profile.ProfilePath("."), profile.NoShutdownHook)
 	cmd.Execute()
 }

@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/pkg/profile"
 )
 
 func main()  {
+	defer profile.Start(profile.MemProfile, profile.ProfilePath("."), profile.NoShutdownHook)
+
 	path := "_fixtures/abug"
 
 	identifierApp := identifier.NewJavaIdentifierApp()

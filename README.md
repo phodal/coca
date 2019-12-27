@@ -26,6 +26,8 @@ Todo:
     - [ ] monolithic
     - [ ] microservice 
     - [ ] big data
+ - Badsmell
+    - [ ] sort method size
 
 ## Usage
 

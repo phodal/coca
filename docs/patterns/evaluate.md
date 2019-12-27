@@ -1,15 +1,17 @@
 url: https://github.com/macrozheng/mall
 
 ```
-+------------------------+-------+-----------------------+-------+-----------+
-|          TYPE          | COUNT |         LEVEL         | TOTAL |   RATE    |
-+------------------------+-------+-----------------------+-------+-----------+
-| Nullable / Return Null |    22 | Method                | 12682 | 0.17%     |
-| Utils                  |     2 | Class                 |   458 | 0.44%     |
-| Static Method          |     7 | Method                | 12682 | 0.02%     |
-| Average Method Num     | 12682 | Method/Class          |   458 | 27.689956 |
-| Average Method Length  | 45091 | Without Getter/Setter | 10205 |  4.418520 |
-+------------------------+-------+-----------------------+-------+-----------+
++--------------------------------+-------+-----------------------+-------+-----------+
+|              TYPE              | COUNT |         LEVEL         | TOTAL |   RATE    |
++--------------------------------+-------+-----------------------+-------+-----------+
+| Nullable / Return Null         |    22 | Method                | 12682 | 0.17%     |
+| Utils                          |     2 | Class                 |   458 | 0.44%     |
+| Static Method                  |     7 | Method                | 12682 | 0.02%     |
+| Average Method Num.            | 12682 | Method/Class          |   458 | 27.689956 |
+| Method Num. Std Dev / 标准差   | 12682 | Class                 | -     | 58.993564 |
+| Average Method Length          | 45091 | Without Getter/Setter | 10205 |  4.418520 |
+| Method Length Std Dev / 标准差 | 12682 | Method                | -     |  2.904016 |
++--------------------------------+-------+-----------------------+-------+-----------+
 ```
 
 // issues: big data class / god service 
@@ -17,15 +19,17 @@ url: https://github.com/macrozheng/mall
 url: https://github.com/shuzheng/zheng
 
 ```
-+------------------------+-------+-----------------------+-------+-----------+
-|          TYPE          | COUNT |         LEVEL         | TOTAL |   RATE    |
-+------------------------+-------+-----------------------+-------+-----------+
-| Nullable / Return Null |     0 | Method                |  5256 | 0.00%     |
-| Utils                  |    18 | Class                 |   366 | 4.92%     |
-| Static Method          |     0 | Method                |  5256 | 0.34%     |
-| Average Method Num     |  5256 | Method/Class          |   366 | 14.360656 |
-| Average Method Length  | 19644 | Without Getter/Setter |  4328 |  4.538817 |
-+------------------------+-------+-----------------------+-------+-----------+
++--------------------------------+-------+-----------------------+-------+-----------+
+|              TYPE              | COUNT |         LEVEL         | TOTAL |   RATE    |
++--------------------------------+-------+-----------------------+-------+-----------+
+| Nullable / Return Null         |     0 | Method                |  5256 | 0.00%     |
+| Utils                          |    18 | Class                 |   366 | 4.92%     |
+| Static Method                  |     0 | Method                |  5256 | 0.34%     |
+| Average Method Num.            |  5256 | Method/Class          |   366 | 14.360656 |
+| Method Num. Std Devv / 标准差   |  5256 | Class                 | -     | 32.965336 |
+| Average Method Length          | 19644 | Without Getter/Setter |  4328 |  4.538817 |
+| Method Length Std Devv / 标准差 |  5256 | Method                | -     |  4.467935 |
++--------------------------------+-------+-----------------------+-------+-----------+
 ```
 
 // data class
@@ -40,7 +44,9 @@ big data
 | Utils                  |    18 | Class                 |   496 | 7.06%     |
 | Static Method          |   400 | Method                |  3041 | 1.15%     |
 | Average Method Num     |  3041 | Method/Class          |   496 | 6.13      |
+| Method Num. Std Dev     |  3041 | Class                 | -     | 11.03 |
 | Average Method Length  | 17730 | Without Getter/Setter |  1551 | 11.43     |
+| Method Length Std Dev   |  3041 | Method                | -     |  14.22 |
 +------------------------+-------+-----------------------+-------+-----------+
 ```
 
@@ -56,7 +62,9 @@ Common Project
 | Utils                  |    26 | Class                 |  1007 | 7.06%     |
 | Static Method          |  2062 | Method                | 16642 | 0.16%     |
 | Average Method Num     | 16642 | Method/Class          |  1007 | 16.52     |
+| Method Num. Std Dev     |  16642 | Class                 | -     | 29.86 |
 | Average Method Length  | 69012 | Without Getter/Setter |  6020 | 11.46     |
+| Method Length Std Dev   |  16642 | Method                | -     |  19.30 |
 +------------------------+-------+-----------------------+-------+-----------+
 ```
 
@@ -72,7 +80,9 @@ Algo Project
 | Utils                  |    43 | Class                 |   926 | 4.64%     |
 | Static Method          |  542  | Method                |  4914 | 0.88%     |
 | Average Method Num     | 4914  | Method/Class          |   927 | 5.30      |
+| Method Num. Std Dev     |  4914 | Class                 | -     | 9.24 |
 | Average Method Length  | 51056 | Without Getter/Setter |  2603 | 19.61     |
+| Method Length Std Dev   |  4914 | Method                | -     |  24.39 |
 +------------------------+-------+-----------------------+-------+-----------+
 ```
 

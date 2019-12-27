@@ -25,7 +25,6 @@ func GetJavaFiles(codeDir string) []string {
 			}
 		}
 
-		fmt.Println(path)
 		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java")&& !strings.Contains(path, "Tests.java"){
 			files = append(files, path)
 		}

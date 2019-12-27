@@ -15,4 +15,7 @@ require (
 	github.com/pkg/profile v1.3.0
 	github.com/sabhiram/go-gitignore v0.0.0-20180611051255-d3107576ba94
 	github.com/spf13/cobra v0.0.5
+	golang.org/x/exp v0.0.0-20191224044220-1fea468a75e9 // indirect
+	golang.org/x/tools v0.0.0-20191226230302-065ed046f11a // indirect
+	gonum.org/v1/gonum v0.6.2
 )

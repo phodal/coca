@@ -17,12 +17,13 @@ type UtilsSummary struct {
 }
 
 type Summary struct {
-	UtilsCount        int
-	ClassCount        int
-	MethodCount       int
-	NormalMethodCount int
-	TotalMethodLength int
-	StaticMethodCount int
+	UtilsCount         int
+	ClassCount         int
+	MethodCount        int
+	NormalMethodCount  int
+	TotalMethodLength  int
+	StaticMethodCount  int
+	MethodStdDeviation int
 }
 
 type EvaluateModel struct {

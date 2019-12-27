@@ -4,6 +4,7 @@ import (
 	"github.com/phodal/coca/core/domain/evaluate/evaluator"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
+	"gonum.org/v1/gonum/stat"
 	"strings"
 )
 
@@ -38,6 +39,7 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 		}
 	}
 
+	var methodLengthArray []float64
 	for _, ident := range identifiers {
 		result.Summary.ClassCount++
 		for _, method := range ident.Methods {
@@ -49,10 +51,15 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 
 			if !strings.HasPrefix(method.Name, "set") && !strings.HasPrefix(method.Name, "get") {
 				result.Summary.NormalMethodCount++
-				result.Summary.TotalMethodLength = result.Summary.TotalMethodLength + method.StopLine - method.StartLine + 1
+				methodLength := method.StopLine - method.StartLine + 1
+				result.Summary.TotalMethodLength = result.Summary.TotalMethodLength + methodLength
+
+				methodLengthArray = append(methodLengthArray, float64(methodLength))
 			}
 		}
 	}
+
+	result.Summary.MethodStdDeviation = int(stat.StdDev(methodLengthArray, nil))
 
 	evaluation = Evaluation{evaluator.Service{}}
 	evaluation.EvaluateList(&result, servicesNode, nodeMap, identifiers)

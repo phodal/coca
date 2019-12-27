@@ -67,6 +67,8 @@ var evaluateCmd = &cobra.Command{
 		normalMethodCount := result.Summary.NormalMethodCount
 		table.Append([]string{"Average Method Length", strconv.Itoa(totalLength), "Without Getter/Setter", strconv.Itoa(normalMethodCount), Rate(totalLength, normalMethodCount)})
 
+		table.Append([]string{"Std Dev / 标准差", strconv.Itoa(methodCount), "Method", "-", strconv.Itoa(result.Summary.MethodStdDeviation)})
+
 		table.Render()
 	},
 }

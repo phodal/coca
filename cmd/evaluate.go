@@ -61,6 +61,12 @@ var evaluateCmd = &cobra.Command{
 		staticCount := result.Summary.StaticMethodCount
 		table.Append([]string{"Static Method", strconv.Itoa(staticCount), "Method", strconv.Itoa(methodCount), Percent(utilsCount, methodCount)})
 
+		table.Append([]string{"Average Method Num", strconv.Itoa(methodCount), "Method/Class", strconv.Itoa(classCount), Rate(methodCount, classCount)})
+
+		totalLength := result.Summary.TotalMethodLength
+		normalMethodCount := result.Summary.NormalMethodCount
+		table.Append([]string{"Average Method Length", strconv.Itoa(totalLength), "Without Getter/Setter", strconv.Itoa(normalMethodCount), Rate(totalLength, normalMethodCount)})
+
 		table.Render()
 	},
 }
@@ -68,6 +74,11 @@ var evaluateCmd = &cobra.Command{
 func Percent(pcent int, all int) string {
 	percent := 100.0 * float64(pcent) / float64(all)
 	return fmt.Sprintf("%3.2f%%", percent)
+}
+
+func Rate(pcent int, all int) string {
+	percent := float64(pcent) / float64(all)
+	return fmt.Sprintf("%f", percent)
 }
 
 func init() {

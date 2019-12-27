@@ -46,6 +46,11 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 			if support.Contains(method.Modifiers, "static") {
 				result.Summary.StaticMethodCount++
 			}
+
+			if !strings.HasPrefix(method.Name, "set") && !strings.HasPrefix(method.Name, "get") {
+				result.Summary.NormalMethodCount++
+				result.Summary.TotalMethodLength = result.Summary.TotalMethodLength + method.StopLine - method.StartLine + 1
+			}
 		}
 	}
 

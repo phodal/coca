@@ -20,6 +20,8 @@ type Summary struct {
 	UtilsCount        int
 	ClassCount        int
 	MethodCount       int
+	NormalMethodCount int
+	TotalMethodLength int
 	StaticMethodCount int
 }
 

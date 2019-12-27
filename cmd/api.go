@@ -1,14 +1,14 @@
 package cmd
 
 import (
+	"encoding/json"
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/adapter"
 	. "github.com/phodal/coca/core/adapter/api"
 	"github.com/phodal/coca/core/domain/call_graph"
 	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
-	"encoding/json"
-	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -31,11 +31,11 @@ type ApiCmdConfig struct {
 
 var (
 	apiCmdConfig ApiCmdConfig
-	restApis []RestApi
+	restApis     []RestApi
 
-	identifiers = adapter.LoadIdentify(apiCmdConfig.DependencePath)
+	identifiers    = adapter.LoadIdentify(apiCmdConfig.DependencePath)
 	identifiersMap = adapter.BuildIdentifierMap(identifiers)
-	diMap = adapter.BuildDIMap(identifiers, identifiersMap)
+	diMap          = adapter.BuildDIMap(identifiers, identifiersMap)
 )
 
 var apiCmd = &cobra.Command{

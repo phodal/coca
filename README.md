@@ -22,6 +22,10 @@ Todo:
  -  Evaluate API
     - [ ] Average Method Length
     - [ ] Average Class Method Count
+ - Date Collections
+    - [ ] monolithic
+    - [ ] microservice 
+    - [ ] big data
 
 ## Usage
 

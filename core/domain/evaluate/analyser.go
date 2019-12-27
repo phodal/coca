@@ -40,8 +40,12 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 	}
 
 	var methodLengthArray []float64
+	var methodCountArray []float64
 	for _, ident := range identifiers {
 		result.Summary.ClassCount++
+
+		methodCountArray = append(methodCountArray, float64(len(ident.Methods)))
+
 		for _, method := range ident.Methods {
 			result.Summary.MethodCount++
 
@@ -59,7 +63,8 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 		}
 	}
 
-	result.Summary.MethodStdDeviation = int(stat.StdDev(methodLengthArray, nil))
+	result.Summary.MethodLengthStdDeviation = stat.StdDev(methodLengthArray, nil)
+	result.Summary.MethodNumStdDeviation = stat.StdDev(methodCountArray, nil)
 
 	evaluation = Evaluation{evaluator.Service{}}
 	evaluation.EvaluateList(&result, servicesNode, nodeMap, identifiers)

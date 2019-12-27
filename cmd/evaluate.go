@@ -61,13 +61,14 @@ var evaluateCmd = &cobra.Command{
 		staticCount := result.Summary.StaticMethodCount
 		table.Append([]string{"Static Method", strconv.Itoa(staticCount), "Method", strconv.Itoa(methodCount), Percent(utilsCount, methodCount)})
 
-		table.Append([]string{"Average Method Num", strconv.Itoa(methodCount), "Method/Class", strconv.Itoa(classCount), Rate(methodCount, classCount)})
+		table.Append([]string{"Average Method Num.", strconv.Itoa(methodCount), "Method/Class", strconv.Itoa(classCount), Rate(methodCount, classCount)})
+		table.Append([]string{"Method Num. Std Dev / 标准差", strconv.Itoa(methodCount), "Class", "-", fmt.Sprintf("%f", result.Summary.MethodNumStdDeviation)})
 
 		totalLength := result.Summary.TotalMethodLength
 		normalMethodCount := result.Summary.NormalMethodCount
 		table.Append([]string{"Average Method Length", strconv.Itoa(totalLength), "Without Getter/Setter", strconv.Itoa(normalMethodCount), Rate(totalLength, normalMethodCount)})
 
-		table.Append([]string{"Std Dev / 标准差", strconv.Itoa(methodCount), "Method", "-", strconv.Itoa(result.Summary.MethodStdDeviation)})
+		table.Append([]string{"Method Length Std Dev / 标准差", strconv.Itoa(methodCount), "Method", "-", fmt.Sprintf("%f", result.Summary.MethodLengthStdDeviation)})
 
 		table.Render()
 	},

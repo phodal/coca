@@ -1,9 +1,9 @@
 package identifier
 
 import (
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
 
 var nodeInfos []models.JIdentifier = nil
@@ -18,9 +18,8 @@ func NewJavaIdentifierApp() JavaIdentifierApp {
 func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JIdentifier {
 	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)
-	for index := range files {
-		file := files[index]
 
+	for _, file := range files {
 		parser := support.ProcessFile(file)
 		context := parser.CompilationUnit()
 

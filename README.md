@@ -20,8 +20,8 @@ Todo:
  - [ ] Docs
     - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
  -  Evaluate API
-    - [ ] Average Method Length
-    - [ ] Average Class Method Count
+    - [x] Average Method Length
+    - [x] Average Class Method Count
  - Date Collections
     - [ ] monolithic
     - [ ] microservice 
@@ -313,13 +313,17 @@ coca evaluate
 ```
 
 ```
-+------------------------+-------+--------+-------+-------+
-|          TYPE          | COUNT | LEVEL  | TOTAL | RATE  |
-+------------------------+-------+--------+-------+-------+
-| Nullable / Return Null |     8 | Method |   161 | 4.97% |
-| Utils                  |     1 | Class  |    64 | 1.56% |
-| Static Method          |    19 | Method |    19 | 0.62% |
-+------------------------+-------+--------+-------+-------+
++--------------------------------+-------+-----------------------+-------+-----------+
+|              TYPE              | COUNT |         LEVEL         | TOTAL |   RATE    |
++--------------------------------+-------+-----------------------+-------+-----------+
+| Nullable / Return Null         |     0 | Method                |  5256 | 0.00%     |
+| Utils                          |    18 | Class                 |   366 | 4.92%     |
+| Static Method                  |     0 | Method                |  5256 | 0.34%     |
+| Average Method Num.            |  5256 | Method/Class          |   366 | 14.360656 |
+| Method Num. Std Dev / 标准差   |  5256 | Class                 | -     | 32.965336 |
+| Average Method Length          | 19644 | Without Getter/Setter |  4328 |  4.538817 |
+| Method Length Std Dev / 标准差 |  5256 | Method                | -     |  4.467935 |
++--------------------------------+-------+-----------------------+-------+-----------+
 ```
 
 Evaluate.json examples

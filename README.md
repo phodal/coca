@@ -34,6 +34,9 @@ Todo:
     - [ ] Test badsmell
         - [ ] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
  - Arch
+    - [x] Architecture Visualization
+    - [ ] Architecture Guard
+      - [ ] DSL Design
  
 ## Usage
 

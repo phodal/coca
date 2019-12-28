@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/adapter"

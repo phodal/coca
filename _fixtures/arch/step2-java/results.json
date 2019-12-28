@@ -1,0 +1,99 @@
+{
+	"NodeList": {
+		"domain.AggregateRoot": "domain.AggregateRoot",
+		"domain.AggregateRootA": "domain.AggregateRootA",
+		"domain.AggregateRootB": "domain.AggregateRootB",
+		"domain.Entity": "domain.Entity",
+		"domain.EntityB": "domain.EntityB",
+		"domain.Provider": "domain.Provider",
+		"domain.Router": "domain.Router",
+		"domain.ValueObject": "domain.ValueObject",
+		"domain.ValueObjectC": "domain.ValueObjectC",
+		"domain.ValueObjectD": "domain.ValueObjectD",
+		"gateways.FakeRouter": "gateways.FakeRouter",
+		"repositories.AggregateRootARepo": "repositories.AggregateRootARepo",
+		"repositories.Repository": "repositories.Repository"
+	},
+	"RelationList": {
+		"domain.AggregateRoot-\u003edomain.Entity": {
+			"From": "domain.AggregateRoot",
+			"To": "domain.Entity",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootA-\u003edomain.AggregateRoot": {
+			"From": "domain.AggregateRootA",
+			"To": "domain.AggregateRoot",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootA-\u003edomain.AggregateRootB": {
+			"From": "domain.AggregateRootA",
+			"To": "domain.AggregateRootB",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootA-\u003edomain.EntityB": {
+			"From": "domain.AggregateRootA",
+			"To": "domain.EntityB",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootA-\u003edomain.Router": {
+			"From": "domain.AggregateRootA",
+			"To": "domain.Router",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootA-\u003edomain.ValueObjectC": {
+			"From": "domain.AggregateRootA",
+			"To": "domain.ValueObjectC",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootB-\u003edomain.AggregateRoot": {
+			"From": "domain.AggregateRootB",
+			"To": "domain.AggregateRoot",
+			"Style": "\"solid\""
+		},
+		"domain.AggregateRootB-\u003edomain.AggregateRootA": {
+			"From": "domain.AggregateRootB",
+			"To": "domain.AggregateRootA",
+			"Style": "\"solid\""
+		},
+		"domain.EntityB-\u003edomain.Entity": {
+			"From": "domain.EntityB",
+			"To": "domain.Entity",
+			"Style": "\"solid\""
+		},
+		"domain.EntityB-\u003edomain.ValueObjectD": {
+			"From": "domain.EntityB",
+			"To": "domain.ValueObjectD",
+			"Style": "\"solid\""
+		},
+		"domain.Router-\u003edomain.Provider": {
+			"From": "domain.Router",
+			"To": "domain.Provider",
+			"Style": "\"solid\""
+		},
+		"domain.ValueObjectC-\u003edomain.ValueObject": {
+			"From": "domain.ValueObjectC",
+			"To": "domain.ValueObject",
+			"Style": "\"solid\""
+		},
+		"domain.ValueObjectD-\u003edomain.ValueObject": {
+			"From": "domain.ValueObjectD",
+			"To": "domain.ValueObject",
+			"Style": "\"solid\""
+		},
+		"gateways.FakeRouter-\u003edomain.Router": {
+			"From": "gateways.FakeRouter",
+			"To": "domain.Router",
+			"Style": "\"solid\""
+		},
+		"repositories.AggregateRootARepo-\u003edomain.AggregateRootA": {
+			"From": "repositories.AggregateRootARepo",
+			"To": "domain.AggregateRootA",
+			"Style": "\"solid\""
+		},
+		"repositories.AggregateRootARepo-\u003erepositories.Repository": {
+			"From": "repositories.AggregateRootARepo",
+			"To": "repositories.Repository",
+			"Style": "\"solid\""
+		}
+	}
+}

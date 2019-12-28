@@ -1,19 +1,23 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/core/domain/todo"
+	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
 )
 
 type RootCmdConfig struct {
-	Path string
+	Path    string
+	WithGit bool
 }
 
 var (
-	rootCmdConfig RootCmdConfig
+	todoCmdConfig RootCmdConfig
 )
 
 var todoCmd = &cobra.Command{
@@ -25,18 +29,31 @@ var todoCmd = &cobra.Command{
 		app := todo.NewTodoApp()
 		todos := app.AnalysisPath(path)
 
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
-		for _, todo := range todos {
-			table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
-		}
+		simple, _ := json.MarshalIndent(todos, "", "\t")
+		support.WriteToCocaFile("simple-todos.json", string(simple))
 
-		table.Render()
+		fmt.Println("Todos Count", len(todos))
+
+		if todoCmdConfig.WithGit {
+			gitTodos := app.BuildWithGitHistory(todos)
+
+			cModel, _ := json.MarshalIndent(todos, "", "\t")
+			support.WriteToCocaFile("todos.json", string(cModel))
+
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
+			for _, todo := range gitTodos {
+				table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
+			}
+
+			table.Render()
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(todoCmd)
 
-	todoCmd.PersistentFlags().StringVarP(&rootCmdConfig.Path, "path", "p", ".", "path")
+	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Path, "path", "p", ".", "path")
+	todoCmd.PersistentFlags().BoolVarP(&todoCmdConfig.WithGit, "git", "g", false, "path")
 }

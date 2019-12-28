@@ -11,7 +11,8 @@ func TestNewTodoApp(t *testing.T) {
 
 
 	app := NewTodoApp()
-	todos := app.AnalysisPath(codePath)
+	stodos := app.AnalysisPath(codePath)
+	todos := app.BuildWithGitHistory(stodos)
 
 	g.Expect(todos[0].Line).To(Equal("6"))
 	g.Expect(todos[0].Date).To(Equal("2019-12-28"))

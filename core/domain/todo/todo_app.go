@@ -1,10 +1,15 @@
 package todo
 
 import (
+	"fmt"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/domain/gitt"
 	"github.com/phodal/coca/core/domain/todo/astitodo"
+	"github.com/phodal/coca/core/support"
+	. "github.com/phodal/coca/languages/java"
 	"log"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -28,11 +33,10 @@ type TodoDetail struct {
 }
 
 func (a TodoApp) AnalysisPath(path string) []TodoDetail {
+	buildComment(path)
+
 	var todoList []TodoDetail = nil
-	todos, err := astitodo.Extract(path)
-	if err != nil {
-		log.Fatal(err)
-	}
+	todos := buildComment(path)
 	for _, todo := range todos {
 		lineOutput := runGitGetLog(todo.Line, todo.Filename)
 
@@ -55,6 +59,34 @@ func (a TodoApp) AnalysisPath(path string) []TodoDetail {
 	}
 
 	return todoList
+}
+
+func buildComment(path string) []*astitodo.TODO {
+	var todos []*astitodo.TODO
+	files := support.GetJavaFiles(path)
+	for index := range files {
+		file := files[index]
+
+		displayName := filepath.Base(file)
+		fmt.Println("Start parse java call: " + displayName)
+
+		is, _ := antlr.NewFileStream(file)
+		lexer := NewJavaLexer(is)
+
+		for _, token := range lexer.GetAllTokens() {
+			COMMENT_TOKEN_INDEX := 109
+			COMMENT_LINE_TOKNE_INDEX := 110
+			// based on `JavaLexer.tokens` file
+			if token.GetTokenType() == COMMENT_TOKEN_INDEX || token.GetTokenType() == COMMENT_LINE_TOKNE_INDEX {
+				todo := astitodo.ParseComment(token, displayName)
+				if todo != nil {
+					todos = append(todos, todo)
+				}
+			}
+		}
+	}
+
+	return todos
 }
 
 func runGitGetLog(line int, fileName string) string {

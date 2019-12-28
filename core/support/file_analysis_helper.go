@@ -3,12 +3,11 @@ package support
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	. "github.com/phodal/coca/languages/java"
 	ignore "github.com/sabhiram/go-gitignore"
 	"os"
 	"path/filepath"
 	"strings"
-
-	. "github.com/phodal/coca/languages/java"
 )
 
 func GetJavaFiles(codeDir string) []string {

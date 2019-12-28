@@ -164,13 +164,29 @@ func (s *JavaCallListener) EnterFormalParameter(ctx *parser.FormalParameterConte
 
 func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationContext) {
 	decelerators := ctx.VariableDeclarators()
-	typeType := decelerators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
+	typeType := decelerators.GetParent().GetChild(0).(*parser.TypeTypeContext)
 	for _, declarator := range decelerators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
-		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
-		mapFields[value] = typeType
-		fields = append(fields, *&models.JAppField{Type: typeType, Value: value})
+		var typeCtx *parser.ClassOrInterfaceTypeContext = nil
+		if reflect.TypeOf(typeType.GetChild(0)).String() == "*parser.ClassOrInterfaceTypeContext" {
+			typeCtx = typeType.GetChild(0).(*parser.ClassOrInterfaceTypeContext)
+		}
 
-		buildFieldCall(typeType, ctx)
+		if typeType.GetChildCount() > 1 {
+			if reflect.TypeOf(typeType.GetChild(1)).String() == "*parser.ClassOrInterfaceTypeContext" {
+				typeCtx = typeType.GetChild(1).(*parser.ClassOrInterfaceTypeContext)
+			}
+		}
+
+		if typeCtx == nil {
+			continue
+		}
+
+		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
+		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		mapFields[value] = typeTypeText
+		fields = append(fields, *&models.JAppField{Type: typeTypeText, Value: value})
+
+		buildFieldCall(typeTypeText, ctx)
 	}
 }
 

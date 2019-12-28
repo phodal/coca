@@ -72,6 +72,15 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	currentNode = models.NewJIdentifier()
 }
 
+func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+	hasEnterClass = false
+	if currentNode.ClassName != "" {
+		currentNode.Methods = currentNode.GetMethods()
+		nodes = append(nodes, *currentNode)
+	}
+	currentNode = models.NewJIdentifier()
+}
+
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 	hasEnterMethod = true
 	currentMethod = *&models.JMethod{
@@ -95,6 +104,7 @@ func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.Construc
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
+	hasEnterClass = true
 	for _, modifier := range ctx.AllModifier() {
 		modifier := modifier.(*parser.ModifierContext).GetChild(0)
 		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {

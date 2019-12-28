@@ -119,17 +119,18 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
 		for _, typ := range types {
 			typeText := typ.GetText()
-			var hasSetImplement = false
-			for _, imp := range imports {
-				if strings.HasSuffix(imp, "."+typeText) {
-					hasSetImplement = true
-					currentNode.Implements = append(currentNode.Implements, imp)
-				}
-			}
-			// 同一个包下的类
-			if !hasSetImplement {
-				currentNode.Implements = append(currentNode.Implements, currentPkg+"."+typeText)
-			}
+			buildImplement(typeText)
+			//var hasSetImplement = false
+			//for _, imp := range imports {
+			//	if strings.HasSuffix(imp, "."+typeText) {
+			//		hasSetImplement = true
+			//		currentNode.Implements = append(currentNode.Implements, imp)
+			//	}
+			//}
+			//// 同一个包下的类
+			//if !hasSetImplement {
+			//	currentNode.Implements = append(currentNode.Implements, currentPkg+"."+typeText)
+			//}
 		}
 	}
 
@@ -605,4 +606,9 @@ func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 
 		currentNode.MethodCalls = append(currentNode.MethodCalls, *jMethodCall)
 	}
+}
+
+func buildImplement(text string) {
+	target, _ := warpTargetFullType(text)
+	currentNode.Implements = append(currentNode.Implements, target)
 }

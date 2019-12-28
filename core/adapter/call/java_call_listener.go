@@ -82,7 +82,6 @@ func (s *JavaCallListener) exitBody() {
 			methodsArray = append(methodsArray, value)
 		}
 
-		currentNode.MethodCalls = methodCalls
 		currentNode.Fields = fields
 		currentNode.Type = currentType
 		currentNode.Methods = methodsArray

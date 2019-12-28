@@ -28,10 +28,12 @@ func Refactoring() {
 			sourceClasses[className] = className
 		}
 
-		for _, methodCall := range node.MethodCalls {
-			if strings.Contains(methodCall.Package, analysisPackage) {
-				className := methodCall.Package + "." + methodCall.Class
-				targetClasses[className] = className
+		for _, method := range node.Methods {
+			for _, methodCall := range method.MethodCalls {
+				if strings.Contains(methodCall.Package, analysisPackage) {
+					className := methodCall.Package + "." + methodCall.Class
+					targetClasses[className] = className
+				}
 			}
 		}
 	}

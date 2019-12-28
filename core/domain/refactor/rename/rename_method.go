@@ -51,10 +51,12 @@ func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
 				}
 			}
 
-			for _, methodCall := range pkgNode.MethodCalls {
-				if methodCall.Package+methodCall.Class == oldInfo.Package+oldInfo.Class {
-					if methodCall.MethodName == oldInfo.Method {
-						updateSelfRefs(pkgNode, methodCallToMethodModel(methodCall), newInfo)
+			for _, method := range pkgNode.Methods {
+				for _, methodCall := range method.MethodCalls {
+					if methodCall.Package+methodCall.Class == oldInfo.Package+oldInfo.Class {
+						if methodCall.MethodName == oldInfo.Method {
+							updateSelfRefs(pkgNode, methodCallToMethodModel(methodCall), newInfo)
+						}
 					}
 				}
 			}

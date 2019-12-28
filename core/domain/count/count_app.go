@@ -13,13 +13,15 @@ func BuildCallMap(parserDeps []models.JClassNode) map[string]int {
 	// TODO: support identify data class
 	var callMap = make(map[string]int)
 	for _, clz := range parserDeps {
-		for _, call := range clz.MethodCalls {
-			callMethod := call.Package + "." + call.Class + "." + call.MethodName
-			if projectMethods[callMethod] {
-				if callMap[callMethod] == 0 {
-					callMap[callMethod] = 1
-				} else {
-					callMap[callMethod]++
+		for _, method := range clz.Methods {
+			for _, call := range method.MethodCalls {
+				callMethod := call.Package + "." + call.Class + "." + call.MethodName
+				if projectMethods[callMethod] {
+					if callMap[callMethod] == 0 {
+						callMap[callMethod] = 1
+					} else {
+						callMap[callMethod]++
+					}
 				}
 			}
 		}

@@ -66,3 +66,4 @@ api.svg
 coca_reporter
 *.coverprofile
 bug
+_fixtures/tbs/tbs

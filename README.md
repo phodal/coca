@@ -473,6 +473,8 @@ Arch based on [Tequila](https://github.com/newlee/tequila)
 
 Git Analysis inspired by [Code Maat](https://github.com/adamtornhill/code-maat)
 
+Test bad smells inspired by [Test Smell Examples](https://testsmells.github.io/pages/testsmellexamples.html)
+
 [![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 
 @ 2019 A [Phodal Huang](https://www.phodal.com)'s [Idea](http://github.com/phodal/ideas).  This code is distributed under the MPL license. See `LICENSE` in this directory.

@@ -579,7 +579,7 @@ func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 		jMethodCall := &models.JMethodCall{
 			Package:           removeTarget(target),
 			Type:              "field",
-			Class:             "typeType",
+			Class:             typeType,
 			MethodName:        "",
 			StartLine:         ctx.GetStart().GetLine(),
 			StartLinePosition: ctx.GetStart().GetColumn(),

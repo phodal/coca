@@ -3,6 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/adapter"
 	. "github.com/phodal/coca/core/adapter/api"
@@ -65,7 +66,7 @@ var apiCmd = &cobra.Command{
 				_ = json.Unmarshal(apiContent, &restApis)
 			}
 
-			parsedDeps := GetDepsFromJson(depPath)
+			parsedDeps := cmd_util.GetDepsFromJson(depPath)
 
 			restFieldsApi := filterApi(apiPrefix, restApis)
 
@@ -94,7 +95,7 @@ var apiCmd = &cobra.Command{
 			}
 
 			WriteToCocaFile("api.dot", dotContent)
-			ConvertToSvg("api")
+			cmd_util.ConvertToSvg("api")
 		}
 	},
 }

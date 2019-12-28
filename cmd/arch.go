@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/arch"
 	"github.com/spf13/cobra"
@@ -20,7 +21,7 @@ var archCmd = &cobra.Command{
 	Short: "generate arch",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		parsedDeps := GetDepsFromJson(archCmdConfig.DependencePath)
+		parsedDeps := cmd_util.GetDepsFromJson(archCmdConfig.DependencePath)
 		archApp := arch.NewArchApp()
 		dotContent := archApp.Analysis(parsedDeps)
 

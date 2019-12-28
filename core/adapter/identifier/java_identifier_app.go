@@ -6,7 +6,6 @@ import (
 	"github.com/phodal/coca/core/support"
 )
 
-var nodeInfos []models.JIdentifier = nil
 
 type JavaIdentifierApp struct {
 }
@@ -16,8 +15,12 @@ func NewJavaIdentifierApp() JavaIdentifierApp {
 }
 
 func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []models.JIdentifier {
-	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)
+	return j.AnalysisFiles(files)
+}
+
+func (j *JavaIdentifierApp) AnalysisFiles(files []string) []models.JIdentifier {
+	var nodeInfos []models.JIdentifier = nil
 
 	for _, file := range files {
 		parser := support.ProcessFile(file)

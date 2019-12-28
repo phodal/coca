@@ -1,14 +1,12 @@
 package call
 
 import (
-	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/support"
 	"path/filepath"
 )
-
-var nodeInfos []models.JClassNode
 
 type JavaCallApp struct {
 }
@@ -18,12 +16,16 @@ func NewJavaCallApp() JavaCallApp {
 }
 
 func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []models.JIdentifier) []models.JClassNode {
-	nodeInfos = nil
 	files := support.GetJavaFiles(codeDir)
+	return j.AnalysisFiles(identNodes, files, classes)
+}
+
+func (j *JavaCallApp) AnalysisFiles(identNodes []models.JIdentifier, files []string, classes []string) []models.JClassNode {
+	var nodeInfos []models.JClassNode
 
 	var identMap = make(map[string]models.JIdentifier)
 	for _, ident := range identNodes {
-		identMap[ident.Package + "." + ident.ClassName] = ident
+		identMap[ident.Package+"."+ident.ClassName] = ident
 	}
 
 	for index := range files {

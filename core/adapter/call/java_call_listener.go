@@ -111,12 +111,7 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	}
 
 	if ctx.EXTENDS() != nil {
-		currentClzExtend = ctx.TypeType().GetText()
-		for _, imp := range imports {
-			if strings.HasSuffix(imp, "."+currentClzExtend) {
-				currentNode.Extend = currentClzExtend
-			}
-		}
+		buildExtend(ctx)
 	}
 
 	if ctx.IMPLEMENTS() != nil {
@@ -205,11 +200,10 @@ func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 		StopLine:          ctx.GetStop().GetLine(),
 		StopLinePosition:  ctx.GetStop().GetColumn(),
 		Override:          isOverrideMethod,
-		Parameters: 		nil,
+		Parameters:        nil,
 		Annotations:       currentMethod.Annotations,
 		IsConstructor:     true,
 	}
-
 
 	parameters := ctx.FormalParameters()
 	if buildMethodParameters(parameters, method) {
@@ -306,7 +300,7 @@ func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
 	}
 
 	classQueue = classQueue[0 : len(classQueue)-1]
-	currentClz = classQueue[len(classQueue) - 1]
+	currentClz = classQueue[len(classQueue)-1]
 }
 
 func getMethodMapName(method models.JMethod) string {
@@ -566,4 +560,12 @@ func warpTargetFullType(targetType string) (string, string) {
 	}
 
 	return "", callType
+}
+
+func buildExtend(ctx *parser.ClassDeclarationContext) {
+	currentClzExtend = ctx.TypeType().GetText()
+	target, _ := warpTargetFullType(currentClzExtend)
+	if target != "" {
+		currentNode.Extend = target
+	}
 }

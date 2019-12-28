@@ -115,14 +115,12 @@ Examples Result:
          "File": "examples/api/BookController.java",
          "BS": "dataClass"
       }
-      ...
    ],
    "lazyElement": [
       {
          "File": "examples/api/model/BookRepresentaion.java",
          "BS": "lazyElement"
       }
-      ...
    ]
 }
 ```
@@ -435,6 +433,31 @@ results:
 |        |                  | many constructor, too many     |
 |        |                  | parameters                     |
 +--------+------------------+--------------------------------+
+```
+
+### Test Bad Smells
+
+```
+coca tbs
+``` 
+
+results
+
+```json
+[
+	{
+		"FileName": "_fixtures/tbs/code/EmptyTest.java",
+		"Type": "EmptyTest",
+		"Description": "",
+		"Line": 0
+	},
+	{
+		"FileName": "_fixtures/tbs/code/IgnoreTest.java",
+		"Type": "IgnoreTest",
+		"Description": "",
+		"Line": 0
+	}
+]
 ```
 
 ## Dev

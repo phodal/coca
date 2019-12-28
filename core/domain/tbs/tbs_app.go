@@ -31,18 +31,37 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
 			fullName := clz.Package + "." + clz.Class + "." + method.Name
-			checkIgnoreTest(clz, identMethodMap[fullName], &results)
+			checkIgnoreTest(clz.Path, identMethodMap[fullName], &results)
+			checkEmptyTest(clz.Path, identMethodMap[fullName], method, &results)
 		}
 	}
 
 	return results
 }
 
-func checkIgnoreTest(clz models.JClassNode, method models.JMethod, results *[]TestBadSmell) {
+func checkEmptyTest(path string, iMethod models.JMethod, cMethod models.JMethod, results *[]TestBadSmell) {
+	for _, annotation := range iMethod.Annotations {
+		if annotation.QualifiedName == "Test" {
+			if len(cMethod.MethodCalls) <= 1 {
+				tbs := *&TestBadSmell{
+					FileName:    path,
+					Type:        "EmptyTest",
+					Description: "",
+					Line:        0,
+				}
+
+				*results = append(*results, tbs)
+			}
+		}
+	}
+
+}
+
+func checkIgnoreTest(clzPath string, method models.JMethod, results *[]TestBadSmell) {
 	for _, annotation := range method.Annotations {
 		if annotation.QualifiedName == "Ignore" {
 			tbs := *&TestBadSmell{
-				FileName:    clz.Path,
+				FileName:    clzPath,
 				Type:        "IgnoreTest",
 				Description: "",
 				Line:        0,

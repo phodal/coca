@@ -24,33 +24,23 @@ var analysisCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := analysisCmdConfig.Path
 
-		if importPath != "" {
-			//var iNodes []models.JIdentifier
-			//if IsExistCocaFile("identify.json") && !analysisCmdConfig.ForceUpdate {
-			//	fmt.Println("use exist identify")
-			//	identContent := ReadCocaFile("identify.json")
-			//	_ = json.Unmarshal(identContent, &iNodes)
-			//} else {
-			//	fmt.Println("force update identify")
-			identifierApp := NewJavaIdentifierApp()
-			iNodes := identifierApp.AnalysisPath(importPath)
+		identifierApp := NewJavaIdentifierApp()
+		iNodes := identifierApp.AnalysisPath(importPath)
 
-			identModel, _ := json.MarshalIndent(iNodes, "", "\t")
-			WriteToCocaFile("identify.json", string(identModel))
-			//}
+		identModel, _ := json.MarshalIndent(iNodes, "", "\t")
+		WriteToCocaFile("identify.json", string(identModel))
 
-			var classes []string = nil
+		var classes []string = nil
 
-			for _, node := range iNodes {
-				classes = append(classes, node.Package+"."+node.ClassName)
-			}
-
-			callApp := new(JavaCallApp)
-
-			callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
-			cModel, _ := json.MarshalIndent(callNodes, "", "\t")
-			WriteToCocaFile("deps.json", string(cModel))
+		for _, node := range iNodes {
+			classes = append(classes, node.Package+"."+node.ClassName)
 		}
+
+		callApp := new(JavaCallApp)
+
+		callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
+		cModel, _ := json.MarshalIndent(callNodes, "", "\t")
+		WriteToCocaFile("deps.json", string(cModel))
 	},
 }
 

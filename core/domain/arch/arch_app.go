@@ -26,6 +26,16 @@ func (a ArchApp) Analysis(deps []models.JClassNode, identifiersMap map[string]mo
 		src := clz.Package + "." + clz.Class
 		fullGraph.NodeList[src] = src
 
+		for _, impl := range clz.Implements {
+			relation := &tequila.Relation{
+				From:  src,
+				To:    impl,
+				Style: "\"solid\"",
+			}
+
+			fullGraph.RelationList[relation.From+"->"+relation.To] = relation
+		}
+
 		addCallInField(clz, src, fullGraph)
 		addExtend(clz, src, fullGraph)
 		addCallInMethod(clz, identifiersMap, src, fullGraph)

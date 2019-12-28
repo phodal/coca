@@ -70,11 +70,26 @@ Available Commands:
 
 ```
 
+1. Run `coca analysis`
+2. Run Command
+
 ### Analysis
 
 ```
 coca analysis
 ```
+
+### Arch
+
+```
+coca arch
+```
+
+Examples Results:
+
+![Architecture demo](docs/sample/arch.svg)
+
+Repo from: [https://github.com/howiehu/ddd-architecture-samples](https://github.com/howiehu/ddd-architecture-samples)
 
 ### Find Bad Smells
 

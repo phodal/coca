@@ -66,6 +66,10 @@ func addCallInMethod(clz models.JClassNode, identifiersMap map[string]models.JId
 		// TODO: add implements, extends support
 		for _, call := range method.MethodCalls {
 			dst := call.Package + "." + call.Class
+			if src == dst {
+				continue
+			}
+
 			if _, ok := identifiersMap[dst]; ok {
 				relation := &tequila.Relation{
 					From:  src,

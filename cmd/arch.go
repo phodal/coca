@@ -30,8 +30,6 @@ var archCmd = &cobra.Command{
 		archApp := arch.NewArchApp()
 		dotContent := archApp.Analysis(parsedDeps, identifiersMap)
 
-		fmt.Println(dotContent)
-
 		ignores := strings.Split("", ",")
 		var nodeFilter = func(key string) bool {
 			for _, f := range ignores {

@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class MysteryGuest {
+public class MysteryGuestTest {
     @Test
     public void testPersistence() throws Exception {
         try (FileOutputStream out = new FileOutputStream("people.bin");) {

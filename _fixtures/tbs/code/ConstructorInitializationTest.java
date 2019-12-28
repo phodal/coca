@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConstructorInitialization {
+public class ConstructorInitializationTest {
     @Before
     public void init() throws Exception {
 

@@ -34,6 +34,23 @@ func LoadIdentify(importPath string) []models.JIdentifier {
 	return *&identifiers
 }
 
+func LoadTestIdentify(files []string) []models.JIdentifier {
+	var identifiers []models.JIdentifier
+
+	apiContent := support.ReadCocaFile("tidentify.json")
+	if apiContent == nil {
+		identifierApp := new(identifier.JavaIdentifierApp)
+		ident := identifierApp.AnalysisFiles(files)
+
+		identModel, _ := json.MarshalIndent(ident, "", "\t")
+		support.WriteToCocaFile("tidentify.json", string(identModel))
+
+		return *&ident
+	}
+	_ = json.Unmarshal(apiContent, &identifiers)
+
+	return *&identifiers
+}
 
 func BuildDIMap(identifiers []models.JIdentifier, identifierMap map[string]models.JIdentifier) map[string]string {
 	var diMap = make(map[string]string)

@@ -52,6 +52,7 @@ func initClass() {
 	currentClz = ""
 	currentClzExtend = ""
 	currentMethod = models.NewJMethod()
+	currentNode.MethodCalls = nil
 
 	methodMap = make(map[string]models.JMethod)
 	methodCalls = nil
@@ -168,6 +169,8 @@ func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeType
 		fields = append(fields, *&models.JAppField{Type: typeType, Value: value})
+
+		buildFieldCall(typeType, ctx)
 	}
 }
 
@@ -567,5 +570,23 @@ func buildExtend(ctx *parser.ClassDeclarationContext) {
 	target, _ := warpTargetFullType(currentClzExtend)
 	if target != "" {
 		currentNode.Extend = target
+	}
+}
+
+func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
+	target, _ := warpTargetFullType(typeType)
+	if target != "" {
+		jMethodCall := &models.JMethodCall{
+			Package:           removeTarget(target),
+			Type:              "field",
+			Class:             "typeType",
+			MethodName:        "",
+			StartLine:         ctx.GetStart().GetLine(),
+			StartLinePosition: ctx.GetStart().GetColumn(),
+			StopLine:          ctx.GetStop().GetLine(),
+			StopLinePosition:  ctx.GetStop().GetColumn(),
+		}
+
+		currentNode.MethodCalls = append(currentNode.MethodCalls, *jMethodCall)
 	}
 }

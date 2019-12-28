@@ -7,6 +7,7 @@ type JClassNode struct {
 	Path        string
 	Fields      []JAppField
 	Methods     []JMethod
+	MethodCalls []JMethodCall
 	Extend      string
 	Implements  []string
 }
@@ -17,5 +18,5 @@ type JAppField struct {
 }
 
 func NewClassNode() JClassNode {
-	return *&JClassNode{"", "", "", "", nil, nil, "", nil}
+	return *&JClassNode{"", "", "", "", nil, nil, nil, "", nil}
 }

@@ -68,6 +68,7 @@ func buildComment(path string) []*astitodo.TODO {
 		file := files[index]
 
 		displayName := filepath.Base(file)
+		abs, _ := filepath.Abs(file)
 		fmt.Println("Start parse java call: " + displayName)
 
 		is, _ := antlr.NewFileStream(file)
@@ -78,7 +79,7 @@ func buildComment(path string) []*astitodo.TODO {
 			COMMENT_LINE_TOKNE_INDEX := 110
 			// based on `JavaLexer.tokens` file
 			if token.GetTokenType() == COMMENT_TOKEN_INDEX || token.GetTokenType() == COMMENT_LINE_TOKNE_INDEX {
-				todo := astitodo.ParseComment(token, displayName)
+				todo := astitodo.ParseComment(token, abs)
 				if todo != nil {
 					todos = append(todos, todo)
 				}

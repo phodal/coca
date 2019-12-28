@@ -27,6 +27,10 @@ type BadSmellModel struct {
 type BadSmellApp struct {
 }
 
+func NewBadSmellApp() *BadSmellApp {
+	return &BadSmellApp{}
+}
+
 func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []BadSmellModel {
 	nodeInfos = nil
 	files := (*BadSmellApp)(nil).javaFiles(codeDir)

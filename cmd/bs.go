@@ -28,7 +28,7 @@ var badsmellCmd = &cobra.Command{
 
 		ignoreRules := strings.Split(ignoreStr, ",")
 
-		bsApp := new(bs.BadSmellApp)
+		bsApp := *bs.NewBadSmellApp()
 		bsList := bsApp.AnalysisPath(importPath, ignoreRules)
 
 		bsModel, _ := json.MarshalIndent(bsList, "", "\t")

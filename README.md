@@ -10,34 +10,6 @@ Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)
 
-Todo:
-
- - [x] Show all todos and history
- - [ ] Suggest API for Design Patterns
-   - [x] factory pattern
-   - [x] strategy 
-   - [x] builder
-   - [ ] cycle-deps -> adapter / agency
- - [ ] Docs
-    - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
- -  Evaluate API
-    - [x] Average Method Length
-    - [x] Average Class Method Count
- - Date Collections
-    - [ ] monolithic
-    - [ ] microservice 
-    - [ ] big data
- - Badsmell
-    - [x] sort method size
- - Tests
-    - [ ] Testable?
-    - [ ] Test badsmell
-        - [ ] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
- - Arch
-    - [x] Architecture Visualization
-    - [ ] Architecture Guard
-      - [ ] DSL Design
- 
 ## Usage
 
 install 
@@ -459,6 +431,63 @@ results
 	}
 ]
 ```
+
+## Todo
+
+ - [x] bad smell support
+   - [x] longParameterList
+   - [x] longMethod
+   - [x] repeatedSwitches
+   - [x] complexIf
+   - [x] largeClass
+   - [x] refusedBequest
+   - [x] dataClass
+   - [x] sort method size
+ - [x] CLOC
+ - [x] API Visualization
+    - [x] Spring Support
+    - [x] @Service Support
+    - [x] API Call Size
+ - [x] Git
+    - [x] Revs Counts
+    - [x] Summary
+ - [x] Concept
+    - [x] words NLP        
+ - [x] call & rcall graph
+    - [x] Count Refs
+ - [x] AutoRefactor
+   - [x] remove unused
+   - [x] move files
+ - [x] Evaluate
+   - [x] nullable count
+   - [x] static count
+   - [x] method num /length count
+ - [x] Todo Summary
+    - [x] Todo with History & Author   
+ - [x] Show all todos and history
+ - [ ] Suggest API for Design Patterns
+   - [x] factory pattern
+   - [x] strategy 
+   - [x] builder
+   - [ ] cycle-deps -> adapter / agency
+ - [ ] Docs
+    - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
+ -  Evaluate API
+    - [x] Average Method Length
+    - [x] Average Class Method Count
+ - Date Collections
+    - [ ] monolithic
+    - [ ] microservice 
+    - [ ] big data
+ - Tests
+    - [ ] Testable?
+    - [ ] Test badsmell
+        - [x] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
+ - Arch
+    - [x] Architecture Visualization
+    - [ ] Architecture Guard
+      - [ ] DSL Design
+ 
 
 ## Dev
 

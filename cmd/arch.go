@@ -1,11 +1,13 @@
 package cmd
 
 import (
+	"bufio"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/domain/arch"
 	"github.com/spf13/cobra"
+	"os"
 	"strings"
 )
 
@@ -39,7 +41,12 @@ var archCmd = &cobra.Command{
 			return false
 		}
 
-		dotContent.ToDot("coca_reporter/arch.dot", ".", nodeFilter)
+		graph := dotContent.ToDot(".", nodeFilter)
+		f, _ := os.Create("coca_reporter/arch.dot")
+		w := bufio.NewWriter(f)
+		w.WriteString("di" + graph.String())
+		w.Flush()
+
 		cmd_util.ConvertToSvg("arch")
 	},
 }

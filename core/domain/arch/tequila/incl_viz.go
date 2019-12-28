@@ -1,7 +1,6 @@
 package tequila
 
 import (
-	"bufio"
 	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"io/ioutil"
@@ -232,7 +231,7 @@ func ParseInclude(codeDir string) *FullGraph {
 	return fullGraph
 }
 
-func (fullGraph *FullGraph) ToDot(fileName string, split string, filter func(string) bool) {
+func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	graph.SetName("G")
 
@@ -294,10 +293,7 @@ func (fullGraph *FullGraph) ToDot(fileName string, split string, filter func(str
 		}
 	}
 
-	f, _ := os.Create(fileName)
-	w := bufio.NewWriter(f)
-	w.WriteString("di" + graph.String())
-	w.Flush()
+	return graph
 }
 
 var Foo = func() string {

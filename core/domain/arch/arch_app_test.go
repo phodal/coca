@@ -37,6 +37,13 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g.Expect(results.RelationList["domain.AggregateRootA->domain.AggregateRoot"].From).To(Equal("domain.AggregateRootA"))
 	g.Expect(results.RelationList["domain.AggregateRootA->domain.AggregateRoot"].To).To(Equal("domain.AggregateRoot"))
 
+	graph := results.ToDot(".", func(key string) bool {
+		return false
+	})
+
+	g.Expect(len(graph.Nodes.Lookup)).To(Equal(13))
+	g.Expect(len(graph.SubGraphs.SubGraphs)).To(Equal(3))
+
 	jsonContent, _ := json.MarshalIndent(results, "", "\t")
 	content := support.ReadFile(codePath + "/" + "results.json")
 

@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"io/ioutil"
-	"os"
-	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -192,43 +190,6 @@ func formatMethodName(fullMethodName string) string {
 	methodName = strings.Replace(methodName, "include/", "", -1)
 	methodName = strings.ToLower(methodName)
 	return methodName
-}
-
-func codeDotFiles(codeDir string, fileFilter func(string) bool) []string {
-	codeDotFiles := make([]string, 0)
-	filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".dot") {
-			if fileFilter(path) {
-				//return nil
-				if strings.Contains(path, "_test_") {
-					return nil
-				}
-
-				codeDotFiles = append(codeDotFiles, path)
-			}
-		}
-
-		return nil
-	})
-
-	return codeDotFiles
-}
-
-func ParseInclude(codeDir string) *FullGraph {
-	fullGraph = &FullGraph{
-		NodeList:     make(map[string]string),
-		RelationList: make(map[string]*Relation),
-	}
-	codeDotFiles := codeDotFiles(codeDir, func(path string) bool {
-
-		return strings.HasSuffix(path, "_dep__incl.dot")
-	})
-
-	for _, codeDotfile := range codeDotFiles {
-		parseDotFile(codeDotfile)
-	}
-
-	return fullGraph
 }
 
 func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gographviz.Graph {

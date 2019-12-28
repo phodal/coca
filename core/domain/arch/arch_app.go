@@ -1,6 +1,7 @@
 package arch
 
 import (
+	"fmt"
 	"github.com/phodal/coca/core/domain/arch/tequila"
 	"github.com/phodal/coca/core/models"
 )
@@ -19,11 +20,26 @@ func (a ArchApp) Analysis(deps []models.JClassNode, identifiersMap map[string]mo
 	}
 
 	for _, clz := range deps {
+		if clz.Class == "Main" {
+			continue
+		}
+
 		src := clz.Package + "." + clz.Class
 		fullGraph.NodeList[src] = src
 
+		if clz.Extend != "" {
+			fmt.Println(clz.Extend)
+			relation := &tequila.Relation{
+				From:  src,
+				To:    clz.Extend,
+				Style: "\"solid\"",
+			}
+
+			fullGraph.RelationList[relation.From+"->"+relation.To] = relation
+		}
+
 		for _, method := range clz.Methods {
-			if method.Name == "Main" {
+			if method.Name == "main" {
 				continue
 			}
 

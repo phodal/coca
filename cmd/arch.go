@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/domain/arch"
 	"github.com/spf13/cobra"
+	"strings"
 )
 
 type ArchCmdConfig struct {
@@ -21,12 +23,27 @@ var archCmd = &cobra.Command{
 	Short: "generate arch",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		identifiers = adapter.LoadIdentify(apiCmdConfig.DependencePath)
+		identifiersMap = adapter.BuildIdentifierMap(identifiers)
+
 		parsedDeps := cmd_util.GetDepsFromJson(archCmdConfig.DependencePath)
 		archApp := arch.NewArchApp()
-		dotContent := archApp.Analysis(parsedDeps)
+		dotContent := archApp.Analysis(parsedDeps, identifiersMap)
 
 		fmt.Println(dotContent)
-		//ConvertToSvg(dotContent)
+
+		ignores := strings.Split("", ",")
+		var nodeFilter = func(key string) bool {
+			for _, f := range ignores {
+				if key == f {
+					return true
+				}
+			}
+			return false
+		}
+
+		dotContent.ToDot("coca_reporter/arch.dot", ".", nodeFilter)
+		cmd_util.ConvertToSvg("arch")
 	},
 }
 

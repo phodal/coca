@@ -33,7 +33,8 @@ Todo:
     - [ ] Testable?
     - [ ] Test badsmell
         - [ ] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
-
+ - Arch
+ 
 ## Usage
 
 install 
@@ -443,6 +444,10 @@ go get github.com/onsi/gomega
 
 License
 ---
+
+Arch based on [Tequila](https://github.com/newlee/tequila)
+
+Git Analysis inspired by [Code Maat](https://github.com/adamtornhill/code-maat)
 
 [![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 

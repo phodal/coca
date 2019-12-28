@@ -6,6 +6,7 @@ import (
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/domain/arch"
+	"github.com/phodal/coca/core/domain/arch/tequila"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -13,6 +14,7 @@ import (
 
 type ArchCmdConfig struct {
 	DependencePath string
+	IsMergePackage bool
 }
 
 var (
@@ -29,7 +31,7 @@ var archCmd = &cobra.Command{
 
 		parsedDeps := cmd_util.GetDepsFromJson(archCmdConfig.DependencePath)
 		archApp := arch.NewArchApp()
-		dotContent := archApp.Analysis(parsedDeps, identifiersMap)
+		result := archApp.Analysis(parsedDeps, identifiersMap)
 
 		ignores := strings.Split("", ",")
 		var nodeFilter = func(key string) bool {
@@ -41,7 +43,12 @@ var archCmd = &cobra.Command{
 			return false
 		}
 
-		graph := dotContent.ToDot(".", nodeFilter)
+
+		if archCmdConfig.IsMergePackage {
+			result = result.MergeHeaderFile(tequila.MergePackageFunc)
+		}
+
+		graph := result.ToDot(".", nodeFilter)
 		f, _ := os.Create("coca_reporter/arch.dot")
 		w := bufio.NewWriter(f)
 		w.WriteString("di" + graph.String())
@@ -55,4 +62,5 @@ func init() {
 	rootCmd.AddCommand(archCmd)
 
 	archCmd.PersistentFlags().StringVarP(&archCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
+	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergePackage, "mergePackage", "P", false, "merge package/folder for include dependencies")
 }

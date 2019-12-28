@@ -12,8 +12,8 @@ func NewArchApp() ArchApp {
 	return *&ArchApp{}
 }
 
-func (a ArchApp) Analysis(deps []models.JClassNode, identifiersMap map[string]models.JIdentifier) tequila.FullGraph {
-	fullGraph := tequila.FullGraph{
+func (a ArchApp) Analysis(deps []models.JClassNode, identifiersMap map[string]models.JIdentifier) *tequila.FullGraph {
+	fullGraph := &tequila.FullGraph{
 		NodeList:     make(map[string]string),
 		RelationList: make(map[string]*tequila.Relation),
 	}
@@ -36,12 +36,12 @@ func (a ArchApp) Analysis(deps []models.JClassNode, identifiersMap map[string]mo
 			fullGraph.RelationList[relation.From+"->"+relation.To] = relation
 		}
 
-		addCallInField(clz, src, fullGraph)
-		addExtend(clz, src, fullGraph)
-		addCallInMethod(clz, identifiersMap, src, fullGraph)
+		addCallInField(clz, src, *fullGraph)
+		addExtend(clz, src, *fullGraph)
+		addCallInMethod(clz, identifiersMap, src, *fullGraph)
 	}
 
-	return *&fullGraph
+	return fullGraph
 }
 
 func addCallInField(clz models.JClassNode, src string, fullGraph tequila.FullGraph) {

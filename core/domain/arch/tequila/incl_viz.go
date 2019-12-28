@@ -1,9 +1,7 @@
 package tequila
 
 import (
-	"fmt"
 	"github.com/awalterschulze/gographviz"
-	"io/ioutil"
 	"sort"
 	"strconv"
 	"strings"
@@ -24,24 +22,6 @@ type Fan struct {
 	Name   string
 	FanIn  int
 	FanOut int
-}
-
-func (f *FullGraph) FindCrossRef(merge func(string) string) []string {
-	mergedRelationMap := make(map[string]string)
-	result := make([]string, 0)
-	for key := range f.RelationList {
-		relation := f.RelationList[key]
-		mergedFrom := merge(relation.From)
-		mergedTo := merge(relation.To)
-		if mergedFrom == mergedTo {
-			continue
-		}
-		if _, ok := mergedRelationMap[mergedTo+mergedFrom]; ok {
-			result = append(result, mergedFrom+" <-> "+mergedTo)
-		}
-		mergedRelationMap[mergedFrom+mergedTo] = ""
-	}
-	return result
 }
 
 func (f *FullGraph) MergeHeaderFile(merge func(string) string) *FullGraph {
@@ -75,27 +55,6 @@ func (f *FullGraph) MergeHeaderFile(merge func(string) string) *FullGraph {
 	return result
 }
 
-func (f *FullGraph) EntryPoints(merge func(string) string) []string {
-	mergedGraph := f.MergeHeaderFile(merge)
-	fromMap := make(map[string]bool)
-	toMap := make(map[string]bool)
-	for key := range mergedGraph.RelationList {
-		relation := mergedGraph.RelationList[key]
-		if relation.From == "main" {
-			continue
-		}
-		fromMap[relation.From] = true
-		toMap[relation.To] = true
-	}
-	result := make([]string, 0)
-	for key := range fromMap {
-		if _, ok := toMap[key]; !ok {
-			result = append(result, key)
-		}
-	}
-	return result
-}
-
 func (f *FullGraph) SortedByFan(merge func(string) string) []*Fan {
 	mergedGraph := f.MergeHeaderFile(merge)
 	result := make([]*Fan, len(mergedGraph.NodeList))
@@ -119,78 +78,6 @@ func (f *FullGraph) SortedByFan(merge func(string) string) []*Fan {
 }
 
 var fullGraph *FullGraph
-
-func parseRelation(edge *gographviz.Edge, nodes map[string]string) {
-	if _, ok := nodes[edge.Src]; ok {
-		if _, ok := nodes[edge.Dst]; ok {
-			dst := nodes[edge.Dst]
-			src := nodes[edge.Src]
-			dst = strings.ToLower(dst)
-			src = strings.ToLower(src)
-			relation := &Relation{
-				From:  dst,
-				To:    src,
-				Style: "\"solid\"",
-			}
-			fullGraph.RelationList[relation.From+"->"+relation.To] = relation
-		}
-	}
-}
-
-func filterDirectory(fullMethodName string) bool {
-	if strings.Contains(fullMethodName, "_test") {
-		return true
-	}
-
-	if strings.Contains(fullMethodName, "Test") {
-		return true
-	}
-
-	if strings.Contains(fullMethodName, "/Library/") {
-		return true
-	}
-	return false
-}
-
-func parseDotFile(codeDotfile string) {
-	fbuf, _ := ioutil.ReadFile(codeDotfile)
-	parseFromBuffer(fbuf)
-}
-func parseFromBuffer(fbuf []byte) {
-	g, err := gographviz.Read(fbuf)
-	if err != nil {
-		fmt.Println(string(fbuf))
-	}
-	nodes := make(map[string]string)
-	for _, node := range g.Nodes.Nodes {
-		fullMethodName := strings.Replace(node.Attrs["label"], "\"", "", 2)
-		if strings.Contains(fullMethodName, " ") {
-			tmp := strings.Split(fullMethodName, " ")
-			fullMethodName = tmp[len(tmp)-1]
-		}
-		if filterDirectory(fullMethodName) {
-			continue
-		}
-
-		methodName := formatMethodName(fullMethodName)
-		fullGraph.NodeList[methodName] = methodName
-		nodes[node.Name] = methodName
-	}
-	for key := range g.Edges.DstToSrcs {
-		for edgesKey := range g.Edges.DstToSrcs[key] {
-			for _, edge := range g.Edges.DstToSrcs[key][edgesKey] {
-				parseRelation(edge, nodes)
-			}
-		}
-	}
-}
-func formatMethodName(fullMethodName string) string {
-	methodName := strings.Replace(fullMethodName, "\\l", "", -1)
-	methodName = strings.Replace(methodName, "src/", "", -1)
-	methodName = strings.Replace(methodName, "include/", "", -1)
-	methodName = strings.ToLower(methodName)
-	return methodName
-}
 
 func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gographviz.Graph {
 	graph := gographviz.NewGraph()
@@ -259,33 +146,4 @@ func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gogra
 
 var Foo = func() string {
 	return ""
-}
-
-func (fullGraph *FullGraph) ToDataSet(fileName string, split string, filter func(string) bool) {
-	nodes := make(map[string]string)
-
-	for nodeKey := range fullGraph.NodeList {
-		if filter(nodeKey) {
-			continue
-		}
-
-		nodes[nodeKey] = nodeKey
-	}
-
-	relMap := make(map[string][]string)
-	for key := range fullGraph.RelationList {
-		relation := fullGraph.RelationList[key]
-
-		if nodes[relation.From] == "" && nodes[relation.To] != "" {
-			if _, ok := relMap[relation.From]; !ok {
-				relMap[relation.From] = make([]string, 0)
-			}
-			relMap[relation.From] = append(relMap[relation.From], relation.To)
-		}
-	}
-
-	for key := range relMap {
-		tos := relMap[key]
-		fmt.Print("['" + strings.Join(tos, "','") + "'],")
-	}
 }

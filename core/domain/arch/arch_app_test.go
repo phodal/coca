@@ -6,6 +6,7 @@ import (
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/domain/arch/tequila"
 	"github.com/phodal/coca/core/support"
 	"io"
 	"reflect"
@@ -48,6 +49,39 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	content := support.ReadFile(codePath + "/" + "results.json")
 
 	g.Expect(JSONBytesEqual(jsonContent, content)).To(Equal(true))
+}
+
+func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/arch/step2-java"
+	identifierApp := new(identifier.JavaIdentifierApp)
+	identifiers := identifierApp.AnalysisPath(codePath)
+	var classes []string = nil
+	for _, node := range identifiers {
+		classes = append(classes, node.Package+"."+node.ClassName)
+	}
+
+	callApp := call.NewJavaCallApp()
+	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
+
+	identifiersMap := adapter.BuildIdentifierMap(identifiers)
+
+	app := NewArchApp()
+	result := app.Analysis(callNodes, identifiersMap)
+
+	fans := result.SortedByFan(tequila.MergePackageFunc)
+
+	g.Expect(len(fans)).To(Equal(3))
+	var fanPackage []string;
+	for _, fan := range fans {
+		fanPackage = append(fanPackage, fan.Name)
+	}
+
+	g.Eventually(fanPackage).Should(ConsistOf("domain", "repositories", "gateways"))
+	g.Expect(fans[0].Name).To(Equal("domain"))
+	g.Eventually(fans[0].FanIn).Should(Equal(2))
+	g.Eventually(fans[0].FanOut).Should(Equal(0))
 }
 
 func JSONEqual(a, b io.Reader) (bool, error) {

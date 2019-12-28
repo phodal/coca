@@ -28,6 +28,10 @@ Todo:
     - [ ] big data
  - Badsmell
     - [ ] sort method size
+ - Tests
+    - [ ] Testable?
+ - [ ] Test badsmell
+    - [ ] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
 
 ## Usage
 

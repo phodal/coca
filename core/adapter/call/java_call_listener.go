@@ -112,7 +112,8 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	}
 
 	if ctx.EXTENDS() != nil {
-		buildExtend(ctx)
+		currentClzExtend = ctx.TypeType().GetText()
+		buildExtend(currentClzExtend)
 	}
 
 	if ctx.IMPLEMENTS() != nil {
@@ -120,17 +121,6 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 		for _, typ := range types {
 			typeText := typ.GetText()
 			buildImplement(typeText)
-			//var hasSetImplement = false
-			//for _, imp := range imports {
-			//	if strings.HasSuffix(imp, "."+typeText) {
-			//		hasSetImplement = true
-			//		currentNode.Implements = append(currentNode.Implements, imp)
-			//	}
-			//}
-			//// 同一个包下的类
-			//if !hasSetImplement {
-			//	currentNode.Implements = append(currentNode.Implements, currentPkg+"."+typeText)
-			//}
 		}
 	}
 
@@ -140,6 +130,13 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	currentType = "Interface"
 	currentNode.Class = ctx.IDENTIFIER().GetText()
+
+	if ctx.EXTENDS() != nil {
+		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
+		for _, typ := range types {
+			buildExtend(typ.GetText())
+		}
+	}
 }
 
 func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
@@ -582,9 +579,8 @@ func warpTargetFullType(targetType string) (string, string) {
 	return "", callType
 }
 
-func buildExtend(ctx *parser.ClassDeclarationContext) {
-	currentClzExtend = ctx.TypeType().GetText()
-	target, _ := warpTargetFullType(currentClzExtend)
+func buildExtend(extendName string) {
+	target, _ := warpTargetFullType(extendName)
 	if target != "" {
 		currentNode.Extend = target
 	}

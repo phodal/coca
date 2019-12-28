@@ -85,11 +85,17 @@ coca analysis
 coca arch
 ```
 
-Examples Results:
+Examples Results 1:
+
+![Architecture demo 2](docs/sample/ddd.svg)
+
+from: [https://github.com/newlee/tequila](https://github.com/newlee/tequila/tree/master/examples/step2-Java)
+
+Examples Results 2:
 
 ![Architecture demo](docs/sample/arch.svg)
 
-Repo from: [https://github.com/howiehu/ddd-architecture-samples](https://github.com/howiehu/ddd-architecture-samples)
+from: [https://github.com/howiehu/ddd-architecture-samples](https://github.com/howiehu/ddd-architecture-samples)
 
 ### Find Bad Smells
 

@@ -7,12 +7,10 @@ import (
 	"github.com/phodal/coca/core/adapter"
 	. "github.com/phodal/coca/core/adapter/api"
 	"github.com/phodal/coca/core/domain/call_graph"
-	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
-	"os/exec"
 	"regexp"
 	"sort"
 	"strconv"
@@ -67,12 +65,7 @@ var apiCmd = &cobra.Command{
 				_ = json.Unmarshal(apiContent, &restApis)
 			}
 
-			var parsedDeps []models.JClassNode
-			file := ReadFile(depPath)
-			if file == nil {
-				log.Fatal("lost file:" + depPath)
-			}
-			_ = json.Unmarshal(file, &parsedDeps)
+			parsedDeps := GetDepsFromJson(depPath)
 
 			restFieldsApi := filterApi(apiPrefix, restApis)
 
@@ -101,12 +94,7 @@ var apiCmd = &cobra.Command{
 			}
 
 			WriteToCocaFile("api.dot", dotContent)
-
-			cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/api.dot", "-o", config.CocaConfig.ReporterPath + "/api.svg"}...)
-			_, err := cmd.CombinedOutput()
-			if err != nil {
-				log.Fatalf("cmd.Run() failed with %s\n", err)
-			}
+			ConvertToSvg("api")
 		}
 	},
 }

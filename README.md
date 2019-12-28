@@ -15,8 +15,9 @@ Todo:
  - [x] Show all todos and history
  - [ ] Suggest API for Design Patterns
    - [x] factory pattern
-   - [ ] strategy 
-   - [ ] builder
+   - [x] strategy 
+   - [x] builder
+   - [ ] cycle-deps -> adapter / agency
  - [ ] Docs
     - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
  -  Evaluate API
@@ -27,11 +28,11 @@ Todo:
     - [ ] microservice 
     - [ ] big data
  - Badsmell
-    - [ ] sort method size
+    - [x] sort method size
  - Tests
     - [ ] Testable?
- - [ ] Test badsmell
-    - [ ] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
+    - [ ] Test badsmell
+        - [ ] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
 
 ## Usage
 

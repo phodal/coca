@@ -1,23 +1,15 @@
 package unused_classes
 
 import (
-	"encoding/json"
 	. "github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
 	"sort"
 	"strings"
 )
 
 var parsedDeps []JClassNode
+var analysisPackage = ""
 
-func Refactoring() []string {
-	var analysisPackage = ""
-	file := support.ReadCocaFile("deps.json")
-	if file == nil {
-		return nil
-	}
-
-	_ = json.Unmarshal(file, &parsedDeps)
+func Refactoring(parsedDeps []JClassNode) []string {
 	sourceClasses := make(map[string]string)
 	targetClasses := make(map[string]string)
 
@@ -45,8 +37,5 @@ func Refactoring() []string {
 	}
 
 	sort.Sort(sort.StringSlice(excludePackage))
-	//for _, res := range excludePackage {
-	//	fmt.Println(res)
-	//}
 	return excludePackage
 }

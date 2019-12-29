@@ -8,7 +8,7 @@ import (
 func TestBadSmellApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	bsApp := new(BadSmellApp)
+	bsApp := NewBadSmellApp()
 	codePath := "../../../_fixtures/bs"
 	bsList := bsApp.AnalysisPath(codePath, nil)
 

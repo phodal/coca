@@ -2,6 +2,7 @@ package identifier
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/adapter/common_listener"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
@@ -107,13 +108,12 @@ func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.Inter
 		modifier := modifier.(*parser.ModifierContext).GetChild(0)
 		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {
 			annotationContext := modifier.GetChild(0).(*parser.AnnotationContext)
-			buildAnnotation(annotationContext)
+			common_listener.BuildAnnotation(annotationContext)
 		}
 	}
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -190,31 +190,12 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 	}
 
 	if hasEnterClass {
-		annotation := buildAnnotation(ctx)
+		annotation := common_listener.BuildAnnotation(ctx)
 		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
 	} else {
-		annotation := buildAnnotation(ctx)
+		annotation := common_listener.BuildAnnotation(ctx)
 		currentNode.Annotations = append(currentNode.Annotations, annotation)
 	}
-}
-
-func buildAnnotation(ctx *parser.AnnotationContext) models.Annotation {
-	annotationName := ctx.QualifiedName().GetText()
-	annotation := models.NewAnnotation()
-	annotation.QualifiedName = annotationName
-	if ctx.ElementValuePairs() != nil {
-		pairs := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
-		for _, pair := range pairs {
-			pairCtx := pair.(*parser.ElementValuePairContext)
-			pairCtx.ElementValue()
-			annotation.ValuePairs = append(annotation.ValuePairs, *&models.AnnotationKeyValue{
-				Key:   pairCtx.IDENTIFIER().GetText(),
-				Value: pairCtx.ElementValue().GetText(),
-			})
-		}
-	}
-
-	return annotation
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

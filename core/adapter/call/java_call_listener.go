@@ -2,6 +2,7 @@ package call
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/adapter/common_listener"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
@@ -33,6 +34,7 @@ var isOverrideMethod = false
 var currentNode models.JClassNode
 var classNodes []models.JClassNode
 var fileName = ""
+var hasEnterClass = false
 
 func NewJavaCallListener(nodes map[string]models.JIdentifier, file string) *JavaCallListener {
 	identMap = nodes
@@ -69,10 +71,12 @@ func (s *JavaCallListener) getNodeInfo() []models.JClassNode {
 }
 
 func (s *JavaCallListener) ExitClassBody(ctx *parser.ClassBodyContext) {
+	hasEnterClass = false
 	s.exitBody()
 }
 
 func (s *JavaCallListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
+	hasEnterClass = false
 	s.exitBody()
 }
 
@@ -104,6 +108,7 @@ func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 }
 
 func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	hasEnterClass = true
 	currentClzExtend = ""
 	currentType = "Class"
 	if ctx.IDENTIFIER() != nil {
@@ -128,6 +133,7 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 }
 
 func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+	hasEnterClass = true
 	currentType = "Interface"
 	currentNode.Class = ctx.IDENTIFIER().GetText()
 
@@ -135,6 +141,18 @@ func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclar
 		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
 		for _, typ := range types {
 			buildExtend(typ.GetText())
+		}
+	}
+}
+
+
+func (s *JavaCallListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
+	hasEnterClass = true
+	for _, modifier := range ctx.AllModifier() {
+		modifier := modifier.(*parser.ModifierContext).GetChild(0)
+		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {
+			annotationContext := modifier.GetChild(0).(*parser.AnnotationContext)
+			common_listener.BuildAnnotation(annotationContext)
 		}
 	}
 }
@@ -205,6 +223,14 @@ func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		isOverrideMethod = true
 	} else {
 		isOverrideMethod = false
+	}
+
+	if hasEnterClass {
+		annotation := common_listener.BuildAnnotation(ctx)
+		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
+	} else {
+		annotation := common_listener.BuildAnnotation(ctx)
+		currentNode.Annotations = append(currentNode.Annotations, annotation)
 	}
 }
 

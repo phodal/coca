@@ -10,6 +10,7 @@ type JClassNode struct {
 	MethodCalls []JMethodCall
 	Extend      string
 	Implements  []string
+	Annotations []Annotation
 }
 
 type JAppField struct {
@@ -18,5 +19,5 @@ type JAppField struct {
 }
 
 func NewClassNode() JClassNode {
-	return *&JClassNode{"", "", "", "", nil, nil, nil, "", nil}
+	return *&JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil}
 }

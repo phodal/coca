@@ -412,21 +412,29 @@ coca tbs
 
 results
 
-```json
-[
-	{
-		"FileName": "_fixtures/tbs/code/EmptyTest.java",
-		"Type": "EmptyTest",
-		"Description": "",
-		"Line": 0
-	},
-	{
-		"FileName": "_fixtures/tbs/code/IgnoreTest.java",
-		"Type": "IgnoreTest",
-		"Description": "",
-		"Line": 0
-	}
-]
+```bash
++---------------------+-------------------------------------------------------------------------------------------+------+
+|        TYPE         |                                         FILENAME                                          | LINE |
++---------------------+-------------------------------------------------------------------------------------------+------+
+| DuplicateAssertTest | app/test/cc/arduino/contributions/VersionHelperTest.java                                  |   64 |
+| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java                             |   49 |
+| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java                             |   73 |
+| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java                             |  117 |
+| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                                                    |   71 |
+| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                                                    |   72 |
+| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                                                    |   77 |
+| DuplicateAssertTest | app/test/cc/arduino/net/PACSupportMethodsTest.java                                        |   26 |
+| EmptyTest           | app/test/cc/arduino/packages/contributions/HostDependentDownloadableContributionTest.java |   41 |
+| UnknownTest         | app/test/cc/arduino/packages/contributions/HostDependentDownloadableContributionTest.java |   41 |
+| EmptyTest           | app/test/cc/arduino/packages/contributions/HostDependentDownloadableContributionTest.java |   44 |
+| UnknownTest         | app/test/processing/app/BlockCommentGeneratesOneUndoActionTest.java                       |   56 |
+| DuplicateAssertTest | app/test/processing/app/macosx/SystemProfilerParserTest.java                              |   87 |
+| DuplicateAssertTest | app/test/processing/app/syntax/PdeKeywordsTest.java                                       |   54 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |   79 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |  105 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |  133 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |  139 |
++---------------------+-------------------------------------------------------------------------------------------+------+
 ```
 
 ## Todo

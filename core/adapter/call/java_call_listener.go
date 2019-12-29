@@ -365,6 +365,8 @@ func getMethodMapName(method models.JMethod) string {
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	allIdentifiers := ctx.CreatedName().(*parser.CreatedNameContext).AllIDENTIFIER()
+	//currentType = "Creator"
+
 	for _, identifier := range allIdentifiers {
 		createdName := identifier.GetText()
 		localVars[variableName] = createdName
@@ -376,6 +378,25 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 		buildCreatedCall(createdName, ctx)
 	}
 }
+
+//func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
+//	text := ctx.CreatedName().GetText()
+//	creatorNode := &models.JClassNode{
+//		Package:     currentPkg,
+//		Class:       text,
+//		Type:        "Creator",
+//		Path:        "",
+//		Fields:      nil,
+//		Methods:     nil,
+//		MethodCalls: nil,
+//		Extend:      "",
+//		Implements:  nil,
+//		Annotations: nil,
+//	}
+//
+//	classNodes = append(classNodes, *creatorNode)
+//	//currentNode = *creatorNode
+//}
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]

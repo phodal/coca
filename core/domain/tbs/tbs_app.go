@@ -8,6 +8,10 @@ import (
 type TbsApp struct {
 }
 
+var (
+	DuplicatedAssertionLimitLength = 5
+)
+
 func NewTbsApp() *TbsApp {
 	return &TbsApp{}
 }
@@ -43,7 +47,8 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
 				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
 
-				if strings.Contains(methodCall.MethodName, "assert") {
+				methodName := methodCall.MethodName
+				if hasAssertion(methodName) {
 					hasAssert = true
 				}
 
@@ -59,6 +64,26 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	}
 
 	return results
+}
+
+func hasAssertion(methodName string) bool {
+	methodName = strings.ToLower(methodName)
+	assertionList := []string{
+		"assert",
+		"should",
+		"check",     // ArchUnit,
+		"maynotbe",  // ArchUnit,
+		"is",        // RestAssured,
+		"spec",      // RestAssured,
+	}
+
+	for _, assertion := range assertionList {
+		if strings.Contains(methodName, assertion) {
+			return true
+		}
+	}
+
+	return false
 }
 
 func isTest(method models.JMethod) bool {
@@ -85,8 +110,9 @@ func checkUnknownTest(clz models.JClassNode, method models.JMethod, results *[]T
 
 func checkDuplicateAssertTest(clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall, testType *string) {
 	for _, methodCall := range methodCallMap {
-		if len(methodCall) >= 3 {
-			if strings.Contains(methodCall[len(methodCall)-1].MethodName, "assert") {
+		if len(methodCall) >= DuplicatedAssertionLimitLength {
+			methodName := methodCall[len(methodCall)-1].MethodName
+			if hasAssertion(methodName) {
 
 				*testType = "DuplicateAssertTest"
 				tbs := *&TestBadSmell{

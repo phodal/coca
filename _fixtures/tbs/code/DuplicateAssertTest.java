@@ -18,5 +18,8 @@ public class DuplicateAssertTest {
 
         valid = XmlSanitizer.isValid("Fritz!box");
         assertEquals("Exclamation mark is valid", true, valid);
+
+        valid = XmlSanitizer.isValid("Fritz!box");
+        assertEquals("Exclamation mark is valid", true, valid);
     }
 }

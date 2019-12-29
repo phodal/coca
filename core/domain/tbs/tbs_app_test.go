@@ -62,7 +62,7 @@ func TestTbsApp_DuplicateAssertTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	g.Expect(result[0].Line).To(Equal(20))
+	g.Expect(result[0].Line).To(Equal(23))
 	g.Expect(result[0].Type).To(Equal("DuplicateAssertTest"))
 }
 

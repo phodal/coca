@@ -17,7 +17,7 @@ var parsedDeps []models.JClassNode
 
 var conceptCmd = &cobra.Command{
 	Use:   "concept",
-	Short: "concept api",
+	Short: "build domain concept from source code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		dependence := cmd.Flag("dependence").Value.String()

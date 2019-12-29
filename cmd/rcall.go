@@ -24,7 +24,7 @@ var (
 
 var reverseCmd = &cobra.Command{
 	Use:   "rcall",
-	Short: "reverse call",
+	Short: "reverse call graph visualization",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		dependence := *&reverseConfig.DependencePath

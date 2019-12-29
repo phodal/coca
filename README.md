@@ -10,39 +10,35 @@ Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)
 
+features:
+
+```
+Available Commands:
+  analysis    analysis code
+  api         scan HTTP api from annotation
+  arch        project package visualization
+  bs          generate bad smell list and suggestions
+  call        show call graph with specific method
+  cloc        count lines of code with complexity estimation
+  concept     build domain concept from source code
+  count       count most refs function
+  evaluate    evaluate code situation and refactor effort
+  git         analysis git commit history for revs count, summary and suggest
+  help        Help about any command
+  rcall       reverse call graph visualization
+  refactor    auto refactor code
+  suggest     find usable Design Patterns from code
+  tbs         generate tests bad smell
+  todo        scan all todo, and list with time
+  version     version
+```
+
 ## Usage
 
 install 
 
 ```bash
 go get -u github.com/phodal/coca
-```
-
-help:
-
-```bash
-Usage:
-  coca [command]
-
-
-Available Commands:
-  analysis    analysis package
-  api         scan api
-  bs          bad smell analysis
-  call        call graph api
-  cloc        cloc [FILE or DIRECTORY]
-  concept     concept api
-  count       count code
-  evaluate    evaluate refactor effort
-  git         git analysis
-  help        Help about any command
-  rcall       reverse call
-  refactor    auto refactor code
-  suggest     simple holmes
-  todo        scan todo
-  version     print the version number of Coca
-
-
 ```
 
 1. Run `coca analysis`

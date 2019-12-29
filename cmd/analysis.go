@@ -19,7 +19,7 @@ var (
 
 var analysisCmd = &cobra.Command{
 	Use:   "analysis",
-	Short: "analysis package",
+	Short: "analysis code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := analysisCmdConfig.Path

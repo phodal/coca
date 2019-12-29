@@ -22,7 +22,7 @@ var (
 
 var callGraphCmd = &cobra.Command{
 	Use:   "call",
-	Short: "call graph api",
+	Short: "show call graph with specific method",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		var parsedDeps []models.JClassNode

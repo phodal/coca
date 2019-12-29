@@ -19,7 +19,7 @@ var (
 
 var badsmellCmd = &cobra.Command{
 	Use:   "bs",
-	Short: "bad smell analysis",
+	Short: "generate bad smell list and suggestions",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := *&bsCmdConfig.Path

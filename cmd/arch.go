@@ -23,7 +23,7 @@ var (
 
 var archCmd = &cobra.Command{
 	Use:   "arch",
-	Short: "generate arch",
+	Short: "project package visualization",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		identifiers = adapter.LoadIdentify(apiCmdConfig.DependencePath)

@@ -22,7 +22,7 @@ var (
 
 var todoCmd = &cobra.Command{
 	Use:   "todo",
-	Short: "scan todo",
+	Short: "scan all todo, and list with time",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		path := cmd.Flag("path").Value.String()

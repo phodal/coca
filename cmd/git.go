@@ -27,7 +27,7 @@ var (
 
 var gitCmd = &cobra.Command{
 	Use:   "git",
-	Short: "git analysis",
+	Short: "analysis git commit history for revs count, summary and suggest",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		message := getCommitMessage()

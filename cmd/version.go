@@ -12,7 +12,7 @@ func init() {
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "print the version number of Coca",
+	Short: "version",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Coca Version: " + config.VERSION + " -- HEAD")
 	},

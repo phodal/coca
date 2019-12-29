@@ -26,7 +26,7 @@ var cparsedDeps []models.JClassNode
 
 var countCmd = &cobra.Command{
 	Use:   "count",
-	Short: "count code",
+	Short: "count most refs function",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		dependence := countCmdConfig.DependencePath

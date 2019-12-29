@@ -24,7 +24,7 @@ var (
 
 var evaluateCmd = &cobra.Command{
 	Use:   "evaluate",
-	Short: "evaluate refactor effort",
+	Short: "evaluate code situation and refactor effort",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		dependence := *&evaluateConfig.DependencePath

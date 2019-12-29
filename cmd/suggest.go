@@ -17,7 +17,7 @@ var (
 
 var suggestCmd = &cobra.Command{
 	Use:   "suggest",
-	Short: "simple holmes",
+	Short: "find usable Design Patterns from code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		parsedDeps = nil

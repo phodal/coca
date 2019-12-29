@@ -39,7 +39,7 @@ var (
 
 var apiCmd = &cobra.Command{
 	Use:   "api",
-	Short: "scan api",
+	Short: "scan HTTP api from annotation",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		path := apiCmdConfig.Path

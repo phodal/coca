@@ -20,7 +20,7 @@ var (
 
 var tbsCmd = &cobra.Command{
 	Use:   "tbs",
-	Short: "test bad smell",
+	Short: "generate tests bad smell",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		files := support.GetJavaTestFiles(tbsCmdConfig.Path)

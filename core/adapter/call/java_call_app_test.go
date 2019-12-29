@@ -99,6 +99,7 @@ func TestAnnotation(t *testing.T) {
 		methodMap[c.Name] = c
 	}
 
+	g.Expect(len(callNodes[0].Annotations)).To(Equal(0))
 	g.Expect(methodMap["macOsXPositiveTest"].Name).To(Equal("macOsXPositiveTest"))
 
 	for _, call := range methodMap["macOsXPositiveTest"].MethodCalls {

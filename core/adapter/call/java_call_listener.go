@@ -248,7 +248,11 @@ func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
 	} else {
 		annotation := common_listener.BuildAnnotation(ctx)
-		currentNode.Annotations = append(currentNode.Annotations, annotation)
+		if currentType == "Creator" {
+			currentCreatorNode.Annotations = append(currentCreatorNode.Annotations, annotation)
+		} else {
+			currentNode.Annotations = append(currentNode.Annotations, annotation)
+		}
 	}
 }
 

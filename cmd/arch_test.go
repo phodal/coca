@@ -16,7 +16,7 @@ func TestArch(t *testing.T) {
 
 	tests := []cmdTestCase{{
 		name:   "arch",
-		cmd:    "arch",
+		cmd:    "arch -P ",
 		golden: "",
 	}}
 	runTestCmd(t, tests)

@@ -61,7 +61,7 @@ func path(filename string) string {
 	if filepath.IsAbs(filename) {
 		return filename
 	}
-	return filepath.Join("testdata", filename)
+	return filepath.Join("", filename)
 }
 
 func compare(actual []byte, filename string) error {
@@ -78,7 +78,6 @@ func compare(actual []byte, filename string) error {
 	}
 	return nil
 }
-
 
 func update(filename string, in []byte) error {
 	if !*updateGolden {

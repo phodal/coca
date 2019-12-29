@@ -52,6 +52,16 @@ func TestTbsApp_SleepyTest(t *testing.T) {
 	g.Expect(result[0].Type).To(Equal("SleepyTest"))
 }
 
+func TestTbsApp_DuplicateAssertTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/DuplicateAssertTest.java"
+	codePath = filepath.FromSlash(codePath)
+	result := buildTbsResult(codePath)
+
+	g.Expect(result[0].Type).To(Equal("DuplicateAssertTest"))
+}
+
 func buildTbsResult(codePath string) []TestBadSmell {
 	files := support.GetJavaTestFiles(codePath)
 	var identifiers []models.JIdentifier

@@ -29,14 +29,34 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 				checkEmptyTest(clz.Path, annotation, &results, method)
 			}
 
+			var methodCallMap = make(map[string][]models.JMethodCall)
 			for _, methodCall := range method.MethodCalls {
 				checkRedundantPrintTest(clz.Path, methodCall, &results)
 				checkUnknownTest(clz.Path, methodCall, &results)
+				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap)
 			}
 		}
 	}
 
 	return results
+}
+
+func checkDuplicateAssertTest(methodCall models.JMethodCall, clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall) {
+	methodCallMap[methodCallName(methodCall)] = append(methodCallMap[methodCallName(methodCall)], methodCall)
+	if len(methodCallMap[methodCallName(methodCall)]) >= 3 {
+		tbs := *&TestBadSmell{
+			FileName:    clz.Path,
+			Type:        "DuplicateAssertTest",
+			Description: "",
+			Line:        0,
+		}
+
+		*results = append(*results, tbs)
+	}
+}
+
+func methodCallName(methodCall models.JMethodCall) string {
+	return methodCall.Package + "." + methodCall.Class + "." + methodCall.MethodName
 }
 
 func checkUnknownTest(path string, method models.JMethodCall, results *[]TestBadSmell) {

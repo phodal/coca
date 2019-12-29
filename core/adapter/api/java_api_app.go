@@ -14,7 +14,6 @@ type JavaApiApp struct {
 }
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []models.JClassNode, identifiersMap map[string]models.JIdentifier, diMap map[string]string) []RestApi {
-
 	files := support.GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]

@@ -7,7 +7,7 @@ import (
 func TestGit(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "git",
-		cmd:    "git -a -f -t",
+		cmd:    "git -a -f -t -b -o",
 		golden: "",
 	}}
 	runTestCmd(t, tests)

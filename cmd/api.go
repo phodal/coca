@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
@@ -42,61 +43,58 @@ var apiCmd = &cobra.Command{
 	Short: "scan HTTP api from annotation",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		path := apiCmdConfig.Path
 		depPath := apiCmdConfig.DependencePath
 		apiPrefix := apiCmdConfig.AggregateApi
 
-		if path != "" {
-
-			parsedDeps = nil
-			depFile := ReadFile(depPath)
-			if depFile == nil {
-				log.Fatal("lost deps")
-			}
-
-			_ = json.Unmarshal(depFile, &parsedDeps)
-
-			if *&apiCmdConfig.ForceUpdate {
-				forceUpdateApi()
-			} else {
-				apiContent := ReadCocaFile("apis.json")
-				if apiContent == nil {
-					forceUpdateApi()
-				}
-				_ = json.Unmarshal(apiContent, &restApis)
-			}
-
-			parsedDeps := cmd_util.GetDepsFromJson(depPath)
-
-			restFieldsApi := filterApi(apiPrefix, restApis)
-
-			analyser := call_graph.NewCallGraph()
-			dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
-
-			if *&apiCmdConfig.Sort {
-				sort.Slice(counts, func(i, j int) bool {
-					return counts[i].Size < counts[j].Size
-				})
-			}
-
-			if apiCmdConfig.ShowCount {
-				table := tablewriter.NewWriter(os.Stdout)
-
-				table.SetHeader([]string{"Size", "Method", "Uri", "Caller"})
-
-				for _, v := range counts {
-					table.Append([]string{strconv.Itoa(v.Size), v.HttpMethod, v.Uri, replacePackage(v.Caller)})
-				}
-				table.Render()
-			}
-
-			if apiCmdConfig.RemovePackageNames != "" {
-				dotContent = replacePackage(dotContent)
-			}
-
-			WriteToCocaFile("api.dot", dotContent)
-			cmd_util.ConvertToSvg("api")
+		parsedDeps = nil
+		depFile := ReadFile(depPath)
+		if depFile == nil {
+			log.Fatal("lost deps")
 		}
+
+		_ = json.Unmarshal(depFile, &parsedDeps)
+
+		if *&apiCmdConfig.ForceUpdate {
+			forceUpdateApi()
+		} else {
+			apiContent := ReadCocaFile("apis.json")
+			if apiContent == nil {
+				forceUpdateApi()
+			}
+			_ = json.Unmarshal(apiContent, &restApis)
+		}
+
+		parsedDeps := cmd_util.GetDepsFromJson(depPath)
+
+		restFieldsApi := filterApi(apiPrefix, restApis)
+
+		fmt.Println(restApis)
+		analyser := call_graph.NewCallGraph()
+		dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
+
+		if *&apiCmdConfig.Sort {
+			sort.Slice(counts, func(i, j int) bool {
+				return counts[i].Size < counts[j].Size
+			})
+		}
+
+		if apiCmdConfig.ShowCount {
+			table := tablewriter.NewWriter(os.Stdout)
+
+			table.SetHeader([]string{"Size", "Method", "Uri", "Caller"})
+
+			for _, v := range counts {
+				table.Append([]string{strconv.Itoa(v.Size), v.HttpMethod, v.Uri, replacePackage(v.Caller)})
+			}
+			table.Render()
+		}
+
+		if apiCmdConfig.RemovePackageNames != "" {
+			dotContent = replacePackage(dotContent)
+		}
+
+		WriteToCocaFile("api.dot", dotContent)
+		cmd_util.ConvertToSvg("api")
 	},
 }
 

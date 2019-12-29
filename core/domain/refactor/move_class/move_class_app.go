@@ -78,13 +78,12 @@ func parseRename() {
 
 		copyClass(originFile, newFile)
 
-		updatePackageInfo(nodes, originImport, newImport)
-
+		updatePackageInfo(originImport, newImport)
 		updateImportSide(originImport, newImport)
 	}
 }
 
-func updatePackageInfo(structs []models2.JMoveStruct, originImport string, newImport string) {
+func updatePackageInfo(originImport string, newImport string) {
 	var originNode models2.JMoveStruct
 	for index := range nodes {
 		node := nodes[index]
@@ -99,7 +98,6 @@ func updatePackageInfo(structs []models2.JMoveStruct, originImport string, newIm
 	path := buildJavaPath(configPath + newImport)
 	split := strings.Split(newImport, ".")
 	pkg := strings.Join(split[:len(split)-1], ".")
-	fmt.Println(pkg)
 	updateFile(path, originNode.GetPkgInfo().StartLine, "package "+pkg+";")
 }
 

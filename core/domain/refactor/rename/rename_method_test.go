@@ -4,6 +4,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
+	"path/filepath"
 	"sync"
 	"testing"
 )
@@ -15,6 +16,9 @@ func TestRenameMethodApp(t *testing.T) {
 
 	codePath := "../../../../_fixtures/refactor/unused"
 	configPath := "../../../../_fixtures/refactor/rename.config"
+	codePath = filepath.FromSlash(codePath)
+	configPath = filepath.FromSlash(configPath)
+
 	identifierApp := new(identifier.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
@@ -42,6 +46,8 @@ func TestRenameMethodApp(t *testing.T) {
 		wg.Wait()
 
 		configPath2 := "../../../../_fixtures/refactor/rename_back.config"
+		configPath2 = filepath.FromSlash(configPath2)
+
 		RenameMethodApp(callNodes, configPath2).Start()
 		defer wg.Done()
 

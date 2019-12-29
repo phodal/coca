@@ -5,6 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
+	"path/filepath"
 	"testing"
 )
 
@@ -13,7 +14,9 @@ func TestRefactoring(t *testing.T) {
 
 
 	var parsedDeps []models.JClassNode
-	file := support.ReadFile("../../../../_fixtures/count/call.json")
+	codePath := "../../../../_fixtures/count/call.json"
+	codePath = filepath.FromSlash(codePath)
+	file := support.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := Refactoring(parsedDeps)

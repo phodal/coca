@@ -7,6 +7,8 @@ import (
 
 func TestCount(t *testing.T) {
 	abs, _ := filepath.Abs("../_fixtures/arch")
+	abs = filepath.FromSlash(abs)
+
 	analysis := []cmdTestCase{{
 		name:   "analysis",
 		cmd:    "analysis -p " + abs,

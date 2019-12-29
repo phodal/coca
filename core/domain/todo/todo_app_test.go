@@ -2,15 +2,17 @@ package todo
 
 import (
 	. "github.com/onsi/gomega"
+	"path/filepath"
 	"testing"
 )
 
 func TestNewTodoApp(t *testing.T) {
 	g := NewGomegaWithT(t)
+
 	codePath := "../../../_fixtures/todo"
-
-
+	codePath = filepath.FromSlash(codePath)
 	app := NewTodoApp()
+
 	stodos := app.AnalysisPath(codePath)
 	todos := app.BuildWithGitHistory(stodos)
 

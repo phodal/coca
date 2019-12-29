@@ -4,6 +4,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/models"
+	"path/filepath"
 	"testing"
 )
 
@@ -11,6 +12,8 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/call"
+	codePath = filepath.FromSlash(codePath)
+
 	identifierApp := new(identifier.JavaIdentifierApp)
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
@@ -28,6 +31,8 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/suggest/factory"
+	codePath = filepath.FromSlash(codePath)
+
 	callNodes := getCallNodes(codePath)
 	g.Expect(len(callNodes[0].Methods)).To(Equal(3))
 }
@@ -50,6 +55,8 @@ func TestLambda_Express(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/lambda"
+	codePath = filepath.FromSlash(codePath)
+
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]models.JMethod)
@@ -65,6 +72,8 @@ func TestInterface(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/grammar/interface"
+	codePath = filepath.FromSlash(codePath)
+
 	callNodes := getCallNodes(codePath)
 
 	g.Expect(true).To(Equal(true))

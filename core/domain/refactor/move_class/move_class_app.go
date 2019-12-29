@@ -143,7 +143,7 @@ func copyClass(originFile string, newFile string) {
 
 	_, err := CopyFile(originFile, newFile)
 	if err != nil {
-		log.Println(err)
+		log.Fatalln(err)
 	}
 }
 

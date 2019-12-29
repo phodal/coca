@@ -5,6 +5,7 @@ import (
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
 	"log"
+	"path/filepath"
 	"testing"
 
 	. "github.com/onsi/gomega"
@@ -15,7 +16,9 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := NewSuggestApp()
-	file := support.ReadFile("../../../_fixtures/suggest/factory/factory_suggest.json")
+	codePath := "../../../_fixtures/suggest/factory/factory_suggest.json"
+	codePath = filepath.FromSlash(codePath)
+	file := support.ReadFile(codePath)
 	if file == nil {
 		log.Fatal("lost file")
 	}

@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
+	"path/filepath"
 	"testing"
 )
 
@@ -15,10 +16,13 @@ func TestAnalyser_Analysis(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := NewEvaluateAnalyser()
-	file := support.ReadFile("../../../_fixtures/evaluate/service.json")
+	codePath := "../../../_fixtures/evaluate/service.json"
+	codePath = filepath.FromSlash(codePath)
+	file := support.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	analyser.Analysis(parsedDeps, nil)
+
 	g.Expect(true).To(Equal(true))
 }
 
@@ -27,10 +31,13 @@ func Test_Service_LifeCycle(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := NewEvaluateAnalyser()
-	file := support.ReadFile("../../../_fixtures/evaluate/service_lifecycle.json")
+	codePath := "../../../_fixtures/evaluate/service_lifecycle.json"
+	codePath = filepath.FromSlash(codePath)
+	file := support.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)
+
 	g.Expect(len(result.ServiceSummary.LifecycleMap["do"])).To(Equal(2))
 	g.Expect(result.ServiceSummary.LifecycleMap["do"][0]).To(Equal("doSave"))
 	g.Expect(result.ServiceSummary.LifecycleMap["do"][1]).To(Equal("doUpdate"))
@@ -41,10 +48,13 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := NewEvaluateAnalyser()
-	file := support.ReadFile("../../../_fixtures/evaluate/service_same_return_type.json")
+	codePath := "../../../_fixtures/evaluate/service_same_return_type.json"
+	codePath = filepath.FromSlash(codePath)
+	file := support.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := analyser.Analysis(parsedDeps, nil)
+
 	g.Expect(len(results.ServiceSummary.ReturnTypeMap)).To(Equal(1))
 }
 
@@ -53,7 +63,9 @@ func Test_Long_Parameters(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := NewEvaluateAnalyser()
-	file := support.ReadFile("../../../_fixtures/evaluate/service_long_parameters.json")
+	codePath := "../../../_fixtures/evaluate/service_long_parameters.json"
+	codePath = filepath.FromSlash(codePath)
+	file := support.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)
@@ -68,6 +80,7 @@ func TestNullPointException(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/evaluate/null"
+	codePath = filepath.FromSlash(codePath)
 	identifierApp := new(identifier.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil

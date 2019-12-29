@@ -7,6 +7,8 @@ import (
 
 func TestApi(t *testing.T) {
 	abs, _ := filepath.Abs("../_fixtures/call")
+	abs = filepath.FromSlash(abs)
+
 	analysis := []cmdTestCase{{
 		name:   "analysis",
 		cmd:    "analysis -p " + abs,

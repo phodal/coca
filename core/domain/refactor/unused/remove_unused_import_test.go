@@ -2,6 +2,7 @@ package unused
 
 import (
 	. "github.com/onsi/gomega"
+	"path/filepath"
 	"testing"
 )
 
@@ -10,6 +11,7 @@ func TestRemoveUnusedImportApp_Analysis(t *testing.T) {
 
 
 	codePath := "../../../../_fixtures/refactor/unused"
+	codePath = filepath.FromSlash(codePath)
 	app := NewRemoveUnusedImportApp(codePath)
 	results := app.Analysis()
 

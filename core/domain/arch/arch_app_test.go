@@ -9,6 +9,7 @@ import (
 	"github.com/phodal/coca/core/domain/arch/tequila"
 	"github.com/phodal/coca/core/support"
 	"io"
+	"path/filepath"
 	"reflect"
 	"testing"
 )
@@ -17,6 +18,8 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
+	codePath = filepath.FromSlash(codePath)
+
 	identifierApp := new(identifier.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
@@ -46,7 +49,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g.Expect(len(graph.SubGraphs.SubGraphs)).To(Equal(3))
 
 	jsonContent, _ := json.MarshalIndent(results, "", "\t")
-	content := support.ReadFile(codePath + "/" + "results.json")
+	content := support.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
 
 	g.Expect(JSONBytesEqual(jsonContent, content)).To(Equal(true))
 }
@@ -55,6 +58,8 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
+	codePath = filepath.FromSlash(codePath)
+
 	identifierApp := new(identifier.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil

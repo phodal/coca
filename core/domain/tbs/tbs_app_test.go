@@ -6,6 +6,7 @@ import (
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
+	"path/filepath"
 	"testing"
 )
 
@@ -13,6 +14,7 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/tbs/code/EmptyTest.java"
+	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
 	g.Expect(len(result)).To(Equal(1))
@@ -23,6 +25,7 @@ func TestTbsApp_IgnoreTest(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/tbs/code/IgnoreTest.java"
+	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
 	g.Expect(len(result)).To(Equal(1))
@@ -33,6 +36,7 @@ func TestTbsApp_RedundantPrintTest(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/tbs/code/RedundantPrintTest.java"
+	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("RedundantPrintTest"))
@@ -42,6 +46,7 @@ func TestTbsApp_SleepyTest(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/tbs/code/SleepyTest.java"
+	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("SleepyTest"))

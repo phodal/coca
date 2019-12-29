@@ -5,6 +5,7 @@ import (
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
+	"path/filepath"
 	"testing"
 )
 
@@ -12,6 +13,8 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/call"
+	codePath = filepath.FromSlash(codePath)
+
 	identifierApp := new(identifier.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil

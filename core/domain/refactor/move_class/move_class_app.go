@@ -139,12 +139,7 @@ func updateFile(path string, lineNum int, newImp string) {
 
 func copyClass(originFile string, newFile string) {
 	originFile = buildJavaPath(originFile)
-	// TODO: 适配 Windows
-	if runtime.GOOS == "windows" {
-		newFile = strings.ReplaceAll(newFile, ".", "\\") + ".java"
-	} else {
-		newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
-	}
+	newFile = buildJavaPath(newFile)
 
 	_, err := CopyFile(originFile, newFile)
 	if err != nil {
@@ -154,7 +149,6 @@ func copyClass(originFile string, newFile string) {
 
 func buildJavaPath(originFile string) string {
 	// TODO: 适配 Windows
-
 	str := ""
 	if runtime.GOOS == "windows" {
 		str = strings.ReplaceAll(originFile, ".", "\\") + ".java"

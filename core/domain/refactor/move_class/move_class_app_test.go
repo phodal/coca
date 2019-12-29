@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestNewMoveClassApp(t *testing.T) {
+func TestMoveClassApp(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	config := "../../../../_fixtures/refactor/move.config"

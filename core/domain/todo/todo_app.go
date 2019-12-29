@@ -94,8 +94,8 @@ func buildComment(path string) []*astitodo.TODO {
 }
 
 func runGitGetLog(line int, fileName string) string {
-	// git log -1 -L2:README.md --pretty="format:[%h] %aN %ad %s" --date=short  --numstat
-	historyArgs := []string{"log", "-1", "-L" + strconv.Itoa(line) + ":" + fileName, "--pretty=\"format:[%h] %aN %ad %s\"", "--date=short", "--numstat", "--summary"}
+	// git log -1 -L2:README.md --pretty="format:[%h] %aN %ad %s" --date=short
+	historyArgs := []string{"log", "-1", "-L" + strconv.Itoa(line) + ":" + fileName, "--pretty=\"format:[%h] %aN %ad %s\"", "--date=short"}
 	cmd := exec.Command("git", historyArgs...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {

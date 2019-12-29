@@ -1,9 +1,9 @@
 language: go
 
 go:
-  - 1.12.x
+#  - 1.12.x
   - 1.13.x
-  - tip
+#  - tip
 
 os:
   - linux
@@ -14,15 +14,15 @@ env:
   global:
     - GO111MODULE=on
     - PATH=${TRAVIS_BUILD_DIR}/bin:${PATH}
-
-addons:
-  apt:
-    packages:
-      - graphviz
+#
+#addons:
+#  apt:
+#    packages:
+#      - graphviz
 
 before_script:
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install graphviz; fi
+#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
+#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install graphviz; fi
   - go get github.com/onsi/gomega
   - go get github.com/onsi/ginkgo/ginkgo
   - go get github.com/modocache/gover

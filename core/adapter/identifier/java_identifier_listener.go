@@ -13,7 +13,6 @@ var nodes []models.JIdentifier
 
 var currentMethod models.JMethod
 var hasEnterClass = false
-var hasEnterMethod = false
 var imports []string
 
 func NewJavaIdentifierListener() *JavaIdentifierListener {
@@ -82,7 +81,7 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 }
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	hasEnterMethod = true
+
 	currentMethod = *&models.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
@@ -97,7 +96,6 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 }
 
 func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	hasEnterMethod = false
 
 	currentNode.AddMethod(currentMethod)
 	_ = models.NewJMethod()
@@ -115,7 +113,6 @@ func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.Inter
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	hasEnterMethod = true
 
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
@@ -139,7 +136,6 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	hasEnterMethod = false
 
 	currentNode.AddMethod(currentMethod)
 	_ = models.NewJMethod()
@@ -149,7 +145,6 @@ var isOverrideMethod = false
 
 func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	hasEnterClass = true
-	hasEnterMethod = true
 
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()
@@ -182,7 +177,6 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 }
 
 func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	hasEnterMethod = false
 
 	currentNode.AddMethod(currentMethod)
 	_ = models.NewJMethod()

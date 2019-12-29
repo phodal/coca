@@ -38,9 +38,10 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 			var methodCallMap = make(map[string][]models.JMethodCall)
 			var hasAssert = false
 			for index, methodCall := range method.MethodCalls {
+				methodCallMap[methodCallName(methodCall)] = append(methodCallMap[methodCallName(methodCall)], methodCall)
+
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
-				checkSleepyTest(clz.Path, methodCall, &results)
-				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap, &testType)
+				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
 
 				if strings.Contains(methodCall.MethodName, "assert") {
 					hasAssert = true
@@ -48,10 +49,12 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 
 				if index == len(method.MethodCalls)-1 {
 					if !hasAssert {
-						checkUnknownTest(clz, &results, &testType)
+						checkUnknownTest(clz, method, &results, &testType)
 					}
 				}
 			}
+
+			checkDuplicateAssertTest(clz, &results, methodCallMap, &testType)
 		}
 	}
 
@@ -68,32 +71,34 @@ func isTest(method models.JMethod) bool {
 	return isTest
 }
 
-func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, testType *string) {
+func checkUnknownTest(clz models.JClassNode, method models.JMethod, results *[]TestBadSmell, testType *string) {
 	*testType = "UnknownTest"
 	tbs := *&TestBadSmell{
 		FileName:    clz.Path,
 		Type:        *testType,
 		Description: "",
-		Line:        0,
+		Line:        method.StartLine,
 	}
 
 	*results = append(*results, tbs)
 }
 
-func checkDuplicateAssertTest(methodCall models.JMethodCall, clz models.JClassNode, results *[]TestBadSmell,
-	methodCallMap map[string][]models.JMethodCall, testType *string) {
+func checkDuplicateAssertTest(clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall, testType *string) {
+	for _, methodCall := range methodCallMap {
+		if len(methodCall) >= 3 {
+			if strings.Contains(methodCall[len(methodCall)-1].MethodName, "assert") {
 
-	methodCallMap[methodCallName(methodCall)] = append(methodCallMap[methodCallName(methodCall)], methodCall)
-	if len(methodCallMap[methodCallName(methodCall)]) >= 3 {
-		*testType = "DuplicateAssertTest"
-		tbs := *&TestBadSmell{
-			FileName:    clz.Path,
-			Type:        *testType,
-			Description: "",
-			Line:        0,
+				*testType = "DuplicateAssertTest"
+				tbs := *&TestBadSmell{
+					FileName:    clz.Path,
+					Type:        *testType,
+					Description: "",
+					Line:        methodCall[len(methodCall)-1].StartLine,
+				}
+
+				*results = append(*results, tbs)
+			}
 		}
-
-		*results = append(*results, tbs)
 	}
 }
 
@@ -101,13 +106,14 @@ func methodCallName(methodCall models.JMethodCall) string {
 	return methodCall.Package + "." + methodCall.Class + "." + methodCall.MethodName
 }
 
-func checkSleepyTest(path string, method models.JMethodCall, results *[]TestBadSmell) {
+func checkSleepyTest(path string, method models.JMethodCall, jMethod models.JMethod, results *[]TestBadSmell, testType *string) {
 	if method.MethodName == "sleep" && method.Class == "Thread" {
+		*testType = "SleepyTest"
 		tbs := *&TestBadSmell{
 			FileName:    path,
-			Type:        "SleepyTest",
+			Type:        *testType,
 			Description: "",
-			Line:        0,
+			Line:        method.StartLine,
 		}
 
 		*results = append(*results, tbs)
@@ -121,7 +127,7 @@ func checkRedundantPrintTest(path string, mCall models.JMethodCall, results *[]T
 			FileName:    path,
 			Type:        *testType,
 			Description: "",
-			Line:        0,
+			Line:        mCall.StartLine,
 		}
 
 		*results = append(*results, tbs)
@@ -136,7 +142,7 @@ func checkEmptyTest(path string, annotation models.Annotation, results *[]TestBa
 				FileName:    path,
 				Type:        *testType,
 				Description: "",
-				Line:        0,
+				Line:        method.StartLine,
 			}
 
 			*results = append(*results, tbs)

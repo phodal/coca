@@ -17,6 +17,7 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
+	g.Expect(result[0].Line).To(Equal(8))
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
 }
 
@@ -28,6 +29,7 @@ func TestTbsApp_IgnoreTest(t *testing.T) {
 	result := buildTbsResult(codePath)
 
 	g.Expect(len(result)).To(Equal(1))
+	g.Expect(result[0].Line).To(Equal(0))
 	g.Expect(result[0].Type).To(Equal("IgnoreTest"))
 }
 
@@ -38,6 +40,7 @@ func TestTbsApp_RedundantPrintTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
+	g.Expect(result[0].Line).To(Equal(9))
 	g.Expect(result[0].Type).To(Equal("RedundantPrintTest"))
 }
 
@@ -48,6 +51,7 @@ func TestTbsApp_SleepyTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
+	g.Expect(result[0].Line).To(Equal(8))
 	g.Expect(result[0].Type).To(Equal("SleepyTest"))
 }
 
@@ -58,6 +62,7 @@ func TestTbsApp_DuplicateAssertTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
+	g.Expect(result[0].Line).To(Equal(20))
 	g.Expect(result[0].Type).To(Equal("DuplicateAssertTest"))
 }
 
@@ -69,6 +74,7 @@ func TestTbsApp_UnknownTest(t *testing.T) {
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
+	g.Expect(result[0].Line).To(Equal(7))
 	g.Expect(result[1].Type).To(Equal("UnknownTest"))
 }
 

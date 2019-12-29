@@ -17,6 +17,17 @@ func GetJavaFiles(codeDir string) []string {
 		fmt.Println(err)
 	}
 
+	fi, err := os.Stat(codeDir)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	if fi.Mode().IsRegular() {
+		files = append(files, codeDir)
+		return files
+	}
+
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
 		if gitIgnore != nil {
 			if gitIgnore.MatchesPath(path) {
@@ -37,6 +48,17 @@ func GetJavaTestFiles(codeDir string) []string {
 	gitIgnore, err := ignore.CompileIgnoreFile(".gitignore")
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	fi, err := os.Stat(codeDir)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	if fi.Mode().IsRegular() {
+		files = append(files, codeDir)
+		return files
 	}
 
 	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {

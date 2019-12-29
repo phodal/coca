@@ -28,9 +28,7 @@ func (j *JavaCallApp) AnalysisFiles(identNodes []models.JIdentifier, files []str
 		identMap[ident.Package+"."+ident.ClassName] = ident
 	}
 
-	for index := range files {
-		file := files[index]
-
+	for _, file := range files {
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 

@@ -487,7 +487,11 @@ results
     - [x] Architecture Visualization
     - [ ] Architecture Guard
       - [ ] DSL Design
- 
+
+Tech Debt
+
+ - Duplicate Code
+   - cmd/ -> user builder to refactoring
 
 ## Dev
 

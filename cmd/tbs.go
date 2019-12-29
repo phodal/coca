@@ -27,7 +27,7 @@ var tbsCmd = &cobra.Command{
 		var identifiers []models.JIdentifier
 
 		identifiers = adapter.LoadTestIdentify(files)
-		identifiersMap = adapter.BuildIdentifierMap(identifiers)
+		identifiersMap := adapter.BuildIdentifierMap(identifiers)
 
 		var classes []string = nil
 		for _, node := range identifiers {

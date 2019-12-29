@@ -1,10 +1,10 @@
 package adapter
 
 import (
+	"encoding/json"
 	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
-	"encoding/json"
 )
 
 func BuildIdentifierMap(identifiers []models.JIdentifier) map[string]models.JIdentifier {
@@ -20,7 +20,7 @@ func LoadIdentify(importPath string) []models.JIdentifier {
 	var identifiers []models.JIdentifier
 
 	apiContent := support.ReadCocaFile("identify.json")
-	if apiContent == nil {
+	if apiContent == nil || string(apiContent) == "null" {
 		identifierApp := new(identifier.JavaIdentifierApp)
 		ident := identifierApp.AnalysisPath(importPath)
 
@@ -38,8 +38,9 @@ func LoadTestIdentify(files []string) []models.JIdentifier {
 	var identifiers []models.JIdentifier
 
 	apiContent := support.ReadCocaFile("tidentify.json")
-	if apiContent == nil {
-		identifierApp := new(identifier.JavaIdentifierApp)
+
+	if apiContent == nil || string(apiContent) == "null" {
+		identifierApp := identifier.NewJavaIdentifierApp()
 		ident := identifierApp.AnalysisFiles(files)
 
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
@@ -60,7 +61,7 @@ func BuildDIMap(identifiers []models.JIdentifier, identifierMap map[string]model
 				name := annotation.QualifiedName
 				if (name == "Component" || name == "Repository") && len(clz.Implements) > 0 {
 					superClz := identifierMap[clz.Implements[0]]
-					diMap[superClz.Package + "." + superClz.ClassName] = clz.Package + "." + clz.ClassName
+					diMap[superClz.Package+"."+superClz.ClassName] = clz.Package + "." + clz.ClassName
 				}
 			}
 		}
@@ -68,4 +69,3 @@ func BuildDIMap(identifiers []models.JIdentifier, identifierMap map[string]model
 
 	return diMap
 }
-

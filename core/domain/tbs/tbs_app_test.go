@@ -12,9 +12,9 @@ import (
 
 func TestTbsApp_EmptyTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	codePath := "../../../_fixtures/tbs/code/EmptyTest.java"
 	codePath = filepath.FromSlash(codePath)
+
 	result := buildTbsResult(codePath)
 
 	g.Expect(len(result)).To(Equal(2))
@@ -24,9 +24,9 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 
 func TestTbsApp_IgnoreTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	codePath := "../../../_fixtures/tbs/code/IgnoreTest.java"
 	codePath = filepath.FromSlash(codePath)
+
 	result := buildTbsResult(codePath)
 
 	g.Expect(len(result)).To(Equal(1))
@@ -35,9 +35,9 @@ func TestTbsApp_IgnoreTest(t *testing.T) {
 
 func TestTbsApp_RedundantPrintTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	codePath := "../../../_fixtures/tbs/code/RedundantPrintTest.java"
 	codePath = filepath.FromSlash(codePath)
+
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("RedundantPrintTest"))
@@ -45,9 +45,9 @@ func TestTbsApp_RedundantPrintTest(t *testing.T) {
 
 func TestTbsApp_SleepyTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	codePath := "../../../_fixtures/tbs/code/SleepyTest.java"
 	codePath = filepath.FromSlash(codePath)
+
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("SleepyTest"))
@@ -55,9 +55,9 @@ func TestTbsApp_SleepyTest(t *testing.T) {
 
 func TestTbsApp_DuplicateAssertTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	codePath := "../../../_fixtures/tbs/code/DuplicateAssertTest.java"
 	codePath = filepath.FromSlash(codePath)
+
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("DuplicateAssertTest"))
@@ -65,9 +65,9 @@ func TestTbsApp_DuplicateAssertTest(t *testing.T) {
 
 func TestTbsApp_UnknownTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	codePath := "../../../_fixtures/tbs/code/UnknownTest.java"
 	codePath = filepath.FromSlash(codePath)
+
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))

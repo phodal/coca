@@ -15,6 +15,7 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 	codePath := "../../../_fixtures/tbs/code/EmptyTest.java"
 	result := buildTbsResult(codePath)
 
+	g.Expect(len(result)).To(Equal(1))
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
 }
 
@@ -24,7 +25,17 @@ func TestTbsApp_IgnoreTest(t *testing.T) {
 	codePath := "../../../_fixtures/tbs/code/IgnoreTest.java"
 	result := buildTbsResult(codePath)
 
+	g.Expect(len(result)).To(Equal(1))
 	g.Expect(result[0].Type).To(Equal("IgnoreTest"))
+}
+
+func TestTbsApp_RedundantPrintTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/RedundantPrintTest.java"
+	result := buildTbsResult(codePath)
+
+	g.Expect(result[0].Type).To(Equal("RedundantPrintTest"))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

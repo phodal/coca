@@ -26,10 +26,26 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 		for _, method := range clz.Methods {
 			checkIgnoreTest(clz.Path, method, &results)
 			checkEmptyTest(clz.Path, method, &results)
+			checkRedundantPrintTest(clz.Path, method, &results)
 		}
 	}
 
 	return results
+}
+
+func checkRedundantPrintTest(path string, method models.JMethod, results *[]TestBadSmell) {
+	for _, method := range method.MethodCalls {
+		if method.Class == "System.out" && (method.MethodName == "println" || method.MethodName == "printf" || method.MethodName == "print") {
+			tbs := *&TestBadSmell{
+				FileName:    path,
+				Type:        "RedundantPrintTest",
+				Description: "",
+				Line:        0,
+			}
+
+			*results = append(*results, tbs)
+		}
+	}
 }
 
 func checkEmptyTest(path string, method models.JMethod, results *[]TestBadSmell) {

@@ -1,6 +1,7 @@
 package call
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/models"
@@ -76,7 +77,6 @@ func TestInterface(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	g.Expect(true).To(Equal(true))
 	methodMap := make(map[string]models.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
@@ -84,4 +84,23 @@ func TestInterface(t *testing.T) {
 
 	g.Expect(len(callNodes[0].Methods)).To(Equal(6))
 	g.Expect(methodMap["count"].Name).To(Equal("count"))
+}
+
+func TestAnnotation(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+	g.Expect(methodMap["macOsXPositiveTest"].Name).To(Equal("macOsXPositiveTest"))
+
+	for _, call := range methodMap["macOsXPositiveTest"].MethodCalls {
+		fmt.Println(call.Class)
+	}
 }

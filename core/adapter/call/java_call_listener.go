@@ -364,14 +364,17 @@ func getMethodMapName(method models.JMethod) string {
 
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	createdName := ctx.CreatedName().GetText()
-	localVars[variableName] = createdName
+	allIdentifiers := ctx.CreatedName().(*parser.CreatedNameContext).AllIDENTIFIER()
+	for _, identifier := range allIdentifiers {
+		createdName := identifier.GetText()
+		localVars[variableName] = createdName
 
-	if currentMethod.Name == "" {
-		return
+		if currentMethod.Name == "" {
+			return
+		}
+
+		buildCreatedCall(createdName, ctx)
 	}
-
-	buildCreatedCall(createdName, ctx)
 }
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {

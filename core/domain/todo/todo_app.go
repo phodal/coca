@@ -99,6 +99,7 @@ func runGitGetLog(line int, fileName string) string {
 	cmd := exec.Command("git", historyArgs...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
+		fmt.Println(out)
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 

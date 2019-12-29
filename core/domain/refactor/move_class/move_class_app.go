@@ -12,7 +12,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 )
 
@@ -55,11 +54,10 @@ func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 		nodes = append(nodes, *moveStruct)
 	}
 
-	parseRename()
 	return nodes
 }
 
-func parseRename() {
+func (j *MoveClassApp) Refactoring() {
 	file, err := os.Open(moveConfig)
 	if err != nil {
 		log.Fatal(err)
@@ -76,9 +74,11 @@ func parseRename() {
 		originImport := splitStr[0]
 		newImport := splitStr[1]
 
-		originFile, _ := filepath.Abs(configPath + originImport)
-		newFile, _ := filepath.Abs(configPath + newImport)
+		originFile  := buildJavaPath(configPath, originImport)
+		newFile := buildJavaPath(configPath, newImport)
 
+		// for travis test
+		fmt.Println(originFile, newFile)
 		copyClass(originFile, newFile)
 
 		updatePackageInfo(originImport, newImport)
@@ -99,7 +99,7 @@ func updatePackageInfo(originImport string, newImport string) {
 		return
 	}
 
-	path := buildJavaPath(configPath + newImport)
+	path := buildJavaPath(configPath, newImport)
 	split := strings.Split(newImport, ".")
 	pkg := strings.Join(split[:len(split)-1], ".")
 	updateFile(path, originNode.GetPkgInfo().StartLine, "package "+pkg+";")
@@ -138,24 +138,18 @@ func updateFile(path string, lineNum int, newImp string) {
 }
 
 func copyClass(originFile string, newFile string) {
-	originFile = buildJavaPath(originFile)
-	newFile = buildJavaPath(newFile)
-
 	_, err := CopyFile(originFile, newFile)
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
 
-func buildJavaPath(originFile string) string {
-	// TODO: 适配 Windows
-	str := ""
-	if runtime.GOOS == "windows" {
-		str = strings.ReplaceAll(originFile, ".", "\\") + ".java"
-	} else {
-		str = strings.ReplaceAll(originFile, ".", "/") + ".java"
+func buildJavaPath(configPath string, importStr string) string {
+	if !strings.HasSuffix(configPath, "/") {
+		configPath = configPath + "/"
 	}
-	return str
+	path := configPath + strings.ReplaceAll(importStr, ".", "/") + ".java"
+	return filepath.FromSlash(path)
 }
 
 func CopyFile(src, dst string) (int64, error) {

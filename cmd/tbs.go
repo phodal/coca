@@ -2,12 +2,16 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/domain/tbs"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
 	"github.com/spf13/cobra"
+	"os"
+	"strconv"
 )
 
 type TbsCmdConfig struct {
@@ -43,8 +47,20 @@ var tbsCmd = &cobra.Command{
 		app := tbs.NewTbsApp()
 		result := app.AnalysisPath(classNodes, identifiersMap)
 
+		fmt.Println("Test Bad Smell nums: ", len(result))
 		resultContent, _ := json.MarshalIndent(result, "", "\t")
 		support.WriteToCocaFile("tbs.json", string(resultContent))
+
+		if len(result) <= 20  {
+			table := tablewriter.NewWriter(os.Stdout)
+			table.SetHeader([]string{"Type", "FileName", "Line"})
+
+			for _, result := range result {
+				table.Append([]string{result.Type, result.FileName, strconv.Itoa(result.Line)})
+			}
+
+			table.Render()
+		}
 	},
 }
 

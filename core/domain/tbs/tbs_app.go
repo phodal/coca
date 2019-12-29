@@ -24,11 +24,13 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	for _, clz := range deps {
 		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
-			checkIgnoreTest(clz.Path, method, &results)
-			checkEmptyTest(clz.Path, method, &results)
-			checkRedundantPrintTest(clz.Path, method, &results)
+			for _, annotation := range method.Annotations {
+				checkIgnoreTest(clz.Path, annotation, &results)
+				checkEmptyTest(clz.Path, annotation, &results, method)
+			}
 
 			for _, methodCall := range method.MethodCalls {
+				checkRedundantPrintTest(clz.Path, methodCall, &results)
 				checkUnknownTest(clz.Path, methodCall, &results)
 			}
 		}
@@ -50,12 +52,25 @@ func checkUnknownTest(path string, method models.JMethodCall, results *[]TestBad
 	}
 }
 
-func checkRedundantPrintTest(path string, method models.JMethod, results *[]TestBadSmell) {
-	for _, method := range method.MethodCalls {
-		if method.Class == "System.out" && (method.MethodName == "println" || method.MethodName == "printf" || method.MethodName == "print") {
+func checkRedundantPrintTest(path string, mCall models.JMethodCall, results *[]TestBadSmell) {
+	if mCall.Class == "System.out" && (mCall.MethodName == "println" || mCall.MethodName == "printf" || mCall.MethodName == "print") {
+		tbs := *&TestBadSmell{
+			FileName:    path,
+			Type:        "RedundantPrintTest",
+			Description: "",
+			Line:        0,
+		}
+
+		*results = append(*results, tbs)
+	}
+}
+
+func checkEmptyTest(path string, annotation models.Annotation, results *[]TestBadSmell, method models.JMethod) {
+	if annotation.QualifiedName == "Test" {
+		if len(method.MethodCalls) <= 1 {
 			tbs := *&TestBadSmell{
 				FileName:    path,
-				Type:        "RedundantPrintTest",
+				Type:        "EmptyTest",
 				Description: "",
 				Line:        0,
 			}
@@ -65,35 +80,15 @@ func checkRedundantPrintTest(path string, method models.JMethod, results *[]Test
 	}
 }
 
-func checkEmptyTest(path string, method models.JMethod, results *[]TestBadSmell) {
-	for _, annotation := range method.Annotations {
-		if annotation.QualifiedName == "Test" {
-			if len(method.MethodCalls) <= 1 {
-				tbs := *&TestBadSmell{
-					FileName:    path,
-					Type:        "EmptyTest",
-					Description: "",
-					Line:        0,
-				}
-
-				*results = append(*results, tbs)
-			}
+func checkIgnoreTest(clzPath string, annotation models.Annotation, results *[]TestBadSmell) {
+	if annotation.QualifiedName == "Ignore" {
+		tbs := *&TestBadSmell{
+			FileName:    clzPath,
+			Type:        "IgnoreTest",
+			Description: "",
+			Line:        0,
 		}
-	}
 
-}
-
-func checkIgnoreTest(clzPath string, method models.JMethod, results *[]TestBadSmell) {
-	for _, annotation := range method.Annotations {
-		if annotation.QualifiedName == "Ignore" {
-			tbs := *&TestBadSmell{
-				FileName:    clzPath,
-				Type:        "IgnoreTest",
-				Description: "",
-				Line:        0,
-			}
-
-			*results = append(*results, tbs)
-		}
+		*results = append(*results, tbs)
 	}
 }

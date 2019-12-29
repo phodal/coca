@@ -23,7 +23,6 @@ var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtend = ""
 var currentMethod models.JMethod
-var currentCreatorMethod models.JMethod
 var methodMap = make(map[string]models.JMethod)
 var creatorMethodMap = make(map[string]models.JMethod)
 
@@ -34,7 +33,6 @@ var identMap map[string]models.JIdentifier
 var isOverrideMethod = false
 
 var classNodeQueue []models.JClassNode
-var currentClassForQueue models.JClassNode
 
 var currentNode *models.JClassNode
 var classNodes []models.JClassNode
@@ -339,7 +337,6 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *m
 
 func updateMethod(method *models.JMethod) {
 	if currentType == "Creator" {
-		currentCreatorMethod = *method
 		creatorMethodMap[getMethodMapName(*method)] = *method
 	} else {
 		currentMethod = *method
@@ -434,9 +431,6 @@ func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
 	if classNodeQueue == nil || len(classNodeQueue) <= 1 {
 		return
 	}
-
-	classNodeQueue = classNodeQueue[0 : len(classNodeQueue)-1]
-	currentClassForQueue = classNodeQueue[len(classNodeQueue)-1]
 
 	currentMethod.Creators = append(currentMethod.Creators, currentCreatorNode)
 }

@@ -80,7 +80,7 @@ func TestTbsApp_UnknownTest(t *testing.T) {
 
 func TestTbsApp_CreatorNotUnknownTest(t *testing.T) {
 	g := NewGomegaWithT(t)
-	codePath := "../../../_fixtures/tbs/code/CreatorNotUnknownTest.java"
+	codePath := "../../../_fixtures/tbs/regression/CreatorNotUnknownTest.java"
 	codePath = filepath.FromSlash(codePath)
 
 	result := buildTbsResult(codePath)

@@ -17,9 +17,7 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	g.Expect(len(result)).To(Equal(2))
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
-	g.Expect(result[1].Type).To(Equal("UnknownTest"))
 }
 
 func TestTbsApp_IgnoreTest(t *testing.T) {

@@ -25,14 +25,7 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	for _, clz := range deps {
 		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
-			var isTest = false
-			for _, annotation := range method.Annotations {
-				if annotation.QualifiedName == "Test" || annotation.QualifiedName == "Ignore" {
-					isTest = true
-				}
-			}
-
-			if !isTest {
+			if !isTest(method) {
 				continue
 			}
 
@@ -44,7 +37,7 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 
 			var methodCallMap = make(map[string][]models.JMethodCall)
 			var hasAssert = false
-			for _, methodCall := range method.MethodCalls {
+			for index, methodCall := range method.MethodCalls {
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
 				checkSleepyTest(clz.Path, methodCall, &results)
 				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap, &testType)
@@ -52,10 +45,12 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 				if strings.Contains(methodCall.MethodName, "assert") {
 					hasAssert = true
 				}
-			}
 
-			if testType != "IgnoreTest" {
-				checkUnknownTest(clz, &results, hasAssert, &testType)
+				if index == len(method.MethodCalls)-1 {
+					if !hasAssert {
+						checkUnknownTest(clz, &results, &testType)
+					}
+				}
 			}
 		}
 	}
@@ -63,18 +58,26 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	return results
 }
 
-func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, hasAssert bool, testType *string) {
-	if !hasAssert {
-		*testType = "UnknownTest"
-		tbs := *&TestBadSmell{
-			FileName:    clz.Path,
-			Type:        *testType,
-			Description: "",
-			Line:        0,
+func isTest(method models.JMethod) bool {
+	var isTest = false
+	for _, annotation := range method.Annotations {
+		if annotation.QualifiedName == "Test" || annotation.QualifiedName == "Ignore" {
+			isTest = true
 		}
-
-		*results = append(*results, tbs)
 	}
+	return isTest
+}
+
+func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, testType *string) {
+	*testType = "UnknownTest"
+	tbs := *&TestBadSmell{
+		FileName:    clz.Path,
+		Type:        *testType,
+		Description: "",
+		Line:        0,
+	}
+
+	*results = append(*results, tbs)
 }
 
 func checkDuplicateAssertTest(methodCall models.JMethodCall, clz models.JClassNode, results *[]TestBadSmell,

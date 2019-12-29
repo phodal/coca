@@ -8,5 +8,6 @@ public class UnknownTest {
         String a = "blabla";
         String b = "blablac";
         String c = a + b;
+        Show(a, b);
     }
 }

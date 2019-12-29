@@ -60,3 +60,12 @@ func TestStaticMethod(t *testing.T) {
 	g.Expect(identifiers[0].Methods[0].Modifiers[0]).To(Equal("public"))
 	g.Expect(identifiers[0].Methods[0].Modifiers[1]).To(Equal("static"))
 }
+
+func TestModifierLength(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	identApp := NewJavaIdentifierApp()
+	identifiers := identApp.AnalysisPath("../../../_fixtures/bs/ComplexIf.java")
+
+	g.Expect(len(identifiers[0].Methods[0].Modifiers)).To(Equal(1))
+}

@@ -21,6 +21,14 @@ func BuildAnnotation(ctx *parser.AnnotationContext) models.Annotation {
 		}
 	}
 
+	if ctx.ElementValue() != nil {
+		value := ctx.ElementValue().GetText()
+		annotation.ValuePairs = append(annotation.ValuePairs, *&models.AnnotationKeyValue{
+			Key:   value,
+			Value: value,
+		})
+	}
+
 	return annotation
 }
 

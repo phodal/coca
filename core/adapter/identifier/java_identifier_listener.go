@@ -169,7 +169,9 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 	if reflect.TypeOf(ctx.GetParent().GetParent()).String() == "*parser.ClassBodyDeclarationContext" {
 		bodyCtx := ctx.GetParent().GetParent().(*parser.ClassBodyDeclarationContext)
 		for _, modifier := range bodyCtx.AllModifier() {
-			currentMethod.Modifiers = append(currentMethod.Modifiers, modifier.GetText())
+			if !strings.Contains(modifier.GetText(), "@") {
+				currentMethod.Modifiers = append(currentMethod.Modifiers, modifier.GetText())
+			}
 		}
 	}
 

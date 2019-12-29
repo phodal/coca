@@ -1,9 +1,7 @@
 language: go
 
 go:
-  - 1.12.x
   - 1.13.x
-  - tip
 
 env:
   global:
@@ -27,11 +25,10 @@ before_install:
 script:
   - go test -v  $(go list ./... | grep -v /languages/)  -race -coverprofile=coverage.txt -covermode=atomic
 
-#
-#os:
-#  - linux
-#  - osx
-#  - windows
+os:
+  - linux
+  - osx
+  - windows
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

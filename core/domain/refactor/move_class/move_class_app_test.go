@@ -1,8 +1,10 @@
 package move_class
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 )
@@ -12,10 +14,16 @@ func TestMoveClassApp(t *testing.T) {
 
 	config := "../../../../_fixtures/refactor/move.config"
 	path := "../../../../_fixtures/refactor/"
-	abs_path, _ := filepath.Abs(path)
-	app := NewMoveClassApp(config, abs_path + "/")
+
+	absPath, _ := filepath.Abs(path)
+	app := NewMoveClassApp(config, absPath+ "/")
 	app.Analysis()
 
-	stat, _ := os.Stat(path + "/move/b/ImportForB.java")
+	// debug
+	cmd := exec.Command("tree", absPath)
+	output, _ := cmd.CombinedOutput()
+	fmt.Println(string(output))
+
+	stat, _ := os.Stat(absPath + "/move/b/ImportForB.java")
 	g.Expect(stat.Name()).To(Equal("ImportForB.java"))
 }

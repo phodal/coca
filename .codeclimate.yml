@@ -4,3 +4,4 @@ exclude_patterns:
   - "examples/"
   - "docs/"
   - "stories/"
+  - "bughunt"

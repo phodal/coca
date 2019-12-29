@@ -27,10 +27,27 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 			checkIgnoreTest(clz.Path, method, &results)
 			checkEmptyTest(clz.Path, method, &results)
 			checkRedundantPrintTest(clz.Path, method, &results)
+
+			for _, methodCall := range method.MethodCalls {
+				checkUnknownTest(clz.Path, methodCall, &results)
+			}
 		}
 	}
 
 	return results
+}
+
+func checkUnknownTest(path string, method models.JMethodCall, results *[]TestBadSmell) {
+	if method.MethodName == "sleep" && method.Class == "Thread" {
+		tbs := *&TestBadSmell{
+			FileName:    path,
+			Type:        "SleepyTest",
+			Description: "",
+			Line:        0,
+		}
+
+		*results = append(*results, tbs)
+	}
 }
 
 func checkRedundantPrintTest(path string, method models.JMethod, results *[]TestBadSmell) {

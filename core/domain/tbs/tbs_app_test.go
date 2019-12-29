@@ -38,6 +38,15 @@ func TestTbsApp_RedundantPrintTest(t *testing.T) {
 	g.Expect(result[0].Type).To(Equal("RedundantPrintTest"))
 }
 
+func TestTbsApp_SleepyTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/SleepyTest.java"
+	result := buildTbsResult(codePath)
+
+	g.Expect(result[0].Type).To(Equal("SleepyTest"))
+}
+
 func buildTbsResult(codePath string) []TestBadSmell {
 	files := support.GetJavaTestFiles(codePath)
 	var identifiers []models.JIdentifier

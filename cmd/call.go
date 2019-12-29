@@ -1,14 +1,14 @@
 package cmd
 
 import (
+	"encoding/json"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
 	. "github.com/phodal/coca/core/domain/call_graph"
 	"github.com/phodal/coca/core/models"
 	. "github.com/phodal/coca/core/support"
-	"encoding/json"
 	"github.com/spf13/cobra"
 	"log"
-	"os/exec"
 	"strings"
 )
 
@@ -46,12 +46,7 @@ var callGraphCmd = &cobra.Command{
 			}
 
 			WriteToCocaFile("call.dot", content)
-
-			cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/call.dot", "-o", config.CocaConfig.ReporterPath + "/call.svg"}...)
-			_, err := cmd.CombinedOutput()
-			if err != nil {
-				log.Fatalf("cmd.Run() failed with %s\n", err)
-			}
+			cmd_util.ConvertToSvg("call")
 		}
 	},
 }

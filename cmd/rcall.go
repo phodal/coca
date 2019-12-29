@@ -1,14 +1,14 @@
 package cmd
 
 import (
+	"encoding/json"
+	"fmt"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/call_graph/rcall"
 	. "github.com/phodal/coca/core/support"
-	"encoding/json"
-	"fmt"
 	"github.com/spf13/cobra"
 	"log"
-	"os/exec"
 	"strings"
 )
 
@@ -51,12 +51,7 @@ var reverseCmd = &cobra.Command{
 		}
 
 		WriteToCocaFile("rcall.dot", content)
-
-		acmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/rcall.dot", "-o", config.CocaConfig.ReporterPath + "/rcall.svg"}...)
-		output, err := acmd.CombinedOutput()
-		if err != nil {
-			log.Fatalf("cmd.Run() failed with %s%s\n", err, string(output))
-		}
+		cmd_util.ConvertToSvg("call")
 	},
 }
 

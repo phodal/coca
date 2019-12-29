@@ -75,6 +75,7 @@ func hasAssertion(methodName string) bool {
 		"maynotbe",  // ArchUnit,
 		"is",        // RestAssured,
 		"spec",      // RestAssured,
+		"verify",    // Mockito,
 	}
 
 	for _, assertion := range assertionList {

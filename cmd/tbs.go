@@ -15,7 +15,8 @@ import (
 )
 
 type TbsCmdConfig struct {
-	Path string
+	Path   string
+	IsSort bool
 }
 
 var (
@@ -49,9 +50,19 @@ var tbsCmd = &cobra.Command{
 
 		fmt.Println("Test Bad Smell nums: ", len(result))
 		resultContent, _ := json.MarshalIndent(result, "", "\t")
+
+		if tbsCmdConfig.IsSort {
+			var tbsMap = make(map[string][]tbs.TestBadSmell)
+			for _, tbs := range result {
+				tbsMap[tbs.Type] = append(tbsMap[tbs.Type], tbs)
+			}
+
+			resultContent, _ = json.MarshalIndent(tbsMap, "", "\t")
+		}
+
 		support.WriteToCocaFile("tbs.json", string(resultContent))
 
-		if len(result) <= 20  {
+		if len(result) <= 20 {
 			table := tablewriter.NewWriter(os.Stdout)
 			table.SetHeader([]string{"Type", "FileName", "Line"})
 
@@ -68,4 +79,5 @@ func init() {
 	rootCmd.AddCommand(tbsCmd)
 
 	tbsCmd.PersistentFlags().StringVarP(&tbsCmdConfig.Path, "path", "p", ".", "example -p core/main")
+	tbsCmd.PersistentFlags().BoolVarP(&tbsCmdConfig.IsSort, "sort", "s", false, "-s")
 }

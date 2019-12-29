@@ -1,10 +1,8 @@
 package move_class
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"testing"
 )

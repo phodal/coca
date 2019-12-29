@@ -9,10 +9,25 @@ import (
 	"testing"
 )
 
-func TestTbsApp_AnalysisPath(t *testing.T) {
+func TestTbsApp_EmptyTest(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/tbs/code/EmptyTest.java"
+	result := buildTbsResult(codePath)
+
+	g.Expect(result[0].Type).To(Equal("EmptyTest"))
+}
+
+func TestTbsApp_IgnoreTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/IgnoreTest.java"
+	result := buildTbsResult(codePath)
+
+	g.Expect(result[0].Type).To(Equal("IgnoreTest"))
+}
+
+func buildTbsResult(codePath string) []TestBadSmell {
 	files := support.GetJavaTestFiles(codePath)
 	var identifiers []models.JIdentifier
 
@@ -29,6 +44,5 @@ func TestTbsApp_AnalysisPath(t *testing.T) {
 
 	app := NewTbsApp()
 	result := app.AnalysisPath(classNodes, identifiersMap)
-
-	g.Expect(result[0].Type).To(Equal("EmptyTest"))
+	return result
 }

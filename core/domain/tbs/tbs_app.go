@@ -1,7 +1,6 @@
 package tbs
 
 import (
-	"fmt"
 	"github.com/phodal/coca/core/models"
 )
 
@@ -34,7 +33,6 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 }
 
 func checkEmptyTest(path string, method models.JMethod, results *[]TestBadSmell) {
-	fmt.Println(method.Annotations)
 	for _, annotation := range method.Annotations {
 		if annotation.QualifiedName == "Test" {
 			if len(method.MethodCalls) <= 1 {

@@ -145,7 +145,6 @@ func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclar
 	}
 }
 
-
 func (s *JavaCallListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
 	hasEnterClass = true
 	for _, modifier := range ctx.AllModifier() {
@@ -270,7 +269,16 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+	method := &models.JMethod{
+		Name: name, Type: typeType,
+		StartLine:         startLine,
+		StartLinePosition: startLinePosition,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+		Annotations:       currentMethod.Annotations,
+		Override:          isOverrideMethod,
+		Parameters:        nil,
+	}
 
 	parameters := ctx.FormalParameters()
 	if buildMethodParameters(parameters, method) {

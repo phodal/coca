@@ -1,6 +1,7 @@
 package tbs
 
 import (
+	"fmt"
 	"github.com/phodal/coca/core/models"
 )
 
@@ -20,29 +21,23 @@ type TestBadSmell struct {
 
 func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string]models.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
-	var identMethodMap = make(map[string]models.JMethod)
-	for key, clzMap := range identifiersMap {
-		for _, method := range clzMap.Methods {
-			identMethodMap[key + "." + method.Name] = method
-		}
-	}
 
 	for _, clz := range deps {
 		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
-			fullName := clz.Package + "." + clz.Class + "." + method.Name
-			checkIgnoreTest(clz.Path, identMethodMap[fullName], &results)
-			checkEmptyTest(clz.Path, identMethodMap[fullName], method, &results)
+			checkIgnoreTest(clz.Path, method, &results)
+			checkEmptyTest(clz.Path, method, &results)
 		}
 	}
 
 	return results
 }
 
-func checkEmptyTest(path string, iMethod models.JMethod, cMethod models.JMethod, results *[]TestBadSmell) {
-	for _, annotation := range iMethod.Annotations {
+func checkEmptyTest(path string, method models.JMethod, results *[]TestBadSmell) {
+	fmt.Println(method.Annotations)
+	for _, annotation := range method.Annotations {
 		if annotation.QualifiedName == "Test" {
-			if len(cMethod.MethodCalls) <= 1 {
+			if len(method.MethodCalls) <= 1 {
 				tbs := *&TestBadSmell{
 					FileName:    path,
 					Type:        "EmptyTest",

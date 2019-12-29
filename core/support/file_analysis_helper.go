@@ -14,7 +14,7 @@ func GetJavaFiles(codeDir string) []string {
 	files := make([]string, 0)
 	gitIgnore, err := ignore.CompileIgnoreFile(".gitignore")
 	if err != nil {
-		fmt.Println(err)
+		//fmt.Println(err)
 	}
 
 	fi, err := os.Stat(codeDir)

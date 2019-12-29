@@ -115,17 +115,16 @@ var gitCmd = &cobra.Command{
 			}
 
 			GetRelatedFiles(commitMessages, config)
-			//results := GetRelatedFiles(commitMessages, config)
-			//fmt.Println(results)
 		}
 	},
 }
 
 func getCommitMessage() string {
-	historyArgs := []string{"log", "--pretty=format:[%h] %aN %ad %s", "--date=short", "--numstat", "--reverse", "--summary"}
+	historyArgs := []string{"log", "--pretty=\"format:[%h] %aN %ad %s\"", "--date=short", "--numstat", "--reverse", "--summary"}
 	cmd := exec.Command("git", historyArgs...)
 	out, err := cmd.CombinedOutput()
 	if err != nil {
+		fmt.Println(string(out))
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 

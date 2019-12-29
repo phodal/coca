@@ -20,12 +20,6 @@ func TestMoveClassApp(t *testing.T) {
 	app.Analysis()
 	app.Refactoring()
 
-	cmd := exec.Command("pwd")
-	output, _ := cmd.CombinedOutput()
-	fmt.Println("////////////////////////")
-	fmt.Println(string(output))
-
-	// todo: fix in CI
 	stat, _ := os.Stat(filepath.FromSlash(absPath + "/move/b/ImportForB.java"))
 	g.Expect(stat.Name()).To(Equal("ImportForB.java"))
 

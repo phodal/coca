@@ -17,8 +17,9 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
-	g.Expect(len(result)).To(Equal(1))
+	g.Expect(len(result)).To(Equal(2))
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
+	g.Expect(result[1].Type).To(Equal("UnknownTest"))
 }
 
 func TestTbsApp_IgnoreTest(t *testing.T) {
@@ -28,7 +29,7 @@ func TestTbsApp_IgnoreTest(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
-	g.Expect(len(result)).To(Equal(1))
+	g.Expect(len(result)).To(Equal(2))
 	g.Expect(result[0].Type).To(Equal("IgnoreTest"))
 }
 
@@ -60,6 +61,17 @@ func TestTbsApp_DuplicateAssertTest(t *testing.T) {
 	result := buildTbsResult(codePath)
 
 	g.Expect(result[0].Type).To(Equal("DuplicateAssertTest"))
+}
+
+func TestTbsApp_UnknownTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/UnknownTest.java"
+	codePath = filepath.FromSlash(codePath)
+	result := buildTbsResult(codePath)
+
+	g.Expect(result[0].Type).To(Equal("EmptyTest"))
+	g.Expect(result[1].Type).To(Equal("UnknownTest"))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

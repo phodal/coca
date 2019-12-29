@@ -2,6 +2,7 @@ package tbs
 
 import (
 	"github.com/phodal/coca/core/models"
+	"strings"
 )
 
 type TbsApp struct {
@@ -30,15 +31,35 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 			}
 
 			var methodCallMap = make(map[string][]models.JMethodCall)
+			var hasAssert = false
 			for _, methodCall := range method.MethodCalls {
 				checkRedundantPrintTest(clz.Path, methodCall, &results)
 				checkSleepyTest(clz.Path, methodCall, &results)
 				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap)
+
+				if strings.Contains(methodCall.MethodName, "assert") {
+					hasAssert = true
+				}
 			}
+
+			checkUnknownTest(clz, &results, hasAssert)
 		}
 	}
 
 	return results
+}
+
+func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, hasAssert bool) {
+	if !hasAssert {
+		tbs := *&TestBadSmell{
+			FileName:    clz.Path,
+			Type:        "UnknownTest",
+			Description: "",
+			Line:        0,
+		}
+
+		*results = append(*results, tbs)
+	}
 }
 
 func checkDuplicateAssertTest(methodCall models.JMethodCall, clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall) {

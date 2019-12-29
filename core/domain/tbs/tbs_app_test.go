@@ -85,8 +85,7 @@ func TestTbsApp_CreatorNotUnknownTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	// todo: fix bug
-	g.Expect(len(result)).To(Equal(3))
+	g.Expect(len(result)).To(Equal(0))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

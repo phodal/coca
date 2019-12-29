@@ -23,7 +23,9 @@ var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtend = ""
 var currentMethod models.JMethod
+var currentCreatorMethod models.JMethod
 var methodMap = make(map[string]models.JMethod)
+var creatorMethodMap = make(map[string]models.JMethod)
 
 var methodQueue []models.JMethod
 var classQueue []string
@@ -100,13 +102,12 @@ func (s *JavaCallListener) exitBody() {
 	}
 
 	if currentType == "Creator" {
-		currentCreatorNode.Methods = append(currentCreatorNode.Methods, currentNode.Methods...)
 		var methodsArray []models.JMethod
-		for _, value := range methodMap {
+		for _, value := range creatorMethodMap {
 			methodsArray = append(methodsArray, value)
 		}
 
-		currentNode.Methods = append(currentNode.Methods, methodsArray...)
+		currentCreatorNode.Methods = methodsArray
 		return
 	}
 
@@ -288,7 +289,8 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	method := &models.JMethod{
-		Name: name, Type: typeType,
+		Name:              name,
+		Type:              typeType,
 		StartLine:         startLine,
 		StartLinePosition: startLinePosition,
 		StopLine:          stopLine,
@@ -332,9 +334,14 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *m
 }
 
 func updateMethod(method *models.JMethod) {
-	currentMethod = *method
-	methodQueue = append(methodQueue, *method)
-	methodMap[getMethodMapName(*method)] = *method
+	if currentType == "Creator" {
+		currentCreatorMethod = *method
+		creatorMethodMap[getMethodMapName(*method)] = *method
+	} else {
+		currentMethod = *method
+		methodQueue = append(methodQueue, *method)
+		methodMap[getMethodMapName(*method)] = *method
+	}
 }
 
 func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
@@ -342,6 +349,10 @@ func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationCo
 }
 
 func exitMethod() {
+	if currentType == "Creator" {
+		return
+	}
+
 	if methodQueue == nil || len(methodQueue) < 1 {
 		currentMethod = models.NewJMethod()
 		return
@@ -422,6 +433,8 @@ func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
 
 	classNodeQueue = classNodeQueue[0 : len(classNodeQueue)-1]
 	currentClassForQueue = classNodeQueue[len(classNodeQueue)-1]
+
+	currentMethod.Creators = append(currentMethod.Creators, currentCreatorNode)
 }
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {

@@ -1,6 +1,7 @@
 package tbs
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
@@ -76,6 +77,17 @@ func TestTbsApp_UnknownTest(t *testing.T) {
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
 	g.Expect(result[0].Line).To(Equal(7))
 	g.Expect(result[1].Type).To(Equal("UnknownTest"))
+}
+
+func TestTbsApp_CreatorNotUnknownTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+	codePath := "../../../_fixtures/tbs/code/CreatorNotUnknownTest.java"
+	codePath = filepath.FromSlash(codePath)
+
+	result := buildTbsResult(codePath)
+
+	// todo: fix bug
+	g.Expect(len(result)).To(Equal(3))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

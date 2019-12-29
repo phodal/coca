@@ -32,7 +32,7 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 			var methodCallMap = make(map[string][]models.JMethodCall)
 			for _, methodCall := range method.MethodCalls {
 				checkRedundantPrintTest(clz.Path, methodCall, &results)
-				checkUnknownTest(clz.Path, methodCall, &results)
+				checkSleepyTest(clz.Path, methodCall, &results)
 				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap)
 			}
 		}
@@ -59,7 +59,7 @@ func methodCallName(methodCall models.JMethodCall) string {
 	return methodCall.Package + "." + methodCall.Class + "." + methodCall.MethodName
 }
 
-func checkUnknownTest(path string, method models.JMethodCall, results *[]TestBadSmell) {
+func checkSleepyTest(path string, method models.JMethodCall, results *[]TestBadSmell) {
 	if method.MethodName == "sleep" && method.Class == "Thread" {
 		tbs := *&TestBadSmell{
 			FileName:    path,

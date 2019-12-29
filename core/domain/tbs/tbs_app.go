@@ -25,35 +25,50 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	for _, clz := range deps {
 		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
+			var isTest = false
 			for _, annotation := range method.Annotations {
-				checkIgnoreTest(clz.Path, annotation, &results)
-				checkEmptyTest(clz.Path, annotation, &results, method)
+				if annotation.QualifiedName == "Test" || annotation.QualifiedName == "Ignore" {
+					isTest = true
+				}
+			}
+
+			if !isTest {
+				continue
+			}
+
+			var testType = ""
+			for _, annotation := range method.Annotations {
+				checkIgnoreTest(clz.Path, annotation, &results, &testType)
+				checkEmptyTest(clz.Path, annotation, &results, method, &testType)
 			}
 
 			var methodCallMap = make(map[string][]models.JMethodCall)
 			var hasAssert = false
 			for _, methodCall := range method.MethodCalls {
-				checkRedundantPrintTest(clz.Path, methodCall, &results)
+				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
 				checkSleepyTest(clz.Path, methodCall, &results)
-				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap)
+				checkDuplicateAssertTest(methodCall, clz, &results, methodCallMap, &testType)
 
 				if strings.Contains(methodCall.MethodName, "assert") {
 					hasAssert = true
 				}
 			}
 
-			checkUnknownTest(clz, &results, hasAssert)
+			if testType != "IgnoreTest" {
+				checkUnknownTest(clz, &results, hasAssert, &testType)
+			}
 		}
 	}
 
 	return results
 }
 
-func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, hasAssert bool) {
+func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, hasAssert bool, testType *string) {
 	if !hasAssert {
+		*testType = "UnknownTest"
 		tbs := *&TestBadSmell{
 			FileName:    clz.Path,
-			Type:        "UnknownTest",
+			Type:        *testType,
 			Description: "",
 			Line:        0,
 		}
@@ -62,12 +77,15 @@ func checkUnknownTest(clz models.JClassNode, results *[]TestBadSmell, hasAssert 
 	}
 }
 
-func checkDuplicateAssertTest(methodCall models.JMethodCall, clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall) {
+func checkDuplicateAssertTest(methodCall models.JMethodCall, clz models.JClassNode, results *[]TestBadSmell,
+	methodCallMap map[string][]models.JMethodCall, testType *string) {
+
 	methodCallMap[methodCallName(methodCall)] = append(methodCallMap[methodCallName(methodCall)], methodCall)
 	if len(methodCallMap[methodCallName(methodCall)]) >= 3 {
+		*testType = "DuplicateAssertTest"
 		tbs := *&TestBadSmell{
 			FileName:    clz.Path,
-			Type:        "DuplicateAssertTest",
+			Type:        *testType,
 			Description: "",
 			Line:        0,
 		}
@@ -93,11 +111,12 @@ func checkSleepyTest(path string, method models.JMethodCall, results *[]TestBadS
 	}
 }
 
-func checkRedundantPrintTest(path string, mCall models.JMethodCall, results *[]TestBadSmell) {
+func checkRedundantPrintTest(path string, mCall models.JMethodCall, results *[]TestBadSmell, testType *string) {
 	if mCall.Class == "System.out" && (mCall.MethodName == "println" || mCall.MethodName == "printf" || mCall.MethodName == "print") {
+		*testType = "RedundantPrintTest"
 		tbs := *&TestBadSmell{
 			FileName:    path,
-			Type:        "RedundantPrintTest",
+			Type:        *testType,
 			Description: "",
 			Line:        0,
 		}
@@ -106,12 +125,13 @@ func checkRedundantPrintTest(path string, mCall models.JMethodCall, results *[]T
 	}
 }
 
-func checkEmptyTest(path string, annotation models.Annotation, results *[]TestBadSmell, method models.JMethod) {
+func checkEmptyTest(path string, annotation models.Annotation, results *[]TestBadSmell, method models.JMethod, testType *string) {
 	if annotation.QualifiedName == "Test" {
 		if len(method.MethodCalls) <= 1 {
+			*testType = "EmptyTest"
 			tbs := *&TestBadSmell{
 				FileName:    path,
-				Type:        "EmptyTest",
+				Type:        *testType,
 				Description: "",
 				Line:        0,
 			}
@@ -121,11 +141,12 @@ func checkEmptyTest(path string, annotation models.Annotation, results *[]TestBa
 	}
 }
 
-func checkIgnoreTest(clzPath string, annotation models.Annotation, results *[]TestBadSmell) {
+func checkIgnoreTest(clzPath string, annotation models.Annotation, results *[]TestBadSmell, testType *string) {
 	if annotation.QualifiedName == "Ignore" {
+		*testType = "IgnoreTest"
 		tbs := *&TestBadSmell{
 			FileName:    clzPath,
-			Type:        "IgnoreTest",
+			Type:        *testType,
 			Description: "",
 			Line:        0,
 		}

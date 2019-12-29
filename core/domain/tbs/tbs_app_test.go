@@ -29,7 +29,7 @@ func TestTbsApp_IgnoreTest(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	result := buildTbsResult(codePath)
 
-	g.Expect(len(result)).To(Equal(2))
+	g.Expect(len(result)).To(Equal(1))
 	g.Expect(result[0].Type).To(Equal("IgnoreTest"))
 }
 

@@ -7,6 +7,7 @@ import (
 	base2 "github.com/phodal/coca/core/domain/refactor/base"
 	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
 	utils2 "github.com/phodal/coca/core/support"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -32,7 +33,7 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 	return &MoveClassApp{}
 }
 
-func (j *MoveClassApp) Analysis() {
+func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 	// TODO: 使用 Deps.json 来移动包
 	files := utils2.GetJavaFiles(configPath)
 	for index := range files {
@@ -49,11 +50,13 @@ func (j *MoveClassApp) Analysis() {
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
+		node = listener.GetNodeInfo()
 		moveStruct := &models2.JMoveStruct{node, currentFile, node.GetImports()}
 		nodes = append(nodes, *moveStruct)
 	}
 
 	parseRename()
+	return nodes
 }
 
 func parseRename() {
@@ -95,6 +98,7 @@ func updatePackageInfo(originImport string, newImport string) {
 	if originNode.Name == "" {
 		return
 	}
+
 	path := buildJavaPath(configPath + newImport)
 	split := strings.Split(newImport, ".")
 	pkg := strings.Join(split[:len(split)-1], ".")
@@ -142,8 +146,7 @@ func copyClass(originFile string, newFile string) {
 		newFile = strings.ReplaceAll(newFile, ".", "/") + ".java"
 	}
 
-	fmt.Println(originFile, newFile)
-	_, err := utils2.CopyFile(originFile, newFile)
+	_, err := CopyFile(originFile, newFile)
 	if err != nil {
 		panic(err)
 	}
@@ -159,4 +162,29 @@ func buildJavaPath(originFile string) string {
 		str = strings.ReplaceAll(originFile, ".", "/") + ".java"
 	}
 	return str
+}
+
+func CopyFile(src, dst string) (int64, error) {
+	sourceFileStat, err := os.Stat(src)
+	if err != nil {
+		return 0, err
+	}
+
+	if !sourceFileStat.Mode().IsRegular() {
+		return 0, fmt.Errorf("%s is not a regular file", src)
+	}
+
+	source, err := os.Open(src)
+	if err != nil {
+		return 0, err
+	}
+	defer source.Close()
+
+	destination, err := os.Create(dst)
+	if err != nil {
+		return 0, err
+	}
+	defer destination.Close()
+	nBytes, err := io.Copy(destination, source)
+	return nBytes, err
 }

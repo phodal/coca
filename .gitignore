@@ -67,3 +67,4 @@ coca_reporter
 *.coverprofile
 bug
 _fixtures/tbs/tbs
+_fixtures/refactor/move/b/ImportForB.java

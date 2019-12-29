@@ -14,6 +14,7 @@ type JMethod struct {
 	IsConstructor     bool
 	IsReturnNull      bool
 	Modifiers         []string
+	Creators          []JClassNode
 }
 
 type Annotation struct {

@@ -31,8 +31,13 @@ var classQueue []string
 var identMap map[string]models.JIdentifier
 var isOverrideMethod = false
 
-var currentNode models.JClassNode
+var classNodeQueue []models.JClassNode
+var currentClassForQueue models.JClassNode
+
+var currentNode *models.JClassNode
 var classNodes []models.JClassNode
+var creatorNodes []models.JClassNode
+var currentCreatorNode models.JClassNode
 var fileName = ""
 var hasEnterClass = false
 
@@ -90,9 +95,22 @@ func (s *JavaCallListener) exitBody() {
 		currentNode.Fields = fields
 		currentNode.Type = currentType
 		currentNode.Methods = methodsArray
+
 		currentNode.Path = fileName
-		classNodes = append(classNodes, currentNode)
 	}
+
+	if currentType == "Creator" {
+		currentCreatorNode.Methods = append(currentCreatorNode.Methods, currentNode.Methods...)
+		var methodsArray []models.JMethod
+		for _, value := range methodMap {
+			methodsArray = append(methodsArray, value)
+		}
+
+		currentNode.Methods = append(currentNode.Methods, methodsArray...)
+		return
+	}
+
+	classNodes = append(classNodes, *currentNode)
 	currentNode = models.NewClassNode()
 	initClass()
 }
@@ -308,6 +326,7 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *m
 		}
 
 		method.Parameters = methodParams
+		updateMethod(method)
 	}
 	return false
 }
@@ -365,38 +384,45 @@ func getMethodMapName(method models.JMethod) string {
 func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	allIdentifiers := ctx.CreatedName().(*parser.CreatedNameContext).AllIDENTIFIER()
-	//currentType = "Creator"
 
 	for _, identifier := range allIdentifiers {
 		createdName := identifier.GetText()
 		localVars[variableName] = createdName
 
-		if currentMethod.Name == "" {
-			return
+		currentType = "Creator"
+		classNodeQueue = append(classNodeQueue, *currentNode)
+		buildCreatedCall(createdName, ctx)
+
+		text := ctx.CreatedName().GetText()
+		creatorNode := &models.JClassNode{
+			Package:     currentPkg,
+			Class:       text,
+			Type:        "Creator",
+			Path:        "",
+			Fields:      nil,
+			Methods:     nil,
+			MethodCalls: nil,
+			Extend:      "",
+			Implements:  nil,
+			Annotations: nil,
 		}
 
-		buildCreatedCall(createdName, ctx)
+		currentCreatorNode = *creatorNode
+		creatorNodes = append(creatorNodes, *creatorNode)
 	}
 }
 
-//func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
-//	text := ctx.CreatedName().GetText()
-//	creatorNode := &models.JClassNode{
-//		Package:     currentPkg,
-//		Class:       text,
-//		Type:        "Creator",
-//		Path:        "",
-//		Fields:      nil,
-//		Methods:     nil,
-//		MethodCalls: nil,
-//		Extend:      "",
-//		Implements:  nil,
-//		Annotations: nil,
-//	}
-//
-//	classNodes = append(classNodes, *creatorNode)
-//	//currentNode = *creatorNode
-//}
+func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
+	currentType = ""
+	currentCreatorNode = *models.NewClassNode()
+
+	if classNodeQueue == nil || len(classNodeQueue) <= 1 {
+		return
+	}
+
+	classNodeQueue = classNodeQueue[0 : len(classNodeQueue)-1]
+	currentClassForQueue = classNodeQueue[len(classNodeQueue)-1]
+}
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]

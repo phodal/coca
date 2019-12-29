@@ -18,6 +18,6 @@ type JAppField struct {
 	Value string
 }
 
-func NewClassNode() JClassNode {
-	return *&JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil}
+func NewClassNode() *JClassNode {
+	return &JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil}
 }

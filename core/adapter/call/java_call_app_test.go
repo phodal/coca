@@ -94,16 +94,15 @@ func TestAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	fmt.Println(callNodes)
-	//methodMap := make(map[string]models.JMethod)
-	//for _, c := range callNodes[0].Methods {
-	//	methodMap[c.Name] = c
-	//}
-	//g.Expect(methodMap["macOsXPositiveTest"].Name).To(Equal("macOsXPositiveTest"))
-	//
-	//for _, call := range methodMap["macOsXPositiveTest"].MethodCalls {
-	//	fmt.Println(call.Class)
-	//}
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+	g.Expect(methodMap["macOsXPositiveTest"].Name).To(Equal("macOsXPositiveTest"))
+
+	for _, call := range methodMap["macOsXPositiveTest"].MethodCalls {
+		fmt.Println(call.Class)
+	}
 
 	g.Expect(true).To(Equal(true))
 }

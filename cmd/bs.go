@@ -69,7 +69,7 @@ func isSmellHaveSize(key string) bool {
 		"longMethod",
 		"dataClass",
 	}
-	return infrastructure.Contains(smellList, key)
+	return infrastructure.StringArrayContains(smellList, key)
 }
 
 func init() {

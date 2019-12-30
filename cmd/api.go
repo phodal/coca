@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
@@ -68,7 +67,6 @@ var apiCmd = &cobra.Command{
 
 		restFieldsApi := filterApi(apiPrefix, restApis)
 
-		fmt.Println(restApis)
 		analyser := call_graph.NewCallGraph()
 		dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
 

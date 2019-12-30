@@ -17,24 +17,6 @@ type JMethod struct {
 	Creators          []JClassNode
 }
 
-type Annotation struct {
-	QualifiedName string
-	ValuePairs    []AnnotationKeyValue
-}
-
-type AnnotationKeyValue struct {
-	Key   string
-	Value string
-}
-
-func NewAnnotation() Annotation {
-	return *&Annotation{
-		QualifiedName: "",
-		ValuePairs:    nil,
-	}
-}
-
-// TODO support annnotation
 func NewJMethod() JMethod {
 	return *&JMethod{
 		Name:              "",
@@ -48,11 +30,6 @@ func NewJMethod() JMethod {
 		MethodCalls:       nil,
 		IsConstructor:     false,
 	}
-}
-
-type JParameter struct {
-	Name string
-	Type string
 }
 
 type JMethodInfo struct {

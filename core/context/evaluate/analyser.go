@@ -49,7 +49,7 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 		for _, method := range ident.Methods {
 			result.Summary.MethodCount++
 
-			if infrastructure.Contains(method.Modifiers, "static") {
+			if infrastructure.StringArrayContains(method.Modifiers, "static") {
 				result.Summary.StaticMethodCount++
 			}
 

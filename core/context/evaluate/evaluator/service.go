@@ -70,7 +70,8 @@ func (s Service) Evaluate(result *EvaluateModel, node domain.JClassNode) {
 
 	if s.enableAbstractParameters() {
 		for _, method := range node.Methods {
-			if len(method.Parameters) >= 4 {
+			PARAMETERR_LENGTH_LIMIT := 4
+			if len(method.Parameters) >= PARAMETERR_LENGTH_LIMIT {
 				longParameterList = append(longParameterList, method)
 			}
 		}

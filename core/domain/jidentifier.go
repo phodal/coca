@@ -26,3 +26,8 @@ func (identifier *JIdentifier) AddMethod(method JMethod) {
 func (identifier *JIdentifier) GetMethods() []JMethod {
 	return methods
 }
+
+func (identifier *JIdentifier) GetClassFullName() string {
+	return identifier.Package+"."+identifier.ClassName
+}
+

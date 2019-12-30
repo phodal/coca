@@ -25,7 +25,7 @@ func (j *JavaCallApp) AnalysisFiles(identNodes []domain.JIdentifier, files []str
 
 	var identMap = make(map[string]domain.JIdentifier)
 	for _, ident := range identNodes {
-		identMap[ident.Package+"."+ident.ClassName] = ident
+		identMap[ident.GetClassFullName()] = ident
 	}
 
 	for _, file := range files {

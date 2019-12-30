@@ -7,11 +7,8 @@ import (
 	"github.com/phodal/coca/core/context/bs"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
-	"os"
-	"path/filepath"
-	"strings"
-
 	. "github.com/phodal/coca/languages/java"
+	"path/filepath"
 )
 
 var nodeInfos []domain.BsJClass
@@ -25,7 +22,7 @@ func NewBadSmellApp() *BadSmellApp {
 
 func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []domain.BadSmellModel {
 	nodeInfos = nil
-	files := (*BadSmellApp)(nil).javaFiles(codeDir)
+	files := infrastructure.GetJavaFiles(codeDir)
 	for index := range files {
 		nodeInfo := domain.NewJFullClassNode()
 		file := files[index]
@@ -55,11 +52,11 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []domai
 		mapIgnoreRules[ignore] = true
 	}
 
-	filteredBsList := filterBadsmellList(bsList, mapIgnoreRules)
+	filteredBsList := FilterBadSmellList(bsList, mapIgnoreRules)
 	return filteredBsList
 }
 
-func filterBadsmellList(models []domain.BadSmellModel, ignoreRules map[string]bool) []domain.BadSmellModel {
+func FilterBadSmellList(models []domain.BadSmellModel, ignoreRules map[string]bool) []domain.BadSmellModel {
 	var results []domain.BadSmellModel
 	for _, model := range models {
 		if !ignoreRules[model.Bs] {
@@ -67,17 +64,6 @@ func filterBadsmellList(models []domain.BadSmellModel, ignoreRules map[string]bo
 		}
 	}
 	return results
-}
-
-func (j *BadSmellApp) javaFiles(codeDir string) []string {
-	files := make([]string, 0)
-	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") {
-			files = append(files, path)
-		}
-		return nil
-	})
-	return files
 }
 
 func (j *BadSmellApp) processFile(path string) *JavaParser {

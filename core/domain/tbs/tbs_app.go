@@ -26,10 +26,10 @@ type TestBadSmell struct {
 func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string]models.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
 
-	var identMethodMap = make(map[string]models.JMethod)
-	for _, ident := range identifiersMap {
-		for _, method := range ident.Methods {
-			identMethodMap[ident.Package + "." + ident.ClassName + "." + method.Name] = method
+	var callMethodMap = make(map[string]models.JMethod)
+	for _, clz := range deps {
+		for _, method := range clz.Methods {
+			callMethodMap[clz.Package+"."+clz.Class+"."+method.Name] = method
 		}
 	}
 
@@ -43,8 +43,10 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 			currentMethodCalls := method.MethodCalls
 			for _, methodCall := range currentMethodCalls {
 				if methodCall.Class == clz.Class {
-					jMethod := identMethodMap[getMethodCallFullPath(methodCall)]
-					currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
+					jMethod := callMethodMap[getMethodCallFullPath(methodCall)]
+					if jMethod.Name != "" {
+						currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
+					}
 				}
 			}
 
@@ -64,9 +66,9 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
 				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
+				checkRedundantAssertionTest(clz.Path, methodCall, method, &results, &testType)
 
-				methodName := methodCall.MethodName
-				if hasAssertion(methodName) {
+				if hasAssertion(methodCall.MethodName) {
 					hasAssert = true
 				}
 
@@ -77,11 +79,15 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 				}
 			}
 
-			checkDuplicateAssertTest(clz, &results, methodCallMap, &testType)
+			checkDuplicateAssertTest(clz, &results, methodCallMap, method, &testType)
 		}
 	}
 
 	return results
+}
+
+func checkRedundantAssertionTest(path string, call models.JMethodCall, method models.JMethod, result *[]TestBadSmell, testType *string) {
+
 }
 
 func hasAssertion(methodName string) bool {
@@ -89,11 +95,11 @@ func hasAssertion(methodName string) bool {
 	assertionList := []string{
 		"assert",
 		"should",
-		"check",     // ArchUnit,
-		"maynotbe",  // ArchUnit,
-		"is",        // RestAssured,
-		"spec",      // RestAssured,
-		"verify",    // Mockito,
+		"check",    // ArchUnit,
+		"maynotbe", // ArchUnit,
+		"is",       // RestAssured,
+		"spec",     // RestAssured,
+		"verify",   // Mockito,
 	}
 
 	for _, assertion := range assertionList {
@@ -127,23 +133,27 @@ func checkUnknownTest(clz models.JClassNode, method models.JMethod, results *[]T
 	*results = append(*results, tbs)
 }
 
-func checkDuplicateAssertTest(clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall, testType *string) {
+func checkDuplicateAssertTest(clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall, method models.JMethod, testType *string) {
+	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
 		if len(methodCall) >= DuplicatedAssertionLimitLength {
 			methodName := methodCall[len(methodCall)-1].MethodName
 			if hasAssertion(methodName) {
-
-				*testType = "DuplicateAssertTest"
-				tbs := *&TestBadSmell{
-					FileName:    clz.Path,
-					Type:        *testType,
-					Description: "",
-					Line:        methodCall[len(methodCall)-1].StartLine,
-				}
-
-				*results = append(*results, tbs)
+				isDuplicateAssert = true
 			}
 		}
+	}
+
+	if isDuplicateAssert {
+		*testType = "DuplicateAssertTest"
+		tbs := *&TestBadSmell{
+			FileName:    clz.Path,
+			Type:        *testType,
+			Description: "",
+			Line:        method.StartLine,
+		}
+
+		*results = append(*results, tbs)
 	}
 }
 

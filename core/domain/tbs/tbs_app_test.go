@@ -1,7 +1,6 @@
 package tbs
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
@@ -63,7 +62,8 @@ func TestTbsApp_DuplicateAssertTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	g.Expect(result[0].Line).To(Equal(23))
+	g.Expect(len(result)).To(Equal(1))
+	g.Expect(result[0].Line).To(Equal(9))
 	g.Expect(result[0].Type).To(Equal("DuplicateAssertTest"))
 }
 
@@ -77,6 +77,17 @@ func TestTbsApp_UnknownTest(t *testing.T) {
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
 	g.Expect(result[0].Line).To(Equal(7))
 	g.Expect(result[1].Type).To(Equal("UnknownTest"))
+}
+
+func TestTbsApp_RedundantAssertionTest(t *testing.T) {
+	g := NewGomegaWithT(t)
+	codePath := "../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath = filepath.FromSlash(codePath)
+
+	result := buildTbsResult(codePath)
+
+	g.Expect(len(result)).To(Equal(1))
+	//g.Expect(result[0].Type).To(Equal("EmptyTest"))
 }
 
 func TestTbsApp_CreatorNotUnknownTest(t *testing.T) {
@@ -96,8 +107,7 @@ func TestTbsApp_CallAssertInClassTests(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	fmt.Println(result)
-	g.Expect(len(result)).To(Equal(1))
+	g.Expect(len(result)).To(Equal(0))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

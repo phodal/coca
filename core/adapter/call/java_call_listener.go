@@ -99,7 +99,7 @@ func (s *JavaCallListener) exitBody() {
 		currentNode.Path = fileName
 	}
 
-	if currentType == "Creator" {
+	if currentType == "CreatorClass" {
 		var methodsArray []models.JMethod
 		for _, value := range creatorMethodMap {
 			methodsArray = append(methodsArray, value)
@@ -246,7 +246,7 @@ func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
 	} else {
 		annotation := common_listener.BuildAnnotation(ctx)
-		if currentType == "Creator" {
+		if currentType == "CreatorClass" {
 			currentCreatorNode.Annotations = append(currentCreatorNode.Annotations, annotation)
 		} else {
 			currentNode.Annotations = append(currentNode.Annotations, annotation)
@@ -300,6 +300,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 		Annotations:       currentMethod.Annotations,
 		Override:          isOverrideMethod,
 		Parameters:        nil,
+		Creators:          nil,
 	}
 
 	parameters := ctx.FormalParameters()
@@ -336,7 +337,7 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *m
 }
 
 func updateMethod(method *models.JMethod) {
-	if currentType == "Creator" {
+	if currentType == "CreatorClass" {
 		creatorMethodMap[getMethodMapName(*method)] = *method
 	} else {
 		currentMethod = *method
@@ -350,21 +351,23 @@ func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationCo
 }
 
 func exitMethod() {
-	if currentType == "Creator" {
+	if currentType == "CreatorClass" {
 		return
 	}
 
-	if methodQueue == nil || len(methodQueue) < 1 {
-		currentMethod = models.NewJMethod()
-		return
-	}
-
-	if len(methodQueue) <= 2 {
-		currentMethod = methodQueue[0]
-	} else {
-		methodQueue = methodQueue[0 : len(methodQueue)-1]
-		currentMethod = models.NewJMethod()
-	}
+	currentMethod = models.NewJMethod()
+	//
+	//if methodQueue == nil || len(methodQueue) < 1 {
+	//	currentMethod = models.NewJMethod()
+	//	return
+	//}
+	//
+	//if len(methodQueue) <= 2 {
+	//	currentMethod = methodQueue[0]
+	//} else {
+	//	methodQueue = methodQueue[0 : len(methodQueue)-1]
+	//	currentMethod = models.NewJMethod()
+	//}
 }
 
 // TODO: add inner creator examples
@@ -401,15 +404,27 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 		createdName := identifier.GetText()
 		localVars[variableName] = createdName
 
-		currentType = "Creator"
 		classNodeQueue = append(classNodeQueue, *currentNode)
 		buildCreatedCall(createdName, ctx)
 
+		if currentMethod.Name == "" {
+			return
+		}
+
+		if ctx.ClassCreatorRest() == nil {
+			return
+		}
+
+		if ctx.ClassCreatorRest().(*parser.ClassCreatorRestContext).ClassBody() == nil {
+			return
+		}
+
+		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
 		creatorNode := &models.JClassNode{
 			Package:     currentPkg,
 			Class:       text,
-			Type:        "Creator",
+			Type:        "CreatorClass",
 			Path:        "",
 			Fields:      nil,
 			Methods:     nil,
@@ -425,14 +440,16 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 }
 
 func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
+	method := methodMap[getMethodMapName(currentMethod)]
+	method.Creators = append(method.Creators, currentCreatorNode)
+	methodMap[getMethodMapName(currentMethod)] = method
+
 	currentType = ""
 	currentCreatorNode = *models.NewClassNode()
 
-	if classNodeQueue == nil || len(classNodeQueue) <= 1 {
+	if classNodeQueue == nil || len(classNodeQueue) < 1 {
 		return
 	}
-
-	currentMethod.Creators = append(currentMethod.Creators, currentCreatorNode)
 }
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
@@ -441,7 +458,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 
 	jMethodCall := &models.JMethodCall{
 		Package:           removeTarget(fullType),
-		Type:              "creator",
+		Type:              "CreatorClass",
 		Class:             createdName,
 		MethodName:        "",
 		StartLine:         ctx.GetStart().GetLine(),

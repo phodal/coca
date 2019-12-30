@@ -108,3 +108,73 @@ func TestAnnotation(t *testing.T) {
 
 	g.Expect(true).To(Equal(true))
 }
+
+func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/regression/CallAssertInClassTests.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+
+	g.Expect(len(methodMap["supportsEventType"].Annotations)).To(Equal(1))
+	g.Expect(len(methodMap["genericListenerRawTypeTypeErasure"].Annotations)).To(Equal(1))
+}
+
+func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/regression/EnvironmentSystemIntegrationTests.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+
+	g.Expect(len(methodMap["setUp"].Annotations)).To(Equal(1))
+	g.Expect(len(methodMap["annotationConfigApplicationContext_withProfileExpressionMatchOr"].Annotations)).To(Equal(1))
+	g.Expect(len(methodMap["annotationConfigApplicationContext_withProfileExpressionMatchAnd"].Annotations)).To(Equal(1))
+	g.Expect(len(methodMap["annotationConfigApplicationContext_withProfileExpressionNoMatchAnd"].Annotations)).To(Equal(1))
+	g.Expect(len(methodMap["annotationConfigApplicationContext_withProfileExpressionNoMatchNone"].Annotations)).To(Equal(1))
+}
+
+func Test_CreatorAnnotation(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+
+	g.Expect(len(methodMap["macOsXPositiveTest"].Annotations)).To(Equal(0))
+}
+
+func Test_ShouldGetMethodCreators(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+	}
+
+	fmt.Println(methodMap["macOsXPositiveTest"])
+	g.Expect(len(methodMap["macOsXPositiveTest"].Creators)).To(Equal(2))
+}

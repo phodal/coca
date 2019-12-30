@@ -1,6 +1,7 @@
 package concept
 
 import (
+	"github.com/phodal/coca/config"
 	languages2 "github.com/phodal/coca/core/domain/call_graph/stop_words/languages"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
@@ -43,7 +44,7 @@ func buildMethodsFromDeps(clzs []models.JClassNode) support.PairList {
 func removeNormalWords(words map[string]int) map[string]int {
 	var newWords = words
 	var stopwords = languages2.ENGLISH_STOP_WORDS
-	stopwords = append(stopwords, support.TechStopWords...)
+	stopwords = append(stopwords, config.TechStopWords...)
 	for _, normalWord := range stopwords {
 		if newWords[normalWord] > 0 {
 			delete(newWords, normalWord)

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
-	"github.com/phodal/coca/core/adapter"
-	"github.com/phodal/coca/core/adapter/call"
+	"github.com/phodal/coca/core/ast"
+	"github.com/phodal/coca/core/ast/call"
 	"github.com/phodal/coca/core/context/tbs"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
@@ -31,8 +31,8 @@ var tbsCmd = &cobra.Command{
 		files := infrastructure.GetJavaTestFiles(tbsCmdConfig.Path)
 		var identifiers []domain.JIdentifier
 
-		identifiers = adapter.LoadTestIdentify(files)
-		identifiersMap := adapter.BuildIdentifierMap(identifiers)
+		identifiers = ast.LoadTestIdentify(files)
+		identifiersMap := ast.BuildIdentifierMap(identifiers)
 
 		var classes []string = nil
 		for _, node := range identifiers {

@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"encoding/json"
-	. "github.com/phodal/coca/core/adapter/call"
-	. "github.com/phodal/coca/core/adapter/identifier"
+	. "github.com/phodal/coca/core/ast/call"
+	. "github.com/phodal/coca/core/ast/identifier"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 )

@@ -3,7 +3,7 @@ package sql
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/sql/parse"
+	"github.com/phodal/coca/core/ast/sql/parse"
 	parser2 "github.com/phodal/coca/languages/sql"
 	"os"
 	"path/filepath"

@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/adapter"
+	"github.com/phodal/coca/core/ast"
 	"github.com/phodal/coca/core/context/arch"
 	"github.com/phodal/coca/core/context/arch/tequila"
 	"github.com/spf13/cobra"
@@ -26,8 +26,8 @@ var archCmd = &cobra.Command{
 	Short: "project package visualization",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		identifiers = adapter.LoadIdentify(apiCmdConfig.DependencePath)
-		identifiersMap = adapter.BuildIdentifierMap(identifiers)
+		identifiers = ast.LoadIdentify(apiCmdConfig.DependencePath)
+		identifiersMap = ast.BuildIdentifierMap(identifiers)
 
 		parsedDeps := cmd_util.GetDepsFromJson(archCmdConfig.DependencePath)
 		archApp := arch.NewArchApp()

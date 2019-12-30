@@ -2,9 +2,9 @@ package api
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/adapter"
-	"github.com/phodal/coca/core/adapter/call"
-	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/ast"
+	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/identifier"
 	"path/filepath"
 	"testing"
 )
@@ -25,8 +25,8 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	callApp := call.NewJavaCallApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	identifiersMap := adapter.BuildIdentifierMap(identifiers)
-	diMap := adapter.BuildDIMap(identifiers, identifiersMap)
+	identifiersMap := ast.BuildIdentifierMap(identifiers)
+	diMap := ast.BuildDIMap(identifiers, identifiersMap)
 
 	app := new(JavaApiApp)
 	restApis := app.AnalysisPath(codePath, callNodes, identifiersMap, diMap)

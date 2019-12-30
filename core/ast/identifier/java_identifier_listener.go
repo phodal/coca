@@ -2,7 +2,7 @@ package identifier
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/common_listener"
+	"github.com/phodal/coca/core/ast/common_listener"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/languages/java"
 	"reflect"

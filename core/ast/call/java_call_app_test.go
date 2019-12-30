@@ -3,7 +3,7 @@ package call
 import (
 	"fmt"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/domain"
 	"path/filepath"
 	"testing"

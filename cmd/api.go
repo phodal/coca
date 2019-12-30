@@ -5,8 +5,8 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/adapter"
-	. "github.com/phodal/coca/core/adapter/api"
+	"github.com/phodal/coca/core/ast"
+	. "github.com/phodal/coca/core/ast/api"
 	"github.com/phodal/coca/core/context/call_graph"
 	"github.com/phodal/coca/core/domain"
 	. "github.com/phodal/coca/core/infrastructure"
@@ -33,9 +33,9 @@ var (
 	apiCmdConfig ApiCmdConfig
 	restApis     []domain.RestApi
 
-	identifiers    = adapter.LoadIdentify(apiCmdConfig.DependencePath)
-	identifiersMap = adapter.BuildIdentifierMap(identifiers)
-	diMap          = adapter.BuildDIMap(identifiers, identifiersMap)
+	identifiers    = ast.LoadIdentify(apiCmdConfig.DependencePath)
+	identifiersMap = ast.BuildIdentifierMap(identifiers)
+	diMap          = ast.BuildDIMap(identifiers, identifiersMap)
 )
 
 var apiCmd = &cobra.Command{

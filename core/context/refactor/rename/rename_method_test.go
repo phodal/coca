@@ -2,8 +2,8 @@ package unused
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/adapter/call"
-	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/identifier"
 	"path/filepath"
 	"sync"
 	"testing"

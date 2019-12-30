@@ -1,8 +1,8 @@
-package adapter
+package ast
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 )

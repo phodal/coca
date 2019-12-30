@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/core/adapter/bs"
+	"github.com/phodal/coca/core/ast/bs"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"

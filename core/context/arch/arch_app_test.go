@@ -3,9 +3,9 @@ package arch
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/adapter"
-	"github.com/phodal/coca/core/adapter/call"
-	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/ast"
+	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/context/arch/tequila"
 	"github.com/phodal/coca/core/infrastructure"
 	"io"
@@ -30,7 +30,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	callApp := call.NewJavaCallApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	identifiersMap := adapter.BuildIdentifierMap(identifiers)
+	identifiersMap := ast.BuildIdentifierMap(identifiers)
 
 	app := NewArchApp()
 	results := app.Analysis(callNodes, identifiersMap)
@@ -70,7 +70,7 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	callApp := call.NewJavaCallApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	identifiersMap := adapter.BuildIdentifierMap(identifiers)
+	identifiersMap := ast.BuildIdentifierMap(identifiers)
 
 	app := NewArchApp()
 	result := app.Analysis(callNodes, identifiersMap)

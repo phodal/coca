@@ -1,10 +1,10 @@
 package rcall
 
 import (
+	"encoding/json"
 	"github.com/phodal/coca/core/context/call_graph"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
-	"encoding/json"
 )
 
 type RCallGraph struct {

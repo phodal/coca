@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/context/call_graph/rcall"
+	"github.com/phodal/coca/core/context/rcall"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"

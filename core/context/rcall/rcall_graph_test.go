@@ -15,7 +15,7 @@ func TestRCallGraph_Analysis(t *testing.T) {
 
 	var parsedDeps []domain.JClassNode
 	analyser := NewRCallGraph()
-	file := infrastructure.ReadFile("../../../../_fixtures/call_api_test.json")
+	file := infrastructure.ReadFile("../../../_fixtures/call/call_api_test.json")
 	if file == nil {
 		log.Fatal("lost file")
 	}

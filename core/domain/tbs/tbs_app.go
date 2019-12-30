@@ -25,22 +25,14 @@ type TestBadSmell struct {
 
 func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string]models.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
-
-	var callMethodMap = make(map[string]models.JMethod)
+	callMethodMap := buildCallMethodMap(deps)
 	for _, clz := range deps {
-		for _, method := range clz.Methods {
-			callMethodMap[clz.Package+"."+clz.Class+"."+method.Name] = method
-		}
-	}
-
-	for _, clz := range deps {
-		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
 			if !isTest(method) {
 				continue
 			}
 
-			currentMethodCalls := updateMethodCalls(method, clz, callMethodMap)
+			currentMethodCalls := updateMethodCallsForSelfCall(method, clz, callMethodMap)
 
 			var testType = ""
 			for _, annotation := range method.Annotations {
@@ -54,6 +46,7 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 				if methodCall.MethodName == "" {
 					continue
 				}
+
 				methodCallMap[getMethodCallFullPath(methodCall)] = append(methodCallMap[getMethodCallFullPath(methodCall)], methodCall)
 
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
@@ -78,7 +71,17 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	return results
 }
 
-func updateMethodCalls(method models.JMethod, clz models.JClassNode, callMethodMap map[string]models.JMethod) []models.JMethodCall {
+func buildCallMethodMap(deps []models.JClassNode) map[string]models.JMethod {
+	var callMethodMap = make(map[string]models.JMethod)
+	for _, clz := range deps {
+		for _, method := range clz.Methods {
+			callMethodMap[clz.Package+"."+clz.Class+"."+method.Name] = method
+		}
+	}
+	return callMethodMap
+}
+
+func updateMethodCallsForSelfCall(method models.JMethod, clz models.JClassNode, callMethodMap map[string]models.JMethod) []models.JMethodCall {
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.Class == clz.Class {

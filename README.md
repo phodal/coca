@@ -486,18 +486,27 @@ results
  - Tests
     - [ ] Testable?
     - [x] Test badsmell -> list [https://testsmells.github.io/pages/testsmells.html]
-      - [x] IgnoreTest
-      - [x] EmptyTest
-      - [x] RedundantPrintTest
-      - [x] SleepyTest
-      - [x] RedundantAssertionTest
-      - [x] UnknownTest
-      - [x] DuplicateAssertTest
+      - [x] IgnoreTest: @Ingore
+      - [x] EmptyTest: not call in test
+      - [x] RedundantPrintTest: system.out.println
+      - [x] SleepyTest: Time.sleep
+      - [x] RedundantAssertionTest: assertTrue(True) 
+      - [x] UnknownTest: not assert
+      - [x] DuplicateAssertTest: assert > 5
+      - [ ] TestersOnly: method only call by test
+      - [ ] CrossBorderTest: test method which not in system
+      - [ ] General Fixture: JUnit classes having at least one method not using the entire test fixture defined in the setUp() method
  - Arch
     - [x] Architecture Visualization
     - [ ] Architecture Guard
       - [ ] DSL Design
-
+ - Tech Debt from Source Code
+    - [ ] auto create story
+ - TBD
+    - Comment Analysis
+      - [ ] incorrect comment ? http://das.encs.concordia.ca/uploads/2018/02/Maldonado_thesis.pdf
+ 
+ 
 Documents Todo:
 
  - [ ] Docs

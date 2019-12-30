@@ -43,6 +43,6 @@ func (j *JClassNode) SetMethodFromMap(methodMap map[string]JMethod) {
 
 func (j *JClassNode) BuildStringMethodMap(projectMethods map[string]string) {
 	for _, method := range j.Methods {
-		projectMethods[method.GetFullMethodName(*j)] = method.GetFullMethodName(*j)
+		projectMethods[method.BuildFullMethodName(*j)] = method.BuildFullMethodName(*j)
 	}
 }

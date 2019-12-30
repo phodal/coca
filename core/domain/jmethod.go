@@ -37,6 +37,13 @@ func NewJMethod() JMethod {
 	}
 }
 
+type JMethodInfo struct {
+	Name       string
+	Type       string
+	Parameters []JParameter
+	Length     string
+}
+
 func (m *JMethod) IsJavaLangReturnType() bool {
 	return m.Type == "String" || m.Type == "int" || m.Type == "float" || m.Type == "void" || m.Type == "char" || m.Type == "double"
 }
@@ -49,13 +56,16 @@ func (m *JMethod) IsGetterSetter() bool {
 	return strings.HasPrefix(m.Name, "set") || strings.HasPrefix(m.Name, "get")
 }
 
-func (m *JMethod) GetFullMethodName(node JClassNode) string {
+func (m *JMethod) BuildFullMethodName(node JClassNode) string {
 	return node.Package + "." + node.Class + "." + m.Name
 }
 
-type JMethodInfo struct {
-	Name       string
-	Type       string
-	Parameters []JParameter
-	Length     string
+func (m *JMethod) GetAllCallString() []string {
+	var calls []string
+	for _, call := range m.MethodCalls {
+		if call.Class != "" {
+			calls = append(calls, call.BuilFullMethodName())
+		}
+	}
+	return calls
 }

@@ -26,6 +26,6 @@ func NewJMethodCall() JMethodCall {
 	}
 }
 
-func (c *JMethodCall) GetFullMethodName() string {
+func (c *JMethodCall) BuilFullMethodName() string {
 	return c.Package + "." + c.Class + "." + c.MethodName
 }

@@ -83,7 +83,7 @@ func (s Service) Evaluate(result *EvaluateModel, node domain.JClassNode) {
 				methodType := method.Type
 
 				if _, ok := serviceNodeMap[methodType]; ok {
-					returnTypeMap[methodType] = append(returnTypeMap[methodType], method.GetFullMethodName(node))
+					returnTypeMap[methodType] = append(returnTypeMap[methodType], method.BuildFullMethodName(node))
 				}
 			}
 		}

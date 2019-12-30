@@ -11,3 +11,7 @@ type RestApi struct {
 	ClassName        string
 }
 
+func (r *RestApi) BuildFullMethodPath() string {
+	return r.PackageName + "." + r.ClassName + "." + r.MethodName
+}
+

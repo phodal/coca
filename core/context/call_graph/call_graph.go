@@ -71,7 +71,7 @@ func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JCla
 	results := "digraph G { \n"
 
 	for _, restApi := range restApis {
-		caller := restApi.PackageName + "." + restApi.ClassName + "." + restApi.MethodName
+		caller := restApi.BuildFullMethodPath()
 
 		loopCount = 0
 		chain := "\"" + restApi.HttpMethod + " " + restApi.Uri + "\" -> \"" + escapeStr(caller) + "\";\n"
@@ -100,16 +100,11 @@ func BuildMethodMap(clzs []domain.JClassNode) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range clzs {
 		for _, method := range clz.Methods {
-			var methodName = clz.Package + "." + clz.Class + "." + method.Name
-			var calls []string
-			for _, call := range method.MethodCalls {
-				if call.Class != "" {
-					calls = append(calls, call.Package+"."+call.Class+"."+call.MethodName)
-				}
-			}
-			methodMap[methodName] = calls
+			methodName := method.BuildFullMethodName(clz)
+			methodMap[methodName] = method.GetAllCallString()
 		}
 	}
 
 	return methodMap
 }
+

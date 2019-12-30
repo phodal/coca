@@ -24,3 +24,16 @@ func TestNewTodoApp(t *testing.T) {
 	g.Expect(todos[1].Message[0]).To(Equal("add more content"))
 	g.Expect(todos[1].Assignee).To(Equal("phodal"))
 }
+
+func Test_ShouldReturnNullWhenNotTodo(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs"
+	codePath = filepath.FromSlash(codePath)
+	app := NewTodoApp()
+
+	stodos := app.AnalysisPath(codePath)
+	todos := app.BuildWithGitHistory(stodos)
+
+	g.Expect(len(todos)).To(Equal(0))
+}

@@ -1,6 +1,7 @@
 package tbs
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
@@ -86,6 +87,17 @@ func TestTbsApp_CreatorNotUnknownTest(t *testing.T) {
 	result := buildTbsResult(codePath)
 
 	g.Expect(len(result)).To(Equal(0))
+}
+
+func TestTbsApp_CallAssertInClassTests(t *testing.T) {
+	g := NewGomegaWithT(t)
+	codePath := "../../../_fixtures/tbs/regression/CallAssertInClassTests.java"
+	codePath = filepath.FromSlash(codePath)
+
+	result := buildTbsResult(codePath)
+
+	fmt.Println(result)
+	g.Expect(len(result)).To(Equal(1))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

@@ -26,11 +26,26 @@ type TestBadSmell struct {
 func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string]models.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
 
+	var identMethodMap = make(map[string]models.JMethod)
+	for _, ident := range identifiersMap {
+		for _, method := range ident.Methods {
+			identMethodMap[ident.Package + "." + ident.ClassName + "." + method.Name] = method
+		}
+	}
+
 	for _, clz := range deps {
 		// TODO refactoring identify & annotation
 		for _, method := range clz.Methods {
 			if !isTest(method) {
 				continue
+			}
+
+			currentMethodCalls := method.MethodCalls
+			for _, methodCall := range currentMethodCalls {
+				if methodCall.Class == clz.Class {
+					jMethod := identMethodMap[getMethodCallFullPath(methodCall)]
+					currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
+				}
 			}
 
 			var testType = ""
@@ -41,8 +56,11 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 
 			var methodCallMap = make(map[string][]models.JMethodCall)
 			var hasAssert = false
-			for index, methodCall := range method.MethodCalls {
-				methodCallMap[methodCallName(methodCall)] = append(methodCallMap[methodCallName(methodCall)], methodCall)
+			for index, methodCall := range currentMethodCalls {
+				if methodCall.MethodName == "" {
+					continue
+				}
+				methodCallMap[getMethodCallFullPath(methodCall)] = append(methodCallMap[getMethodCallFullPath(methodCall)], methodCall)
 
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
 				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
@@ -52,7 +70,7 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 					hasAssert = true
 				}
 
-				if index == len(method.MethodCalls)-1 {
+				if index == len(currentMethodCalls)-1 {
 					if !hasAssert {
 						checkUnknownTest(clz, method, &results, &testType)
 					}
@@ -129,7 +147,7 @@ func checkDuplicateAssertTest(clz models.JClassNode, results *[]TestBadSmell, me
 	}
 }
 
-func methodCallName(methodCall models.JMethodCall) string {
+func getMethodCallFullPath(methodCall models.JMethodCall) string {
 	return methodCall.Package + "." + methodCall.Class + "." + methodCall.MethodName
 }
 

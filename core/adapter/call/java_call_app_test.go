@@ -175,6 +175,22 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 		methodMap[c.Name] = c
 	}
 
-	fmt.Println(methodMap["macOsXPositiveTest"])
 	g.Expect(len(methodMap["macOsXPositiveTest"].Creators)).To(Equal(2))
+}
+
+func Test_ShouldNotGetCreators(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodMap := make(map[string]models.JMethod)
+	for _, c := range callNodes[0].Methods {
+		methodMap[c.Name] = c
+		fmt.Println(c.Name)
+	}
+
+	g.Expect(len(methodMap["testTrue"].Creators)).To(Equal(0))
 }

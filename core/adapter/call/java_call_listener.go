@@ -440,9 +440,11 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 }
 
 func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
-	method := methodMap[getMethodMapName(currentMethod)]
-	method.Creators = append(method.Creators, currentCreatorNode)
-	methodMap[getMethodMapName(currentMethod)] = method
+	if currentCreatorNode.Class != "" {
+		method := methodMap[getMethodMapName(currentMethod)]
+		method.Creators = append(method.Creators, currentCreatorNode)
+		methodMap[getMethodMapName(currentMethod)] = method
+	}
 
 	currentType = ""
 	currentCreatorNode = *models.NewClassNode()

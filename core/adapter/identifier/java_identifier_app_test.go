@@ -48,8 +48,16 @@ func TestAddReturnNull(t *testing.T) {
 	identApp := NewJavaIdentifierApp()
 	identifiers := identApp.AnalysisPath(filepath.FromSlash("../../../_fixtures/evaluate/null"))
 
+	var returNullCount = 0
+	for _, method := range identifiers[0].Methods {
+		if method.IsReturnNull {
+			returNullCount++
+		}
+	}
+
 	g.Expect(identifiers[0].Methods[1].IsReturnNull).To(Equal(true))
 	g.Expect(identifiers[0].Methods[2].IsReturnNull).To(Equal(true))
+	g.Expect(returNullCount).To(Equal(2))
 }
 
 func TestStaticMethod(t *testing.T) {

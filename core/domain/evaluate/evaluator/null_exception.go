@@ -1,4 +1,4 @@
-package evaluator
+	package evaluator
 
 import (
 	"github.com/phodal/coca/core/models"
@@ -13,18 +13,24 @@ func (NullPointException) Evaluate(*EvaluateModel, models.JClassNode) {
 
 func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []models.JClassNode, nodeMap map[string]models.JClassNode, identifiers []models.JIdentifier) {
 	var nullableList []string = nil
+	var nullableMap = make(map[string]string)
 	for _, ident := range identifiers {
 		for _, method := range ident.Methods {
+			methodName := buildMethodPath(ident, method)
 			if method.IsReturnNull {
-				nullableList = append(nullableList, buildMethodPath(ident, method))
+				nullableMap[methodName] = methodName
 			} else {
 				for _, annotation := range method.Annotations {
 					if annotation.QualifiedName == "Nullable" {
-						nullableList = append(nullableList, buildMethodPath(ident, method))
+						nullableMap[methodName] = methodName
 					}
 				}
 			}
 		}
+	}
+
+	for _, value := range nullableMap {
+		nullableList = append(nullableList, value)
 	}
 
 	evaluateModel.Nullable.Items = nullableList

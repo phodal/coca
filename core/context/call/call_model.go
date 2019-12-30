@@ -1,4 +1,4 @@
-package call_graph
+package call
 
 type CallApiCount struct {
 	HttpMethod string

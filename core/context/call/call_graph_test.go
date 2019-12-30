@@ -1,9 +1,9 @@
-package call_graph_test
+package call_test
 
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/context/call_graph"
+	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
@@ -15,7 +15,7 @@ func Test_should_generate_correct_files(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	var parsedDeps []domain.JClassNode
-	analyser := call_graph.NewCallGraph()
+	analyser := call.NewCallGraph()
 	codePath := "../../../_fixtures/call/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)
 

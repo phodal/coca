@@ -1,4 +1,4 @@
-package call_graph
+package call
 
 import (
 	"github.com/phodal/coca/core/domain"

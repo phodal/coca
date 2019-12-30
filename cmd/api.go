@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/ast"
 	. "github.com/phodal/coca/core/ast/api"
-	"github.com/phodal/coca/core/context/call_graph"
+	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
@@ -68,7 +68,7 @@ var apiCmd = &cobra.Command{
 
 		restFieldsApi := filterApi(apiPrefix, restApis)
 
-		analyser := call_graph.NewCallGraph()
+		analyser := call.NewCallGraph()
 		dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
 
 		if *&apiCmdConfig.Sort {

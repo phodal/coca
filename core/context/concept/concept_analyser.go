@@ -2,7 +2,7 @@ package concept
 
 import (
 	"github.com/phodal/coca/config"
-	languages2 "github.com/phodal/coca/core/context/call_graph/stop_words/languages"
+	languages2 "github.com/phodal/coca/core/context/call/stop_words/languages"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 )

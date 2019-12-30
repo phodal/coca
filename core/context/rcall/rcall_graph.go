@@ -2,7 +2,7 @@ package rcall
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/core/context/call_graph"
+	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 )
@@ -25,7 +25,7 @@ func (c RCallGraph) Analysis(funcName string, clzs []domain.JClassNode) string {
 
 	graphvizReverse := "rankdir = LR;\nedge [dir=\"back\"];\n"
 	chain = graphvizReverse + chain
-	dotContent := call_graph.ToGraphviz(chain)
+	dotContent := call.ToGraphviz(chain)
 	return dotContent
 }
 

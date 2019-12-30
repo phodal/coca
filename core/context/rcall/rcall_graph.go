@@ -33,21 +33,21 @@ func BuildProjectMethodMap(clzs []domain.JClassNode) map[string]int {
 	var maps = make(map[string]int)
 	for _, clz := range clzs {
 		for _, method := range clz.Methods {
-			maps[clz.Package+"."+clz.Class+"."+method.Name] = 1
+			maps[method.BuildFullMethodName(clz)] = 1
 		}
 	}
 
 	return maps
 }
 
-func BuildRCallMethodMap(clzs []domain.JClassNode, projectMaps map[string]int) map[string][]string {
+func BuildRCallMethodMap(parserDeps []domain.JClassNode, projectMaps map[string]int) map[string][]string {
 	var methodMap = make(map[string][]string)
-	for _, clz := range clzs {
+	for _, clz := range parserDeps {
 		for _, method := range clz.Methods {
-			var caller = clz.Package + "." + clz.Class + "." + method.Name
+			var caller = method.BuildFullMethodName(clz)
 			for _, call := range method.MethodCalls {
 				if call.Class != "" {
-					callee := buildMethodFullName(call)
+					callee := call.BuilFullMethodName()
 					if projectMaps[callee] < 1 {
 						continue
 					}
@@ -58,10 +58,6 @@ func BuildRCallMethodMap(clzs []domain.JClassNode, projectMaps map[string]int) m
 	}
 
 	return methodMap
-}
-
-func buildMethodFullName(call domain.JMethodCall) string {
-	return call.Package + "." + call.Class + "." + call.MethodName
 }
 
 var loopCount = 0

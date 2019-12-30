@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/adapter/shell"
-	"github.com/phodal/coca/core/context/gitt"
+	"github.com/phodal/coca/core/context/git"
 	"github.com/phodal/coca/core/context/todo/astitodo"
 	"github.com/phodal/coca/core/infrastructure"
 	. "github.com/phodal/coca/languages/java"
@@ -49,7 +49,7 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 			Assignee: todo.Assignee,
 			Message:  todo.Message,
 		}
-		commitMessages := gitt.BuildMessageByInput(lineOutput)
+		commitMessages := git.BuildMessageByInput(lineOutput)
 
 		if len(commitMessages) > 0 {
 			commit := commitMessages[0]

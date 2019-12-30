@@ -1,4 +1,4 @@
-package gitt
+package git
 
 import (
 	"bytes"

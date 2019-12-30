@@ -5,6 +5,7 @@ type JMethodCall struct {
 	Type              string
 	Class             string
 	MethodName        string
+	Parameters        []JParameter
 	StartLine         int
 	StartLinePosition int
 	StopLine          int
@@ -17,6 +18,7 @@ func NewJMethodCall() JMethodCall {
 		Type:              "",
 		Class:             "",
 		MethodName:        "",
+		Parameters:        nil,
 		StartLine:         0,
 		StartLinePosition: 0,
 		StopLine:          0,

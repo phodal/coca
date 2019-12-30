@@ -189,7 +189,6 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 	methodMap := make(map[string]models.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
-		fmt.Println(c.Name)
 	}
 
 	g.Expect(len(methodMap["testTrue"].Creators)).To(Equal(0))

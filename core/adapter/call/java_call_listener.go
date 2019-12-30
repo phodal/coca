@@ -603,7 +603,17 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &models.JMethodCall{removeTarget(fullType), "lambda", targetType, methodName, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := &models.JMethodCall{
+			Package:           removeTarget(fullType),
+			Type:              "lambda",
+			Class:             targetType,
+			MethodName:        methodName,
+			Parameters:        nil,
+			StartLine:         startLine,
+			StartLinePosition: startLinePosition,
+			StopLine:          stopLine,
+			StopLinePosition:  stopLinePosition,
+		}
 		addMethodCall(*jMethodCall)
 	}
 }

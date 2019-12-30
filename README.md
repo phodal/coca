@@ -391,6 +391,7 @@ results:
 | 2019-12-09 | Cristian Maglie | Should be a Theme value?       | app/src/processing/app/EditorStatus.java                                             |   73 |
 | 2019-12-09 | Cristian Maglie | Improve decoupling             | app/src/processing/app/EditorTab.java                                                |  465 |
 +------------+-----------------+--------------------------------+--------------------------------------------------------------------------------------+------+```
+```
 
 ### Suggest
 

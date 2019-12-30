@@ -79,7 +79,7 @@ func (s Service) Evaluate(result *EvaluateModel, node domain.JClassNode) {
 
 	if s.enableSameReturnType() {
 		for _, method := range node.Methods {
-			if !s.isJavaType(method) {
+			if !method.IsJavaLangReturnType() {
 				methodType := method.Type
 
 				if _, ok := serviceNodeMap[methodType]; ok {
@@ -89,10 +89,6 @@ func (s Service) Evaluate(result *EvaluateModel, node domain.JClassNode) {
 			}
 		}
 	}
-}
-
-func (s Service) isJavaType(method domain.JMethod) bool {
-	return method.Type == "String" || method.Type == "int"
 }
 
 func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string {

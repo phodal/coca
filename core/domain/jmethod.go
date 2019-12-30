@@ -37,6 +37,10 @@ func NewJMethod() JMethod {
 	}
 }
 
+func (m *JMethod) IsJavaLangReturnType() bool {
+	return m.Type == "String" || m.Type == "int" || m.Type == "float" || m.Type == "void" || m.Type == "char" || m.Type == "double"
+}
+
 func (m *JMethod) IsStatic() bool {
 	return infrastructure.StringArrayContains(m.Modifiers, "static")
 }

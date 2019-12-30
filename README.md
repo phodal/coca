@@ -370,20 +370,27 @@ coca todo
 results:
 
 ```
-+------------+--------------+--------------------------------+---------------------------------------------------+-------+
-|    DATE    |    AUTHOR    |            MESSAGES            |                     FILENAME                      | LINE  |
-+------------+--------------+--------------------------------+---------------------------------------------------+-------+
-| 2019-12-19 | Phodal Huang | 支持 interface 在同一个包内    | core/adapter/api/JavaApiListener.go               |   200 |
-| 2019-12-21 | Phodal Huang | 处理链试调用                   | core/adapter/bs/BadSmellListener.go               |   305 |
-| 2019-12-18 | Phodal Huang | update this reflect            | core/adapter/bs/BadSmellListener.go               |   363 |
-| 2019-12-15 | Phodal Huang | update for array               | core/adapter/bs/BadSmellListener.go               |   388 |
-| 2019-12-24 | Phodal Huang | 支持依赖注入                   | core/adapter/call/JavaCallListener.go             |   108 |
-| 2019-12-24 | Phodal Huang | add inner creator examples     | core/adapter/call/JavaCallListener.go             |   209 |
-| 2019-12-24 | Phodal Huang | add inner creator examples     | core/adapter/call/JavaCallListener.go             |   215 |
-| 2019-12-24 | Phodal Huang |                                | core/adapter/call/JavaCallListener.go             |   270 |
-| 2019-12-20 | Phodal Huang | 处理链试调用                   | core/adapter/call/JavaCallListener.go             |   324 |
-+------------+--------------+--------------------------------+---------------------------------------------------+-------+
-```
++------------+-----------------+--------------------------------+--------------------------------------------------------------------------------------+------+
+|    DATE    |     AUTHOR      |            MESSAGES            |                                       FILENAME                                       | LINE |
++------------+-----------------+--------------------------------+--------------------------------------------------------------------------------------+------+
+| 2019-12-09 | Cristian Maglie | happens on macosx, don't know  | app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCellJPanel.java |  118 |
+|            |                 | why                            |                                                                                      |      |
+| 2019-12-09 | Cristian Maglie | Make this a method of Theme    | app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCellJPanel.java |  233 |
+| 2019-12-09 | Cristian Maglie | Do a better job in refreshing  | app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java                  |  241 |
+|            |                 | only the needed element        |                                                                                      |      |
+| 2019-12-09 | Cristian Maglie | Do a better job in refreshing  | app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java                  |  273 |
+|            |                 | only the needed element        |                                                                                      |      |
+| 2019-12-09 | Cristian Maglie | Make this a method of Theme    | app/src/cc/arduino/contributions/libraries/ui/MultiLibraryInstallDialog.java         |  149 |
+| 2019-12-09 | Cristian Maglie | happens on macosx, don't know  | app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCellJPanel.java |  183 |
+|            |                 | why                            |                                                                                      |      |
+| 2019-12-09 | Cristian Maglie | show error                     | app/src/processing/app/Base.java                                                     | 1440 |
+| 2019-12-09 | Cristian Maglie | error when importing. ignoring | app/src/processing/app/Base.java                                                     | 2423 |
+|            |                 | :(                             |                                                                                      |      |
+| 2019-12-09 | Cristian Maglie | Improve / move error handling  | app/src/processing/app/Editor.java                                                   | 1541 |
+| 2019-12-09 | Cristian Maglie | Should be a Theme value?       | app/src/processing/app/EditorHeader.java                                             |   78 |
+| 2019-12-09 | Cristian Maglie | Should be a Theme value?       | app/src/processing/app/EditorStatus.java                                             |   73 |
+| 2019-12-09 | Cristian Maglie | Improve decoupling             | app/src/processing/app/EditorTab.java                                                |  465 |
++------------+-----------------+--------------------------------+--------------------------------------------------------------------------------------+------+```
 
 ### Suggest
 
@@ -413,28 +420,22 @@ coca tbs
 results
 
 ```bash
-+---------------------+-------------------------------------------------------------------------------------------+------+
-|        TYPE         |                                         FILENAME                                          | LINE |
-+---------------------+-------------------------------------------------------------------------------------------+------+
-| DuplicateAssertTest | app/test/cc/arduino/contributions/VersionHelperTest.java                                  |   64 |
-| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java                             |   49 |
-| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java                             |   73 |
-| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java                             |  117 |
-| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                                                    |   71 |
-| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                                                    |   72 |
-| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                                                    |   77 |
-| DuplicateAssertTest | app/test/cc/arduino/net/PACSupportMethodsTest.java                                        |   26 |
-| EmptyTest           | app/test/cc/arduino/packages/contributions/HostDependentDownloadableContributionTest.java |   41 |
-| UnknownTest         | app/test/cc/arduino/packages/contributions/HostDependentDownloadableContributionTest.java |   41 |
-| EmptyTest           | app/test/cc/arduino/packages/contributions/HostDependentDownloadableContributionTest.java |   44 |
-| UnknownTest         | app/test/processing/app/BlockCommentGeneratesOneUndoActionTest.java                       |   56 |
-| DuplicateAssertTest | app/test/processing/app/macosx/SystemProfilerParserTest.java                              |   87 |
-| DuplicateAssertTest | app/test/processing/app/syntax/PdeKeywordsTest.java                                       |   54 |
-| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |   79 |
-| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |  105 |
-| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |  133 |
-| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java                                        |  139 |
-+---------------------+-------------------------------------------------------------------------------------------+------+
++---------------------+---------------------------------------------------------------+------+
+|        TYPE         |                           FILENAME                            | LINE |
++---------------------+---------------------------------------------------------------+------+
+| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java |  107 |
+| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java |   41 |
+| DuplicateAssertTest | app/test/cc/arduino/i18n/ExternalProcessOutputParserTest.java |   63 |
+| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                        |   71 |
+| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                        |   72 |
+| RedundantPrintTest  | app/test/cc/arduino/i18n/I18NTest.java                        |   77 |
+| DuplicateAssertTest | app/test/cc/arduino/net/PACSupportMethodsTest.java            |   19 |
+| DuplicateAssertTest | app/test/processing/app/macosx/SystemProfilerParserTest.java  |   51 |
+| DuplicateAssertTest | app/test/processing/app/syntax/PdeKeywordsTest.java           |   41 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java            |   57 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java            |   83 |
+| DuplicateAssertTest | app/test/processing/app/tools/ZipDeflaterTest.java            |  109 |
++---------------------+---------------------------------------------------------------+------+
 ```
 
 ## Todo

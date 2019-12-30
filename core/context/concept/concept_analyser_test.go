@@ -16,7 +16,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 
 	var parsedDeps []domain.JClassNode
 	analyser := NewConceptAnalyser()
-	codePath := "../../../_fixtures/call_api_test.json"
+	codePath := "../../../_fixtures/call/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)
 
 	file := infrastructure.ReadFile(codePath)

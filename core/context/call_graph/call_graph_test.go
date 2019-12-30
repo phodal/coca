@@ -16,7 +16,7 @@ func Test_should_generate_correct_files(t *testing.T) {
 
 	var parsedDeps []domain.JClassNode
 	analyser := call_graph.NewCallGraph()
-	codePath := "../../../_fixtures/call_api_test.json"
+	codePath := "../../../_fixtures/call/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)
 
 	file := infrastructure.ReadFile(codePath)

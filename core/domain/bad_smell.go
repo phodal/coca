@@ -1,4 +1,4 @@
-package models
+package domain
 
 type BsJClass struct {
 	Package     string
@@ -84,4 +84,12 @@ func NewJFullClassNode() BsJClass {
 		nil,
 		nil,
 		*info}
+}
+
+type BadSmellModel struct {
+	File        string `json:"EntityName,omitempty"`
+	Line        string `json:"Line,omitempty"`
+	Bs          string `json:"BS,omitempty"`
+	Description string `json:"Description,omitempty"`
+	Size        int    `size:"Description,omitempty"`
 }

@@ -22,7 +22,7 @@ type TestBadSmell struct {
 
 func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
-	callMethodMap := buildCallMethodMap(deps)
+	callMethodMap := domain.BuildCallMethodMap(deps)
 	for _, clz := range deps {
 		for _, method := range clz.Methods {
 			if !method.IsJunitTest() {
@@ -66,16 +66,6 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 	}
 
 	return results
-}
-
-func buildCallMethodMap(deps []domain.JClassNode) map[string]domain.JMethod {
-	var callMethodMap = make(map[string]domain.JMethod)
-	for _, clz := range deps {
-		for _, method := range clz.Methods {
-			callMethodMap[method.BuildFullMethodName(clz)] = method
-		}
-	}
-	return callMethodMap
 }
 
 func updateMethodCallsForSelfCall(method domain.JMethod, clz domain.JClassNode, callMethodMap map[string]domain.JMethod) []domain.JMethodCall {

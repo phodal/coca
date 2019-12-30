@@ -46,3 +46,13 @@ func (j *JClassNode) BuildStringMethodMap(projectMethods map[string]string) {
 		projectMethods[method.BuildFullMethodName(*j)] = method.BuildFullMethodName(*j)
 	}
 }
+
+func BuildCallMethodMap(deps []JClassNode) map[string]JMethod {
+	var callMethodMap = make(map[string]JMethod)
+	for _, clz := range deps {
+		for _, method := range clz.Methods {
+			callMethodMap[method.BuildFullMethodName(clz)] = method
+		}
+	}
+	return callMethodMap
+}

@@ -12,8 +12,8 @@ func NewSuggestApp() SuggestApp {
 	return *&SuggestApp{}
 }
 
-func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []Suggest {
-	var suggests []Suggest
+func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []domain.Suggest {
+	var suggests []domain.Suggest
 	for _, clz := range deps {
 		if clz.Type == "Class" {
 			// TODO: DSL => class constructor.len > 3
@@ -27,11 +27,11 @@ func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []Suggest {
 	return suggests
 }
 
-func factorySuggest(clz domain.JClassNode, suggests []Suggest) []Suggest {
+func factorySuggest(clz domain.JClassNode, suggests []domain.Suggest) []domain.Suggest {
 	var constructorCount = 0
 	var longestParaConstructorMethod = clz.Methods[0]
 
-	var currentSuggestList []Suggest = nil
+	var currentSuggestList []domain.Suggest = nil
 	for _, method := range clz.Methods {
 		if method.IsConstructor {
 			constructorCount++
@@ -42,8 +42,10 @@ func factorySuggest(clz domain.JClassNode, suggests []Suggest) []Suggest {
 
 			declLineNum := method.StopLine - method.StartLine
 			// 参数过多，且在构造函数里调用过多
-			if declLineNum > len(method.Parameters)-3 && (len(method.MethodCalls) > len(method.Parameters)+3) {
-				suggest := NewSuggest(clz, "factory", "complex constructor")
+			PARAMETER_LINE_OFFSET := 3
+			PARAMETER_METHOD_CALL_OFFSET := 3
+			if declLineNum > len(method.Parameters)-PARAMETER_LINE_OFFSET && (len(method.MethodCalls) > len(method.Parameters)+PARAMETER_METHOD_CALL_OFFSET) {
+				suggest := domain.NewSuggest(clz, "factory", "complex constructor")
 				suggest.Line = method.StartLine
 				currentSuggestList = append(currentSuggestList, suggest)
 			}
@@ -52,18 +54,18 @@ func factorySuggest(clz domain.JClassNode, suggests []Suggest) []Suggest {
 
 	// TODO 合并 suggest
 	if constructorCount >= 3 {
-		suggest := NewSuggest(clz, "factory", "too many constructor")
+		suggest := domain.NewSuggest(clz, "factory", "too many constructor")
 		suggest.Size = constructorCount
 		currentSuggestList = append(currentSuggestList, suggest)
 	}
 
 	if len(longestParaConstructorMethod.Parameters) >= 5 {
-		suggest := NewSuggest(clz, "builder", "too many parameters")
+		suggest := domain.NewSuggest(clz, "builder", "too many parameters")
 		suggest.Size = len(longestParaConstructorMethod.Parameters)
 		currentSuggestList = append(currentSuggestList, suggest)
 	}
 
-	var suggest = NewSuggest(clz, "", "")
+	var suggest = domain.NewSuggest(clz, "", "")
 	for _, s := range currentSuggestList {
 		if !strings.Contains(suggest.Pattern, s.Pattern) {
 			if suggest.Pattern != "" {

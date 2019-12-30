@@ -1,6 +1,4 @@
-package suggest
-
-import "github.com/phodal/coca/core/domain"
+package domain
 
 type Suggest struct {
 	File    string
@@ -12,7 +10,7 @@ type Suggest struct {
 	Line    int
 }
 
-func NewSuggest(clz domain.JClassNode, pattern, reason string) Suggest {
+func NewSuggest(clz JClassNode, pattern, reason string) Suggest {
 	return *&Suggest{
 		File:    clz.Path,
 		Package: clz.Package,

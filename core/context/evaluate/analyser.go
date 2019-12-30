@@ -3,7 +3,6 @@ package evaluate
 import (
 	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
 	"gonum.org/v1/gonum/stat"
 	"strings"
 )
@@ -49,11 +48,11 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 		for _, method := range ident.Methods {
 			result.Summary.MethodCount++
 
-			if infrastructure.StringArrayContains(method.Modifiers, "static") {
+			if method.IsStatic() {
 				result.Summary.StaticMethodCount++
 			}
 
-			if !strings.HasPrefix(method.Name, "set") && !strings.HasPrefix(method.Name, "get") {
+			if method.IsGetterSetter() {
 				result.Summary.NormalMethodCount++
 				methodLength := method.StopLine - method.StartLine + 1
 				result.Summary.TotalMethodLength = result.Summary.TotalMethodLength + methodLength

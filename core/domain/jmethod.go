@@ -1,5 +1,10 @@
 package domain
 
+import (
+	"github.com/phodal/coca/core/infrastructure"
+	"strings"
+)
+
 type JMethod struct {
 	Name              string
 	Type              string
@@ -30,6 +35,14 @@ func NewJMethod() JMethod {
 		MethodCalls:       nil,
 		IsConstructor:     false,
 	}
+}
+
+func (m *JMethod) IsStatic() bool {
+	return infrastructure.StringArrayContains(m.Modifiers, "static")
+}
+
+func (m *JMethod) IsGetterSetter() bool {
+	return strings.HasPrefix(m.Name, "set") || strings.HasPrefix(m.Name, "get")
 }
 
 type JMethodInfo struct {

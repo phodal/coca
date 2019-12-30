@@ -3,7 +3,7 @@ package suggest
 import (
 	"encoding/json"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"log"
 	"path/filepath"
 	"testing"
@@ -18,7 +18,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	analyser := NewSuggestApp()
 	codePath := "../../../_fixtures/suggest/factory/factory_suggest.json"
 	codePath = filepath.FromSlash(codePath)
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	if file == nil {
 		log.Fatal("lost file")
 	}

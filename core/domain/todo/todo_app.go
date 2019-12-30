@@ -5,7 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/domain/gitt"
 	"github.com/phodal/coca/core/domain/todo/astitodo"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	. "github.com/phodal/coca/languages/java"
 	"log"
 	"os/exec"
@@ -66,7 +66,7 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 
 func buildComment(path string) []*astitodo.TODO {
 	var todos []*astitodo.TODO
-	files := support.GetJavaFiles(path)
+	files := infrastructure.GetJavaFiles(path)
 	for index := range files {
 		file := files[index]
 

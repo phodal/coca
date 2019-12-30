@@ -3,7 +3,7 @@ package rcall
 import (
 	"github.com/phodal/coca/core/domain/call_graph"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"encoding/json"
 )
 
@@ -19,7 +19,7 @@ func (c RCallGraph) Analysis(funcName string, clzs []models.JClassNode) string {
 	rcallMap := BuildRCallMethodMap(clzs, projectMethodMap)
 
 	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
-	support.WriteToCocaFile("rcallmap.json", string(mapJson))
+	infrastructure.WriteToCocaFile("rcallmap.json", string(mapJson))
 
 	chain := c.buildRCallChain(funcName, rcallMap)
 

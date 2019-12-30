@@ -5,7 +5,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/suggest"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -21,7 +21,7 @@ var suggestCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		parsedDeps = nil
-		depFile := support.ReadFile(apiCmdConfig.DependencePath)
+		depFile := infrastructure.ReadFile(apiCmdConfig.DependencePath)
 		if depFile == nil {
 			log.Fatal("lost deps")
 		}

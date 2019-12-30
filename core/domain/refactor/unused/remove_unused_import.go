@@ -5,7 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	base2 "github.com/phodal/coca/core/domain/refactor/base"
 	models2 "github.com/phodal/coca/core/domain/refactor/base/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -25,7 +25,7 @@ func NewRemoveUnusedImportApp(pPath string) *RemoveUnusedImportApp {
 }
 
 func (j *RemoveUnusedImportApp) Analysis() []models2.JFullIdentifier {
-	files := support.GetJavaFiles(configPath)
+	files := infrastructure.GetJavaFiles(configPath)
 
 	var nodes []models2.JFullIdentifier = nil
 	for index := range files {
@@ -35,7 +35,7 @@ func (j *RemoveUnusedImportApp) Analysis() []models2.JFullIdentifier {
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := support.ProcessFile(file)
+		parser := infrastructure.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

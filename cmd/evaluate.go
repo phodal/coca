@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/evaluate"
 	"github.com/phodal/coca/core/models"
-	. "github.com/phodal/coca/core/support"
+	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
 	"os"

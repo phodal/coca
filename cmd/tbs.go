@@ -8,7 +8,7 @@ import (
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/domain/tbs"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"os"
 	"strconv"
@@ -28,7 +28,7 @@ var tbsCmd = &cobra.Command{
 	Short: "generate tests bad smell",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		files := support.GetJavaTestFiles(tbsCmdConfig.Path)
+		files := infrastructure.GetJavaTestFiles(tbsCmdConfig.Path)
 		var identifiers []models.JIdentifier
 
 		identifiers = adapter.LoadTestIdentify(files)
@@ -43,7 +43,7 @@ var tbsCmd = &cobra.Command{
 		classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
 
 		nodeContent, _ := json.MarshalIndent(classNodes, "", "\t")
-		support.WriteToCocaFile("tdeps.json", string(nodeContent))
+		infrastructure.WriteToCocaFile("tdeps.json", string(nodeContent))
 
 		app := tbs.NewTbsApp()
 		result := app.AnalysisPath(classNodes, identifiersMap)
@@ -60,7 +60,7 @@ var tbsCmd = &cobra.Command{
 			resultContent, _ = json.MarshalIndent(tbsMap, "", "\t")
 		}
 
-		support.WriteToCocaFile("tbs.json", string(resultContent))
+		infrastructure.WriteToCocaFile("tbs.json", string(resultContent))
 
 		if len(result) <= 20 {
 			table := tablewriter.NewWriter(os.Stdout)

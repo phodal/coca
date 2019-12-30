@@ -5,7 +5,7 @@ import (
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
 	"testing"
 )
@@ -111,7 +111,7 @@ func TestTbsApp_CallAssertInClassTests(t *testing.T) {
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {
-	files := support.GetJavaTestFiles(codePath)
+	files := infrastructure.GetJavaTestFiles(codePath)
 	var identifiers []models.JIdentifier
 
 	identifiers = adapter.LoadTestIdentify(files)

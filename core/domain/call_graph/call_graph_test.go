@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/domain/call_graph"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
 	"testing"
 )
@@ -19,7 +19,7 @@ func Test_should_generate_correct_files(t *testing.T) {
 	codePath := "../../../_fixtures/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)
 
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	dotContent := analyser.Analysis("com.phodal.pholedge.book.BookController.createBook", *&parsedDeps)

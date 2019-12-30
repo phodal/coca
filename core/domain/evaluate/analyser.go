@@ -3,7 +3,7 @@ package evaluate
 import (
 	"github.com/phodal/coca/core/domain/evaluate/evaluator"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"gonum.org/v1/gonum/stat"
 	"strings"
 )
@@ -49,7 +49,7 @@ func (a Analyser) Analysis(classNodes []models.JClassNode, identifiers []models.
 		for _, method := range ident.Methods {
 			result.Summary.MethodCount++
 
-			if support.Contains(method.Modifiers, "static") {
+			if infrastructure.Contains(method.Modifiers, "static") {
 				result.Summary.StaticMethodCount++
 			}
 

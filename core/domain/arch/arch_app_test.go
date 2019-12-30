@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/domain/arch/tequila"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"io"
 	"path/filepath"
 	"reflect"
@@ -49,7 +49,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g.Expect(len(graph.SubGraphs.SubGraphs)).To(Equal(3))
 
 	jsonContent, _ := json.MarshalIndent(results, "", "\t")
-	content := support.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
+	content := infrastructure.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
 
 	g.Expect(JSONBytesEqual(jsonContent, content)).To(Equal(true))
 }

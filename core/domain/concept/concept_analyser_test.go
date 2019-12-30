@@ -3,7 +3,7 @@ package concept
 import (
 	"encoding/json"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"log"
 	"path/filepath"
 	"testing"
@@ -19,7 +19,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	codePath := "../../../_fixtures/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)
 
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	if file == nil {
 		log.Fatal("lost file")
 	}

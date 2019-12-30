@@ -6,7 +6,7 @@ import (
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain/count"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -34,7 +34,7 @@ var countCmd = &cobra.Command{
 			return
 		}
 
-		file := support.ReadFile(dependence)
+		file := infrastructure.ReadFile(dependence)
 		if file == nil {
 			log.Fatal("lost file:" + dependence)
 		}
@@ -43,7 +43,7 @@ var countCmd = &cobra.Command{
 
 		callMap := count.BuildCallMap(cparsedDeps)
 
-		callMapSort := support.RankByWordCount(callMap)
+		callMapSort := infrastructure.RankByWordCount(callMap)
 
 		if countCmdConfig.Top > 0 {
 			callMapSort = callMapSort[:countCmdConfig.Top]

@@ -8,7 +8,7 @@ import (
 	"github.com/phodal/coca/core/adapter/identifier"
 	"github.com/phodal/coca/core/domain/evaluate/evaluator"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
 	"testing"
 )
@@ -20,7 +20,7 @@ func TestAnalyser_Analysis(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service.json"
 	codePath = filepath.FromSlash(codePath)
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	analyser.Analysis(parsedDeps, nil)
@@ -35,7 +35,7 @@ func Test_Service_LifeCycle(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_lifecycle.json"
 	codePath = filepath.FromSlash(codePath)
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)
@@ -52,7 +52,7 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_same_return_type.json"
 	codePath = filepath.FromSlash(codePath)
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := analyser.Analysis(parsedDeps, nil)
@@ -67,7 +67,7 @@ func Test_Long_Parameters(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_long_parameters.json"
 	codePath = filepath.FromSlash(codePath)
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)

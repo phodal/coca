@@ -3,7 +3,7 @@ package rcall
 import (
 	"encoding/json"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"log"
 	"testing"
 
@@ -15,7 +15,7 @@ func TestRCallGraph_Analysis(t *testing.T) {
 
 	var parsedDeps []models.JClassNode
 	analyser := NewRCallGraph()
-	file := support.ReadFile("../../../../_fixtures/call_api_test.json")
+	file := infrastructure.ReadFile("../../../../_fixtures/call_api_test.json")
 	if file == nil {
 		log.Fatal("lost file")
 	}

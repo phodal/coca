@@ -1,9 +1,9 @@
 package evaluator
 
 import (
+	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/core/infrastructure/apriori"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
-	"github.com/phodal/coca/core/support/apriori"
 	"strings"
 )
 
@@ -103,7 +103,7 @@ func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string 
 		}
 
 		firstWord := nameArray[0]
-		if !(support.IsTechStopWords(firstWord)) {
+		if !(IsTechStopWords(firstWord)) {
 			nameMap[firstWord] = append(nameMap[firstWord], strings.Join(nameArray, ""))
 		}
 		if len(nameMap[firstWord]) > 1 {
@@ -112,6 +112,16 @@ func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string 
 	}
 
 	return hadLifecycle
+}
+
+func IsTechStopWords(firstWord string) bool {
+	for _, word := range config.TechStopWords {
+		if word == firstWord {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 func (s Service) enableLifecycle() bool {

@@ -1,4 +1,4 @@
-package support
+package infrastructure
 
 import (
 	"fmt"

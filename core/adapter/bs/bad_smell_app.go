@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	models2 "github.com/phodal/coca/core/adapter/bs/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -54,7 +54,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []BadSm
 	}
 
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
-	support.WriteToCocaFile("nodeInfos.json", string(bsModel))
+	infrastructure.WriteToCocaFile("nodeInfos.json", string(bsModel))
 
 	bsList := analysisBadSmell(nodeInfos)
 

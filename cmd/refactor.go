@@ -6,7 +6,7 @@ import (
 	. "github.com/phodal/coca/core/domain/refactor/move_class"
 	. "github.com/phodal/coca/core/domain/refactor/rename"
 	. "github.com/phodal/coca/core/domain/refactor/unused"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 )
 
@@ -30,7 +30,7 @@ var refactorCmd = &cobra.Command{
 		}
 
 		if dependence != "" && rename != "" {
-			file := support.ReadFile(dependence)
+			file := infrastructure.ReadFile(dependence)
 			if file == nil {
 				return
 			}

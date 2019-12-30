@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
 )
 
@@ -16,7 +16,7 @@ func NewJavaCallApp() JavaCallApp {
 }
 
 func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []models.JIdentifier) []models.JClassNode {
-	files := support.GetJavaFiles(codeDir)
+	files := infrastructure.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
@@ -32,7 +32,7 @@ func (j *JavaCallApp) AnalysisFiles(identNodes []models.JIdentifier, files []str
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := support.ProcessFile(file)
+		parser := infrastructure.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := NewJavaCallListener(identMap, file)

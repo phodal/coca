@@ -3,7 +3,7 @@ package unused
 import (
 	support3 "github.com/phodal/coca/core/domain/refactor/rename/support"
 	. "github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -25,7 +25,7 @@ func RenameMethodApp(deps []JClassNode, p string) *RemoveMethodApp {
 }
 
 func (j *RemoveMethodApp) Start() {
-	configBytes := support.ReadFile(configPath)
+	configBytes := infrastructure.ReadFile(configPath)
 	if configBytes == nil {
 		return
 	}

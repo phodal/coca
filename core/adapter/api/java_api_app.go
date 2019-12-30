@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"path/filepath"
@@ -14,14 +14,14 @@ type JavaApiApp struct {
 }
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []models.JClassNode, identifiersMap map[string]models.JIdentifier, diMap map[string]string) []RestApi {
-	files := support.GetJavaFiles(codeDir)
+	files := infrastructure.GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]
 
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := support.ProcessFile(file)
+		parser := infrastructure.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := NewJavaApiListener(identifiersMap, diMap)

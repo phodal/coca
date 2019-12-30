@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/models"
-	"github.com/phodal/coca/core/support"
+	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
 	"testing"
 )
@@ -14,7 +14,7 @@ func TestBuildCallMap(t *testing.T) {
 	var parsedDeps []models.JClassNode
 	codePath := "../../../_fixtures/count/call.json"
 	codePath = filepath.FromSlash(codePath)
-	file := support.ReadFile(codePath)
+	file := infrastructure.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	callMap := BuildCallMap(parsedDeps)

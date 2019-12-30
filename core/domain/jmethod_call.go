@@ -25,3 +25,7 @@ func NewJMethodCall() JMethodCall {
 		StopLinePosition:  0,
 	}
 }
+
+func (c *JMethodCall) GetFullMethodName() string {
+	return c.Package + "." + c.Class + "." + c.MethodName
+}

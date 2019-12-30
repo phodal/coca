@@ -2,8 +2,8 @@ package evaluator
 
 import (
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/infrastructure/apriori"
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/apriori"
 	"strings"
 )
 
@@ -83,8 +83,7 @@ func (s Service) Evaluate(result *EvaluateModel, node domain.JClassNode) {
 				methodType := method.Type
 
 				if _, ok := serviceNodeMap[methodType]; ok {
-					fullMethodName := node.Package + "." + node.Class + "." + method.Name
-					returnTypeMap[methodType] = append(returnTypeMap[methodType], fullMethodName)
+					returnTypeMap[methodType] = append(returnTypeMap[methodType], method.GetFullMethodName(node))
 				}
 			}
 		}

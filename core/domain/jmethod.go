@@ -49,6 +49,10 @@ func (m *JMethod) IsGetterSetter() bool {
 	return strings.HasPrefix(m.Name, "set") || strings.HasPrefix(m.Name, "get")
 }
 
+func (m *JMethod) GetFullMethodName(node JClassNode) string {
+	return node.Package + "." + node.Class + "." + m.Name
+}
+
 type JMethodInfo struct {
 	Name       string
 	Type       string

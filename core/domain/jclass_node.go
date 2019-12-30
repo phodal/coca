@@ -40,3 +40,9 @@ func (j *JClassNode) SetMethodFromMap(methodMap map[string]JMethod) {
 
 	j.Methods = methodsArray
 }
+
+func (j *JClassNode) BuildStringMethodMap(projectMethods map[string]string) {
+	for _, method := range j.Methods {
+		projectMethods[method.GetFullMethodName(*j)] = method.GetFullMethodName(*j)
+	}
+}

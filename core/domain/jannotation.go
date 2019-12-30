@@ -17,3 +17,6 @@ func NewAnnotation() Annotation {
 	}
 }
 
+func (n * Annotation) IsComponentOrRepository() bool {
+	return n.QualifiedName == "Component" || n.QualifiedName == "Repository"
+}

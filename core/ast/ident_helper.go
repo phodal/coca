@@ -58,10 +58,9 @@ func BuildDIMap(identifiers []domain.JIdentifier, identifierMap map[string]domai
 	for _, clz := range identifiers {
 		if len(clz.Annotations) > 0 {
 			for _, annotation := range clz.Annotations {
-				name := annotation.QualifiedName
-				if (name == "Component" || name == "Repository") && len(clz.Implements) > 0 {
+				if (annotation.IsComponentOrRepository()) && len(clz.Implements) > 0 {
 					superClz := identifierMap[clz.Implements[0]]
-					diMap[superClz.Package+"."+superClz.ClassName] = clz.Package + "." + clz.ClassName
+					diMap[superClz.GetClassFullName()] = superClz.GetClassFullName()
 				}
 			}
 		}

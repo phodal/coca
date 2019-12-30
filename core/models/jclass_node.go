@@ -21,3 +21,12 @@ type JAppField struct {
 func NewClassNode() *JClassNode {
 	return &JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil}
 }
+
+func (j *JClassNode) SetMethodFromMap(methodMap map[string]JMethod) {
+	var methodsArray []JMethod
+	for _, value := range methodMap {
+		methodsArray = append(methodsArray, value)
+	}
+
+	j.Methods = methodsArray
+}

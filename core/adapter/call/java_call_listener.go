@@ -87,25 +87,14 @@ func (s *JavaCallListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
 
 func (s *JavaCallListener) exitBody() {
 	if currentNode.Class != "" {
-		var methodsArray []models.JMethod
-		for _, value := range methodMap {
-			methodsArray = append(methodsArray, value)
-		}
-
 		currentNode.Fields = fields
 		currentNode.Type = currentType
-		currentNode.Methods = methodsArray
-
 		currentNode.Path = fileName
+		currentNode.SetMethodFromMap(methodMap)
 	}
 
 	if currentType == "CreatorClass" {
-		var methodsArray []models.JMethod
-		for _, value := range creatorMethodMap {
-			methodsArray = append(methodsArray, value)
-		}
-
-		currentCreatorNode.Methods = methodsArray
+		currentNode.SetMethodFromMap(creatorMethodMap)
 		return
 	}
 

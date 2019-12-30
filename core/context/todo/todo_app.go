@@ -3,15 +3,13 @@ package todo
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/adapter/shell"
 	"github.com/phodal/coca/core/context/gitt"
 	"github.com/phodal/coca/core/context/todo/astitodo"
 	"github.com/phodal/coca/core/infrastructure"
 	. "github.com/phodal/coca/languages/java"
-	"log"
-	"os/exec"
 	"path/filepath"
 	"strconv"
-	"strings"
 )
 
 type TodoApp struct {
@@ -41,7 +39,7 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 	var todoList []TodoDetail = nil
 
 	for _, todo := range todos {
-		lineOutput := runGitGetLog(todo.Line, todo.Filename)
+		lineOutput := shell.RunGitGetLog(todo.Line, todo.Filename)
 
 		todoDetail := &TodoDetail{
 			Date:     "",
@@ -91,19 +89,4 @@ func buildComment(path string) []*astitodo.TODO {
 	}
 
 	return todos
-}
-
-func runGitGetLog(line int, fileName string) string {
-	// git log -1 -L2:README.md --pretty="format:[%h] %aN %ad %s" --date=short
-	historyArgs := []string{"log", "-1", "-L" + strconv.Itoa(line) + ":" + fileName, "--pretty=\"format:[%h] %aN %ad %s\"", "--date=short"}
-	cmd := exec.Command("git", historyArgs...)
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println(string(out))
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
-
-	split := strings.Split(string(out), "\n")
-	output := split[0] + "\n "
-	return output
 }

@@ -4,7 +4,6 @@ import (
 	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
 	"gonum.org/v1/gonum/stat"
-	"strings"
 )
 
 type Analyser struct {
@@ -24,14 +23,14 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 	for _, node := range classNodes {
 		nodeMap[node.Class] = node
 
-		if strings.Contains(strings.ToLower(node.Class), "util") || strings.Contains(strings.ToLower(node.Class), "utils") {
+		if node.IsUtilClass() {
 			result.Summary.UtilsCount++
 
 			evaluation = Evaluation{evaluator.Util{}}
 			evaluation.Evaluate(&result, node)
 		}
 
-		if strings.Contains(strings.ToLower(node.Class), "service") {
+		if node.IsServiceClass() {
 			servicesNode = append(servicesNode, node)
 		} else {
 			evaluation = Evaluation{evaluator.Empty{}}

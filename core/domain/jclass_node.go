@@ -1,5 +1,7 @@
 package domain
 
+import "strings"
+
 type JClassNode struct {
 	Package     string
 	Class       string
@@ -20,6 +22,14 @@ type JAppField struct {
 
 func NewClassNode() *JClassNode {
 	return &JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil}
+}
+
+func (j *JClassNode) IsUtilClass() bool {
+	return strings.Contains(strings.ToLower(j.Class), "util") || strings.Contains(strings.ToLower(j.Class), "utils")
+}
+
+func (j *JClassNode) IsServiceClass() bool {
+	return strings.Contains(strings.ToLower(j.Class), "service")
 }
 
 func (j *JClassNode) SetMethodFromMap(methodMap map[string]JMethod) {

@@ -2,9 +2,11 @@ package evaluate
 
 import (
 	"encoding/json"
+	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/adapter/call"
 	"github.com/phodal/coca/core/adapter/identifier"
+	"github.com/phodal/coca/core/domain/evaluate/evaluator"
 	"github.com/phodal/coca/core/models"
 	"github.com/phodal/coca/core/support"
 	"path/filepath"
@@ -80,6 +82,22 @@ func TestNullPointException(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/evaluate/null"
+	result := buildEvaluateResult(codePath)
+
+	g.Expect(len(result.Nullable.Items)).To(Equal(2))
+}
+
+func TestStaticUtils(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/evaluate/utils"
+	result := buildEvaluateResult(codePath)
+
+	fmt.Println(result)
+	g.Expect(result.Summary.UtilsCount).To(Equal(1))
+}
+
+func buildEvaluateResult(codePath string) evaluator.EvaluateModel {
 	codePath = filepath.FromSlash(codePath)
 	identifierApp := new(identifier.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
@@ -93,6 +111,5 @@ func TestNullPointException(t *testing.T) {
 
 	analyser := NewEvaluateAnalyser()
 	result := analyser.Analysis(callNodes, identifiers)
-
-	g.Expect(len(result.Nullable.Items)).To(Equal(2))
+	return result
 }

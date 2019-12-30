@@ -86,8 +86,8 @@ func TestTbsApp_RedundantAssertionTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	g.Expect(len(result)).To(Equal(0))
-	//g.Expect(result[0].Type).To(Equal("EmptyTest"))
+	g.Expect(len(result)).To(Equal(1))
+	g.Expect(result[0].Type).To(Equal("RedundantAssertionTest"))
 }
 
 func TestTbsApp_CreatorNotUnknownTest(t *testing.T) {

@@ -318,22 +318,27 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *m
 			return true
 		}
 
-		var methodParams []models.JParameter = nil
-		parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
-		formalParameter := parameterList.AllFormalParameter()
-		for _, param := range formalParameter {
-			paramContext := param.(*parser.FormalParameterContext)
-			paramType := paramContext.TypeType().GetText()
-			paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
-
-			localVars[paramValue] = paramType
-			methodParams = append(methodParams, *&models.JParameter{Name: paramValue, Type: paramType})
-		}
+		methodParams := getMethodParameters(parameters)
 
 		method.Parameters = methodParams
 		updateMethod(method)
 	}
 	return false
+}
+
+func getMethodParameters(parameters parser.IFormalParametersContext) []models.JParameter {
+	var methodParams []models.JParameter = nil
+	parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
+	formalParameter := parameterList.AllFormalParameter()
+	for _, param := range formalParameter {
+		paramContext := param.(*parser.FormalParameterContext)
+		paramType := paramContext.TypeType().GetText()
+		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
+
+		localVars[paramValue] = paramType
+		methodParams = append(methodParams, *&models.JParameter{Name: paramValue, Type: paramType})
+	}
+	return methodParams
 }
 
 func updateMethod(method *models.JMethod) {
@@ -534,6 +539,14 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 		targetType = split[0]
 	}
 	jMethodCall.Class = targetType
+
+	if ctx.ExpressionList() != nil {
+		var parameters []string
+		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {
+			parameters = append(parameters, expression.(*parser.ExpressionContext).GetText())
+		}
+		jMethodCall.Parameters = parameters
+	}
 
 	addMethodCall(jMethodCall)
 }

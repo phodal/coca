@@ -22,14 +22,6 @@ func NewSqlIdentifierListener() *SqlIdentifierListener {
 	return &SqlIdentifierListener{}
 }
 
-func (s *SqlIdentifierListener) EnterSelect_stmt(ctx *parser.Select_stmtContext) {
-
-}
-
-func (s *SqlIdentifierListener) EnterSelect_or_values(ctx *parser.Select_or_valuesContext) {
-
-}
-
 func (s *SqlIdentifierListener) EnterSelect_core(ctx *parser.Select_coreContext) {
 	columns := ctx.AllResult_column()
 	for _, col := range columns {

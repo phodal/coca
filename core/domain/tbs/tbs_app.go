@@ -86,8 +86,21 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	return results
 }
 
-func checkRedundantAssertionTest(path string, call models.JMethodCall, method models.JMethod, result *[]TestBadSmell, testType *string) {
+func checkRedundantAssertionTest(path string, call models.JMethodCall, method models.JMethod, results *[]TestBadSmell, testType *string) {
+	TWO_PARAMETERS := 2
+	if len(call.Parameters) == TWO_PARAMETERS {
+		if call.Parameters[0] == call.Parameters[1] {
+			*testType = "RedundantAssertionTest"
+			tbs := *&TestBadSmell{
+				FileName:    path,
+				Type:        *testType,
+				Description: "",
+				Line:        method.StartLine,
+			}
 
+			*results = append(*results, tbs)
+		}
+	}
 }
 
 func hasAssertion(methodName string) bool {

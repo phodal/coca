@@ -193,3 +193,21 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 
 	g.Expect(len(methodMap["testTrue"].Creators)).To(Equal(0))
 }
+
+func Test_ShouldGetMethodCallParameters(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodCallMap := make(map[string]models.JMethodCall)
+	for _, method := range callNodes[0].Methods {
+		for _, call := range method.MethodCalls {
+			methodCallMap[call.MethodName] = call
+		}
+	}
+
+	g.Expect(methodCallMap["assertEquals"].Parameters).To(Equal([]string{"true", "true"}))
+}

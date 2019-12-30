@@ -5,7 +5,7 @@ type JMethodCall struct {
 	Type              string
 	Class             string
 	MethodName        string
-	Parameters        []JParameter
+	Parameters        []string
 	StartLine         int
 	StartLinePosition int
 	StopLine          int

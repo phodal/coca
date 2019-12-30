@@ -6,8 +6,8 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/core/adapter"
 	"github.com/phodal/coca/core/adapter/call"
-	"github.com/phodal/coca/core/domain/tbs"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/context/tbs"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"os"
@@ -29,7 +29,7 @@ var tbsCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		files := infrastructure.GetJavaTestFiles(tbsCmdConfig.Path)
-		var identifiers []models.JIdentifier
+		var identifiers []domain.JIdentifier
 
 		identifiers = adapter.LoadTestIdentify(files)
 		identifiersMap := adapter.BuildIdentifierMap(identifiers)

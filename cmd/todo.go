@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
-	"github.com/phodal/coca/core/domain/todo"
+	"github.com/phodal/coca/core/context/todo"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"os"

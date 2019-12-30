@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/domain/evaluate"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/context/evaluate"
+	"github.com/phodal/coca/core/domain"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
@@ -35,7 +35,7 @@ var evaluateCmd = &cobra.Command{
 			log.Fatal("lost file:" + dependence)
 		}
 
-		var identifiers []models.JIdentifier
+		var identifiers []domain.JIdentifier
 		identContent := ReadCocaFile("identify.json")
 
 		_ = json.Unmarshal(identContent, &identifiers)

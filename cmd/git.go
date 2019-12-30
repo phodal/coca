@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
-	. "github.com/phodal/coca/core/domain/gitt"
+	. "github.com/phodal/coca/core/context/gitt"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"io/ioutil"

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/domain/concept"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/context/concept"
+	"github.com/phodal/coca/core/domain"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
@@ -13,7 +13,7 @@ import (
 	"strconv"
 )
 
-var parsedDeps []models.JClassNode
+var parsedDeps []domain.JClassNode
 
 var conceptCmd = &cobra.Command{
 	Use:   "concept",

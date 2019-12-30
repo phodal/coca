@@ -3,7 +3,7 @@ package call
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
 )
@@ -15,15 +15,15 @@ func NewJavaCallApp() JavaCallApp {
 	return *&JavaCallApp{}
 }
 
-func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []models.JIdentifier) []models.JClassNode {
+func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {
 	files := infrastructure.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
-func (j *JavaCallApp) AnalysisFiles(identNodes []models.JIdentifier, files []string, classes []string) []models.JClassNode {
-	var nodeInfos []models.JClassNode
+func (j *JavaCallApp) AnalysisFiles(identNodes []domain.JIdentifier, files []string, classes []string) []domain.JClassNode {
+	var nodeInfos []domain.JClassNode
 
-	var identMap = make(map[string]models.JIdentifier)
+	var identMap = make(map[string]domain.JIdentifier)
 	for _, ident := range identNodes {
 		identMap[ident.Package+"."+ident.ClassName] = ident
 	}

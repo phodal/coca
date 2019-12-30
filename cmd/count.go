@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/domain/count"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/context/count"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
@@ -22,7 +22,7 @@ var (
 	countCmdConfig CountCmdConfig
 )
 
-var cparsedDeps []models.JClassNode
+var cparsedDeps []domain.JClassNode
 
 var countCmd = &cobra.Command{
 	Use:   "count",

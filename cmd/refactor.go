@@ -3,9 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/phodal/coca/config"
-	. "github.com/phodal/coca/core/domain/refactor/move_class"
-	. "github.com/phodal/coca/core/domain/refactor/rename"
-	. "github.com/phodal/coca/core/domain/refactor/unused"
+	. "github.com/phodal/coca/core/context/refactor/move_class"
+	. "github.com/phodal/coca/core/context/refactor/rename"
+	. "github.com/phodal/coca/core/context/refactor/unused"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 )

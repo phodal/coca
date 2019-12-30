@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/config"
-	"github.com/phodal/coca/core/domain/suggest"
+	"github.com/phodal/coca/core/context/suggest"
 	"github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"

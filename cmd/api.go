@@ -8,7 +8,7 @@ import (
 	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/adapter"
 	. "github.com/phodal/coca/core/adapter/api"
-	"github.com/phodal/coca/core/domain/call_graph"
+	"github.com/phodal/coca/core/context/call_graph"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"

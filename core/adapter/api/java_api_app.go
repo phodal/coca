@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -13,7 +13,7 @@ var allApis []RestApi
 type JavaApiApp struct {
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []models.JClassNode, identifiersMap map[string]models.JIdentifier, diMap map[string]string) []RestApi {
+func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier, diMap map[string]string) []RestApi {
 	files := infrastructure.GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]

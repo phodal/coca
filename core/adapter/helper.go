@@ -3,12 +3,12 @@ package adapter
 import (
 	"encoding/json"
 	"github.com/phodal/coca/core/adapter/identifier"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 )
 
-func BuildIdentifierMap(identifiers []models.JIdentifier) map[string]models.JIdentifier {
-	var identifiersMap = make(map[string]models.JIdentifier)
+func BuildIdentifierMap(identifiers []domain.JIdentifier) map[string]domain.JIdentifier {
+	var identifiersMap = make(map[string]domain.JIdentifier)
 
 	for _, ident := range identifiers {
 		identifiersMap[ident.Package+"."+ident.ClassName] = ident
@@ -16,8 +16,8 @@ func BuildIdentifierMap(identifiers []models.JIdentifier) map[string]models.JIde
 	return identifiersMap
 }
 
-func LoadIdentify(importPath string) []models.JIdentifier {
-	var identifiers []models.JIdentifier
+func LoadIdentify(importPath string) []domain.JIdentifier {
+	var identifiers []domain.JIdentifier
 
 	apiContent := infrastructure.ReadCocaFile("identify.json")
 	if apiContent == nil || string(apiContent) == "null" {
@@ -34,8 +34,8 @@ func LoadIdentify(importPath string) []models.JIdentifier {
 	return *&identifiers
 }
 
-func LoadTestIdentify(files []string) []models.JIdentifier {
-	var identifiers []models.JIdentifier
+func LoadTestIdentify(files []string) []domain.JIdentifier {
+	var identifiers []domain.JIdentifier
 
 	apiContent := infrastructure.ReadCocaFile("tidentify.json")
 
@@ -53,7 +53,7 @@ func LoadTestIdentify(files []string) []models.JIdentifier {
 	return *&identifiers
 }
 
-func BuildDIMap(identifiers []models.JIdentifier, identifierMap map[string]models.JIdentifier) map[string]string {
+func BuildDIMap(identifiers []domain.JIdentifier, identifierMap map[string]domain.JIdentifier) map[string]string {
 	var diMap = make(map[string]string)
 	for _, clz := range identifiers {
 		if len(clz.Annotations) > 0 {

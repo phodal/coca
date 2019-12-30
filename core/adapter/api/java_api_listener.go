@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	models2 "github.com/phodal/coca/core/models"
+	models2 "github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strings"

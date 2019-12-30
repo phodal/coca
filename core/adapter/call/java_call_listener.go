@@ -3,7 +3,7 @@ package call
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/adapter/common_listener"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strconv"
@@ -14,40 +14,40 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
-var fields []models.JAppField
-var methodCalls []models.JMethodCall
+var fields []domain.JAppField
+var methodCalls []domain.JMethodCall
 var currentType string
 
 var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtend = ""
-var currentMethod models.JMethod
-var methodMap = make(map[string]models.JMethod)
-var creatorMethodMap = make(map[string]models.JMethod)
+var currentMethod domain.JMethod
+var methodMap = make(map[string]domain.JMethod)
+var creatorMethodMap = make(map[string]domain.JMethod)
 
-var methodQueue []models.JMethod
+var methodQueue []domain.JMethod
 var classQueue []string
 
-var identMap map[string]models.JIdentifier
+var identMap map[string]domain.JIdentifier
 var isOverrideMethod = false
 
-var classNodeQueue []models.JClassNode
+var classNodeQueue []domain.JClassNode
 
-var currentNode *models.JClassNode
-var classNodes []models.JClassNode
-var creatorNodes []models.JClassNode
-var currentCreatorNode models.JClassNode
+var currentNode *domain.JClassNode
+var classNodes []domain.JClassNode
+var creatorNodes []domain.JClassNode
+var currentCreatorNode domain.JClassNode
 var fileName = ""
 var hasEnterClass = false
 
-func NewJavaCallListener(nodes map[string]models.JIdentifier, file string) *JavaCallListener {
+func NewJavaCallListener(nodes map[string]domain.JIdentifier, file string) *JavaCallListener {
 	identMap = nodes
 	imports = nil
 	fileName = file
 	currentPkg = ""
 	classNodes = nil
-	currentNode = models.NewClassNode()
+	currentNode = domain.NewClassNode()
 	classQueue = nil
 	methodQueue = nil
 
@@ -58,10 +58,10 @@ func NewJavaCallListener(nodes map[string]models.JIdentifier, file string) *Java
 func initClass() {
 	currentClz = ""
 	currentClzExtend = ""
-	currentMethod = models.NewJMethod()
+	currentMethod = domain.NewJMethod()
 	currentNode.MethodCalls = nil
 
-	methodMap = make(map[string]models.JMethod)
+	methodMap = make(map[string]domain.JMethod)
 	methodCalls = nil
 	fields = nil
 	isOverrideMethod = false
@@ -71,7 +71,7 @@ type JavaCallListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaCallListener) getNodeInfo() []models.JClassNode {
+func (s *JavaCallListener) getNodeInfo() []domain.JClassNode {
 	return classNodes
 }
 
@@ -99,7 +99,7 @@ func (s *JavaCallListener) exitBody() {
 	}
 
 	classNodes = append(classNodes, *currentNode)
-	currentNode = models.NewClassNode()
+	currentNode = domain.NewClassNode()
 	initClass()
 }
 
@@ -171,7 +171,7 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+	method := &domain.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
 	updateMethod(method)
 }
 
@@ -205,7 +205,7 @@ func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeTypeText
-		fields = append(fields, *&models.JAppField{Type: typeTypeText, Value: value})
+		fields = append(fields, *&domain.JAppField{Type: typeTypeText, Value: value})
 
 		buildFieldCall(typeTypeText, ctx)
 	}
@@ -244,7 +244,7 @@ func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 }
 
 func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	method := &models.JMethod{
+	method := &domain.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
 		StartLine:         ctx.GetStart().GetLine(),
@@ -266,7 +266,7 @@ func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 }
 
 func (s *JavaCallListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	currentMethod = models.NewJMethod()
+	currentMethod = domain.NewJMethod()
 	isOverrideMethod = false
 }
 
@@ -279,7 +279,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	method := &models.JMethod{
+	method := &domain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -300,7 +300,7 @@ func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	updateMethod(method)
 }
 
-func buildMethodParameters(parameters parser.IFormalParametersContext, method *models.JMethod) bool {
+func buildMethodParameters(parameters parser.IFormalParametersContext, method *domain.JMethod) bool {
 	if parameters != nil {
 		if parameters.GetChild(0) == nil || parameters.GetText() == "()" || parameters.GetChild(1) == nil {
 			updateMethod(method)
@@ -315,8 +315,8 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *m
 	return false
 }
 
-func getMethodParameters(parameters parser.IFormalParametersContext) []models.JParameter {
-	var methodParams []models.JParameter = nil
+func getMethodParameters(parameters parser.IFormalParametersContext) []domain.JParameter {
+	var methodParams []domain.JParameter = nil
 	parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
 	formalParameter := parameterList.AllFormalParameter()
 	for _, param := range formalParameter {
@@ -325,12 +325,12 @@ func getMethodParameters(parameters parser.IFormalParametersContext) []models.JP
 		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 		localVars[paramValue] = paramType
-		methodParams = append(methodParams, *&models.JParameter{Name: paramValue, Type: paramType})
+		methodParams = append(methodParams, *&domain.JParameter{Name: paramValue, Type: paramType})
 	}
 	return methodParams
 }
 
-func updateMethod(method *models.JMethod) {
+func updateMethod(method *domain.JMethod) {
 	if currentType == "CreatorClass" {
 		creatorMethodMap[getMethodMapName(*method)] = *method
 	} else {
@@ -349,7 +349,7 @@ func exitMethod() {
 		return
 	}
 
-	currentMethod = models.NewJMethod()
+	currentMethod = domain.NewJMethod()
 	//
 	//if methodQueue == nil || len(methodQueue) < 1 {
 	//	currentMethod = models.NewJMethod()
@@ -382,7 +382,7 @@ func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
 	currentClz = classQueue[len(classQueue)-1]
 }
 
-func getMethodMapName(method models.JMethod) string {
+func getMethodMapName(method domain.JMethod) string {
 	name := method.Name
 	if name == "" && len(methodQueue) > 1 {
 		name = methodQueue[len(methodQueue)-1].Name
@@ -415,7 +415,7 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
-		creatorNode := &models.JClassNode{
+		creatorNode := &domain.JClassNode{
 			Package:     currentPkg,
 			Class:       text,
 			Type:        "CreatorClass",
@@ -441,7 +441,7 @@ func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
 	}
 
 	currentType = ""
-	currentCreatorNode = *models.NewClassNode()
+	currentCreatorNode = *domain.NewClassNode()
 
 	if classNodeQueue == nil || len(classNodeQueue) < 1 {
 		return
@@ -452,7 +452,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType, _ := warpTargetFullType(createdName)
 
-	jMethodCall := &models.JMethodCall{
+	jMethodCall := &domain.JMethodCall{
 		Package:           removeTarget(fullType),
 		Type:              "CreatorClass",
 		Class:             createdName,
@@ -472,7 +472,7 @@ func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclar
 }
 
 func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
-	var jMethodCall = models.NewJMethodCall()
+	var jMethodCall = domain.NewJMethodCall()
 
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	var targetType = parseTargetType(targetCtx)
@@ -540,7 +540,7 @@ func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	addMethodCall(jMethodCall)
 }
 
-func addMethodCall(jMethodCall models.JMethodCall) {
+func addMethodCall(jMethodCall domain.JMethodCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
@@ -605,7 +605,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &models.JMethodCall{
+		jMethodCall := &domain.JMethodCall{
 			Package:           removeTarget(fullType),
 			Type:              "lambda",
 			Class:             targetType,
@@ -715,7 +715,7 @@ func buildExtend(extendName string) {
 func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 	target, _ := warpTargetFullType(typeType)
 	if target != "" {
-		jMethodCall := &models.JMethodCall{
+		jMethodCall := &domain.JMethodCall{
 			Package:           removeTarget(target),
 			Type:              "field",
 			Class:             typeType,

@@ -3,23 +3,23 @@ package identifier
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/adapter/common_listener"
-	"github.com/phodal/coca/core/models"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strings"
 )
 
-var currentNode *models.JIdentifier
-var nodes []models.JIdentifier
+var currentNode *domain.JIdentifier
+var nodes []domain.JIdentifier
 
-var currentMethod models.JMethod
+var currentMethod domain.JMethod
 var hasEnterClass = false
 var imports []string
 
 func NewJavaIdentifierListener() *JavaIdentifierListener {
 	nodes = nil
-	currentNode = models.NewJIdentifier()
-	currentMethod = models.NewJMethod()
+	currentNode = domain.NewJIdentifier()
+	currentMethod = domain.NewJMethod()
 	return &JavaIdentifierListener{}
 }
 
@@ -60,7 +60,7 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 		}
 	}
 
-	currentMethod = models.NewJMethod()
+	currentMethod = domain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
@@ -69,7 +69,7 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = models.NewJIdentifier()
+	currentNode = domain.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
@@ -78,12 +78,12 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = models.NewJIdentifier()
+	currentNode = domain.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 
-	currentMethod = *&models.JMethod{
+	currentMethod = *&domain.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
 		StartLine:         ctx.GetStart().GetLine(),
@@ -99,7 +99,7 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 
 	currentNode.AddMethod(currentMethod)
-	_ = models.NewJMethod()
+	_ = domain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
@@ -123,7 +123,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	annotations := currentMethod.Annotations
-	currentMethod = *&models.JMethod{
+	currentMethod = *&domain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -138,7 +138,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 
 	currentNode.AddMethod(currentMethod)
-	_ = models.NewJMethod()
+	_ = domain.NewJMethod()
 }
 
 var isOverrideMethod = false
@@ -155,7 +155,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	annotations := currentMethod.Annotations
-	currentMethod = *&models.JMethod{
+	currentMethod = *&domain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -181,7 +181,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 
 	currentNode.AddMethod(currentMethod)
-	_ = models.NewJMethod()
+	_ = domain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
@@ -216,6 +216,6 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 	}
 }
 
-func (s *JavaIdentifierListener) getNodes() []models.JIdentifier {
+func (s *JavaIdentifierListener) getNodes() []domain.JIdentifier {
 	return nodes
 }

@@ -3,7 +3,7 @@ package cmd
 import (
 	"bufio"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/ast"
 	"github.com/phodal/coca/core/context/arch"
 	"github.com/phodal/coca/core/context/arch/tequila"

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/phodal/coca/core/ast/full"
 	. "github.com/phodal/coca/core/ast/identifier"
-	. "github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 )
 
@@ -28,7 +28,7 @@ var analysisCmd = &cobra.Command{
 		iNodes := identifierApp.AnalysisPath(importPath)
 
 		identModel, _ := json.MarshalIndent(iNodes, "", "\t")
-		WriteToCocaFile("identify.json", string(identModel))
+		coca_file.WriteToCocaFile("identify.json", string(identModel))
 
 		var classes []string = nil
 
@@ -40,7 +40,7 @@ var analysisCmd = &cobra.Command{
 
 		callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 		cModel, _ := json.MarshalIndent(callNodes, "", "\t")
-		WriteToCocaFile("deps.json", string(cModel))
+		coca_file.WriteToCocaFile("deps.json", string(cModel))
 	},
 }
 

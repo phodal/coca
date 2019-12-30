@@ -1,8 +1,8 @@
 package tbs
 
 import (
-	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/constants"
 	"strings"
 )
 
@@ -110,7 +110,7 @@ func checkRedundantAssertionTest(path string, call domain.JMethodCall, method do
 
 func hasAssertion(methodName string) bool {
 	methodName = strings.ToLower(methodName)
-	for _, assertion := range config.ASSERTION_LIST {
+	for _, assertion := range constants.ASSERTION_LIST {
 		if strings.Contains(methodName, assertion) {
 			return true
 		}
@@ -144,7 +144,7 @@ func checkUnknownTest(clz domain.JClassNode, method domain.JMethod, results *[]T
 func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]domain.JMethodCall, method domain.JMethod, testType *string) {
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
-		if len(methodCall) >= config.DuplicatedAssertionLimitLength {
+		if len(methodCall) >= constants.DuplicatedAssertionLimitLength {
 			methodName := methodCall[len(methodCall)-1].MethodName
 			if hasAssertion(methodName) {
 				isDuplicateAssert = true

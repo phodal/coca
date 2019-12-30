@@ -1,4 +1,4 @@
-package infrastructure
+package str_helper
 
 import "sort"
 

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 	"testing"
 )
@@ -16,7 +16,7 @@ func TestRefactoring(t *testing.T) {
 	var parsedDeps []domain.JClassNode
 	codePath := "../../../../_fixtures/count/call.json"
 	codePath = filepath.FromSlash(codePath)
-	file := infrastructure.ReadFile(codePath)
+	file := coca_file.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := Refactoring(parsedDeps)

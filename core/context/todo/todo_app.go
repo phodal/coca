@@ -6,7 +6,7 @@ import (
 	"github.com/phodal/coca/core/adapter/shell"
 	"github.com/phodal/coca/core/context/git"
 	"github.com/phodal/coca/core/context/todo/astitodo"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	. "github.com/phodal/coca/languages/java"
 	"path/filepath"
 	"strconv"
@@ -64,7 +64,7 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 
 func buildComment(path string) []*astitodo.TODO {
 	var todos []*astitodo.TODO
-	files := infrastructure.GetJavaFiles(path)
+	files := coca_file.GetJavaFiles(path)
 	for index := range files {
 		file := files[index]
 

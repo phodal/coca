@@ -3,10 +3,10 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/cmd/config"
 	. "github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
-	. "github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
@@ -33,7 +33,7 @@ var callGraphCmd = &cobra.Command{
 
 		if dependence != "" {
 			analyser := NewCallGraph()
-			file := ReadFile(dependence)
+			file := coca_file.ReadFile(dependence)
 			if file == nil {
 				log.Fatal("lost file:" + dependence)
 			}
@@ -45,7 +45,7 @@ var callGraphCmd = &cobra.Command{
 				content = strings.ReplaceAll(content, remove, "")
 			}
 
-			WriteToCocaFile("call.dot", content)
+			coca_file.WriteToCocaFile("call.dot", content)
 			cmd_util.ConvertToSvg("call")
 		}
 	},

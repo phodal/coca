@@ -1,9 +1,9 @@
 package evaluator
 
 import (
-	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/apriori"
+	"github.com/phodal/coca/core/infrastructure/constants"
 	"strings"
 )
 
@@ -111,7 +111,7 @@ func (s Service) buildLifecycle(methodNameArray [][]string) map[string][]string 
 }
 
 func IsTechStopWords(firstWord string) bool {
-	for _, word := range config.TechStopWords {
+	for _, word := range constants.TechStopWords {
 		if word == firstWord {
 			return true;
 		}

@@ -1,8 +1,8 @@
-package infrastructure
+package coca_file
 
 import (
 	"fmt"
-	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/cmd/config"
 	"io/ioutil"
 	"os"
 	"path/filepath"

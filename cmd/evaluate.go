@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
-	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/context/evaluate"
 	"github.com/phodal/coca/core/domain"
-	. "github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -30,13 +30,13 @@ var evaluateCmd = &cobra.Command{
 		dependence := *&evaluateConfig.DependencePath
 
 		analyser := evaluate.NewEvaluateAnalyser()
-		file := ReadFile(dependence)
+		file := coca_file.ReadFile(dependence)
 		if file == nil {
 			log.Fatal("lost file:" + dependence)
 		}
 
 		var identifiers []domain.JIdentifier
-		identContent := ReadCocaFile("identify.json")
+		identContent := coca_file.ReadCocaFile("identify.json")
 
 		_ = json.Unmarshal(identContent, &identifiers)
 		_ = json.Unmarshal(file, &parsedDeps)
@@ -44,7 +44,7 @@ var evaluateCmd = &cobra.Command{
 		result := analyser.Analysis(parsedDeps, identifiers)
 
 		cModel, _ := json.MarshalIndent(result, "", "\t")
-		WriteToCocaFile("evaluate.json", string(cModel))
+		coca_file.WriteToCocaFile("evaluate.json", string(cModel))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 )
 
 func BuildIdentifierMap(identifiers []domain.JIdentifier) map[string]domain.JIdentifier {
@@ -19,13 +19,13 @@ func BuildIdentifierMap(identifiers []domain.JIdentifier) map[string]domain.JIde
 func LoadIdentify(importPath string) []domain.JIdentifier {
 	var identifiers []domain.JIdentifier
 
-	apiContent := infrastructure.ReadCocaFile("identify.json")
+	apiContent := coca_file.ReadCocaFile("identify.json")
 	if apiContent == nil || string(apiContent) == "null" {
 		identifierApp := new(identifier.JavaIdentifierApp)
 		ident := identifierApp.AnalysisPath(importPath)
 
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
-		infrastructure.WriteToCocaFile("identify.json", string(identModel))
+		coca_file.WriteToCocaFile("identify.json", string(identModel))
 
 		return *&ident
 	}
@@ -37,14 +37,14 @@ func LoadIdentify(importPath string) []domain.JIdentifier {
 func LoadTestIdentify(files []string) []domain.JIdentifier {
 	var identifiers []domain.JIdentifier
 
-	apiContent := infrastructure.ReadCocaFile("tidentify.json")
+	apiContent := coca_file.ReadCocaFile("tidentify.json")
 
 	if apiContent == nil || string(apiContent) == "null" {
 		identifierApp := identifier.NewJavaIdentifierApp()
 		ident := identifierApp.AnalysisFiles(files)
 
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
-		infrastructure.WriteToCocaFile("tidentify.json", string(identModel))
+		coca_file.WriteToCocaFile("tidentify.json", string(identModel))
 
 		return *&ident
 	}

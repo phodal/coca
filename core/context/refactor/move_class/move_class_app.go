@@ -6,7 +6,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	base2 "github.com/phodal/coca/core/context/refactor/base"
 	models2 "github.com/phodal/coca/core/context/refactor/base/models"
-	utils2 "github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"io"
 	"io/ioutil"
 	"log"
@@ -34,13 +34,13 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 
 func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 	// TODO: 使用 Deps.json 来移动包
-	files := utils2.GetJavaFiles(configPath)
+	files := coca_file.GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
 
 		currentFile, _ = filepath.Abs(file)
 
-		parser := utils2.ProcessFile(file)
+		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

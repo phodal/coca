@@ -3,10 +3,11 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
-	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/context/count"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
+	"github.com/phodal/coca/core/infrastructure/str_helper"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -34,7 +35,7 @@ var countCmd = &cobra.Command{
 			return
 		}
 
-		file := infrastructure.ReadFile(dependence)
+		file := coca_file.ReadFile(dependence)
 		if file == nil {
 			log.Fatal("lost file:" + dependence)
 		}
@@ -43,7 +44,7 @@ var countCmd = &cobra.Command{
 
 		callMap := count.BuildCallMap(cparsedDeps)
 
-		callMapSort := infrastructure.RankByWordCount(callMap)
+		callMapSort := str_helper.RankByWordCount(callMap)
 
 		if countCmdConfig.Top > 0 {
 			callMapSort = callMapSort[:countCmdConfig.Top]

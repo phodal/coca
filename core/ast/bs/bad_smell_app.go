@@ -6,7 +6,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/context/bs"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	. "github.com/phodal/coca/languages/java"
 	"path/filepath"
 )
@@ -22,7 +22,7 @@ func NewBadSmellApp() *BadSmellApp {
 
 func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []domain.BadSmellModel {
 	nodeInfos = nil
-	files := infrastructure.GetJavaFiles(codeDir)
+	files := coca_file.GetJavaFiles(codeDir)
 	for index := range files {
 		nodeInfo := domain.NewJFullClassNode()
 		file := files[index]
@@ -43,7 +43,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []domai
 	}
 
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
-	infrastructure.WriteToCocaFile("nodeInfos.json", string(bsModel))
+	coca_file.WriteToCocaFile("nodeInfos.json", string(bsModel))
 
 	bsList := bs.AnalysisBadSmell(nodeInfos)
 

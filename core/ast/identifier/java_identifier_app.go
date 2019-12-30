@@ -3,7 +3,7 @@ package identifier
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 )
 
 
@@ -15,7 +15,7 @@ func NewJavaIdentifierApp() JavaIdentifierApp {
 }
 
 func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []domain.JIdentifier {
-	files := infrastructure.GetJavaFiles(codeDir)
+	files := coca_file.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(files)
 }
 
@@ -23,7 +23,7 @@ func (j *JavaIdentifierApp) AnalysisFiles(files []string) []domain.JIdentifier {
 	var nodeInfos []domain.JIdentifier = nil
 
 	for _, file := range files {
-		parser := infrastructure.ProcessFile(file)
+		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := NewJavaIdentifierListener()

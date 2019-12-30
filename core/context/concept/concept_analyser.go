@@ -1,10 +1,10 @@
 package concept
 
 import (
-	"github.com/phodal/coca/config"
 	languages2 "github.com/phodal/coca/core/context/call/stop_words/languages"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/constants"
+	"github.com/phodal/coca/core/infrastructure/str_helper"
 )
 
 type ConceptAnalyser struct {
@@ -18,11 +18,11 @@ func (c ConceptAnalyser) run() {
 
 }
 
-func (c ConceptAnalyser) Analysis(clzs *[]domain.JClassNode) infrastructure.PairList {
+func (c ConceptAnalyser) Analysis(clzs *[]domain.JClassNode) str_helper.PairList {
 	return buildMethodsFromDeps(*clzs)
 }
 
-func buildMethodsFromDeps(clzs []domain.JClassNode) infrastructure.PairList {
+func buildMethodsFromDeps(clzs []domain.JClassNode) str_helper.PairList {
 	var methodsName []string
 	var methodStr string
 	for _, clz := range clzs {
@@ -37,14 +37,14 @@ func buildMethodsFromDeps(clzs []domain.JClassNode) infrastructure.PairList {
 
 	words = removeNormalWords(words)
 
-	wordCounts := infrastructure.RankByWordCount(words)
+	wordCounts := str_helper.RankByWordCount(words)
 	return wordCounts
 }
 
 func removeNormalWords(words map[string]int) map[string]int {
 	var newWords = words
 	var stopwords = languages2.ENGLISH_STOP_WORDS
-	stopwords = append(stopwords, config.TechStopWords...)
+	stopwords = append(stopwords, constants.TechStopWords...)
 	for _, normalWord := range stopwords {
 		if newWords[normalWord] > 0 {
 			delete(newWords, normalWord)

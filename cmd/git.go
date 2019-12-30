@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	. "github.com/phodal/coca/core/context/git"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
@@ -33,7 +33,7 @@ var gitCmd = &cobra.Command{
 		message := getCommitMessage()
 		commitMessages := BuildMessageByInput(message)
 		cModel, _ := json.MarshalIndent(commitMessages, "", "\t")
-		infrastructure.WriteToCocaFile("commits.json", string(cModel))
+		coca_file.WriteToCocaFile("commits.json", string(cModel))
 
 		if *&gitCmdConfig.ShowSummary {
 			ShowChangeLogSummary(commitMessages)

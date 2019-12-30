@@ -5,7 +5,7 @@ import (
 	"github.com/phodal/coca/core/ast"
 	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 	"testing"
 )
@@ -111,7 +111,7 @@ func TestTbsApp_CallAssertInClassTests(t *testing.T) {
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {
-	files := infrastructure.GetJavaTestFiles(codePath)
+	files := coca_file.GetJavaTestFiles(codePath)
 	var identifiers []domain.JIdentifier
 
 	identifiers = ast.LoadTestIdentify(files)

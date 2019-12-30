@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 )
 
@@ -16,7 +16,7 @@ func NewJavaFullApp() JavaFullApp {
 }
 
 func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {
-	files := infrastructure.GetJavaFiles(codeDir)
+	files := coca_file.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
@@ -32,7 +32,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []domain.JIdentifier, files []str
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := infrastructure.ProcessFile(file)
+		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := NewJavaFullListener(identMap, file)

@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/config"
+	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/ast"
 	. "github.com/phodal/coca/core/ast/api"
 	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
-	. "github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -47,7 +47,7 @@ var apiCmd = &cobra.Command{
 		apiPrefix := apiCmdConfig.AggregateApi
 
 		parsedDeps = nil
-		depFile := ReadFile(depPath)
+		depFile := coca_file.ReadFile(depPath)
 		if depFile == nil {
 			log.Fatal("lost deps")
 		}
@@ -57,7 +57,7 @@ var apiCmd = &cobra.Command{
 		if *&apiCmdConfig.ForceUpdate {
 			forceUpdateApi()
 		} else {
-			apiContent := ReadCocaFile("apis.json")
+			apiContent := coca_file.ReadCocaFile("apis.json")
 			if apiContent == nil {
 				forceUpdateApi()
 			}
@@ -92,7 +92,7 @@ var apiCmd = &cobra.Command{
 			dotContent = replacePackage(dotContent)
 		}
 
-		WriteToCocaFile("api.dot", dotContent)
+		coca_file.WriteToCocaFile("api.dot", dotContent)
 		cmd_util.ConvertToSvg("api")
 	},
 }
@@ -101,7 +101,7 @@ func forceUpdateApi() {
 	app := new(JavaApiApp)
 	restApis = app.AnalysisPath(apiCmdConfig.Path, parsedDeps, identifiersMap, diMap)
 	cModel, _ := json.MarshalIndent(restApis, "", "\t")
-	WriteToCocaFile("apis.json", string(cModel))
+	coca_file.WriteToCocaFile("apis.json", string(cModel))
 }
 
 func filterApi(apiPrefix string, apis []domain.RestApi, ) []domain.RestApi {

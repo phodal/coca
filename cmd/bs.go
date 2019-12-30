@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"github.com/phodal/coca/core/ast/bs"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure"
+	"github.com/phodal/coca/core/infrastructure/coca_file"
+	"github.com/phodal/coca/core/infrastructure/str_helper"
 	"github.com/spf13/cobra"
 	"sort"
 	"strings"
@@ -39,7 +40,7 @@ var badsmellCmd = &cobra.Command{
 			bsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
 		}
 
-		infrastructure.WriteToCocaFile("bs.json", string(bsModel))
+		coca_file.WriteToCocaFile("bs.json", string(bsModel))
 	},
 }
 
@@ -70,7 +71,7 @@ func isSmellHaveSize(key string) bool {
 		"longMethod",
 		"dataClass",
 	}
-	return infrastructure.StringArrayContains(smellList, key)
+	return str_helper.StringArrayContains(smellList, key)
 }
 
 func init() {

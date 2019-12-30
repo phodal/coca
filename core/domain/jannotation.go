@@ -20,3 +20,15 @@ func NewAnnotation() Annotation {
 func (n * Annotation) IsComponentOrRepository() bool {
 	return n.QualifiedName == "Component" || n.QualifiedName == "Repository"
 }
+
+func (n * Annotation) IsTest() bool {
+	return n.QualifiedName == "Test"
+}
+
+func (n * Annotation) IsIgnoreTest() bool {
+	return n.QualifiedName == "Ignore"
+}
+
+func (n * Annotation) IsIgnoreOrTest() bool {
+	return n.IsTest() || n.IsIgnoreTest()
+}

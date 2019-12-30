@@ -64,8 +64,18 @@ func (m *JMethod) GetAllCallString() []string {
 	var calls []string
 	for _, call := range m.MethodCalls {
 		if call.Class != "" {
-			calls = append(calls, call.BuilFullMethodName())
+			calls = append(calls, call.BuildFullMethodName())
 		}
 	}
 	return calls
+}
+
+func (m *JMethod) IsJunitTest() bool {
+	var isTest = false
+	for _, annotation := range m.Annotations {
+		if annotation.IsIgnoreOrTest() {
+			isTest = true
+		}
+	}
+	return isTest
 }

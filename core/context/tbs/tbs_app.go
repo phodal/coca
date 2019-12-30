@@ -25,7 +25,7 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 	callMethodMap := buildCallMethodMap(deps)
 	for _, clz := range deps {
 		for _, method := range clz.Methods {
-			if !isTest(method) {
+			if !method.IsJunitTest() {
 				continue
 			}
 
@@ -44,7 +44,7 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 					continue
 				}
 
-				methodCallMap[getMethodCallFullPath(methodCall)] = append(methodCallMap[getMethodCallFullPath(methodCall)], methodCall)
+				methodCallMap[methodCall.BuildFullMethodName()] = append(methodCallMap[methodCall.BuildFullMethodName()], methodCall)
 
 				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
 				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
@@ -72,7 +72,7 @@ func buildCallMethodMap(deps []domain.JClassNode) map[string]domain.JMethod {
 	var callMethodMap = make(map[string]domain.JMethod)
 	for _, clz := range deps {
 		for _, method := range clz.Methods {
-			callMethodMap[clz.Package+"."+clz.Class+"."+method.Name] = method
+			callMethodMap[method.BuildFullMethodName(clz)] = method
 		}
 	}
 	return callMethodMap
@@ -82,7 +82,7 @@ func updateMethodCallsForSelfCall(method domain.JMethod, clz domain.JClassNode, 
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.Class == clz.Class {
-			jMethod := callMethodMap[getMethodCallFullPath(methodCall)]
+			jMethod := callMethodMap[methodCall.BuildFullMethodName()]
 			if jMethod.Name != "" {
 				currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
 			}
@@ -117,16 +117,6 @@ func hasAssertion(methodName string) bool {
 	}
 
 	return false
-}
-
-func isTest(method domain.JMethod) bool {
-	var isTest = false
-	for _, annotation := range method.Annotations {
-		if annotation.QualifiedName == "Test" || annotation.QualifiedName == "Ignore" {
-			isTest = true
-		}
-	}
-	return isTest
 }
 
 func checkUnknownTest(clz domain.JClassNode, method domain.JMethod, results *[]TestBadSmell, testType *string) {
@@ -165,12 +155,8 @@ func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, me
 	}
 }
 
-func getMethodCallFullPath(methodCall domain.JMethodCall) string {
-	return methodCall.Package + "." + methodCall.Class + "." + methodCall.MethodName
-}
-
 func checkSleepyTest(path string, method domain.JMethodCall, jMethod domain.JMethod, results *[]TestBadSmell, testType *string) {
-	if method.MethodName == "sleep" && method.Class == "Thread" {
+	if method.IsThreadSleep() {
 		*testType = "SleepyTest"
 		tbs := *&TestBadSmell{
 			FileName:    path,
@@ -184,7 +170,7 @@ func checkSleepyTest(path string, method domain.JMethodCall, jMethod domain.JMet
 }
 
 func checkRedundantPrintTest(path string, mCall domain.JMethodCall, results *[]TestBadSmell, testType *string) {
-	if mCall.Class == "System.out" && (mCall.MethodName == "println" || mCall.MethodName == "printf" || mCall.MethodName == "print") {
+	if mCall.IsSystemOutput() {
 		*testType = "RedundantPrintTest"
 		tbs := *&TestBadSmell{
 			FileName:    path,
@@ -198,7 +184,7 @@ func checkRedundantPrintTest(path string, mCall domain.JMethodCall, results *[]T
 }
 
 func checkEmptyTest(path string, annotation domain.Annotation, results *[]TestBadSmell, method domain.JMethod, testType *string) {
-	if annotation.QualifiedName == "Test" {
+	if annotation.IsTest() {
 		if len(method.MethodCalls) <= 1 {
 			*testType = "EmptyTest"
 			tbs := *&TestBadSmell{
@@ -214,7 +200,7 @@ func checkEmptyTest(path string, annotation domain.Annotation, results *[]TestBa
 }
 
 func checkIgnoreTest(clzPath string, annotation domain.Annotation, results *[]TestBadSmell, testType *string) {
-	if annotation.QualifiedName == "Ignore" {
+	if annotation.IsIgnoreTest() {
 		*testType = "IgnoreTest"
 		tbs := *&TestBadSmell{
 			FileName:    clzPath,

@@ -2,24 +2,13 @@ package api
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	models2 "github.com/phodal/coca/core/domain"
+	models "github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strings"
 )
 
-var jClassNodes []models2.JClassNode
-
-type RestApi struct {
-	Uri              string
-	HttpMethod       string
-	MethodName       string
-	ResponseStatus   string
-	RequestBodyClass string
-	MethodParams     map[string]string
-	PackageName      string
-	ClassName        string
-}
+var jClassNodes []models.JClassNode
 
 var hasEnterClass = false
 var isSpringRestController = false
@@ -27,18 +16,18 @@ var hasEnterRestController = false
 var baseApiUrlName string
 var localVars = make(map[string]string)
 
-var currentRestApi RestApi
-var RestApis []RestApi
+var currentRestApi models.RestApi
+var RestApis []models.RestApi
 var currentClz string
 var currentPkg string
 
-var identMap map[string]models2.JIdentifier
+var identMap map[string]models.JIdentifier
 var imports []string
 var currentExtends = ""
 var currentImplements = ""
 var depInjectMap map[string]string
 
-func NewJavaApiListener(jIdentMap map[string]models2.JIdentifier, diMap map[string]string) *JavaApiListener {
+func NewJavaApiListener(jIdentMap map[string]models.JIdentifier, diMap map[string]string) *JavaApiListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""
@@ -51,7 +40,7 @@ func NewJavaApiListener(jIdentMap map[string]models2.JIdentifier, diMap map[stri
 	depInjectMap = diMap
 
 	params := make(map[string]string)
-	currentRestApi = *&RestApi{"", "", "", "", "", params, "", ""}
+	currentRestApi = *&models.RestApi{"", "", "", "", "", params, "", ""}
 	return &JavaApiListener{}
 }
 
@@ -132,7 +121,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestApi = RestApi{uriRemoveQuote, "", "", "", "", nil, "", ""}
+	currentRestApi = models.RestApi{uriRemoveQuote, "", "", "", "", nil, "", ""}
 	if annotationName != "RequestMapping" {
 		if hasEnterClass {
 			addApiMethod(annotationName)
@@ -309,14 +298,14 @@ func buildMethodParameters(requestBodyClass string) {
 	currentRestApi.MethodParams = params
 }
 
-func (s *JavaApiListener) appendClasses(classes []models2.JClassNode) {
+func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
 	jClassNodes = classes
 }
 
-func (s *JavaApiListener) getClassApis() []RestApi {
+func (s *JavaApiListener) getClassApis() []models.RestApi {
 	return RestApis
 }
 
-func (s *JavaApiListener) getCurrentApi() RestApi {
+func (s *JavaApiListener) getCurrentApi() models.RestApi {
 	return currentRestApi
 }

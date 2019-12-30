@@ -8,6 +8,7 @@ import (
 	"github.com/phodal/coca/core/adapter"
 	. "github.com/phodal/coca/core/adapter/api"
 	"github.com/phodal/coca/core/context/call_graph"
+	"github.com/phodal/coca/core/domain"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
 	"log"
@@ -30,7 +31,7 @@ type ApiCmdConfig struct {
 
 var (
 	apiCmdConfig ApiCmdConfig
-	restApis     []RestApi
+	restApis     []domain.RestApi
 
 	identifiers    = adapter.LoadIdentify(apiCmdConfig.DependencePath)
 	identifiersMap = adapter.BuildIdentifierMap(identifiers)
@@ -103,8 +104,8 @@ func forceUpdateApi() {
 	WriteToCocaFile("apis.json", string(cModel))
 }
 
-func filterApi(apiPrefix string, apis []RestApi, ) []RestApi {
-	var restFieldsApi []RestApi
+func filterApi(apiPrefix string, apis []domain.RestApi, ) []domain.RestApi {
+	var restFieldsApi []domain.RestApi
 	if apiPrefix != "" {
 		for _, api := range apis {
 			if strings.HasPrefix(api.Uri, apiPrefix) {

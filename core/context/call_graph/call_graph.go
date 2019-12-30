@@ -1,7 +1,6 @@
 package call_graph
 
 import (
-	"github.com/phodal/coca/core/adapter/api"
 	"github.com/phodal/coca/core/domain"
 	"strings"
 )
@@ -65,7 +64,7 @@ func getMethodName(child string) string {
 	return strings.Join(split[len(split)-1:], ".")
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []api.RestApi, deps []domain.JClassNode, diMap map[string]string) (string, []CallApiCount) {
+func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JClassNode, diMap map[string]string) (string, []CallApiCount) {
 	methodMap := BuildMethodMap(deps)
 	var apiCallSCounts []CallApiCount
 

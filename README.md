@@ -311,17 +311,19 @@ coca refactor -m move.config -p .
 coca evaluate
 ```
 
+Arduino Results:
+
 ```
 +--------------------------------+-------+-----------------------+-------+-----------+
 |              TYPE              | COUNT |         LEVEL         | TOTAL |   RATE    |
 +--------------------------------+-------+-----------------------+-------+-----------+
-| Nullable / Return Null         |     0 | Method                |  5256 | 0.00%     |
-| Utils                          |    18 | Class                 |   366 | 4.92%     |
-| Static Method                  |     0 | Method                |  5256 | 0.34%     |
-| Average Method Num.            |  5256 | Method/Class          |   366 | 14.360656 |
-| Method Num. Std Dev / 标准差   |  5256 | Class                 | -     | 32.965336 |
-| Average Method Length          | 19644 | Without Getter/Setter |  4328 |  4.538817 |
-| Method Length Std Dev / 标准差 |  5256 | Method                | -     |  4.467935 |
+| Nullable / Return Null         |     0 | Method                |  1615 | 0.00%     |
+| Utils                          |     7 | Class                 |   252 | 2.78%     |
+| Static Method                  |     0 | Method                |  1615 | 0.43%     |
+| Average Method Num.            |  1615 | Method/Class          |   252 |  6.408730 |
+| Method Num. Std Dev / 标准差   |  1615 | Class                 | -     |  7.344917 |
+| Average Method Length          | 13654 | Without Getter/Setter |  1100 | 12.412727 |
+| Method Length Std Dev / 标准差 |  1615 | Method                | -     | 20.047092 |
 +--------------------------------+-------+-----------------------+-------+-----------+
 ```
 
@@ -441,59 +443,69 @@ results
 
 ## Todo
 
- - [x] bad smell support
-   - [x] longParameterList
-   - [x] longMethod
-   - [x] repeatedSwitches
-   - [x] complexIf
-   - [x] largeClass
-   - [x] refusedBequest
-   - [x] dataClass
+ - bad smell support
    - [x] sort method size
- - [x] CLOC
- - [x] API Visualization
+   - type
+     - [x] longParameterList
+     - [x] longMethod
+     - [x] repeatedSwitches
+     - [x] complexIf
+     - [x] largeClass
+     - [x] refusedBequest
+     - [x] dataClass
+ - CLOC
+ - HTTP API Visualization
     - [x] Spring Support
     - [x] @Service Support
     - [x] API Call Size
- - [x] Git
+ - Git
     - [x] Revs Counts
     - [x] Summary
- - [x] Concept
-    - [x] words NLP        
- - [x] call & rcall graph
+ - Concept
+    - [x] words NLP
+    - [ ] to domain        
+ - Call & rcall graph
     - [x] Count Refs
- - [x] AutoRefactor
+ - AutoRefactor
    - [x] remove unused
    - [x] move files
- - [x] Evaluate
+ - Evaluate
    - [x] nullable count
    - [x] static count
    - [x] method num /length count
- - [x] Todo Summary
+ - Todo Summary
     - [x] Todo with History & Author   
- - [x] Show all todos and history
- - [ ] Suggest API for Design Patterns
+ - Suggest API for Design Patterns
    - [x] factory pattern
    - [x] strategy 
    - [x] builder
    - [ ] cycle-deps -> adapter / agency
- - [ ] Docs
-    - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
  -  Evaluate API
     - [x] Average Method Length
     - [x] Average Class Method Count
- - Date Collections
-    - [ ] monolithic
-    - [ ] microservice 
-    - [ ] big data
  - Tests
     - [ ] Testable?
-    - [ ] Test badsmell
-        - [x] Test bad smell list [https://testsmells.github.io/pages/testsmells.html]
+    - [x] Test badsmell -> list [https://testsmells.github.io/pages/testsmells.html]
+      - [x] IgnoreTest
+      - [x] EmptyTest
+      - [x] RedundantPrintTest
+      - [x] SleepyTest
+      - [x] RedundantAssertionTest
+      - [x] UnknownTest
+      - [x] DuplicateAssertTest
  - Arch
     - [x] Architecture Visualization
     - [ ] Architecture Guard
       - [ ] DSL Design
+
+Documents Todo:
+
+ - [ ] Docs
+    - [ ] Lifecycle for new projects: evaluate (cloc, bad smell, api, git, todo) -> design -> patterns (suggest) -> refactoring ()
+ - Date Collections
+    - [ ] monolithic
+    - [ ] microservice 
+    - [ ] big data
 
 Tech Debt
 

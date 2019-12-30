@@ -40,15 +40,7 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 				continue
 			}
 
-			currentMethodCalls := method.MethodCalls
-			for _, methodCall := range currentMethodCalls {
-				if methodCall.Class == clz.Class {
-					jMethod := callMethodMap[getMethodCallFullPath(methodCall)]
-					if jMethod.Name != "" {
-						currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
-					}
-				}
-			}
+			currentMethodCalls := updateMethodCalls(method, clz, callMethodMap)
 
 			var testType = ""
 			for _, annotation := range method.Annotations {
@@ -84,6 +76,19 @@ func (a TbsApp) AnalysisPath(deps []models.JClassNode, identifiersMap map[string
 	}
 
 	return results
+}
+
+func updateMethodCalls(method models.JMethod, clz models.JClassNode, callMethodMap map[string]models.JMethod) []models.JMethodCall {
+	currentMethodCalls := method.MethodCalls
+	for _, methodCall := range currentMethodCalls {
+		if methodCall.Class == clz.Class {
+			jMethod := callMethodMap[getMethodCallFullPath(methodCall)]
+			if jMethod.Name != "" {
+				currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
+			}
+		}
+	}
+	return currentMethodCalls
 }
 
 func checkRedundantAssertionTest(path string, call models.JMethodCall, method models.JMethod, results *[]TestBadSmell, testType *string) {

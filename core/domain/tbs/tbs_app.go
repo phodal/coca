@@ -1,16 +1,13 @@
 package tbs
 
 import (
+	"github.com/phodal/coca/config"
 	"github.com/phodal/coca/core/models"
 	"strings"
 )
 
 type TbsApp struct {
 }
-
-var (
-	DuplicatedAssertionLimitLength = 5
-)
 
 func NewTbsApp() *TbsApp {
 	return &TbsApp{}
@@ -113,17 +110,7 @@ func checkRedundantAssertionTest(path string, call models.JMethodCall, method mo
 
 func hasAssertion(methodName string) bool {
 	methodName = strings.ToLower(methodName)
-	assertionList := []string{
-		"assert",
-		"should",
-		"check",    // ArchUnit,
-		"maynotbe", // ArchUnit,
-		"is",       // RestAssured,
-		"spec",     // RestAssured,
-		"verify",   // Mockito,
-	}
-
-	for _, assertion := range assertionList {
+	for _, assertion := range config.ASSERTION_LIST {
 		if strings.Contains(methodName, assertion) {
 			return true
 		}
@@ -157,7 +144,7 @@ func checkUnknownTest(clz models.JClassNode, method models.JMethod, results *[]T
 func checkDuplicateAssertTest(clz models.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]models.JMethodCall, method models.JMethod, testType *string) {
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
-		if len(methodCall) >= DuplicatedAssertionLimitLength {
+		if len(methodCall) >= config.DuplicatedAssertionLimitLength {
 			methodName := methodCall[len(methodCall)-1].MethodName
 			if hasAssertion(methodName) {
 				isDuplicateAssert = true

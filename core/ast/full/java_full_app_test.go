@@ -1,4 +1,4 @@
-package call
+package full
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := NewJavaCallApp()
+	callApp := NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, iNodes)
 
 	g.Expect(len(callNodes)).To(Equal(1))
@@ -46,7 +46,7 @@ func getCallNodes(codePath string) []domain.JClassNode {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := NewJavaCallApp()
+	callApp := NewJavaFullApp()
 
 	callNodes := callApp.AnalysisPath(codePath, classes, iNodes)
 	return callNodes

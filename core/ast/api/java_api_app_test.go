@@ -3,7 +3,7 @@ package api
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/ast"
-	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/ast/identifier"
 	"path/filepath"
 	"testing"
@@ -22,7 +22,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := call.NewJavaCallApp()
+	callApp := full.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	identifiersMap := ast.BuildIdentifierMap(identifiers)

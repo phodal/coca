@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/core/ast"
-	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/context/tbs"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
@@ -39,7 +39,7 @@ var tbsCmd = &cobra.Command{
 			classes = append(classes, node.Package+"."+node.ClassName)
 		}
 
-		analysisApp := call.NewJavaCallApp()
+		analysisApp := full.NewJavaFullApp()
 		classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
 
 		nodeContent, _ := json.MarshalIndent(classNodes, "", "\t")

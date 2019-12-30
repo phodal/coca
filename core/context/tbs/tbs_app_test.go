@@ -3,7 +3,7 @@ package tbs
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/ast"
-	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure"
 	"path/filepath"
@@ -122,7 +122,7 @@ func buildTbsResult(codePath string) []TestBadSmell {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	analysisApp := call.NewJavaCallApp()
+	analysisApp := full.NewJavaFullApp()
 	classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
 
 	app := NewTbsApp()

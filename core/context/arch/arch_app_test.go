@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/ast"
-	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/context/arch/tequila"
 	"github.com/phodal/coca/core/infrastructure"
@@ -27,7 +27,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := call.NewJavaCallApp()
+	callApp := full.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	identifiersMap := ast.BuildIdentifierMap(identifiers)
@@ -67,7 +67,7 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := call.NewJavaCallApp()
+	callApp := full.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	identifiersMap := ast.BuildIdentifierMap(identifiers)

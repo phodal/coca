@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
@@ -106,7 +106,7 @@ func buildEvaluateResult(codePath string) evaluator.EvaluateModel {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := call.NewJavaCallApp()
+	callApp := full.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	analyser := NewEvaluateAnalyser()

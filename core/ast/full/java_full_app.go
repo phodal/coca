@@ -1,4 +1,4 @@
-package call
+package full
 
 import (
 	"fmt"
@@ -8,19 +8,19 @@ import (
 	"path/filepath"
 )
 
-type JavaCallApp struct {
+type JavaFullApp struct {
 }
 
-func NewJavaCallApp() JavaCallApp {
-	return *&JavaCallApp{}
+func NewJavaFullApp() JavaFullApp {
+	return *&JavaFullApp{}
 }
 
-func (j *JavaCallApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {
+func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {
 	files := infrastructure.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
-func (j *JavaCallApp) AnalysisFiles(identNodes []domain.JIdentifier, files []string, classes []string) []domain.JClassNode {
+func (j *JavaFullApp) AnalysisFiles(identNodes []domain.JIdentifier, files []string, classes []string) []domain.JClassNode {
 	var nodeInfos []domain.JClassNode
 
 	var identMap = make(map[string]domain.JIdentifier)
@@ -35,7 +35,7 @@ func (j *JavaCallApp) AnalysisFiles(identNodes []domain.JIdentifier, files []str
 		parser := infrastructure.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaCallListener(identMap, file)
+		listener := NewJavaFullListener(identMap, file)
 		listener.appendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

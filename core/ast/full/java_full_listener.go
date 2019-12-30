@@ -1,4 +1,4 @@
-package call
+package full
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
@@ -41,7 +41,7 @@ var currentCreatorNode domain.JClassNode
 var fileName = ""
 var hasEnterClass = false
 
-func NewJavaCallListener(nodes map[string]domain.JIdentifier, file string) *JavaCallListener {
+func NewJavaFullListener(nodes map[string]domain.JIdentifier, file string) *JavaFullListener {
 	identMap = nodes
 	imports = nil
 	fileName = file
@@ -52,7 +52,7 @@ func NewJavaCallListener(nodes map[string]domain.JIdentifier, file string) *Java
 	methodQueue = nil
 
 	initClass()
-	return &JavaCallListener{}
+	return &JavaFullListener{}
 }
 
 func initClass() {
@@ -67,25 +67,25 @@ func initClass() {
 	isOverrideMethod = false
 }
 
-type JavaCallListener struct {
+type JavaFullListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaCallListener) getNodeInfo() []domain.JClassNode {
+func (s *JavaFullListener) getNodeInfo() []domain.JClassNode {
 	return classNodes
 }
 
-func (s *JavaCallListener) ExitClassBody(ctx *parser.ClassBodyContext) {
+func (s *JavaFullListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	hasEnterClass = false
 	s.exitBody()
 }
 
-func (s *JavaCallListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
+func (s *JavaFullListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
 	hasEnterClass = false
 	s.exitBody()
 }
 
-func (s *JavaCallListener) exitBody() {
+func (s *JavaFullListener) exitBody() {
 	if currentNode.Class != "" {
 		currentNode.Fields = fields
 		currentNode.Type = currentType
@@ -103,17 +103,17 @@ func (s *JavaCallListener) exitBody() {
 	initClass()
 }
 
-func (s *JavaCallListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
+func (s *JavaFullListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
 	currentNode.Package = ctx.QualifiedName().GetText()
 	currentPkg = ctx.QualifiedName().GetText()
 }
 
-func (s *JavaCallListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
+func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
 	imports = append(imports, importText)
 }
 
-func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
 	currentClzExtend = ""
 	currentType = "Class"
@@ -138,7 +138,7 @@ func (s *JavaCallListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	// TODO: 支持依赖注入
 }
 
-func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+func (s *JavaFullListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = true
 	currentType = "Interface"
 	currentNode.Class = ctx.IDENTIFIER().GetText()
@@ -151,7 +151,7 @@ func (s *JavaCallListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclar
 	}
 }
 
-func (s *JavaCallListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
+func (s *JavaFullListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
 	hasEnterClass = true
 	for _, modifier := range ctx.AllModifier() {
 		modifier := modifier.(*parser.ModifierContext).GetChild(0)
@@ -162,7 +162,7 @@ func (s *JavaCallListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBo
 	}
 }
 
-func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
+func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -175,15 +175,15 @@ func (s *JavaCallListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 	updateMethod(method)
 }
 
-func (s *JavaCallListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+func (s *JavaFullListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 
 }
 
-func (s *JavaCallListener) EnterFormalParameter(ctx *parser.FormalParameterContext) {
+func (s *JavaFullListener) EnterFormalParameter(ctx *parser.FormalParameterContext) {
 	formalParameters[ctx.VariableDeclaratorId().GetText()] = ctx.TypeType().GetText()
 }
 
-func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationContext) {
+func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationContext) {
 	decelerators := ctx.VariableDeclarators()
 	typeType := decelerators.GetParent().GetChild(0).(*parser.TypeTypeContext)
 	for _, declarator := range decelerators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
@@ -211,7 +211,7 @@ func (s *JavaCallListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 	}
 }
 
-func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariableDeclarationContext) {
+func (s *JavaFullListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariableDeclarationContext) {
 	typ := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	if ctx.GetChild(1) != nil {
 		if ctx.GetChild(1).GetChild(0) != nil && ctx.GetChild(1).GetChild(0).GetChild(0) != nil {
@@ -221,7 +221,7 @@ func (s *JavaCallListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariab
 	}
 }
 
-func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	// Todo: support override method
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "Override" {
@@ -243,7 +243,7 @@ func (s *JavaCallListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	}
 }
 
-func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
+func (s *JavaFullListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 	method := &domain.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
@@ -265,12 +265,12 @@ func (s *JavaCallListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 	updateMethod(method)
 }
 
-func (s *JavaCallListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
+func (s *JavaFullListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 	currentMethod = domain.NewJMethod()
 	isOverrideMethod = false
 }
 
-func (s *JavaCallListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
@@ -340,7 +340,7 @@ func updateMethod(method *domain.JMethod) {
 	}
 }
 
-func (s *JavaCallListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+func (s *JavaFullListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	exitMethod()
 }
 
@@ -365,7 +365,7 @@ func exitMethod() {
 }
 
 // TODO: add inner creator examples
-func (s *JavaCallListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
+func (s *JavaFullListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
 		classQueue = append(classQueue, currentClz)
@@ -373,7 +373,7 @@ func (s *JavaCallListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
 }
 
 // TODO: add inner creator examples
-func (s *JavaCallListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
+func (s *JavaFullListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
 	if classQueue == nil || len(classQueue) <= 1 {
 		return
 	}
@@ -390,7 +390,7 @@ func getMethodMapName(method domain.JMethod) string {
 	return currentPkg + "." + currentClz + "." + name + ":" + strconv.Itoa(method.StartLine)
 }
 
-func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
+func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
 	allIdentifiers := ctx.CreatedName().(*parser.CreatedNameContext).AllIDENTIFIER()
 
@@ -433,7 +433,7 @@ func (s *JavaCallListener) EnterCreator(ctx *parser.CreatorContext) {
 	}
 }
 
-func (s *JavaCallListener) ExitCreator(ctx *parser.CreatorContext) {
+func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 	if currentCreatorNode.Class != "" {
 		method := methodMap[getMethodMapName(currentMethod)]
 		method.Creators = append(method.Creators, currentCreatorNode)
@@ -467,11 +467,11 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	methodMap[getMethodMapName(currentMethod)] = method
 }
 
-func (s *JavaCallListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {
+func (s *JavaFullListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {
 	// TODO
 }
 
-func (s *JavaCallListener) EnterMethodCall(ctx *parser.MethodCallContext) {
+func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var jMethodCall = domain.NewJMethodCall()
 
 	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
@@ -587,7 +587,7 @@ func buildSpecificTarget(targetType string) string {
 	return targetType
 }
 
-func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
+func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 	// lambda BlogPO::of
 	if ctx.COLONCOLON() != nil {
 		if ctx.Expression(0) == nil {
@@ -620,7 +620,7 @@ func (s *JavaCallListener) EnterExpression(ctx *parser.ExpressionContext) {
 	}
 }
 
-func (s *JavaCallListener) appendClasses(classes []string) {
+func (s *JavaFullListener) appendClasses(classes []string) {
 	clzs = classes
 }
 

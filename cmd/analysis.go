@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
-	. "github.com/phodal/coca/core/ast/call"
+	. "github.com/phodal/coca/core/ast/full"
 	. "github.com/phodal/coca/core/ast/identifier"
 	. "github.com/phodal/coca/core/infrastructure"
 	"github.com/spf13/cobra"
@@ -36,7 +36,7 @@ var analysisCmd = &cobra.Command{
 			classes = append(classes, node.Package+"."+node.ClassName)
 		}
 
-		callApp := new(JavaCallApp)
+		callApp := NewJavaFullApp()
 
 		callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 		cModel, _ := json.MarshalIndent(callNodes, "", "\t")

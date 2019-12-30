@@ -2,7 +2,7 @@ package unused
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/ast/call"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/ast/identifier"
 	"path/filepath"
 	"sync"
@@ -27,7 +27,7 @@ func TestRenameMethodApp(t *testing.T) {
 	}
 
 	wg.Add(1)
-	callApp := call.NewJavaCallApp()
+	callApp := full.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	wg.Add(1)

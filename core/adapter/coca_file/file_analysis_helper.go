@@ -84,8 +84,8 @@ func ProcessFile(path string) *JavaParser {
 	return parser
 }
 
-func ProcessString(path string) *JavaParser {
-	is := antlr.NewInputStream(path)
+func ProcessString(code string) *JavaParser {
+	is := antlr.NewInputStream(code)
 	lexer := NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
 	parser := NewJavaParser(stream)

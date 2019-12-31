@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/ast/bs"
 	"github.com/phodal/coca/core/domain/bs_domain"
+	"github.com/phodal/coca/core/infrastructure/ast/bs"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 )

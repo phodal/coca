@@ -2,8 +2,8 @@ package analysis
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/ast/identifier"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 )
 

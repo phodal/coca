@@ -2,8 +2,8 @@ package full
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/ast/common_listener"
 	"github.com/phodal/coca/core/domain"
+	common_listener2 "github.com/phodal/coca/core/infrastructure/ast/common_listener"
 	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strconv"
@@ -160,7 +160,7 @@ func (s *JavaFullListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBo
 		modifier := modifier.(*parser.ModifierContext).GetChild(0)
 		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {
 			annotationContext := modifier.GetChild(0).(*parser.AnnotationContext)
-			common_listener.BuildAnnotation(annotationContext)
+			common_listener2.BuildAnnotation(annotationContext)
 		}
 	}
 }
@@ -175,7 +175,7 @@ func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
-		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
 	method := &domain.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
@@ -238,7 +238,7 @@ func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	}
 
 	if !hasEnterClass {
-		annotation := common_listener.BuildAnnotation(ctx)
+		annotation := common_listener2.BuildAnnotation(ctx)
 		if currentType == "CreatorClass" {
 			currentCreatorNode.Annotations = append(currentCreatorNode.Annotations, annotation)
 		} else {
@@ -284,7 +284,7 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
-		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
 	method := &domain.JMethod{

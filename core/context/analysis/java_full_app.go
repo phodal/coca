@@ -3,8 +3,8 @@ package analysis
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/ast/full"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 )

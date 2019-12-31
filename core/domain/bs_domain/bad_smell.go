@@ -1,6 +1,9 @@
 package bs_domain
 
-import "strings"
+import (
+	"sort"
+	"strings"
+)
 
 type BsJClass struct {
 	Package     string
@@ -108,4 +111,23 @@ func (b *BsJClass) HaveCallParent() bool {
 		}
 	}
 	return hasCallParentMethod
+}
+
+func SortSmellByType(models []BadSmellModel, filterFunc func(key string) bool) map[string][]BadSmellModel {
+	sortSmells := make(map[string][]BadSmellModel)
+	for _, model := range models {
+		sortSmells[model.Bs] = append(sortSmells[model.Bs], model)
+	}
+
+	for key, smells := range sortSmells {
+		if filterFunc(key) {
+			sort.Slice(smells, func(i, j int) bool {
+				return smells[i].Size > (smells[j].Size)
+			})
+
+			sortSmells[key] = smells
+		}
+	}
+
+	return sortSmells
 }

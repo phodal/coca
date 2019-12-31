@@ -7,7 +7,6 @@ import (
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/phodal/coca/core/infrastructure/str_helper"
 	"github.com/spf13/cobra"
-	"sort"
 	"strings"
 )
 
@@ -36,7 +35,7 @@ var badsmellCmd = &cobra.Command{
 		bsModel, _ := json.MarshalIndent(bsList, "", "\t")
 
 		if sortType == "type" {
-			sortSmells := sortSmellByType(bsList)
+			sortSmells := bs_domain.SortSmellByType(bsList, isSmellHaveSize)
 			bsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
 		}
 
@@ -44,24 +43,6 @@ var badsmellCmd = &cobra.Command{
 	},
 }
 
-func sortSmellByType(models []bs_domain.BadSmellModel) map[string][]bs_domain.BadSmellModel {
-	sortSmells := make(map[string][]bs_domain.BadSmellModel)
-	for _, model := range models {
-		sortSmells[model.Bs] = append(sortSmells[model.Bs], model)
-	}
-
-	for key, smells := range sortSmells {
-		if isSmellHaveSize(key) {
-			sort.Slice(smells, func(i, j int) bool {
-				return smells[i].Size > (smells[j].Size)
-			})
-
-			sortSmells[key] = smells
-		}
-	}
-
-	return sortSmells
-}
 
 func isSmellHaveSize(key string) bool {
 	var smellList = []string{

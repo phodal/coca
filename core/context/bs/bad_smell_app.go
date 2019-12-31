@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/context/bs"
+	"github.com/phodal/coca/core/ast/bs"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
@@ -32,11 +32,11 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_do
 		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewBadSmellListener()
+		listener := bs.NewBadSmellListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		nodeInfo = listener.getNodeInfo()
+		nodeInfo = listener.GetNodeInfo()
 		nodeInfo.Path = file
 		nodeInfos = append(nodeInfos, nodeInfo)
 	}
@@ -44,7 +44,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_do
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
 	coca_file.WriteToCocaFile("nodeInfos.json", string(bsModel))
 
-	bsList := bs.AnalysisBadSmell(nodeInfos)
+	bsList := AnalysisBadSmell(nodeInfos)
 
 	mapIgnoreRules := make(map[string]bool)
 	for _, ignore := range ignoreRules {

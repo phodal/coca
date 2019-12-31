@@ -39,7 +39,7 @@ type BadSmellListener struct {
 	BaseJavaParserListener
 }
 
-func (s *BadSmellListener) getNodeInfo() bs_domain.BsJClass {
+func (s *BadSmellListener) GetNodeInfo() bs_domain.BsJClass {
 	return *&bs_domain.BsJClass{
 		currentPkg,
 		currentClz,

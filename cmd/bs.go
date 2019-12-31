@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/core/ast/bs"
+	bs2 "github.com/phodal/coca/core/context/bs"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/phodal/coca/core/infrastructure/str_helper"
@@ -29,7 +29,7 @@ var badsmellCmd = &cobra.Command{
 
 		ignoreRules := strings.Split(ignoreStr, ",")
 
-		bsApp := *bs.NewBadSmellApp()
+		bsApp := *bs2.NewBadSmellApp()
 		bsList := bsApp.AnalysisPath(importPath, ignoreRules)
 
 		bsModel, _ := json.MarshalIndent(bsList, "", "\t")

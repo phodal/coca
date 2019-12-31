@@ -1,0 +1,393 @@
+[
+  {
+    "Package": "com.phodal.coca.analysis",
+    "Class": "JavaCallApp",
+    "Type": "",
+    "Path": "_fixtures/examples/poly/poly.java",
+    "Fields": [
+      {
+        "Type": "JavaDaoParser",
+        "Value": "daoParser"
+      }
+    ],
+    "Methods": [
+      {
+        "Name": "parse",
+        "Type": "void",
+        "StartLine": 57,
+        "StartLinePosition": 16,
+        "StopLine": 63,
+        "StopLinePosition": 21,
+        "Parameters": [
+          {
+            "Name": "path",
+            "Type": "Path"
+          },
+          {
+            "Name": "clzs",
+            "Type": "List\u003cString\u003e"
+          }
+        ],
+        "MethodCalls": [
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "System.out",
+            "MethodName": "println",
+            "Parameters": [
+              "\"Start parse java call: \"+path.getFileName()"
+            ],
+            "StartLine": 58,
+            "StartLinePosition": 19,
+            "StopLine": 58,
+            "StopLinePosition": 26
+          },
+          {
+            "Package": "java.nio.file",
+            "Type": "chain",
+            "Class": "Path",
+            "MethodName": "getFileName",
+            "Parameters": null,
+            "StartLine": 58,
+            "StartLinePosition": 60,
+            "StopLine": 58,
+            "StopLinePosition": 71
+          },
+          {
+            "Package": "com.phodal.coca.analysis.identifier",
+            "Type": "chain",
+            "Class": "JavaFileParser",
+            "MethodName": "parse",
+            "Parameters": [
+              "path"
+            ],
+            "StartLine": 59,
+            "StartLinePosition": 40,
+            "StopLine": 59,
+            "StopLinePosition": 45
+          },
+          {
+            "Package": "java.util",
+            "Type": "CreatorClass",
+            "Class": "ArrayList",
+            "MethodName": "",
+            "Parameters": null,
+            "StartLine": 60,
+            "StartLinePosition": 38,
+            "StopLine": 60,
+            "StopLinePosition": 50
+          },
+          {
+            "Package": "com.phodal.coca.analysis.calls",
+            "Type": "CreatorClass",
+            "Class": "JavaCallVisitor",
+            "MethodName": "",
+            "Parameters": null,
+            "StartLine": 61,
+            "StartLinePosition": 44,
+            "StopLine": 61,
+            "StopLinePosition": 82
+          },
+          {
+            "Package": "com.phodal.coca.java",
+            "Type": "chain",
+            "Class": "JavaParserBaseVisitor",
+            "MethodName": "visit",
+            "Parameters": [
+              "tree"
+            ],
+            "StartLine": 62,
+            "StartLinePosition": 16,
+            "StopLine": 62,
+            "StopLinePosition": 21
+          }
+        ],
+        "Override": false,
+        "Annotations": null,
+        "IsConstructor": false,
+        "IsReturnNull": false,
+        "Modifiers": null,
+        "Creators": null
+      },
+      {
+        "Name": "JavaCallApp",
+        "Type": "",
+        "StartLine": 26,
+        "StartLinePosition": 11,
+        "StopLine": 28,
+        "StopLinePosition": 4,
+        "Parameters": [
+          {
+            "Name": "daoParser",
+            "Type": "JavaDaoParser"
+          }
+        ],
+        "MethodCalls": null,
+        "Override": false,
+        "Annotations": null,
+        "IsConstructor": true,
+        "IsReturnNull": false,
+        "Modifiers": null,
+        "Creators": null
+      },
+      {
+        "Name": "analysisDir",
+        "Type": "void",
+        "StartLine": 30,
+        "StartLinePosition": 16,
+        "StopLine": 42,
+        "StopLinePosition": 27,
+        "Parameters": [
+          {
+            "Name": "dir",
+            "Type": "String"
+          },
+          {
+            "Name": "clzs",
+            "Type": "List\u003cString\u003e"
+          }
+        ],
+        "MethodCalls": [
+          {
+            "Package": "java.nio.file",
+            "Type": "chain",
+            "Class": "Paths",
+            "MethodName": "get",
+            "Parameters": [
+              "dir"
+            ],
+            "StartLine": 31,
+            "StartLinePosition": 33,
+            "StopLine": 31,
+            "StopLinePosition": 36
+          },
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "JavaCallApp",
+            "MethodName": "parse",
+            "Parameters": [
+              "clzs"
+            ],
+            "StartLine": 32,
+            "StartLinePosition": 38,
+            "StopLine": 32,
+            "StopLinePosition": 43
+          },
+          {
+            "Package": "java.util.concurrent",
+            "Type": "chain",
+            "Class": "Executors",
+            "MethodName": "newFixedThreadPool",
+            "Parameters": [
+              "poolSize"
+            ],
+            "StartLine": 34,
+            "StartLinePosition": 41,
+            "StopLine": 34,
+            "StopLinePosition": 59
+          },
+          {
+            "Package": "java.util",
+            "Type": "CreatorClass",
+            "Class": "ArrayList",
+            "MethodName": "",
+            "Parameters": null,
+            "StartLine": 35,
+            "StartLinePosition": 35,
+            "StopLine": 35,
+            "StopLinePosition": 47
+          },
+          {
+            "Package": "com.phodal.coca.analysis.utils",
+            "Type": "CreatorClass",
+            "Class": "ProcessFiles",
+            "MethodName": "",
+            "Parameters": null,
+            "StartLine": 36,
+            "StartLinePosition": 30,
+            "StopLine": 36,
+            "StopLinePosition": 70
+          },
+          {
+            "Package": "com.phodal.coca.analysis.utils",
+            "Type": "chain",
+            "Class": "Files",
+            "MethodName": "walkFileTree",
+            "Parameters": [
+              "startingDir",
+              "pf"
+            ],
+            "StartLine": 37,
+            "StartLinePosition": 14,
+            "StopLine": 37,
+            "StopLinePosition": 26
+          },
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "f",
+            "MethodName": "get",
+            "Parameters": null,
+            "StartLine": 39,
+            "StartLinePosition": 14,
+            "StopLine": 39,
+            "StopLinePosition": 17
+          },
+          {
+            "Package": "java.util.concurrent",
+            "Type": "chain",
+            "Class": "ExecutorService",
+            "MethodName": "shutdown",
+            "Parameters": null,
+            "StartLine": 41,
+            "StartLinePosition": 13,
+            "StopLine": 41,
+            "StopLinePosition": 21
+          }
+        ],
+        "Override": false,
+        "Annotations": null,
+        "IsConstructor": false,
+        "IsReturnNull": false,
+        "Modifiers": null,
+        "Creators": null
+      },
+      {
+        "Name": "parse",
+        "Type": "Consumer\u003cPath\u003e",
+        "StartLine": 44,
+        "StartLinePosition": 27,
+        "StopLine": 55,
+        "StopLinePosition": 32,
+        "Parameters": [
+          {
+            "Name": "clzs",
+            "Type": "List\u003cString\u003e"
+          }
+        ],
+        "MethodCalls": [
+          {
+            "Package": "java.nio.file",
+            "Type": "chain",
+            "Class": "Path",
+            "MethodName": "toString",
+            "Parameters": null,
+            "StartLine": 47,
+            "StartLinePosition": 48,
+            "StopLine": 47,
+            "StopLinePosition": 56
+          },
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "path",
+            "MethodName": "endsWith",
+            "Parameters": [
+              "\"Tests.java\""
+            ],
+            "StartLine": 47,
+            "StartLinePosition": 59,
+            "StopLine": 47,
+            "StopLinePosition": 67
+          },
+          {
+            "Package": "java.nio.file",
+            "Type": "chain",
+            "Class": "Path",
+            "MethodName": "toString",
+            "Parameters": null,
+            "StartLine": 47,
+            "StartLinePosition": 91,
+            "StopLine": 47,
+            "StopLinePosition": 99
+          },
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "path",
+            "MethodName": "endsWith",
+            "Parameters": [
+              "\"Test.java\""
+            ],
+            "StartLine": 47,
+            "StartLinePosition": 102,
+            "StopLine": 47,
+            "StopLinePosition": 110
+          },
+          {
+            "Package": "java.nio.file",
+            "Type": "chain",
+            "Class": "Path",
+            "MethodName": "toString",
+            "Parameters": null,
+            "StartLine": 47,
+            "StartLinePosition": 132,
+            "StopLine": 47,
+            "StopLinePosition": 140
+          },
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "path",
+            "MethodName": "endsWith",
+            "Parameters": [
+              "\".java\""
+            ],
+            "StartLine": 47,
+            "StartLinePosition": 143,
+            "StopLine": 47,
+            "StopLinePosition": 151
+          },
+          {
+            "Package": "com.phodal.coca.analysis",
+            "Type": "",
+            "Class": "JavaCallApp",
+            "MethodName": "parse",
+            "Parameters": [
+              "path",
+              "clzs"
+            ],
+            "StartLine": 49,
+            "StartLinePosition": 20,
+            "StopLine": 49,
+            "StopLinePosition": 25
+          },
+          {
+            "Package": "org.antlr.v4.runtime.tree",
+            "Type": "chain",
+            "Class": "e",
+            "MethodName": "printStackTrace",
+            "Parameters": null,
+            "StartLine": 52,
+            "StartLinePosition": 18,
+            "StopLine": 52,
+            "StopLinePosition": 33
+          }
+        ],
+        "Override": false,
+        "Annotations": null,
+        "IsConstructor": false,
+        "IsReturnNull": false,
+        "Modifiers": null,
+        "Creators": null
+      }
+    ],
+    "MethodCalls": [
+      {
+        "Package": "com.phodal.coca.analysis.calls",
+        "Type": "field",
+        "Class": "JavaDaoParser",
+        "MethodName": "",
+        "Parameters": null,
+        "StartLine": 24,
+        "StartLinePosition": 12,
+        "StopLine": 24,
+        "StopLinePosition": 35
+      }
+    ],
+    "Extend": "",
+    "Implements": null,
+    "Annotations": null
+  }
+]

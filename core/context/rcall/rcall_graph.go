@@ -1,8 +1,6 @@
 package rcall
 
 import (
-	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
 )
@@ -14,12 +12,11 @@ func NewRCallGraph() RCallGraph {
 	return *&RCallGraph{}
 }
 
-func (c RCallGraph) Analysis(funcName string, clzs []domain.JClassNode) string {
+func (c RCallGraph) Analysis(funcName string, clzs []domain.JClassNode, writeCallback func(rcallMap map[string][]string)) string {
 	var projectMethodMap = BuildProjectMethodMap(clzs)
 	rcallMap := BuildRCallMethodMap(clzs, projectMethodMap)
 
-	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
-	cmd_util.WriteToCocaFile("rcallmap.json", string(mapJson))
+	writeCallback(rcallMap)
 
 	chain := c.buildRCallChain(funcName, rcallMap)
 
@@ -45,9 +42,9 @@ func BuildRCallMethodMap(parserDeps []domain.JClassNode, projectMaps map[string]
 	for _, clz := range parserDeps {
 		for _, method := range clz.Methods {
 			var caller = method.BuildFullMethodName(clz)
-			for _, call := range method.MethodCalls {
-				if call.Class != "" {
-					callee := call.BuildFullMethodName()
+			for _, jMethodCall := range method.MethodCalls {
+				if jMethodCall.Class != "" {
+					callee := jMethodCall.BuildFullMethodName()
 					if projectMaps[callee] < 1 {
 						continue
 					}

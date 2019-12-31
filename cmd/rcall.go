@@ -43,15 +43,20 @@ var reverseCmd = &cobra.Command{
 		_ = json.Unmarshal(file, &parsedDeps)
 
 		fmt.Println("start rcall class :", className)
-		content := analyser.Analysis(className, *&parsedDeps)
+		content := analyser.Analysis(className, *&parsedDeps, WriteCallMap)
 
 		if remove != "" {
 			content = strings.ReplaceAll(content, remove, "")
 		}
 
 		cmd_util.WriteToCocaFile("rcall.dot", content)
-		cmd_util.ConvertToSvg("call")
+		cmd_util.ConvertToSvg("rcall")
 	},
+}
+
+func WriteCallMap(rcallMap map[string][]string) {
+	mapJson, _ := json.MarshalIndent(rcallMap, "", "\t")
+	cmd_util.WriteToCocaFile("rcallmap.json", string(mapJson))
 }
 
 func init() {

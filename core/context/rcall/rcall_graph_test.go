@@ -22,7 +22,7 @@ func TestRCallGraph_Analysis(t *testing.T) {
 
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	content := analyser.Analysis("com.phodal.pholedge.book.BookFactory.create", *&parsedDeps)
+	content := analyser.Analysis("com.phodal.pholedge.book.BookFactory.create", *&parsedDeps, nil)
 
 	g.Expect(content).To(Equal(`digraph G {
 rankdir = LR;

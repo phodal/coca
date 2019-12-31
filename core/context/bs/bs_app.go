@@ -75,7 +75,7 @@ func checkRefusedBequest(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadS
 
 func checkLargeClass(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
 	normalClassLength := withOutGetterSetterClass(node.Methods)
-	if node.Type == "Class" && normalClassLength > BS_LARGE_LENGTH {
+	if node.Type == "Class" && normalClassLength >= BS_LARGE_LENGTH {
 		description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
 		*badSmellList = append(*badSmellList, *&bs_domain.BadSmellModel{node.Path, "", "largeClass", description, normalClassLength})
 	}

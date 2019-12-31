@@ -91,3 +91,17 @@ func TestBadSmellApp_MultipleIf(t *testing.T) {
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("repeatedSwitches"))
 }
+
+func TestBadSmellApp_LargeClass(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	bsApp := NewBadSmellApp()
+	codePath := "../../../_fixtures/bs/LargeClass.java"
+	codePath = filepath.FromSlash(codePath)
+
+	bs := bsApp.AnalysisPath(codePath)
+	bsList := bsApp.FilterBadSmell(bs, nil)
+
+	g.Expect(len(bsList)).To(Equal(1))
+	g.Expect(bsList[0].Bs).To(Equal("largeClass"))
+}

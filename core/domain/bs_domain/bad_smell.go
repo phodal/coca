@@ -131,3 +131,14 @@ func SortSmellByType(models []BadSmellModel, filterFunc func(key string) bool) m
 
 	return sortSmells
 }
+
+func FilterBadSmellList(models []BadSmellModel, ignoreRules map[string]bool) []BadSmellModel {
+	var results []BadSmellModel
+	for _, model := range models {
+		if !ignoreRules[model.Bs] {
+			results = append(results, model)
+		}
+	}
+	return results
+}
+

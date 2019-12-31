@@ -141,5 +141,5 @@ func init() {
 	gitCmd.PersistentFlags().BoolP("full", "f", false, "full")
 	gitCmd.PersistentFlags().BoolVarP(&gitCmdConfig.ShowSummary, "summary", "m", false, "full")
 	gitCmd.PersistentFlags().IntVarP(&gitCmdConfig.Size, "size", "s", 20, "full")
-	gitCmd.PersistentFlags().StringVar(&relatedConfig, "r", "", "related")
+	gitCmd.PersistentFlags().StringVarP(&relatedConfig, "related", "r", "", "related")
 }

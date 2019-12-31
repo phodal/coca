@@ -2,11 +2,6 @@ package git
 
 import "time"
 
-type CodeAge struct {
-	EntityName string
-	Age        time.Time
-}
-
 type CodeAgeDisplay struct {
 	EntityName string
 	Month      string

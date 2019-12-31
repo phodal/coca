@@ -12,7 +12,6 @@ var (
 
 // high fix
 // high features
-//
 func ShowChangeLogSummary(commits []CommitMessage) {
 	changeMap := BuildChangeMap(commits)
 	for key, value := range changeMap {

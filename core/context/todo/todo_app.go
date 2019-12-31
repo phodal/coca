@@ -31,7 +31,7 @@ type TodoDetail struct {
 }
 
 func (a TodoApp) AnalysisPath(path string) []*astitodo.TODO {
-	todos := buildComment(path)
+	todos := buildComments(path)
 	return todos
 }
 
@@ -62,14 +62,13 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 	return todoList
 }
 
-func buildComment(path string) []*astitodo.TODO {
+func buildComments(path string) []*astitodo.TODO {
 	var todos []*astitodo.TODO
 	files := coca_file.GetJavaFiles(path)
 	for index := range files {
 		file := files[index]
 
 		displayName := filepath.Base(file)
-		//abs, _ := filepath.Abs(file)
 		fmt.Println("Start parse java call: " + displayName)
 
 		is, _ := antlr.NewFileStream(file)

@@ -7,7 +7,6 @@ import (
 	"github.com/phodal/coca/core/context/bs"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
-	. "github.com/phodal/coca/languages/java"
 	"path/filepath"
 )
 
@@ -30,7 +29,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_do
 		displayName := filepath.Base(file)
 		fmt.Println("Start parse java call: " + displayName)
 
-		parser := (*BadSmellApp)(nil).processFile(file)
+		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := NewBadSmellListener()
@@ -52,24 +51,6 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_do
 		mapIgnoreRules[ignore] = true
 	}
 
-	filteredBsList := FilterBadSmellList(bsList, mapIgnoreRules)
+	filteredBsList := bs_domain.FilterBadSmellList(bsList, mapIgnoreRules)
 	return filteredBsList
-}
-
-func FilterBadSmellList(models []bs_domain.BadSmellModel, ignoreRules map[string]bool) []bs_domain.BadSmellModel {
-	var results []bs_domain.BadSmellModel
-	for _, model := range models {
-		if !ignoreRules[model.Bs] {
-			results = append(results, model)
-		}
-	}
-	return results
-}
-
-func (j *BadSmellApp) processFile(path string) *JavaParser {
-	is, _ := antlr.NewFileStream(path)
-	lexer := NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	parser := NewJavaParser(stream)
-	return parser
 }

@@ -104,13 +104,6 @@ func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.Construc
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
 	hasEnterClass = true
-	for _, modifier := range ctx.AllModifier() {
-		modifier := modifier.(*parser.ModifierContext).GetChild(0)
-		if reflect.TypeOf(modifier.GetChild(0)).String() == "*parser.AnnotationContext" {
-			annotationContext := modifier.GetChild(0).(*parser.AnnotationContext)
-			common_listener.BuildAnnotation(annotationContext)
-		}
-	}
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
@@ -122,7 +115,10 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	annotations := currentMethod.Annotations
+	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+	}
+
 	currentMethod = *&domain.JMethod{
 		Name:              name,
 		Type:              typeType,
@@ -131,14 +127,13 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 		StopLine:          stopLine,
 		StopLinePosition:  stopLinePosition,
 		Override:          isOverrideMethod,
-		Annotations:       annotations,
+		Annotations:       currentMethod.Annotations,
 	}
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-
 	currentNode.AddMethod(currentMethod)
-	_ = domain.NewJMethod()
+	currentMethod = domain.NewJMethod()
 }
 
 var isOverrideMethod = false
@@ -154,7 +149,10 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	annotations := currentMethod.Annotations
+	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+	}
+
 	currentMethod = *&domain.JMethod{
 		Name:              name,
 		Type:              typeType,
@@ -163,7 +161,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 		StopLine:          stopLine,
 		StopLinePosition:  stopLinePosition,
 		Override:          isOverrideMethod,
-		Annotations:       annotations,
+		Annotations:       currentMethod.Annotations,
 	}
 
 	if reflect.TypeOf(ctx.GetParent().GetParent()).String() == "*parser.ClassBodyDeclarationContext" {
@@ -179,22 +177,17 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 }
 
 func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-
 	currentNode.AddMethod(currentMethod)
-	_ = domain.NewJMethod()
+	currentMethod = domain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
-	// Todo: support override method
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "Override" {
 		isOverrideMethod = true
 	}
 
-	if hasEnterClass {
-		annotation := common_listener.BuildAnnotation(ctx)
-		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
-	} else {
+	if !hasEnterClass {
 		annotation := common_listener.BuildAnnotation(ctx)
 		currentNode.Annotations = append(currentNode.Annotations, annotation)
 	}

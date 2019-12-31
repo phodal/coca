@@ -30,7 +30,12 @@ import static org.mockito.Mockito.verify;
 /**
  * @author Stephane Nicoll
  */
+@RunWith(PowerMockRunner.class)
 public class CallAssertInClassTests extends AbstractApplicationEventListenerTests {
+
+    @Mock
+    Connection connection = PowerMockito.mock(Connection.class);
+
 	@Test  // Demonstrates we cant inject that event because the listener has a raw type
 	public void genericListenerRawTypeTypeErasure() {
 		GenericTestEvent<String> stringEvent = createGenericTestEvent("test");

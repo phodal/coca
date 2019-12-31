@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/context/bs"
-	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	. "github.com/phodal/coca/languages/java"
 	"path/filepath"
 )
 
-var nodeInfos []domain.BsJClass
+var nodeInfos []bs_domain.BsJClass
 
 type BadSmellApp struct {
 }
@@ -20,11 +20,11 @@ func NewBadSmellApp() *BadSmellApp {
 	return &BadSmellApp{}
 }
 
-func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []domain.BadSmellModel {
+func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_domain.BadSmellModel {
 	nodeInfos = nil
 	files := coca_file.GetJavaFiles(codeDir)
 	for index := range files {
-		nodeInfo := domain.NewJFullClassNode()
+		nodeInfo := bs_domain.NewJFullClassNode()
 		file := files[index]
 
 		displayName := filepath.Base(file)
@@ -56,8 +56,8 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []domai
 	return filteredBsList
 }
 
-func FilterBadSmellList(models []domain.BadSmellModel, ignoreRules map[string]bool) []domain.BadSmellModel {
-	var results []domain.BadSmellModel
+func FilterBadSmellList(models []bs_domain.BadSmellModel, ignoreRules map[string]bool) []bs_domain.BadSmellModel {
+	var results []bs_domain.BadSmellModel
 	for _, model := range models {
 		if !ignoreRules[model.Bs] {
 			results = append(results, model)

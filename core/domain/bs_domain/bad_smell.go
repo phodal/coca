@@ -1,4 +1,6 @@
-package domain
+package bs_domain
+
+import "strings"
 
 type BsJClass struct {
 	Package     string
@@ -92,4 +94,18 @@ type BadSmellModel struct {
 	Bs          string `json:"BS,omitempty"`
 	Description string `json:"Description,omitempty"`
 	Size        int    `size:"Description,omitempty"`
+}
+
+func (b *BsJMethod) IsGetterSetter() bool {
+	return strings.HasPrefix(b.Name, "set") || strings.HasPrefix(b.Name, "get")
+}
+
+func (b *BsJClass) HaveCallParent() bool {
+	hasCallParentMethod := false
+	for _, methodCall := range b.MethodCalls {
+		if methodCall.Class == b.Extends {
+			hasCallParentMethod = true
+		}
+	}
+	return hasCallParentMethod
 }

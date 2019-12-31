@@ -14,7 +14,6 @@ import (
 	"log"
 	"os"
 	"regexp"
-	"sort"
 	"strconv"
 	"strings"
 )
@@ -66,15 +65,13 @@ var apiCmd = &cobra.Command{
 
 		parsedDeps := cmd_util.GetDepsFromJson(depPath)
 
-		restFieldsApi := filterApi(apiPrefix, restApis)
+		restFieldsApi := domain.FilterApiByPrefix(apiPrefix, restApis)
 
 		analyser := call.NewCallGraph()
 		dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
 
 		if *&apiCmdConfig.Sort {
-			sort.Slice(counts, func(i, j int) bool {
-				return counts[i].Size < counts[j].Size
-			})
+			domain.SortApi(counts)
 		}
 
 		if apiCmdConfig.ShowCount {
@@ -102,21 +99,6 @@ func forceUpdateApi() {
 	restApis = app.AnalysisPath(apiCmdConfig.Path, parsedDeps, identifiersMap, diMap)
 	cModel, _ := json.MarshalIndent(restApis, "", "\t")
 	coca_file.WriteToCocaFile("apis.json", string(cModel))
-}
-
-func filterApi(apiPrefix string, apis []domain.RestApi, ) []domain.RestApi {
-	var restFieldsApi []domain.RestApi
-	if apiPrefix != "" {
-		for _, api := range apis {
-			if strings.HasPrefix(api.Uri, apiPrefix) {
-				restFieldsApi = append(restFieldsApi, api)
-			}
-		}
-	} else {
-		restFieldsApi = apis
-	}
-
-	return restFieldsApi
 }
 
 func replacePackage(content string) string {

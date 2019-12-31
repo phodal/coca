@@ -3,6 +3,7 @@ package common_listener
 import (
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/languages/java"
+	"reflect"
 )
 
 func BuildAnnotation(ctx *parser.AnnotationContext) domain.Annotation {
@@ -28,5 +29,16 @@ func BuildAnnotation(ctx *parser.AnnotationContext) domain.Annotation {
 	}
 
 	return annotation
+}
+
+func BuildAnnotationForMethod(context *parser.ModifierContext, method *domain.JMethod) {
+	if context.ClassOrInterfaceModifier() != nil {
+		if reflect.TypeOf(context.ClassOrInterfaceModifier().GetChild(0)).String() == "*parser.AnnotationContext" {
+			annotationCtx := context.ClassOrInterfaceModifier().GetChild(0).(*parser.AnnotationContext)
+
+			annotation := BuildAnnotation(annotationCtx)
+			method.Annotations = append(method.Annotations, annotation)
+		}
+	}
 }
 

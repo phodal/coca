@@ -137,6 +137,10 @@ func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []apr
 	var dataset [][]string
 	for _, commitMessage := range commitMessages {
 		var set []string
+		GIT_RELATED_MAX_SIZE := 10
+		if len(commitMessage.Changes) > GIT_RELATED_MAX_SIZE {
+			continue
+		}
 		for _, change := range commitMessage.Changes {
 			if strings.HasSuffix(change.File, ".java") && !strings.HasSuffix(change.File, "Test.java") {
 				if strings.Contains(change.File, "core/main/java/") {

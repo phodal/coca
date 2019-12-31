@@ -2,6 +2,7 @@ package call
 
 import (
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/jpackage"
 	"strings"
 )
 
@@ -39,8 +40,8 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	if len(methodMap[funcName]) > 0 {
 		var arrayResult = ""
 		for _, child := range methodMap[funcName] {
-			if _, ok := diMap[getClz(child)]; ok {
-				child = diMap[getClz(child)] + "." + getMethodName(child)
+			if _, ok := diMap[jpackage.GetClassName(child)]; ok {
+				child = diMap[jpackage.GetClassName(child)] + "." + jpackage.GetMethodName(child)
 			}
 			if len(methodMap[child]) > 0 {
 				arrayResult = arrayResult + BuildCallChain(child, methodMap, diMap)
@@ -54,19 +55,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	return "\n"
 }
 
-func getClz(child string) string {
-	split := strings.Split(child, ".")
-	return strings.Join(split[:len(split)-1], ".")
-}
-
-func getMethodName(child string) string {
-	split := strings.Split(child, ".")
-	return strings.Join(split[len(split)-1:], ".")
-}
-
-func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JClassNode, diMap map[string]string) (string, []CallApiCount) {
+func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JClassNode, diMap map[string]string) (string, []domain.CallApi) {
 	methodMap := BuildMethodMap(deps)
-	var apiCallSCounts []CallApiCount
+	var apiCallSCounts []domain.CallApi
 
 	results := "digraph G { \n"
 
@@ -78,7 +69,7 @@ func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JCla
 		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
-		count := &CallApiCount{
+		count := &domain.CallApi{
 			HttpMethod: restApi.HttpMethod,
 			Caller:     caller,
 			Uri:        restApi.Uri,
@@ -107,4 +98,3 @@ func BuildMethodMap(clzs []domain.JClassNode) map[string][]string {
 
 	return methodMap
 }
-

@@ -3,7 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/phodal/coca/core/ast/bs"
-	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/phodal/coca/core/infrastructure/str_helper"
 	"github.com/spf13/cobra"
@@ -44,8 +44,8 @@ var badsmellCmd = &cobra.Command{
 	},
 }
 
-func sortSmellByType(models []domain.BadSmellModel) map[string][]domain.BadSmellModel {
-	sortSmells := make(map[string][]domain.BadSmellModel)
+func sortSmellByType(models []bs_domain.BadSmellModel) map[string][]bs_domain.BadSmellModel {
+	sortSmells := make(map[string][]bs_domain.BadSmellModel)
 	for _, model := range models {
 		sortSmells[model.Bs] = append(sortSmells[model.Bs], model)
 	}

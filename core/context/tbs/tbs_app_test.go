@@ -17,6 +17,7 @@ func TestTbsApp_EmptyTest(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
+	g.Expect(result[0].FileName).To(Equal("../../../_fixtures/tbs/code/EmptyTest.java"))
 	g.Expect(result[0].Line).To(Equal(8))
 	g.Expect(result[0].Type).To(Equal("EmptyTest"))
 }

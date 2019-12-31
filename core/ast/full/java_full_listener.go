@@ -98,7 +98,10 @@ func (s *JavaFullListener) exitBody() {
 		return
 	}
 
-	classNodes = append(classNodes, *currentNode)
+	if currentNode.Class != "" {
+		classNodes = append(classNodes, *currentNode)
+	}
+
 	currentNode = domain.NewClassNode()
 	initClass()
 }
@@ -171,6 +174,10 @@ func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
+	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+	}
+
 	method := &domain.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
 	updateMethod(method)
 }
@@ -230,10 +237,7 @@ func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		isOverrideMethod = false
 	}
 
-	if hasEnterClass {
-		annotation := common_listener.BuildAnnotation(ctx)
-		currentMethod.Annotations = append(currentMethod.Annotations, annotation)
-	} else {
+	if !hasEnterClass {
 		annotation := common_listener.BuildAnnotation(ctx)
 		if currentType == "CreatorClass" {
 			currentCreatorNode.Annotations = append(currentCreatorNode.Annotations, annotation)
@@ -278,6 +282,10 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	stopLinePosition := startLinePosition + len(name)
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
+
+	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+	}
 
 	method := &domain.JMethod{
 		Name:              name,

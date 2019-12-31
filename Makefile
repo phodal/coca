@@ -10,7 +10,7 @@ BINARY_LINUX=$(BINARY_DIR)/$(PACKAGE_NAME)_linux
 BINARY_MACOS=$(BINARY_DIR)/$(PACKAGE_NAME)_macos
 BINARY_WINDOWS=$(BINARY_DIR)/$(PACKAGE_NAME)_windows.exe
 
-all: clean bughunt build
+all: clean build
 build: build-linux build-windows build-macos
 test:
 	$(GOTEST) -v ./...

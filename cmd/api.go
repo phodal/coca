@@ -8,7 +8,6 @@ import (
 	"github.com/phodal/coca/core/context/api"
 	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/ast"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -31,7 +30,7 @@ var (
 	apiCmdConfig ApiCmdConfig
 	restApis     []domain.RestApi
 
-	identifiers    = ast.LoadIdentify(apiCmdConfig.DependencePath)
+	identifiers    = cmd_util.LoadIdentify(apiCmdConfig.DependencePath)
 	identifiersMap = domain.BuildIdentifierMap(identifiers)
 	diMap          = domain.BuildDIMap(identifiers, identifiersMap)
 )

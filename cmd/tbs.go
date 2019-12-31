@@ -9,7 +9,6 @@ import (
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/tbs"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/ast"
 	"github.com/spf13/cobra"
 	"os"
 	"strconv"
@@ -32,7 +31,7 @@ var tbsCmd = &cobra.Command{
 		files := coca_file.GetJavaTestFiles(tbsCmdConfig.Path)
 		var identifiers []domain.JIdentifier
 
-		identifiers = ast.LoadTestIdentify(files)
+		identifiers = cmd_util.LoadTestIdentify(files)
 		identifiersMap := domain.BuildIdentifierMap(identifiers)
 
 		var classes []string = nil

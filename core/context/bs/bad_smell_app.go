@@ -1,10 +1,8 @@
 package bs
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/adapter/coca_file"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/ast/bs"
@@ -20,7 +18,7 @@ func NewBadSmellApp() *BadSmellApp {
 	return &BadSmellApp{}
 }
 
-func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_domain.BadSmellModel {
+func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 	nodeInfos = nil
 	files := coca_file.GetJavaFiles(codeDir)
 	for index := range files {
@@ -42,10 +40,11 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_do
 		nodeInfos = append(nodeInfos, nodeInfo)
 	}
 
-	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
-	cmd_util.WriteToCocaFile("nodeInfos.json", string(bsModel))
+	return &nodeInfos
+}
 
-	bsList := AnalysisBadSmell(nodeInfos)
+func (j *BadSmellApp) FilterBadSmell(nodeInfos *[]bs_domain.BsJClass, ignoreRules []string) []bs_domain.BadSmellModel {
+	bsList := AnalysisBadSmell(*nodeInfos)
 
 	mapIgnoreRules := make(map[string]bool)
 	for _, ignore := range ignoreRules {

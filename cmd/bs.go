@@ -30,19 +30,23 @@ var badsmellCmd = &cobra.Command{
 		ignoreRules := strings.Split(ignoreStr, ",")
 
 		bsApp := *bs2.NewBadSmellApp()
-		bsList := bsApp.AnalysisPath(importPath, ignoreRules)
+		bsList := bsApp.AnalysisPath(importPath)
 
 		bsModel, _ := json.MarshalIndent(bsList, "", "\t")
+		cmd_util.WriteToCocaFile("nodeInfos.json", string(bsModel))
+
+		filterBs := bsApp.FilterBadSmell(bsList, ignoreRules)
+
+		filterBsModel, _ := json.MarshalIndent(filterBs, "", "\t")
 
 		if sortType == "type" {
-			sortSmells := bs_domain.SortSmellByType(bsList, isSmellHaveSize)
-			bsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
+			sortSmells := bs_domain.SortSmellByType(filterBs, isSmellHaveSize)
+			filterBsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
 		}
 
-		cmd_util.WriteToCocaFile("bs.json", string(bsModel))
+		cmd_util.WriteToCocaFile("bs.json", string(filterBsModel))
 	},
 }
-
 
 func isSmellHaveSize(key string) bool {
 	var smellList = []string{

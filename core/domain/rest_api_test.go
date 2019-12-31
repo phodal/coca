@@ -1,0 +1,20 @@
+package domain
+
+import (
+	. "github.com/onsi/gomega"
+	"testing"
+)
+
+func Test_FilterRestApi(t *testing.T) {
+	g := NewGomegaWithT(t)
+	var apis []RestApi
+	blogApi := &RestApi{"/blog", "", "", "", "", nil, "", "",}
+	homeApi := &RestApi{"/home", "", "", "", "", nil, "", "",}
+	apis = append(apis, *blogApi)
+	apis = append(apis, *homeApi)
+
+	filteredApi := FilterApiByPrefix("/blog", apis)
+
+	g.Expect(len(filteredApi)).To(Equal(1))
+	g.Expect(filteredApi[0].Uri).To(Equal("/blog"))
+}

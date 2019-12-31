@@ -6,6 +6,14 @@ import (
 	"strconv"
 )
 
+var (
+	BS_LONG_PARAS_LENGTH = 5
+	BS_IF_SWITCH_LENGTH  = 8
+	BS_LARGE_LENGTH      = 20
+	BS_METHOD_LENGTH     = 30
+	BS_IF_LINES_LENGTH   = 3
+)
+
 func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 	var badSmellList []bs_domain.BadSmellModel
 	for _, node := range nodes {
@@ -18,7 +26,7 @@ func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 		// Long Method
 		for _, method := range node.Methods {
 			methodLength := method.StopLine - method.StartLine
-			if methodLength > 30 {
+			if methodLength > BS_METHOD_LENGTH {
 				description := "method length: " + strconv.Itoa(methodLength)
 				longMethod := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longMethod", description, methodLength}
 				badSmellList = append(badSmellList, *longMethod)
@@ -29,7 +37,7 @@ func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 			}
 
 			// longParameterList
-			if len(method.Parameters) > 5 {
+			if len(method.Parameters) > BS_LONG_PARAS_LENGTH {
 				paramsJson, _ := json.Marshal(method.Parameters)
 				str := string(paramsJson[:])
 				longParams := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "longParameterList", str, len(method.Parameters)}
@@ -37,20 +45,20 @@ func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 			}
 
 			// repeatedSwitches
-			if method.MethodBs.IfSize > 8 {
+			if method.MethodBs.IfSize > BS_IF_SWITCH_LENGTH {
 				longParams := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "ifSize", method.MethodBs.IfSize}
 				badSmellList = append(badSmellList, *longParams)
 			}
 
 			// repeatedSwitches
-			if method.MethodBs.SwitchSize > 8 {
+			if method.MethodBs.SwitchSize > BS_IF_SWITCH_LENGTH {
 				longParams := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "switchSize", method.MethodBs.SwitchSize}
 				badSmellList = append(badSmellList, *longParams)
 			}
 
 			// complex if
 			for _, info := range method.MethodBs.IfInfo {
-				if info.EndLine-info.StartLine >= 2 {
+				if info.EndLine-info.StartLine >= BS_IF_LINES_LENGTH {
 					longParams := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(info.StartLine), "complexCondition", "complexCondition", 0}
 					badSmellList = append(badSmellList, *longParams)
 				}
@@ -72,7 +80,7 @@ func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 
 		// LargeClass
 		normalClassLength := withOutGetterSetterClass(node.Methods)
-		if node.Type == "Class" && normalClassLength > 20 {
+		if node.Type == "Class" && normalClassLength > BS_LARGE_LENGTH {
 			description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
 			badSmellList = append(badSmellList, *&bs_domain.BadSmellModel{node.Path, "", "largeClass", description, normalClassLength})
 		}

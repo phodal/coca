@@ -2,13 +2,13 @@ package jpackage
 
 import "strings"
 
-func GetClassName(child string) string {
-	split := strings.Split(child, ".")
+func GetClassName(path string) string {
+	split := strings.Split(path, ".")
 	return strings.Join(split[:len(split)-1], ".")
 }
 
-func GetMethodName(child string) string {
-	split := strings.Split(child, ".")
+func GetMethodName(path string) string {
+	split := strings.Split(path, ".")
 	return strings.Join(split[len(split)-1:], ".")
 }
 

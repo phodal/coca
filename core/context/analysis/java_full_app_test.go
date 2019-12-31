@@ -1,9 +1,8 @@
-package full
+package analysis
 
 import (
 	"fmt"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/domain"
 	"path/filepath"
 	"testing"
@@ -15,7 +14,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	codePath := "../../../_fixtures/call"
 	codePath = filepath.FromSlash(codePath)
 
-	identifierApp := new(identifier.JavaIdentifierApp)
+	identifierApp := new(JavaIdentifierApp)
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range iNodes {
@@ -39,7 +38,7 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 }
 
 func getCallNodes(codePath string) []domain.JClassNode {
-	identifierApp := new(identifier.JavaIdentifierApp)
+	identifierApp := new(JavaIdentifierApp)
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range iNodes {

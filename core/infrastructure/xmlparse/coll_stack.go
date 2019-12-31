@@ -1,4 +1,4 @@
-package parse
+package xmlparse
 
 import (
 	l "container/list"

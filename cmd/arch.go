@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/core/ast"
 	"github.com/phodal/coca/core/context/arch"
 	"github.com/phodal/coca/core/context/arch/tequila"
+	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -27,7 +28,7 @@ var archCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		identifiers = ast.LoadIdentify(apiCmdConfig.DependencePath)
-		identifiersMap = ast.BuildIdentifierMap(identifiers)
+		identifiersMap = domain.BuildIdentifierMap(identifiers)
 
 		parsedDeps := cmd_util.GetDepsFromJson(archCmdConfig.DependencePath)
 		archApp := arch.NewArchApp()

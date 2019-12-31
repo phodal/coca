@@ -6,7 +6,7 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/ast"
-	. "github.com/phodal/coca/core/ast/api"
+	"github.com/phodal/coca/core/context/api"
 	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
@@ -33,8 +33,8 @@ var (
 	restApis     []domain.RestApi
 
 	identifiers    = ast.LoadIdentify(apiCmdConfig.DependencePath)
-	identifiersMap = ast.BuildIdentifierMap(identifiers)
-	diMap          = ast.BuildDIMap(identifiers, identifiersMap)
+	identifiersMap = domain.BuildIdentifierMap(identifiers)
+	diMap          = domain.BuildDIMap(identifiers, identifiersMap)
 )
 
 var apiCmd = &cobra.Command{
@@ -95,7 +95,7 @@ var apiCmd = &cobra.Command{
 }
 
 func forceUpdateApi() {
-	app := new(JavaApiApp)
+	app := new(api.JavaApiApp)
 	restApis = app.AnalysisPath(apiCmdConfig.Path, parsedDeps, identifiersMap, diMap)
 	cModel, _ := json.MarshalIndent(restApis, "", "\t")
 	coca_file.WriteToCocaFile("apis.json", string(cModel))

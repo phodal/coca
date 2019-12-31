@@ -1,4 +1,4 @@
-package identifier
+package analysis
 
 import (
 	. "github.com/onsi/gomega"

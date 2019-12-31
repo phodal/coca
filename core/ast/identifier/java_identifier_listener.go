@@ -209,6 +209,6 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 	}
 }
 
-func (s *JavaIdentifierListener) getNodes() []domain.JIdentifier {
+func (s *JavaIdentifierListener) GetNodes() []domain.JIdentifier {
 	return nodes
 }

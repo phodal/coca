@@ -1,4 +1,4 @@
-package str_helper
+package string_helper
 
 import "sort"
 

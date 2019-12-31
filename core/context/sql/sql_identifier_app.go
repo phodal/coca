@@ -3,7 +3,8 @@ package sql
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/ast/sql/parse"
+	"github.com/phodal/coca/core/ast/sql"
+	"github.com/phodal/coca/core/infrastructure/xmlparse"
 	parser2 "github.com/phodal/coca/languages/sql"
 	"os"
 	"path/filepath"
@@ -18,7 +19,7 @@ func NewSqlIdentifierApp() SqlIdentifierApp {
 	return *&SqlIdentifierApp{}
 }
 
-func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []SqlNode {
+func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SqlNode {
 	xmlFiles := (*SqlIdentifierApp)(nil).xmlFiles(codeDir)
 	for _, xmlFile := range xmlFiles {
 		xmlFile, err := os.Open(xmlFile)
@@ -26,7 +27,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []SqlNode {
 			fmt.Println(err)
 		}
 
-		parsedXml := parse.ParseXml(xmlFile)
+		parsedXml := xmlparse.ParseXml(xmlFile)
 		for _, attr := range parsedXml.Attrs {
 			if strings.Contains(attr.Name.Local, "namespace") {
 				fmt.Println(attr.Value)
@@ -34,7 +35,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []SqlNode {
 		}
 	}
 
-	var infos []SqlNode
+	var infos []sql.SqlNode
 	files := (*SqlIdentifierApp)(nil).sqlFiles(codeDir)
 	for index := range files {
 		file := files[index]
@@ -42,7 +43,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []SqlNode {
 		parser := (*SqlIdentifierApp)(nil).processFile(file)
 		context := parser.Parse()
 
-		listener := NewSqlIdentifierListener()
+		listener := sql.NewSqlIdentifierListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

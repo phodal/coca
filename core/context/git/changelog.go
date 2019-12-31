@@ -2,7 +2,7 @@ package git
 
 import (
 	"fmt"
-	"github.com/phodal/coca/core/infrastructure/str_helper"
+	"github.com/phodal/coca/core/infrastructure/string_helper"
 	"regexp"
 )
 
@@ -15,7 +15,7 @@ var (
 func ShowChangeLogSummary(commits []CommitMessage) {
 	changeMap := BuildChangeMap(commits)
 	for key, value := range changeMap {
-		sortValue := str_helper.RankByWordCount(value)
+		sortValue := string_helper.RankByWordCount(value)
 		maxSize := len(sortValue)
 		if maxSize > 10 {
 			maxSize = 10

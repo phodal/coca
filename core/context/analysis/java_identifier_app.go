@@ -1,7 +1,8 @@
-package identifier
+package analysis
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/ast/identifier"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 )
@@ -26,11 +27,11 @@ func (j *JavaIdentifierApp) AnalysisFiles(files []string) []domain.JIdentifier {
 		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaIdentifierListener()
+		listener := identifier.NewJavaIdentifierListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		identifiers := listener.getNodes()
+		identifiers := listener.GetNodes()
 		nodeInfos = append(nodeInfos, identifiers...)
 	}
 

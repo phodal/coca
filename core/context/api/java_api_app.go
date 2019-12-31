@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/ast/api"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
@@ -24,12 +25,12 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode
 		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaApiListener(identifiersMap, diMap)
-		listener.appendClasses(parsedDeps)
+		listener := api.NewJavaApiListener(identifiersMap, diMap)
+		listener.AppendClasses(parsedDeps)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		allApis = listener.getClassApis()
+		allApis = listener.GetClassApis()
 	}
 
 	return *&allApis

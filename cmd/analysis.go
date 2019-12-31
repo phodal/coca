@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
-	. "github.com/phodal/coca/core/ast/full"
-	. "github.com/phodal/coca/core/ast/identifier"
+	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 )
@@ -24,7 +23,7 @@ var analysisCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := analysisCmdConfig.Path
 
-		identifierApp := NewJavaIdentifierApp()
+		identifierApp := analysis.NewJavaIdentifierApp()
 		iNodes := identifierApp.AnalysisPath(importPath)
 
 		identModel, _ := json.MarshalIndent(iNodes, "", "\t")
@@ -36,7 +35,7 @@ var analysisCmd = &cobra.Command{
 			classes = append(classes, node.Package+"."+node.ClassName)
 		}
 
-		callApp := NewJavaFullApp()
+		callApp := analysis.NewJavaFullApp()
 
 		callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 		cModel, _ := json.MarshalIndent(callNodes, "", "\t")

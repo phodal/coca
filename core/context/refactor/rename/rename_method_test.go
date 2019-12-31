@@ -2,8 +2,7 @@ package unused
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/ast/full"
-	"github.com/phodal/coca/core/ast/identifier"
+	"github.com/phodal/coca/core/context/analysis"
 	"path/filepath"
 	"sync"
 	"testing"
@@ -19,7 +18,7 @@ func TestRenameMethodApp(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	configPath = filepath.FromSlash(configPath)
 
-	identifierApp := new(identifier.JavaIdentifierApp)
+	identifierApp := new(analysis.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
@@ -27,7 +26,7 @@ func TestRenameMethodApp(t *testing.T) {
 	}
 
 	wg.Add(1)
-	callApp := full.NewJavaFullApp()
+	callApp := analysis.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	wg.Add(1)

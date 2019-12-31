@@ -3,10 +3,9 @@ package arch
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/ast"
-	"github.com/phodal/coca/core/ast/full"
-	"github.com/phodal/coca/core/ast/identifier"
+	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/arch/tequila"
+	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"io"
 	"path/filepath"
@@ -20,17 +19,17 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	codePath := "../../../_fixtures/arch/step2-java"
 	codePath = filepath.FromSlash(codePath)
 
-	identifierApp := new(identifier.JavaIdentifierApp)
+	identifierApp := new(analysis.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := full.NewJavaFullApp()
+	callApp := analysis.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	identifiersMap := ast.BuildIdentifierMap(identifiers)
+	identifiersMap := domain.BuildIdentifierMap(identifiers)
 
 	app := NewArchApp()
 	results := app.Analysis(callNodes, identifiersMap)
@@ -60,17 +59,17 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	codePath := "../../../_fixtures/arch/step2-java"
 	codePath = filepath.FromSlash(codePath)
 
-	identifierApp := new(identifier.JavaIdentifierApp)
+	identifierApp := new(analysis.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := full.NewJavaFullApp()
+	callApp := analysis.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	identifiersMap := ast.BuildIdentifierMap(identifiers)
+	identifiersMap := domain.BuildIdentifierMap(identifiers)
 
 	app := NewArchApp()
 	result := app.Analysis(callNodes, identifiersMap)

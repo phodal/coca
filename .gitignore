@@ -68,3 +68,5 @@ coca_reporter
 bug
 _fixtures/tbs/tbs
 _fixtures/refactor/move/b/ImportForB.java
+!wasm/web
+wasm/web/coca.wasm

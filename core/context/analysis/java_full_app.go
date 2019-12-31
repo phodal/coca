@@ -1,8 +1,9 @@
-package full
+package analysis
 
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/ast/full"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
@@ -35,12 +36,12 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []domain.JIdentifier, files []str
 		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()
 
-		listener := NewJavaFullListener(identMap, file)
-		listener.appendClasses(classes)
+		listener := full.NewJavaFullListener(identMap, file)
+		listener.AppendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		nodes := listener.getNodeInfo()
+		nodes := listener.GetNodeInfo()
 		nodeInfos = append(nodeInfos, nodes...)
 	}
 

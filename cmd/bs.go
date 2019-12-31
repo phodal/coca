@@ -5,7 +5,7 @@ import (
 	bs2 "github.com/phodal/coca/core/context/bs"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
-	"github.com/phodal/coca/core/infrastructure/str_helper"
+	"github.com/phodal/coca/core/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"strings"
 )
@@ -52,7 +52,7 @@ func isSmellHaveSize(key string) bool {
 		"longMethod",
 		"dataClass",
 	}
-	return str_helper.StringArrayContains(smellList, key)
+	return string_helper.StringArrayContains(smellList, key)
 }
 
 func init() {

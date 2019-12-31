@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"github.com/phodal/coca/core/infrastructure/str_helper"
+	"github.com/phodal/coca/core/infrastructure/string_helper"
 	"strings"
 )
 
@@ -49,7 +49,7 @@ func (m *JMethod) IsJavaLangReturnType() bool {
 }
 
 func (m *JMethod) IsStatic() bool {
-	return str_helper.StringArrayContains(m.Modifiers, "static")
+	return string_helper.StringArrayContains(m.Modifiers, "static")
 }
 
 func (m *JMethod) IsGetterSetter() bool {

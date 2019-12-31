@@ -4,7 +4,7 @@ import (
 	languages2 "github.com/phodal/coca/core/context/call/stop_words/languages"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/constants"
-	"github.com/phodal/coca/core/infrastructure/str_helper"
+	"github.com/phodal/coca/core/infrastructure/string_helper"
 )
 
 type ConceptAnalyser struct {
@@ -18,11 +18,11 @@ func (c ConceptAnalyser) run() {
 
 }
 
-func (c ConceptAnalyser) Analysis(clzs *[]domain.JClassNode) str_helper.PairList {
+func (c ConceptAnalyser) Analysis(clzs *[]domain.JClassNode) string_helper.PairList {
 	return buildMethodsFromDeps(*clzs)
 }
 
-func buildMethodsFromDeps(clzs []domain.JClassNode) str_helper.PairList {
+func buildMethodsFromDeps(clzs []domain.JClassNode) string_helper.PairList {
 	var methodsName []string
 	var methodStr string
 	for _, clz := range clzs {
@@ -37,7 +37,7 @@ func buildMethodsFromDeps(clzs []domain.JClassNode) str_helper.PairList {
 
 	words = removeNormalWords(words)
 
-	wordCounts := str_helper.RankByWordCount(words)
+	wordCounts := string_helper.RankByWordCount(words)
 	return wordCounts
 }
 

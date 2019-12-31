@@ -37,7 +37,7 @@ before_install:
   - go get -t -v  $(go list ./... | grep -v /languages/)
 
 script:
-  - go test -v  $(go list ./... | grep -v /languages/) -coverprofile=coverage.txt -covermode=set
+  - go test -v  echo 'mode: atomic' > coverage.txt && $(go list ./... | grep -v /languages/) | xargs -n1 -I{} sh -c 'go test -covermode=atomic -coverprofile=coverage.tmp {} && tail -n +2 coverage.tmp >> coverage.txt' && rm coverage.tmp -coverprofile=coverage.txt -covermode=atomic -coverpkg=./...
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

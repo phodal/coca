@@ -3,7 +3,7 @@ package tbs
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/ast"
-	"github.com/phodal/coca/core/ast/full"
+	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
@@ -116,14 +116,14 @@ func buildTbsResult(codePath string) []TestBadSmell {
 	var identifiers []domain.JIdentifier
 
 	identifiers = ast.LoadTestIdentify(files)
-	identifiersMap := ast.BuildIdentifierMap(identifiers)
+	identifiersMap := domain.BuildIdentifierMap(identifiers)
 
 	var classes []string = nil
 	for _, node := range identifiers {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	analysisApp := full.NewJavaFullApp()
+	analysisApp := analysis.NewJavaFullApp()
 	classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
 
 	app := NewTbsApp()

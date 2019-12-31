@@ -2,10 +2,8 @@ package evaluate
 
 import (
 	"encoding/json"
-	"fmt"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/core/ast/full"
-	"github.com/phodal/coca/core/ast/identifier"
+	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/coca_file"
@@ -93,20 +91,19 @@ func TestStaticUtils(t *testing.T) {
 	codePath := "../../../_fixtures/evaluate/utils"
 	result := buildEvaluateResult(codePath)
 
-	fmt.Println(result)
 	g.Expect(result.Summary.UtilsCount).To(Equal(1))
 }
 
 func buildEvaluateResult(codePath string) evaluator.EvaluateModel {
 	codePath = filepath.FromSlash(codePath)
-	identifierApp := new(identifier.JavaIdentifierApp)
+	identifierApp := new(analysis.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
 		classes = append(classes, node.Package+"."+node.ClassName)
 	}
 
-	callApp := full.NewJavaFullApp()
+	callApp := analysis.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	analyser := NewEvaluateAnalyser()

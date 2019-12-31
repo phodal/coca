@@ -298,11 +298,11 @@ func buildMethodParameters(requestBodyClass string) {
 	currentRestApi.MethodParams = params
 }
 
-func (s *JavaApiListener) appendClasses(classes []models.JClassNode) {
+func (s *JavaApiListener) AppendClasses(classes []models.JClassNode) {
 	jClassNodes = classes
 }
 
-func (s *JavaApiListener) getClassApis() []models.RestApi {
+func (s *JavaApiListener) GetClassApis() []models.RestApi {
 	return RestApis
 }
 

@@ -71,7 +71,7 @@ type JavaFullListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaFullListener) getNodeInfo() []domain.JClassNode {
+func (s *JavaFullListener) GetNodeInfo() []domain.JClassNode {
 	return classNodes
 }
 
@@ -628,7 +628,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 	}
 }
 
-func (s *JavaFullListener) appendClasses(classes []string) {
+func (s *JavaFullListener) AppendClasses(classes []string) {
 	clzs = classes
 }
 

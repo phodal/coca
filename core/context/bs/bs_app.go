@@ -91,13 +91,13 @@ func checkComplexIf(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmel
 }
 
 func checkRepeatedSwitches(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
-	if method.MethodBs.IfSize > BS_IF_SWITCH_LENGTH {
+	if method.MethodBs.IfSize >= BS_IF_SWITCH_LENGTH {
 		longParams := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "ifSize", method.MethodBs.IfSize}
 		*badSmellList = append(*badSmellList, *longParams)
 	}
 
 	// repeatedSwitches
-	if method.MethodBs.SwitchSize > BS_IF_SWITCH_LENGTH {
+	if method.MethodBs.SwitchSize >= BS_IF_SWITCH_LENGTH {
 		longParams := &bs_domain.BadSmellModel{node.Path, strconv.Itoa(method.StartLine), "repeatedSwitches", "switchSize", method.MethodBs.SwitchSize}
 		*badSmellList = append(*badSmellList, *longParams)
 	}

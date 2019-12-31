@@ -55,11 +55,6 @@ func TestRCallGraph_Constructor(t *testing.T) {
 rankdir = LR;
 edge [dir="back"];
 "com.phodal.coca.analysis.JavaCallApp.parse" -> "com.phodal.coca.analysis.JavaCallApp.analysisDir";
-"com.phodal.coca.analysis.JavaCallApp.parse" -> "com.phodal.coca.analysis.JavaCallApp.analysisDir";
-"com.phodal.coca.analysis.JavaCallApp.parse" -> "com.phodal.coca.analysis.JavaCallApp.analysisDir";
-"com.phodal.coca.analysis.JavaCallApp.parse" -> "com.phodal.coca.analysis.JavaCallApp.analysisDir";
-"com.phodal.coca.analysis.JavaCallApp.parse" -> "com.phodal.coca.analysis.JavaCallApp.analysisDir";
-
 }
 `))
 }

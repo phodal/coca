@@ -58,6 +58,7 @@ func BuildRCallMethodMap(parserDeps []domain.JClassNode, projectMaps map[string]
 }
 
 var loopCount = 0
+var lastChild = ""
 
 func (c RCallGraph) buildRCallChain(funcName string, methodMap map[string][]string) string {
 	if loopCount >= 6 {
@@ -68,7 +69,11 @@ func (c RCallGraph) buildRCallChain(funcName string, methodMap map[string][]stri
 	if len(methodMap[funcName]) > 0 {
 		var arrayResult = ""
 		for _, child := range methodMap[funcName] {
+			if child == lastChild {
+				return ""
+			}
 			if len(methodMap[child]) > 0 {
+				lastChild = child
 				arrayResult = arrayResult + c.buildRCallChain(child, methodMap)
 			}
 			if funcName == child {

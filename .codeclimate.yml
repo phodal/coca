@@ -1,7 +1,5 @@
+version: "2"
 exclude_patterns:
   - "languages/"
   - "_fixtures/"
-  - "examples/"
-  - "docs/"
-  - "stories/"
-  - "bughunt"
+  - "wasm/"

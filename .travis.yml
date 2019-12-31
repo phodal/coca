@@ -37,7 +37,7 @@ before_install:
   - go get -t -v  $(go list ./... | grep -v /languages/)
 
 script:
-  - go test -v  $(go list ./... | grep -v /languages/)  -race -coverprofile=coverage.txt -covermode=atomic
+  - go test -v  $(go list ./... | grep -v /languages/) -coverprofile=coverage.txt -covermode=atomic
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

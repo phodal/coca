@@ -3,9 +3,9 @@ package unused
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/adapter/coca_file"
 	base2 "github.com/phodal/coca/core/context/refactor/base"
 	models2 "github.com/phodal/coca/core/context/refactor/base/models"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"io/ioutil"
 	"os"
 	"path/filepath"

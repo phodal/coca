@@ -3,9 +3,9 @@ package api
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/adapter/coca_file"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast/api"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 )
 

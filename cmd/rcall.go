@@ -6,7 +6,6 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/context/rcall"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
@@ -36,7 +35,7 @@ var reverseCmd = &cobra.Command{
 		}
 
 		analyser := rcall.NewRCallGraph()
-		file := coca_file.ReadFile(dependence)
+		file := cmd_util.ReadFile(dependence)
 		if file == nil {
 			log.Fatal("lost file:" + dependence)
 		}
@@ -50,7 +49,7 @@ var reverseCmd = &cobra.Command{
 			content = strings.ReplaceAll(content, remove, "")
 		}
 
-		coca_file.WriteToCocaFile("rcall.dot", content)
+		cmd_util.WriteToCocaFile("rcall.dot", content)
 		cmd_util.ConvertToSvg("call")
 	},
 }

@@ -9,7 +9,6 @@ import (
 	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -46,7 +45,7 @@ var apiCmd = &cobra.Command{
 		apiPrefix := apiCmdConfig.AggregateApi
 
 		parsedDeps = nil
-		depFile := coca_file.ReadFile(depPath)
+		depFile := cmd_util.ReadFile(depPath)
 		if depFile == nil {
 			log.Fatal("lost deps")
 		}
@@ -56,7 +55,7 @@ var apiCmd = &cobra.Command{
 		if *&apiCmdConfig.ForceUpdate {
 			forceUpdateApi()
 		} else {
-			apiContent := coca_file.ReadCocaFile("apis.json")
+			apiContent := cmd_util.ReadCocaFile("apis.json")
 			if apiContent == nil {
 				forceUpdateApi()
 			}
@@ -89,7 +88,7 @@ var apiCmd = &cobra.Command{
 			dotContent = replacePackage(dotContent)
 		}
 
-		coca_file.WriteToCocaFile("api.dot", dotContent)
+		cmd_util.WriteToCocaFile("api.dot", dotContent)
 		cmd_util.ConvertToSvg("api")
 	},
 }
@@ -98,7 +97,7 @@ func forceUpdateApi() {
 	app := new(api.JavaApiApp)
 	restApis = app.AnalysisPath(apiCmdConfig.Path, parsedDeps, identifiersMap, diMap)
 	cModel, _ := json.MarshalIndent(restApis, "", "\t")
-	coca_file.WriteToCocaFile("apis.json", string(cModel))
+	cmd_util.WriteToCocaFile("apis.json", string(cModel))
 }
 
 func replacePackage(content string) string {

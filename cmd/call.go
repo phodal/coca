@@ -6,7 +6,6 @@ import (
 	"github.com/phodal/coca/cmd/config"
 	. "github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
@@ -33,7 +32,7 @@ var callGraphCmd = &cobra.Command{
 
 		if dependence != "" {
 			analyser := NewCallGraph()
-			file := coca_file.ReadFile(dependence)
+			file := cmd_util.ReadFile(dependence)
 			if file == nil {
 				log.Fatal("lost file:" + dependence)
 			}
@@ -45,7 +44,7 @@ var callGraphCmd = &cobra.Command{
 				content = strings.ReplaceAll(content, remove, "")
 			}
 
-			coca_file.WriteToCocaFile("call.dot", content)
+			cmd_util.WriteToCocaFile("call.dot", content)
 			cmd_util.ConvertToSvg("call")
 		}
 	},

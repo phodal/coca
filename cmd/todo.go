@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/todo"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -30,7 +30,7 @@ var todoCmd = &cobra.Command{
 		todos := app.AnalysisPath(path)
 
 		simple, _ := json.MarshalIndent(todos, "", "\t")
-		coca_file.WriteToCocaFile("simple-todos.json", string(simple))
+		cmd_util.WriteToCocaFile("simple-todos.json", string(simple))
 
 		fmt.Println("Todos Count", len(todos))
 
@@ -38,7 +38,7 @@ var todoCmd = &cobra.Command{
 			gitTodos := app.BuildWithGitHistory(todos)
 
 			cModel, _ := json.MarshalIndent(todos, "", "\t")
-			coca_file.WriteToCocaFile("todos.json", string(cModel))
+			cmd_util.WriteToCocaFile("todos.json", string(cModel))
 
 			table := tablewriter.NewWriter(os.Stdout)
 			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})

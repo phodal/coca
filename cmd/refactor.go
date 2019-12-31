@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	. "github.com/phodal/coca/core/context/refactor/move_class"
 	. "github.com/phodal/coca/core/context/refactor/rename"
 	. "github.com/phodal/coca/core/context/refactor/unused"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 )
 
@@ -30,7 +30,7 @@ var refactorCmd = &cobra.Command{
 		}
 
 		if dependence != "" && rename != "" {
-			file := coca_file.ReadFile(dependence)
+			file := cmd_util.ReadFile(dependence)
 			if file == nil {
 				return
 			}

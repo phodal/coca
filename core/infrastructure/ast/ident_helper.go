@@ -2,21 +2,21 @@ package ast
 
 import (
 	"encoding/json"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 )
 
 func LoadIdentify(importPath string) []domain.JIdentifier {
 	var identifiers []domain.JIdentifier
 
-	apiContent := coca_file.ReadCocaFile("identify.json")
+	apiContent := cmd_util.ReadCocaFile("identify.json")
 	if apiContent == nil || string(apiContent) == "null" {
 		identifierApp := new(analysis.JavaIdentifierApp)
 		ident := identifierApp.AnalysisPath(importPath)
 
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
-		coca_file.WriteToCocaFile("identify.json", string(identModel))
+		cmd_util.WriteToCocaFile("identify.json", string(identModel))
 
 		return *&ident
 	}
@@ -28,14 +28,14 @@ func LoadIdentify(importPath string) []domain.JIdentifier {
 func LoadTestIdentify(files []string) []domain.JIdentifier {
 	var identifiers []domain.JIdentifier
 
-	apiContent := coca_file.ReadCocaFile("tidentify.json")
+	apiContent := cmd_util.ReadCocaFile("tidentify.json")
 
 	if apiContent == nil || string(apiContent) == "null" {
 		identifierApp := analysis.NewJavaIdentifierApp()
 		ident := identifierApp.AnalysisFiles(files)
 
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
-		coca_file.WriteToCocaFile("tidentify.json", string(identModel))
+		cmd_util.WriteToCocaFile("tidentify.json", string(identModel))
 
 		return *&ident
 	}

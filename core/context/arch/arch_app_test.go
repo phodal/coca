@@ -3,10 +3,10 @@ package arch
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/arch/tequila"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"io"
 	"path/filepath"
 	"reflect"
@@ -48,7 +48,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g.Expect(len(graph.SubGraphs.SubGraphs)).To(Equal(3))
 
 	jsonContent, _ := json.MarshalIndent(results, "", "\t")
-	content := coca_file.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
+	content := cmd_util.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
 
 	g.Expect(JSONBytesEqual(jsonContent, content)).To(Equal(true))
 }

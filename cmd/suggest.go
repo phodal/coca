@@ -3,9 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/context/suggest"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -21,7 +21,7 @@ var suggestCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		parsedDeps = nil
-		depFile := coca_file.ReadFile(apiCmdConfig.DependencePath)
+		depFile := cmd_util.ReadFile(apiCmdConfig.DependencePath)
 		if depFile == nil {
 			log.Fatal("lost deps")
 		}

@@ -2,10 +2,10 @@ package tbs
 
 import (
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/core/adapter/coca_file"
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 	"testing"
 )

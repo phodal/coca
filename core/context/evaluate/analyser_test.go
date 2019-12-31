@@ -3,10 +3,10 @@ package evaluate
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 	"testing"
 )
@@ -18,7 +18,7 @@ func TestAnalyser_Analysis(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service.json"
 	codePath = filepath.FromSlash(codePath)
-	file := coca_file.ReadFile(codePath)
+	file := cmd_util.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	analyser.Analysis(parsedDeps, nil)
@@ -33,7 +33,7 @@ func Test_Service_LifeCycle(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_lifecycle.json"
 	codePath = filepath.FromSlash(codePath)
-	file := coca_file.ReadFile(codePath)
+	file := cmd_util.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)
@@ -50,7 +50,7 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_same_return_type.json"
 	codePath = filepath.FromSlash(codePath)
-	file := coca_file.ReadFile(codePath)
+	file := cmd_util.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := analyser.Analysis(parsedDeps, nil)
@@ -65,7 +65,7 @@ func Test_Long_Parameters(t *testing.T) {
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_long_parameters.json"
 	codePath = filepath.FromSlash(codePath)
-	file := coca_file.ReadFile(codePath)
+	file := cmd_util.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	result := analyser.Analysis(parsedDeps, nil)

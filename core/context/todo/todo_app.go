@@ -3,10 +3,10 @@ package todo
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/core/adapter/coca_file"
 	"github.com/phodal/coca/core/adapter/shell"
 	"github.com/phodal/coca/core/context/git"
 	"github.com/phodal/coca/core/context/todo/astitodo"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	. "github.com/phodal/coca/languages/java"
 	"path/filepath"
 	"strconv"

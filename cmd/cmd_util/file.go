@@ -5,14 +5,13 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"log"
 	"os/exec"
 )
 
 func GetDepsFromJson(depPath string) []domain.JClassNode {
 	var parsedDeps []domain.JClassNode
-	file := coca_file.ReadFile(depPath)
+	file := ReadFile(depPath)
 	if file == nil {
 		log.Fatal("lost file:" + depPath)
 	}

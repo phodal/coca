@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/cmd/cmd_util"
+	"github.com/phodal/coca/core/adapter/coca_file"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/ast/bs"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 )
 
@@ -42,7 +43,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string, ignoreRules []string) []bs_do
 	}
 
 	bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
-	coca_file.WriteToCocaFile("nodeInfos.json", string(bsModel))
+	cmd_util.WriteToCocaFile("nodeInfos.json", string(bsModel))
 
 	bsList := AnalysisBadSmell(nodeInfos)
 

@@ -1,9 +1,9 @@
 package unused
 
 import (
+	"github.com/phodal/coca/cmd/cmd_util"
 	support3 "github.com/phodal/coca/core/context/refactor/rename/support"
 	. "github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -25,7 +25,7 @@ func RenameMethodApp(deps []JClassNode, p string) *RemoveMethodApp {
 }
 
 func (j *RemoveMethodApp) Start() {
-	configBytes := coca_file.ReadFile(configPath)
+	configBytes := cmd_util.ReadFile(configPath)
 	if configBytes == nil {
 		return
 	}

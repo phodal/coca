@@ -3,8 +3,8 @@ package unused_classes
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"path/filepath"
 	"testing"
 )
@@ -16,7 +16,7 @@ func TestRefactoring(t *testing.T) {
 	var parsedDeps []domain.JClassNode
 	codePath := "../../../../_fixtures/count/call.json"
 	codePath = filepath.FromSlash(codePath)
-	file := coca_file.ReadFile(codePath)
+	file := cmd_util.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
 	results := Refactoring(parsedDeps)

@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"encoding/json"
+	"github.com/phodal/coca/cmd/cmd_util"
 	bs2 "github.com/phodal/coca/core/context/bs"
 	"github.com/phodal/coca/core/domain/bs_domain"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/phodal/coca/core/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"strings"
@@ -39,7 +39,7 @@ var badsmellCmd = &cobra.Command{
 			bsModel, _ = json.MarshalIndent(sortSmells, "", "\t")
 		}
 
-		coca_file.WriteToCocaFile("bs.json", string(bsModel))
+		cmd_util.WriteToCocaFile("bs.json", string(bsModel))
 	},
 }
 

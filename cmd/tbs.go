@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/olekukonko/tablewriter"
+	"github.com/phodal/coca/cmd/cmd_util"
+	"github.com/phodal/coca/core/adapter/coca_file"
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/tbs"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast"
-	"github.com/phodal/coca/core/infrastructure/coca_file"
 	"github.com/spf13/cobra"
 	"os"
 	"strconv"
@@ -43,7 +44,7 @@ var tbsCmd = &cobra.Command{
 		classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
 
 		nodeContent, _ := json.MarshalIndent(classNodes, "", "\t")
-		coca_file.WriteToCocaFile("tdeps.json", string(nodeContent))
+		cmd_util.WriteToCocaFile("tdeps.json", string(nodeContent))
 
 		app := tbs.NewTbsApp()
 		result := app.AnalysisPath(classNodes, identifiersMap)
@@ -60,7 +61,7 @@ var tbsCmd = &cobra.Command{
 			resultContent, _ = json.MarshalIndent(tbsMap, "", "\t")
 		}
 
-		coca_file.WriteToCocaFile("tbs.json", string(resultContent))
+		cmd_util.WriteToCocaFile("tbs.json", string(resultContent))
 
 		if len(result) <= 20 {
 			table := tablewriter.NewWriter(os.Stdout)

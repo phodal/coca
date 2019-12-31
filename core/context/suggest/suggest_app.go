@@ -2,7 +2,6 @@ package suggest
 
 import (
 	"github.com/phodal/coca/core/domain"
-	"strings"
 )
 
 type SuggestApp struct {
@@ -65,24 +64,7 @@ func factorySuggest(clz domain.JClassNode, suggests []domain.Suggest) []domain.S
 		currentSuggestList = append(currentSuggestList, suggest)
 	}
 
-	var suggest = domain.NewSuggest(clz, "", "")
-	for _, s := range currentSuggestList {
-		if !strings.Contains(suggest.Pattern, s.Pattern) {
-			if suggest.Pattern != "" {
-				suggest.Pattern = suggest.Pattern + ", " + s.Pattern
-			} else {
-				suggest.Pattern = s.Pattern
-			}
-		}
-
-		if !strings.Contains(suggest.Reason, s.Reason) {
-			if suggest.Reason != "" {
-				suggest.Reason = suggest.Reason + ", " + s.Reason
-			} else {
-				suggest.Reason = s.Reason
-			}
-		}
-	}
+	suggest := domain.MergeSuggest(clz, currentSuggestList)
 
 	if suggest.Pattern != "" {
 		suggests = append(suggests, suggest)

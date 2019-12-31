@@ -1,47 +1,35 @@
 package unused
 
 import (
-	"github.com/phodal/coca/cmd/cmd_util"
-	support3 "github.com/phodal/coca/core/context/refactor/rename/support"
+	support "github.com/phodal/coca/core/context/refactor/rename/support"
 	. "github.com/phodal/coca/core/domain"
 	"io/ioutil"
 	"log"
 	"strings"
 )
 
-var parsedChange []support3.RefactorChangeRelate
+var parsedChange []support.RefactorChangeRelate
 
 type RemoveMethodApp struct {
 }
 
-var configPath string
-var conf string
 var parsedDeps []JClassNode
 
-func RenameMethodApp(deps []JClassNode, p string) *RemoveMethodApp {
+func RenameMethodApp(deps []JClassNode) *RemoveMethodApp {
 	parsedDeps = deps
-	configPath = p
 	return &RemoveMethodApp{}
 }
 
-func (j *RemoveMethodApp) Start() {
-	configBytes := cmd_util.ReadFile(configPath)
-	if configBytes == nil {
-		return
-	}
-
-	conf = string(configBytes)
-
-	parsedChange = support3.ParseRelates(conf)
-
+func (j *RemoveMethodApp) Refactoring(conf string) {
+	parsedChange = support.ParseRelates(conf)
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []JClassNode, relates []support3.RefactorChangeRelate) {
+func startParse(nodes []JClassNode, relates []support.RefactorChangeRelate) {
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
-			oldInfo := support3.BuildMethodPackageInfo(related.OldObj)
-			newInfo := support3.BuildMethodPackageInfo(related.NewObj)
+			oldInfo := support.BuildMethodPackageInfo(related.OldObj)
+			newInfo := support.BuildMethodPackageInfo(related.NewObj)
 
 			if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
 				for _, method := range pkgNode.Methods {
@@ -68,7 +56,7 @@ func methodCallToMethodModel(call JMethodCall) JMethod {
 	return *&JMethod{Name: call.MethodName, Type: call.Type, StartLine: call.StartLine, StartLinePosition: call.StartLinePosition, StopLine: call.StopLine, StopLinePosition: call.StopLinePosition}
 }
 
-func updateSelfRefs(node JClassNode, method JMethod, info *support3.PackageClassInfo) {
+func updateSelfRefs(node JClassNode, method JMethod, info *support.PackageClassInfo) {
 	path := node.Path
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

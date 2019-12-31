@@ -37,9 +37,15 @@ var refactorCmd = &cobra.Command{
 
 			_ = json.Unmarshal(file, &parsedDeps)
 
+			renameApp := RenameMethodApp(parsedDeps)
 
-			renameApp := RenameMethodApp(parsedDeps, rename)
-			renameApp.Start()
+			configBytes := cmd_util.ReadFile(rename)
+			if configBytes == nil {
+				return
+			}
+
+			conf := string(configBytes)
+			renameApp.Refactoring(conf)
 		}
 	},
 }

@@ -33,7 +33,7 @@ func (j *RemoveUnusedImportApp) Analysis() []models2.JFullIdentifier {
 
 		currentFile, _ = filepath.Abs(file)
 		displayName := filepath.Base(file)
-		fmt.Println("Start parse java call: " + displayName)
+		fmt.Println("Refactoring parse java call: " + displayName)
 
 		parser := coca_file.ProcessFile(file)
 		context := parser.CompilationUnit()

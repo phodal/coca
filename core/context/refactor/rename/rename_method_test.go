@@ -32,7 +32,7 @@ func TestRenameMethodApp(t *testing.T) {
 	wg.Add(1)
 	go func() {
 
-		RenameMethodApp(callNodes, configPath).Start()
+		RenameMethodApp(callNodes).Refactoring("")
 		defer wg.Done()
 
 		newnodes := callApp.AnalysisPath(codePath, classes, identifiers)
@@ -47,7 +47,7 @@ func TestRenameMethodApp(t *testing.T) {
 		configPath2 := "../../../../_fixtures/refactor/rename_back.config"
 		configPath2 = filepath.FromSlash(configPath2)
 
-		RenameMethodApp(callNodes, configPath2).Start()
+		RenameMethodApp(callNodes).Refactoring("")
 		defer wg.Done()
 
 		renameBackNodes := callApp.AnalysisPath(codePath, classes, identifiers)

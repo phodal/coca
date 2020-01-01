@@ -6,6 +6,25 @@
         const go = new Go();
         WebAssembly.instantiateStreaming(fetch("coca.wasm"), go.importObject).then((result) => {
             go.run(result.instance);
+
+            let code = `
+package com.phodal.coca.analysis.identifier.model;
+
+public class DataClass {
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+}
+`;
+            compileCode(code, (err, message) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log(message);
+            })
         });
     </script>
 </head>

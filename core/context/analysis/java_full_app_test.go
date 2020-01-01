@@ -210,3 +210,23 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 
 	g.Expect(methodCallMap["assertEquals"].Parameters).To(Equal([]string{"true", "true"}))
 }
+
+func Test_BuilderCallSplitIssut(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/abug/BuilderCallSplitIssue.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	methodCallMap := make(map[string]domain.JMethodCall)
+	for _, method := range callNodes[0].Methods {
+		for _, call := range method.MethodCalls {
+			methodCallMap[call.MethodName] = call
+		}
+	}
+
+	g.Expect(methodCallMap["assertThat"].Class).To(Equal(""))
+	//g.Expect(methodCallMap["assertThat"].Class).To(Equal("Assertions"))
+	g.Expect(methodCallMap["isFalse"].Class).To(Equal("assertThat(ctx"))
+}

@@ -1,4 +1,45 @@
-# [](https://github.com/phodal/coca/compare/v1.2.0...v) (2019-12-29)
+# [](https://github.com/phodal/coca/compare/v1.3.0...v) (2020-01-01)
+
+
+
+# [1.3.0](https://github.com/phodal/coca/compare/v1.2.0...v1.3.0) (2019-12-31)
+
+
+### Bug Fixes
+
+* add dirty fix for creator ([12ad93e](https://github.com/phodal/coca/commit/12ad93ea4c425f600781de218a295781a4075bb2))
+* add multiple creator test ([d14e2eb](https://github.com/phodal/coca/commit/d14e2ebfe8c4b60d08d3353cd920e4a0baf801d5))
+* fix annotaion & add creatorclass ([bd934af](https://github.com/phodal/coca/commit/bd934aff62af905123ece466d0a723ff7d1ad89c))
+* fix build & windows slash issues ([6f13cdb](https://github.com/phodal/coca/commit/6f13cdb875347ce79b51362a4b44faa118dbb957))
+* fix call constructor bug ([45bf836](https://github.com/phodal/coca/commit/45bf836bc1ad97751a729bab282dfc45ccacd5d8))
+* fix creator annotaion issue ([fc4de07](https://github.com/phodal/coca/commit/fc4de078d03ed48f5a91676a3b29ffcf20eae576))
+* fix creator array issue ([1668c84](https://github.com/phodal/coca/commit/1668c842c62eafdb3fe4f5e8aff8cba4301a9318))
+* fix creator unkonw issue ([483be10](https://github.com/phodal/coca/commit/483be10d4180207a6d0447134f47d358bb6c3015))
+* fix data issue ([ba0a9a7](https://github.com/phodal/coca/commit/ba0a9a71fa3e378efa096d410b204e75dfde4aa0))
+* fix git format issue ([9c1ba22](https://github.com/phodal/coca/commit/9c1ba22ff198757751c81af3a91ba279c86b83b8))
+* fix ignore test with unkown issue ([26f2716](https://github.com/phodal/coca/commit/26f27168afbf912f1e2350370a5b3b5d404c7920))
+* fix typo ([235db0a](https://github.com/phodal/coca/commit/235db0a92119042df369337a8075145cdce18533))
+* fix typo ([58b29c2](https://github.com/phodal/coca/commit/58b29c2a8ce3d65004003167b807ae8a0c7f54da))
+* try to fix call assert in self issue ([f041478](https://github.com/phodal/coca/commit/f04147890503f9a332c41d532d7464310d8ba91c))
+* try to fix creator issues ([bed0dcd](https://github.com/phodal/coca/commit/bed0dcd838e08648a17d1203ac15e28a787d9b71))
+* try to fix os stat error issue for ci ([873f613](https://github.com/phodal/coca/commit/873f613a5fb439a2654d01de2b1cbb0d88361286))
+
+
+### Features
+
+* [tbs] adapter add output ([7b6f9f8](https://github.com/phodal/coca/commit/7b6f9f82df5dc63ab4e8316112b433345b829ec3))
+* [tbs] add duplicateAssert ([e291ef0](https://github.com/phodal/coca/commit/e291ef0263a8e7040b289f9f0b5fb49702584e81))
+* [tbs] add RedundantAssertionTest ([b4893c4](https://github.com/phodal/coca/commit/b4893c4775d917b88826f0752f6431a295431d25))
+* [tbs] add sort by type cmd & fix mockito issue ([354931a](https://github.com/phodal/coca/commit/354931a300ce769b08d3d51ff309891f4c4e93c6))
+* [tbs] add start line to bs ([02905e5](https://github.com/phodal/coca/commit/02905e58226cf7c8a2d15e0ff1e61d096102d524))
+* [tbs] add unknown test ([f218d55](https://github.com/phodal/coca/commit/f218d55c442ad4aec6cb3434852655ecdae7d694))
+* [tbs] update assertion list ([1b6b725](https://github.com/phodal/coca/commit/1b6b725c91a2f2e947e467623994e7f41ed49894))
+* add parameters to jmethocall api ([a046289](https://github.com/phodal/coca/commit/a046289ad2f7e0596fdbcaea8c0d8c1fa565897f))
+* lets support multiple go version again.... ([1230a0a](https://github.com/phodal/coca/commit/1230a0a514c37b153eb0fa52288de0ffaa24120a))
+* move behavior to domain ([592f5e7](https://github.com/phodal/coca/commit/592f5e7aa7b56c84f5ef7a44d4d12fd136e13209))
+* move sugeest to domain ([2cf880a](https://github.com/phodal/coca/commit/2cf880a1cce9f996c75ce4ef735115632cef245f))
+* try in wasm ([2d34993](https://github.com/phodal/coca/commit/2d3499344b4d61203c8d6325c211ab130b691082))
+* update assertion list ([3b1a707](https://github.com/phodal/coca/commit/3b1a7077c2c7deae1f8e5ec030727bae78b7a7b2))
 
 
 

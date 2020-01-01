@@ -358,18 +358,6 @@ func exitMethod() {
 	}
 
 	currentMethod = domain.NewJMethod()
-	//
-	//if methodQueue == nil || len(methodQueue) < 1 {
-	//	currentMethod = models.NewJMethod()
-	//	return
-	//}
-	//
-	//if len(methodQueue) <= 2 {
-	//	currentMethod = methodQueue[0]
-	//} else {
-	//	methodQueue = methodQueue[0 : len(methodQueue)-1]
-	//	currentMethod = models.NewJMethod()
-	//}
 }
 
 // TODO: add inner creator examples

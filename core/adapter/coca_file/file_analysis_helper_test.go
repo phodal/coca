@@ -7,9 +7,20 @@ import (
 	"testing"
 )
 
-func TestJavaCallApp_AnalysisPath(t *testing.T) {
+func TestJavaCallApp_ProcessStringWorks(t *testing.T) {
 	g := NewGomegaWithT(t)
-	parser := ProcessString("package com.phodal.coca;")
+	parser := ProcessString(`
+package com.phodal.coca.analysis.identifier.model;
+
+public class DataClass {
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+}
+
+`)
 
 	context := parser.CompilationUnit()
 	listener := identifier.NewJavaIdentifierListener()
@@ -17,5 +28,5 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	antlr.NewParseTreeWalker().Walk(listener, context)
 
 	identifiers := listener.GetNodes()
-	g.Expect(len(identifiers)).To(Equal(0))
+	g.Expect(identifiers[0].ClassName).To(Equal("DataClass"))
 }

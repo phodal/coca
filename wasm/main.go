@@ -8,7 +8,17 @@ import (
 )
 
 func main()  {
-	parser := coca_file.ProcessString("package com.phodal.coca;")
+	parser := coca_file.ProcessString(`
+package com.phodal.coca.analysis.identifier.model;
+
+public class DataClass {
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+}
+`)
 	context := parser.CompilationUnit()
 
 	listener := identifier.NewJavaIdentifierListener()

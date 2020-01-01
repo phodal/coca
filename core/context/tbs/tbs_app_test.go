@@ -111,6 +111,16 @@ func TestTbsApp_CallAssertInClassTests(t *testing.T) {
 	g.Expect(len(result)).To(Equal(0))
 }
 
+func TestTbsApp_ShouldReturnEmptyForFunc(t *testing.T) {
+	g := NewGomegaWithT(t)
+	codePath := "../../../_fixtures/tbs/regression/EnvironmentSystemIntegrationTests.java"
+	codePath = filepath.FromSlash(codePath)
+
+	result := buildTbsResult(codePath)
+
+	g.Expect(len(result)).To(Equal(0))
+}
+
 func buildTbsResult(codePath string) []TestBadSmell {
 	files := coca_file.GetJavaTestFiles(codePath)
 	var identifiers []domain.JIdentifier

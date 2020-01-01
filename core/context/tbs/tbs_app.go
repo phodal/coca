@@ -30,6 +30,7 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 			}
 
 			currentMethodCalls := updateMethodCallsForSelfCall(method, clz, callMethodMap)
+			method.MethodCalls = currentMethodCalls
 
 			var testType = ""
 			for _, annotation := range method.Annotations {

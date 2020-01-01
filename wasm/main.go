@@ -7,7 +7,7 @@ import (
 )
 
 func registerCallbacks() {
-	js.Global().Set("compileCode", js.FuncOf(CompileCodeCallback))
+	js.Global().Set("compileCode", js.FuncOf(compileCodeCallback))
 }
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	<-c
 }
 
-func CompileCodeCallback(value js.Value, args []js.Value) interface{} {
+func compileCodeCallback(value js.Value, args []js.Value) interface{} {
 	callback := args[len(args)-1:][0]
 	message := args[0].String()
 
@@ -26,4 +26,3 @@ func CompileCodeCallback(value js.Value, args []js.Value) interface{} {
 	callback.Invoke(js.Null(), string(identModel))
 	return nil
 }
-

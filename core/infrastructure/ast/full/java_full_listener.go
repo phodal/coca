@@ -482,8 +482,16 @@ func (s *JavaFullListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclar
 func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var jMethodCall = domain.NewJMethodCall()
 
-	var targetCtx = ctx.GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	var targetType = parseTargetType(targetCtx)
+	targetCtx := ctx.GetParent().GetChild(0).(antlr.ParseTree)
+	var targetType = parseTargetType(targetCtx.GetText())
+
+	if targetCtx.GetChild(0) != nil {
+		if reflect.TypeOf(targetCtx.GetChild(0)).String() == "*parser.MethodCallContext" {
+			methodCallContext := targetCtx.GetChild(0).(*parser.MethodCallContext)
+			targetType = methodCallContext.IDENTIFIER().GetText()
+		}
+	}
+
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
 	jMethodCall.StartLine = ctx.GetStart().GetLine()
@@ -522,7 +530,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 			targetType = clz
 		} else {
-			targetType = buildSpecificTarget(targetType)
+			targetType = buildSelfThisTarget(targetType)
 			targetType = buildMethodNameForBuilder(ctx, targetType)
 		}
 	}
@@ -530,7 +538,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
 
-	// TODO: 处理链试调用
+
 	if isChainCall(targetType) {
 		split := strings.Split(targetType, ".")
 		targetType = split[0]
@@ -540,7 +548,8 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	if ctx.ExpressionList() != nil {
 		var parameters []string
 		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {
-			parameters = append(parameters, expression.(*parser.ExpressionContext).GetText())
+			expressionCtx := expression.(*parser.ExpressionContext)
+			parameters = append(parameters, expressionCtx.GetText())
 		}
 		jMethodCall.Parameters = parameters
 	}
@@ -582,7 +591,7 @@ func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 	return targetType
 }
 
-func buildSpecificTarget(targetType string) string {
+func buildSelfThisTarget(targetType string) string {
 	isSelfFieldCall := strings.Contains(targetType, "this.")
 	if isSelfFieldCall {
 		targetType = strings.ReplaceAll(targetType, "this.", "")

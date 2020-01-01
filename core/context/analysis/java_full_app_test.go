@@ -38,7 +38,7 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 }
 
 func getCallNodes(codePath string) []domain.JClassNode {
-	identifierApp := new(JavaIdentifierApp)
+	identifierApp := NewJavaIdentifierApp()
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range iNodes {
@@ -227,6 +227,5 @@ func Test_BuilderCallSplitIssut(t *testing.T) {
 	}
 
 	g.Expect(methodCallMap["assertThat"].Class).To(Equal(""))
-	//g.Expect(methodCallMap["assertThat"].Class).To(Equal("Assertions"))
-	g.Expect(methodCallMap["isFalse"].Class).To(Equal("assertThat(ctx"))
+	g.Expect(methodCallMap["isFalse"].Class).To(Equal("assertThat"))
 }

@@ -475,10 +475,6 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	methodMap[getMethodMapName(currentMethod)] = method
 }
 
-func (s *JavaFullListener) EnterLocalTypeDeclaration(ctx *parser.LocalTypeDeclarationContext) {
-	// TODO
-}
-
 func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var jMethodCall = domain.NewJMethodCall()
 
@@ -510,11 +506,6 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	packageName := currentPkg
 
 	if fullType != "" {
-		if targetType == "" {
-			// 处理自调用
-			targetType = currentClz
-		}
-
 		packageName = removeTarget(fullType)
 		methodName = callee
 	} else {
@@ -537,12 +528,6 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
-
-
-	if isChainCall(targetType) {
-		split := strings.Split(targetType, ".")
-		targetType = split[0]
-	}
 	jMethodCall.Class = targetType
 
 	if ctx.ExpressionList() != nil {

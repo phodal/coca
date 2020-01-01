@@ -233,12 +233,10 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 func Test_InnerClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/call/InnerClass.java"
+	codePath := "../../../_fixtures/abug/InnerClass.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
 
-	//g.Expect(callNodes[0].Class).To(Equal("Outer"))
-
-	g.Expect(callNodes[0].Class).To(Equal("Inner"))
+	g.Expect(callNodes[0].Class).To(Equal("Outer"))
 }

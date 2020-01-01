@@ -117,6 +117,11 @@ func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 }
 
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	// TODO: support inner class
+	if currentNode.Class != "" {
+		return
+	}
+
 	hasEnterClass = true
 	currentClzExtend = ""
 	currentType = "Class"

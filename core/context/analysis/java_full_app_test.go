@@ -211,7 +211,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 	g.Expect(methodCallMap["assertEquals"].Parameters).To(Equal([]string{"true", "true"}))
 }
 
-func Test_BuilderCallSplitIssut(t *testing.T) {
+func Test_BuilderCallSplitIssue(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/abug/BuilderCallSplitIssue.java"
@@ -228,4 +228,17 @@ func Test_BuilderCallSplitIssut(t *testing.T) {
 
 	g.Expect(methodCallMap["assertThat"].Class).To(Equal(""))
 	g.Expect(methodCallMap["isFalse"].Class).To(Equal("assertThat"))
+}
+
+func Test_InnerClass(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/call/InnerClass.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	//g.Expect(callNodes[0].Class).To(Equal("Outer"))
+
+	g.Expect(callNodes[0].Class).To(Equal("Inner"))
 }

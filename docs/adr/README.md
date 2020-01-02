@@ -9,3 +9,4 @@
 * [7. practise-go-patterns-in-coca](0007-practise-go-patterns-in-coca.md)
 * [8. testable-evaluate](0008-testable-evaluate.md)
 * [9. git-tell-file-history](0009-git-tell-file-history.md)
+* [10. pluginable](0010-pluginable.md)

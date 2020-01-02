@@ -545,6 +545,13 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 		}
 	}
 
+	// TODO: 处理链试调用
+	// for normal builder chain call
+	if isChainCall(targetType) {
+		split := strings.Split(targetType, ".")
+		targetType = split[0]
+	}
+
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
 	jMethodCall.Class = targetType

@@ -2,7 +2,6 @@ package call_test
 
 import (
 	"encoding/json"
-	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/analysis"
@@ -59,18 +58,23 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	analyser := call.NewCallGraph()
 	dotContent, apis := analyser.AnalysisByFiles(restApis, callNodes, diMap)
 
+	domain.SortApi(apis)
 	g.Expect(len(apis)).To(Equal(4))
+	g.Expect(apis[0].Size).To(Equal(4))
+	g.Expect(apis[1].Size).To(Equal(7))
+	g.Expect(apis[2].Size).To(Equal(12))
+	g.Expect(apis[3].Size).To(Equal(16))
 
 	g.Expect(dotContent).To(Equal(`digraph G { 
 
 "POST /books" -> "com.phodal.pholedge.book.BookController.createBook";
 "com.phodal.pholedge.book.BookFactory.create" -> "com.phodal.pholedge.core.IdGenerator.generate";
 "com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.builder";
-"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.builder().id";
-"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.builder().id(id).isbn";
-"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.builder().id(id).isbn(isbn).name";
-"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.builder().id(id).isbn(isbn).name(name).createdAt";
-"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.builder().id(id).isbn(isbn).name(name).createdAt(now()).build";
+"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.id";
+"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.isbn";
+"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.name";
+"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.createdAt";
+"com.phodal.pholedge.book.model.Book.create" -> "com.phodal.pholedge.book.model.Book.build";
 "com.phodal.pholedge.book.BookFactory.create" -> "com.phodal.pholedge.book.model.Book.create";
 "com.phodal.pholedge.book.BookService.createBook" -> "com.phodal.pholedge.book.BookFactory.create";
 "com.phodal.pholedge.book.BookService.createBook" -> "com.phodal.pholedge.book.model.command.CreateBookCommand.getIsbn";

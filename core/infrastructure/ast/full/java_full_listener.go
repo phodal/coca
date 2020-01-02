@@ -88,7 +88,6 @@ func (s *JavaFullListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
 func (s *JavaFullListener) exitBody() {
 	if currentNode.Class != "" {
 		currentNode.Fields = fields
-		currentNode.Type = currentType
 		currentNode.Path = fileName
 		currentNode.SetMethodFromMap(methodMap)
 	}
@@ -98,11 +97,29 @@ func (s *JavaFullListener) exitBody() {
 		return
 	}
 
-	if currentNode.Class != "" {
+	if currentNode.Class == "" {
+		currentNode = domain.NewClassNode()
+		initClass()
+		return
+	}
+
+	if currentNode.Type == "InnerClass" && len(classNodeQueue) >= 1 {
+		classNodeQueue[0].InnerClass = append(currentNode.InnerClass, *currentNode)
+	} else {
 		classNodes = append(classNodes, *currentNode)
 	}
 
-	currentNode = domain.NewClassNode()
+	if len(classNodeQueue) >= 1 {
+		if len(classNodeQueue) == 1 {
+			currentNode = &classNodeQueue[0]
+		} else {
+			classNodeQueue = classNodeQueue[0 : len(classNodeQueue)-1]
+			currentNode = &classNodeQueue[len(classNodeQueue)-1]
+		}
+	} else {
+		currentNode = domain.NewClassNode()
+	}
+
 	initClass()
 }
 
@@ -119,12 +136,14 @@ func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	// TODO: support inner class
 	if currentNode.Class != "" {
-		return
+		classNodeQueue = append(classNodeQueue, *currentNode)
+		currentType = "InnerClass"
+	} else {
+		currentType = "Class"
 	}
 
 	hasEnterClass = true
 	currentClzExtend = ""
-	currentType = "Class"
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
 		currentNode.Class = currentClz
@@ -143,6 +162,7 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 		}
 	}
 
+	currentNode.Type = currentType
 	// TODO: 支持依赖注入
 }
 
@@ -157,6 +177,8 @@ func (s *JavaFullListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclar
 			buildExtend(typ.GetText())
 		}
 	}
+
+	currentNode.Type = currentType
 }
 
 func (s *JavaFullListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
@@ -399,7 +421,6 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 		createdName := identifier.GetText()
 		localVars[variableName] = createdName
 
-		classNodeQueue = append(classNodeQueue, *currentNode)
 		buildCreatedCall(createdName, ctx)
 
 		if currentMethod.Name == "" {
@@ -413,6 +434,8 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 		if ctx.ClassCreatorRest().(*parser.ClassCreatorRestContext).ClassBody() == nil {
 			return
 		}
+
+		//classNodeQueue = append(classNodeQueue, *currentNode)
 
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
@@ -441,7 +464,9 @@ func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 		methodMap[getMethodMapName(currentMethod)] = method
 	}
 
-	currentType = ""
+	if currentType == "CreatorClass" {
+		currentType = ""
+	}
 	currentCreatorNode = *domain.NewClassNode()
 
 	if classNodeQueue == nil || len(classNodeQueue) < 1 {

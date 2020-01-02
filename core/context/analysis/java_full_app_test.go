@@ -77,6 +77,7 @@ func TestInterface(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]domain.JMethod)
+
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -238,5 +239,7 @@ func Test_InnerClass(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
+	g.Expect(len(callNodes)).To(Equal(1))
 	g.Expect(callNodes[0].Class).To(Equal("Outer"))
+	g.Expect(callNodes[0].InnerClass[0].Class).To(Equal("Inner"))
 }

@@ -40,7 +40,6 @@ func Test_ShouldBuildSuccessDataFromJson(t *testing.T) {
 func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-
 	codePath := "../../../_fixtures/examples/api"
 	identApp := analysis.NewJavaIdentifierApp()
 	identifiers := identApp.AnalysisPath(filepath.FromSlash(codePath))

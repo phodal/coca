@@ -505,8 +505,11 @@ results
  - TBD
     - Comment Analysis
       - [ ] incorrect comment ? http://das.encs.concordia.ca/uploads/2018/02/Maldonado_thesis.pdf
- 
- 
+ - Online Code Analysis
+    - [x] WASM support
+    - [ ] expose WASM API
+    - [ ] GitHub search code
+
 Documents Todo:
 
  - [ ] Docs

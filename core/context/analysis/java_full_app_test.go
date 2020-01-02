@@ -243,3 +243,16 @@ func Test_InnerClass(t *testing.T) {
 	g.Expect(callNodes[0].Class).To(Equal("Outer"))
 	g.Expect(callNodes[0].InnerClass[0].Class).To(Equal("Inner"))
 }
+
+func Test_DoubleClass(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/abug/DoubleClass.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	g.Expect(len(callNodes)).To(Equal(2))
+	g.Expect(callNodes[0].Class).To(Equal("ClassOne"))
+	g.Expect(callNodes[1].Class).To(Equal("ClassTwo"))
+}

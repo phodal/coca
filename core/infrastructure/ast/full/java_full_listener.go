@@ -27,7 +27,7 @@ var methodMap = make(map[string]domain.JMethod)
 var creatorMethodMap = make(map[string]domain.JMethod)
 
 var methodQueue []domain.JMethod
-var classQueue []string
+var classStringQueue []string
 
 var identMap map[string]domain.JIdentifier
 var isOverrideMethod = false
@@ -48,7 +48,8 @@ func NewJavaFullListener(nodes map[string]domain.JIdentifier, file string) *Java
 	currentPkg = ""
 	classNodes = nil
 	currentNode = domain.NewClassNode()
-	classQueue = nil
+	classStringQueue = nil
+	classNodeQueue = nil
 	methodQueue = nil
 
 	initClass()
@@ -391,18 +392,18 @@ func exitMethod() {
 func (s *JavaFullListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
-		classQueue = append(classQueue, currentClz)
+		classStringQueue = append(classStringQueue, currentClz)
 	}
 }
 
 // TODO: add inner creator examples
 func (s *JavaFullListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
-	if classQueue == nil || len(classQueue) <= 1 {
+	if classStringQueue == nil || len(classStringQueue) <= 1 {
 		return
 	}
 
-	classQueue = classQueue[0 : len(classQueue)-1]
-	currentClz = classQueue[len(classQueue)-1]
+	classStringQueue = classStringQueue[0 : len(classStringQueue)-1]
+	currentClz = classStringQueue[len(classStringQueue)-1]
 }
 
 func getMethodMapName(method domain.JMethod) string {

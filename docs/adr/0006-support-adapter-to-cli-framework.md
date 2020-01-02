@@ -5,6 +5,7 @@ Date: 2019-12-21
 ## Status
 
 2019-12-21 proposed
+2020-01-01 done
 
 ## Context
 

@@ -8,7 +8,11 @@ import (
 	"github.com/phodal/coca/core/infrastructure/ast/identifier"
 )
 
-func CompileCode(code string) []domain.JClassNode {
+type WAnalysis struct {
+
+}
+
+func (w *WAnalysis) Analysis(code string) []domain.JClassNode {
 	classes, identMap := prepareForAnalysis(code)
 
 	parser := coca_file.ProcessString(code)

@@ -20,7 +20,7 @@ func compileCodeCallback(value js.Value, args []js.Value) interface{} {
 	callback := args[len(args)-1:][0]
 	message := args[0].String()
 
-	results := wadapter.CompileCode(message)
+	results := new(wadapter.WAnalysis).Analysis(message)
 
 	identModel, _ := json.Marshal(results)
 	callback.Invoke(js.Null(), string(identModel))

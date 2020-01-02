@@ -509,6 +509,8 @@ results
     - [x] WASM support
     - [ ] expose WASM API
     - [ ] GitHub search code
+ - [ ] Pluggable
+    - [ ] plugin support
 
 Documents Todo:
 

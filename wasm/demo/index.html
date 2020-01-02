@@ -6,6 +6,7 @@
         const go = new Go();
         WebAssembly.instantiateStreaming(fetch("coca.wasm"), go.importObject).then((result) => {
             go.run(result.instance);
+            console.log(result.instance)
 
             let code = `
 package com.phodal.coca.analysis.identifier.model;
@@ -23,6 +24,13 @@ public class Hello {
 }
 `;
             compileCode(code, (err, message) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log(message);
+            });
+            analysisBadsmell(code, (err, message) => {
                 if (err) {
                     console.error(err);
                     return;

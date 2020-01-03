@@ -12,6 +12,8 @@ Context here...
 
 examples: https://www.npmjs.com/package/webpack-bundle-analyzer
 
+A Golang Examples: https://github.com/willpoint/treemap/blob/master/treemap.go
+
 ## Decision
 
 Decision here...

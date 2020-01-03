@@ -11,3 +11,4 @@
 * [9. git-tell-file-history](0009-git-tell-file-history.md)
 * [10. pluginable](0010-pluginable.md)
 * [11. module-treemap-visualization](0011-module-treemap-visualization.md)
+* [12. check-dependence-usage-for-module-seperate](0012-check-dependence-usage-for-module-seperate.md)

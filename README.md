@@ -512,6 +512,8 @@ results
     - [ ] GitHub search code
  - [ ] Pluggable
     - [ ] plugin support
+ - [ ] 3rd-party Dependence Analysis
+    - [ ] analysis XML or Groovy Scripts
 
 Documents Todo:
 

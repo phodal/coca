@@ -94,6 +94,15 @@ func TestStaticUtils(t *testing.T) {
 	g.Expect(result.Summary.UtilsCount).To(Equal(1))
 }
 
+func Test_CheckFornull(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/evaluate/checkfornull"
+	result := buildEvaluateResult(codePath)
+
+	g.Expect(len(result.Nullable.Items)).To(Equal(1))
+}
+
 func buildEvaluateResult(codePath string) evaluator.EvaluateModel {
 	codePath = filepath.FromSlash(codePath)
 	identifierApp := new(analysis.JavaIdentifierApp)

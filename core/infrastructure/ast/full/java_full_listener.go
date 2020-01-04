@@ -591,8 +591,7 @@ func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 				if reflect.TypeOf(varDeclParent).String() == "*parser.VariableDeclaratorsContext" {
 					parent := varDeclParent.(*parser.VariableDeclaratorsContext).GetParent()
 					if reflect.TypeOf(parent).String() == "*parser.LocalVariableDeclarationContext" {
-						context := parent.(*parser.LocalVariableDeclarationContext)
-						targetType = context.TypeType().GetText()
+						targetType = parent.(*parser.LocalVariableDeclarationContext).TypeType().GetText()
 					}
 				}
 			}
@@ -666,11 +665,6 @@ func parseTargetType(targetCtx string) string {
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
 		targetType = currentClz
 	} else {
-		//if isChainCall(targetVar) {
-		//	split := strings.Split(targetType, ".")
-		//	targetVar = split[0]
-		//}
-
 		fieldType := mapFields[targetVar]
 		formalType := formalParameters[targetVar]
 		localVarType := localVars[targetVar]
@@ -707,7 +701,6 @@ func warpTargetFullType(targetType string) (string, string) {
 		}
 	}
 
-	//maybe the same package
 	for _, clz := range clzs {
 		if strings.HasSuffix(clz, "."+pureTargetType) {
 			callType = "same package"
@@ -715,11 +708,10 @@ func warpTargetFullType(targetType string) (string, string) {
 		}
 	}
 
-	//1. current package, 2. import by *
 	if pureTargetType == "super" || pureTargetType == "this" {
 		for _, imp := range imports {
 			if strings.HasSuffix(imp, currentClzExtend) {
-				callType = pureTargetType
+				callType = "super"
 				return imp, callType
 			}
 		}

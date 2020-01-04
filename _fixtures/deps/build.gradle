@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'study.huhao.demo'
+version = '1.0.0'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude module: 'junit'
+    }
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.5.2'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.1.1'
+
+    implementation 'org.flywaydb:flyway-core'
+    testImplementation 'org.flywaydb.flyway-test-extensions:flyway-spring-test:6.0.0'
+
+    testImplementation 'io.rest-assured:rest-assured'
+
+    testImplementation 'com.tngtech.archunit:archunit-junit5-api:0.12.0'
+    testRuntimeOnly 'com.tngtech.archunit:archunit-junit5-engine:0.12.0'
+}
+
+test {
+    useJUnitPlatform()
+}

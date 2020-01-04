@@ -514,6 +514,8 @@ results
     - [ ] plugin support
  - [ ] 3rd-party Dependence Analysis
     - [ ] analysis XML or Groovy Scripts
+    - [ ] Groovy Support
+      - [ ] migrate to Golang Styles
 
 Documents Todo:
 

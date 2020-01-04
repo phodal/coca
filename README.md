@@ -481,6 +481,8 @@ results
    - [x] strategy 
    - [x] builder
    - [ ] cycle-deps -> adapter / agency
+   - [ ] bad patterns
+       - [ ] singleton
  -  Evaluate API
     - [x] Average Method Length
     - [x] Average Class Method Count

@@ -35,8 +35,8 @@ parser grammar GroovyParser;
 
 options {
     tokenVocab = GroovyLexer;
-    contextSuperClass = GroovyParserRuleContext;
-    superClass = AbstractParser;
+//    contextSuperClass = GroovyParserRuleContext;
+//    superClass = AbstractParser;
 }
 //
 //@header {
@@ -459,8 +459,8 @@ literal
     :   IntegerLiteral                                                                      #integerLiteralAlt
     |   FloatingPointLiteral                                                                #floatingPointLiteralAlt
     |   stringLiteral                                                                       #stringLiteralAlt
-    |   BooleanLiteral                                                                      #booleanLiteralAlt
-    |   NullLiteral                                                                         #nullLiteralAlt
+    |   BooleanLiteral                                                                      #boolLiteralAlt
+    |   NullLiteral                                                                         #nilLiteralAlt
     ;
 
 // GSTRING
@@ -582,7 +582,7 @@ blockStatement
     ;
 
 localVariableDeclaration
-    :   { !SemanticPredicates.isInvalidLocalVariableDeclaration(_input) }?
+    : //  { !SemanticPredicates.isInvalidLocalVariableDeclaration(_input) }?
         variableDeclaration[0]
     ;
 
@@ -678,8 +678,7 @@ statement
     |   localVariableDeclaration                                                                            #localVariableDeclarationStmtAlt
 
     // validate the method in the AstBuilder#visitMethodDeclaration, e.g. method without method body is not allowed
-    |   { !SemanticPredicates.isInvalidMethodDeclaration(_input) }?
-        methodDeclaration[3, 9]                                                                             #methodDeclarationStmtAlt
+    |  methodDeclaration[3, 9]                                                                             #methodDeclarationStmtAlt
 
     |   statementExpression                                                                                 #expressionStmtAlt
 
@@ -761,14 +760,12 @@ expressionInPar
     :   LPAREN enhancedStatementExpression rparen
     ;
 
-expressionList[boolean canSpread]
+expressionList[bool canSpread]
     :   expressionListElement[$canSpread] (COMMA expressionListElement[$canSpread])*
     ;
 
-expressionListElement[boolean canSpread]
-    :   (   MUL { require($canSpread, "spread operator is not allowed here", -1); }
-        |
-        ) expression
+expressionListElement[bool canSpread]
+    :   (MUL | ) expression
     ;
 
 enhancedStatementExpression
@@ -902,7 +899,6 @@ enhancedExpression
 commandExpression
     :   expression
         (
-            { !SemanticPredicates.isFollowingArgumentsOrClosure($expression.ctx) }?
             argumentList
         |
             /* if pathExpression is a method call, no need to have any more arguments */
@@ -1157,7 +1153,7 @@ identifier
     |   VAR
     |
         // if 'static' followed by DOT, we can treat them as identifiers, e.g. static.unused = { -> }
-        { DOT == _input.LT(2).getType() }?
+//        { DOT == _input.LT(2).getType() }?
         STATIC
     |   IN
 //    |   DEF
@@ -1231,7 +1227,7 @@ rparen
     :   RPAREN
     |
         // !!!Error Alternative, impact the performance of parsing
-        { require(false, "Missing ')'"); }
+//        { require(false, "Missing ')'"); }
     ;
 
 nls

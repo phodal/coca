@@ -389,17 +389,17 @@ func (s *BaseGroovyParserListener) EnterStringLiteralAlt(ctx *StringLiteralAltCo
 // ExitStringLiteralAlt is called when production stringLiteralAlt is exited.
 func (s *BaseGroovyParserListener) ExitStringLiteralAlt(ctx *StringLiteralAltContext) {}
 
-// EnterBooleanLiteralAlt is called when production booleanLiteralAlt is entered.
-func (s *BaseGroovyParserListener) EnterBooleanLiteralAlt(ctx *BooleanLiteralAltContext) {}
+// EnterBoolLiteralAlt is called when production boolLiteralAlt is entered.
+func (s *BaseGroovyParserListener) EnterBoolLiteralAlt(ctx *BoolLiteralAltContext) {}
 
-// ExitBooleanLiteralAlt is called when production booleanLiteralAlt is exited.
-func (s *BaseGroovyParserListener) ExitBooleanLiteralAlt(ctx *BooleanLiteralAltContext) {}
+// ExitBoolLiteralAlt is called when production boolLiteralAlt is exited.
+func (s *BaseGroovyParserListener) ExitBoolLiteralAlt(ctx *BoolLiteralAltContext) {}
 
-// EnterNullLiteralAlt is called when production nullLiteralAlt is entered.
-func (s *BaseGroovyParserListener) EnterNullLiteralAlt(ctx *NullLiteralAltContext) {}
+// EnterNilLiteralAlt is called when production nilLiteralAlt is entered.
+func (s *BaseGroovyParserListener) EnterNilLiteralAlt(ctx *NilLiteralAltContext) {}
 
-// ExitNullLiteralAlt is called when production nullLiteralAlt is exited.
-func (s *BaseGroovyParserListener) ExitNullLiteralAlt(ctx *NullLiteralAltContext) {}
+// ExitNilLiteralAlt is called when production nilLiteralAlt is exited.
+func (s *BaseGroovyParserListener) ExitNilLiteralAlt(ctx *NilLiteralAltContext) {}
 
 // EnterGstring is called when production gstring is entered.
 func (s *BaseGroovyParserListener) EnterGstring(ctx *GstringContext) {}

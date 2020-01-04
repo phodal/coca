@@ -185,11 +185,11 @@ type GroovyParserListener interface {
 	// EnterStringLiteralAlt is called when entering the stringLiteralAlt production.
 	EnterStringLiteralAlt(c *StringLiteralAltContext)
 
-	// EnterBooleanLiteralAlt is called when entering the booleanLiteralAlt production.
-	EnterBooleanLiteralAlt(c *BooleanLiteralAltContext)
+	// EnterBoolLiteralAlt is called when entering the boolLiteralAlt production.
+	EnterBoolLiteralAlt(c *BoolLiteralAltContext)
 
-	// EnterNullLiteralAlt is called when entering the nullLiteralAlt production.
-	EnterNullLiteralAlt(c *NullLiteralAltContext)
+	// EnterNilLiteralAlt is called when entering the nilLiteralAlt production.
+	EnterNilLiteralAlt(c *NilLiteralAltContext)
 
 	// EnterGstring is called when entering the gstring production.
 	EnterGstring(c *GstringContext)
@@ -791,11 +791,11 @@ type GroovyParserListener interface {
 	// ExitStringLiteralAlt is called when exiting the stringLiteralAlt production.
 	ExitStringLiteralAlt(c *StringLiteralAltContext)
 
-	// ExitBooleanLiteralAlt is called when exiting the booleanLiteralAlt production.
-	ExitBooleanLiteralAlt(c *BooleanLiteralAltContext)
+	// ExitBoolLiteralAlt is called when exiting the boolLiteralAlt production.
+	ExitBoolLiteralAlt(c *BoolLiteralAltContext)
 
-	// ExitNullLiteralAlt is called when exiting the nullLiteralAlt production.
-	ExitNullLiteralAlt(c *NullLiteralAltContext)
+	// ExitNilLiteralAlt is called when exiting the nilLiteralAlt production.
+	ExitNilLiteralAlt(c *NilLiteralAltContext)
 
 	// ExitGstring is called when exiting the gstring production.
 	ExitGstring(c *GstringContext)

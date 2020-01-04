@@ -33,9 +33,9 @@
  */
 lexer grammar GroovyLexer;
 
-options {
-    superClass = AbstractLexer;
-}
+//options {
+//    superClass = AbstractLexer;
+//}
 //
 //@header {
 //    import static org.apache.groovy.parser.antlr4.SemanticPredicates.*;
@@ -214,7 +214,8 @@ StringLiteral
     :   GStringQuotationMark    DqStringCharacter* GStringQuotationMark
     |   SqStringQuotationMark   SqStringCharacter* SqStringQuotationMark
 
-    |   Slash      { this.isRegexAllowed() && _input.LA(1) != '*' }?
+    |   Slash
+//    |   Slash      { this.isRegexAllowed() && _input.LA(1) != '*' }?
                  SlashyStringCharacter+       Slash
 
     |   TdqStringQuotationMark  TdqStringCharacter*    TdqStringQuotationMark
@@ -230,10 +231,10 @@ TdqGStringBegin
     :   TdqStringQuotationMark   TdqStringCharacter* Dollar -> type(GStringBegin), pushMode(TDQ_GSTRING_MODE), pushMode(GSTRING_TYPE_SELECTOR_MODE)
     ;
 SlashyGStringBegin
-    :   Slash { this.isRegexAllowed() && _input.LA(1) != '*' }? SlashyStringCharacter* Dollar { isFollowedByJavaLetterInGString(_input) }? -> type(GStringBegin), pushMode(SLASHY_GSTRING_MODE), pushMode(GSTRING_TYPE_SELECTOR_MODE)
+    :   Slash SlashyStringCharacter* Dollar -> type(GStringBegin), pushMode(SLASHY_GSTRING_MODE), pushMode(GSTRING_TYPE_SELECTOR_MODE)
     ;
 DollarSlashyGStringBegin
-    :   DollarSlashyGStringQuotationMarkBegin DollarSlashyStringCharacter* Dollar { isFollowedByJavaLetterInGString(_input) }? -> type(GStringBegin), pushMode(DOLLAR_SLASHY_GSTRING_MODE), pushMode(GSTRING_TYPE_SELECTOR_MODE)
+    :   DollarSlashyGStringQuotationMarkBegin DollarSlashyStringCharacter* Dollar -> type(GStringBegin), pushMode(DOLLAR_SLASHY_GSTRING_MODE), pushMode(GSTRING_TYPE_SELECTOR_MODE)
     ;
 
 mode DQ_GSTRING_MODE;
@@ -263,7 +264,7 @@ SlashyGStringEnd
     :   Dollar? Slash  -> type(GStringEnd), popMode
     ;
 SlashyGStringPart
-    :   Dollar { isFollowedByJavaLetterInGString(_input) }?   -> type(GStringPart), pushMode(GSTRING_TYPE_SELECTOR_MODE)
+    :   Dollar -> type(GStringPart), pushMode(GSTRING_TYPE_SELECTOR_MODE)
     ;
 SlashyGStringCharacter
     :   SlashyStringCharacter -> more
@@ -274,7 +275,7 @@ DollarSlashyGStringEnd
     :   DollarSlashyGStringQuotationMarkEnd      -> type(GStringEnd), popMode
     ;
 DollarSlashyGStringPart
-    :   Dollar { isFollowedByJavaLetterInGString(_input) }?   -> type(GStringPart), pushMode(GSTRING_TYPE_SELECTOR_MODE)
+    :   Dollar -> type(GStringPart), pushMode(GSTRING_TYPE_SELECTOR_MODE)
     ;
 DollarSlashyGStringCharacter
     :   DollarSlashyStringCharacter -> more
@@ -282,7 +283,7 @@ DollarSlashyGStringCharacter
 
 mode GSTRING_TYPE_SELECTOR_MODE;
 GStringLBrace
-    :   '{' { this.enterParen();  } -> type(LBRACE), popMode, pushMode(DEFAULT_MODE)
+    :   '{' -> type(LBRACE), popMode, pushMode(DEFAULT_MODE)
     ;
 GStringIdentifier
     :   IdentifierInGString -> type(Identifier), popMode, pushMode(GSTRING_PATH_MODE)
@@ -294,14 +295,7 @@ GStringPathPart
     :   Dot IdentifierInGString
     ;
 RollBackOne
-    :   . {
-            // a trick to handle GStrings followed by EOF properly
-            if (EOF == _input.LA(1) && ('"' == _input.LA(-1) || '/' == _input.LA(-1))) {
-                setType(GStringEnd);
-            } else {
-                setChannel(HIDDEN);
-            }
-          } -> popMode
+    :   .  -> popMode
     ;
 
 
@@ -323,29 +317,29 @@ SqStringCharacter
 // character in the triple double quotation string. e.g. """a"""
 fragment TdqStringCharacter
     :   ~["\\$]
-    |   GStringQuotationMark { _input.LA(1) != '"' || _input.LA(2) != '"' || _input.LA(3) == '"' && (_input.LA(4) != '"' || _input.LA(5) != '"') }?
+    |   GStringQuotationMark
     |   EscapeSequence
     ;
 
 // character in the triple single quotation string. e.g. '''a'''
 fragment TsqStringCharacter
     :   ~['\\]
-    |   SqStringQuotationMark { _input.LA(1) != '\'' || _input.LA(2) != '\'' || _input.LA(3) == '\'' && (_input.LA(4) != '\'' || _input.LA(5) != '\'') }?
+    |   SqStringQuotationMark
     |   EscapeSequence
     ;
 
 // character in the slashy string. e.g. /a/
 fragment SlashyStringCharacter
     :   SlashEscape
-    |   Dollar { !isFollowedByJavaLetterInGString(_input) }?
+    |   Dollar
     |   ~[/$\u0000]
     ;
 
 // character in the collar slashy string. e.g. $/a/$
 fragment DollarSlashyStringCharacter
     :   SlashEscape | DollarSlashEscape | DollarDollarEscape
-    |   Slash { _input.LA(1) != '$' }?
-    |   Dollar { !isFollowedByJavaLetterInGString(_input) }?
+    |   Slash
+    |   Dollar
     |   ~[/$\u0000]
     ;
 
@@ -456,10 +450,12 @@ IntegerLiteral
         |   HexIntegerLiteral
         |   OctalIntegerLiteral
         |   BinaryIntegerLiteral
-        ) (Underscore { require(false, "Number ending with underscores is invalid", -1, true); })?
+        ) (Underscore)?
+//         { require(false, "Number ending with underscores is invalid", -1, true); }
 
     // !!! Error Alternative !!!
-    |   Zero ([0-9] { invalidDigitCount++; })+ { require(false, "Invalid octal number", -(invalidDigitCount + 1), true); } IntegerTypeSuffix?
+    |   Zero ([0-9])+ IntegerTypeSuffix?
+//    |   Zero ([0-9] { invalidDigitCount++; })+ { require(false, "Invalid octal number", -(invalidDigitCount + 1), true); } IntegerTypeSuffix?
     ;
 
 fragment
@@ -598,7 +594,7 @@ BinaryDigitOrUnderscore
 FloatingPointLiteral
     :   (   DecimalFloatingPointLiteral
         |   HexadecimalFloatingPointLiteral
-        ) (Underscore { require(false, "Number ending with underscores is invalid", -1, true); })?
+        ) (Underscore)?
     ;
 
 fragment
@@ -793,18 +789,25 @@ NOT_IDENTICAL       : '!==';
 ARROW               : '->';
 
 // !internalPromise will be parsed as !in ternalPromise, so semantic predicates are necessary
-NOT_INSTANCEOF      : '!instanceof' { isFollowedBy(_input, ' ', '\t', '\r', '\n') }?;
-NOT_IN              : '!in'         { isFollowedBy(_input, ' ', '\t', '\r', '\n', '[', '(', '{') }?;
+NOT_INSTANCEOF      : '!instanceof' ;
+NOT_IN              : '!in'         ;
 
 
 // §3.11 Separators
 
-LPAREN          : '('  { this.enterParen();     } -> pushMode(DEFAULT_MODE);
-RPAREN          : ')'  { this.exitParen();      } -> popMode;
-LBRACE          : '{'  { this.enterParen();     } -> pushMode(DEFAULT_MODE);
-RBRACE          : '}'  { this.exitParen();      } -> popMode;
-LBRACK          : '['  { this.enterParen();     } -> pushMode(DEFAULT_MODE);
-RBRACK          : ']'  { this.exitParen();      } -> popMode;
+LPAREN          : '('  -> pushMode(DEFAULT_MODE);
+RPAREN          : ')'  -> popMode;
+LBRACE          : '{'  -> pushMode(DEFAULT_MODE);
+RBRACE          : '}'  -> popMode;
+LBRACK          : '['  -> pushMode(DEFAULT_MODE);
+RBRACK          : ']'  -> popMode;
+//
+//LPAREN          : '('  { this.enterParen();     } -> pushMode(DEFAULT_MODE);
+//RPAREN          : ')'  { this.exitParen();      } -> popMode;
+//LBRACE          : '{'  { this.enterParen();     } -> pushMode(DEFAULT_MODE);
+//RBRACE          : '}'  { this.exitParen();      } -> popMode;
+//LBRACK          : '['  { this.enterParen();     } -> pushMode(DEFAULT_MODE);
+//RBRACK          : ']'  { this.exitParen();      } -> popMode;
 
 SEMI            : ';';
 COMMA           : ',';
@@ -925,23 +928,23 @@ WS  :  ([ \t\u000C]+ | LineEscape+)     -> skip
 
 
 // Inside (...) and [...] but not {...}, ignore newlines.
-NL  : '\r'? '\n'            { this.ignoreTokenInsideParens(); }
+NL  : '\r'? '\n'
     ;
 
 // Multiple-line comments(including groovydoc comments)
 ML_COMMENT
-    :   '/*' .*? '*/'       { this.ignoreMultiLineCommentConditionally(); } -> type(NL)
+    :   '/*' .*? '*/'        -> type(NL)
     ;
 
 // Single-line comments
 SL_COMMENT
-    :   '//' ~[\r\n\uFFFF]* { this.ignoreTokenInsideParens(); }             -> type(NL)
+    :   '//' ~[\r\n\uFFFF]*  -> type(NL)
     ;
 
 // Script-header comments.
 // The very first characters of the file may be "#!".  If so, ignore the first line.
 SH_COMMENT
-    :   '#!' { require(0 == this.tokenIndex, "Shebang comment should appear at the first line", -2, true); } ~[\r\n\uFFFF]* -> skip
+    :   '#!' ~[\r\n\uFFFF]* -> skip
     ;
 
 // Unexpected characters will be handled by groovy parser later.

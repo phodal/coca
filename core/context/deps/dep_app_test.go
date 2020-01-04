@@ -8,11 +8,10 @@ import (
 func TestAnalysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	pluginsStr := `plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.2.2.RELEASE'
-}
-`
+	pluginsStr := `dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}`
 
 	Analysis(pluginsStr)
 

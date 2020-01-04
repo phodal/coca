@@ -36,177 +36,177 @@ lexer grammar GroovyLexer;
 options {
     superClass = AbstractLexer;
 }
-
-@header {
-    import static org.apache.groovy.parser.antlr4.SemanticPredicates.*;
-    import java.util.Deque;
-    import java.util.ArrayDeque;
-    import java.util.Map;
-    import java.util.HashMap;
-    import java.util.Set;
-    import java.util.HashSet;
-    import java.util.Collections;
-    import java.util.Arrays;
-}
-
-@members {
-    private long tokenIndex     = 0;
-    private int  lastTokenType  = 0;
-    private int  invalidDigitCount = 0;
-
-    /**
-     * Record the index and token type of the current token while emitting tokens.
-     */
-    @Override
-    public void emit(Token token) {
-        this.tokenIndex++;
-
-        int tokenType = token.getType();
-        if (Token.DEFAULT_CHANNEL == token.getChannel()) {
-            this.lastTokenType = tokenType;
-        }
-
-        if (RollBackOne == tokenType) {
-            this.rollbackOneChar();
-        }
-
-        super.emit(token);
-    }
-
-    private static final Set<Integer> REGEX_CHECK_SET =
-                                            Collections.unmodifiableSet(
-                                                new HashSet<>(Arrays.asList(Identifier, CapitalizedIdentifier, NullLiteral, BooleanLiteral, THIS, RPAREN, RBRACK, RBRACE, IntegerLiteral, FloatingPointLiteral, StringLiteral, GStringEnd, INC, DEC)));
-    private boolean isRegexAllowed() {
-        if (REGEX_CHECK_SET.contains(this.lastTokenType)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * just a hook, which will be overrided by GroovyLangLexer
-     */
-    protected void rollbackOneChar() {}
-
-    private static class Paren {
-        private String text;
-        private int lastTokenType;
-        private int line;
-        private int column;
-
-        public Paren(String text, int lastTokenType, int line, int column) {
-            this.text = text;
-            this.lastTokenType = lastTokenType;
-            this.line = line;
-            this.column = column;
-        }
-
-        public String getText() {
-            return this.text;
-        }
-
-        public int getLastTokenType() {
-            return this.lastTokenType;
-        }
-
-        public int getLine() {
-            return line;
-        }
-
-        public int getColumn() {
-            return column;
-        }
-
-        @Override
-        public int hashCode() {
-            return (int) (text.hashCode() * line + column);
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Paren)) {
-                return false;
-            }
-
-            Paren other = (Paren) obj;
-
-            return this.text.equals(other.text) && (this.line == other.line && this.column == other.column);
-        }
-    }
-
-    private static final Map<String, String> PAREN_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
-        {
-            put("(", ")");
-            put("[", "]");
-            put("{", "}");
-        }
-    });
-
-    protected void enterParenCallback(String text) {}
-
-    protected void exitParenCallback(String text) {}
-
-    private final Deque<Paren> parenStack = new ArrayDeque<>(32);
-
-    private void enterParen() {
-        String text = getText();
-        enterParenCallback(text);
-        parenStack.push(new Paren(text, this.lastTokenType, getLine(), getCharPositionInLine()));
-    }
-
-    private void exitParen() {
-        Paren paren = parenStack.peek();
-        String text = getText();
-
-        require(null != paren, "Too many '" + text + "'");
-        require(text.equals(PAREN_MAP.get(paren.getText())),
-                "'" + paren.getText() + "'" + new PositionInfo(paren.getLine(), paren.getColumn()) + " can not match '" + text + "'", -1);
-
-        exitParenCallback(text);
-        parenStack.pop();
-    }
-    private boolean isInsideParens() {
-        Paren paren = parenStack.peek();
-
-        // We just care about "(" and "[", inside which the new lines will be ignored.
-        // Notice: the new lines between "{" and "}" can not be ignored.
-        if (null == paren) {
-            return false;
-        }
-        return ("(".equals(paren.getText()) && TRY != paren.getLastTokenType()) // we don't treat try-paren(i.e. try (....)) as parenthesis
-                    || "[".equals(paren.getText());
-    }
-    private void ignoreTokenInsideParens() {
-        if (!this.isInsideParens()) {
-            return;
-        }
-
-        this.setChannel(Token.HIDDEN_CHANNEL);
-    }
-    private void ignoreMultiLineCommentConditionally() {
-        if (!this.isInsideParens() && isFollowedByWhiteSpaces(_input)) {
-            return;
-        }
-
-        this.setChannel(Token.HIDDEN_CHANNEL);
-    }
-
-    @Override
-    public int getSyntaxErrorSource() {
-        return GroovySyntaxError.LEXER;
-    }
-
-    @Override
-    public int getErrorLine() {
-        return getLine();
-    }
-
-    @Override
-    public int getErrorColumn() {
-        return getCharPositionInLine() + 1;
-    }
-}
+//
+//@header {
+//    import static org.apache.groovy.parser.antlr4.SemanticPredicates.*;
+//    import java.util.Deque;
+//    import java.util.ArrayDeque;
+//    import java.util.Map;
+//    import java.util.HashMap;
+//    import java.util.Set;
+//    import java.util.HashSet;
+//    import java.util.Collections;
+//    import java.util.Arrays;
+//}
+//
+//@members {
+//    private long tokenIndex     = 0;
+//    private int  lastTokenType  = 0;
+//    private int  invalidDigitCount = 0;
+//
+//    /**
+//     * Record the index and token type of the current token while emitting tokens.
+//     */
+//    @Override
+//    public void emit(Token token) {
+//        this.tokenIndex++;
+//
+//        int tokenType = token.getType();
+//        if (Token.DEFAULT_CHANNEL == token.getChannel()) {
+//            this.lastTokenType = tokenType;
+//        }
+//
+//        if (RollBackOne == tokenType) {
+//            this.rollbackOneChar();
+//        }
+//
+//        super.emit(token);
+//    }
+//
+//    private static final Set<Integer> REGEX_CHECK_SET =
+//                                            Collections.unmodifiableSet(
+//                                                new HashSet<>(Arrays.asList(Identifier, CapitalizedIdentifier, NullLiteral, BooleanLiteral, THIS, RPAREN, RBRACK, RBRACE, IntegerLiteral, FloatingPointLiteral, StringLiteral, GStringEnd, INC, DEC)));
+//    private boolean isRegexAllowed() {
+//        if (REGEX_CHECK_SET.contains(this.lastTokenType)) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
+//
+//    /**
+//     * just a hook, which will be overrided by GroovyLangLexer
+//     */
+//    protected void rollbackOneChar() {}
+//
+//    private static class Paren {
+//        private String text;
+//        private int lastTokenType;
+//        private int line;
+//        private int column;
+//
+//        public Paren(String text, int lastTokenType, int line, int column) {
+//            this.text = text;
+//            this.lastTokenType = lastTokenType;
+//            this.line = line;
+//            this.column = column;
+//        }
+//
+//        public String getText() {
+//            return this.text;
+//        }
+//
+//        public int getLastTokenType() {
+//            return this.lastTokenType;
+//        }
+//
+//        public int getLine() {
+//            return line;
+//        }
+//
+//        public int getColumn() {
+//            return column;
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return (int) (text.hashCode() * line + column);
+//        }
+//
+//        @Override
+//        public boolean equals(Object obj) {
+//            if (!(obj instanceof Paren)) {
+//                return false;
+//            }
+//
+//            Paren other = (Paren) obj;
+//
+//            return this.text.equals(other.text) && (this.line == other.line && this.column == other.column);
+//        }
+//    }
+//
+//    private static final Map<String, String> PAREN_MAP = Collections.unmodifiableMap(new HashMap<String, String>() {
+//        {
+//            put("(", ")");
+//            put("[", "]");
+//            put("{", "}");
+//        }
+//    });
+//
+//    protected void enterParenCallback(String text) {}
+//
+//    protected void exitParenCallback(String text) {}
+//
+//    private final Deque<Paren> parenStack = new ArrayDeque<>(32);
+//
+//    private void enterParen() {
+//        String text = getText();
+//        enterParenCallback(text);
+//        parenStack.push(new Paren(text, this.lastTokenType, getLine(), getCharPositionInLine()));
+//    }
+//
+//    private void exitParen() {
+//        Paren paren = parenStack.peek();
+//        String text = getText();
+//
+//        require(null != paren, "Too many '" + text + "'");
+//        require(text.equals(PAREN_MAP.get(paren.getText())),
+//                "'" + paren.getText() + "'" + new PositionInfo(paren.getLine(), paren.getColumn()) + " can not match '" + text + "'", -1);
+//
+//        exitParenCallback(text);
+//        parenStack.pop();
+//    }
+//    private boolean isInsideParens() {
+//        Paren paren = parenStack.peek();
+//
+//        // We just care about "(" and "[", inside which the new lines will be ignored.
+//        // Notice: the new lines between "{" and "}" can not be ignored.
+//        if (null == paren) {
+//            return false;
+//        }
+//        return ("(".equals(paren.getText()) && TRY != paren.getLastTokenType()) // we don't treat try-paren(i.e. try (....)) as parenthesis
+//                    || "[".equals(paren.getText());
+//    }
+//    private void ignoreTokenInsideParens() {
+//        if (!this.isInsideParens()) {
+//            return;
+//        }
+//
+//        this.setChannel(Token.HIDDEN_CHANNEL);
+//    }
+//    private void ignoreMultiLineCommentConditionally() {
+//        if (!this.isInsideParens() && isFollowedByWhiteSpaces(_input)) {
+//            return;
+//        }
+//
+//        this.setChannel(Token.HIDDEN_CHANNEL);
+//    }
+//
+//    @Override
+//    public int getSyntaxErrorSource() {
+//        return GroovySyntaxError.LEXER;
+//    }
+//
+//    @Override
+//    public int getErrorLine() {
+//        return getLine();
+//    }
+//
+//    @Override
+//    public int getErrorColumn() {
+//        return getCharPositionInLine() + 1;
+//    }
+//}
 
 
 // §3.10.5 String Literals
@@ -870,10 +870,10 @@ JavaLetterInGString
     :   [a-zA-Z_] // these are the "java letters" below 0x7F, except for $
     |   // covers all characters above 0x7F which are not a surrogate
         ~[\u0000-\u007F\uD800-\uDBFF]
-        {Character.isJavaIdentifierStart(_input.LA(-1))}?
+//        {Character.isJavaIdentifierStart(_input.LA(-1))}?
     |   // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
         [\uD800-\uDBFF] [\uDC00-\uDFFF]
-        {Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+//        {Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
     ;
 
 fragment
@@ -881,10 +881,10 @@ JavaLetterOrDigitInGString
     :   [a-zA-Z0-9_] // these are the "java letters or digits" below 0x7F, except for $
     |   // covers all characters above 0x7F which are not a surrogate
         ~[\u0000-\u007F\uD800-\uDBFF]
-        {Character.isJavaIdentifierPart(_input.LA(-1))}?
+//        {Character.isJavaIdentifierPart(_input.LA(-1))}?
     |   // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
         [\uD800-\uDBFF] [\uDC00-\uDFFF]
-        {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+//        {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
     ;
 
 
@@ -893,10 +893,10 @@ JavaLetter
     :   [a-zA-Z$_] // these are the "java letters" below 0x7F
     |   // covers all characters above 0x7F which are not a surrogate
         ~[\u0000-\u007F\uD800-\uDBFF]
-        {Character.isJavaIdentifierStart(_input.LA(-1))}?
+//        {Character.isJavaIdentifierStart(_input.LA(-1))}?
     |   // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
         [\uD800-\uDBFF] [\uDC00-\uDFFF]
-        {Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+//        {Character.isJavaIdentifierStart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
     ;
 
 fragment
@@ -904,10 +904,10 @@ JavaLetterOrDigit
     :   [a-zA-Z0-9$_] // these are the "java letters or digits" below 0x7F
     |   // covers all characters above 0x7F which are not a surrogate
         ~[\u0000-\u007F\uD800-\uDBFF]
-        {Character.isJavaIdentifierPart(_input.LA(-1))}?
+//        {Character.isJavaIdentifierPart(_input.LA(-1))}?
     |   // covers UTF-16 surrogate pairs encodings for U+10000 to U+10FFFF
         [\uD800-\uDBFF] [\uDC00-\uDFFF]
-        {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
+//        {Character.isJavaIdentifierPart(Character.toCodePoint((char)_input.LA(-2), (char)_input.LA(-1)))}?
     ;
 
 //

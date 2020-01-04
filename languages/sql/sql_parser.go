@@ -1624,7 +1624,7 @@ func (p *SqlParser) Error() (localctx IErrorContext) {
 		localctx.(*ErrorContext)._UNEXPECTED_CHAR = _m
 	}
 
-	     //throw new RuntimeException("UNEXPECTED_CHAR=" + (func() string { if localctx.(*ErrorContext).Get_UNEXPECTED_CHAR() == nil { return "" } else { return localctx.(*ErrorContext).Get_UNEXPECTED_CHAR().GetText() }}()));
+	     throw new RuntimeException("UNEXPECTED_CHAR=" + (func() string { if localctx.(*ErrorContext).Get_UNEXPECTED_CHAR() == nil { return "" } else { return localctx.(*ErrorContext).Get_UNEXPECTED_CHAR().GetText() }}()));
 	   
 
 

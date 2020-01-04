@@ -38,62 +38,62 @@ options {
     contextSuperClass = GroovyParserRuleContext;
     superClass = AbstractParser;
 }
-
-@header {
-    import java.util.Map;
-    import org.codehaus.groovy.ast.NodeMetaDataHandler;
-    import org.apache.groovy.parser.antlr4.SemanticPredicates;
-}
-
-@members {
-
-    public static class GroovyParserRuleContext extends ParserRuleContext implements NodeMetaDataHandler {
-        private Map metaDataMap = null;
-
-        public GroovyParserRuleContext() {}
-
-        public GroovyParserRuleContext(ParserRuleContext parent, int invokingStateNumber) {
-            super(parent, invokingStateNumber);
-        }
-
-        @Override
-        public Map<?, ?> getMetaDataMap() {
-            return this.metaDataMap;
-        }
-
-        @Override
-        public void setMetaDataMap(Map<?, ?> metaDataMap) {
-            this.metaDataMap = metaDataMap;
-        }
-    }
-
-    @Override
-    public int getSyntaxErrorSource() {
-        return GroovySyntaxError.PARSER;
-    }
-
-    @Override
-    public int getErrorLine() {
-        Token token = _input.LT(-1);
-
-        if (null == token) {
-            return -1;
-        }
-
-        return token.getLine();
-    }
-
-    @Override
-    public int getErrorColumn() {
-        Token token = _input.LT(-1);
-
-        if (null == token) {
-            return -1;
-        }
-
-        return token.getCharPositionInLine() + 1 + token.getText().length();
-    }
-}
+//
+//@header {
+//    import java.util.Map;
+//    import org.codehaus.groovy.ast.NodeMetaDataHandler;
+//    import org.apache.groovy.parser.antlr4.SemanticPredicates;
+//}
+//
+//@members {
+//
+//    public static class GroovyParserRuleContext extends ParserRuleContext implements NodeMetaDataHandler {
+//        private Map metaDataMap = null;
+//
+//        public GroovyParserRuleContext() {}
+//
+//        public GroovyParserRuleContext(ParserRuleContext parent, int invokingStateNumber) {
+//            super(parent, invokingStateNumber);
+//        }
+//
+//        @Override
+//        public Map<?, ?> getMetaDataMap() {
+//            return this.metaDataMap;
+//        }
+//
+//        @Override
+//        public void setMetaDataMap(Map<?, ?> metaDataMap) {
+//            this.metaDataMap = metaDataMap;
+//        }
+//    }
+//
+//    @Override
+//    public int getSyntaxErrorSource() {
+//        return GroovySyntaxError.PARSER;
+//    }
+//
+//    @Override
+//    public int getErrorLine() {
+//        Token token = _input.LT(-1);
+//
+//        if (null == token) {
+//            return -1;
+//        }
+//
+//        return token.getLine();
+//    }
+//
+//    @Override
+//    public int getErrorColumn() {
+//        Token token = _input.LT(-1);
+//
+//        if (null == token) {
+//            return -1;
+//        }
+//
+//        return token.getCharPositionInLine() + 1 + token.getText().length();
+//    }
+//}
 
 // starting point for parsing a groovy file
 compilationUnit
@@ -200,11 +200,11 @@ typeParameter
     ;
 
 typeBound
-    :   type (BITAND nls type)*
+    :   typeType (BITAND nls typeType)*
     ;
 
 typeList
-    :   type (COMMA nls type)*
+    :   typeType (COMMA nls typeType)*
     ;
 
 
@@ -231,7 +231,7 @@ locals[ int t ]
                         // Only interface can extend more than one super class
                         {1 == $t}? scs=typeList
                     |
-                        sc=type
+                        sc=typeType
                     )
                 nls)?
             |
@@ -345,7 +345,7 @@ dimsOpt
     ;
 
 standardType
-options { baseContext = type; }
+options { baseContext = typeType; }
     :   annotationsOpt
         (
             primitiveType
@@ -355,7 +355,7 @@ options { baseContext = type; }
         dimsOpt
     ;
 
-type
+typeType
     :   annotationsOpt
         (
             (
@@ -395,8 +395,8 @@ typeArguments
     ;
 
 typeArgument
-    :   type
-    |   annotationsOpt QUESTION ((EXTENDS | SUPER) nls type)?
+    :   typeType
+    |   annotationsOpt QUESTION ((EXTENDS | SUPER) nls typeType)?
     ;
 
 annotatedQualifiedClassName
@@ -416,11 +416,11 @@ formalParameterList
     ;
 
 thisFormalParameter
-    :   type THIS
+    :   typeType THIS
     ;
 
 formalParameter
-    :   variableModifiersOpt type? ELLIPSIS? variableDeclaratorId (nls ASSIGN nls expression)?
+    :   variableModifiersOpt typeType? ELLIPSIS? variableDeclaratorId (nls ASSIGN nls expression)?
     ;
 
 methodBody
@@ -598,12 +598,12 @@ classifiedModifiers[int t]
 variableDeclaration[int t]
 @leftfactor { classifiedModifiers }
     :   classifiedModifiers[$t]
-        (   type? variableDeclarators
+        (   typeType? variableDeclarators
         |   typeNamePairs nls ASSIGN nls variableInitializer
         )
     |
         classifiedModifiers[$t]?
-        type variableDeclarators
+        typeType variableDeclarators
     ;
 
 typeNamePairs
@@ -611,7 +611,7 @@ typeNamePairs
     ;
 
 typeNamePair
-    :   type? variableDeclaratorId
+    :   typeType? variableDeclaratorId
     ;
 
 variableNames
@@ -730,7 +730,7 @@ forControl
     ;
 
 enhancedForControl
-    :   variableModifiersOpt type? variableDeclaratorId (COLON | IN) expression
+    :   variableModifiersOpt typeType? variableDeclaratorId (COLON | IN) expression
     ;
 
 classicalForControl
@@ -750,7 +750,7 @@ forUpdate
 // EXPRESSIONS
 
 castParExpression
-    :   LPAREN type rparen
+    :   LPAREN typeType rparen
     ;
 
 parExpression
@@ -787,17 +787,17 @@ postfixExpression
 expression
     // qualified names, array expressions, method invocation, post inc/dec, type casting (level 1)
     // The cast expression must be put before pathExpression to resovle the ambiguities between type casting and call on parentheses expression, e.g. (int)(1 / 2)
-    :   castParExpression castOperandExpression                                             #castExprAlt
-    |   postfixExpression                                                                   #postfixExprAlt
+    :   castParExpression castOperandExpression                                             #castExprAltForExpr
+    |   postfixExpression                                                                   #postfixExprAltForExpr
 
     // ~(BNOT)/!(LNOT) (level 1)
-    |   (BITNOT | NOT) nls expression                                                       #unaryNotExprAlt
+    |   (BITNOT | NOT) nls expression                                                       #unaryNotExprAltForExpr
 
     // math power operator (**) (level 2)
     |   left=expression op=POWER nls right=expression                                       #powerExprAlt
 
     // ++(prefix)/--(prefix)/+(unary)/-(unary) (level 3)
-    |   op=(INC | DEC | ADD | SUB) expression                                               #unaryAddExprAlt
+    |   op=(INC | DEC | ADD | SUB) expression                                               #unaryAddExprAltForExpr
 
     // multiplication/division/modulo (level 4)
     |   left=expression nls op=(MUL | DIV | MOD) nls right=expression                       #multiplicativeExprAlt
@@ -818,7 +818,7 @@ expression
         right=expression                                                                    #shiftExprAlt
 
     // boolean relational expressions (level 7)
-    |   left=expression nls op=(AS | INSTANCEOF | NOT_INSTANCEOF) nls type                  #relationalExprAlt
+    |   left=expression nls op=(AS | INSTANCEOF | NOT_INSTANCEOF) nls typeType                  #relationalExprAlt
     |   left=expression nls op=(LE | GE | GT | LT | IN | NOT_IN)  nls right=expression      #relationalExprAlt
 
     // equality/inequality (==/!=) (level 8)
@@ -1044,7 +1044,7 @@ primary
     |   parExpression                                                                       #parenPrmrAlt
     |   closureOrLambdaExpression                                                           #closureOrLambdaExpressionPrmrAlt
     |   list                                                                                #listPrmrAlt
-    |   map                                                                                 #mapPrmrAlt
+    |   normalMap                                                                                 #mapPrmrAlt
     |   builtInType                                                                         #builtInTypePrmrAlt
     ;
 
@@ -1052,7 +1052,7 @@ list
     :   LBRACK expressionList[true]? COMMA? RBRACK
     ;
 
-map
+normalMap
     :   LBRACK
         (   mapEntryList COMMA?
         |   COLON

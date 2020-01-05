@@ -41,6 +41,9 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 			var hasAssert = false
 			for index, methodCall := range currentMethodCalls {
 				if methodCall.MethodName == "" {
+					if index == len(currentMethodCalls)-1 {
+						checkAssert(hasAssert, clz, method, &results, &testType)
+					}
 					continue
 				}
 
@@ -55,9 +58,7 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 				}
 
 				if index == len(currentMethodCalls)-1 {
-					if !hasAssert {
-						checkUnknownTest(clz, method, &results, &testType)
-					}
+					checkAssert(hasAssert, clz, method, &results, &testType)
 				}
 			}
 
@@ -66,6 +67,21 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 	}
 
 	return results
+}
+
+func checkAssert(hasAssert bool, clz domain.JClassNode, method domain.JMethod, results *[]TestBadSmell, testType *string) {
+	if !hasAssert {
+		*testType = "UnknownTest"
+		tbs := *&TestBadSmell{
+			FileName:    clz.Path,
+			Type:        *testType,
+			Description: "",
+			Line:        method.StartLine,
+		}
+
+		*results = append(*results, tbs)
+
+	}
 }
 
 func updateMethodCallsForSelfCall(method domain.JMethod, clz domain.JClassNode, callMethodMap map[string]domain.JMethod) []domain.JMethodCall {
@@ -96,18 +112,6 @@ func checkRedundantAssertionTest(path string, call domain.JMethodCall, method do
 			*results = append(*results, tbs)
 		}
 	}
-}
-
-func checkUnknownTest(clz domain.JClassNode, method domain.JMethod, results *[]TestBadSmell, testType *string) {
-	*testType = "UnknownTest"
-	tbs := *&TestBadSmell{
-		FileName:    clz.Path,
-		Type:        *testType,
-		Description: "",
-		Line:        method.StartLine,
-	}
-
-	*results = append(*results, tbs)
 }
 
 func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]domain.JMethodCall, method domain.JMethod, testType *string) {

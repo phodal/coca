@@ -128,7 +128,7 @@ func TestTbsApp_ShouldReturnMultipleResult(t *testing.T) {
 
 	result := buildTbsResult(codePath)
 
-	g.Expect(len(result)).To(Equal(3))
+	g.Expect(len(result)).To(Equal(4))
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {

@@ -3,7 +3,6 @@ package tbs
 import (
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/constants"
-	"strings"
 )
 
 type TbsApp struct {
@@ -51,7 +50,7 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
 				checkRedundantAssertionTest(clz.Path, methodCall, method, &results, &testType)
 
-				if hasAssertion(methodCall.MethodName) {
+				if methodCall.HasAssertion() {
 					hasAssert = true
 				}
 
@@ -99,17 +98,6 @@ func checkRedundantAssertionTest(path string, call domain.JMethodCall, method do
 	}
 }
 
-func hasAssertion(methodName string) bool {
-	methodName = strings.ToLower(methodName)
-	for _, assertion := range constants.ASSERTION_LIST {
-		if strings.Contains(methodName, assertion) {
-			return true
-		}
-	}
-
-	return false
-}
-
 func checkUnknownTest(clz domain.JClassNode, method domain.JMethod, results *[]TestBadSmell, testType *string) {
 	*testType = "UnknownTest"
 	tbs := *&TestBadSmell{
@@ -126,8 +114,7 @@ func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, me
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
 		if len(methodCall) >= constants.DuplicatedAssertionLimitLength {
-			methodName := methodCall[len(methodCall)-1].MethodName
-			if hasAssertion(methodName) {
+			if methodCall[len(methodCall)-1].HasAssertion() {
 				isDuplicateAssert = true
 			}
 		}

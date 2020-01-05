@@ -121,6 +121,16 @@ func TestTbsApp_ShouldReturnEmptyForFunc(t *testing.T) {
 	g.Expect(len(result)).To(Equal(0))
 }
 
+func TestTbsApp_ShouldReturnMultipleResult(t *testing.T) {
+	g := NewGomegaWithT(t)
+	codePath := "../../../_fixtures/tbs/regression/I18NTest.java"
+	codePath = filepath.FromSlash(codePath)
+
+	result := buildTbsResult(codePath)
+
+	g.Expect(len(result)).To(Equal(3))
+}
+
 func buildTbsResult(codePath string) []TestBadSmell {
 	files := coca_file.GetJavaTestFiles(codePath)
 	var identifiers []domain.JIdentifier

@@ -1,5 +1,10 @@
 package domain
 
+import (
+	"github.com/phodal/coca/core/infrastructure/constants"
+	"strings"
+)
+
 type JMethodCall struct {
 	Package           string
 	Type              string
@@ -41,3 +46,15 @@ func (c *JMethodCall) IsSystemOutput() bool {
 func (c *JMethodCall) IsThreadSleep() bool {
 	return c.MethodName == "sleep" && c.Class == "Thread"
 }
+
+func (c *JMethodCall) HasAssertion() bool {
+	methodName := strings.ToLower(c.MethodName)
+	for _, assertion := range constants.ASSERTION_LIST {
+		if strings.HasPrefix(methodName, assertion) {
+			return true
+		}
+	}
+
+	return false
+}
+

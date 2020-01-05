@@ -1,6 +1,8 @@
 package domain
 
-import "strings"
+import (
+	"strings"
+)
 
 type RestApi struct {
 	Uri              string

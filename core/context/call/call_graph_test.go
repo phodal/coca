@@ -85,14 +85,14 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 
 "PUT /books/{id}" -> "com.phodal.pholedge.book.BookController.updateBook";
 "com.phodal.pholedge.book.BookRepository.byId" -> "com.phodal.pholedge.book.model.this.bookMapper.byId";
-"com.phodal.pholedge.book.BookRepository.byId" -> "com.phodal.pholedge.core.exception.NotFoundException.";
+"com.phodal.pholedge.book.BookRepository.byId" -> "com.phodal.pholedge.core.exception.NotFoundException";
 "com.phodal.pholedge.book.BookService.updateBook" -> "com.phodal.pholedge.book.BookRepository.byId";
 "com.phodal.pholedge.book.BookService.updateBook" -> "com.phodal.pholedge.book.model.Book.save";
 "com.phodal.pholedge.book.BookService.updateBook" -> "com.phodal.pholedge.book.model.command.UpdateBookCommand.getIsbn";
 "com.phodal.pholedge.book.BookService.updateBook" -> "com.phodal.pholedge.book.model.command.UpdateBookCommand.getName";
 "com.phodal.pholedge.book.BookRepository.save" -> "com.phodal.pholedge.book.model.this.bookMapper.doSave";
 "com.phodal.pholedge.book.BookService.updateBook" -> "com.phodal.pholedge.book.BookRepository.save";
-"com.phodal.pholedge.book.model.Book.toRepresentation" -> "com.phodal.pholedge.book.model.BookRepresentaion.";
+"com.phodal.pholedge.book.model.Book.toRepresentation" -> "com.phodal.pholedge.book.model.BookRepresentaion";
 "com.phodal.pholedge.book.BookService.updateBook" -> "com.phodal.pholedge.book.model.Book.toRepresentation";
 "com.phodal.pholedge.book.BookController.updateBook" -> "com.phodal.pholedge.book.BookService.updateBook";
 
@@ -103,9 +103,9 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 
 "GET /books/{id}" -> "com.phodal.pholedge.book.BookController.getBookById";
 "com.phodal.pholedge.book.BookRepository.byId" -> "com.phodal.pholedge.book.model.this.bookMapper.byId";
-"com.phodal.pholedge.book.BookRepository.byId" -> "com.phodal.pholedge.core.exception.NotFoundException.";
+"com.phodal.pholedge.book.BookRepository.byId" -> "com.phodal.pholedge.core.exception.NotFoundException";
 "com.phodal.pholedge.book.BookService.getBookById" -> "com.phodal.pholedge.book.BookRepository.byId";
-"com.phodal.pholedge.book.model.Book.toRepresentation" -> "com.phodal.pholedge.book.model.BookRepresentaion.";
+"com.phodal.pholedge.book.model.Book.toRepresentation" -> "com.phodal.pholedge.book.model.BookRepresentaion";
 "com.phodal.pholedge.book.BookService.getBookById" -> "com.phodal.pholedge.book.model.Book.toRepresentation";
 "com.phodal.pholedge.book.BookController.getBookById" -> "com.phodal.pholedge.book.BookService.getBookById";
 }

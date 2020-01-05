@@ -27,6 +27,10 @@ func NewJMethodCall() JMethodCall {
 }
 
 func (c *JMethodCall) BuildFullMethodName() string {
+	isConstructor := c.MethodName == ""
+	if isConstructor {
+		return c.Package + "." + c.Class
+	}
 	return c.Package + "." + c.Class + "." + c.MethodName
 }
 

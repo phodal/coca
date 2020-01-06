@@ -8,7 +8,7 @@ func TestVersion(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "version",
 		cmd:    "version",
-		golden: "",
+		golden: "testdata/version.txt",
 	}}
 	runTestCmd(t, tests)
 }

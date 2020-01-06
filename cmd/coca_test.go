@@ -42,7 +42,7 @@ func executeActionCommandC(cmd string) (*cobra.Command, string, error) {
 	}
 	buf := new(bytes.Buffer)
 
-	rootCmd.SetOutput(buf)
+	rootCmd.SetOut(buf)
 	rootCmd.SetArgs(args)
 
 	c, err := rootCmd.ExecuteC()

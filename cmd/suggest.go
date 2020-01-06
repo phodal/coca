@@ -8,7 +8,6 @@ import (
 	"github.com/phodal/coca/core/context/suggest"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 )
 
 var (
@@ -31,7 +30,7 @@ var suggestCmd = &cobra.Command{
 		app := suggest.NewSuggestApp()
 		results := app.AnalysisPath(parsedDeps)
 
-		table := tablewriter.NewWriter(os.Stdout)
+		table := tablewriter.NewWriter(output)
 		table.SetHeader([]string{"Class", "Pattern", "Reason"})
 
 		for _, result := range results {

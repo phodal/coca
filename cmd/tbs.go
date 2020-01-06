@@ -10,7 +10,6 @@ import (
 	"github.com/phodal/coca/core/context/tbs"
 	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
-	"os"
 	"strconv"
 )
 
@@ -48,7 +47,8 @@ var tbsCmd = &cobra.Command{
 		app := tbs.NewTbsApp()
 		result := app.AnalysisPath(classNodes, identifiersMap)
 
-		fmt.Println("Test Bad Smell nums: ", len(result))
+		fmt.Fprintf(output, "Test Bad Smell nums:  %d\n", len(result))
+
 		resultContent, _ := json.MarshalIndent(result, "", "\t")
 
 		if tbsCmdConfig.IsSort {
@@ -63,7 +63,7 @@ var tbsCmd = &cobra.Command{
 		cmd_util.WriteToCocaFile("tbs.json", string(resultContent))
 
 		if len(result) <= 20 {
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 			table.SetHeader([]string{"Type", "FileName", "Line"})
 
 			for _, result := range result {

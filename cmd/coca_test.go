@@ -40,12 +40,14 @@ func executeActionCommandC(cmd string) (*cobra.Command, string, error) {
 	if err != nil {
 		return nil, "", err
 	}
+
 	buf := new(bytes.Buffer)
+	command := NewRootCmd(buf)
 
-	rootCmd.SetOut(buf)
-	rootCmd.SetArgs(args)
+	command.SetOut(buf)
+	command.SetArgs(args)
 
-	c, err := rootCmd.ExecuteC()
+	c, err := command.ExecuteC()
 
 	return c, buf.String(), err
 }

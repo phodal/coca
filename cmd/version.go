@@ -15,6 +15,6 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Fprintf(output, "Coca Version: " + config.VERSION + " -- HEAD \n")
+		fmt.Fprintf(output, "Coca Version: " + config.VERSION + " -- HEAD")
 	},
 }

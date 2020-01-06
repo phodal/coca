@@ -8,7 +8,7 @@ func TestTodo(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "todo",
 		cmd:    "todo -p . -g",
-		golden: "",
+		golden: "testdata/todo_normal.txt",
 	}}
 	runTestCmd(t, tests)
 }

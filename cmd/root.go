@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"os"
+	"io"
 )
 
 var (
-	output = os.Stdout
+	output io.Writer
 	rootCmd = &cobra.Command{
 		Use:   "coca",
 		Short: "A generator for Cobra based Applications",
@@ -14,7 +14,8 @@ var (
 	}
 )
 
-func Execute() error {
-	rootCmd.SetOut(output)
-	return rootCmd.Execute()
+func NewRootCmd(out io.Writer) *cobra.Command {
+	output = out
+	rootCmd.SetOut(out)
+	return rootCmd
 }

@@ -7,7 +7,6 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/context/todo"
 	"github.com/spf13/cobra"
-	"os"
 	"strings"
 )
 
@@ -32,7 +31,7 @@ var todoCmd = &cobra.Command{
 		simple, _ := json.MarshalIndent(todos, "", "\t")
 		cmd_util.WriteToCocaFile("simple-todos.json", string(simple))
 
-		fmt.Println("Todos Count", len(todos))
+		fmt.Fprintf(output, "Todos Count %d\n", len(todos))
 
 		if todoCmdConfig.WithGit {
 			gitTodos := app.BuildWithGitHistory(todos)
@@ -40,7 +39,7 @@ var todoCmd = &cobra.Command{
 			cModel, _ := json.MarshalIndent(todos, "", "\t")
 			cmd_util.WriteToCocaFile("todos.json", string(cModel))
 
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
 			for _, todo := range gitTodos {
 				table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
@@ -52,8 +51,9 @@ var todoCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(todoCmd)
-
+	todoCmd.SetOut(output)
 	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Path, "path", "p", ".", "path")
 	todoCmd.PersistentFlags().BoolVarP(&todoCmdConfig.WithGit, "git", "g", false, "path")
+
+	rootCmd.AddCommand(todoCmd)
 }

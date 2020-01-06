@@ -4,12 +4,9 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/core/context/analysis"
+	"github.com/phodal/coca/cocatest"
 	"github.com/phodal/coca/core/context/arch/tequila"
-	"github.com/phodal/coca/core/domain"
-	"io"
 	"path/filepath"
-	"reflect"
 	"testing"
 )
 
@@ -17,19 +14,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
-	codePath = filepath.FromSlash(codePath)
-
-	identifierApp := new(analysis.JavaIdentifierApp)
-	identifiers := identifierApp.AnalysisPath(codePath)
-	var classes []string = nil
-	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
-	}
-
-	callApp := analysis.NewJavaFullApp()
-	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
-
-	identifiersMap := domain.BuildIdentifierMap(identifiers)
+	callNodes, identifiersMap := cocatest.BuildAnalysisDeps(codePath)
 
 	app := NewArchApp()
 	results := app.Analysis(callNodes, identifiersMap)
@@ -50,26 +35,14 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	jsonContent, _ := json.MarshalIndent(results, "", "\t")
 	content := cmd_util.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
 
-	g.Expect(JSONBytesEqual(jsonContent, content)).To(Equal(true))
+	g.Expect(cocatest.JSONBytesEqual(jsonContent, content)).To(Equal(true))
 }
 
 func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
-	codePath = filepath.FromSlash(codePath)
-
-	identifierApp := new(analysis.JavaIdentifierApp)
-	identifiers := identifierApp.AnalysisPath(codePath)
-	var classes []string = nil
-	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
-	}
-
-	callApp := analysis.NewJavaFullApp()
-	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
-
-	identifiersMap := domain.BuildIdentifierMap(identifiers)
+	callNodes, identifiersMap := cocatest.BuildAnalysisDeps(codePath)
 
 	app := NewArchApp()
 	result := app.Analysis(callNodes, identifiersMap)
@@ -86,29 +59,4 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	g.Expect(fans[0].Name).To(Equal("domain"))
 	g.Eventually(fans[0].FanIn).Should(Equal(2))
 	g.Eventually(fans[0].FanOut).Should(Equal(0))
-}
-
-func JSONEqual(a, b io.Reader) (bool, error) {
-	var j, j2 interface{}
-	d := json.NewDecoder(a)
-	if err := d.Decode(&j); err != nil {
-		return false, err
-	}
-	d = json.NewDecoder(b)
-	if err := d.Decode(&j2); err != nil {
-		return false, err
-	}
-	return reflect.DeepEqual(j2, j), nil
-}
-
-// JSONBytesEqual compares the JSON in two byte slices.
-func JSONBytesEqual(a, b []byte) (bool, error) {
-	var j, j2 interface{}
-	if err := json.Unmarshal(a, &j); err != nil {
-		return false, err
-	}
-	if err := json.Unmarshal(b, &j2); err != nil {
-		return false, err
-	}
-	return reflect.DeepEqual(j2, j), nil
 }

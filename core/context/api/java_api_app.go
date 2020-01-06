@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/coca_file"
+	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast/api"
 	"path/filepath"
@@ -15,14 +15,14 @@ type JavaApiApp struct {
 }
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier, diMap map[string]string) []domain.RestApi {
-	files := coca_file.GetJavaFiles(codeDir)
+	files := cocafile.GetJavaFiles(codeDir)
 	for index := range files {
 		file := files[index]
 
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := coca_file.ProcessFile(file)
+		parser := cocafile.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := api.NewJavaApiListener(identifiersMap, diMap)

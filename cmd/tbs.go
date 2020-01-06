@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/core/adapter/coca_file"
+	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/context/analysis"
 	"github.com/phodal/coca/core/context/tbs"
 	"github.com/phodal/coca/core/domain"
@@ -28,7 +28,7 @@ var tbsCmd = &cobra.Command{
 	Short: "generate tests bad smell",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		files := coca_file.GetJavaTestFiles(tbsCmdConfig.Path)
+		files := cocafile.GetJavaTestFiles(tbsCmdConfig.Path)
 		var identifiers []domain.JIdentifier
 
 		identifiers = cmd_util.LoadTestIdentify(files)

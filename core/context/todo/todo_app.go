@@ -3,7 +3,7 @@ package todo
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/coca_file"
+	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/adapter/shell"
 	"github.com/phodal/coca/core/context/git"
 	"github.com/phodal/coca/core/context/todo/astitodo"
@@ -64,7 +64,7 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 
 func buildComments(path string) []*astitodo.TODO {
 	var todos []*astitodo.TODO
-	files := coca_file.GetJavaFiles(path)
+	files := cocafile.GetJavaFiles(path)
 	for index := range files {
 		file := files[index]
 

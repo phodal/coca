@@ -3,7 +3,7 @@ package analysis
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/coca_file"
+	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast/full"
 	"path/filepath"
@@ -17,7 +17,7 @@ func NewJavaFullApp() JavaFullApp {
 }
 
 func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {
-	files := coca_file.GetJavaFiles(codeDir)
+	files := cocafile.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
@@ -33,7 +33,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []domain.JIdentifier, files []str
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := coca_file.ProcessFile(file)
+		parser := cocafile.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := full.NewJavaFullListener(identMap, file)

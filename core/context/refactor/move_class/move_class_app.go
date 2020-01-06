@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/coca_file"
+	"github.com/phodal/coca/core/adapter/cocafile"
 	base2 "github.com/phodal/coca/core/context/refactor/base"
 	models2 "github.com/phodal/coca/core/context/refactor/base/models"
 	"io"
@@ -34,13 +34,13 @@ func NewMoveClassApp(config string, pPath string) *MoveClassApp {
 
 func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 	// TODO: 使用 Deps.json 来移动包
-	files := coca_file.GetJavaFiles(configPath)
+	files := cocafile.GetJavaFiles(configPath)
 	for index := range files {
 		file := files[index]
 
 		currentFile, _ = filepath.Abs(file)
 
-		parser := coca_file.ProcessFile(file)
+		parser := cocafile.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

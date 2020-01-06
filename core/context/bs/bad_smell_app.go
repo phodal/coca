@@ -3,7 +3,7 @@ package bs
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/core/adapter/coca_file"
+	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/domain/bs_domain"
 	"github.com/phodal/coca/core/infrastructure/ast/bs"
 	"path/filepath"
@@ -20,7 +20,7 @@ func NewBadSmellApp() *BadSmellApp {
 
 func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 	nodeInfos = nil
-	files := coca_file.GetJavaFiles(codeDir)
+	files := cocafile.GetJavaFiles(codeDir)
 	for index := range files {
 		nodeInfo := bs_domain.NewJFullClassNode()
 		file := files[index]
@@ -28,7 +28,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := coca_file.ProcessFile(file)
+		parser := cocafile.ProcessFile(file)
 		context := parser.CompilationUnit()
 
 		listener := bs.NewBadSmellListener()

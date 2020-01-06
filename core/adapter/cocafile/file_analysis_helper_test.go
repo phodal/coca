@@ -1,4 +1,4 @@
-package coca_file
+package cocafile
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"

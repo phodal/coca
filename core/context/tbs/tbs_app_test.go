@@ -129,7 +129,7 @@ func TestTbsApp_ShouldReturnMultipleResult(t *testing.T) {
 }
 
 func buildTbsResult(codePath string) []TestBadSmell {
-	identifiersMap, classNodes := cocatest.BuildAnalysisResultsByPath(codePath)
+	identifiersMap, classNodes := cocatest.BuildTestAnalysisResultsByPath(codePath)
 
 	app := NewTbsApp()
 	result := app.AnalysisPath(classNodes, identifiersMap)

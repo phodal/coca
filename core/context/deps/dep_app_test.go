@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestAnalysis(t *testing.T) {
+func Test_ShouldReturnGradleDep(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	pluginsStr := `dependencies {
@@ -14,9 +14,28 @@ func TestAnalysis(t *testing.T) {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }`
 
-	Analysis(pluginsStr)
+	AnalysisGradle(pluginsStr)
 
 	g.Expect(true).To(Equal(true))
+}
+
+func Test_ShouldReturnCorrectMavenDeps(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/deps/maven/pom.xml"
+	mavenDeps := AnalysisMaven(codePath)
+
+	g.Expect(len(mavenDeps)).To(Equal(12))
+	g.Expect(true).To(Equal(true))
+}
+
+func Test_ShouldReturnNilWhenErrorPath(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/god_know_it"
+	mavenDeps := AnalysisMaven(codePath)
+
+	g.Expect(len(mavenDeps)).To(Equal(0))
 }
 
 func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {

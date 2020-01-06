@@ -10,10 +10,10 @@ type ElemType string
 
 const (
 	eleTpText ElemType = "text" // 静态文本节点
-	eleTpNode ElemType = "node" // 节点子节点
+	eleTpNode ElemType = "XmlNode" // 节点子节点
 )
 
-type node struct {
+type XmlNode struct {
 	Id       string
 	Name     string
 	Attrs    map[string]xml.Attr
@@ -25,9 +25,9 @@ type element struct {
 	Val         interface{}
 }
 
-func ParseXml(r io.Reader) *node {
+func ParseXml(r io.Reader) *XmlNode {
 	parser := xml.NewDecoder(r)
-	var root node
+	var root XmlNode
 
 	st := NewStack()
 	for {
@@ -44,7 +44,7 @@ func ParseXml(r io.Reader) *node {
 			for _, val := range attr {
 				attrMap[val.Name.Local] = val
 			}
-			node := node{
+			node := XmlNode{
 				Name:     name,
 				Attrs:    attrMap,
 				Elements: make([]element, 0),
@@ -58,15 +58,15 @@ func ParseXml(r io.Reader) *node {
 
 		case xml.EndElement: //tag end
 			if st.Len() > 0 {
-				//cur node
-				n := st.Pop().(node)
-				if st.Len() > 0 { //if the root node then append to element
+				//cur XmlNode
+				n := st.Pop().(XmlNode)
+				if st.Len() > 0 { //if the root XmlNode then append to element
 					e := element{
 						ElementType: eleTpNode,
 						Val:         n,
 					}
 
-					pn := st.Pop().(node)
+					pn := st.Pop().(XmlNode)
 					els := pn.Elements
 					els = append(els, e)
 					pn.Elements = els
@@ -77,7 +77,7 @@ func ParseXml(r io.Reader) *node {
 			}
 		case xml.CharData: //tag content
 			if st.Len() > 0 {
-				n := st.Pop().(node)
+				n := st.Pop().(XmlNode)
 
 				bytes := xml.CharData(t)
 				content := strings.TrimSpace(string(bytes))

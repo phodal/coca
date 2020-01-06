@@ -30,7 +30,8 @@ func runTestCmd(t *testing.T, tests []cmdTestCase) {
 				t.Errorf("expected error, got '%v'", err)
 			}
 			if tt.golden != "" {
-				slash := filepath.FromSlash(tt.golden)
+				abs, _ := filepath.Abs(tt.golden)
+				slash := filepath.FromSlash(abs)
 				AssertGoldenString(t, output, slash)
 			}
 		})

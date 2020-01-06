@@ -1,13 +1,11 @@
 package cmd
 
 import (
-	"path/filepath"
 	"testing"
 )
 
 func TestEvaluate(t *testing.T) {
-	abs, _ := filepath.Abs("../_fixtures/arch")
-	abs = filepath.FromSlash(abs)
+	abs := "../_fixtures/arch"
 
 	analysis := []cmdTestCase{{
 		name:   "analysis",

@@ -1,13 +1,11 @@
 package cmd
 
 import (
-	"path/filepath"
 	"testing"
 )
 
 func TestBadSmell(t *testing.T) {
-	abs, _ := filepath.Abs("../_fixtures/bs")
-	abs = filepath.FromSlash(abs)
+	abs := "../_fixtures/bs"
 
 	tests := []cmdTestCase{{
 		name:   "bs",

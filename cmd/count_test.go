@@ -1,13 +1,11 @@
 package cmd
 
 import (
-	"path/filepath"
 	"testing"
 )
 
 func TestCount(t *testing.T) {
-	abs, _ := filepath.Abs("../_fixtures/arch")
-	abs = filepath.FromSlash(abs)
+	abs := "../_fixtures/arch"
 
 	analysis := []cmdTestCase{{
 		name:   "analysis",
@@ -19,7 +17,7 @@ func TestCount(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "count",
 		cmd:    "count -t 1",
-		golden: filepath.FromSlash("testdata/count.txt"),
+		golden: "testdata/count.txt",
 	}}
 	runTestCmd(t, tests)
 }

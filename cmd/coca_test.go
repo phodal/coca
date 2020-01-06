@@ -5,6 +5,7 @@ import (
 	"github.com/mattn/go-shellwords"
 	"github.com/spf13/cobra"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -29,7 +30,8 @@ func runTestCmd(t *testing.T, tests []cmdTestCase) {
 				t.Errorf("expected error, got '%v'", err)
 			}
 			if tt.golden != "" {
-				AssertGoldenString(t, output, tt.golden)
+				slash := filepath.FromSlash(tt.golden)
+				AssertGoldenString(t, output, slash)
 			}
 		})
 	}

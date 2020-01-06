@@ -19,7 +19,7 @@ func TestCount(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "count",
 		cmd:    "count -t 1",
-		golden: "testdata/count.txt",
+		golden: filepath.FromSlash("testdata/count.txt"),
 	}}
 	runTestCmd(t, tests)
 }

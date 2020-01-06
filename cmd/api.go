@@ -10,7 +10,6 @@ import (
 	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -73,7 +72,7 @@ var apiCmd = &cobra.Command{
 		}
 
 		if apiCmdConfig.ShowCount {
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 
 			table.SetHeader([]string{"Size", "Method", "Uri", "Caller"})
 

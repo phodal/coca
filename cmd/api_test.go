@@ -19,7 +19,7 @@ func TestApi(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "api",
 		cmd:    "api -c -f -p " + abs,
-		golden: "",
+		golden: "testdata/api.txt",
 	}}
 	runTestCmd(t, tests)
 }

@@ -10,7 +10,6 @@ import (
 	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 	"strconv"
 )
 
@@ -46,7 +45,7 @@ var evaluateCmd = &cobra.Command{
 		cModel, _ := json.MarshalIndent(result, "", "\t")
 		cmd_util.WriteToCocaFile("evaluate.json", string(cModel))
 
-		table := tablewriter.NewWriter(os.Stdout)
+		table := tablewriter.NewWriter(output)
 		table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})
 
 		classCount := result.Summary.ClassCount

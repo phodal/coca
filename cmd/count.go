@@ -10,7 +10,6 @@ import (
 	"github.com/phodal/coca/core/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 	"strconv"
 )
 
@@ -50,7 +49,7 @@ var countCmd = &cobra.Command{
 			callMapSort = callMapSort[:countCmdConfig.Top]
 		}
 
-		table := tablewriter.NewWriter(os.Stdout)
+		table := tablewriter.NewWriter(output)
 		table.SetHeader([]string{"Refs Count", "method"})
 
 		for _, count := range callMapSort {

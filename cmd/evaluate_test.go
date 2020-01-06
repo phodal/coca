@@ -19,7 +19,7 @@ func TestEvaluate(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "evaluate",
 		cmd:    "evaluate",
-		golden: "",
+		golden: "testdata/evaluate.txt",
 	}}
 	runTestCmd(t, tests)
 }

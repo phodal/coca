@@ -29,7 +29,7 @@ func Analysis(str string) {
 	parser := ProcessGroovyString(str)
 	context := parser.CompilationUnit()
 
-	listener := new(groovy.GroovyIdentifierListener)
+	listener := groovy.NewGroovyIdentListener()
 
 	antlr.NewParseTreeWalker().Walk(listener, context)
 }

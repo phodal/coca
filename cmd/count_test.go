@@ -18,8 +18,8 @@ func TestCount(t *testing.T) {
 
 	tests := []cmdTestCase{{
 		name:   "count",
-		cmd:    "count",
-		golden: "",
+		cmd:    "count -t 1",
+		golden: "testdata/count.txt",
 	}}
 	runTestCmd(t, tests)
 }

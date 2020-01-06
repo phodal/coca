@@ -26,7 +26,7 @@ func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
 
 	depApp := NewDepApp()
-	depApp.CountDeps(classNodes)
+	importMap := depApp.BuildImportMap(classNodes)
 
-	g.Expect(true).To(Equal(true))
+	g.Expect(len(importMap)).To(Equal(6))
 }

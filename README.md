@@ -514,8 +514,9 @@ results
     - [ ] GitHub search code
  - [ ] Pluggable
     - [ ] plugin support
- - [ ] 3rd-party Dependence Analysis
-    - [ ] analysis XML or Groovy Scripts
+ - [ ] Dependence Analysis
+    - [ ] Deps Related Counts
+    - [ ] 3rd-party analysis XML or Groovy Scripts
     - [ ] Groovy Support
       - [ ] migrate to Golang Styles
 

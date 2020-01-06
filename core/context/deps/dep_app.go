@@ -1,7 +1,6 @@
 package deps
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast/groovy"
@@ -15,8 +14,19 @@ func NewDepApp() DepApp {
 	return *&DepApp{}
 }
 
-func (d *DepApp) CountDeps(deps []domain.JClassNode) {
-	fmt.Println(deps)
+func (d *DepApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImport {
+	var impMap = make(map[string]domain.JImport)
+	for _, clz := range deps {
+		for _, method := range clz.Methods {
+			for _, call := range method.MethodCalls {
+				if call.Package != clz.Package {
+					impMap[call.Package] = domain.NewJImport(call.Package)
+				}
+			}
+		}
+	}
+
+	return impMap
 }
 
 func Analysis(str string) {

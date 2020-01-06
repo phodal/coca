@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/core/context/analysis"
+	"github.com/phodal/coca/cocatest"
 	"github.com/phodal/coca/core/context/api"
 	"github.com/phodal/coca/core/context/call"
 	"github.com/phodal/coca/core/domain"
@@ -41,15 +41,8 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/examples/api"
-	identApp := analysis.NewJavaIdentifierApp()
-	identifiers := identApp.AnalysisPath(filepath.FromSlash(codePath))
-	var classes []string = nil
-	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
-	}
-	callApp := analysis.NewJavaFullApp()
-	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
-	identifiersMap := domain.BuildIdentifierMap(identifiers)
+	callNodes, identifiersMap, identifiers := cocatest.BuildAnalysisDeps(codePath)
+
 	diMap := domain.BuildDIMap(identifiers, identifiersMap)
 	app := new(api.JavaApiApp)
 	restApis := app.AnalysisPath(codePath, callNodes, identifiersMap, diMap)

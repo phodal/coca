@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/core/context/analysis"
+	"github.com/phodal/coca/cocatest"
 	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
 	"path/filepath"
@@ -104,16 +104,7 @@ func Test_CheckFornull(t *testing.T) {
 }
 
 func buildEvaluateResult(codePath string) evaluator.EvaluateModel {
-	codePath = filepath.FromSlash(codePath)
-	identifierApp := new(analysis.JavaIdentifierApp)
-	identifiers := identifierApp.AnalysisPath(codePath)
-	var classes []string = nil
-	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
-	}
-
-	callApp := analysis.NewJavaFullApp()
-	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
+	callNodes, _, identifiers := cocatest.BuildAnalysisDeps(codePath)
 
 	analyser := NewEvaluateAnalyser()
 	result := analyser.Analysis(callNodes, identifiers)

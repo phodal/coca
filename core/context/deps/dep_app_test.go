@@ -23,7 +23,7 @@ func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/examples/api/"
-	_, classNodes := cocatest.BuildTestAnalysisResultsByPath(codePath)
+	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
 
 	depApp := NewDepApp()
 	depApp.CountDeps(classNodes)

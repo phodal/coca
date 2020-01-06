@@ -14,7 +14,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
-	callNodes, identifiersMap := cocatest.BuildAnalysisDeps(codePath)
+	callNodes, identifiersMap, _ := cocatest.BuildAnalysisDeps(codePath)
 
 	app := NewArchApp()
 	results := app.Analysis(callNodes, identifiersMap)
@@ -42,7 +42,7 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
-	callNodes, identifiersMap := cocatest.BuildAnalysisDeps(codePath)
+	callNodes, identifiersMap, _ := cocatest.BuildAnalysisDeps(codePath)
 
 	app := NewArchApp()
 	result := app.Analysis(callNodes, identifiersMap)

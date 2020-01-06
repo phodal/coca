@@ -1,24 +1,22 @@
 package cmd
 
 import (
-	"path/filepath"
 	"testing"
 )
 
 func TestApi(t *testing.T) {
-	abs, _ := filepath.Abs("../_fixtures/call")
-	abs = filepath.FromSlash(abs)
+	path := "../_fixtures/call"
 
 	analysis := []cmdTestCase{{
 		name:   "analysis",
-		cmd:    "analysis -p " + abs,
+		cmd:    "analysis -p " + path,
 		golden: "",
 	}}
 	runTestCmd(t, analysis)
 
 	tests := []cmdTestCase{{
 		name:   "api",
-		cmd:    "api -c -f -p " + abs,
+		cmd:    "api -c -f -p " + path,
 		golden: "testdata/api.txt",
 	}}
 	runTestCmd(t, tests)

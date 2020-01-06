@@ -10,6 +10,7 @@ import (
 	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
 	"log"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -93,7 +94,7 @@ var apiCmd = &cobra.Command{
 
 func forceUpdateApi() {
 	app := new(api.JavaApiApp)
-	restApis = app.AnalysisPath(apiCmdConfig.Path, parsedDeps, identifiersMap, diMap)
+	restApis = app.AnalysisPath(filepath.FromSlash(apiCmdConfig.Path), parsedDeps, identifiersMap, diMap)
 	cModel, _ := json.MarshalIndent(restApis, "", "\t")
 	cmd_util.WriteToCocaFile("apis.json", string(cModel))
 }

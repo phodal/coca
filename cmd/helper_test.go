@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"path/filepath"
+	"strings"
 )
 
 // UpdateGolden writes out the golden files with the latest values, rather than failing the test.
@@ -72,12 +73,22 @@ func compare(actual []byte, filename string) error {
 	if err != nil {
 		return errors.Wrapf(err, "unable to read testdata %s", filename)
 	}
+
+	splitExcept := strings.Split(string(expected), "\n")
+	if len(splitExcept) >= 2 {
+		expectedWithoutEndLine := strings.Join(splitExcept[:len(splitExcept)-2], "")
+
+		splitActual := strings.Split(string(actual), "\n")
+		actualWithoutEndLine := strings.Join(splitActual[:len(splitActual)-2], "")
+
+		if expectedWithoutEndLine != actualWithoutEndLine {
+			return errors.Errorf("does not match golden file %s\n\nWANT:\n'%s'\n\nGOT:\n'%s'\n", filename, expected, actual)
+		}
+	}
+
 	if string(expected) != string(actual) {
 		return errors.Errorf("does not match golden file %s\n\nWANT:\n'%s'\n\nGOT:\n'%s'\n", filename, expected, actual)
 	}
-	//if !bytes.Equal(expected, actual) {
-	//	return errors.Errorf("does not match golden file %s\n\nWANT:\n'%s'\n\nGOT:\n'%s'\n", filename, expected, actual)
-	//}
 	return nil
 }
 

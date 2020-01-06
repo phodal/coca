@@ -1,8 +1,36 @@
-# [](https://github.com/phodal/coca/compare/v1.3.0...v) (2020-01-01)
+# [](https://github.com/phodal/coca/compare/v1.3.0...v) (2020-01-06)
+
+
+### Bug Fixes
+
+* [deps] remove unused java code in antlr & it will cause bugs ([9a8ab9a](https://github.com/phodal/coca/commit/9a8ab9a80a763aaffc394b7e8f6041220b8b18bf))
+* [evaluate] add checkfor null ([922160a](https://github.com/phodal/coca/commit/922160a84c4223ba92aa864d7949d884f71e4504))
+* [fullast] make call chain work btter ([556edf6](https://github.com/phodal/coca/commit/556edf6873e141460a49aedfff507806d7a5073e))
+* add a quick dirty fix for duplicate class ([e3594ae](https://github.com/phodal/coca/commit/e3594aeb51fb2dda0ad1ddd33e559ba2bfefd045))
+* add lost api test ([2d773f0](https://github.com/phodal/coca/commit/2d773f0ab264c57d01c51838eaf39f9a8b877fb4))
+* fix api get fullname empty issue ([b15f90a](https://github.com/phodal/coca/commit/b15f90acb237ac439d56f4269a42a3937d94f352))
+* fix class node queue issue ([7ad0ae9](https://github.com/phodal/coca/commit/7ad0ae9f5f73f132e39b808560afe61c48da34aa))
+* fix methodcall not update issue ([8f830be](https://github.com/phodal/coca/commit/8f830be9a46e7f39597e98851fed0327639e6b02))
+* fix methodname empty unknown issue ([7924018](https://github.com/phodal/coca/commit/792401859058917e5790d8d39f31817c1d874787))
+* fix path issue for windows ([3c7a6db](https://github.com/phodal/coca/commit/3c7a6db507696984170ff9fedfc9b9573a7f8b2b))
+
+
+### Features
+
+* [dep] add basic maven xml parser ([16386f4](https://github.com/phodal/coca/commit/16386f447e7b36a8091d9623d8c728640d1cc26e))
+* [dep] init analysis ([12371e0](https://github.com/phodal/coca/commit/12371e0bc8c0422ecab3cafad6d64536c55d33ea))
+* [dep] make first compiler for groovy ([8944882](https://github.com/phodal/coca/commit/8944882854c08c657659770d6f46d0c49239d430))
+* [deps] add groovy grammer files ([44a395c](https://github.com/phodal/coca/commit/44a395cd0a843b13cd9d80e446dc779345ba05cc))
+* [wasm] add analysi bs ([72f735c](https://github.com/phodal/coca/commit/72f735c2fe1bea970ebafdffc74a7d752e2907f6))
+* [wasm] expose concept API ([4095526](https://github.com/phodal/coca/commit/40955260d07b74559fa693803f9574be7b4ac51d))
+* add count import to analysis full app ([4dbc777](https://github.com/phodal/coca/commit/4dbc777d11aee446b6086fa4733d67abbef793b2))
+* init jdep model ([543e09f](https://github.com/phodal/coca/commit/543e09f50fa65dfa56621be33ebf1e927a08bc70))
+* make inner class to inner class node ([7185b9c](https://github.com/phodal/coca/commit/7185b9c63458db72ddfc2e5c3403913b771bcc53))
+* make wasm works ([b5005ae](https://github.com/phodal/coca/commit/b5005ae20d91d8d6bafc837aa59e27bf908d2edd))
 
 
 
-# [1.3.0](https://github.com/phodal/coca/compare/v1.2.0...v1.3.0) (2019-12-31)
+# [1.3.0](https://github.com/phodal/coca/compare/v1.2.0...v1.3.0) (2020-01-01)
 
 
 ### Bug Fixes

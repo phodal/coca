@@ -1,7 +1,6 @@
 package analysis
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/core/domain"
 	"path/filepath"

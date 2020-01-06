@@ -1,7 +1,6 @@
 package bs
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"path/filepath"
 	"testing"
@@ -44,7 +43,6 @@ func TestBadSmellApp_LongMethod(t *testing.T) {
 	bs := bsApp.AnalysisPath(codePath)
 	bsList := bsApp.FilterBadSmell(bs, nil)
 
-	fmt.Println(bsList)
 	g.Expect(len(bsList)).To(Equal(2))
 	g.Expect(bsList[0].Bs).To(Equal("longMethod"))
 	g.Expect(bsList[1].Bs).To(Equal("refusedBequest"))

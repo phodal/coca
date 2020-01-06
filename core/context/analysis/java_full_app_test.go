@@ -101,12 +101,6 @@ func TestAnnotation(t *testing.T) {
 
 	g.Expect(len(callNodes[0].Annotations)).To(Equal(0))
 	g.Expect(methodMap["macOsXPositiveTest"].Name).To(Equal("macOsXPositiveTest"))
-
-	for _, call := range methodMap["macOsXPositiveTest"].MethodCalls {
-		fmt.Println(call.Class)
-	}
-
-	g.Expect(true).To(Equal(true))
 }
 
 func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {

@@ -2,8 +2,7 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
-	shellwords "github.com/mattn/go-shellwords"
+	"github.com/mattn/go-shellwords"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"

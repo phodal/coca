@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
-	"os"
 	"os/exec"
 	"strconv"
 	"time"
@@ -36,14 +35,14 @@ var gitCmd = &cobra.Command{
 		cmd_util.WriteToCocaFile("commits.json", string(cModel))
 
 		if *&gitCmdConfig.ShowSummary {
-			ShowChangeLogSummary(commitMessages)
+			ShowChangeLogSummary(commitMessages, output)
 		}
 
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
 		size := *&gitCmdConfig.Size
 
 		if cmd.Flag("basic").Value.String() == "true" {
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 
 			basicSummary := BasicSummary(commitMessages)
 			table.SetHeader([]string{"Statistic", "Number"})
@@ -55,7 +54,7 @@ var gitCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("team").Value.String() == "true" {
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 
 			teamSummary := GetTeamSummary(commitMessages)
 			table.SetHeader([]string{"EntityName", "RevsCount", "AuthorCount"})
@@ -70,7 +69,7 @@ var gitCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("age").Value.String() == "true" {
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 
 			ages := CalculateCodeAge(commitMessages)
 			var agesDisplay []CodeAgeDisplay
@@ -93,7 +92,7 @@ var gitCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("top").Value.String() == "true" {
-			table := tablewriter.NewWriter(os.Stdout)
+			table := tablewriter.NewWriter(output)
 
 			authors := GetTopAuthors(commitMessages)
 			table.SetHeader([]string{"Author", "CommitCount", "LineCount"})

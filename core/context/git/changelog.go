@@ -3,6 +3,7 @@ package git
 import (
 	"fmt"
 	"github.com/phodal/coca/core/infrastructure/string_helper"
+	"io"
 	"regexp"
 )
 
@@ -12,7 +13,7 @@ var (
 
 // high fix
 // high features
-func ShowChangeLogSummary(commits []CommitMessage) {
+func ShowChangeLogSummary(commits []CommitMessage, output io.Writer) {
 	changeMap := BuildChangeMap(commits)
 	for key, value := range changeMap {
 		sortValue := string_helper.RankByWordCount(value)
@@ -21,12 +22,12 @@ func ShowChangeLogSummary(commits []CommitMessage) {
 			maxSize = 10
 		}
 
-		fmt.Println(key  + ":")
-		fmt.Println("---------------------")
+		fmt.Fprintf(output, "%s :\n", key)
+		fmt.Fprintln(output, "---------------------")
 		for _, val := range sortValue[:maxSize] {
-			fmt.Println(val.Key, val.Value)
+			fmt.Fprintf(output, "%s, %d\n", val.Key, val.Value)
 		}
-		fmt.Println("=====================")
+		fmt.Fprintln(output, "=====================")
 	}
 }
 

@@ -42,7 +42,7 @@ var reverseCmd = &cobra.Command{
 
 		_ = json.Unmarshal(file, &parsedDeps)
 
-		fmt.Println("start rcall class :", className)
+		fmt.Fprintf(output,"start rcall class: %s\n", className)
 		content := analyser.Analysis(className, *&parsedDeps, WriteCallMap)
 
 		if remove != "" {

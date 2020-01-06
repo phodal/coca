@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
+// Todo: fake it
 func TestGit(t *testing.T) {
 	tests := []cmdTestCase{{
 		name:   "git",

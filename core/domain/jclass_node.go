@@ -14,6 +14,7 @@ type JClassNode struct {
 	Implements  []string
 	Annotations []Annotation
 	InnerClass  []JClassNode
+	Imports     []JImport
 }
 
 type JAppField struct {
@@ -22,7 +23,7 @@ type JAppField struct {
 }
 
 func NewClassNode() *JClassNode {
-	return &JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil, nil}
+	return &JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil, nil, nil}
 }
 
 func (j *JClassNode) IsUtilClass() bool {

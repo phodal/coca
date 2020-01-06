@@ -1,11 +1,11 @@
 package domain
 
 type JImport struct {
-	source string
+	Source string
 }
 
 func NewJImport(str string) JImport {
 	return *&JImport{
-		source: str,
+		Source: str,
 	}
 }

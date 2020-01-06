@@ -17,12 +17,8 @@ func NewDepApp() DepApp {
 func (d *DepApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImport {
 	var impMap = make(map[string]domain.JImport)
 	for _, clz := range deps {
-		for _, method := range clz.Methods {
-			for _, call := range method.MethodCalls {
-				if call.Package != clz.Package {
-					impMap[call.Package] = domain.NewJImport(call.Package)
-				}
-			}
+		for _, imp := range clz.Imports {
+			impMap[imp.Source] = imp
 		}
 	}
 

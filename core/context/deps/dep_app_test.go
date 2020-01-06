@@ -28,5 +28,5 @@ func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 	depApp := NewDepApp()
 	importMap := depApp.BuildImportMap(classNodes)
 
-	g.Expect(len(importMap)).To(Equal(6))
+	g.Expect(len(importMap)).To(Equal(25))
 }

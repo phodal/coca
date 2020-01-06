@@ -132,6 +132,7 @@ func (s *JavaFullListener) EnterPackageDeclaration(ctx *parser.PackageDeclaratio
 func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
 	imports = append(imports, importText)
+	currentNode.Imports = append(currentNode.Imports, domain.NewJImport(importText))
 }
 
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {

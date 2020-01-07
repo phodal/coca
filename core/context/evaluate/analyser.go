@@ -37,6 +37,18 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 		}
 	}
 
+	SummaryMethodIdentifier(identifiers, result)
+
+	evaluation = Evaluation{evaluator.Service{}}
+	evaluation.EvaluateList(&result, servicesNode, nodeMap, identifiers)
+
+	nullableEva := Evaluation{evaluator.NullPointException{}}
+	nullableEva.EvaluateList(&result, servicesNode, nodeMap, identifiers)
+
+	return result
+}
+
+func SummaryMethodIdentifier(identifiers []domain.JIdentifier, result evaluator.EvaluateModel) {
 	var methodLengthArray []float64
 	var methodCountArray []float64
 	for _, ident := range identifiers {
@@ -63,12 +75,4 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 
 	result.Summary.MethodLengthStdDeviation = stat.StdDev(methodLengthArray, nil)
 	result.Summary.MethodNumStdDeviation = stat.StdDev(methodCountArray, nil)
-
-	evaluation = Evaluation{evaluator.Service{}}
-	evaluation.EvaluateList(&result, servicesNode, nodeMap, identifiers)
-
-	nullableEva := Evaluation{evaluator.NullPointException{}}
-	nullableEva.EvaluateList(&result, servicesNode, nodeMap, identifiers)
-
-	return result
 }

@@ -21,7 +21,7 @@ var (
 	changesReg     = regexp.MustCompile(changes)
 	complexMoveReg = regexp.MustCompile(complexMoveRegStr)
 	basicMvReg     = regexp.MustCompile(basicMoveRegStr)
-	changeModelReg = regexp.MustCompile(changeModel)
+	changeModeReg  = regexp.MustCompile(changeModel)
 )
 
 func UpdateMessageForChange(changedFile string) (string, string, string) {
@@ -54,7 +54,6 @@ func ParseLog(text string) {
 	allString := revReg.FindAllString(text, -1)
 	if len(allString) == 1 {
 		str := ""
-
 		id := revReg.FindStringSubmatch(text)
 		str = strings.Split(text, id[0])[1]
 		auth := authorReg.FindStringSubmatch(str)
@@ -71,45 +70,43 @@ func ParseLog(text string) {
 		fileFieldName := changes[3]
 		change := *&FileChange{added, deleted, fileFieldName, ""}
 
-		//currentFileChanges = append(currentFileChanges, *change)
-
 		currentFileChangeMap[fileFieldName] = change
-	} else if changeModelReg.MatchString(text) {
-		matches := changeModelReg.FindStringSubmatch(text)
-
-		if len(matches) > 4 {
-			mode := matches[1]
-
-			if _, ok := currentFileChangeMap[matches[4]]; ok {
-				change := currentFileChangeMap[matches[4]]
-				change.Mode = mode
-				currentFileChangeMap[matches[4]] = change
-			} else {
-				if mode == "delete" {
-					deleteFile := *&FileChange{
-						Added:   0,
-						Deleted: 0,
-						File:    matches[4],
-						Mode:    "delete",
-					}
-
-					currentFileChanges = append(currentFileChanges, deleteFile)
-				}
-
-			}
+	} else if changeModeReg.MatchString(text) {
+		buildChangeMode(text)
+	} else if currentCommitMessage.Rev != "" {
+		for _, value := range currentFileChangeMap {
+			currentFileChanges = append(currentFileChanges, value)
 		}
-	} else {
-		if currentCommitMessage.Rev != "" {
-			for _, value := range currentFileChangeMap {
-				currentFileChanges = append(currentFileChanges, value)
+
+		currentFileChangeMap = make(map[string]FileChange)
+		currentCommitMessage.Changes = currentFileChanges
+		commitMessages = append(commitMessages, currentCommitMessage)
+
+		currentCommitMessage = *&CommitMessage{"", "", "", "", nil}
+		currentFileChanges = nil
+	}
+}
+
+func buildChangeMode(text string) {
+	matches := changeModeReg.FindStringSubmatch(text)
+
+	CHANGE_MODE_INDEX := 4
+	if len(matches) > CHANGE_MODE_INDEX {
+		mode := matches[1]
+
+		if _, ok := currentFileChangeMap[matches[CHANGE_MODE_INDEX]]; ok {
+			change := currentFileChangeMap[matches[CHANGE_MODE_INDEX]]
+			change.Mode = mode
+			currentFileChangeMap[matches[CHANGE_MODE_INDEX]] = change
+		} else if mode == "delete" {
+			deleteFile := *&FileChange{
+				Added:   0,
+				Deleted: 0,
+				File:    matches[CHANGE_MODE_INDEX],
+				Mode:    "delete",
 			}
 
-			currentFileChangeMap = make(map[string]FileChange)
-			currentCommitMessage.Changes = currentFileChanges
-			commitMessages = append(commitMessages, currentCommitMessage)
-
-			currentCommitMessage = *&CommitMessage{"", "", "", "", nil}
-			currentFileChanges = nil
+			currentFileChanges = append(currentFileChanges, deleteFile)
 		}
 	}
 }

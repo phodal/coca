@@ -543,21 +543,7 @@ func buildMethodCallMethod(jMethodCall *domain.JMethodCall, callee string, targe
 		packageName = removeTarget(fullType)
 		methodName = callee
 	} else {
-		if ctx.GetText() == targetType {
-			clz := currentClz
-			// 处理 static 方法，如 now()
-			for _, imp := range imports {
-				if strings.HasSuffix(imp, "."+methodName) {
-					packageName = imp
-					clz = ""
-				}
-			}
-
-			targetType = clz
-		} else {
-			targetType = buildSelfThisTarget(targetType)
-			targetType = buildMethodNameForBuilder(ctx, targetType)
-		}
+		targetType, packageName = handleEmptyFullType(ctx, targetType, methodName, packageName)
 	}
 
 	// TODO: 处理链试调用
@@ -570,6 +556,25 @@ func buildMethodCallMethod(jMethodCall *domain.JMethodCall, callee string, targe
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
 	jMethodCall.Class = targetType
+}
+
+func handleEmptyFullType(ctx *parser.MethodCallContext, targetType string, methodName string, packageName string) (string, string) {
+	if ctx.GetText() == targetType {
+		clz := currentClz
+		// 处理 static 方法，如 now()
+		for _, imp := range imports {
+			if strings.HasSuffix(imp, "."+methodName) {
+				packageName = imp
+				clz = ""
+			}
+		}
+
+		targetType = clz
+	} else {
+		targetType = buildSelfThisTarget(targetType)
+		targetType = buildMethodNameForBuilder(ctx, targetType)
+	}
+	return targetType, packageName
 }
 
 func buildMethodCallLocation(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext, callee string) {

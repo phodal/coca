@@ -16,6 +16,7 @@ type JavaApiApp struct {
 
 func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier, diMap map[string]string) []domain.RestApi {
 	files := cocafile.GetJavaFiles(codeDir)
+	allApis = nil
 	for index := range files {
 		file := files[index]
 
@@ -30,8 +31,9 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
-		allApis = listener.GetClassApis()
+		currentRestApis := listener.GetClassApis()
+		allApis = append(allApis, currentRestApis...)
 	}
 
-	return *&allApis
+	return allApis
 }

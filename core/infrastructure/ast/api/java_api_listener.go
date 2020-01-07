@@ -306,7 +306,3 @@ func (s *JavaApiListener) AppendClasses(classes []models.JClassNode) {
 func (s *JavaApiListener) GetClassApis() []models.RestApi {
 	return restApis
 }
-
-func (s *JavaApiListener) getCurrentApi() models.RestApi {
-	return currentRestApi
-}

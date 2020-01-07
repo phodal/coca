@@ -9,7 +9,7 @@ import (
 func BuildAnalysisDeps(codePath string) ([]domain.JClassNode, map[string]domain.JIdentifier, []domain.JIdentifier) {
 	codePath = filepath.FromSlash(codePath)
 
-	identifierApp := new(analysis.JavaIdentifierApp)
+	identifierApp := analysis.NewJavaIdentifierApp()
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {

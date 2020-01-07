@@ -17,7 +17,7 @@ var baseApiUrlName string
 var localVars = make(map[string]string)
 
 var currentRestApi models.RestApi
-var RestApis []models.RestApi
+var restApis []models.RestApi
 var currentClz string
 var currentPkg string
 
@@ -35,6 +35,7 @@ func NewJavaApiListener(jIdentMap map[string]models.JIdentifier, diMap map[strin
 	currentImplements = ""
 
 	imports = nil
+	restApis = nil
 
 	identMap = jIdentMap
 	depInjectMap = diMap
@@ -198,7 +199,7 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 							currentRestApi.ClassName = currentClz
 							currentRestApi.MethodName = methodName
 
-							RestApis = append(RestApis, currentRestApi)
+							restApis = append(restApis, currentRestApi)
 							return
 						}
 					}
@@ -219,7 +220,7 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 			currentRestApi.RequestBodyClass = requestBodyClass
 			hasEnterRestController = false
 			requestBodyClass = ""
-			RestApis = append(RestApis, currentRestApi)
+			restApis = append(restApis, currentRestApi)
 		} else {
 			buildRestApi(ctx)
 		}
@@ -282,7 +283,7 @@ func buildRestApi(ctx *parser.MethodDeclarationContext) {
 
 	hasEnterRestController = false
 	requestBodyClass = ""
-	RestApis = append(RestApis, currentRestApi)
+	restApis = append(restApis, currentRestApi)
 }
 
 func buildMethodParameters(requestBodyClass string) {
@@ -303,7 +304,7 @@ func (s *JavaApiListener) AppendClasses(classes []models.JClassNode) {
 }
 
 func (s *JavaApiListener) GetClassApis() []models.RestApi {
-	return RestApis
+	return restApis
 }
 
 func (s *JavaApiListener) getCurrentApi() models.RestApi {

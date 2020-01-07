@@ -36,9 +36,6 @@ var reverseCmd = &cobra.Command{
 
 		analyser := rcall.NewRCallGraph()
 		file := cmd_util.ReadFile(dependence)
-		if file == nil {
-			log.Fatal("lost file:" + dependence)
-		}
 
 		_ = json.Unmarshal(file, &parsedDeps)
 

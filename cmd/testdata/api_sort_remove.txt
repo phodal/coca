@@ -1,0 +1,8 @@
++------+--------+-------------+----------------------------+
+| SIZE | METHOD |     URI     |           CALLER           |
++------+--------+-------------+----------------------------+
+|    2 | POST   | /books      | BookController.createBook  |
+|    2 | PUT    | /books/{id} | BookController.updateBook  |
+|    2 | GET    | /books/     | BookController.getBookList |
+|    2 | GET    | /books/{id} | BookController.getBookById |
++------+--------+-------------+----------------------------+

@@ -14,7 +14,7 @@ func TestRCall(t *testing.T) {
 
 	tests := []cmdTestCase{{
 		name:   "rcall",
-		cmd:    "rcall -c com",
+		cmd:    "rcall -r com -c com",
 		golden: "testdata/rcall_normal.txt",
 	}}
 	runTestCmd(t, tests)

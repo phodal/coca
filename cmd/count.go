@@ -9,7 +9,6 @@ import (
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/string_helper"
 	"github.com/spf13/cobra"
-	"log"
 	"strconv"
 )
 
@@ -30,14 +29,7 @@ var countCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		dependence := countCmdConfig.DependencePath
-		if dependence == "" {
-			return
-		}
-
 		file := cmd_util.ReadFile(dependence)
-		if file == nil {
-			log.Fatal("lost file:" + dependence)
-		}
 
 		_ = json.Unmarshal(file, &cparsedDeps)
 

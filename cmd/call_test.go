@@ -16,7 +16,7 @@ func TestCall(t *testing.T) {
 
 	tests := []cmdTestCase{{
 		name:   "call",
-		cmd:    "call",
+		cmd:    "call -r com",
 		golden: "",
 	}}
 	runTestCmd(t, tests)

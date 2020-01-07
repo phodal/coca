@@ -8,7 +8,6 @@ import (
 	"github.com/phodal/coca/core/context/concept"
 	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
-	"log"
 	"os"
 	"strconv"
 )
@@ -25,10 +24,6 @@ var conceptCmd = &cobra.Command{
 		if dependence != "" {
 			analyser := concept.NewConceptAnalyser()
 			file := cmd_util.ReadFile(dependence)
-			if file == nil {
-				log.Fatal("lost file:" + dependence)
-			}
-
 			_ = json.Unmarshal(file, &parsedDeps)
 
 			wordCounts := analyser.Analysis(&parsedDeps)

@@ -3,7 +3,6 @@ package git
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/phodal/coca/core/infrastructure/apriori"
 	"log"
 	"sort"
@@ -133,11 +132,13 @@ type TopAuthor struct {
 	LineCount   int
 }
 
-func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []apriori.RelationRecord {
+var GIT_RELATED_MAX_SIZE = 10
+var MIN_DATASET = 2
+
+func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) [][]string {
 	var dataset [][]string
 	for _, commitMessage := range commitMessages {
 		var set []string
-		GIT_RELATED_MAX_SIZE := 10
 		if len(commitMessage.Changes) > GIT_RELATED_MAX_SIZE {
 			continue
 		}
@@ -152,34 +153,37 @@ func GetRelatedFiles(commitMessages []CommitMessage, relatedConfig []byte) []apr
 			}
 		}
 
-		if len(set) > 2 {
+		if len(set) > MIN_DATASET {
 			dataset = append(dataset, set)
 		}
 	}
 
-	var newOptions apriori.Options = apriori.NewOptions(0.1, 0.9, 0, 0)
+	var newOptions = apriori.NewOptions(0.1, 0.9, 0, 0)
 
 	decoder := json.NewDecoder(bytes.NewReader(relatedConfig))
 	decoder.UseNumber()
-	error := decoder.Decode(&newOptions)
-	if error != nil {
-		log.Fatal(error)
+	err := decoder.Decode(&newOptions)
+	if err != nil {
+		log.Fatal(err)
 		return nil
 	}
 
-	fmt.Println(newOptions)
-	apriori := apriori.NewApriori(dataset)
-	result := apriori.Calculate(newOptions)
+	newApriori := apriori.NewApriori(dataset)
+	result := newApriori.Calculate(newOptions)
 
+	var availableResults [][]string = nil
 	for _, res := range result {
 		items := res.GetSupportRecord().GetItems()
-		if len(items) > 2 {
-			fmt.Println(items)
-			fmt.Println(res.GetSupportRecord().GetSupport())
+		if len(items) > MIN_DATASET {
+			availableResults = append(availableResults, items)
 		}
 	}
 
-	return result
+	if len(availableResults) > 0 {
+		return availableResults
+	}
+
+	return nil
 }
 
 func GetTopAuthors(commitMessages []CommitMessage) []TopAuthor {

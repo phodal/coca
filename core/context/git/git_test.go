@@ -181,7 +181,35 @@ func TestChangeModel(t *testing.T) {
 
 	g.Expect(result[0].Changes[0].File).To(Equal("adapter/call/visitor/JavaCallVisitor.go"))
 	g.Expect(result[0].Changes[0].Mode).To(Equal("delete"))
-	//g.Expect(result[0].Changes[2].File).To(Equal("learn_go_suite_test.go"))
-	//g.Expect(result[0].Changes[2].Mode).To(Equal("create"))
+}
+
+
+func Test_ShouldReturnRelatedFiles(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	result := BuildMessageByInput(`
+[ef9165d] Phodal Huang 2019-12-18 refactor: extract vars
+0       0       adapter/JavaCallListener.java
+0       0       adapter/JavaCallListener2.java
+0       0       adapter/JavaCallListener3.java
+0       0       adapter/JavaCallListener5.java
+
+[ef9165c] Phodal Huang 2019-12-18 refactor: extract vars
+0       0       adapter/JavaCallListener.java
+0       0       adapter/JavaCallListener2.java
+0       0       adapter/JavaCallListener3.java
+0       0       adapter/JavaCallListener4.java
+`)
+	relatedConfig := []byte(`{
+	"minSupport": 0.1,
+	"minConfidence": 0.9,
+	"minLift": 0,
+	"maxLength": 3
+}
+`)
+
+	relatedFiles := GetRelatedFiles(result, relatedConfig)
+
+	g.Expect(len(relatedFiles)).To(Equal(7))
 }
 

@@ -241,33 +241,37 @@ func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo bs_domain.Metho
 					continue
 				}
 
-				statementCtx := statement.GetChild(0).(*StatementContext)
-				if (reflect.TypeOf(statementCtx.GetChild(1)).String()) == "*parser.ParExpressionContext" {
-					if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "if" {
-						if reflect.TypeOf(statementCtx.GetChild(1)).String() == "*parser.ParExpressionContext" {
-							parCtx := statementCtx.GetChild(1).(*ParExpressionContext)
-							startLine := parCtx.GetStart().GetLine()
-							endLine := parCtx.GetStop().GetLine()
-
-							info := bs_domain.NewIfPairInfo()
-							info.StartLine = startLine
-							info.EndLine = endLine
-							bsInfo.IfInfo = append(bsInfo.IfInfo, info)
-						}
-
-						bsInfo.IfSize = bsInfo.IfSize + 1
-					}
-
-					if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "switch" {
-						bsInfo.SwitchSize = bsInfo.SwitchSize + 1
-					}
-
-				}
+				countMethodIfSwitch(statement, &bsInfo)
 			}
 		}
 	}
 
 	return bsInfo
+}
+
+func countMethodIfSwitch(statement IBlockStatementContext, bsInfo *bs_domain.MethodBadSmellInfo) {
+	statementCtx := statement.GetChild(0).(*StatementContext)
+	if (reflect.TypeOf(statementCtx.GetChild(1)).String()) == "*parser.ParExpressionContext" {
+		if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "if" {
+			if reflect.TypeOf(statementCtx.GetChild(1)).String() == "*parser.ParExpressionContext" {
+				parCtx := statementCtx.GetChild(1).(*ParExpressionContext)
+				startLine := parCtx.GetStart().GetLine()
+				endLine := parCtx.GetStop().GetLine()
+
+				info := bs_domain.NewIfPairInfo()
+				info.StartLine = startLine
+				info.EndLine = endLine
+				bsInfo.IfInfo = append(bsInfo.IfInfo, info)
+			}
+
+			bsInfo.IfSize = bsInfo.IfSize + 1
+		}
+
+		if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "switch" {
+			bsInfo.SwitchSize = bsInfo.SwitchSize + 1
+		}
+
+	}
 }
 
 func (s *BadSmellListener) EnterFormalParameterList(ctx *FormalParameterListContext) {

@@ -528,7 +528,7 @@ func buildMethodCallParameters(jMethodCall *domain.JMethodCall, ctx *parser.Meth
 	}
 }
 
-func buildMethodCallMethod(jMethodCall *domain.JMethodCall, callee string, targetType string,  ctx *parser.MethodCallContext) {
+func buildMethodCallMethod(jMethodCall *domain.JMethodCall, callee string, targetType string, ctx *parser.MethodCallContext) {
 	methodName := callee
 	packageName := currentPkg
 
@@ -603,17 +603,22 @@ func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 		if reflect.TypeOf(parentCtx.GetParent()).String() == "*parser.VariableInitializerContext" {
 			varParent := parentCtx.GetParent().(*parser.VariableInitializerContext).GetParent()
 			if reflect.TypeOf(varParent).String() == "*parser.VariableDeclaratorContext" {
-				varDeclParent := varParent.(*parser.VariableDeclaratorContext).GetParent()
-				if reflect.TypeOf(varDeclParent).String() == "*parser.VariableDeclaratorsContext" {
-					parent := varDeclParent.(*parser.VariableDeclaratorsContext).GetParent()
-					if reflect.TypeOf(parent).String() == "*parser.LocalVariableDeclarationContext" {
-						targetType = parent.(*parser.LocalVariableDeclarationContext).TypeType().GetText()
-					}
-				}
+				targetType = getTargetFromVarDecl(varParent, targetType)
 			}
 		}
 	}
 
+	return targetType
+}
+
+func getTargetFromVarDecl(varParent antlr.Tree, targetType string) string {
+	varDeclParent := varParent.(*parser.VariableDeclaratorContext).GetParent()
+	if reflect.TypeOf(varDeclParent).String() == "*parser.VariableDeclaratorsContext" {
+		parent := varDeclParent.(*parser.VariableDeclaratorsContext).GetParent()
+		if reflect.TypeOf(parent).String() == "*parser.LocalVariableDeclarationContext" {
+			targetType = parent.(*parser.LocalVariableDeclarationContext).TypeType().GetText()
+		}
+	}
 	return targetType
 }
 

@@ -29,7 +29,24 @@ func Test_ShouldReturnCorrectGradleDepsFroFile(t *testing.T) {
 
 	mavenDeps := AnalysisGradle(string(bytes))
 
-	g.Expect(len(mavenDeps)).To(Equal(13))
+	g.Expect(len(mavenDeps)).To(Equal(14))
+}
+
+func Test_ShouldHandleExclude(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	pluginsStr := `dependencies {
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		exclude module: 'junit'
+    }
+}`
+
+	results := AnalysisGradle(pluginsStr)
+
+	g.Expect(len(results)).To(Equal(1))
+	g.Expect(results[0].ArtifactId).To(Equal("spring-boot-starter-test"))
+	g.Expect(results[0].GroupId).To(Equal("org.springframework.boot"))
 }
 
 func Test_ShouldReturnCorrectMavenDeps(t *testing.T) {

@@ -65,36 +65,54 @@ func buildBlockStatements(closureContext *parser.ClosureContext) []domain.JDepen
 	var results []domain.JDependency
 	statementsContext := closureContext.BlockStatementsOpt().(*parser.BlockStatementsOptContext).BlockStatements().(*parser.BlockStatementsContext)
 	for _, blockStatement := range statementsContext.AllBlockStatement() {
-		child := blockStatement.GetChild(0).GetChild(0).GetChild(0).(*parser.CommandExpressionContext)
-		declare := child.GetChild(0).(antlr.ParseTree).GetText()
-
-		if child.GetChildCount() < 2 {
-			continue
-		}
-
 		var result *domain.JDependency = nil
-		for _, arg := range child.GetChild(1).(antlr.ParseTree).(*parser.ArgumentListContext).AllArgumentListElement() {
-			if reflect.TypeOf(arg.(*parser.ArgumentListElementContext).GetChild(0)).String() == "*parser.ExpressionListElementContext" {
-				listElementContext := arg.(*parser.ArgumentListElementContext).GetChild(0).(*parser.ExpressionListElementContext)
-				literalPrmrAltContext := listElementContext.
-					GetChild(0).
-					GetChild(0).
-					GetChild(0).
-					GetChild(0).
-				(*parser.LiteralPrmrAltContext)
 
-				resultStr := literalPrmrAltContext.Literal().GetChild(0).(*parser.StringLiteralContext).StringLiteral().GetText()
-				result = ConvertToJDep(resultStr)
+		commandExprCtx := blockStatement.GetChild(0).GetChild(0).GetChild(0).(*parser.CommandExpressionContext)
+		pathExpression := commandExprCtx.GetChild(0).(*parser.PostfixExprAltForExprContext).GetChild(0).(*parser.PostfixExpressionContext).PathExpression()
+		scope := pathExpression.GetChild(0).(antlr.ParseTree).GetText()
+
+		//  with quote testImplementation('org.springframework.boot:spring-boot-starter-test')
+		isWithQuote := pathExpression.GetChildCount() >= 2
+		if isWithQuote {
+			argumentsContext := pathExpression.GetChild(1).(*parser.PathElementContext).GetChild(0).(*parser.ArgumentsContext)
+			argListCtx := argumentsContext.GetChild(1).(*parser.EnhancedArgumentListContext)
+			for _, argElement := range argListCtx.AllEnhancedArgumentListElement() {
+				result = ConvertToJDep(argElement.GetText())
 			}
 		}
 
+		// normal: developmentOnly 'org.springframework.boot:spring-boot-devtools'
+		if commandExprCtx.GetChildCount() >= 2 {
+			argumentListContext := commandExprCtx.GetChild(1).(*parser.ArgumentListContext)
+			result = BuildDependency(argumentListContext)
+		}
+
 		if result != nil {
-			result.Scope = declare
+			result.Scope = scope
 			results = append(results, *result)
 		}
 	}
 
 	return results
+}
+
+func BuildDependency(argumentListContext *parser.ArgumentListContext) *domain.JDependency {
+	var result *domain.JDependency = nil
+	for _, arg := range argumentListContext.AllArgumentListElement() {
+		if reflect.TypeOf(arg.(*parser.ArgumentListElementContext).GetChild(0)).String() == "*parser.ExpressionListElementContext" {
+			listElementContext := arg.(*parser.ArgumentListElementContext).GetChild(0).(*parser.ExpressionListElementContext)
+			literalPrmrAltContext := listElementContext.
+				GetChild(0).
+				GetChild(0).
+				GetChild(0).
+				GetChild(0).
+			(*parser.LiteralPrmrAltContext)
+
+			resultStr := literalPrmrAltContext.Literal().GetChild(0).(*parser.StringLiteralContext).StringLiteral().GetText()
+			result = ConvertToJDep(resultStr)
+		}
+	}
+	return result
 }
 
 func ConvertToJDep(result string) *domain.JDependency {

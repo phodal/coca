@@ -181,30 +181,8 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 	methodName := ctx.IDENTIFIER().GetText()
 
 	if currentImplements != "" {
-		var superClz = ""
-		for index := range imports {
-			imp := imports[index]
-			if strings.HasSuffix(imp, "."+currentImplements) {
-				superClz = imp
-			}
-			// TODO: 支持 interface 在同一个包内
-		}
-
-		if _, ok := identMap[superClz]; ok {
-			for _, method := range identMap[superClz].Methods {
-				if method.Name == methodName {
-					for _, annotation := range method.Annotations {
-						if annotation.QualifiedName == "ServiceMethod" {
-							currentRestApi.PackageName = currentPkg
-							currentRestApi.ClassName = currentClz
-							currentRestApi.MethodName = methodName
-
-							restApis = append(restApis, currentRestApi)
-							return
-						}
-					}
-				}
-			}
+		if buildApiForInterfaceAnnotation(methodName) {
+			return
 		}
 	}
 
@@ -222,7 +200,7 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 			requestBodyClass = ""
 			restApis = append(restApis, currentRestApi)
 		} else {
-			buildRestApi(ctx)
+			buildRestApiWithParameters(ctx)
 		}
 	}
 
@@ -231,6 +209,35 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 	if reflect.TypeOf(blockContext).String() == "*parser.BlockContext" {
 		filterMethodCall(blockContext)
 	}
+}
+
+func buildApiForInterfaceAnnotation(methodName string) bool {
+	var superClz = ""
+	for index := range imports {
+		imp := imports[index]
+		if strings.HasSuffix(imp, "."+currentImplements) {
+			superClz = imp
+		}
+		// TODO: 支持 interface 在同一个包内
+	}
+
+	if _, ok := identMap[superClz]; ok {
+		for _, method := range identMap[superClz].Methods {
+			if method.Name == methodName {
+				for _, annotation := range method.Annotations {
+					if annotation.QualifiedName == "ServiceMethod" {
+						currentRestApi.PackageName = currentPkg
+						currentRestApi.ClassName = currentClz
+						currentRestApi.MethodName = methodName
+
+						restApis = append(restApis, currentRestApi)
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false
 }
 
 func filterMethodCall(blockContext antlr.Tree) {
@@ -246,7 +253,7 @@ func filterMethodCall(blockContext antlr.Tree) {
 	}
 }
 
-func buildRestApi(ctx *parser.MethodDeclarationContext) {
+func buildRestApiWithParameters(ctx *parser.MethodDeclarationContext) {
 	parameterList := ctx.FormalParameters().GetChild(1).(*parser.FormalParameterListContext)
 	formalParameter := parameterList.AllFormalParameter()
 	for _, param := range formalParameter {

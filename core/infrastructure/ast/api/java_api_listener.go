@@ -13,7 +13,7 @@ var jClassNodes []models.JClassNode
 var hasEnterClass = false
 var isSpringRestController = false
 var hasEnterRestController = false
-var baseApiUrlName string
+var baseApiUrl string
 var localVars = make(map[string]string)
 
 var currentRestApi models.RestApi
@@ -88,36 +88,20 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	}
 
 	if !hasEnterClass {
-		// 类声明处的注解
-		if annotationName == "RequestMapping" {
-			if ctx.ElementValuePairs() != nil {
-				allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
-				for _, valuePair := range allValuePair {
-					pair := valuePair.(*parser.ElementValuePairContext)
-					if pair.IDENTIFIER().GetText() == "value" {
-						text := pair.ElementValue().GetText()
-						baseApiUrlName = text[1 : len(text)-1]
-					}
-				}
-			} else if ctx.ElementValue() != nil {
-				text := ctx.ElementValue().GetText()
-				baseApiUrlName = text[1 : len(text)-1]
-			} else {
-				baseApiUrlName = "/"
-			}
-		}
+		buildBaseApiUrlString(annotationName, ctx)
 	}
 
-	if !(annotationName == "RequestMapping" || annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping") {
+	notApi := annotationName == "RequestMapping" || annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping"
+	if !notApi {
 		return
 	}
 
 	hasEnterRestController = true
 	uri := ""
 	if ctx.ElementValue() != nil {
-		uri = baseApiUrlName + ctx.ElementValue().GetText()
+		uri = baseApiUrl + ctx.ElementValue().GetText()
 	} else {
-		uri = baseApiUrlName
+		uri = baseApiUrl
 	}
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
@@ -140,8 +124,29 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 			}
 			if pair.IDENTIFIER().GetText() == "value" {
 				text := pair.ElementValue().GetText()
-				currentRestApi.Uri = baseApiUrlName + text[1:len(text)-1]
+				currentRestApi.Uri = baseApiUrl + text[1:len(text)-1]
 			}
+		}
+	}
+}
+
+func buildBaseApiUrlString(annotationName string, ctx *parser.AnnotationContext) {
+	// 类声明处的注解
+	if annotationName == "RequestMapping" {
+		if ctx.ElementValuePairs() != nil {
+			allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
+			for _, valuePair := range allValuePair {
+				pair := valuePair.(*parser.ElementValuePairContext)
+				if pair.IDENTIFIER().GetText() == "value" {
+					text := pair.ElementValue().GetText()
+					baseApiUrl = text[1 : len(text)-1]
+				}
+			}
+		} else if ctx.ElementValue() != nil {
+			text := ctx.ElementValue().GetText()
+			baseApiUrl = text[1 : len(text)-1]
+		} else {
+			baseApiUrl = "/"
 		}
 	}
 }

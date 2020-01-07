@@ -64,22 +64,23 @@ func BuildDeps(val xmlparse.XmlNode) []domain.JDependency {
 					dependency.Scope = textNode.Val.(string)
 				}
 			}
-
 		}
-		deps = append(deps, *dependency)
 
+		deps = append(deps, *dependency)
 	}
 
 	return deps
 }
 
-func AnalysisGradle(str string) {
+func AnalysisGradle(str string) []domain.JDependency {
 	parser := ProcessGroovyString(str)
 	context := parser.CompilationUnit()
 
 	listener := groovy.NewGroovyIdentListener()
 
 	antlr.NewParseTreeWalker().Walk(listener, context)
+
+	return listener.GetDepsInfo()
 }
 
 func ProcessGroovyString(code string) *GroovyParser {

@@ -14,9 +14,10 @@ func Test_ShouldReturnGradleDep(t *testing.T) {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }`
 
-	AnalysisGradle(pluginsStr)
+	results := AnalysisGradle(pluginsStr)
 
-	g.Expect(true).To(Equal(true))
+	g.Expect(len(results)).To(Equal(2))
+	g.Expect(results[0].ArtifactId).To(Equal("spring-boot-starter-web"))
 }
 
 func Test_ShouldReturnCorrectMavenDeps(t *testing.T) {

@@ -37,7 +37,7 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 		}
 	}
 
-	SummaryMethodIdentifier(identifiers, result)
+	SummaryMethodIdentifier(identifiers, &result)
 
 	evaluation = Evaluation{evaluator.Service{}}
 	evaluation.EvaluateList(&result, servicesNode, nodeMap, identifiers)
@@ -48,7 +48,7 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 	return result
 }
 
-func SummaryMethodIdentifier(identifiers []domain.JIdentifier, result evaluator.EvaluateModel) {
+func SummaryMethodIdentifier(identifiers []domain.JIdentifier, result *evaluator.EvaluateModel) {
 	var methodLengthArray []float64
 	var methodCountArray []float64
 	for _, ident := range identifiers {

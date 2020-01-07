@@ -5,7 +5,7 @@ import (
 )
 
 func TestCount(t *testing.T) {
-	abs := "../_fixtures/arch"
+	abs := "../_fixtures/examples/rename"
 
 	analysis := []cmdTestCase{{
 		name:   "analysis",

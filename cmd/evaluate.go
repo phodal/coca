@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/core/context/evaluate"
+	"github.com/phodal/coca/core/context/evaluate/evaluator"
 	"github.com/phodal/coca/core/domain"
 	"github.com/spf13/cobra"
 	"log"
@@ -45,32 +46,36 @@ var evaluateCmd = &cobra.Command{
 		cModel, _ := json.MarshalIndent(result, "", "\t")
 		cmd_util.WriteToCocaFile("evaluate.json", string(cModel))
 
-		table := tablewriter.NewWriter(output)
-		table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})
-
-		classCount := result.Summary.ClassCount
-		methodCount := result.Summary.MethodCount
-
-		nullItemsLength := len(result.Nullable.Items)
-		table.Append([]string{"Nullable / Return Null", strconv.Itoa(nullItemsLength), "Method", strconv.Itoa(methodCount), Percent(nullItemsLength, methodCount)})
-
-		utilsCount := result.Summary.UtilsCount
-		table.Append([]string{"Utils", strconv.Itoa(utilsCount), "Class", strconv.Itoa(classCount), Percent(utilsCount, classCount)})
-
-		staticCount := result.Summary.StaticMethodCount
-		table.Append([]string{"Static Method", strconv.Itoa(staticCount), "Method", strconv.Itoa(methodCount), Percent(utilsCount, methodCount)})
-
-		table.Append([]string{"Average Method Num.", strconv.Itoa(methodCount), "Method/Class", strconv.Itoa(classCount), Rate(methodCount, classCount)})
-		table.Append([]string{"Method Num. Std Dev / 标准差", strconv.Itoa(methodCount), "Class", "-", fmt.Sprintf("%f", result.Summary.MethodNumStdDeviation)})
-
-		totalLength := result.Summary.TotalMethodLength
-		normalMethodCount := result.Summary.NormalMethodCount
-		table.Append([]string{"Average Method Length", strconv.Itoa(totalLength), "Without Getter/Setter", strconv.Itoa(normalMethodCount), Rate(totalLength, normalMethodCount)})
-
-		table.Append([]string{"Method Length Std Dev / 标准差", strconv.Itoa(methodCount), "Method", "-", fmt.Sprintf("%f", result.Summary.MethodLengthStdDeviation)})
-
-		table.Render()
+		buildOutput(result)
 	},
+}
+
+func buildOutput(result evaluator.EvaluateModel) {
+	table := tablewriter.NewWriter(output)
+	table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})
+
+	classCount := result.Summary.ClassCount
+	methodCount := result.Summary.MethodCount
+
+	nullItemsLength := len(result.Nullable.Items)
+	table.Append([]string{"Nullable / Return Null", strconv.Itoa(nullItemsLength), "Method", strconv.Itoa(methodCount), Percent(nullItemsLength, methodCount)})
+
+	utilsCount := result.Summary.UtilsCount
+	table.Append([]string{"Utils", strconv.Itoa(utilsCount), "Class", strconv.Itoa(classCount), Percent(utilsCount, classCount)})
+
+	staticCount := result.Summary.StaticMethodCount
+	table.Append([]string{"Static Method", strconv.Itoa(staticCount), "Method", strconv.Itoa(methodCount), Percent(utilsCount, methodCount)})
+
+	table.Append([]string{"Average Method Num.", strconv.Itoa(methodCount), "Method/Class", strconv.Itoa(classCount), Rate(methodCount, classCount)})
+	table.Append([]string{"Method Num. Std Dev / 标准差", strconv.Itoa(methodCount), "Class", "-", fmt.Sprintf("%f", result.Summary.MethodNumStdDeviation)})
+
+	totalLength := result.Summary.TotalMethodLength
+	normalMethodCount := result.Summary.NormalMethodCount
+	table.Append([]string{"Average Method Length", strconv.Itoa(totalLength), "Without Getter/Setter", strconv.Itoa(normalMethodCount), Rate(totalLength, normalMethodCount)})
+
+	table.Append([]string{"Method Length Std Dev / 标准差", strconv.Itoa(methodCount), "Method", "-", fmt.Sprintf("%f", result.Summary.MethodLengthStdDeviation)})
+
+	table.Render()
 }
 
 func Percent(pcent int, all int) string {

@@ -14,7 +14,7 @@ func TestBadSmellApp_ComplexCondition(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("complexCondition"))
@@ -27,7 +27,7 @@ func TestBadSmellApp_DataClass(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("dataClass"))
@@ -41,7 +41,7 @@ func TestBadSmellApp_LongMethod(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(2))
 	g.Expect(bsList[0].Bs).To(Equal("longMethod"))
@@ -56,7 +56,7 @@ func TestBadSmellApp_LazyElement(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("lazyElement"))
@@ -70,7 +70,7 @@ func TestBadSmellApp_LongParameters(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("longParameterList"))
@@ -84,7 +84,7 @@ func TestBadSmellApp_MultipleIf(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("repeatedSwitches"))
@@ -98,7 +98,7 @@ func TestBadSmellApp_LargeClass(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	bs := bsApp.AnalysisPath(codePath)
-	bsList := bsApp.FilterBadSmell(bs, nil)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
 
 	g.Expect(len(bsList)).To(Equal(1))
 	g.Expect(bsList[0].Bs).To(Equal("largeClass"))

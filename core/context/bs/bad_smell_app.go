@@ -43,7 +43,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 	return &nodeInfos
 }
 
-func (j *BadSmellApp) FilterBadSmell(nodeInfos *[]bs_domain.BsJClass, ignoreRules []string) []bs_domain.BadSmellModel {
+func (j *BadSmellApp) IdentifyBadSmell(nodeInfos *[]bs_domain.BsJClass, ignoreRules []string) []bs_domain.BadSmellModel {
 	bsList := AnalysisBadSmell(*nodeInfos)
 
 	mapIgnoreRules := make(map[string]bool)

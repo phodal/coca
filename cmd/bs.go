@@ -30,13 +30,12 @@ var badsmellCmd = &cobra.Command{
 		ignoreRules := strings.Split(ignoreStr, ",")
 
 		bsApp := *bs2.NewBadSmellApp()
-		bsList := bsApp.AnalysisPath(importPath)
+		nodeInfos := bsApp.AnalysisPath(importPath)
 
-		bsModel, _ := json.MarshalIndent(bsList, "", "\t")
+		bsModel, _ := json.MarshalIndent(nodeInfos, "", "\t")
 		cmd_util.WriteToCocaFile("nodeInfos.json", string(bsModel))
 
-		filterBs := bsApp.FilterBadSmell(bsList, ignoreRules)
-
+		filterBs := bsApp.IdentifyBadSmell(nodeInfos, ignoreRules)
 		filterBsModel, _ := json.MarshalIndent(filterBs, "", "\t")
 
 		if sortType == "type" {

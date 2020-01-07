@@ -1,7 +1,9 @@
 package deps
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest"
 	"testing"
 )
@@ -20,6 +22,17 @@ func Test_ShouldReturnGradleDep(t *testing.T) {
 	g.Expect(results[0].ArtifactId).To(Equal("spring-boot-starter-web"))
 }
 
+func Test_ShouldReturnCorrectGradleDepsFroFile(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/deps/gradle/build.gradle"
+	bytes := cmd_util.ReadFile(codePath)
+
+	mavenDeps := AnalysisGradle(string(bytes))
+
+	g.Expect(len(mavenDeps)).To(Equal(13))
+}
+
 func Test_ShouldReturnCorrectMavenDeps(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -27,7 +40,6 @@ func Test_ShouldReturnCorrectMavenDeps(t *testing.T) {
 	mavenDeps := AnalysisMaven(codePath)
 
 	g.Expect(len(mavenDeps)).To(Equal(12))
-	g.Expect(true).To(Equal(true))
 }
 
 func Test_ShouldReturnNilWhenErrorPath(t *testing.T) {

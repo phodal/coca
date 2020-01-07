@@ -27,9 +27,8 @@ func (s *GroovyIdentifierListener) EnterScriptStatement(ctx *parser.ScriptStatem
 	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.ExpressionStmtAltContext" {
 		cmdExpr := ctx.GetChild(0).(*parser.ExpressionStmtAltContext).StatementExpression().GetChild(0).(*parser.CommandExpressionContext).Expression()
 		if cmdExpr != nil {
-			postfixExpressionContext := cmdExpr.GetChild(0).(*parser.PostfixExpressionContext)
-			if postfixExpressionContext != nil {
-				pathExprCtx := postfixExpressionContext.GetChild(0).(*parser.PathExpressionContext)
+			if reflect.TypeOf(cmdExpr.GetChild(0)).String() == "*parser.PostfixExpressionContext" {
+				pathExprCtx := cmdExpr.GetChild(0).(*parser.PostfixExpressionContext).GetChild(0).(*parser.PathExpressionContext)
 				buildGroovyMap(pathExprCtx)
 			}
 		}
@@ -68,6 +67,10 @@ func buildBlockStatements(closureContext *parser.ClosureContext) []domain.JDepen
 	for _, blockStatement := range statementsContext.AllBlockStatement() {
 		child := blockStatement.GetChild(0).GetChild(0).GetChild(0).(*parser.CommandExpressionContext)
 		declare := child.GetChild(0).(antlr.ParseTree).GetText()
+
+		if child.GetChildCount() < 2 {
+			continue
+		}
 
 		var result *domain.JDependency = nil
 		for _, arg := range child.GetChild(1).(antlr.ParseTree).(*parser.ArgumentListContext).AllArgumentListElement() {

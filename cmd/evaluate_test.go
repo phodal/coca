@@ -5,11 +5,9 @@ import (
 )
 
 func TestEvaluate(t *testing.T) {
-	abs := "../_fixtures/arch"
-
 	analysis := []cmdTestCase{{
 		name:   "analysis",
-		cmd:    "analysis -p " + abs,
+		cmd:    "analysis -p ../_fixtures/arch",
 		golden: "",
 	}}
 	runTestCmd(t, analysis)

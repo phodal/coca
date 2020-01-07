@@ -510,10 +510,27 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
-	jMethodCall.StartLine = ctx.GetStart().GetLine()
-	jMethodCall.StartLinePosition = ctx.GetStart().GetColumn()
-	jMethodCall.StopLine = ctx.GetStop().GetLine()
-	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
+	buildMethodCallLocation(&jMethodCall, ctx, callee)
+	buildMethodCallMethod(&jMethodCall, callee, targetType, ctx)
+	buildMethodCallParameters(&jMethodCall, ctx)
+
+	addMethodCallToMap(jMethodCall)
+}
+
+func buildMethodCallParameters(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext) {
+	if ctx.ExpressionList() != nil {
+		var parameters []string
+		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {
+			expressionCtx := expression.(*parser.ExpressionContext)
+			parameters = append(parameters, expressionCtx.GetText())
+		}
+		jMethodCall.Parameters = parameters
+	}
+}
+
+func buildMethodCallMethod(jMethodCall *domain.JMethodCall, callee string, targetType string,  ctx *parser.MethodCallContext) {
+	methodName := callee
+	packageName := currentPkg
 
 	fullType, callType := warpTargetFullType(targetType)
 	if targetType == "super" || callee == "super" {
@@ -521,9 +538,6 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 		targetType = currentClzExtend
 	}
 	jMethodCall.Type = callType
-
-	methodName := callee
-	packageName := currentPkg
 
 	if fullType != "" {
 		packageName = removeTarget(fullType)
@@ -556,20 +570,16 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
 	jMethodCall.Class = targetType
-
-	if ctx.ExpressionList() != nil {
-		var parameters []string
-		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {
-			expressionCtx := expression.(*parser.ExpressionContext)
-			parameters = append(parameters, expressionCtx.GetText())
-		}
-		jMethodCall.Parameters = parameters
-	}
-
-	addMethodCall(jMethodCall)
 }
 
-func addMethodCall(jMethodCall domain.JMethodCall) {
+func buildMethodCallLocation(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext, callee string) {
+	jMethodCall.StartLine = ctx.GetStart().GetLine()
+	jMethodCall.StartLinePosition = ctx.GetStart().GetColumn()
+	jMethodCall.StopLine = ctx.GetStop().GetLine()
+	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
+}
+
+func addMethodCallToMap(jMethodCall domain.JMethodCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
@@ -644,7 +654,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 			StopLine:          stopLine,
 			StopLinePosition:  stopLinePosition,
 		}
-		addMethodCall(*jMethodCall)
+		addMethodCallToMap(*jMethodCall)
 	}
 }
 

@@ -1,7 +1,6 @@
 package deps
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest"

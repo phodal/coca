@@ -7,6 +7,10 @@ import (
 
 func ProcessJavaFile(path string) *parser.JavaParser {
 	is, _ := antlr.NewFileStream(path)
+	return processStream(is)
+}
+
+func processStream(is antlr.CharStream) *parser.JavaParser {
 	lexer := parser.NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
 	parser := parser.NewJavaParser(stream)
@@ -15,8 +19,5 @@ func ProcessJavaFile(path string) *parser.JavaParser {
 
 func ProcessJavaString(code string) *parser.JavaParser {
 	is := antlr.NewInputStream(code)
-	lexer := parser.NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	parser := parser.NewJavaParser(stream)
-	return parser
+	return processStream(is)
 }

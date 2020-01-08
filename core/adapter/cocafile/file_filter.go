@@ -10,6 +10,10 @@ var JavaCodeFileFilter = func(path string) bool {
 	return strings.HasSuffix(path, ".java") && !JavaTestFileFilter(path)
 }
 
+var JavaFileFilter = func(path string) bool {
+	return strings.HasSuffix(path, ".java")
+}
+
 var PomXmlFilter = func(path string) bool {
 	return strings.HasSuffix(path, "pom.xml")
 }

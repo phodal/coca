@@ -15,7 +15,7 @@ func GetJavaFiles(codeDir string) []string {
 
 func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string {
 	files := make([]string, 0)
-	gitIgnore, err := ignore.CompileIgnoreFile(".gitignore")
+	gitIgnore, err := ignore.CompileIgnoreFile(filepath.FromSlash(codeDir + "/.gitignore"))
 	if err != nil {
 		//fmt.Println(err)
 	}

@@ -1,0 +1,8 @@
+unused
++---------------------------+----------------------------------------+---------+
+|          GROUPID          |               ARTIFACTID               |  SCOPE  |
++---------------------------+----------------------------------------+---------+
+| org.flywaydb              | flyway-core                            |         |
+| mysql                     | mysql-connector-java                   | runtime |
+| org.springframework.cloud | spring-cloud-starter-contract-verifier | test    |
++---------------------------+----------------------------------------+---------+

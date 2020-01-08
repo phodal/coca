@@ -17,11 +17,11 @@ func LoadIdentify(importPath string) []domain.JIdentifier {
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
 		WriteToCocaFile("identify.json", string(identModel))
 
-		return *&ident
+		return ident
 	}
 	_ = json.Unmarshal(apiContent, &identifiers)
 
-	return *&identifiers
+	return identifiers
 }
 
 func LoadTestIdentify(files []string) []domain.JIdentifier {
@@ -36,10 +36,10 @@ func LoadTestIdentify(files []string) []domain.JIdentifier {
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
 		WriteToCocaFile("tidentify.json", string(identModel))
 
-		return *&ident
+		return ident
 	}
 	_ = json.Unmarshal(apiContent, &identifiers)
 
-	return *&identifiers
+	return identifiers
 }
 

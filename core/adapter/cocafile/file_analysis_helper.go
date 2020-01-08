@@ -7,22 +7,10 @@ import (
 	ignore "github.com/sabhiram/go-gitignore"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
-var javaCodeFileFilter = func(path string) bool {
-	return strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") && !strings.Contains(path, "Tests.java")
-}
-
-var javaTestFileFilter = func(path string) bool {
-	if strings.Contains(path, "Test.java") || strings.Contains(path, "Tests.java") {
-		return true
-	}
-	return false
-}
-
 func GetJavaFiles(codeDir string) []string {
-	return GetFilesWithFilter(codeDir, javaCodeFileFilter)
+	return GetFilesWithFilter(codeDir, JavaCodeFileFilter)
 }
 
 func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string {
@@ -59,7 +47,7 @@ func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string 
 }
 
 func GetJavaTestFiles(codeDir string) []string {
-	return GetFilesWithFilter(codeDir, javaTestFileFilter)
+	return GetFilesWithFilter(codeDir, JavaTestFileFilter)
 }
 
 func ProcessFile(path string) *JavaParser {

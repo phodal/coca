@@ -24,6 +24,7 @@ Available Commands:
   cloc        count lines of code with complexity estimation
   concept     build domain concept from source code
   count       count most refs function
+  deps        evaluate dependencies
   evaluate    evaluate code situation and refactor effort
   git         analysis git commit history for revs count, summary and suggest
   help        Help about any command
@@ -442,6 +443,24 @@ results
 +---------------------+---------------------------------------------------------------+------+
 ```
 
+### Find unused deps
+
+```
+coca  deps -p _fixtures/deps/maven_sample
+```
+
+results:
+
+```
++---------------------------+----------------------------------------+---------+
+|          GROUPID          |               ARTIFACTID               |  SCOPE  |
++---------------------------+----------------------------------------+---------+
+| org.flywaydb              | flyway-core                            |         |
+| mysql                     | mysql-connector-java                   | runtime |
+| org.springframework.cloud | spring-cloud-starter-contract-verifier | test    |
++---------------------------+----------------------------------------+---------+
+```
+
 ## Todo
 
  - bad smell support
@@ -514,11 +533,11 @@ results
     - [ ] GitHub search code
  - [ ] Pluggable
     - [ ] plugin support
- - [ ] Dependence Analysis
+ - [x] Dependence Analysis
     - [ ] Deps Related Counts
-    - [ ] 3rd-party analysis XML or Groovy Scripts
-    - [ ] Groovy Support
-      - [ ] migrate to Golang Styles
+    - [x] 3rd-party analysis XML or Groovy Scripts
+    - [x] Groovy Support
+      - [x] migrate to Golang Styles
 
 Documents Todo:
 

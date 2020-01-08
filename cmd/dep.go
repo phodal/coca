@@ -28,7 +28,6 @@ var depCmd = &cobra.Command{
 		path, _ = filepath.Abs(path)
 		files := cocafile.GetFilesWithFilter(path, cocafile.JavaFileFilter)
 
-		fmt.Println(path, files)
 		identifierApp := analysis.NewJavaIdentifierApp()
 		iNodes := identifierApp.AnalysisFiles(files)
 

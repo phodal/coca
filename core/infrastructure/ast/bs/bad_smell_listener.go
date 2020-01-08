@@ -73,13 +73,13 @@ func (s *BadSmellListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	if ctx.IMPLEMENTS() != nil {
 		typeList := ctx.TypeList().(*TypeListContext)
 		for _, typ := range typeList.AllTypeType() {
-			typeData := getTypeDATA(typ.(*TypeTypeContext))
+			typeData := getTypeData(typ.(*TypeTypeContext))
 			currentClzImplements = append(currentClzImplements, typeData)
 		}
 	}
 }
 
-func getTypeDATA(typ *TypeTypeContext) string {
+func getTypeData(typ *TypeTypeContext) string {
 	var typeData string
 	classOrInterface := typ.ClassOrInterfaceType().(*ClassOrInterfaceTypeContext)
 	if classOrInterface != nil {

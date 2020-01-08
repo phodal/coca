@@ -7,10 +7,10 @@ import (
 )
 
 func ConvertToSvg(name string) {
-	cmd := exec.Command("dot", []string{"-Tsvg", config.CocaConfig.ReporterPath + "/" + name + ".dot", "-o", config.CocaConfig.ReporterPath + "/" + name + ".svg"}...)
+	reporter_path := config.CocaConfig.ReporterPath
+	cmd := exec.Command("dot", "-Tsvg", reporter_path+"/"+name+".dot", "-o", reporter_path+"/"+name+".svg")
 	_, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println("cmd.Run() failed with:", err)
 	}
 }
-

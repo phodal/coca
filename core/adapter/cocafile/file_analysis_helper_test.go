@@ -9,7 +9,7 @@ import (
 
 func TestJavaCallApp_ProcessStringWorks(t *testing.T) {
 	g := NewGomegaWithT(t)
-	parser := ProcessString(`
+	parser := ProcessJavaString(`
 package com.phodal.coca.analysis.identifier.model;
 
 public class DataClass {

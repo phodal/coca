@@ -33,7 +33,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []domain.JIdentifier, files []str
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := cocafile.ProcessFile(file)
+		parser := cocafile.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		listener := full.NewJavaFullListener(identMap, file)

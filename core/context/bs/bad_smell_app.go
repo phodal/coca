@@ -28,7 +28,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := cocafile.ProcessFile(file)
+		parser := cocafile.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		listener := bs.NewBadSmellListener()

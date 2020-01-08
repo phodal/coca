@@ -40,7 +40,7 @@ func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 
 		currentFile, _ = filepath.Abs(file)
 
-		parser := cocafile.ProcessFile(file)
+		parser := cocafile.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

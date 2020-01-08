@@ -50,7 +50,7 @@ func GetJavaTestFiles(codeDir string) []string {
 	return GetFilesWithFilter(codeDir, JavaTestFileFilter)
 }
 
-func ProcessFile(path string) *JavaParser {
+func ProcessJavaFile(path string) *JavaParser {
 	is, _ := antlr.NewFileStream(path)
 	lexer := NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
@@ -58,7 +58,7 @@ func ProcessFile(path string) *JavaParser {
 	return parser
 }
 
-func ProcessString(code string) *JavaParser {
+func ProcessJavaString(code string) *JavaParser {
 	is := antlr.NewInputStream(code)
 	lexer := NewJavaLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0)

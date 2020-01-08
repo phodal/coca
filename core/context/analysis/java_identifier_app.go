@@ -24,7 +24,7 @@ func (j *JavaIdentifierApp) AnalysisFiles(files []string) []domain.JIdentifier {
 	var nodeInfos []domain.JIdentifier = nil
 
 	for _, file := range files {
-		parser := cocafile.ProcessFile(file)
+		parser := cocafile.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		listener := identifier.NewJavaIdentifierListener()

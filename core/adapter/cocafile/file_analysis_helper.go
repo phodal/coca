@@ -10,7 +10,22 @@ import (
 	"strings"
 )
 
+var javaCodeFileFilter = func(path string) bool {
+	return strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") && !strings.Contains(path, "Tests.java")
+}
+
+var javaTestFileFilter = func(path string) bool {
+	if strings.Contains(path, "Test.java") || strings.Contains(path, "Tests.java") {
+		return true
+	}
+	return false
+}
+
 func GetJavaFiles(codeDir string) []string {
+	return GetFilesWithFilter(codeDir, javaCodeFileFilter)
+}
+
+func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string {
 	files := make([]string, 0)
 	gitIgnore, err := ignore.CompileIgnoreFile(".gitignore")
 	if err != nil {
@@ -35,7 +50,7 @@ func GetJavaFiles(codeDir string) []string {
 			}
 		}
 
-		if strings.HasSuffix(path, ".java") && !strings.Contains(path, "Test.java") && !strings.Contains(path, "Tests.java") {
+		if filter(path) {
 			files = append(files, path)
 		}
 		return nil
@@ -44,36 +59,7 @@ func GetJavaFiles(codeDir string) []string {
 }
 
 func GetJavaTestFiles(codeDir string) []string {
-	files := make([]string, 0)
-	gitIgnore, err := ignore.CompileIgnoreFile(".gitignore")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	fi, err := os.Stat(codeDir)
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-
-	if fi.Mode().IsRegular() {
-		files = append(files, codeDir)
-		return files
-	}
-
-	_ = filepath.Walk(codeDir, func(path string, fi os.FileInfo, err error) error {
-		if gitIgnore != nil {
-			if gitIgnore.MatchesPath(path) {
-				return nil
-			}
-		}
-
-		if strings.Contains(path, "Test.java") || strings.Contains(path, "Tests.java") {
-			files = append(files, path)
-		}
-		return nil
-	})
-	return files
+	return GetFilesWithFilter(codeDir, javaTestFileFilter)
 }
 
 func ProcessFile(path string) *JavaParser {

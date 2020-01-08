@@ -78,3 +78,16 @@ func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 
 	g.Expect(len(importMap)).To(Equal(25))
 }
+
+//func Test_ListUnusedImportForOneGradleFile(t *testing.T) {
+//	g := NewGomegaWithT(t)
+//
+//	codePath := "../../../_fixtures/deps/maven_sample/"
+//	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
+//
+//	depApp := NewDepApp()
+//	importMap := depApp.BuildImportMap(classNodes)
+//
+//	fmt.Println(importMap)
+//	g.Expect(len(importMap)).To(Equal(2))
+//}

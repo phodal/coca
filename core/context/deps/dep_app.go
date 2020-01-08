@@ -1,7 +1,10 @@
 package deps
 
 import (
+	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/domain"
+	"path/filepath"
+	"strings"
 )
 
 type DepApp struct {
@@ -20,4 +23,36 @@ func (d *DepApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImp
 	}
 
 	return impMap
+}
+
+func (d *DepApp) AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency {
+	path, _ = filepath.Abs(path)
+	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
+
+	var mavenDeps []domain.JDependency = nil
+	for _, pomFile := range pomXmls {
+		currentMavenDeps := AnalysisMaven(pomFile)
+		mavenDeps = append(mavenDeps, currentMavenDeps...)
+	}
+
+	importMap := d.BuildImportMap(nodes)
+
+	var needRemoveMap = make(map[int]int)
+	for depIndex, dep := range mavenDeps {
+		for key, _ := range importMap {
+			if strings.Contains(key, dep.GroupId) {
+				needRemoveMap[depIndex] = depIndex
+				continue
+			}
+		}
+	}
+
+	var results []domain.JDependency = nil
+	for index, dep := range mavenDeps {
+		if _, ok := needRemoveMap[index]; !ok {
+			results = append(results, dep)
+		}
+	}
+
+	return results
 }

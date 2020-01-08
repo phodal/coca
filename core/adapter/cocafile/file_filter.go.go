@@ -9,3 +9,7 @@ var JavaTestFileFilter = func(path string) bool {
 var JavaCodeFileFilter = func(path string) bool {
 	return strings.HasSuffix(path, ".java") && !JavaTestFileFilter(path)
 }
+
+var PomXmlFilter = func(path string) bool {
+	return strings.HasSuffix(path, "pom.xml")
+}

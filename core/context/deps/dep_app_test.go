@@ -79,15 +79,20 @@ func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 	g.Expect(len(importMap)).To(Equal(25))
 }
 
-//func Test_ListUnusedImportForOneGradleFile(t *testing.T) {
-//	g := NewGomegaWithT(t)
-//
-//	codePath := "../../../_fixtures/deps/maven_sample/"
-//	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
-//
-//	depApp := NewDepApp()
-//	importMap := depApp.BuildImportMap(classNodes)
-//
-//	fmt.Println(importMap)
-//	g.Expect(len(importMap)).To(Equal(2))
-//}
+func Test_ListUnusedImportForOneGradleFile(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/deps/maven_sample/"
+	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
+
+	mavenDeps := AnalysisMaven(codePath + "pom.xml")
+	g.Expect(len(mavenDeps)).To(Equal(6))
+
+	depApp := NewDepApp()
+	deps := depApp.AnalysisPath(codePath, classNodes)
+
+	g.Expect(len(deps)).To(Equal(3))
+	g.Expect(deps[0].GroupId).To(Equal("org.flywaydb"))
+	g.Expect(deps[1].GroupId).To(Equal("mysql"))
+	g.Expect(deps[2].GroupId).To(Equal("org.springframework.cloud"))
+}

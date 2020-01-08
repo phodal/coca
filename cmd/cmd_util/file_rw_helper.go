@@ -27,7 +27,7 @@ func ReadCocaFile(fileName string) []byte {
 func ReadFile(fileName string) []byte {
 	contents, err := ioutil.ReadFile(fileName)
 	if err != nil {
-		_ = fmt.Errorf("Failed removing original file: %s", err)
+		_ = fmt.Errorf("Failed read file: %s ", err)
 		return nil
 	}
 	return contents

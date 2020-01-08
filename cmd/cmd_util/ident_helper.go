@@ -7,39 +7,37 @@ import (
 )
 
 func LoadIdentify(importPath string) []domain.JIdentifier {
-	var identifiers []domain.JIdentifier
-
-	apiContent := ReadCocaFile("identify.json")
-	if apiContent == nil || string(apiContent) == "null" {
-		identifierApp := new(analysis.JavaIdentifierApp)
-		ident := identifierApp.AnalysisPath(importPath)
-
-		identModel, _ := json.MarshalIndent(ident, "", "\t")
-		WriteToCocaFile("identify.json", string(identModel))
-
-		return ident
-	}
-	_ = json.Unmarshal(apiContent, &identifiers)
-
-	return identifiers
+	return readIdentify(importPath, "identify.json", analysisByPath)
 }
 
 func LoadTestIdentify(files []string) []domain.JIdentifier {
+	return readIdentify(files, "tidentify.json", analysisByFiles)
+}
+
+func readIdentify(importPath interface{}, fileName string, analysisApp func(importPath interface{}) []domain.JIdentifier) []domain.JIdentifier {
 	var identifiers []domain.JIdentifier
 
-	apiContent := ReadCocaFile("tidentify.json")
-
+	apiContent := ReadCocaFile(fileName)
 	if apiContent == nil || string(apiContent) == "null" {
-		identifierApp := analysis.NewJavaIdentifierApp()
-		ident := identifierApp.AnalysisFiles(files)
+		ident := analysisApp(importPath)
 
 		identModel, _ := json.MarshalIndent(ident, "", "\t")
-		WriteToCocaFile("tidentify.json", string(identModel))
+		WriteToCocaFile(fileName, string(identModel))
 
 		return ident
 	}
 	_ = json.Unmarshal(apiContent, &identifiers)
-
 	return identifiers
 }
 
+func analysisByPath(importPath interface{}) []domain.JIdentifier {
+	identifierApp := new(analysis.JavaIdentifierApp)
+	ident := identifierApp.AnalysisPath(importPath.(string))
+	return ident
+}
+
+func analysisByFiles(files interface{}) []domain.JIdentifier {
+	identifierApp := analysis.NewJavaIdentifierApp()
+	ident := identifierApp.AnalysisFiles(files.([]string))
+	return ident
+}

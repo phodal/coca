@@ -14,6 +14,10 @@ func NewDepApp() DepAnalysisApp {
 	return *&DepAnalysisApp{}
 }
 
+func main() {
+
+}
+
 func (d *DepAnalysisApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImport {
 	var impMap = make(map[string]domain.JImport)
 	for _, clz := range deps {

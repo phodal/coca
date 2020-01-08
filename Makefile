@@ -14,6 +14,7 @@ BINARY_WASM=$(BINARY_DIR)/$(PACKAGE_NAME).wasm
 all: clean build
 build: build-plugins build-linux build-windows build-macos
 test:
+	make build-plugins
 	$(GOTEST) -v ./...
 clean:
 	$(GOCLEAN)
@@ -29,6 +30,8 @@ build-wasm:
 	cp $(BINARY_DIR)/$(PACKAGE_NAME).wasm wasm/web/$(PACKAGE_NAME).wasm
 build-plugins:
 	go build -buildmode=plugin -o plugins/dep.so core/context/deps/*.go
+	mkdir -p output/plugins
+	cp -a plugins/dep.so output/plugins/dep.so
 build-linux:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BINARY_LINUX) -v
 build-windows:

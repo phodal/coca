@@ -1,7 +1,6 @@
 package unused
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest"
@@ -28,7 +27,6 @@ func TestRenameMethodApp(t *testing.T) {
 	callApp := analysis.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	fmt.Println(callNodes)
 	configBytes := cmd_util.ReadFile(configPath)
 	RenameMethodApp(callNodes).Refactoring(string(configBytes))
 

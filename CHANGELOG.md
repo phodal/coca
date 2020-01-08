@@ -1,4 +1,25 @@
-# [](https://github.com/phodal/coca/compare/v1.3.0...v) (2020-01-06)
+# [](https://github.com/phodal/coca/compare/v1.3.1...v) (2020-01-08)
+
+
+### Bug Fixes
+
+* fix api call not empty issue ([1902015](https://github.com/phodal/coca/commit/19020159eb28dcb289a053f1ca3dadb27c5dab01))
+* fix GoLand refactor error issue ([978844b](https://github.com/phodal/coca/commit/978844b5dc35933b56df988c4caa6511edf40d96))
+* fix typo ([3f3a6dc](https://github.com/phodal/coca/commit/3f3a6dc6d1248735f850fcf09cbb82f5d2e048b1))
+
+
+### Features
+
+* [dep] make basic compares ([9da6b28](https://github.com/phodal/coca/commit/9da6b2847ea5a50834b81802255e669332c3bcd6))
+* [dep] make gradle works ([d765e4a](https://github.com/phodal/coca/commit/d765e4a14d621441f30d0ab9ba9984e3ca69dc3c))
+* [dep] make really from files ([3b1c004](https://github.com/phodal/coca/commit/3b1c0043dd9a9ddec7b0abca6544cb7d42108173))
+* [dep] support groovy method call ([8f360bb](https://github.com/phodal/coca/commit/8f360bbb4d4cc94b5ab2a41d6ec8033c667361c2))
+* [deps] make it works ([fe8d3cd](https://github.com/phodal/coca/commit/fe8d3cddf141df709915e5e57633b153b9fcb02d))
+* [deps] support for gradle ([838bd1e](https://github.com/phodal/coca/commit/838bd1e6ba603272c61b54f8faf6bd395cd44dbf))
+
+
+
+## [1.3.1](https://github.com/phodal/coca/compare/v1.3.0...v1.3.1) (2020-01-06)
 
 
 ### Bug Fixes

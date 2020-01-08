@@ -12,9 +12,9 @@ BINARY_WINDOWS=$(BINARY_DIR)/$(PACKAGE_NAME)_windows.exe
 BINARY_WASM=$(BINARY_DIR)/$(PACKAGE_NAME).wasm
 
 all: clean build
-build: build-plugins build-linux build-windows build-macos
+build: build-linux build-windows build-macos
 test:
-	make build-plugins
+#	make build-plugins
 	$(GOTEST) -v ./...
 clean:
 	$(GOCLEAN)

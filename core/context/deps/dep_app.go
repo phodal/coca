@@ -1,4 +1,4 @@
-package main
+package deps
 
 import (
 	"github.com/phodal/coca/core/adapter/cocafile"

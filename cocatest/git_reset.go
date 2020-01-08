@@ -2,7 +2,6 @@ package cocatest
 
 import (
 	"fmt"
-	"log"
 	"os/exec"
 )
 
@@ -12,7 +11,7 @@ func ResetGitDir(codePath string) {
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(string(out))
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+		//log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
 
 }

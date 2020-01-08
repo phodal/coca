@@ -5,6 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/ast"
 	"github.com/phodal/coca/core/infrastructure/ast/api"
 	"path/filepath"
 )
@@ -23,7 +24,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := cocafile.ProcessJavaFile(file)
+		parser := ast.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		listener := api.NewJavaApiListener(identifiersMap, diMap)

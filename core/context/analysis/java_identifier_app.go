@@ -4,6 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/core/adapter/cocafile"
 	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/core/infrastructure/ast"
 	"github.com/phodal/coca/core/infrastructure/ast/identifier"
 )
 
@@ -24,7 +25,7 @@ func (j *JavaIdentifierApp) AnalysisFiles(files []string) []domain.JIdentifier {
 	var nodeInfos []domain.JIdentifier = nil
 
 	for _, file := range files {
-		parser := cocafile.ProcessJavaFile(file)
+		parser := ast.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		listener := identifier.NewJavaIdentifierListener()

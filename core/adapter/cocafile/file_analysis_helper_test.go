@@ -3,13 +3,14 @@ package cocafile
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/core/infrastructure/ast"
 	"github.com/phodal/coca/core/infrastructure/ast/identifier"
 	"testing"
 )
 
 func TestJavaCallApp_ProcessStringWorks(t *testing.T) {
 	g := NewGomegaWithT(t)
-	parser := ProcessJavaString(`
+	parser := ast.ProcessJavaString(`
 package com.phodal.coca.analysis.identifier.model;
 
 public class DataClass {

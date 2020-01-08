@@ -2,8 +2,6 @@ package cocafile
 
 import (
 	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "github.com/phodal/coca/languages/java"
 	ignore "github.com/sabhiram/go-gitignore"
 	"os"
 	"path/filepath"
@@ -48,20 +46,4 @@ func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string 
 
 func GetJavaTestFiles(codeDir string) []string {
 	return GetFilesWithFilter(codeDir, JavaTestFileFilter)
-}
-
-func ProcessJavaFile(path string) *JavaParser {
-	is, _ := antlr.NewFileStream(path)
-	lexer := NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	parser := NewJavaParser(stream)
-	return parser
-}
-
-func ProcessJavaString(code string) *JavaParser {
-	is := antlr.NewInputStream(code)
-	lexer := NewJavaLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	parser := NewJavaParser(stream)
-	return parser
 }

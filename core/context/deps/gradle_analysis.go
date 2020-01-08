@@ -2,12 +2,18 @@ package deps
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/core/domain"
 	"github.com/phodal/coca/core/infrastructure/ast/groovy"
 	"github.com/phodal/coca/languages/groovy"
 )
 
-func AnalysisGradle(str string) []domain.JDependency {
+func AnalysisGradleFile(path string) []domain.JDependency {
+	bytes := cmd_util.ReadFile(path)
+	return AnalysisGradleString(string(bytes))
+}
+
+func AnalysisGradleString(str string) []domain.JDependency {
 	parser := ProcessGroovyString(str)
 	context := parser.CompilationUnit()
 

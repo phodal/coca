@@ -15,7 +15,7 @@ func Test_ShouldReturnGradleDep(t *testing.T) {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }`
 
-	results := AnalysisGradle(pluginsStr)
+	results := AnalysisGradleString(pluginsStr)
 
 	g.Expect(len(results)).To(Equal(2))
 	g.Expect(results[0].ArtifactId).To(Equal("spring-boot-starter-web"))
@@ -27,7 +27,7 @@ func Test_ShouldReturnCorrectGradleDepsFroFile(t *testing.T) {
 	codePath := "../../../_fixtures/deps/gradle/build.gradle"
 	bytes := cmd_util.ReadFile(codePath)
 
-	mavenDeps := AnalysisGradle(string(bytes))
+	mavenDeps := AnalysisGradleString(string(bytes))
 
 	g.Expect(len(mavenDeps)).To(Equal(14))
 }
@@ -42,7 +42,7 @@ func Test_ShouldHandleExclude(t *testing.T) {
     }
 }`
 
-	results := AnalysisGradle(pluginsStr)
+	results := AnalysisGradleString(pluginsStr)
 
 	g.Expect(len(results)).To(Equal(1))
 	g.Expect(results[0].ArtifactId).To(Equal("spring-boot-starter-test"))

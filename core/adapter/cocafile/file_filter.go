@@ -17,3 +17,7 @@ var JavaFileFilter = func(path string) bool {
 var PomXmlFilter = func(path string) bool {
 	return strings.HasSuffix(path, "pom.xml")
 }
+
+var BuildGradleFilter = func(path string) bool {
+	return strings.HasSuffix(path, "build.gradle")
+}

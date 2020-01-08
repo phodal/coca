@@ -28,11 +28,16 @@ func (d *DepApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImp
 func (d *DepApp) AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency {
 	path, _ = filepath.Abs(path)
 	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
+	gradleFiles := cocafile.GetFilesWithFilter(path, cocafile.BuildGradleFilter)
 
 	var mavenDeps []domain.JDependency = nil
 	for _, pomFile := range pomXmls {
 		currentMavenDeps := AnalysisMaven(pomFile)
 		mavenDeps = append(mavenDeps, currentMavenDeps...)
+	}
+	for _, gradleFile := range gradleFiles {
+		dependencies := AnalysisGradleFile(gradleFile)
+		mavenDeps = append(mavenDeps, dependencies...)
 	}
 
 	importMap := d.BuildImportMap(nodes)

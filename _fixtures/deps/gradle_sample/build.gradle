@@ -1,0 +1,57 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.springframework.cloud:spring-cloud-contract-gradle-plugin:2.2.1.RELEASE'
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'spring-cloud-contract'
+
+group = 'com.phodal.coco'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', "Hoxton.SR1")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jersey'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+	implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-config'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'io.projectreactor:reactor-test'
+	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner'
+	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+contracts {
+	targetFramework = org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
+	testMode = 'WebTestClient'
+}
+
+test {
+	useJUnitPlatform()
+}

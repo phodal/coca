@@ -1,0 +1,11 @@
+unused
++---------------------------+-------------------------------------------+--------------------+
+|          GROUPID          |                ARTIFACTID                 |       SCOPE        |
++---------------------------+-------------------------------------------+--------------------+
+| org.flywaydb              | flyway-core                               | implementation     |
+| org.springframework.cloud | spring-cloud-starter-zipkin               | implementation     |
+| org.springframework.cloud | spring-cloud-starter-zookeeper-config     | implementation     |
+| io.projectreactor         | reactor-test                              | testImplementation |
+| org.springframework.cloud | spring-cloud-starter-contract-stub-runner | testImplementation |
+| org.springframework.cloud | spring-cloud-starter-contract-verifier    | testImplementation |
++---------------------------+-------------------------------------------+--------------------+

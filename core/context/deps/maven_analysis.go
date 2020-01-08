@@ -1,4 +1,4 @@
-package deps
+package main
 
 import (
 	"github.com/phodal/coca/core/domain"

@@ -34,9 +34,11 @@ git:
 install: true
 
 before_install:
+  - make build-plugins
   - go get -t -v  $(go list ./... | grep -v /languages/)
 
 script:
+  - make build-plugins
   - go test -v  $(go list ./... | grep -v /languages/) -coverprofile=coverage.txt -covermode=atomic -coverpkg=./...
 
 after_success:

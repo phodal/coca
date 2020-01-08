@@ -1,4 +1,4 @@
-package deps
+package main
 
 import (
 	"github.com/phodal/coca/core/adapter/cocafile"
@@ -7,14 +7,14 @@ import (
 	"strings"
 )
 
-type DepApp struct {
+type DepAnalysisApp struct {
 }
 
-func NewDepApp() DepApp {
-	return *&DepApp{}
+func NewDepApp() DepAnalysisApp {
+	return *&DepAnalysisApp{}
 }
 
-func (d *DepApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImport {
+func (d *DepAnalysisApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImport {
 	var impMap = make(map[string]domain.JImport)
 	for _, clz := range deps {
 		for _, imp := range clz.Imports {
@@ -25,7 +25,7 @@ func (d *DepApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImp
 	return impMap
 }
 
-func (d *DepApp) AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency {
+func (d *DepAnalysisApp) AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency {
 	path, _ = filepath.Abs(path)
 	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
 	gradleFiles := cocafile.GetFilesWithFilter(path, cocafile.BuildGradleFilter)
@@ -61,3 +61,5 @@ func (d *DepApp) AnalysisPath(path string, nodes []domain.JClassNode) []domain.J
 
 	return results
 }
+
+var DepApp DepAnalysisApp // export for Plugins

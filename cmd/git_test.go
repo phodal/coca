@@ -6,10 +6,10 @@ import (
 
 // Todo: fake it
 func TestGit(t *testing.T) {
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "git",
 		cmd:    "git -a -f -t -b -o -r com -s 10 -m",
 		golden: "",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

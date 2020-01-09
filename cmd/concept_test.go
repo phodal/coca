@@ -5,17 +5,17 @@ import (
 )
 
 func TestConcept(t *testing.T) {
-	analysis := []cmdTestCase{{
+	analysis := []CmdTestCase{{
 		name:   "analysis",
 		cmd:    "analysis -p ../_fixtures/examples/api",
 		golden: "",
 	}}
-	runTestCmd(t, analysis)
+	RunTestCmd(t, analysis)
 
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "concept",
 		cmd:    "concept",
 		golden: "",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

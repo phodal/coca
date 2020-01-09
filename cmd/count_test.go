@@ -7,17 +7,17 @@ import (
 func TestCount(t *testing.T) {
 	abs := "../_fixtures/examples/rename"
 
-	analysis := []cmdTestCase{{
+	analysis := []CmdTestCase{{
 		name:   "analysis",
 		cmd:    "analysis -p " + abs,
 		golden: "",
 	}}
-	runTestCmd(t, analysis)
+	RunTestCmd(t, analysis)
 
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "count",
 		cmd:    "count -t 1",
 		golden: "testdata/count.txt",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

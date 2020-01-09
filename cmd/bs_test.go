@@ -7,10 +7,10 @@ import (
 func TestBadSmell(t *testing.T) {
 	abs := "../_fixtures/bs"
 
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "bs",
 		cmd:    "bs -s type -p " + abs,
 		golden: "",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

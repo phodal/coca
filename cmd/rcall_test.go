@@ -5,17 +5,17 @@ import (
 )
 
 func TestRCall(t *testing.T) {
-	analysis := []cmdTestCase{{
+	analysis := []CmdTestCase{{
 		name:   "analysis",
 		cmd:    "analysis -p ../_fixtures/call",
 		golden: "",
 	}}
-	runTestCmd(t, analysis)
+	RunTestCmd(t, analysis)
 
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "rcall",
 		cmd:    "rcall -r com -c com",
 		golden: "testdata/rcall_normal.txt",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

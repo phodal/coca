@@ -7,17 +7,17 @@ import (
 func TestArch(t *testing.T) {
 	abs := "../_fixtures/arch"
 
-	analysis := []cmdTestCase{{
+	analysis := []CmdTestCase{{
 		name:   "analysis",
 		cmd:    "analysis -p " + abs,
 		golden: "",
 	}}
-	runTestCmd(t, analysis)
+	RunTestCmd(t, analysis)
 
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "arch",
 		cmd:    "arch -P ",
 		golden: "",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

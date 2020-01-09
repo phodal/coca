@@ -10,15 +10,15 @@ import (
 	"testing"
 )
 
-// cmdTestCase describes a test case that works with releases.
-type cmdTestCase struct {
+// CmdTestCase describes a test case that works with releases.
+type CmdTestCase struct {
 	name      string
 	cmd       string
 	golden    string
 	wantError bool
 }
 
-func runTestCmd(t *testing.T, tests []cmdTestCase) {
+func RunTestCmd(t *testing.T, tests []CmdTestCase) {
 	t.Helper()
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

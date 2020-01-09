@@ -5,10 +5,10 @@ import (
 )
 
 func TestVersion(t *testing.T) {
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "version",
 		cmd:    "version",
 		golden: "",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

@@ -5,10 +5,10 @@ import (
 )
 
 func TestTbs(t *testing.T) {
-	tests := []cmdTestCase{{
+	tests := []CmdTestCase{{
 		name:   "tbs",
 		cmd:    "tbs -p ../_fixtures/tbs/code -s ",
 		golden: "testdata/tbs_normal.txt",
 	}}
-	runTestCmd(t, tests)
+	RunTestCmd(t, tests)
 }

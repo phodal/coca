@@ -23,7 +23,7 @@ type DepApp interface {
 	AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency
 }
 
-var depCmd = &cobra.Command{
+var depsCmd = &cobra.Command{
 	Use:   "deps",
 	Short: "evaluate dependencies",
 	Long:  ``,
@@ -89,7 +89,7 @@ var depCmd = &cobra.Command{
 //}
 
 func init() {
-	rootCmd.AddCommand(depCmd)
+	rootCmd.AddCommand(depsCmd)
 
-	depCmd.PersistentFlags().StringVarP(&depCmdConfig.Path, "path", "p", ".", "example -p core/main")
+	depsCmd.PersistentFlags().StringVarP(&depCmdConfig.Path, "path", "p", ".", "example -p core/main")
 }

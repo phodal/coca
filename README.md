@@ -37,9 +37,13 @@ Available Commands:
   version     version
 ```
 
+Requirements:
+
+1. [graphviz](https://www.graphviz.org/) for dot file to images (such as svg, png)
+
 ## Usage
 
-install 
+install
 
 ```bash
 go get -u github.com/phodal/coca

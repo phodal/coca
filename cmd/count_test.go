@@ -8,16 +8,16 @@ func TestCount(t *testing.T) {
 	abs := "../_fixtures/examples/rename"
 
 	analysis := []CmdTestCase{{
-		name:   "analysis",
-		cmd:    "analysis -p " + abs,
-		golden: "",
+		Name:   "analysis",
+		Cmd:    "analysis -p " + abs,
+		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
 	tests := []CmdTestCase{{
-		name:   "count",
-		cmd:    "count -t 1",
-		golden: "testdata/count.txt",
+		Name:   "count",
+		Cmd:    "count -t 1",
+		Golden: "testdata/count.txt",
 	}}
 	RunTestCmd(t, tests)
 }

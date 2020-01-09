@@ -6,9 +6,9 @@ import (
 
 func TestVersion(t *testing.T) {
 	tests := []CmdTestCase{{
-		name:   "version",
-		cmd:    "version",
-		golden: "",
+		Name:   "version",
+		Cmd:    "version",
+		Golden: "",
 	}}
 	RunTestCmd(t, tests)
 }

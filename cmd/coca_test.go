@@ -12,25 +12,25 @@ import (
 
 // CmdTestCase describes a test case that works with releases.
 type CmdTestCase struct {
-	name      string
-	cmd       string
-	golden    string
-	wantError bool
+	Name      string
+	Cmd       string
+	Golden    string
+	WantError bool
 }
 
 func RunTestCmd(t *testing.T, tests []CmdTestCase) {
 	t.Helper()
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(tt.Name, func(t *testing.T) {
 			defer resetEnv()()
 
-			t.Log("running cmd: ", tt.cmd)
-			_, output, err := executeActionCommandC(tt.cmd)
-			if (err != nil) != tt.wantError {
+			t.Log("running Cmd: ", tt.Cmd)
+			_, output, err := executeActionCommandC(tt.Cmd)
+			if (err != nil) != tt.WantError {
 				t.Errorf("expected error, got '%v'", err)
 			}
-			if tt.golden != "" {
-				abs, _ := filepath.Abs(tt.golden)
+			if tt.Golden != "" {
+				abs, _ := filepath.Abs(tt.Golden)
 				slash := filepath.FromSlash(abs)
 				AssertGoldenString(t, output, slash)
 			}

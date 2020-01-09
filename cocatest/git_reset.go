@@ -11,7 +11,6 @@ func ResetGitDir(codePath string) {
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(string(out))
-		//log.Fatalf("cmd.Run() failed with %s\n", err)
+		fmt.Println("cmd.Run() failed with: ", err)
 	}
-
 }

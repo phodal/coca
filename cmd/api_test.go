@@ -8,16 +8,16 @@ func TestApi(t *testing.T) {
 	path := "../_fixtures/call"
 
 	analysis := []CmdTestCase{{
-		name:   "analysis",
-		cmd:    "analysis -p " + path,
-		golden: "",
+		Name:   "analysis",
+		Cmd:    "analysis -p " + path,
+		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
 	tests := []CmdTestCase{{
-		name:   "api",
-		cmd:    "api -c -f -p " + path,
-		golden: "testdata/api.txt",
+		Name:   "api",
+		Cmd:    "api -c -f -p " + path,
+		Golden: "testdata/api.txt",
 	}}
 	RunTestCmd(t, tests)
 }
@@ -26,16 +26,16 @@ func Test_ApiWithSortRemove(t *testing.T) {
 	path := "../_fixtures/call"
 
 	analysis := []CmdTestCase{{
-		name:   "analysis",
-		cmd:    "analysis -p " + path,
-		golden: "",
+		Name:   "analysis",
+		Cmd:    "analysis -p " + path,
+		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
 	tests := []CmdTestCase{{
-		name:   "api",
-		cmd:    "api -c -s -r com.phodal.pholedge.book. -p" + path,
-		golden: "testdata/api_sort_remove.txt",
+		Name:   "api",
+		Cmd:    "api -c -s -r com.phodal.pholedge.book. -p" + path,
+		Golden: "testdata/api_sort_remove.txt",
 	}}
 	RunTestCmd(t, tests)
 }

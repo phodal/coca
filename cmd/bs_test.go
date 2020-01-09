@@ -8,9 +8,9 @@ func TestBadSmell(t *testing.T) {
 	abs := "../_fixtures/bs"
 
 	tests := []CmdTestCase{{
-		name:   "bs",
-		cmd:    "bs -s type -p " + abs,
-		golden: "",
+		Name:   "bs",
+		Cmd:    "bs -s type -p " + abs,
+		Golden: "",
 	}}
 	RunTestCmd(t, tests)
 }

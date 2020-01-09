@@ -6,16 +6,16 @@ import (
 
 func TestSuggest(t *testing.T) {
 	analysis := []CmdTestCase{{
-		name:   "analysis",
-		cmd:    "analysis -p ../_fixtures/suggest",
-		golden: "",
+		Name:   "analysis",
+		Cmd:    "analysis -p ../_fixtures/suggest",
+		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
 	tests := []CmdTestCase{{
-		name:   "suggest",
-		cmd:    "suggest",
-		golden: "testdata/suggest_normal.txt",
+		Name:   "suggest",
+		Cmd:    "suggest",
+		Golden: "testdata/suggest_normal.txt",
 	}}
 	RunTestCmd(t, tests)
 }

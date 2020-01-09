@@ -6,16 +6,16 @@ import (
 
 func TestCloc(t *testing.T) {
 	analysis := []CmdTestCase{{
-		name:   "analysis",
-		cmd:    "analysis -p .",
-		golden: "",
+		Name:   "analysis",
+		Cmd:    "analysis -p .",
+		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
 	tests := []CmdTestCase{{
-		name:   "cloc",
-		cmd:    "cloc",
-		golden: "",
+		Name:   "cloc",
+		Cmd:    "cloc",
+		Golden: "",
 	}}
 	RunTestCmd(t, tests)
 }

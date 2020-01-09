@@ -13,8 +13,8 @@ import (
 	"runtime"
 )
 
-// UpdateGolden writes out the golden files with the latest values, rather than failing the test.
-var updateGolden = flag.Bool("update", false, "update golden files")
+// UpdateGolden writes out the Golden files with the latest values, rather than failing the test.
+var updateGolden = flag.Bool("update", false, "update Golden files")
 
 // TestingT describes a testing object compatible with the critical functions from the testing.T type
 type TestingT interface {
@@ -80,7 +80,7 @@ func compare(actual []byte, filename string) error {
 	}
 
 	if !bytes.Equal(expected, actual) {
-		return errors.Errorf("does not match golden file %s\n\nWANT:\n'%s'\n\nGOT:\n'%s'\n", filename, expected, actual)
+		return errors.Errorf("does not match Golden file %s\n\nWANT:\n'%s'\n\nGOT:\n'%s'\n", filename, expected, actual)
 	}
 	return nil
 }

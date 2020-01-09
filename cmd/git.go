@@ -124,7 +124,7 @@ func getCommitMessage() string {
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		fmt.Println(string(out))
-		log.Fatalf("cmd.Run() failed with %s\n", err)
+		log.Fatalf("Cmd.Run() failed with %s\n", err)
 	}
 
 	return string(out)

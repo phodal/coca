@@ -6,18 +6,18 @@ import (
 
 func TestRefactorMove(t *testing.T) {
 	tests := []CmdTestCase{{
-		name:   "refactor",
-		cmd:    "refactor -p . -m .",
-		golden: "",
+		Name:   "refactor",
+		Cmd:    "refactor -p . -m .",
+		Golden: "",
 	}}
 	RunTestCmd(t, tests)
 }
 
 func TestRefactorRename(t *testing.T) {
 	tests := []CmdTestCase{{
-		name:   "refactor",
-		cmd:    "refactor -p . -R . -m .",
-		golden: "",
+		Name:   "refactor",
+		Cmd:    "refactor -p . -R . -m .",
+		Golden: "",
 	}}
 	RunTestCmd(t, tests)
 }

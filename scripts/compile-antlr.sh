@@ -9,3 +9,6 @@ antlr -Dlanguage=Go -listener JavaParser.g4 -o ../java
 
 antlr -Dlanguage=Go -listener GroovyLexer.g4 -o ../groovy
 antlr -Dlanguage=Go -listener GroovyParser.g4 -o ../groovy
+
+antlr -Dlanguage=Go -listener JavaScriptLexer.g4 -o ../js
+antlr -Dlanguage=Go -listener JavaScriptParser.g4 -o ../js

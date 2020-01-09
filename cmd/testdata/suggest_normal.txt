@@ -1,8 +1,5 @@
-|   CLASS    |     PATTERN      |             REASON             |
-|------------|------------------|--------------------------------|
-| BeeBuilder | factory, builder | too many constructor, too many |
-|            |                  | parameters                     |
-| Insect     | factory          | too many constructor           |
-| Bee        | factory, builder | complex constructor, too       |
-|            |                  | many constructor, too many     |
-|            |                  | parameters                     |
+|   CLASS    |     PATTERN      |                             REASON                             |
+|------------|------------------|----------------------------------------------------------------|
+| BeeBuilder | factory, builder | too many constructor, too many parameters                      |
+| Insect     | factory          | too many constructor                                           |
+| Bee        | factory, builder | complex constructor, too many constructor, too many parameters |

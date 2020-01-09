@@ -482,6 +482,7 @@ results:
  - Git
     - [x] Revs Counts
     - [x] Summary
+    - [ ] [git-quick-stats](https://github.com/arzzen/git-quick-stats)
  - Concept
     - [x] words NLP
     - [ ] to domain        

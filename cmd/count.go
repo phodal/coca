@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/count"
@@ -41,7 +40,7 @@ var countCmd = &cobra.Command{
 			callMapSort = callMapSort[:countCmdConfig.Top]
 		}
 
-		table := tablewriter.NewWriter(output)
+		table := cmd_util.NewOutput(output)
 		table.SetHeader([]string{"Refs Count", "method"})
 
 		for _, count := range callMapSort {

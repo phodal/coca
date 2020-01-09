@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/application/todo"
 	"github.com/spf13/cobra"
@@ -39,7 +38,7 @@ var todoCmd = &cobra.Command{
 			cModel, _ := json.MarshalIndent(todos, "", "\t")
 			cmd_util.WriteToCocaFile("todos.json", string(cModel))
 
-			table := tablewriter.NewWriter(output)
+			table := cmd_util.NewOutput(output)
 			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
 			for _, todo := range gitTodos {
 				table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})

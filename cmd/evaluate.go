@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/evaluate"
@@ -51,7 +50,7 @@ var evaluateCmd = &cobra.Command{
 }
 
 func buildOutput(result evaluator.EvaluateModel) {
-	table := tablewriter.NewWriter(output)
+	table := cmd_util.NewOutput(output)
 	table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})
 
 	classCount := result.Summary.ClassCount

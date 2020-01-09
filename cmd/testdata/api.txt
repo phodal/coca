@@ -1,8 +1,6 @@
-+------+--------+-------------+-----------------------------------------------------+
 | SIZE | METHOD |     URI     |                       CALLER                        |
-+------+--------+-------------+-----------------------------------------------------+
+|------|--------|-------------|-----------------------------------------------------|
 |    2 | POST   | /books      | com.phodal.pholedge.book.BookController.createBook  |
 |    2 | PUT    | /books/{id} | com.phodal.pholedge.book.BookController.updateBook  |
 |    2 | GET    | /books/     | com.phodal.pholedge.book.BookController.getBookList |
 |    2 | GET    | /books/{id} | com.phodal.pholedge.book.BookController.getBookById |
-+------+--------+-------------+-----------------------------------------------------+

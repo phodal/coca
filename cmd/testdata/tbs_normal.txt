@@ -1,7 +1,6 @@
 Test Bad Smell nums:  12
-+------------------------+---------------------------------------------------+------+
 |          TYPE          |                     FILENAME                      | LINE |
-+------------------------+---------------------------------------------------+------+
+|------------------------|---------------------------------------------------|------|
 | DuplicateAssertTest    | ../_fixtures/tbs/code/DuplicateAssertTest.java    |    9 |
 | EmptyTest              | ../_fixtures/tbs/code/EmptyTest.java              |    8 |
 | IgnoreTest             | ../_fixtures/tbs/code/IgnoreTest.java             |    0 |
@@ -14,4 +13,3 @@ Test Bad Smell nums:  12
 | RedundantAssertionTest | ../_fixtures/tbs/code/SleepyTest.java             |    7 |
 | EmptyTest              | ../_fixtures/tbs/code/UnknownTest.java            |    7 |
 | UnknownTest            | ../_fixtures/tbs/code/UnknownTest.java            |    7 |
-+------------------------+---------------------------------------------------+------+

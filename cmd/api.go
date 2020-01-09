@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/api"
@@ -73,7 +72,7 @@ var apiCmd = &cobra.Command{
 		}
 
 		if apiCmdConfig.ShowCount {
-			table := tablewriter.NewWriter(output)
+			table := cmd_util.NewOutput(output)
 
 			table.SetHeader([]string{"Size", "Method", "URI", "Caller"})
 

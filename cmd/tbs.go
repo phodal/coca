@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/application/analysis"
@@ -47,7 +46,6 @@ var tbsCmd = &cobra.Command{
 		result := app.AnalysisPath(classNodes, identifiersMap)
 
 		fmt.Fprintf(output, "Test Bad Smell nums:  %d\n", len(result))
-
 		resultContent, _ := json.MarshalIndent(result, "", "\t")
 
 		if tbsCmdConfig.IsSort {
@@ -60,9 +58,8 @@ var tbsCmd = &cobra.Command{
 		}
 
 		cmd_util.WriteToCocaFile("tbs.json", string(resultContent))
-
 		if len(result) <= 20 {
-			table := tablewriter.NewWriter(output)
+			table := cmd_util.NewOutput(output)
 			table.SetHeader([]string{"Type", "FileName", "Line"})
 
 			for _, result := range result {

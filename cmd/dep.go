@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/olekukonko/tablewriter"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/application/deps"
@@ -50,7 +50,7 @@ var depCmd = &cobra.Command{
 
 		results := app.AnalysisPath(path, classNodes)
 		fmt.Fprintln(output, "unused")
-		table := tablewriter.NewWriter(output)
+		table := cmd_util.NewOutput(output)
 		table.SetHeader([]string{"GroupId", "ArtifactId", "Scope"})
 		for _, dep := range results {
 			table.Append([]string{dep.GroupId, dep.ArtifactId, dep.Scope})

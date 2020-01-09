@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	. "github.com/phodal/coca/pkg/application/git"
 	"github.com/spf13/cobra"
@@ -41,9 +40,9 @@ var gitCmd = &cobra.Command{
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
 		size := gitCmdConfig.Size
 
-		if cmd.Flag("basic").Value.String() == "true" {
-			table := tablewriter.NewWriter(output)
+		table := cmd_util.NewOutput(output)
 
+		if cmd.Flag("basic").Value.String() == "true" {
 			basicSummary := BasicSummary(commitMessages)
 			table.SetHeader([]string{"Statistic", "Number"})
 			table.Append([]string{"Commits", strconv.Itoa(basicSummary.Commits)})
@@ -54,8 +53,6 @@ var gitCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("team").Value.String() == "true" {
-			table := tablewriter.NewWriter(output)
-
 			teamSummary := GetTeamSummary(commitMessages)
 			table.SetHeader([]string{"EntityName", "RevsCount", "AuthorCount"})
 
@@ -69,8 +66,6 @@ var gitCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("age").Value.String() == "true" {
-			table := tablewriter.NewWriter(output)
-
 			ages := CalculateCodeAge(commitMessages)
 			var agesDisplay []CodeAgeDisplay
 			for _, info := range ages {
@@ -92,8 +87,6 @@ var gitCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("top").Value.String() == "true" {
-			table := tablewriter.NewWriter(output)
-
 			authors := GetTopAuthors(commitMessages)
 			table.SetHeader([]string{"Author", "CommitCount", "LineCount"})
 

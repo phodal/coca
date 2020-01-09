@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/suggest"
@@ -30,7 +29,7 @@ var suggestCmd = &cobra.Command{
 		app := suggest.NewSuggestApp()
 		results := app.AnalysisPath(parsedDeps)
 
-		table := tablewriter.NewWriter(output)
+		table := cmd_util.NewOutput(output)
 		table.SetHeader([]string{"Class", "Pattern", "Reason"})
 
 		for _, result := range results {

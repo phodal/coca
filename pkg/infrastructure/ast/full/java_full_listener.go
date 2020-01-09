@@ -705,7 +705,7 @@ func warpTargetFullType(targetType string) (string, string) {
 	callType := ""
 	if strings.EqualFold(currentClz, targetType) {
 		callType = "self"
-		return currentPkg + "." + targetType, ""
+		return currentPkg + "." + targetType, callType
 	}
 
 	// TODO: update for array

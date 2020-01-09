@@ -77,11 +77,9 @@ func (f *FullGraph) SortedByFan(merge func(string) string) []*Fan {
 	return result
 }
 
-var fullGraph *FullGraph
-
 func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gographviz.Graph {
 	graph := gographviz.NewGraph()
-	graph.SetName("G")
+	_ = graph.SetName("G")
 
 	nodeIndex := 1
 	layerIndex := 1
@@ -113,14 +111,14 @@ func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gogra
 		layerAttr := make(map[string]string)
 		layerAttr["label"] = "\"" + layer + "\""
 		layerName := "cluster" + strconv.Itoa(layerIndex)
-		graph.AddSubGraph("G", layerName, layerAttr)
+		_ = graph.AddSubGraph("G", layerName, layerAttr)
 		layerIndex++
 		for _, node := range layerMap[layer] {
 			attrs := make(map[string]string)
 			fileName := strings.Replace(node, layer+split, "", -1)
 			attrs["label"] = "\"" + fileName + "\""
 			attrs["shape"] = "box"
-			graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), attrs)
+			_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), attrs)
 			nodes[node] = "node" + strconv.Itoa(nodeIndex)
 			nodeIndex++
 		}
@@ -137,13 +135,9 @@ func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gogra
 			attrs := make(map[string]string)
 			attrs["style"] = relation.Style
 
-			graph.AddEdge(fromNode, toNode, true, attrs)
+			_ = graph.AddEdge(fromNode, toNode, true, attrs)
 		}
 	}
 
 	return graph
-}
-
-var Foo = func() string {
-	return ""
 }

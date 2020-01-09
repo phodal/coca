@@ -104,11 +104,11 @@ primaryType
     ;
 
 predefinedType
-    : Any
-    | Number
-    | Boolean
-    | String
-    | Symbol
+    : ANY
+    | NUMBER
+    | BOOLEAN
+    | STRING
+    | SYMBOL
     | Void
     ;
 
@@ -240,7 +240,7 @@ constructSignature
     ;
 
 indexSignature
-    : '[' Identifier ':' (Number|String) ']' typeAnnotation
+    : '[' Identifier ':' (NUMBER|STRING) ']' typeAnnotation
     ;
 
 methodSignature

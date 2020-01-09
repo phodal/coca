@@ -143,11 +143,11 @@ Yield:                          'yield' ;
 
 //keywords:
 
-Any : 'any';
-Number: 'number';
-Boolean: 'boolean';
-String: 'string';
-Symbol: 'symbol';
+ANY : 'any';
+NUMBER: 'number';
+BOOLEAN: 'boolean';
+STRING: 'string';
+SYMBOL: 'symbol';
 
 
 Type: 'type';

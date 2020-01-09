@@ -28,5 +28,5 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 
 	counts := analyser.Analysis(&parsedDeps)
 
-	g.Expect(counts.Len()).To(Equal(4))
+	g.Expect(len(counts)).To(Equal(4))
 }

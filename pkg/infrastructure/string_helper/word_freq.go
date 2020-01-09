@@ -1,6 +1,8 @@
 package string_helper
 
-import "sort"
+import (
+	"github.com/yourbasic/radix"
+)
 
 // from: https://stackoverflow.com/questions/18695346/how-to-sort-a-mapstringint-by-its-values
 func RankByWordCount(wordFrequencies map[string]int) PairList {
@@ -11,7 +13,7 @@ func RankByWordCount(wordFrequencies map[string]int) PairList {
 		i++
 	}
 
-	sort.Sort(sort.Reverse(pl))
+	radix.SortSlice(pl, func(i int) string { return pl[i].Key })
 	return pl
 }
 

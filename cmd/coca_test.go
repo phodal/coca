@@ -5,6 +5,7 @@ import (
 	"github.com/mattn/go-shellwords"
 	"github.com/phodal/coca/cocatest/testcase"
 	"github.com/spf13/cobra"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,17 +13,17 @@ import (
 )
 
 func RunTestCmd(t *testing.T, tests []testcase.CmdTestCase) {
-	RunTestCaseWithCmd(t, tests)
+	RunTestCaseWithCmd(t, tests, NewRootCmd)
 }
 
-func RunTestCaseWithCmd(t *testing.T, tests []testcase.CmdTestCase) {
+func RunTestCaseWithCmd(t *testing.T, tests []testcase.CmdTestCase, rootCmd func(out io.Writer) *cobra.Command) {
 	t.Helper()
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
 			defer ResetEnv()()
 
 			t.Log("running Cmd: ", tt.Cmd)
-			_, output, err := executeActionCommandC(tt.Cmd)
+			_, output, err := executeActionCommandC(tt.Cmd, rootCmd)
 			if (err != nil) != tt.WantError {
 				t.Errorf("expected error, got '%v'", err)
 			}
@@ -35,14 +36,14 @@ func RunTestCaseWithCmd(t *testing.T, tests []testcase.CmdTestCase) {
 	}
 }
 
-func executeActionCommandC(cmd string) (*cobra.Command, string, error) {
+func executeActionCommandC(cmd string, rootCmd func(out io.Writer) *cobra.Command) (*cobra.Command, string, error) {
 	args, err := shellwords.Parse(cmd)
 	if err != nil {
 		return nil, "", err
 	}
 
 	buf := new(bytes.Buffer)
-	command := NewRootCmd(buf)
+	command := rootCmd(buf)
 
 	command.SetArgs(args)
 

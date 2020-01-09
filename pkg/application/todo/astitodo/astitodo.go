@@ -16,7 +16,8 @@ type TODO struct {
 }
 
 var (
-	regexpAssignee = regexp.MustCompile("^\\([\\w \\._\\+\\-@]+\\)")
+	assignRegStr = "^\\([\\w \\._\\+\\-@]+\\)"
+	regexpAssignee = regexp.MustCompile(assignRegStr)
 )
 
 func ParseComment(token antlr.Token, filename string) *TODO {

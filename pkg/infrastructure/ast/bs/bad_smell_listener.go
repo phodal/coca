@@ -40,7 +40,7 @@ type BadSmellListener struct {
 }
 
 func (s *BadSmellListener) GetNodeInfo() bs_domain.BsJClass {
-	return *&bs_domain.BsJClass{
+	return bs_domain.BsJClass{
 		currentPkg,
 		currentClz,
 		currentClzType,
@@ -125,7 +125,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, *&bs_domain.JFullParameter{paramType, paramValue})
+				methodParams = append(methodParams, bs_domain.JFullParameter{paramType, paramValue})
 			}
 		}
 	}
@@ -318,14 +318,14 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := *&bs_domain.BsJMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+		jMethodCall := bs_domain.BsJMethodCall{removeTarget(fullType), "", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 		methodCalls = append(methodCalls, jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
-			jMethodCall := *&bs_domain.BsJMethodCall{currentPkg, "", currentClz, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := bs_domain.BsJMethodCall{currentPkg, "", currentClz, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, jMethodCall)
 		} else {
-			jMethodCall := *&bs_domain.BsJMethodCall{currentPkg, "NEEDFIX", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
+			jMethodCall := bs_domain.BsJMethodCall{currentPkg, "NEEDFIX", targetType, callee, startLine, startLinePosition, stopLine, stopLinePosition}
 			methodCalls = append(methodCalls, jMethodCall)
 		}
 	}

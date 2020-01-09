@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	models "github.com/phodal/coca/pkg/domain"
 	"github.com/phodal/coca/languages/java"
+	models "github.com/phodal/coca/pkg/domain"
 	"reflect"
 	"strings"
 )
@@ -41,7 +41,7 @@ func NewJavaApiListener(jIdentMap map[string]models.JIdentifier, diMap map[strin
 	depInjectMap = diMap
 
 	params := make(map[string]string)
-	currentRestApi = *&models.RestApi{"", "", "", "", "", params, "", ""}
+	currentRestApi = models.RestApi{MethodParams: params}
 	return &JavaApiListener{}
 }
 

@@ -15,14 +15,14 @@ func BuildAnnotation(ctx *parser.AnnotationContext) domain.Annotation {
 		for _, pair := range pairs {
 			pairCtx := pair.(*parser.ElementValuePairContext)
 			pairCtx.ElementValue()
-			annotation.ValuePairs = append(annotation.ValuePairs, *&domain.AnnotationKeyValue{
+			annotation.ValuePairs = append(annotation.ValuePairs, domain.AnnotationKeyValue{
 				Key:   pairCtx.IDENTIFIER().GetText(),
 				Value: pairCtx.ElementValue().GetText(),
 			})
 		}
 	} else if ctx.ElementValue() != nil {
 		value := ctx.ElementValue().GetText()
-		annotation.ValuePairs = append(annotation.ValuePairs, *&domain.AnnotationKeyValue{
+		annotation.ValuePairs = append(annotation.ValuePairs, domain.AnnotationKeyValue{
 			Key:   value,
 			Value: value,
 		})

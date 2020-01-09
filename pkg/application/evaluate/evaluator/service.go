@@ -64,9 +64,9 @@ func (s Service) Evaluate(result *EvaluateModel, node domain.JClassNode) {
 	}
 
 	// TODO: support for same end words
-	if s.enableSameBehavior() {
-
-	}
+	//if s.enableSameBehavior() {
+	//
+	//}
 
 	if s.enableAbstractParameters() {
 		for _, method := range node.Methods {

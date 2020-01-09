@@ -47,8 +47,6 @@ func UpdateMessageForChange(changedFile string) (string, string, string) {
 	return changedFile, oldFileName, newFileName
 }
 
-var changeMap = make(map[string]string)
-
 func ParseLog(text string) {
 	changeModel = ""
 	allString := revReg.FindAllString(text, -1)

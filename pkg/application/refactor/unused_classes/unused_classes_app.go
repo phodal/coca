@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-var parsedDeps []JClassNode
 var analysisPackage = ""
 
 func Refactoring(parsedDeps []JClassNode) []string {

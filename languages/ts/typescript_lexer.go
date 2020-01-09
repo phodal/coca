@@ -710,7 +710,7 @@ var lexerRuleNames = []string{
 }
 
 type TypeScriptLexer struct {
-	*TypeScriptBaseLexer
+	TypeScriptBaseLexer
 	channelNames []string
 	modeNames    []string
 	// TODO: EOF string
@@ -898,7 +898,7 @@ func (l *TypeScriptLexer) Action(localctx antlr.RuleContext, ruleIndex, actionIn
 func (l *TypeScriptLexer) OpenBrace_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 0:
-		this.ProcessOpenBrace()
+		l.ProcessOpenBrace()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -907,7 +907,7 @@ func (l *TypeScriptLexer) OpenBrace_Action(localctx antlr.RuleContext, actionInd
 func (l *TypeScriptLexer) CloseBrace_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 1:
-		this.ProcessCloseBrace()
+		l.ProcessCloseBrace()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -916,7 +916,7 @@ func (l *TypeScriptLexer) CloseBrace_Action(localctx antlr.RuleContext, actionIn
 func (l *TypeScriptLexer) StringLiteral_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 2:
-		this.ProcessStringLiteral()
+		l.ProcessStringLiteral()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -939,7 +939,7 @@ func (l *TypeScriptLexer) Sempred(localctx antlr.RuleContext, ruleIndex, predInd
 func (p *TypeScriptLexer) RegularExpressionLiteral_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 0:
-		return this.IsRegexPossible()
+		return p.IsRegexPossible()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -949,7 +949,7 @@ func (p *TypeScriptLexer) RegularExpressionLiteral_Sempred(localctx antlr.RuleCo
 func (p *TypeScriptLexer) OctalIntegerLiteral_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 1:
-		return !this.IsStrictMode()
+		return !p.IsStrictMode()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))

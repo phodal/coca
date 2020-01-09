@@ -1,27 +1,27 @@
 package ast
 
 import (
-	parser "github.com/phodal/coca/languages/js"
+	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
 	"reflect"
 )
 
 var currentNode domain.JClassNode
 
-type JavaScriptIdentListener struct {
-	parser.BaseJavaScriptParserListener
+type TypeScriptIdentListener struct {
+	parser.BaseTypeScriptParserListener
 }
 
-func NewJavaScriptIdentListener() *JavaScriptIdentListener {
+func NewTypeScriptIdentListener() *TypeScriptIdentListener {
 	currentNode = *domain.NewClassNode()
-	return &JavaScriptIdentListener{}
+	return &TypeScriptIdentListener{}
 }
 
-func (s *JavaScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
+func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
 
 }
 
-func (s *JavaScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
+func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
 	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.MemberDotExpressionContext" {
 		memberDotExprCtx := ctx.GetChild(0).(*parser.MemberDotExpressionContext)
 		buildMemberDotExpr(memberDotExprCtx)
@@ -36,11 +36,11 @@ func buildMemberDotExpr(memberDotExprCtx *parser.MemberDotExpressionContext) {
 	currentNode.MethodCalls = append(currentNode.MethodCalls, call)
 }
 
-func (s *JavaScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDotExpressionContext) {
+func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDotExpressionContext) {
 
 }
 
-func (s *JavaScriptIdentListener) GetNodeInfo() domain.JClassNode {
+func (s *TypeScriptIdentListener) GetNodeInfo() domain.JClassNode {
 	return currentNode
 }
 

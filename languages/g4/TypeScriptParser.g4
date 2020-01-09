@@ -96,7 +96,7 @@ primaryType
     | predefinedType                                #PredefinedPrimType
     | typeReference                                 #ReferencePrimType
     | objectType                                    #ObjectPrimType
-    | primaryType {notLineTerminator()}? '[' ']'    #ArrayPrimType
+    | primaryType {p.notLineTerminator()}? '[' ']'    #ArrayPrimType
     | '[' tupleElementTypes ']'                     #TuplePrimType
     | typeQuery                                     #QueryPrimType
     | This                                          #ThisPrimType
@@ -157,7 +157,7 @@ typeMember
     ;
 
 arrayType
-    : primaryType {notLineTerminator()}? '[' ']'
+    : primaryType {p.notLineTerminator()}? '[' ']'
     ;
 
 tupleType
@@ -333,7 +333,7 @@ statement
     | variableStatement
     | importStatement
     | exportStatement
-    | emptyStatement
+    | emptyStatement_
     | abstractDeclaration //ADDED
     | classDeclaration
     | interfaceDeclaration //ADDED
@@ -400,12 +400,12 @@ variableDeclaration
     : ( Identifier | arrayLiteral | objectLiteral) typeAnnotation? singleExpression? ('=' typeParameters? singleExpression)? // ECMAScript 6: Array & Object Matching
     ;
 
-emptyStatement
+emptyStatement_
     : SemiColon
     ;
 
 expressionStatement
-    : {this.notOpenBraceAndNotFunction()}? expressionSequence SemiColon?
+    : {p.notOpenBraceAndNotFunction()}? expressionSequence SemiColon?
     ;
 
 ifStatement
@@ -419,8 +419,8 @@ iterationStatement
     | For '(' expressionSequence? SemiColon expressionSequence? SemiColon expressionSequence? ')' statement     # ForStatement
     | For '(' varModifier variableDeclarationList SemiColon expressionSequence? SemiColon expressionSequence? ')'
           statement                                                                                             # ForVarStatement
-    | For '(' singleExpression (In | Identifier{this.p("of")}?) expressionSequence ')' statement                # ForInStatement
-    | For '(' varModifier variableDeclaration (In | Identifier{this.p("of")}?) expressionSequence ')' statement # ForVarInStatement
+    | For '(' singleExpression (In | Identifier{p.p("of")}?) expressionSequence ')' statement                # ForInStatement
+    | For '(' varModifier variableDeclaration (In | Identifier{p.p("of")}?) expressionSequence ')' statement # ForVarInStatement
     ;
 
 varModifier
@@ -430,19 +430,19 @@ varModifier
     ;
 
 continueStatement
-    : Continue ({this.notLineTerminator()}? Identifier)? eos
+    : Continue ({p.notLineTerminator()}? Identifier)? eos
     ;
 
 breakStatement
-    : Break ({this.notLineTerminator()}? Identifier)? eos
+    : Break ({p.notLineTerminator()}? Identifier)? eos
     ;
 
 returnStatement
-    : Return ({this.notLineTerminator()}? expressionSequence)? eos
+    : Return ({p.notLineTerminator()}? expressionSequence)? eos
     ;
 
 yieldStatement
-    : Yield ({this.notLineTerminator()}? expressionSequence)? eos
+    : Yield ({p.notLineTerminator()}? expressionSequence)? eos
     ;
 
 withStatement
@@ -474,7 +474,7 @@ labelledStatement
     ;
 
 throwStatement
-    : Throw {this.notLineTerminator()}? expressionSequence eos
+    : Throw {p.notLineTerminator()}? expressionSequence eos
     ;
 
 tryStatement
@@ -657,8 +657,8 @@ singleExpression
     | singleExpression '.' identifierName                                    # MemberDotExpression
     | singleExpression arguments                                             # ArgumentsExpression
     | New singleExpression typeArguments? arguments?                         # NewExpression
-    | singleExpression {this.notLineTerminator()}? '++'                      # PostIncrementExpression
-    | singleExpression {this.notLineTerminator()}? '--'                      # PostDecreaseExpression
+    | singleExpression {p.notLineTerminator()}? '++'                      # PostIncrementExpression
+    | singleExpression {p.notLineTerminator()}? '--'                      # PostDecreaseExpression
     | Delete singleExpression                                                # DeleteExpression
     | Void singleExpression                                                  # VoidExpression
     | Typeof singleExpression                                                # TypeofExpression
@@ -804,16 +804,16 @@ keyword
     ;
 
 getter
-    : Identifier{this.p("get")}? propertyName
+    : Identifier{p.p("get")}? propertyName
     ;
 
 setter
-    : Identifier{this.p("set")}? propertyName
+    : Identifier{p.p("set")}? propertyName
     ;
 
 eos
     : SemiColon
     | EOF
-    | {this.lineTerminatorAhead()}?
-    | {this.closeBrace()}?
+    | {p.lineTerminatorAhead()}?
+    | {p.closeBrace()}?
     ;

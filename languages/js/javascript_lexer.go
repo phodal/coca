@@ -699,7 +699,7 @@ var lexerRuleNames = []string{
 }
 
 type JavaScriptLexer struct {
-	JavaScriptBaseLexer
+	*JavaScriptBaseLexer
 	channelNames []string
 	modeNames    []string
 	// TODO: EOF string

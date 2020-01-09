@@ -1,14 +1,14 @@
-package application
+package js_ident
 
 import (
 	. "github.com/onsi/gomega"
 	"testing"
 )
 
-func TestJavaCallApp_AnalysisPath(t *testing.T) {
+func Test_TypeScriptConsoleLog(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(JavaScriptApiApp)
+	app := new(TypeScriptApiApp)
 	results := app.Analysis("console.log('hello, world')");
 
 	g.Expect(len(results.MethodCalls)).To(Equal(1))

@@ -3,10 +3,10 @@ package cmd
 import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
-	"github.com/phodal/coca/core/adapter/cocafile"
-	"github.com/phodal/coca/core/context/analysis"
-	"github.com/phodal/coca/core/context/deps"
-	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/pkg/adapter/cocafile"
+	"github.com/phodal/coca/pkg/context/analysis"
+	"github.com/phodal/coca/pkg/context/deps"
+	"github.com/phodal/coca/pkg/domain"
 	"github.com/spf13/cobra"
 	"path/filepath"
 )

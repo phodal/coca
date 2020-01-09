@@ -3,7 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/core/context/analysis"
+	"github.com/phodal/coca/pkg/context/analysis"
 	"github.com/spf13/cobra"
 )
 

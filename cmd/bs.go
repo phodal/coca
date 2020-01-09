@@ -3,9 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
-	bs2 "github.com/phodal/coca/core/context/bs"
-	"github.com/phodal/coca/core/domain/bs_domain"
-	"github.com/phodal/coca/core/infrastructure/string_helper"
+	bs2 "github.com/phodal/coca/pkg/context/bs"
+	"github.com/phodal/coca/pkg/domain/bs_domain"
+	"github.com/phodal/coca/pkg/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"strings"
 )

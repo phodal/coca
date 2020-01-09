@@ -2,8 +2,8 @@ package cmd_util
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/core/context/analysis"
-	"github.com/phodal/coca/core/domain"
+	"github.com/phodal/coca/pkg/context/analysis"
+	"github.com/phodal/coca/pkg/domain"
 )
 
 func LoadIdentify(importPath string) []domain.JIdentifier {

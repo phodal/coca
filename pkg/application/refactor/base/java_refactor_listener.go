@@ -19,7 +19,7 @@ func (s *JavaRefactorListener) EnterPackageDeclaration(ctx *PackageDeclarationCo
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	pkgInfo := *&model.JPkgInfo{node.Pkg, startLine, stopLine}
+	pkgInfo := model.JPkgInfo{Name: node.Pkg, StartLine: startLine, StopLine: stopLine}
 	node.SetPkgInfo(pkgInfo)
 }
 

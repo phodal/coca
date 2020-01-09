@@ -14,10 +14,6 @@ func NewConceptAnalyser() ConceptAnalyser {
 	return *&ConceptAnalyser{}
 }
 
-func (c ConceptAnalyser) run() {
-
-}
-
 func (c ConceptAnalyser) Analysis(clzs *[]domain.JClassNode) string_helper.PairList {
 	return buildMethodsFromDeps(*clzs)
 }

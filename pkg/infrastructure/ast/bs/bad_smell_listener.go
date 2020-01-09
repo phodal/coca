@@ -124,7 +124,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, bs_domain.JFullParameter{paramType, paramValue})
+				methodParams = append(methodParams, bs_domain.JFullParameter{Name: paramType, Type: paramValue})
 			}
 		}
 	}
@@ -189,7 +189,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, bs_domain.JFullParameter{paramType, paramValue})
+				methodParams = append(methodParams, bs_domain.JFullParameter{Name: paramType, Type: paramValue})
 
 				localVars[paramValue] = paramType
 			}

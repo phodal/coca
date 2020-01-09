@@ -34,12 +34,12 @@ var gitCmd = &cobra.Command{
 		cModel, _ := json.MarshalIndent(commitMessages, "", "\t")
 		cmd_util.WriteToCocaFile("commits.json", string(cModel))
 
-		if *&gitCmdConfig.ShowSummary {
+		if gitCmdConfig.ShowSummary {
 			ShowChangeLogSummary(commitMessages, output)
 		}
 
 		isFullMessage := cmd.Flag("full").Value.String() == "true"
-		size := *&gitCmdConfig.Size
+		size := gitCmdConfig.Size
 
 		if cmd.Flag("basic").Value.String() == "true" {
 			table := tablewriter.NewWriter(output)
@@ -77,7 +77,7 @@ var gitCmd = &cobra.Command{
 				const secondsOfOneMonth = 2600640
 				month := time.Since(info.Age).Seconds() / secondsOfOneMonth
 				displayMonth := strconv.FormatFloat(month, 'f', 2, 64)
-				agesDisplay = append(agesDisplay, *&CodeAgeDisplay{info.EntityName, displayMonth})
+				agesDisplay = append(agesDisplay, CodeAgeDisplay{info.EntityName, displayMonth})
 			}
 
 			table.SetHeader([]string{"EntityName", "Month"})

@@ -82,8 +82,7 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 }
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-
-	currentMethod = *&domain.JMethod{
+	currentMethod = domain.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
 		StartLine:         ctx.GetStart().GetLine(),
@@ -97,9 +96,7 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 }
 
 func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-
 	currentNode.AddMethod(currentMethod)
-	_ = domain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
@@ -119,7 +116,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	currentMethod = *&domain.JMethod{
+	currentMethod = domain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -153,7 +150,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	currentMethod = *&domain.JMethod{
+	currentMethod = domain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,

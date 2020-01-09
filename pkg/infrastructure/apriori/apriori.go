@@ -280,17 +280,17 @@ func (a *Apriori) generateSupportRecords(supportRecordChan chan SupportRecord, m
 	supportRecordChan <- SupportRecord{[]string{}, -1}
 }
 
-func (a *Apriori) generateRelationRecords(relationRecords chan RelationRecord, supportRecord SupportRecord, minConfidence float64, minLift float64) {
-	// Calculate ordered stats
-	filteredOrderedStatistics := a.filterOrderedStatistics(
-		a.generateOrderedStatistics(supportRecord),
-		minConfidence,
-		minLift)
-
-	if len(filteredOrderedStatistics) != 0 {
-		relationRecords <- RelationRecord{supportRecord, filteredOrderedStatistics}
-	}
-}
+//func (a *Apriori) generateRelationRecords(relationRecords chan RelationRecord, supportRecord SupportRecord, minConfidence float64, minLift float64) {
+//	// Calculate ordered stats
+//	filteredOrderedStatistics := a.filterOrderedStatistics(
+//		a.generateOrderedStatistics(supportRecord),
+//		minConfidence,
+//		minLift)
+//
+//	if len(filteredOrderedStatistics) != 0 {
+//		relationRecords <- RelationRecord{supportRecord, filteredOrderedStatistics}
+//	}
+//}
 
 // Returns the Apriori candidates as a list.
 func (a *Apriori) createNextCandidates(prevCandidates [][]string, length int) [][]string {

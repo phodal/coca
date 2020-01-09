@@ -124,10 +124,6 @@ func (s Service) enableLifecycle() bool {
 	return true
 }
 
-func (s Service) enableSameBehavior() bool {
-	return true
-}
-
 func (s Service) enableAbstractParameters() bool {
 	return true
 }

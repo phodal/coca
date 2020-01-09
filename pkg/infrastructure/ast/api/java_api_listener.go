@@ -273,10 +273,6 @@ func buildRestApiWithParameters(ctx *parser.MethodDeclarationContext) {
 				if qualifiedName == "RequestBody" {
 					hasRequestBody = true
 				}
-
-				if qualifiedName == "PathVariable" {
-					//fmt.Println()
-				}
 			}
 		}
 

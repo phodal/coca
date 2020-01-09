@@ -44,8 +44,6 @@ bc_demo_test
 cmake_install.cmake
 helloworld
 languages/java_refactor
-languages/java
-languages/sql
 language/g4/*.tokens
 language/g4/*.go
 language/g4/*.interp

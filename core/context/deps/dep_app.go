@@ -10,12 +10,8 @@ import (
 type DepAnalysisApp struct {
 }
 
-func NewDepApp() DepAnalysisApp {
-	return *&DepAnalysisApp{}
-}
-
-func main() {
-
+func NewDepApp() *DepAnalysisApp {
+	return &DepAnalysisApp{}
 }
 
 func (d *DepAnalysisApp) BuildImportMap(deps []domain.JClassNode) map[string]domain.JImport {

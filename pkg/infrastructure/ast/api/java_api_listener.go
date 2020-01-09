@@ -23,22 +23,18 @@ var currentPkg string
 
 var identMap map[string]models.JIdentifier
 var imports []string
-var currentExtends = ""
 var currentImplements = ""
-var depInjectMap map[string]string
 
 func NewJavaApiListener(jIdentMap map[string]models.JIdentifier, diMap map[string]string) *JavaApiListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""
-	currentExtends = ""
 	currentImplements = ""
 
 	imports = nil
 	restApis = nil
 
 	identMap = jIdentMap
-	depInjectMap = diMap
 
 	params := make(map[string]string)
 	currentRestApi = models.RestApi{MethodParams: params}
@@ -62,10 +58,6 @@ func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCont
 	hasEnterClass = true
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
-	}
-
-	if ctx.EXTENDS() != nil {
-		currentExtends = ctx.TypeType().GetText()
 	}
 
 	if ctx.IMPLEMENTS() != nil {

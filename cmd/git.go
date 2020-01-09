@@ -77,7 +77,7 @@ var gitCmd = &cobra.Command{
 				const secondsOfOneMonth = 2600640
 				month := time.Since(info.Age).Seconds() / secondsOfOneMonth
 				displayMonth := strconv.FormatFloat(month, 'f', 2, 64)
-				agesDisplay = append(agesDisplay, CodeAgeDisplay{info.EntityName, displayMonth})
+				agesDisplay = append(agesDisplay, CodeAgeDisplay{EntityName: info.EntityName, Month: displayMonth})
 			}
 
 			table.SetHeader([]string{"EntityName", "Month"})

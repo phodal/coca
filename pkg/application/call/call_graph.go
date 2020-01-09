@@ -10,7 +10,7 @@ type CallGraph struct {
 }
 
 func NewCallGraph() CallGraph {
-	return *&CallGraph{}
+	return CallGraph{}
 }
 
 func (c CallGraph) Analysis(funcName string, clzs []domain.JClassNode) string {

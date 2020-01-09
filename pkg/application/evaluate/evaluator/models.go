@@ -35,5 +35,5 @@ type EvaluateModel struct {
 }
 
 func NewEvaluateModel() EvaluateModel {
-	return *&EvaluateModel{Nullable: Nullable{Items: nil}}
+	return EvaluateModel{Nullable: Nullable{Items: nil}}
 }

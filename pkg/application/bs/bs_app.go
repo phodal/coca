@@ -47,7 +47,7 @@ func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_doma
 	var classNodes = map[string][]string{}
 	var classNodeMaps = map[string]bool{}
 	for _, node := range nodes {
-		classNodeMaps[node.ClassFullName()] = true;
+		classNodeMaps[node.ClassFullName()] = true
 	}
 	for _, node := range nodes {
 		classNodes[node.ClassFullName()] = getCalledClasses(node, classNodeMaps)
@@ -55,7 +55,7 @@ func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_doma
 	var badSmellGraphCall = graphcall.NewBadSmellGraphCall()
 	var descriptions = badSmellGraphCall.AnalysisGraphCallPath(classNodes)
 	for _, description := range descriptions {
-		*badSmellList = append(*badSmellList, *&bs_domain.BadSmellModel{"", "", "graphConnectedCall", description, 0})
+		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{"", "", "graphConnectedCall", description, 0})
 	}
 }
 
@@ -77,7 +77,7 @@ func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
 
 func checkLazyElement(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
 	if node.Type == "Class" && len(node.Methods) < 1 {
-		*badSmellList = append(*badSmellList, *&bs_domain.BadSmellModel{node.Path, "", "lazyElement", "", 0})
+		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{node.Path, "", "lazyElement", "", 0})
 	}
 }
 
@@ -101,7 +101,7 @@ func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BsJClass, badSm
 func checkRefusedBequest(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
 	if node.Extends != "" {
 		if node.HaveCallParent() {
-			*badSmellList = append(*badSmellList, *&bs_domain.BadSmellModel{node.Path, "", "refusedBequest", "", 0})
+			*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{node.Path, "", "refusedBequest", "", 0})
 		}
 	}
 }
@@ -110,7 +110,7 @@ func checkLargeClass(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmell
 	normalClassLength := withOutGetterSetterClass(node.Methods)
 	if node.Type == "Class" && normalClassLength >= BS_LARGE_LENGTH {
 		description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
-		*badSmellList = append(*badSmellList, *&bs_domain.BadSmellModel{node.Path, "", "largeClass", description, normalClassLength})
+		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{node.Path, "", "largeClass", description, normalClassLength})
 	}
 }
 

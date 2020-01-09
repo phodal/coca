@@ -106,7 +106,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestApi = models.RestApi{uriRemoveQuote, "", "", "", "", nil, "", ""}
+	currentRestApi = models.RestApi{Uri: uriRemoveQuote}
 	if annotationName != "RequestMapping" {
 		if hasEnterClass {
 			addApiMethod(annotationName)

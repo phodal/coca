@@ -51,8 +51,8 @@ var archCmd = &cobra.Command{
 		graph := result.ToDot(".", nodeFilter)
 		f, _ := os.Create("coca_reporter/arch.dot")
 		w := bufio.NewWriter(f)
-		w.WriteString("di" + graph.String())
-		w.Flush()
+		_, _ = w.WriteString("di" + graph.String())
+		_ = w.Flush()
 
 		cmd_util.ConvertToSvg("arch")
 	},

@@ -51,7 +51,7 @@ func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		node = listener.GetNodeInfo()
-		moveStruct := &models2.JMoveStruct{node, currentFile, node.GetImports()}
+		moveStruct := &models2.JMoveStruct{JFullIdentifier: node, Path: currentFile, Deps: node.GetImports()}
 		nodes = append(nodes, *moveStruct)
 	}
 

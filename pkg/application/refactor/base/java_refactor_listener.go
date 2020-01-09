@@ -1,13 +1,13 @@
 package base
 
 import (
-	models2 "github.com/phodal/coca/pkg/application/refactor/base/models"
 	. "github.com/phodal/coca/languages/java"
+	model "github.com/phodal/coca/pkg/application/refactor/base/models"
 	"strings"
 	"unicode"
 )
 
-var node models2.JFullIdentifier;
+var node model.JFullIdentifier
 
 type JavaRefactorListener struct {
 	BaseJavaParserListener
@@ -19,7 +19,7 @@ func (s *JavaRefactorListener) EnterPackageDeclaration(ctx *PackageDeclarationCo
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	pkgInfo := *&models2.JPkgInfo{node.Pkg, startLine, stopLine}
+	pkgInfo := *&model.JPkgInfo{node.Pkg, startLine, stopLine}
 	node.SetPkgInfo(pkgInfo)
 }
 
@@ -31,7 +31,7 @@ func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationCont
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	jImport := *&models2.JImport{importText, startLine, stopLine}
+	jImport := model.JImport{Name: importText, StartLine: startLine, StopLine: stopLine}
 
 	node.AddImport(jImport)
 }
@@ -46,7 +46,7 @@ func (s *JavaRefactorListener) EnterQualifiedNameList(ctx *QualifiedNameListCont
 	for _, qualified := range ctx.AllQualifiedName() {
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
-		field := *&models2.JField{qualified.GetText(), node.Pkg, startLine, stopLine}
+		field := model.JField{Name: qualified.GetText(), Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 		node.AddField(field)
 	}
 }
@@ -55,7 +55,7 @@ func (s *JavaRefactorListener) EnterCatchType(ctx *CatchTypeContext) {
 	for _, qualified := range ctx.AllQualifiedName() {
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
-		field := *&models2.JField{qualified.GetText(), node.Pkg, startLine, stopLine}
+		field := model.JField{Name: qualified.GetText(), Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 		node.AddField(field)
 	}
 }
@@ -67,8 +67,7 @@ func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMet
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ctx.IDENTIFIER().GetText()
-	//XXX: find the start position of {, not public
-	method := *&models2.JFullMethod{name, startLine, startLinePosition, stopLine, stopLinePosition}
+	method := model.JFullMethod{Name: name, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
 	node.AddMethod(method)
 }
 
@@ -80,7 +79,7 @@ func (s *JavaRefactorListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarati
 func (s *JavaRefactorListener) EnterTypeType(ctx *TypeTypeContext) {
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
-	field := *&models2.JField{ctx.GetText(), node.Pkg, startLine, stopLine}
+	field := model.JField{Name: ctx.GetText(), Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 	node.AddField(field)
 }
 
@@ -92,7 +91,7 @@ func (s *JavaRefactorListener) EnterClassOrInterfaceType(ctx *ClassOrInterfaceTy
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
 
-		field := *&models2.JField{name, node.Pkg, startLine, stopLine}
+		field := model.JField{Name: name, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 		node.AddField(field)
 	}
 }
@@ -103,7 +102,7 @@ func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 
-	field := *&models2.JField{annotation, node.Pkg, startLine, stopLine}
+	field := model.JField{Name: annotation, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 	node.AddField(field)
 }
 
@@ -115,7 +114,7 @@ func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContex
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
 
-		field := *&models2.JField{name, node.Pkg, startLine, stopLine}
+		field := model.JField{Name: name, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 		node.AddField(field)
 	}
 }
@@ -124,7 +123,7 @@ func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
 	text := ctx.IDENTIFIER().GetText()
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
-	field := *&models2.JField{text, node.Pkg, startLine, stopLine}
+	field := model.JField{Name: text, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 	node.AddField(field)
 }
 
@@ -134,7 +133,7 @@ func (s *JavaRefactorListener) EnterExpressionList(ctx *ExpressionListContext) {
 		if isUppercaseText(expText) {
 			startLine := ctx.GetStart().GetLine()
 			stopLine := ctx.GetStop().GetLine()
-			field := *&models2.JField{expText, node.Pkg, startLine, stopLine}
+			field := model.JField{Name: expText, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 			node.AddField(field)
 		}
 	}
@@ -146,7 +145,7 @@ func (s *JavaRefactorListener) EnterStatement(ctx *StatementContext) {
 		if isUppercaseText(expText) {
 			startLine := ctx.GetStart().GetLine()
 			stopLine := ctx.GetStop().GetLine()
-			field := *&models2.JField{expText, node.Pkg, startLine, stopLine}
+			field := model.JField{Name: expText, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 			node.AddField(field)
 		}
 	}
@@ -160,8 +159,8 @@ func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
 
-		field := &models2.JField{name, node.Pkg, startLine, stopLine}
-		node.AddField(*field)
+		field := model.JField{Name: name, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
+		node.AddField(field)
 	}
 }
 
@@ -172,7 +171,7 @@ func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
 		if isUppercaseText(expText) {
 			startLine := ctx.GetStart().GetLine()
 			stopLine := ctx.GetStop().GetLine()
-			field := *&models2.JField{expText, node.Pkg, startLine, stopLine}
+			field := model.JField{Name: expText, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
 			node.AddField(field)
 		}
 	}
@@ -192,8 +191,8 @@ func (s *JavaRefactorListener) EnterExpression(ctx *ExpressionContext) {
 			if isUppercaseText(expText) {
 				startLine := ctx.GetStart().GetLine()
 				stopLine := ctx.GetStop().GetLine()
-				field := &models2.JField{expText, node.Pkg, startLine, stopLine}
-				node.AddField(*field)
+				field := model.JField{Name: expText, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
+				node.AddField(field)
 			}
 		}
 	}
@@ -203,10 +202,10 @@ func isUppercaseText(text string) bool {
 	return !strings.Contains(text, ".") && unicode.IsUpper([]rune(text)[0])
 }
 
-func (s *JavaRefactorListener) InitNode(identifier models2.JFullIdentifier) {
+func (s *JavaRefactorListener) InitNode(identifier model.JFullIdentifier) {
 	node = identifier
 }
 
-func (s *JavaRefactorListener) GetNodeInfo() models2.JFullIdentifier {
+func (s *JavaRefactorListener) GetNodeInfo() model.JFullIdentifier {
 	return node
 }

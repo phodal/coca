@@ -544,6 +544,7 @@ results:
     - [x] 3rd-party analysis XML or Groovy Scripts
     - [x] Groovy Support
       - [x] migrate to Golang Styles
+ - [ ] Story Cmd
 
 Documents Todo:
 

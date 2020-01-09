@@ -16,7 +16,7 @@ type TodoApp struct {
 }
 
 func NewTodoApp() TodoApp {
-	return *&TodoApp{
+	return TodoApp{
 
 	}
 }

@@ -23,7 +23,7 @@ func Test_ShouldBuildSuccessDataFromJson(t *testing.T) {
 	file := cmd_util.ReadFile(codePath)
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	dotContent := analyser.Analysis("com.phodal.pholedge.book.BookController.createBook", *&parsedDeps)
+	dotContent := analyser.Analysis("com.phodal.pholedge.book.BookController.createBook", parsedDeps)
 
 	g.Expect(dotContent).To(Equal(`digraph G {
 "com.phodal.pholedge.book.BookService.createBook" -> "com.phodal.pholedge.book.BookFactory.create";

@@ -5,7 +5,7 @@ type JImport struct {
 }
 
 func NewJImport(str string) JImport {
-	return *&JImport{
+	return JImport{
 		Source: str,
 	}
 }

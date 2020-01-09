@@ -9,7 +9,7 @@ type RCallGraph struct {
 }
 
 func NewRCallGraph() RCallGraph {
-	return *&RCallGraph{}
+	return RCallGraph{}
 }
 
 func (c RCallGraph) Analysis(funcName string, clzs []domain.JClassNode, writeCallback func(rcallMap map[string][]string)) string {

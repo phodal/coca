@@ -18,7 +18,7 @@ type JMethodCall struct {
 }
 
 func NewJMethodCall() JMethodCall {
-	return *&JMethodCall{
+	return JMethodCall{
 		Package:           "",
 		Type:              "",
 		Class:             "",

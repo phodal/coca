@@ -27,7 +27,7 @@ var evaluateCmd = &cobra.Command{
 	Short: "evaluate code situation and refactor effort",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		dependence := *&evaluateConfig.DependencePath
+		dependence := evaluateConfig.DependencePath
 
 		analyser := evaluate.NewEvaluateAnalyser()
 		file := cmd_util.ReadFile(dependence)

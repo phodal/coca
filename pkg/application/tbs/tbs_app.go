@@ -72,7 +72,7 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 func checkAssert(hasAssert bool, clz domain.JClassNode, method domain.JMethod, results *[]TestBadSmell, testType *string) {
 	if !hasAssert {
 		*testType = "UnknownTest"
-		tbs := *&TestBadSmell{
+		tbs := TestBadSmell{
 			FileName:    clz.Path,
 			Type:        *testType,
 			Description: "",
@@ -102,7 +102,7 @@ func checkRedundantAssertionTest(path string, call domain.JMethodCall, method do
 	if len(call.Parameters) == TWO_PARAMETERS {
 		if call.Parameters[0] == call.Parameters[1] {
 			*testType = "RedundantAssertionTest"
-			tbs := *&TestBadSmell{
+			tbs := TestBadSmell{
 				FileName:    path,
 				Type:        *testType,
 				Description: "",
@@ -126,7 +126,7 @@ func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, me
 
 	if isDuplicateAssert {
 		*testType = "DuplicateAssertTest"
-		tbs := *&TestBadSmell{
+		tbs := TestBadSmell{
 			FileName:    clz.Path,
 			Type:        *testType,
 			Description: "",
@@ -140,7 +140,7 @@ func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, me
 func checkSleepyTest(path string, method domain.JMethodCall, jMethod domain.JMethod, results *[]TestBadSmell, testType *string) {
 	if method.IsThreadSleep() {
 		*testType = "SleepyTest"
-		tbs := *&TestBadSmell{
+		tbs := TestBadSmell{
 			FileName:    path,
 			Type:        *testType,
 			Description: "",
@@ -154,7 +154,7 @@ func checkSleepyTest(path string, method domain.JMethodCall, jMethod domain.JMet
 func checkRedundantPrintTest(path string, mCall domain.JMethodCall, results *[]TestBadSmell, testType *string) {
 	if mCall.IsSystemOutput() {
 		*testType = "RedundantPrintTest"
-		tbs := *&TestBadSmell{
+		tbs := TestBadSmell{
 			FileName:    path,
 			Type:        *testType,
 			Description: "",
@@ -169,7 +169,7 @@ func checkEmptyTest(path string, annotation domain.Annotation, results *[]TestBa
 	if annotation.IsTest() {
 		if len(method.MethodCalls) <= 1 {
 			*testType = "EmptyTest"
-			tbs := *&TestBadSmell{
+			tbs := TestBadSmell{
 				FileName:    path,
 				Type:        *testType,
 				Description: "",
@@ -184,7 +184,7 @@ func checkEmptyTest(path string, annotation domain.Annotation, results *[]TestBa
 func checkIgnoreTest(clzPath string, annotation domain.Annotation, results *[]TestBadSmell, testType *string) {
 	if annotation.IsIgnoreTest() {
 		*testType = "IgnoreTest"
-		tbs := *&TestBadSmell{
+		tbs := TestBadSmell{
 			FileName:    clzPath,
 			Type:        *testType,
 			Description: "",

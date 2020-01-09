@@ -16,7 +16,7 @@ type SqlIdentifierApp struct {
 }
 
 func NewSqlIdentifierApp() SqlIdentifierApp {
-	return *&SqlIdentifierApp{}
+	return SqlIdentifierApp{}
 }
 
 func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SQLNode {

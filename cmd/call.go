@@ -25,7 +25,7 @@ var callGraphCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		var parsedDeps []domain.JClassNode
-		dependence := *&callCmdConfig.Path
+		dependence := callCmdConfig.Path
 
 		className := cmd.Flag("className").Value.String()
 		remove := cmd.Flag("remove").Value.String()
@@ -39,7 +39,7 @@ var callGraphCmd = &cobra.Command{
 
 			_ = json.Unmarshal(file, &parsedDeps)
 
-			content := analyser.Analysis(className, *&parsedDeps)
+			content := analyser.Analysis(className, parsedDeps)
 			if remove != "" {
 				content = strings.ReplaceAll(content, remove, "")
 			}

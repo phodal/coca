@@ -53,14 +53,14 @@ type IfParInfo struct {
 }
 
 func NewIfPairInfo() IfParInfo {
-	return *&IfParInfo{
+	return IfParInfo{
 		StartLine: 0,
 		EndLine:   0,
 	}
 }
 
 func NewMethodBadSmellInfo() MethodBadSmellInfo {
-	return *&MethodBadSmellInfo{
+	return MethodBadSmellInfo{
 		IfSize:     0,
 		SwitchSize: 0,
 		IfInfo:     nil,
@@ -79,7 +79,7 @@ type JFullParameter struct {
 
 func NewJFullClassNode() BsJClass {
 	info := &ClassBadSmellInfo{0, 0}
-	return *&BsJClass{
+	return BsJClass{
 		"",
 		"",
 		"",

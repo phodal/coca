@@ -23,7 +23,7 @@ var badsmellCmd = &cobra.Command{
 	Short: "generate bad smell list and suggestions",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		importPath := *&bsCmdConfig.Path
+		importPath := bsCmdConfig.Path
 		ignoreStr := cmd.Flag("ignore").Value.String()
 		sortType := cmd.Flag("sort").Value.String()
 

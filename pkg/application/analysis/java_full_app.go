@@ -14,7 +14,7 @@ type JavaFullApp struct {
 }
 
 func NewJavaFullApp() JavaFullApp {
-	return *&JavaFullApp{}
+	return JavaFullApp{}
 }
 
 func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {

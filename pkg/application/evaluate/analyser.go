@@ -10,7 +10,7 @@ type Analyser struct {
 }
 
 func NewEvaluateAnalyser() Analyser {
-	return *&Analyser{}
+	return Analyser{}
 }
 
 func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.JIdentifier) evaluator.EvaluateModel {

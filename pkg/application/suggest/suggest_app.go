@@ -8,7 +8,7 @@ type SuggestApp struct {
 }
 
 func NewSuggestApp() SuggestApp {
-	return *&SuggestApp{}
+	return SuggestApp{}
 }
 
 func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []domain.Suggest {

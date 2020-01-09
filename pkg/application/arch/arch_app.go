@@ -9,7 +9,7 @@ type ArchApp struct {
 }
 
 func NewArchApp() ArchApp {
-	return *&ArchApp{}
+	return ArchApp{}
 }
 
 func (a ArchApp) Analysis(deps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier) *tequila.FullGraph {

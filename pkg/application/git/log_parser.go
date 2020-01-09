@@ -58,13 +58,13 @@ func ParseLog(text string) {
 		msg := strings.Split(str, dat[0])[1]
 		msg = msg[1:]
 
-		currentCommitMessage = *&CommitMessage{id[1], auth[1][1:], dat[0], msg, nil}
+		currentCommitMessage = CommitMessage{id[1], auth[1][1:], dat[0], msg, nil}
 	} else if changesReg.MatchString(text) {
 		changes := changesReg.FindStringSubmatch(text)
 		deleted, _ := strconv.Atoi(changes[2])
 		added, _ := strconv.Atoi(changes[1])
 		fileFieldName := changes[3]
-		change := *&FileChange{added, deleted, fileFieldName, ""}
+		change := FileChange{added, deleted, fileFieldName, ""}
 
 		currentFileChangeMap[fileFieldName] = change
 	} else if changeModeReg.MatchString(text) {
@@ -78,7 +78,7 @@ func ParseLog(text string) {
 		currentCommitMessage.Changes = currentFileChanges
 		commitMessages = append(commitMessages, currentCommitMessage)
 
-		currentCommitMessage = *&CommitMessage{"", "", "", "", nil}
+		currentCommitMessage = CommitMessage{"", "", "", "", nil}
 		currentFileChanges = nil
 	}
 }
@@ -95,7 +95,7 @@ func buildChangeMode(text string) {
 			change.Mode = mode
 			currentFileChangeMap[matches[CHANGE_MODE_INDEX]] = change
 		} else if mode == "delete" {
-			deleteFile := *&FileChange{
+			deleteFile := FileChange{
 				Added:   0,
 				Deleted: 0,
 				File:    matches[CHANGE_MODE_INDEX],

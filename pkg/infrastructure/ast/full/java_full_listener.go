@@ -241,7 +241,7 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeTypeText
-		fields = append(fields, *&domain.JAppField{Type: typeTypeText, Value: value})
+		fields = append(fields, domain.JAppField{Type: typeTypeText, Value: value})
 
 		buildFieldCall(typeTypeText, ctx)
 	}
@@ -362,7 +362,7 @@ func getMethodParameters(parameters parser.IFormalParametersContext) []domain.JP
 		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 		localVars[paramValue] = paramType
-		methodParams = append(methodParams, *&domain.JParameter{Name: paramValue, Type: paramType})
+		methodParams = append(methodParams, domain.JParameter{Name: paramValue, Type: paramType})
 	}
 	return methodParams
 }

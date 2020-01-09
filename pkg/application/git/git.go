@@ -50,7 +50,7 @@ func GetTeamSummary(messages []CommitMessage) []TeamSummary {
 
 	var sortInfos []TeamSummary
 	for _, info := range infos {
-		sortInfos = append(sortInfos, *&TeamSummary{info.EntityName, len(info.Authors), len(info.Revs)})
+		sortInfos = append(sortInfos, TeamSummary{info.EntityName, len(info.Authors), len(info.Revs)})
 	}
 
 	sort.Slice(sortInfos, func(i, j int) bool {
@@ -79,7 +79,7 @@ func BuildCommitMessageMap(messages []CommitMessage, infos map[string]ProjectInf
 				revs[commitMessage.Rev] = commitMessage.Rev
 
 				date, _ := time.Parse(timeFormat, commitMessage.Date)
-				infos[fileName] = *&ProjectInfo{fileName, authors, revs, date}
+				infos[fileName] = ProjectInfo{fileName, authors, revs, date}
 			} else {
 				infos[fileName].Authors[commitMessage.Author] = commitMessage.Author
 				infos[fileName].Revs[commitMessage.Rev] = commitMessage.Rev
@@ -201,7 +201,7 @@ func GetTopAuthors(commitMessages []CommitMessage) []TopAuthor {
 
 	var topAuthors []TopAuthor
 	for _, info := range authors {
-		topAuthors = append(topAuthors, *&TopAuthor{info.Name, info.CommitCount, info.LineCount})
+		topAuthors = append(topAuthors, TopAuthor{info.Name, info.CommitCount, info.LineCount})
 	}
 
 	sort.Slice(topAuthors, func(i, j int) bool {

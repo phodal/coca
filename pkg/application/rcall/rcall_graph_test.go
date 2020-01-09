@@ -26,7 +26,7 @@ func TestRCallGraph_Analysis(t *testing.T) {
 
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	content := analyser.Analysis("com.phodal.pholedge.book.BookService.createBook", *&parsedDeps, MockWriteCallMap)
+	content := analyser.Analysis("com.phodal.pholedge.book.BookService.createBook", parsedDeps, MockWriteCallMap)
 
 	g.Expect(content).To(Equal(`digraph G {
 rankdir = LR;
@@ -48,7 +48,7 @@ func TestRCallGraph_Constructor(t *testing.T) {
 
 	_ = json.Unmarshal(file, &parsedDeps)
 
-	content := analyser.Analysis("com.phodal.coca.analysis.JavaCallApp.parse", *&parsedDeps, MockWriteCallMap)
+	content := analyser.Analysis("com.phodal.coca.analysis.JavaCallApp.parse", parsedDeps, MockWriteCallMap)
 
 	// Todo bug: to be fix
 	g.Expect(content).To(Equal(`digraph G {

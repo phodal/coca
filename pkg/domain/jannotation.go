@@ -11,7 +11,7 @@ type AnnotationKeyValue struct {
 }
 
 func NewAnnotation() Annotation {
-	return *&Annotation{
+	return Annotation{
 		QualifiedName: "",
 		ValuePairs:    nil,
 	}

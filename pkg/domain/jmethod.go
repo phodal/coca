@@ -23,7 +23,7 @@ type JMethod struct {
 }
 
 func NewJMethod() JMethod {
-	return *&JMethod{
+	return JMethod{
 		Name:              "",
 		Type:              "",
 		Annotations:       nil,

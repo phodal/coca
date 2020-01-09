@@ -13,7 +13,7 @@ type JavaIdentifierApp struct {
 }
 
 func NewJavaIdentifierApp() JavaIdentifierApp {
-	return *&JavaIdentifierApp{}
+	return JavaIdentifierApp{}
 }
 
 func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []domain.JIdentifier {

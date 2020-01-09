@@ -13,7 +13,7 @@ type Suggest struct {
 }
 
 func NewSuggest(clz JClassNode, pattern, reason string) Suggest {
-	return *&Suggest{
+	return Suggest{
 		File:    clz.Path,
 		Package: clz.Package,
 		Class:   clz.Class,

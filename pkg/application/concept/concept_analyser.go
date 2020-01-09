@@ -11,7 +11,7 @@ type ConceptAnalyser struct {
 }
 
 func NewConceptAnalyser() ConceptAnalyser {
-	return *&ConceptAnalyser{}
+	return ConceptAnalyser{}
 }
 
 func (c ConceptAnalyser) Analysis(clzs *[]domain.JClassNode) string_helper.PairList {

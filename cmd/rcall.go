@@ -26,9 +26,9 @@ var reverseCmd = &cobra.Command{
 	Short: "reverse call graph visualization",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		dependence := *&reverseConfig.DependencePath
-		className := *&reverseConfig.ClassName
-		remove := *&reverseConfig.RemovePackage
+		dependence := reverseConfig.DependencePath
+		className := reverseConfig.ClassName
+		remove := reverseConfig.RemovePackage
 
 		if className == "" {
 			log.Fatal("lost ClassName")
@@ -40,7 +40,7 @@ var reverseCmd = &cobra.Command{
 		_ = json.Unmarshal(file, &parsedDeps)
 
 		fmt.Fprintf(output,"start rcall class: %s\n", className)
-		content := analyser.Analysis(className, *&parsedDeps, WriteCallMap)
+		content := analyser.Analysis(className, parsedDeps, WriteCallMap)
 
 		if remove != "" {
 			content = strings.ReplaceAll(content, remove, "")

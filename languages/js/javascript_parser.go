@@ -519,7 +519,7 @@ var ruleNames = []string{
 	"program", "sourceElement", "statement", "block", "statementList", "importStatement",
 	"importFromBlock", "moduleItems", "importDefault", "importNamespace", "importFrom",
 	"aliasName", "exportStatement", "exportFromBlock", "declaration", "variableStatement",
-	"variableDeclarationList", "variableDeclaration", "emptyStatement", "expressionStatement",
+	"variableDeclarationList", "variableDeclaration", "emptyStatement_", "expressionStatement",
 	"ifStatement", "iterationStatement", "varModifier", "continueStatement",
 	"breakStatement", "returnStatement", "yieldStatement", "withStatement",
 	"switchStatement", "caseBlock", "caseClauses", "caseClause", "defaultClause",
@@ -707,7 +707,7 @@ const (
 	JavaScriptParserRULE_variableStatement       = 15
 	JavaScriptParserRULE_variableDeclarationList = 16
 	JavaScriptParserRULE_variableDeclaration     = 17
-	JavaScriptParserRULE_emptyStatement          = 18
+	JavaScriptParserRULE_emptyStatement_         = 18
 	JavaScriptParserRULE_expressionStatement     = 19
 	JavaScriptParserRULE_ifStatement             = 20
 	JavaScriptParserRULE_iterationStatement      = 21
@@ -1064,14 +1064,14 @@ func (s *StatementContext) ExportStatement() IExportStatementContext {
 	return t.(IExportStatementContext)
 }
 
-func (s *StatementContext) EmptyStatement() IEmptyStatementContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IEmptyStatementContext)(nil)).Elem(), 0)
+func (s *StatementContext) EmptyStatement_() IEmptyStatement_Context {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IEmptyStatement_Context)(nil)).Elem(), 0)
 
 	if t == nil {
 		return nil
 	}
 
-	return t.(IEmptyStatementContext)
+	return t.(IEmptyStatement_Context)
 }
 
 func (s *StatementContext) ClassDeclaration() IClassDeclarationContext {
@@ -1299,7 +1299,7 @@ func (p *JavaScriptParser) Statement() (localctx IStatementContext) {
 		p.EnterOuterAlt(localctx, 5)
 		{
 			p.SetState(160)
-			p.EmptyStatement()
+			p.EmptyStatement_()
 		}
 
 	case 6:
@@ -3535,71 +3535,71 @@ func (p *JavaScriptParser) VariableDeclaration() (localctx IVariableDeclarationC
 	return localctx
 }
 
-// IEmptyStatementContext is an interface to support dynamic dispatch.
-type IEmptyStatementContext interface {
+// IEmptyStatement_Context is an interface to support dynamic dispatch.
+type IEmptyStatement_Context interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// IsEmptyStatementContext differentiates from other interfaces.
-	IsEmptyStatementContext()
+	// IsEmptyStatement_Context differentiates from other interfaces.
+	IsEmptyStatement_Context()
 }
 
-type EmptyStatementContext struct {
+type EmptyStatement_Context struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyEmptyStatementContext() *EmptyStatementContext {
-	var p = new(EmptyStatementContext)
+func NewEmptyEmptyStatement_Context() *EmptyStatement_Context {
+	var p = new(EmptyStatement_Context)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = JavaScriptParserRULE_emptyStatement
+	p.RuleIndex = JavaScriptParserRULE_emptyStatement_
 	return p
 }
 
-func (*EmptyStatementContext) IsEmptyStatementContext() {}
+func (*EmptyStatement_Context) IsEmptyStatement_Context() {}
 
-func NewEmptyStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *EmptyStatementContext {
-	var p = new(EmptyStatementContext)
+func NewEmptyStatement_Context(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *EmptyStatement_Context {
+	var p = new(EmptyStatement_Context)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = JavaScriptParserRULE_emptyStatement
+	p.RuleIndex = JavaScriptParserRULE_emptyStatement_
 
 	return p
 }
 
-func (s *EmptyStatementContext) GetParser() antlr.Parser { return s.parser }
+func (s *EmptyStatement_Context) GetParser() antlr.Parser { return s.parser }
 
-func (s *EmptyStatementContext) SemiColon() antlr.TerminalNode {
+func (s *EmptyStatement_Context) SemiColon() antlr.TerminalNode {
 	return s.GetToken(JavaScriptParserSemiColon, 0)
 }
 
-func (s *EmptyStatementContext) GetRuleContext() antlr.RuleContext {
+func (s *EmptyStatement_Context) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *EmptyStatementContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *EmptyStatement_Context) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *EmptyStatementContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *EmptyStatement_Context) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(JavaScriptParserListener); ok {
-		listenerT.EnterEmptyStatement(s)
+		listenerT.EnterEmptyStatement_(s)
 	}
 }
 
-func (s *EmptyStatementContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *EmptyStatement_Context) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(JavaScriptParserListener); ok {
-		listenerT.ExitEmptyStatement(s)
+		listenerT.ExitEmptyStatement_(s)
 	}
 }
 
-func (p *JavaScriptParser) EmptyStatement() (localctx IEmptyStatementContext) {
-	localctx = NewEmptyStatementContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 36, JavaScriptParserRULE_emptyStatement)
+func (p *JavaScriptParser) EmptyStatement_() (localctx IEmptyStatement_Context) {
+	localctx = NewEmptyStatement_Context(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 36, JavaScriptParserRULE_emptyStatement_)
 
 	defer func() {
 		p.ExitRule()
@@ -3727,8 +3727,8 @@ func (p *JavaScriptParser) ExpressionStatement() (localctx IExpressionStatementC
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(289)
 
-	if !(this.notOpenBraceAndNotFunction()) {
-		panic(antlr.NewFailedPredicateException(p, "this.notOpenBraceAndNotFunction()", ""))
+	if !(p.notOpenBraceAndNotFunction()) {
+		panic(antlr.NewFailedPredicateException(p, "p.notOpenBraceAndNotFunction()", ""))
 	}
 	{
 		p.SetState(290)
@@ -4609,8 +4609,8 @@ func (p *JavaScriptParser) IterationStatement() (localctx IIterationStatementCon
 		}
 		p.SetState(353)
 
-		if !(this.p("of")) {
-			panic(antlr.NewFailedPredicateException(p, "this.p(\"of\")", ""))
+		if !(p.p("of")) {
+			panic(antlr.NewFailedPredicateException(p, "p.p(\"of\")", ""))
 		}
 		{
 			p.SetState(354)
@@ -4844,8 +4844,8 @@ func (p *JavaScriptParser) ContinueStatement() (localctx IContinueStatementConte
 	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 28, p.GetParserRuleContext()) == 1 {
 		p.SetState(363)
 
-		if !(this.notLineTerminator()) {
-			panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+		if !(p.notLineTerminator()) {
+			panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 		}
 		{
 			p.SetState(364)
@@ -4968,8 +4968,8 @@ func (p *JavaScriptParser) BreakStatement() (localctx IBreakStatementContext) {
 	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 29, p.GetParserRuleContext()) == 1 {
 		p.SetState(370)
 
-		if !(this.notLineTerminator()) {
-			panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+		if !(p.notLineTerminator()) {
+			panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 		}
 		{
 			p.SetState(371)
@@ -5098,8 +5098,8 @@ func (p *JavaScriptParser) ReturnStatement() (localctx IReturnStatementContext) 
 	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 30, p.GetParserRuleContext()) == 1 {
 		p.SetState(377)
 
-		if !(this.notLineTerminator()) {
-			panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+		if !(p.notLineTerminator()) {
+			panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 		}
 		{
 			p.SetState(378)
@@ -5228,8 +5228,8 @@ func (p *JavaScriptParser) YieldStatement() (localctx IYieldStatementContext) {
 	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 31, p.GetParserRuleContext()) == 1 {
 		p.SetState(384)
 
-		if !(this.notLineTerminator()) {
-			panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+		if !(p.notLineTerminator()) {
+			panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 		}
 		{
 			p.SetState(385)
@@ -6276,8 +6276,8 @@ func (p *JavaScriptParser) ThrowStatement() (localctx IThrowStatementContext) {
 	}
 	p.SetState(435)
 
-	if !(this.notLineTerminator()) {
-		panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+	if !(p.notLineTerminator()) {
+		panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 	}
 	{
 		p.SetState(436)
@@ -7357,14 +7357,14 @@ func (s *ClassElementContext) Async(i int) antlr.TerminalNode {
 	return s.GetToken(JavaScriptParserAsync, i)
 }
 
-func (s *ClassElementContext) EmptyStatement() IEmptyStatementContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IEmptyStatementContext)(nil)).Elem(), 0)
+func (s *ClassElementContext) EmptyStatement_() IEmptyStatement_Context {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IEmptyStatement_Context)(nil)).Elem(), 0)
 
 	if t == nil {
 		return nil
 	}
 
-	return t.(IEmptyStatementContext)
+	return t.(IEmptyStatement_Context)
 }
 
 func (s *ClassElementContext) PropertyName() IPropertyNameContext {
@@ -7461,8 +7461,8 @@ func (p *JavaScriptParser) ClassElement() (localctx IClassElementContext) {
 				case 2:
 					p.SetState(499)
 
-					if !(this.n("static")) {
-						panic(antlr.NewFailedPredicateException(p, "this.n(\"static\")", ""))
+					if !(p.n("static")) {
+						panic(antlr.NewFailedPredicateException(p, "p.n(\"static\")", ""))
 					}
 					{
 						p.SetState(500)
@@ -7491,7 +7491,7 @@ func (p *JavaScriptParser) ClassElement() (localctx IClassElementContext) {
 		p.EnterOuterAlt(localctx, 2)
 		{
 			p.SetState(508)
-			p.EmptyStatement()
+			p.EmptyStatement_()
 		}
 
 	case 3:
@@ -13478,8 +13478,8 @@ func (p *JavaScriptParser) singleExpression(_p int) (localctx ISingleExpressionC
 				}
 				p.SetState(859)
 
-				if !(this.notLineTerminator()) {
-					panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+				if !(p.notLineTerminator()) {
+					panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 				}
 				{
 					p.SetState(860)
@@ -13496,8 +13496,8 @@ func (p *JavaScriptParser) singleExpression(_p int) (localctx ISingleExpressionC
 				}
 				p.SetState(862)
 
-				if !(this.notLineTerminator()) {
-					panic(antlr.NewFailedPredicateException(p, "this.notLineTerminator()", ""))
+				if !(p.notLineTerminator()) {
+					panic(antlr.NewFailedPredicateException(p, "p.notLineTerminator()", ""))
 				}
 				{
 					p.SetState(863)
@@ -15460,8 +15460,8 @@ func (p *JavaScriptParser) Getter() (localctx IGetterContext) {
 	}
 	p.SetState(944)
 
-	if !(this.p("get")) {
-		panic(antlr.NewFailedPredicateException(p, "this.p(\"get\")", ""))
+	if !(p.p("get")) {
+		panic(antlr.NewFailedPredicateException(p, "p.p(\"get\")", ""))
 	}
 	{
 		p.SetState(945)
@@ -15570,8 +15570,8 @@ func (p *JavaScriptParser) Setter() (localctx ISetterContext) {
 	}
 	p.SetState(948)
 
-	if !(this.p("set")) {
-		panic(antlr.NewFailedPredicateException(p, "this.p(\"set\")", ""))
+	if !(p.p("set")) {
+		panic(antlr.NewFailedPredicateException(p, "p.p(\"set\")", ""))
 	}
 	{
 		p.SetState(949)
@@ -15688,16 +15688,16 @@ func (p *JavaScriptParser) Eos() (localctx IEosContext) {
 		p.EnterOuterAlt(localctx, 3)
 		p.SetState(953)
 
-		if !(this.lineTerminatorAhead()) {
-			panic(antlr.NewFailedPredicateException(p, "this.lineTerminatorAhead()", ""))
+		if !(p.lineTerminatorAhead()) {
+			panic(antlr.NewFailedPredicateException(p, "p.lineTerminatorAhead()", ""))
 		}
 
 	case 4:
 		p.EnterOuterAlt(localctx, 4)
 		p.SetState(954)
 
-		if !(this.closeBrace()) {
-			panic(antlr.NewFailedPredicateException(p, "this.closeBrace()", ""))
+		if !(p.closeBrace()) {
+			panic(antlr.NewFailedPredicateException(p, "p.closeBrace()", ""))
 		}
 
 	}
@@ -15799,7 +15799,7 @@ func (p *JavaScriptParser) Sempred(localctx antlr.RuleContext, ruleIndex, predIn
 func (p *JavaScriptParser) ExpressionStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 0:
-		return this.notOpenBraceAndNotFunction()
+		return p.notOpenBraceAndNotFunction()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15809,7 +15809,7 @@ func (p *JavaScriptParser) ExpressionStatement_Sempred(localctx antlr.RuleContex
 func (p *JavaScriptParser) IterationStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 1:
-		return this.p("of")
+		return p.p("of")
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15819,7 +15819,7 @@ func (p *JavaScriptParser) IterationStatement_Sempred(localctx antlr.RuleContext
 func (p *JavaScriptParser) ContinueStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 2:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15829,7 +15829,7 @@ func (p *JavaScriptParser) ContinueStatement_Sempred(localctx antlr.RuleContext,
 func (p *JavaScriptParser) BreakStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 3:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15839,7 +15839,7 @@ func (p *JavaScriptParser) BreakStatement_Sempred(localctx antlr.RuleContext, pr
 func (p *JavaScriptParser) ReturnStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 4:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15849,7 +15849,7 @@ func (p *JavaScriptParser) ReturnStatement_Sempred(localctx antlr.RuleContext, p
 func (p *JavaScriptParser) YieldStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 5:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15859,7 +15859,7 @@ func (p *JavaScriptParser) YieldStatement_Sempred(localctx antlr.RuleContext, pr
 func (p *JavaScriptParser) ThrowStatement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 6:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15869,7 +15869,7 @@ func (p *JavaScriptParser) ThrowStatement_Sempred(localctx antlr.RuleContext, pr
 func (p *JavaScriptParser) ClassElement_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 7:
-		return this.n("static")
+		return p.n("static")
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15942,13 +15942,13 @@ func (p *JavaScriptParser) SingleExpression_Sempred(localctx antlr.RuleContext, 
 		return p.Precpred(p.GetParserRuleContext(), 39)
 
 	case 29:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	case 30:
 		return p.Precpred(p.GetParserRuleContext(), 38)
 
 	case 31:
-		return this.notLineTerminator()
+		return p.notLineTerminator()
 
 	case 32:
 		return p.Precpred(p.GetParserRuleContext(), 9)
@@ -15961,7 +15961,7 @@ func (p *JavaScriptParser) SingleExpression_Sempred(localctx antlr.RuleContext, 
 func (p *JavaScriptParser) Getter_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 33:
-		return this.p("get")
+		return p.p("get")
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15971,7 +15971,7 @@ func (p *JavaScriptParser) Getter_Sempred(localctx antlr.RuleContext, predIndex 
 func (p *JavaScriptParser) Setter_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 34:
-		return this.p("set")
+		return p.p("set")
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -15981,10 +15981,10 @@ func (p *JavaScriptParser) Setter_Sempred(localctx antlr.RuleContext, predIndex 
 func (p *JavaScriptParser) Eos_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 35:
-		return this.lineTerminatorAhead()
+		return p.lineTerminatorAhead()
 
 	case 36:
-		return this.closeBrace()
+		return p.closeBrace()
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))

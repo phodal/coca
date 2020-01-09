@@ -139,11 +139,11 @@ func (s *BaseJavaScriptParserListener) EnterVariableDeclaration(ctx *VariableDec
 // ExitVariableDeclaration is called when production variableDeclaration is exited.
 func (s *BaseJavaScriptParserListener) ExitVariableDeclaration(ctx *VariableDeclarationContext) {}
 
-// EnterEmptyStatement is called when production emptyStatement is entered.
-func (s *BaseJavaScriptParserListener) EnterEmptyStatement(ctx *EmptyStatementContext) {}
+// EnterEmptyStatement_ is called when production emptyStatement_ is entered.
+func (s *BaseJavaScriptParserListener) EnterEmptyStatement_(ctx *EmptyStatement_Context) {}
 
-// ExitEmptyStatement is called when production emptyStatement is exited.
-func (s *BaseJavaScriptParserListener) ExitEmptyStatement(ctx *EmptyStatementContext) {}
+// ExitEmptyStatement_ is called when production emptyStatement_ is exited.
+func (s *BaseJavaScriptParserListener) ExitEmptyStatement_(ctx *EmptyStatement_Context) {}
 
 // EnterExpressionStatement is called when production expressionStatement is entered.
 func (s *BaseJavaScriptParserListener) EnterExpressionStatement(ctx *ExpressionStatementContext) {}

@@ -65,8 +65,8 @@ type JavaScriptParserListener interface {
 	// EnterVariableDeclaration is called when entering the variableDeclaration production.
 	EnterVariableDeclaration(c *VariableDeclarationContext)
 
-	// EnterEmptyStatement is called when entering the emptyStatement production.
-	EnterEmptyStatement(c *EmptyStatementContext)
+	// EnterEmptyStatement_ is called when entering the emptyStatement_ production.
+	EnterEmptyStatement_(c *EmptyStatement_Context)
 
 	// EnterExpressionStatement is called when entering the expressionStatement production.
 	EnterExpressionStatement(c *ExpressionStatementContext)
@@ -455,8 +455,8 @@ type JavaScriptParserListener interface {
 	// ExitVariableDeclaration is called when exiting the variableDeclaration production.
 	ExitVariableDeclaration(c *VariableDeclarationContext)
 
-	// ExitEmptyStatement is called when exiting the emptyStatement production.
-	ExitEmptyStatement(c *EmptyStatementContext)
+	// ExitEmptyStatement_ is called when exiting the emptyStatement_ production.
+	ExitEmptyStatement_(c *EmptyStatement_Context)
 
 	// ExitExpressionStatement is called when exiting the expressionStatement production.
 	ExitExpressionStatement(c *ExpressionStatementContext)

@@ -34,17 +34,17 @@ channels { ERROR }
 
 options { superClass=JavaScriptBaseLexer; }
 
-HashBangLine:                   { this.IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
+HashBangLine:                   { p.IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
 MultiLineComment:               '/*' .*? '*/'             -> channel(HIDDEN);
 SingleLineComment:              '//' ~[\r\n\u2028\u2029]* -> channel(HIDDEN);
-RegularExpressionLiteral:       '/' RegularExpressionFirstChar RegularExpressionChar* {this.IsRegexPossible()}? '/' IdentifierPart*;
+RegularExpressionLiteral:       '/' RegularExpressionFirstChar RegularExpressionChar* {p.IsRegexPossible()}? '/' IdentifierPart*;
 
 OpenBracket:                    '[';
 CloseBracket:                   ']';
 OpenParen:                      '(';
 CloseParen:                     ')';
-OpenBrace:                      '{' {this.ProcessOpenBrace();};
-CloseBrace:                     '}' {this.ProcessCloseBrace();};
+OpenBrace:                      '{' {l.ProcessOpenBrace();};
+CloseBrace:                     '}' {l.ProcessCloseBrace();};
 SemiColon:                      ';';
 Comma:                          ',';
 Assign:                         '=';
@@ -113,7 +113,7 @@ DecimalLiteral:                 DecimalIntegerLiteral '.' [0-9] [0-9_]* Exponent
 /// Numeric Literals
 
 HexIntegerLiteral:              '0' [xX] [0-9a-fA-F] HexDigit*;
-OctalIntegerLiteral:            '0' [0-7]+ {!this.IsStrictMode()}?;
+OctalIntegerLiteral:            '0' [0-7]+ {!p.IsStrictMode()}?;
 OctalIntegerLiteral2:           '0' [oO] [0-7] [_0-7]*;
 BinaryIntegerLiteral:           '0' [bB] [01] [_01]*;
 
@@ -169,22 +169,22 @@ Await:                          'await';
 /// The following tokens are also considered to be FutureReservedWords
 /// when parsing strict mode
 
-Implements:                     'implements' {this.IsStrictMode()}?;
-Let:                            'let' {this.IsStrictMode()}?;
-Private:                        'private' {this.IsStrictMode()}?;
-Public:                         'public' {this.IsStrictMode()}?;
-Interface:                      'interface' {this.IsStrictMode()}?;
-Package:                        'package' {this.IsStrictMode()}?;
-Protected:                      'protected' {this.IsStrictMode()}?;
-Static:                         'static' {this.IsStrictMode()}?;
-Yield:                          'yield' {this.IsStrictMode()}?;
+Implements:                     'implements' {p.IsStrictMode()}?;
+Let:                            'let' {p.IsStrictMode()}?;
+Private:                        'private' {p.IsStrictMode()}?;
+Public:                         'public' {p.IsStrictMode()}?;
+Interface:                      'interface' {p.IsStrictMode()}?;
+Package:                        'package' {p.IsStrictMode()}?;
+Protected:                      'protected' {p.IsStrictMode()}?;
+Static:                         'static' {p.IsStrictMode()}?;
+Yield:                          'yield' {p.IsStrictMode()}?;
 
 /// Identifier Names and Identifiers
 
 Identifier:                     IdentifierStart IdentifierPart*;
 /// String Literals
 StringLiteral:                 ('"' DoubleStringCharacter* '"'
-             |                  '\'' SingleStringCharacter* '\'') {this.ProcessStringLiteral();}
+             |                  '\'' SingleStringCharacter* '\'') {l.ProcessStringLiteral();}
              ;
 
 // TODO: `${`tmp`}`

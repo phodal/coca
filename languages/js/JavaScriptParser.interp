@@ -269,7 +269,7 @@ declaration
 variableStatement
 variableDeclarationList
 variableDeclaration
-emptyStatement
+emptyStatement_
 expressionStatement
 ifStatement
 iterationStatement

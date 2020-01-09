@@ -8,7 +8,7 @@
  * Copyright (c) 2019 by Student Main (contributor -> ES2020)
  *
  * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
+ * obtaining a copy of p.software and associated documentation
  * files (the "Software"), to deal in the Software without
  * restriction, including without limitation the rights to use,
  * copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -16,7 +16,7 @@
  * Software is furnished to do so, subject to the following
  * conditions:
  *
- * The above copyright notice and this permission notice shall be
+ * The above copyright notice and p.permission notice shall be
  * included in all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -48,7 +48,7 @@ statement
     | variableStatement
     | importStatement
     | exportStatement
-    | emptyStatement
+    | emptyStatement_
     | classDeclaration
     | expressionStatement
     | ifStatement
@@ -131,12 +131,12 @@ variableDeclaration
     : assignable ('=' singleExpression)? // ECMAScript 6: Array & Object Matching
     ;
 
-emptyStatement
+emptyStatement_
     : SemiColon
     ;
 
 expressionStatement
-    : {this.notOpenBraceAndNotFunction()}? expressionSequence eos
+    : {p.notOpenBraceAndNotFunction()}? expressionSequence eos
     ;
 
 ifStatement
@@ -149,8 +149,8 @@ iterationStatement
     | While '(' expressionSequence ')' statement                                                                        # WhileStatement
     | For '(' (expressionSequence | variableStatement)? ';' expressionSequence? ';' expressionSequence? ')' statement   # ForStatement
     | For '(' (singleExpression | variableStatement) In expressionSequence ')' statement                                # ForInStatement
-    // strange, 'of' is an identifier. and this.p("of") not work in sometime.
-    | For Await? '(' (singleExpression | variableStatement) Identifier{this.p("of")}? expressionSequence ')' statement  # ForOfStatement
+    // strange, 'of' is an identifier. and p.p("of") not work in sometime.
+    | For Await? '(' (singleExpression | variableStatement) Identifier{p.p("of")}? expressionSequence ')' statement  # ForOfStatement
     ;
 
 varModifier  // let, const - ECMAScript 6
@@ -160,19 +160,19 @@ varModifier  // let, const - ECMAScript 6
     ;
 
 continueStatement
-    : Continue ({this.notLineTerminator()}? Identifier)? eos
+    : Continue ({p.notLineTerminator()}? Identifier)? eos
     ;
 
 breakStatement
-    : Break ({this.notLineTerminator()}? Identifier)? eos
+    : Break ({p.notLineTerminator()}? Identifier)? eos
     ;
 
 returnStatement
-    : Return ({this.notLineTerminator()}? expressionSequence)? eos
+    : Return ({p.notLineTerminator()}? expressionSequence)? eos
     ;
 
 yieldStatement
-    : Yield ({this.notLineTerminator()}? expressionSequence)? eos
+    : Yield ({p.notLineTerminator()}? expressionSequence)? eos
     ;
 
 withStatement
@@ -204,7 +204,7 @@ labelledStatement
     ;
 
 throwStatement
-    : Throw {this.notLineTerminator()}? expressionSequence eos
+    : Throw {p.notLineTerminator()}? expressionSequence eos
     ;
 
 tryStatement
@@ -236,8 +236,8 @@ classTail
     ;
 
 classElement
-    : (Static | {this.n("static")}? Identifier | Async)* methodDefinition
-    | emptyStatement
+    : (Static | {p.n("static")}? Identifier | Async)* methodDefinition
+    | emptyStatement_
     | '#'? propertyName '=' singleExpression
     ;
 
@@ -320,8 +320,8 @@ singleExpression
     | singleExpression arguments                                            # ArgumentsExpression
     | New singleExpression arguments?                                       # NewExpression
     | New '.' Identifier                                                    # MetaExpression // new.target
-    | singleExpression {this.notLineTerminator()}? '++'                     # PostIncrementExpression
-    | singleExpression {this.notLineTerminator()}? '--'                     # PostDecreaseExpression
+    | singleExpression {p.notLineTerminator()}? '++'                     # PostIncrementExpression
+    | singleExpression {p.notLineTerminator()}? '--'                     # PostDecreaseExpression
     | Delete singleExpression                                               # DeleteExpression
     | Void singleExpression                                                 # VoidExpression
     | Typeof singleExpression                                               # TypeofExpression
@@ -485,16 +485,16 @@ keyword
     ;
 
 getter
-    : Identifier {this.p("get")}? propertyName
+    : Identifier {p.p("get")}? propertyName
     ;
 
 setter
-    : Identifier {this.p("set")}? propertyName
+    : Identifier {p.p("set")}? propertyName
     ;
 
 eos
     : SemiColon
     | EOF
-    | {this.lineTerminatorAhead()}?
-    | {this.closeBrace()}?
+    | {p.lineTerminatorAhead()}?
+    | {p.closeBrace()}?
     ;

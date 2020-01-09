@@ -44,7 +44,7 @@ func (d *DepAnalysisApp) AnalysisPath(path string, nodes []domain.JClassNode) []
 
 	var needRemoveMap = make(map[int]int)
 	for depIndex, dep := range mavenDeps {
-		for key, _ := range importMap {
+		for key := range importMap {
 			if strings.Contains(key, dep.GroupId) {
 				needRemoveMap[depIndex] = depIndex
 				continue

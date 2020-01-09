@@ -35,6 +35,6 @@ func Refactoring(parsedDeps []JClassNode) []string {
 		}
 	}
 
-	sort.Sort(sort.StringSlice(excludePackage))
+	sort.Strings(excludePackage)
 	return excludePackage
 }

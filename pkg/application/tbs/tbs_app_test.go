@@ -141,9 +141,8 @@ func buildTbsResult(codePath string) []TestBadSmell {
 
 func BuildTestAnalysisResultsByPath(codePath string) (map[string]domain.JIdentifier, []domain.JClassNode) {
 	files := cocafile.GetJavaTestFiles(codePath)
-	var identifiers []domain.JIdentifier
 
-	identifiers = cmd_util.LoadTestIdentify(files)
+	identifiers := cmd_util.LoadTestIdentify(files)
 	identifiersMap := domain.BuildIdentifierMap(identifiers)
 
 	var classes []string = nil

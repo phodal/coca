@@ -85,7 +85,7 @@ func (s *JavaRefactorListener) EnterTypeType(ctx *TypeTypeContext) {
 
 func (s *JavaRefactorListener) EnterClassOrInterfaceType(ctx *ClassOrInterfaceTypeContext) {
 	identifiers := ctx.AllIDENTIFIER()
-	for index, _ := range identifiers {
+	for index := range identifiers {
 		context := ctx.IDENTIFIER(index)
 		name := context.GetText()
 		startLine := ctx.GetStart().GetLine()
@@ -108,7 +108,7 @@ func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
 
 func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContext) {
 	identifiers := ctx.AllIDENTIFIER()
-	for index, _ := range identifiers {
+	for index := range identifiers {
 		context := ctx.IDENTIFIER(index)
 		name := context.GetText()
 		startLine := ctx.GetStart().GetLine()
@@ -153,7 +153,7 @@ func (s *JavaRefactorListener) EnterStatement(ctx *StatementContext) {
 
 func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
 	identifiers := ctx.AllIDENTIFIER()
-	for index, _ := range identifiers {
+	for index := range identifiers {
 		context := ctx.IDENTIFIER(index)
 		name := context.GetText()
 		startLine := ctx.GetStart().GetLine()

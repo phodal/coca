@@ -34,9 +34,7 @@ func UpdateMessageForChange(changedFile string) (string, string, string) {
 		var oldLastChanged = changed[4]
 		// TODO: support for Windows rename
 		if changed[2] == "" {
-			if strings.HasPrefix(oldLastChanged, "/") {
-				oldLastChanged = oldLastChanged[1:]
-			}
+			oldLastChanged = strings.TrimPrefix(oldLastChanged, "/")
 		}
 
 		oldFileName = changed[1] + changed[2] + oldLastChanged

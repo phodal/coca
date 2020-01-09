@@ -28,9 +28,8 @@ var tbsCmd = &cobra.Command{
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		files := cocafile.GetJavaTestFiles(tbsCmdConfig.Path)
-		var identifiers []domain.JIdentifier
 
-		identifiers = cmd_util.LoadTestIdentify(files)
+		identifiers := cmd_util.LoadTestIdentify(files)
 		identifiersMap := domain.BuildIdentifierMap(identifiers)
 
 		var classes []string = nil

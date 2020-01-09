@@ -296,9 +296,7 @@ func (a *Apriori) generateRelationRecords(relationRecords chan RelationRecord, s
 func (a *Apriori) createNextCandidates(prevCandidates [][]string, length int) [][]string {
 	var items []string
 	for _, candidate := range prevCandidates {
-		for _, item := range candidate {
-			items = append(items, item)
-		}
+		items = append(items, candidate...)
 	}
 	sort.Strings(items)
 	items = a.uniqueItems(items)

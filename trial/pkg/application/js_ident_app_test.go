@@ -9,7 +9,8 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(JavaScriptApiApp)
-	app.Analysis("console.log('hello, world')");
+	results := app.Analysis("console.log('hello, world')");
 
-	g.Expect(true).To(Equal(true))
+	g.Expect(len(results.MethodCalls)).To(Equal(1))
+	g.Expect(results.MethodCalls[0].Class).To(Equal("console"))
 }

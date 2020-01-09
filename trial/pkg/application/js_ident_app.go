@@ -1,9 +1,10 @@
 package application
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/js"
+	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/trial/pkg/ast"
 )
 
 func processStream(is antlr.CharStream) *parser.JavaScriptParser {
@@ -21,9 +22,12 @@ func ProcessJsString(code string) *parser.JavaScriptParser {
 type JavaScriptApiApp struct {
 }
 
-func (j *JavaScriptApiApp) Analysis(code string) {
+func (j *JavaScriptApiApp) Analysis(code string) domain.JClassNode {
 	jsParser := ProcessJsString(code)
-	program := jsParser.Program()
+	context := jsParser.Program()
 
-	fmt.Println(program)
+	listener := ast.NewJavaScriptIdentListener()
+	antlr.NewParseTreeWalker().Walk(listener, context)
+
+	return listener.GetNodeInfo()
 }

@@ -1,9 +1,9 @@
 language: go
 
 go:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then 1.12.x         ; fi
+#  - 1.12.x
   - 1.13.x
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then tip          ; fi
+#  - tip
 
 os:
   - linux

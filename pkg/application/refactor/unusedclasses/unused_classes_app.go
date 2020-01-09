@@ -1,4 +1,4 @@
-package unused_classes
+package unusedclasses
 
 import (
 	. "github.com/phodal/coca/pkg/domain"

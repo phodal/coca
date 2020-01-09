@@ -8,9 +8,9 @@ import (
 
 func AnalysisMaven(xmlPath string) []domain.JDependency {
 	xmlFile, _ := os.Open(xmlPath)
-	parseXml := xmlparse.ParseXml(xmlFile)
+	parseXml := xmlparse.ParseXML(xmlFile)
 	for _, element := range parseXml.Elements {
-		val := element.Val.(xmlparse.XmlNode)
+		val := element.Val.(xmlparse.XMLNode)
 		if val.Name == "dependencies" {
 			return BuildDeps(val)
 		}
@@ -18,14 +18,14 @@ func AnalysisMaven(xmlPath string) []domain.JDependency {
 	return nil
 }
 
-func BuildDeps(val xmlparse.XmlNode) []domain.JDependency {
+func BuildDeps(val xmlparse.XMLNode) []domain.JDependency {
 	var deps []domain.JDependency = nil
 	for _, depElement := range val.Elements {
-		depNode := depElement.Val.(xmlparse.XmlNode)
+		depNode := depElement.Val.(xmlparse.XMLNode)
 		dependency := domain.NewJDependency("", "")
 
 		for _, depValue := range depNode.Elements {
-			node := depValue.Val.(xmlparse.XmlNode)
+			node := depValue.Val.(xmlparse.XMLNode)
 			if node.Name == "groupId" {
 				for _, textNode := range node.Elements {
 					dependency.GroupId = textNode.Val.(string)

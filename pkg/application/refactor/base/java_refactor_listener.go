@@ -41,7 +41,6 @@ func (s *JavaRefactorListener) EnterClassDeclaration(ctx *ClassDeclarationContex
 	node.Name = ctx.IDENTIFIER().GetText()
 }
 
-// throws
 func (s *JavaRefactorListener) EnterQualifiedNameList(ctx *QualifiedNameListContext) {
 	for _, qualified := range ctx.AllQualifiedName() {
 		startLine := ctx.GetStart().GetLine()

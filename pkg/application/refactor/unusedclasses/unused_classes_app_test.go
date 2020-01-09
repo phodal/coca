@@ -1,4 +1,4 @@
-package unused_classes
+package unusedclasses
 
 import (
 	"encoding/json"

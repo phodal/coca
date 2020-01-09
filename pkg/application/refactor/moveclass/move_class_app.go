@@ -1,4 +1,4 @@
-package move_class
+package moveclass
 
 import (
 	"bufio"

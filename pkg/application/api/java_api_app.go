@@ -10,12 +10,12 @@ import (
 	"path/filepath"
 )
 
-var allApis []domain.RestApi
+var allApis []domain.RestAPI
 
 type JavaApiApp struct {
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier, diMap map[string]string) []domain.RestApi {
+func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode, identifiersMap map[string]domain.JIdentifier, diMap map[string]string) []domain.RestAPI {
 	files := cocafile.GetJavaFiles(codeDir)
 	allApis = nil
 	for index := range files {
@@ -27,7 +27,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []domain.JClassNode
 		parser := ast.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
-		listener := api.NewJavaApiListener(identifiersMap, diMap)
+		listener := api.NewJavaAPIListener(identifiersMap, diMap)
 		listener.AppendClasses(parsedDeps)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

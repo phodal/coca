@@ -22,6 +22,8 @@ clean:
 run:
 	$(GOBUILD) -o $(BINARY_DIR) -v ./...
 	./$(BINARY_DIR)
+lint:
+	golint ./pkg/...
 
 # Cross compilation
 build-wasm:

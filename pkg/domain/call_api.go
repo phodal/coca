@@ -2,15 +2,15 @@ package domain
 
 import "sort"
 
-type CallApi struct {
-	HttpMethod string
-	Uri        string
+type CallAPI struct {
+	HTTPMethod string
+	URI        string
 	Caller     string
 	Size       int
 }
 
-func SortApi(apis []CallApi) {
-	sort.Slice(apis, func(i, j int) bool {
-		return apis[i].Size < apis[j].Size
+func SortAPIs(callAPIs []CallAPI) {
+	sort.Slice(callAPIs, func(i, j int) bool {
+		return callAPIs[i].Size < callAPIs[j].Size
 	})
 }

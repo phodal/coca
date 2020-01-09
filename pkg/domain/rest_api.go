@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-type RestApi struct {
+type RestAPI struct {
 	Uri              string
 	HttpMethod       string
 	MethodName       string
@@ -15,12 +15,12 @@ type RestApi struct {
 	ClassName        string
 }
 
-func (r *RestApi) BuildFullMethodPath() string {
+func (r *RestAPI) BuildFullMethodPath() string {
 	return r.PackageName + "." + r.ClassName + "." + r.MethodName
 }
 
-func FilterApiByPrefix(apiPrefix string, apis []RestApi, ) []RestApi {
-	var restFieldsApi []RestApi
+func FilterApiByPrefix(apiPrefix string, apis []RestAPI, ) []RestAPI {
+	var restFieldsApi []RestAPI
 	if apiPrefix != "" {
 		for _, api := range apis {
 			if strings.HasPrefix(api.Uri, apiPrefix) {

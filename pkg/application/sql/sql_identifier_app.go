@@ -19,7 +19,7 @@ func NewSqlIdentifierApp() SqlIdentifierApp {
 	return *&SqlIdentifierApp{}
 }
 
-func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SqlNode {
+func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SQLNode {
 	xmlFiles := (*SqlIdentifierApp)(nil).xmlFiles(codeDir)
 	for _, xmlFile := range xmlFiles {
 		xmlFile, err := os.Open(xmlFile)
@@ -27,7 +27,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SqlNode {
 			fmt.Println(err)
 		}
 
-		parsedXml := xmlparse.ParseXml(xmlFile)
+		parsedXml := xmlparse.ParseXML(xmlFile)
 		for _, attr := range parsedXml.Attrs {
 			if strings.Contains(attr.Name.Local, "namespace") {
 				fmt.Println(attr.Value)
@@ -35,7 +35,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SqlNode {
 		}
 	}
 
-	var infos []sql.SqlNode
+	var infos []sql.SQLNode
 	files := (*SqlIdentifierApp)(nil).sqlFiles(codeDir)
 	for index := range files {
 		file := files[index]

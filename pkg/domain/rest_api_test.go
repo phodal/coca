@@ -7,9 +7,9 @@ import (
 
 func Test_FilterRestApi(t *testing.T) {
 	g := NewGomegaWithT(t)
-	var apis []RestApi
-	blogApi := &RestApi{"/blog", "", "", "", "", nil, "", "",}
-	homeApi := &RestApi{"/home", "", "", "", "", nil, "", "",}
+	var apis []RestAPI
+	blogApi := &RestAPI{"/blog", "", "", "", "", nil, "", "",}
+	homeApi := &RestAPI{"/home", "", "", "", "", nil, "", "",}
 	apis = append(apis, *blogApi)
 	apis = append(apis, *homeApi)
 

@@ -55,9 +55,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JClassNode, diMap map[string]string) (string, []domain.CallApi) {
+func (c CallGraph) AnalysisByFiles(restApis []domain.RestAPI, deps []domain.JClassNode, diMap map[string]string) (string, []domain.CallAPI) {
 	methodMap := BuildMethodMap(deps)
-	var apiCallSCounts []domain.CallApi
+	var apiCallSCounts []domain.CallAPI
 
 	results := "digraph G { \n"
 
@@ -69,10 +69,10 @@ func (c CallGraph) AnalysisByFiles(restApis []domain.RestApi, deps []domain.JCla
 		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
-		count := &domain.CallApi{
-			HttpMethod: restApi.HttpMethod,
+		count := &domain.CallAPI{
+			HTTPMethod: restApi.HttpMethod,
 			Caller:     caller,
-			Uri:        restApi.Uri,
+			URI:        restApi.Uri,
 			Size:       len(strings.Split(apiCallChain, " -> ")),
 		}
 		apiCallSCounts = append(apiCallSCounts, *count)

@@ -5,24 +5,24 @@ import (
 	"github.com/phodal/coca/languages/sql"
 )
 
-type SqlIdentifierListener struct {
+type SQLIdentifierListener struct {
 	parser.BaseSqlListener
 }
 
-type SqlNode struct {
+type SQLNode struct {
 }
 
-var sqlNode SqlNode
+var sqlNode SQLNode
 
 func init() {
-	sqlNode = *&SqlNode{}
+	sqlNode = SQLNode{}
 }
 
-func NewSqlIdentifierListener() *SqlIdentifierListener {
-	return &SqlIdentifierListener{}
+func NewSqlIdentifierListener() *SQLIdentifierListener {
+	return &SQLIdentifierListener{}
 }
 
-func (s *SqlIdentifierListener) EnterSelect_core(ctx *parser.Select_coreContext) {
+func (s *SQLIdentifierListener) EnterSelect_core(ctx *parser.Select_coreContext) {
 	columns := ctx.AllResult_column()
 	for _, col := range columns {
 		column := col.(*parser.Result_columnContext)
@@ -42,6 +42,6 @@ func (s *SqlIdentifierListener) EnterSelect_core(ctx *parser.Select_coreContext)
 	}
 }
 
-func (s *SqlIdentifierListener) GetNodeInfo() SqlNode {
+func (s *SQLIdentifierListener) GetNodeInfo() SQLNode {
 	return sqlNode
 }

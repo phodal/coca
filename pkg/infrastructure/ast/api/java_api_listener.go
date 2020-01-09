@@ -16,8 +16,8 @@ var hasEnterRestController = false
 var baseApiUrl string
 var localVars = make(map[string]string)
 
-var currentRestApi models.RestApi
-var restApis []models.RestApi
+var currentRestAPI models.RestAPI
+var restAPIs []models.RestAPI
 var currentClz string
 var currentPkg string
 
@@ -25,36 +25,36 @@ var identMap map[string]models.JIdentifier
 var imports []string
 var currentImplements = ""
 
-func NewJavaApiListener(jIdentMap map[string]models.JIdentifier, diMap map[string]string) *JavaApiListener {
+func NewJavaAPIListener(jIdentMap map[string]models.JIdentifier, diMap map[string]string) *JavaAPIListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""
 	currentImplements = ""
 
 	imports = nil
-	restApis = nil
+	restAPIs = nil
 
 	identMap = jIdentMap
 
 	params := make(map[string]string)
-	currentRestApi = models.RestApi{MethodParams: params}
-	return &JavaApiListener{}
+	currentRestAPI = models.RestAPI{MethodParams: params}
+	return &JavaAPIListener{}
 }
 
-type JavaApiListener struct {
+type JavaAPIListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaApiListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
+func (s *JavaAPIListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
 	imports = append(imports, importText)
 }
 
-func (s *JavaApiListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
+func (s *JavaAPIListener) EnterPackageDeclaration(ctx *parser.PackageDeclarationContext) {
 	currentPkg = ctx.QualifiedName().GetText()
 }
 
-func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+func (s *JavaAPIListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
@@ -65,11 +65,11 @@ func (s *JavaApiListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCont
 	}
 }
 
-func (s *JavaApiListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
+func (s *JavaAPIListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = false
 }
 
-func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+func (s *JavaAPIListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "RestController" || annotationName == "Controller" {
 		isSpringRestController = true
@@ -83,8 +83,8 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		buildBaseApiUrlString(annotationName, ctx)
 	}
 
-	notApi := annotationName == "RequestMapping" || annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping"
-	if !notApi {
+	notAPI := annotationName == "RequestMapping" || annotationName == "GetMapping" || annotationName == "PutMapping" || annotationName == "PostMapping" || annotationName == "DeleteMapping"
+	if !notAPI {
 		return
 	}
 
@@ -98,7 +98,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestApi = models.RestApi{Uri: uriRemoveQuote}
+	currentRestAPI = models.RestAPI{Uri: uriRemoveQuote}
 	if annotationName != "RequestMapping" {
 		if hasEnterClass {
 			addApiMethod(annotationName)
@@ -116,7 +116,7 @@ func (s *JavaApiListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 			}
 			if pair.IDENTIFIER().GetText() == "value" {
 				text := pair.ElementValue().GetText()
-				currentRestApi.Uri = baseApiUrl + text[1:len(text)-1]
+				currentRestAPI.Uri = baseApiUrl + text[1:len(text)-1]
 			}
 		}
 	}
@@ -149,32 +149,32 @@ func addApiMethod(annotationName string) {
 		"GetMapping",
 		"RequestMethod.GET",
 		"GET":
-		currentRestApi.HttpMethod = "GET"
+		currentRestAPI.HttpMethod = "GET"
 
 	case
 		"PutMapping",
 		"RequestMethod.PUT",
 		"PUT":
-		currentRestApi.HttpMethod = "PUT"
+		currentRestAPI.HttpMethod = "PUT"
 
 	case
 		"PostMapping",
 		"RequestMethod.POST",
 		"POST":
-		currentRestApi.HttpMethod = "POST"
+		currentRestAPI.HttpMethod = "POST"
 
 	case
 		"DeleteMapping",
 		"RequestMethod.DELETE",
 		"DELETE":
 
-		currentRestApi.HttpMethod = "DELETE"
+		currentRestAPI.HttpMethod = "DELETE"
 	}
 }
 
 var requestBodyClass string
 
-func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
+func (s *JavaAPIListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	methodName := ctx.IDENTIFIER().GetText()
 
 	if currentImplements != "" {
@@ -188,14 +188,14 @@ func (s *JavaApiListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationCo
 			return
 		}
 
-		currentRestApi.PackageName = currentPkg
-		currentRestApi.ClassName = currentClz
-		currentRestApi.MethodName = methodName
+		currentRestAPI.PackageName = currentPkg
+		currentRestAPI.ClassName = currentClz
+		currentRestAPI.MethodName = methodName
 		if ctx.FormalParameters().GetText() == "()" {
-			currentRestApi.RequestBodyClass = requestBodyClass
+			currentRestAPI.RequestBodyClass = requestBodyClass
 			hasEnterRestController = false
 			requestBodyClass = ""
-			restApis = append(restApis, currentRestApi)
+			restAPIs = append(restAPIs, currentRestAPI)
 		} else {
 			buildRestApiWithParameters(ctx)
 		}
@@ -223,11 +223,11 @@ func buildApiForInterfaceAnnotation(methodName string) bool {
 			if method.Name == methodName {
 				for _, annotation := range method.Annotations {
 					if annotation.QualifiedName == "ServiceMethod" {
-						currentRestApi.PackageName = currentPkg
-						currentRestApi.ClassName = currentClz
-						currentRestApi.MethodName = methodName
+						currentRestAPI.PackageName = currentPkg
+						currentRestAPI.ClassName = currentClz
+						currentRestAPI.MethodName = methodName
 
-						restApis = append(restApis, currentRestApi)
+						restAPIs = append(restAPIs, currentRestAPI)
 						return true
 					}
 				}
@@ -277,13 +277,13 @@ func buildRestApiWithParameters(ctx *parser.MethodDeclarationContext) {
 
 		localVars[paramValue] = paramType
 	}
-	currentRestApi.RequestBodyClass = requestBodyClass
+	currentRestAPI.RequestBodyClass = requestBodyClass
 
 	buildMethodParameters(requestBodyClass)
 
 	hasEnterRestController = false
 	requestBodyClass = ""
-	restApis = append(restApis, currentRestApi)
+	restAPIs = append(restAPIs, currentRestAPI)
 }
 
 func buildMethodParameters(requestBodyClass string) {
@@ -296,13 +296,13 @@ func buildMethodParameters(requestBodyClass string) {
 		}
 	}
 
-	currentRestApi.MethodParams = params
+	currentRestAPI.MethodParams = params
 }
 
-func (s *JavaApiListener) AppendClasses(classes []models.JClassNode) {
+func (s *JavaAPIListener) AppendClasses(classes []models.JClassNode) {
 	jClassNodes = classes
 }
 
-func (s *JavaApiListener) GetClassApis() []models.RestApi {
-	return restApis
+func (s *JavaAPIListener) GetClassApis() []models.RestAPI {
+	return restAPIs
 }

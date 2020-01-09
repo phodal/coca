@@ -28,7 +28,7 @@ type ApiCmdConfig struct {
 
 var (
 	apiCmdConfig ApiCmdConfig
-	restApis     []domain.RestApi
+	restApis     []domain.RestAPI
 
 	identifiers    = cmd_util.LoadIdentify(apiCmdConfig.DependencePath)
 	identifiersMap = domain.BuildIdentifierMap(identifiers)
@@ -51,7 +51,7 @@ var apiCmd = &cobra.Command{
 
 		_ = json.Unmarshal(depFile, &parsedDeps)
 
-		if *&apiCmdConfig.ForceUpdate {
+		if apiCmdConfig.ForceUpdate {
 			forceUpdateApi()
 		} else {
 			apiContent := cmd_util.ReadCocaFile("apis.json")
@@ -63,22 +63,22 @@ var apiCmd = &cobra.Command{
 
 		parsedDeps := cmd_util.GetDepsFromJson(depPath)
 
-		restFieldsApi := domain.FilterApiByPrefix(apiPrefix, restApis)
+		filterAPIs := domain.FilterApiByPrefix(apiPrefix, restApis)
 
 		analyser := call.NewCallGraph()
-		dotContent, counts := analyser.AnalysisByFiles(restFieldsApi, parsedDeps, diMap)
+		dotContent, counts := analyser.AnalysisByFiles(filterAPIs, parsedDeps, diMap)
 
-		if *&apiCmdConfig.Sort {
-			domain.SortApi(counts)
+		if apiCmdConfig.Sort {
+			domain.SortAPIs(counts)
 		}
 
 		if apiCmdConfig.ShowCount {
 			table := tablewriter.NewWriter(output)
 
-			table.SetHeader([]string{"Size", "Method", "Uri", "Caller"})
+			table.SetHeader([]string{"Size", "Method", "URI", "Caller"})
 
 			for _, v := range counts {
-				table.Append([]string{strconv.Itoa(v.Size), v.HttpMethod, v.Uri, replacePackage(v.Caller)})
+				table.Append([]string{strconv.Itoa(v.Size), v.HTTPMethod, v.URI, replacePackage(v.Caller)})
 			}
 			table.Render()
 		}

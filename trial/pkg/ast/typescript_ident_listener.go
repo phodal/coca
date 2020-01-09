@@ -21,6 +21,10 @@ func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
 
 }
 
+func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	currentNode.Class = ctx.Identifier().GetText()
+}
+
 func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
 	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.MemberDotExpressionContext" {
 		memberDotExprCtx := ctx.GetChild(0).(*parser.MemberDotExpressionContext)

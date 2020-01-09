@@ -1,4 +1,4 @@
-package cmd
+package cocatest
 
 // based on https://github.com/helm/helm
 // license: apache 2.0

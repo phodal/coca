@@ -1,18 +1,19 @@
 package cmd
 
 import (
+	"github.com/phodal/coca/cocatest/testcase"
 	"testing"
 )
 
 func TestSuggest(t *testing.T) {
-	analysis := []CmdTestCase{{
+	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
 		Cmd:    "analysis -p ../_fixtures/suggest",
 		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
-	tests := []CmdTestCase{{
+	tests := []testcase.CmdTestCase{{
 		Name:   "suggest",
 		Cmd:    "suggest",
 		Golden: "testdata/suggest_normal.txt",

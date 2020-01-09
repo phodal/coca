@@ -1,20 +1,21 @@
 package cmd
 
 import (
+	"github.com/phodal/coca/cocatest/testcase"
 	"testing"
 )
 
 func TestApi(t *testing.T) {
 	path := "../_fixtures/call"
 
-	analysis := []CmdTestCase{{
+	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
 		Cmd:    "analysis -p " + path,
 		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
-	tests := []CmdTestCase{{
+	tests := []testcase.CmdTestCase{{
 		Name:   "api",
 		Cmd:    "api -c -f -p " + path,
 		Golden: "testdata/api.txt",
@@ -25,14 +26,14 @@ func TestApi(t *testing.T) {
 func Test_ApiWithSortRemove(t *testing.T) {
 	path := "../_fixtures/call"
 
-	analysis := []CmdTestCase{{
+	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
 		Cmd:    "analysis -p " + path,
 		Golden: "",
 	}}
 	RunTestCmd(t, analysis)
 
-	tests := []CmdTestCase{{
+	tests := []testcase.CmdTestCase{{
 		Name:   "api",
 		Cmd:    "api -c -s -r com.phodal.pholedge.book. -p" + path,
 		Golden: "testdata/api_sort_remove.txt",

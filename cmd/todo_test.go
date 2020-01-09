@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"github.com/phodal/coca/cocatest/testcase"
 	"testing"
 )
 
 func Test_ShouldOutputCount(t *testing.T) {
-	tests := []CmdTestCase{{
+	tests := []testcase.CmdTestCase{{
 		Name:   "todo",
 		Cmd:    "todo -p ../_fixtures/todo",
 		Golden: "testdata/todo_normal.txt",
@@ -15,7 +16,7 @@ func Test_ShouldOutputCount(t *testing.T) {
 
 //TODO: update func for CI which clone depth = 1
 func TestTodo(t *testing.T) {
-	tests := []CmdTestCase{{
+	tests := []testcase.CmdTestCase{{
 		Name:   "todo",
 		Cmd:    "todo -p ../_fixtures/todo -g",
 		Golden: "",

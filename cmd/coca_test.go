@@ -3,6 +3,7 @@ package cmd
 import (
 	"bytes"
 	"github.com/mattn/go-shellwords"
+	"github.com/phodal/coca/cocatest/testcase"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
@@ -10,19 +11,15 @@ import (
 	"testing"
 )
 
-// CmdTestCase describes a test case that works with releases.
-type CmdTestCase struct {
-	Name      string
-	Cmd       string
-	Golden    string
-	WantError bool
+func RunTestCmd(t *testing.T, tests []testcase.CmdTestCase) {
+	RunTestCaseWithCmd(t, tests)
 }
 
-func RunTestCmd(t *testing.T, tests []CmdTestCase) {
+func RunTestCaseWithCmd(t *testing.T, tests []testcase.CmdTestCase) {
 	t.Helper()
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			defer resetEnv()()
+			defer ResetEnv()()
 
 			t.Log("running Cmd: ", tt.Cmd)
 			_, output, err := executeActionCommandC(tt.Cmd)
@@ -47,7 +44,6 @@ func executeActionCommandC(cmd string) (*cobra.Command, string, error) {
 	buf := new(bytes.Buffer)
 	command := NewRootCmd(buf)
 
-	command.SetOut(buf)
 	command.SetArgs(args)
 
 	c, err := command.ExecuteC()
@@ -55,7 +51,7 @@ func executeActionCommandC(cmd string) (*cobra.Command, string, error) {
 	return c, buf.String(), err
 }
 
-func resetEnv() func() {
+func ResetEnv() func() {
 	origEnv := os.Environ()
 	return func() {
 		os.Clearenv()

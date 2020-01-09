@@ -38,4 +38,5 @@ class Person implements IPerson {
 `)
 
 	g.Expect(results.Class).To(Equal("Person"))
+	g.Expect(results.Implements[0]).To(Equal("IPerson"))
 }

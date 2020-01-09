@@ -14,7 +14,7 @@ func processStream(is antlr.CharStream) *parser.TypeScriptParser {
 	return parser
 }
 
-func ProcessJsString(code string) *parser.TypeScriptParser {
+func ProcessTsString(code string) *parser.TypeScriptParser {
 	is := antlr.NewInputStream(code)
 	return processStream(is)
 }
@@ -23,8 +23,8 @@ type TypeScriptApiApp struct {
 }
 
 func (j *TypeScriptApiApp) Analysis(code string) domain.JClassNode {
-	jsParser := ProcessJsString(code)
-	context := jsParser.Program()
+	scriptParser := ProcessTsString(code)
+	context := scriptParser.Program()
 
 	listener := ast.NewTypeScriptIdentListener()
 	antlr.NewParseTreeWalker().Walk(listener, context)

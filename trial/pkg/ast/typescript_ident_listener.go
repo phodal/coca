@@ -6,14 +6,15 @@ import (
 	"reflect"
 )
 
-var currentNode domain.JClassNode
+var currentNode *domain.JClassNode
+var classNodeQueue []domain.JClassNode
 
 type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
 }
 
 func NewTypeScriptIdentListener() *TypeScriptIdentListener {
-	currentNode = *domain.NewClassNode()
+	currentNode = domain.NewClassNode()
 	return &TypeScriptIdentListener{}
 }
 
@@ -22,7 +23,33 @@ func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
 }
 
 func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	currentNode = domain.NewClassNode()
 	currentNode.Class = ctx.Identifier().GetText()
+
+	heritageContext := ctx.ClassHeritage().(*parser.ClassHeritageContext)
+	if heritageContext.ImplementsClause() != nil {
+		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
+		typeListContext := typeList.(*parser.ClassOrInterfaceTypeListContext)
+		for _, typeType := range typeListContext.AllTypeReference() {
+			typeRefs := typeType.(*parser.TypeReferenceContext).TypeName().GetText()
+			currentNode.Implements = append(currentNode.Implements, typeRefs)
+		}
+	}
+
+	classNodeQueue = append(classNodeQueue, *currentNode)
+}
+
+func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	if len(classNodeQueue) >= 1 {
+		if len(classNodeQueue) == 1 {
+			currentNode = &classNodeQueue[0]
+		} else {
+			classNodeQueue = classNodeQueue[0 : len(classNodeQueue)-1]
+			currentNode = &classNodeQueue[len(classNodeQueue)-1]
+		}
+	} else {
+		currentNode = domain.NewClassNode()
+	}
 }
 
 func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
@@ -45,8 +72,5 @@ func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDot
 }
 
 func (s *TypeScriptIdentListener) GetNodeInfo() domain.JClassNode {
-	return currentNode
+	return *currentNode
 }
-
-
-

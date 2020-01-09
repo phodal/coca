@@ -2,7 +2,7 @@ package cmd_util
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/pkg/context/analysis"
+	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/domain"
 )
 

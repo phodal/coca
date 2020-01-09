@@ -1,7 +1,7 @@
 package base
 
 import (
-	models2 "github.com/phodal/coca/pkg/context/refactor/base/models"
+	models2 "github.com/phodal/coca/pkg/application/refactor/base/models"
 	. "github.com/phodal/coca/languages/java"
 	"strings"
 	"unicode"

@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest"
-	"github.com/phodal/coca/pkg/context/evaluate/evaluator"
+	"github.com/phodal/coca/pkg/application/evaluate/evaluator"
 	"github.com/phodal/coca/pkg/domain"
 	"path/filepath"
 	"testing"

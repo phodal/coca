@@ -1,7 +1,7 @@
 package cocatest
 
 import (
-	"github.com/phodal/coca/pkg/context/analysis"
+	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/domain"
 	"path/filepath"
 )

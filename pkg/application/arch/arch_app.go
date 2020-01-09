@@ -1,7 +1,7 @@
 package arch
 
 import (
-	"github.com/phodal/coca/pkg/context/arch/tequila"
+	"github.com/phodal/coca/pkg/application/arch/tequila"
 	"github.com/phodal/coca/pkg/domain"
 )
 

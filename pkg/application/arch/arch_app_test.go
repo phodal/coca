@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest"
-	"github.com/phodal/coca/pkg/context/arch/tequila"
+	"github.com/phodal/coca/pkg/application/arch/tequila"
 	"path/filepath"
 	"testing"
 )

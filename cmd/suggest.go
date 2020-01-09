@@ -5,7 +5,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/context/suggest"
+	"github.com/phodal/coca/pkg/application/suggest"
 	"github.com/spf13/cobra"
 	"log"
 )

@@ -1,7 +1,7 @@
 package rcall
 
 import (
-	"github.com/phodal/coca/pkg/context/call"
+	"github.com/phodal/coca/pkg/application/call"
 	"github.com/phodal/coca/pkg/domain"
 )
 

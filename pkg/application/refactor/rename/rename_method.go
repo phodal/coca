@@ -1,7 +1,7 @@
 package unused
 
 import (
-	support "github.com/phodal/coca/pkg/context/refactor/rename/support"
+	support "github.com/phodal/coca/pkg/application/refactor/rename/support"
 	. "github.com/phodal/coca/pkg/domain"
 	"io/ioutil"
 	"log"

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
-	. "github.com/phodal/coca/pkg/context/git"
+	. "github.com/phodal/coca/pkg/application/git"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"

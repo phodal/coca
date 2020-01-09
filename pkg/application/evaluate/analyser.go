@@ -1,7 +1,7 @@
 package evaluate
 
 import (
-	"github.com/phodal/coca/pkg/context/evaluate/evaluator"
+	"github.com/phodal/coca/pkg/application/evaluate/evaluator"
 	"github.com/phodal/coca/pkg/domain"
 	"gonum.org/v1/gonum/stat"
 )

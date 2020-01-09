@@ -1,7 +1,7 @@
 package concept
 
 import (
-	languages2 "github.com/phodal/coca/pkg/context/call/stop_words/languages"
+	languages2 "github.com/phodal/coca/pkg/application/call/stop_words/languages"
 	"github.com/phodal/coca/pkg/domain"
 	"github.com/phodal/coca/pkg/infrastructure/constants"
 	"github.com/phodal/coca/pkg/infrastructure/string_helper"

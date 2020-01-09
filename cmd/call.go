@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
-	. "github.com/phodal/coca/pkg/context/call"
+	. "github.com/phodal/coca/pkg/application/call"
 	"github.com/phodal/coca/pkg/domain"
 	"github.com/spf13/cobra"
 	"log"

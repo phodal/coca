@@ -16,7 +16,7 @@ func TestConcept(t *testing.T) {
 	tests := []testcase.CmdTestCase{{
 		Name:   "concept",
 		Cmd:    "concept",
-		Golden: "",
+		Golden: "testdata/concept.txt",
 	}}
 	RunTestCmd(t, tests)
 }

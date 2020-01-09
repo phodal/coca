@@ -2,13 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/olekukonko/tablewriter"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/concept"
 	"github.com/phodal/coca/pkg/domain"
 	"github.com/spf13/cobra"
-	"os"
 	"strconv"
 )
 
@@ -28,7 +26,7 @@ var conceptCmd = &cobra.Command{
 
 			wordCounts := analyser.Analysis(&parsedDeps)
 
-			table := tablewriter.NewWriter(os.Stdout)
+			table := cmd_util.NewOutput(output)
 			table.SetHeader([]string{"Words", "Counts"})
 
 			for _, word := range wordCounts {

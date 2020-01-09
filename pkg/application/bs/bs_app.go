@@ -2,6 +2,7 @@ package bs
 
 import (
 	"encoding/json"
+	"github.com/huleTW/bad-smell-analysis/graphcall"
 	"github.com/phodal/coca/pkg/domain/bs_domain"
 	"strconv"
 )
@@ -38,8 +39,40 @@ func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 		checkRefusedBequest(node, &badSmellList)
 		checkLargeClass(node, &badSmellList)
 	}
-
+	checkConnectedGraphCall(nodes, &badSmellList)
 	return badSmellList
+}
+
+func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+	var classNodes = map[string][]string{}
+	var classNodeMaps = map[string]bool{}
+	for _, node := range nodes {
+		classNodeMaps[node.ClassFullName()] = true;
+	}
+	for _, node := range nodes {
+		classNodes[node.ClassFullName()] = getCalledClasses(node, classNodeMaps)
+	}
+	var badSmellGraphCall = graphcall.NewBadSmellGraphCall()
+	var descriptions = badSmellGraphCall.AnalysisGraphCallPath(classNodes)
+	for _, description := range descriptions {
+		*badSmellList = append(*badSmellList, *&bs_domain.BadSmellModel{"", "", "graphConnectedCall", description, 0})
+	}
+}
+
+//fixme java lamda & recursive
+func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
+	var calledClassesMap = make(map[string]struct{})
+	var calledClasses []string
+	for _, methodCalled := range class.MethodCalls {
+		if methodCalled.Class == "" || !maps[methodCalled.ClassFullName()] || class.ClassFullName() == methodCalled.ClassFullName() {
+			continue
+		}
+		calledClassesMap[methodCalled.ClassFullName()] = struct{}{}
+	}
+	for key := range calledClassesMap {
+		calledClasses = append(calledClasses, key)
+	}
+	return calledClasses
 }
 
 func checkLazyElement(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {

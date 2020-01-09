@@ -113,6 +113,14 @@ func (b *BsJClass) HaveCallParent() bool {
 	return hasCallParentMethod
 }
 
+func (b *BsJClass) ClassFullName() string {
+	return b.Package + "." + b.Class
+}
+
+func (c *BsJMethodCall) ClassFullName() string {
+	return c.Package + "." + c.Class
+}
+
 func SortSmellByType(models []BadSmellModel, filterFunc func(key string) bool) map[string][]BadSmellModel {
 	sortSmells := make(map[string][]BadSmellModel)
 	for _, model := range models {
@@ -141,4 +149,3 @@ func FilterBadSmellList(models []BadSmellModel, ignoreRules map[string]bool) []B
 	}
 	return results
 }
-

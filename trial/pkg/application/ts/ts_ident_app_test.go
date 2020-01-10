@@ -38,8 +38,9 @@ class Person implements IPerson {
 }
 `)
 
-	g.Expect(results[0].Class).To(Equal("Person"))
-	g.Expect(results[0].Implements[0]).To(Equal("IPerson"))
+	g.Expect(results[0].Class).To(Equal("IPerson"))
+	g.Expect(results[1].Class).To(Equal("Person"))
+	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
 }
 
 func Test_TypeScriptMultipleClass(t *testing.T) {
@@ -50,6 +51,6 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 
 	results := app.Analysis(string(code))
 
-	g.Expect(len(results)).To(Equal(2))
-	g.Expect(results[0].Implements[0]).To(Equal("IPerson"))
+	g.Expect(len(results)).To(Equal(3))
+	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
 }

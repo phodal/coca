@@ -10,7 +10,7 @@ func Test_TypeScriptConsoleLog(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	results := app.Analysis("console.log('hello, world')", "")
+	results := app.Analysis("console.log('hello, world')", "").ClassNodes
 
 	g.Expect(len(results[0].MethodCalls)).To(Equal(1))
 	g.Expect(results[0].MethodCalls[0].Class).To(Equal("console"))
@@ -36,7 +36,7 @@ class Person implements IPerson {
         this.name = name;
     }
 }
-`, "")
+`, "").ClassNodes
 
 	g.Expect(results[0].Class).To(Equal("IPerson"))
 	g.Expect(results[1].Class).To(Equal("Person"))
@@ -50,7 +50,7 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
-	results := app.Analysis(string(code), "")
+	results := app.Analysis(string(code), "").ClassNodes
 
 	g.Expect(len(results)).To(Equal(4))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
@@ -63,7 +63,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/AbstractClass.ts")
 
-	results := app.Analysis(string(code), "")
+	results := app.Analysis(string(code), "").ClassNodes
 
 	g.Expect(len(results)).To(Equal(3))
 	g.Expect(results[0].Type).To(Equal("Class"))
@@ -77,7 +77,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Module.ts")
 
-	results := app.Analysis(string(code), "")
+	results := app.Analysis(string(code), "").ClassNodes
 
 	g.Expect(len(results)).To(Equal(2))
 	g.Expect(results[0].Class).To(Equal("Employee"))
@@ -94,7 +94,7 @@ class Employee  {
         console.log("hello, world");
     }
 }
-`, "")
+`, "").ClassNodes
 
 	g.Expect(len(results[0].Methods)).To(Equal(1))
 }
@@ -117,7 +117,7 @@ interface IEmployee extends IPerson{
     getSalary: (number) => number; // arrow function
     getManagerName(number): string;
 }
-`, "")
+`, "").ClassNodes
 
 	g.Expect(results[1].Extend).To(Equal("IPerson"))
 }
@@ -133,7 +133,7 @@ export interface IPerson {
     getSalary: (number) => number;
     getManagerName(number): string;
 }
-`, "")
+`, "").ClassNodes
 
 	firstMethod := results[0].Methods[0]
 	secondMethod := results[0].Methods[1]
@@ -155,7 +155,7 @@ function Sum(x: number, y: number) : void {
     console.log('processNumKeyPairs: key = ' + key + ', value = ' + value)
     return x + y;
 }
-`, "")
+`, "").ClassNodes
 
 	firstMethod := results[0].Methods[0]
 	parameters := firstMethod.Parameters
@@ -174,7 +174,7 @@ func Test_ShouldHandleRestParameters(t *testing.T) {
 function buildName(firstName: string, ...restOfName: string[]) {
   return firstName + " " + restOfName.join(" ");
 }
-`, "")
+`, "").ClassNodes
 
 	firstMethod := results[0].Methods[0]
 	parameters := firstMethod.Parameters
@@ -189,7 +189,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
-	results := app.Analysis(string(code), "")
+	results := app.Analysis(string(code), "").ClassNodes
 
 	fields := results[1].Fields
 	g.Expect(len(fields)).To(Equal(5))

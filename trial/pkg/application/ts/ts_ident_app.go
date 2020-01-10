@@ -22,7 +22,7 @@ func ProcessTsString(code string) *parser.TypeScriptParser {
 type TypeScriptApiApp struct {
 }
 
-func (j *TypeScriptApiApp) Analysis(code string, fileName string) []domain.JClassNode {
+func (j *TypeScriptApiApp) Analysis(code string, fileName string) domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Program()
 

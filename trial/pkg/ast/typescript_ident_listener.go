@@ -11,7 +11,8 @@ var currentNode *domain.JClassNode
 var classNodeQueue []domain.JClassNode
 var classNodes []domain.JClassNode
 
-var default_class = "default"
+var defaultClass = "default"
+var filePath string
 
 type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
@@ -19,17 +20,24 @@ type TypeScriptIdentListener struct {
 
 func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	classNodes = nil
+	filePath = fileName
 	currentNode = domain.NewClassNode()
 	return &TypeScriptIdentListener{}
 }
 
-func (s *TypeScriptIdentListener) GetNodeInfo() []domain.JClassNode {
+func (s *TypeScriptIdentListener) GetNodeInfo() domain.CodeFile {
 	if currentNode.IsNotEmpty() {
-		currentNode.Class = default_class
+		currentNode.Class = defaultClass
 		classNodes = append(classNodes, *currentNode)
 		currentNode = domain.NewClassNode()
 	}
-	return classNodes
+
+	codeFile := &domain.CodeFile{
+		FullName: filePath,
+		Imports:  "",
+		ClassNodes:  classNodes,
+	}
+	return *codeFile
 }
 
 func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {

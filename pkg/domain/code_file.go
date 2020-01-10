@@ -18,7 +18,8 @@ type CodeMember struct {
 }
 
 type CodeFile struct {
-	FullName string
-	Imports  string
-	Members  []CodeMember
+	FullName   string
+	Imports    string
+	Members    []CodeMember
+	ClassNodes []JClassNode
 }

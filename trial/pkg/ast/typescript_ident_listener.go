@@ -125,19 +125,26 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 		currentNode.Extend = referenceContext.TypeName().GetText()
 	}
 
-	for _, classElement := range ctx.ClassTail().(*parser.ClassTailContext).AllClassElement() {
-		elementChild := classElement.GetChild(0)
-		if reflect.TypeOf(elementChild).String() == "*parser.ConstructorDeclarationContext" {
-			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
-			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(constructorDeclCtx))
-		} else if reflect.TypeOf(elementChild).String() == "*parser.PropertyMemberDeclarationContext" {
-			s.handlePropertyMember(elementChild)
-		}
-	}
+	classTailContext := ctx.ClassTail().(*parser.ClassTailContext)
+	handleClassBodyElements(classTailContext)
 	classNodeQueue = append(classNodeQueue, *currentNode)
 }
 
-func (s *TypeScriptIdentListener) handlePropertyMember(elementChild antlr.Tree) {
+func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
+	for _, classElement := range classTailContext.AllClassElement() {
+		elementChild := classElement.GetChild(0)
+		elementTypeStr := reflect.TypeOf(elementChild).String()
+		switch elementTypeStr {
+		case "*parser.ConstructorDeclarationContext":
+			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
+			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(constructorDeclCtx))
+		case "*parser.PropertyMemberDeclarationContext":
+			handlePropertyMember(elementChild)
+		}
+	}
+}
+
+func handlePropertyMember(elementChild antlr.Tree) {
 	propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
 	callSignaturePos := 3
 	if propertyMemberCtx.GetChildCount() >= callSignaturePos {

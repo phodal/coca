@@ -182,3 +182,14 @@ function buildName(firstName: string, ...restOfName: string[]) {
 	g.Expect(parameters[0].Name).To(Equal("firstName"))
 	g.Expect(parameters[1].Name).To(Equal("restOfName"))
 }
+
+func Test_ShouldGetClassFields(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/Class.ts")
+
+	results := app.Analysis(string(code))
+
+	g.Expect(len(results[1].Fields)).To(Equal(0))
+}

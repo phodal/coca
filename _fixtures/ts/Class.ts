@@ -1,4 +1,3 @@
-
 interface IPerson {
     name: string;
 }

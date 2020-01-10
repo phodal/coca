@@ -5,6 +5,7 @@ import (
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
 	"reflect"
+	"strings"
 )
 
 var currentNode *domain.JClassNode
@@ -13,6 +14,7 @@ var classNodes []domain.JClassNode
 
 var defaultClass = "default"
 var filePath string
+var codeFile domain.CodeFile
 
 type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
@@ -22,6 +24,11 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	classNodes = nil
 	filePath = fileName
 	currentNode = domain.NewClassNode()
+	codeFile = domain.CodeFile{
+		FullName: filePath,
+		Imports:  nil,
+		ClassNodes:  nil,
+	}
 	return &TypeScriptIdentListener{}
 }
 
@@ -32,16 +39,16 @@ func (s *TypeScriptIdentListener) GetNodeInfo() domain.CodeFile {
 		currentNode = domain.NewClassNode()
 	}
 
-	codeFile := &domain.CodeFile{
-		FullName: filePath,
-		Imports:  "",
-		ClassNodes:  classNodes,
-	}
-	return *codeFile
+	codeFile.ClassNodes = classNodes
+	return codeFile
 }
 
-func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
+func (s *TypeScriptIdentListener) EnterFromBlock(ctx *parser.FromBlockContext) {
+	importText := ctx.StringLiteral().GetText()
+	replaceDoubleQuote := strings.ReplaceAll(importText, "\"", "")
+	replaceSingleQuote := strings.ReplaceAll(replaceDoubleQuote, "'", "")
 
+	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
 }
 
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

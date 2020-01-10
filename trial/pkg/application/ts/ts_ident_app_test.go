@@ -195,3 +195,17 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	g.Expect(len(fields)).To(Equal(5))
 	g.Expect(fields[0].Modifier).To(Equal("public"))
 }
+
+func Test_ShouldReturnImports(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+import { ZipCodeValidator } from "./ZipCodeValidator";
+
+`, "")
+
+	g.Expect(len(results.Imports)).To(Equal(1))
+	g.Expect(results.Imports[0]).To(Equal("./ZipCodeValidator"))
+}

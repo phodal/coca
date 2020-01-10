@@ -1,6 +1,3 @@
-
-
-
 namespace StringUtility
 {
     function ToCapital(str: string): string {

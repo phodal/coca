@@ -23,6 +23,15 @@ func NewTypeScriptIdentListener() *TypeScriptIdentListener {
 	return &TypeScriptIdentListener{}
 }
 
+func (s *TypeScriptIdentListener) GetNodeInfo() []domain.JClassNode {
+	if currentNode.IsNotEmpty() {
+		currentNode.Class = default_class
+		classNodes = append(classNodes, *currentNode)
+		currentNode = domain.NewClassNode()
+	}
+	return classNodes
+}
+
 func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
 
 }
@@ -123,10 +132,6 @@ func exitClass() {
 }
 
 func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
-	if currentNode.Class == "" {
-		currentNode.Class = default_class
-	}
-
 	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.MemberDotExpressionContext" {
 		memberDotExprCtx := ctx.GetChild(0).(*parser.MemberDotExpressionContext)
 		buildMemberDotExpr(memberDotExprCtx)
@@ -145,10 +150,11 @@ func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDot
 
 }
 
-func (s *TypeScriptIdentListener) GetNodeInfo() []domain.JClassNode {
-	if currentNode.Class == default_class {
-		classNodes = append(classNodes, *currentNode)
-		currentNode = domain.NewClassNode()
-	}
-	return classNodes
+func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionDeclarationContext) {
+	method := domain.NewJMethod()
+
+	method.Name = ctx.Identifier().GetText()
+	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+
+	currentNode.Methods = append(currentNode.Methods, method)
 }

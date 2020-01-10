@@ -49,6 +49,10 @@ func (j *JClassNode) BuildStringMethodMap(projectMethods map[string]string) {
 	}
 }
 
+func (j *JClassNode) IsNotEmpty() bool {
+	return len(j.Methods) > 0 || len(j.MethodCalls) > 0
+}
+
 func BuildCallMethodMap(deps []JClassNode) map[string]JMethod {
 	var callMethodMap = make(map[string]JMethod)
 	for _, clz := range deps {

@@ -52,8 +52,9 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 
 	results := app.Analysis(string(code))
 
-	g.Expect(len(results)).To(Equal(3))
+	g.Expect(len(results)).To(Equal(4))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
+	g.Expect(results[3].Class).To(Equal("default"))
 }
 
 func Test_ShouldEnableGetClassMethod(t *testing.T) {
@@ -70,4 +71,20 @@ class Employee  {
 `)
 
 	g.Expect(len(results[0].Methods)).To(Equal(1))
+}
+
+func Test_ShouldGetDefaultFunctionName(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+function Sum(x: number, y: number) : void {
+    console.log('processNumKeyPairs: key = ' + key + ', value = ' + value)
+    return x + y;
+}
+`)
+
+	g.Expect(len(results[0].Methods)).To(Equal(1))
+	g.Expect(results[0].Methods[0].Name).To(Equal("Sum"))
 }

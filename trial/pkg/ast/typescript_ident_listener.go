@@ -8,6 +8,7 @@ import (
 
 var currentNode *domain.JClassNode
 var classNodeQueue []domain.JClassNode
+var classNodes []domain.JClassNode
 
 type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
@@ -40,6 +41,7 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 }
 
 func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
+	classNodes = append(classNodes, *currentNode)
 	if len(classNodeQueue) >= 1 {
 		if len(classNodeQueue) == 1 {
 			currentNode = &classNodeQueue[0]
@@ -71,6 +73,6 @@ func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDot
 
 }
 
-func (s *TypeScriptIdentListener) GetNodeInfo() domain.JClassNode {
-	return *currentNode
+func (s *TypeScriptIdentListener) GetNodeInfo() []domain.JClassNode {
+	return classNodes
 }

@@ -4,6 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
+	"reflect"
 )
 
 func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) domain.JMethodCall {
@@ -51,3 +52,29 @@ func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string 
 	return implements
 }
 
+func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParameter {
+	childNode := context.GetChild(0)
+	childType := reflect.TypeOf(childNode).String()
+	var parameters []domain.JParameter = nil
+	switch childType {
+	case "*parser.RequiredParameterListContext":
+		var requireParamsList []domain.JParameter = nil
+		for _, requiredParameter := range childNode.(*parser.RequiredParameterListContext).AllRequiredParameter() {
+			paramCtx := requiredParameter.(*parser.RequiredParameterContext)
+			name := paramCtx.IdentifierOrPattern().GetText()
+			paramType := ""
+			if paramCtx.TypeAnnotation() != nil {
+				paramType = paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext).Type_().GetText()
+			}
+			parameter := domain.JParameter{
+				Name: name,
+				Type: paramType,
+			}
+			requireParamsList = append(requireParamsList, parameter)
+		}
+
+		parameters = append(parameters, requireParamsList...)
+	}
+
+	return parameters
+}

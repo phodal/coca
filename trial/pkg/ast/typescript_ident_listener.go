@@ -69,7 +69,7 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 		if reflect.TypeOf(elementChild).String() == "*parser.ConstructorDeclarationContext" {
 			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
 			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(constructorDeclCtx))
-		} else if reflect.TypeOf(elementChild).String() == "*parser.PropertyMemberDeclarationContext"{
+		} else if reflect.TypeOf(elementChild).String() == "*parser.PropertyMemberDeclarationContext" {
 			s.handlePropertyMember(elementChild)
 		}
 	}
@@ -120,6 +120,13 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 
 	method.Name = ctx.Identifier().GetText()
 	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+
+	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
+	if callSignatureContext.ParameterList() != nil {
+		parameterListContext := callSignatureContext.ParameterList().(*parser.ParameterListContext)
+		methodParameters := BuildMethodParameter(parameterListContext)
+		method.Parameters = append(method.Parameters, methodParameters...)
+	}
 
 	currentNode.Methods = append(currentNode.Methods, method)
 }

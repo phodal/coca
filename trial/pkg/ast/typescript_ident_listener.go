@@ -17,7 +17,7 @@ type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
 }
 
-func NewTypeScriptIdentListener() *TypeScriptIdentListener {
+func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	classNodes = nil
 	currentNode = domain.NewClassNode()
 	return &TypeScriptIdentListener{}

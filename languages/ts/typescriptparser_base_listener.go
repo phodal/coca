@@ -249,11 +249,11 @@ func (s *BaseTypeScriptParserListener) EnterTypeQueryExpression(ctx *TypeQueryEx
 // ExitTypeQueryExpression is called when production typeQueryExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitTypeQueryExpression(ctx *TypeQueryExpressionContext) {}
 
-// EnterPropertySignatur is called when production propertySignatur is entered.
-func (s *BaseTypeScriptParserListener) EnterPropertySignatur(ctx *PropertySignaturContext) {}
+// EnterPropertySignature is called when production propertySignature is entered.
+func (s *BaseTypeScriptParserListener) EnterPropertySignature(ctx *PropertySignatureContext) {}
 
-// ExitPropertySignatur is called when production propertySignatur is exited.
-func (s *BaseTypeScriptParserListener) ExitPropertySignatur(ctx *PropertySignaturContext) {}
+// ExitPropertySignature is called when production propertySignature is exited.
+func (s *BaseTypeScriptParserListener) ExitPropertySignature(ctx *PropertySignatureContext) {}
 
 // EnterTypeAnnotation is called when production typeAnnotation is entered.
 func (s *BaseTypeScriptParserListener) EnterTypeAnnotation(ctx *TypeAnnotationContext) {}

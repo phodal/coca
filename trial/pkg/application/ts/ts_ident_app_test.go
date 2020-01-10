@@ -108,6 +108,21 @@ interface IEmployee extends IPerson{
 	g.Expect(results[1].Extend).To(Equal("IPerson"))
 }
 
+func Test_ShouldGetInterfaceProperty(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+export interface IPerson {
+    name: string;
+    gender: string;
+}
+`)
+
+	g.Expect(len(results[0].Fields)).To(Equal(2))
+}
+
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {
 	g := NewGomegaWithT(t)
 

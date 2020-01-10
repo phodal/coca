@@ -149,7 +149,7 @@ typeMemberList
     ;
 
 typeMember
-    : propertySignatur
+    : propertySignature
     | callSignature
     | constructSignature
     | indexSignature
@@ -185,7 +185,7 @@ typeQueryExpression
     | (identifierName '.')+ identifierName
     ;
 
-propertySignatur
+propertySignature
     : ReadOnly? propertyName '?'? typeAnnotation? ('=>' type_)?
     ;
 

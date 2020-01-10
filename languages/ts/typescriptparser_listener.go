@@ -122,8 +122,8 @@ type TypeScriptParserListener interface {
 	// EnterTypeQueryExpression is called when entering the typeQueryExpression production.
 	EnterTypeQueryExpression(c *TypeQueryExpressionContext)
 
-	// EnterPropertySignatur is called when entering the propertySignatur production.
-	EnterPropertySignatur(c *PropertySignaturContext)
+	// EnterPropertySignature is called when entering the propertySignature production.
+	EnterPropertySignature(c *PropertySignatureContext)
 
 	// EnterTypeAnnotation is called when entering the typeAnnotation production.
 	EnterTypeAnnotation(c *TypeAnnotationContext)
@@ -734,8 +734,8 @@ type TypeScriptParserListener interface {
 	// ExitTypeQueryExpression is called when exiting the typeQueryExpression production.
 	ExitTypeQueryExpression(c *TypeQueryExpressionContext)
 
-	// ExitPropertySignatur is called when exiting the propertySignatur production.
-	ExitPropertySignatur(c *PropertySignaturContext)
+	// ExitPropertySignature is called when exiting the propertySignature production.
+	ExitPropertySignature(c *PropertySignatureContext)
 
 	// ExitTypeAnnotation is called when exiting the typeAnnotation production.
 	ExitTypeAnnotation(c *TypeAnnotationContext)

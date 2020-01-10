@@ -47,6 +47,31 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 		implements := BuildImplements(extendsContext.ClassOrInterfaceTypeList())
 		currentNode.Extend = implements[0]
 	}
+
+	objectTypeCtx := ctx.ObjectType().(*parser.ObjectTypeContext)
+	if objectTypeCtx.TypeBody() != nil {
+		typeMemberListCtx := objectTypeCtx.TypeBody().(*parser.TypeBodyContext).TypeMemberList().(*parser.TypeMemberListContext)
+		BuildInterfaceTypeBody(typeMemberListCtx, currentNode)
+	}
+}
+
+func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain.JClassNode) {
+	for _, typeMember := range ctx.AllTypeMember() {
+		typeMemberContext := typeMember.(*parser.TypeMemberContext).GetChild(0)
+		currentType := reflect.TypeOf(typeMemberContext).String()
+		switch currentType {
+		case "*parser.PropertySignatureContext":
+			{
+				signatureCtx := typeMemberContext.(*parser.PropertySignatureContext)
+				field := &domain.JAppField{
+					Type:  BuildAnnotationType(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext)),
+					Value: signatureCtx.PropertyName().GetText(),
+				}
+
+				classNode.Fields = append(classNode.Fields, *field)
+			}
+		}
+	}
 }
 
 func (s *TypeScriptIdentListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

@@ -293,7 +293,7 @@ functionType
 constructorType
 typeQuery
 typeQueryExpression
-propertySignatur
+propertySignature
 typeAnnotation
 callSignature
 parameterList

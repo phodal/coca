@@ -868,7 +868,7 @@ var ruleNames = []string{
 	"typeReference", "typeGeneric", "typeIncludeGeneric", "typeName", "objectType",
 	"typeBody", "typeMemberList", "typeMember", "arrayType", "tupleType", "tupleElementTypes",
 	"functionType", "constructorType", "typeQuery", "typeQueryExpression",
-	"propertySignatur", "typeAnnotation", "callSignature", "parameterList",
+	"propertySignature", "typeAnnotation", "callSignature", "parameterList",
 	"requiredParameterList", "requiredParameter", "accessibilityModifier",
 	"identifierOrPattern", "optionalParameterList", "optionalParameter", "restParameter",
 	"constructSignature", "indexSignature", "methodSignature", "typeAliasDeclaration",
@@ -1087,7 +1087,7 @@ const (
 	TypeScriptParserRULE_constructorType                  = 25
 	TypeScriptParserRULE_typeQuery                        = 26
 	TypeScriptParserRULE_typeQueryExpression              = 27
-	TypeScriptParserRULE_propertySignatur                 = 28
+	TypeScriptParserRULE_propertySignature                = 28
 	TypeScriptParserRULE_typeAnnotation                   = 29
 	TypeScriptParserRULE_callSignature                    = 30
 	TypeScriptParserRULE_parameterList                    = 31
@@ -4465,14 +4465,14 @@ func NewTypeMemberContext(parser antlr.Parser, parent antlr.ParserRuleContext, i
 
 func (s *TypeMemberContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *TypeMemberContext) PropertySignatur() IPropertySignaturContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPropertySignaturContext)(nil)).Elem(), 0)
+func (s *TypeMemberContext) PropertySignature() IPropertySignatureContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPropertySignatureContext)(nil)).Elem(), 0)
 
 	if t == nil {
 		return nil
 	}
 
-	return t.(IPropertySignaturContext)
+	return t.(IPropertySignatureContext)
 }
 
 func (s *TypeMemberContext) CallSignature() ICallSignatureContext {
@@ -4577,7 +4577,7 @@ func (p *TypeScriptParser) TypeMember() (localctx ITypeMemberContext) {
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(417)
-			p.PropertySignatur()
+			p.PropertySignature()
 		}
 
 	case 2:
@@ -5597,45 +5597,45 @@ func (p *TypeScriptParser) TypeQueryExpression() (localctx ITypeQueryExpressionC
 	return localctx
 }
 
-// IPropertySignaturContext is an interface to support dynamic dispatch.
-type IPropertySignaturContext interface {
+// IPropertySignatureContext is an interface to support dynamic dispatch.
+type IPropertySignatureContext interface {
 	antlr.ParserRuleContext
 
 	// GetParser returns the parser.
 	GetParser() antlr.Parser
 
-	// IsPropertySignaturContext differentiates from other interfaces.
-	IsPropertySignaturContext()
+	// IsPropertySignatureContext differentiates from other interfaces.
+	IsPropertySignatureContext()
 }
 
-type PropertySignaturContext struct {
+type PropertySignatureContext struct {
 	*antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
-func NewEmptyPropertySignaturContext() *PropertySignaturContext {
-	var p = new(PropertySignaturContext)
+func NewEmptyPropertySignatureContext() *PropertySignatureContext {
+	var p = new(PropertySignatureContext)
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = TypeScriptParserRULE_propertySignatur
+	p.RuleIndex = TypeScriptParserRULE_propertySignature
 	return p
 }
 
-func (*PropertySignaturContext) IsPropertySignaturContext() {}
+func (*PropertySignatureContext) IsPropertySignatureContext() {}
 
-func NewPropertySignaturContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *PropertySignaturContext {
-	var p = new(PropertySignaturContext)
+func NewPropertySignatureContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *PropertySignatureContext {
+	var p = new(PropertySignatureContext)
 
 	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
 
 	p.parser = parser
-	p.RuleIndex = TypeScriptParserRULE_propertySignatur
+	p.RuleIndex = TypeScriptParserRULE_propertySignature
 
 	return p
 }
 
-func (s *PropertySignaturContext) GetParser() antlr.Parser { return s.parser }
+func (s *PropertySignatureContext) GetParser() antlr.Parser { return s.parser }
 
-func (s *PropertySignaturContext) PropertyName() IPropertyNameContext {
+func (s *PropertySignatureContext) PropertyName() IPropertyNameContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IPropertyNameContext)(nil)).Elem(), 0)
 
 	if t == nil {
@@ -5645,15 +5645,15 @@ func (s *PropertySignaturContext) PropertyName() IPropertyNameContext {
 	return t.(IPropertyNameContext)
 }
 
-func (s *PropertySignaturContext) ReadOnly() antlr.TerminalNode {
+func (s *PropertySignatureContext) ReadOnly() antlr.TerminalNode {
 	return s.GetToken(TypeScriptParserReadOnly, 0)
 }
 
-func (s *PropertySignaturContext) QuestionMark() antlr.TerminalNode {
+func (s *PropertySignatureContext) QuestionMark() antlr.TerminalNode {
 	return s.GetToken(TypeScriptParserQuestionMark, 0)
 }
 
-func (s *PropertySignaturContext) TypeAnnotation() ITypeAnnotationContext {
+func (s *PropertySignatureContext) TypeAnnotation() ITypeAnnotationContext {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*ITypeAnnotationContext)(nil)).Elem(), 0)
 
 	if t == nil {
@@ -5663,11 +5663,11 @@ func (s *PropertySignaturContext) TypeAnnotation() ITypeAnnotationContext {
 	return t.(ITypeAnnotationContext)
 }
 
-func (s *PropertySignaturContext) ARROW() antlr.TerminalNode {
+func (s *PropertySignatureContext) ARROW() antlr.TerminalNode {
 	return s.GetToken(TypeScriptParserARROW, 0)
 }
 
-func (s *PropertySignaturContext) Type_() IType_Context {
+func (s *PropertySignatureContext) Type_() IType_Context {
 	var t = s.GetTypedRuleContext(reflect.TypeOf((*IType_Context)(nil)).Elem(), 0)
 
 	if t == nil {
@@ -5677,29 +5677,29 @@ func (s *PropertySignaturContext) Type_() IType_Context {
 	return t.(IType_Context)
 }
 
-func (s *PropertySignaturContext) GetRuleContext() antlr.RuleContext {
+func (s *PropertySignatureContext) GetRuleContext() antlr.RuleContext {
 	return s
 }
 
-func (s *PropertySignaturContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+func (s *PropertySignatureContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
 	return antlr.TreesStringTree(s, ruleNames, recog)
 }
 
-func (s *PropertySignaturContext) EnterRule(listener antlr.ParseTreeListener) {
+func (s *PropertySignatureContext) EnterRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(TypeScriptParserListener); ok {
-		listenerT.EnterPropertySignatur(s)
+		listenerT.EnterPropertySignature(s)
 	}
 }
 
-func (s *PropertySignaturContext) ExitRule(listener antlr.ParseTreeListener) {
+func (s *PropertySignatureContext) ExitRule(listener antlr.ParseTreeListener) {
 	if listenerT, ok := listener.(TypeScriptParserListener); ok {
-		listenerT.ExitPropertySignatur(s)
+		listenerT.ExitPropertySignature(s)
 	}
 }
 
-func (p *TypeScriptParser) PropertySignatur() (localctx IPropertySignaturContext) {
-	localctx = NewPropertySignaturContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 56, TypeScriptParserRULE_propertySignatur)
+func (p *TypeScriptParser) PropertySignature() (localctx IPropertySignatureContext) {
+	localctx = NewPropertySignatureContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 56, TypeScriptParserRULE_propertySignature)
 	var _la int
 
 	defer func() {

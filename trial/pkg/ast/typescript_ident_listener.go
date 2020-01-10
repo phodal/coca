@@ -44,20 +44,13 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 
 	if ctx.InterfaceExtendsClause() != nil {
 		extendsContext := ctx.InterfaceExtendsClause().(*parser.InterfaceExtendsClauseContext)
-		buildImplements(extendsContext.ClassOrInterfaceTypeList())
+		implements := BuildImplements(extendsContext.ClassOrInterfaceTypeList())
+		currentNode.Implements = append(currentNode.Implements, implements...)
 	}
 }
 
 func (s *TypeScriptIdentListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	exitClass()
-}
-
-func buildImplements(typeList parser.IClassOrInterfaceTypeListContext) {
-	typeListContext := typeList.(*parser.ClassOrInterfaceTypeListContext)
-	for _, typeType := range typeListContext.AllTypeReference() {
-		typeRefs := typeType.(*parser.TypeReferenceContext).TypeName().GetText()
-		currentNode.Implements = append(currentNode.Implements, typeRefs)
-	}
 }
 
 func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
@@ -68,49 +61,29 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 	heritageContext := ctx.ClassHeritage().(*parser.ClassHeritageContext)
 	if heritageContext.ImplementsClause() != nil {
 		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
-		buildImplements(typeList)
+		currentNode.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
 	}
 
 	for _, classElement := range ctx.ClassTail().(*parser.ClassTailContext).AllClassElement() {
 		elementChild := classElement.GetChild(0)
 		if reflect.TypeOf(elementChild).String() == "*parser.ConstructorDeclarationContext" {
 			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
-			appendConstructorMethod(constructorDeclCtx)
+			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(constructorDeclCtx))
 		} else if reflect.TypeOf(elementChild).String() == "*parser.PropertyMemberDeclarationContext"{
-			propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
-			if propertyMemberCtx.GetChildCount() >= 3 {
-				if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
-					appendNormalMethod(propertyMemberCtx)
-				}
-			}
+			s.handlePropertyMember(elementChild)
 		}
 	}
 	classNodeQueue = append(classNodeQueue, *currentNode)
 }
 
-func appendNormalMethod(ctx *parser.PropertyMemberDeclarationContext) {
-	method := domain.NewJMethod()
-	method.Name = ctx.PropertyName().GetText()
-
-	method.StartLine = ctx.GetStart().GetLine()
-	method.StartLinePosition = ctx.GetStart().GetColumn()
-	method.StopLine = ctx.GetStop().GetLine()
-	method.StopLinePosition = ctx.GetStop().GetColumn()
-
-	currentNode.Methods = append(currentNode.Methods, method)
-}
-
-func appendConstructorMethod(ctx *parser.ConstructorDeclarationContext) {
-	method := domain.NewJMethod()
-	method.Name = "constructor"
-
-	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
-
-	if ctx.AccessibilityModifier() != nil  {
-		method.Modifiers = append(method.Modifiers, ctx.AccessibilityModifier().GetText())
+func (s *TypeScriptIdentListener) handlePropertyMember(elementChild antlr.Tree) {
+	propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
+	if propertyMemberCtx.GetChildCount() >= 3 {
+		if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
+			method := BuildMemberMethod(propertyMemberCtx)
+			currentNode.Methods = append(currentNode.Methods, method)
+		}
 	}
-
-	currentNode.Methods = append(currentNode.Methods, method)
 }
 
 func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
@@ -133,17 +106,9 @@ func exitClass() {
 
 func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
 	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.MemberDotExpressionContext" {
-		memberDotExprCtx := ctx.GetChild(0).(*parser.MemberDotExpressionContext)
-		buildMemberDotExpr(memberDotExprCtx)
+		call := BuildArgExpressCall(ctx.GetChild(0).(*parser.MemberDotExpressionContext))
+		currentNode.MethodCalls = append(currentNode.MethodCalls, call)
 	}
-}
-
-func buildMemberDotExpr(memberDotExprCtx *parser.MemberDotExpressionContext) {
-	call := domain.NewJMethodCall()
-	call.Class = memberDotExprCtx.GetChild(0).(*parser.IdentifierExpressionContext).GetText()
-	call.MethodName = memberDotExprCtx.IdentifierName().GetText()
-
-	currentNode.MethodCalls = append(currentNode.MethodCalls, call)
 }
 
 func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDotExpressionContext) {

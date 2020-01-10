@@ -85,6 +85,29 @@ class Employee  {
 	g.Expect(len(results[0].Methods)).To(Equal(1))
 }
 
+func Test_ShouldGetInterfaceImplements(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+export interface IPerson {
+    name: string;
+    gender: string;
+}
+
+interface IEmployee extends IPerson{
+    empCode: number;
+    readonly empName: string;
+    empDept?:string;
+    getSalary: (number) => number; // arrow function
+    getManagerName(number): string;
+}
+`)
+
+	g.Expect(results[1].Extend).To(Equal("IPerson"))
+}
+
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {
 	g := NewGomegaWithT(t)
 

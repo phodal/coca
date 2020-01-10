@@ -96,7 +96,7 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 
 		classNode.Methods = append(classNode.Methods, method)
 	} else {
-		field := &domain.JAppField{
+		field := &domain.JField{
 			Type:  typeType,
 			Value: typeValue,
 		}
@@ -148,7 +148,7 @@ func handlePropertyMember(elementChild antlr.Tree) {
 	propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
 	callSignaturePos := 3
 	if propertyMemberCtx.PropertyName() != nil {
-		field := domain.JAppField{
+		field := domain.JField{
 			Type:  "",
 			Value: "",
 		}

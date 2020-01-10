@@ -7,7 +7,7 @@ type JClassNode struct {
 	Class       string
 	Type        string
 	Path        string
-	Fields      []JAppField
+	Fields      []JField
 	Methods     []JMethod
 	MethodCalls []JMethodCall
 	Extend      string
@@ -17,7 +17,7 @@ type JClassNode struct {
 	Imports     []JImport
 }
 
-type JAppField struct {
+type JField struct {
 	Type  string
 	Value string
 }

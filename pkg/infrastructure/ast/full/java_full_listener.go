@@ -14,7 +14,7 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
-var fields []domain.JAppField
+var fields []domain.JField
 var methodCalls []domain.JMethodCall
 var currentType string
 
@@ -241,7 +241,7 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeTypeText
-		fields = append(fields, domain.JAppField{Type: typeTypeText, Value: value})
+		fields = append(fields, domain.JField{Type: typeTypeText, Value: value})
 
 		buildFieldCall(typeTypeText, ctx)
 	}

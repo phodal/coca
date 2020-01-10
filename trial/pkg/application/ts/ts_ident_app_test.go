@@ -117,10 +117,14 @@ func Test_ShouldGetInterfaceProperty(t *testing.T) {
 export interface IPerson {
     name: string;
     gender: string;
+    getSalary: (number) => number;
 }
 `)
 
+	firstMethod := results[0].Methods[0]
 	g.Expect(len(results[0].Fields)).To(Equal(2))
+	g.Expect(len(results[0].Methods)).To(Equal(1))
+	g.Expect(firstMethod.Name).To(Equal("getSalary"))
 }
 
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {

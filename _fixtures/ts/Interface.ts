@@ -21,6 +21,10 @@ class Employee implements IEmployee {
         this.name = name;
     }
 
+    getManagerName(number): string {
+        return "";
+    }
+
     getSalary(empCode:number):number {
         return 20000;
     }

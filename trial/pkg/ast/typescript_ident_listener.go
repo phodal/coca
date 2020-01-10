@@ -63,12 +63,29 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain
 		case "*parser.PropertySignatureContext":
 			{
 				signatureCtx := typeMemberContext.(*parser.PropertySignatureContext)
-				field := &domain.JAppField{
-					Type:  BuildAnnotationType(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext)),
-					Value: signatureCtx.PropertyName().GetText(),
-				}
+				typeType := BuildTypeAnnotation(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
+				typeValue := signatureCtx.PropertyName().(*parser.PropertyNameContext).GetText()
 
-				classNode.Fields = append(classNode.Fields, *field)
+				isArrowFunc := signatureCtx.Type_() != nil
+				if isArrowFunc {
+					method := domain.NewJMethod()
+					method.Name = typeValue
+					parameter := domain.JParameter{
+						Name: "any",
+						Type: typeType,
+					}
+					method.Parameters = append(method.Parameters, parameter)
+					method.Type = signatureCtx.Type_().GetText()
+
+					classNode.Methods = append(classNode.Methods, method)
+				} else {
+					field := &domain.JAppField{
+						Type:  typeType,
+						Value: typeValue,
+					}
+
+					classNode.Fields = append(classNode.Fields, *field)
+				}
 			}
 		}
 	}
@@ -155,7 +172,7 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 
 	if callSignatureContext.TypeAnnotation() != nil {
 		annotationContext := callSignatureContext.TypeAnnotation().(*parser.TypeAnnotationContext)
-		method.Type = BuildAnnotationType(annotationContext)
+		method.Type = BuildTypeAnnotation(annotationContext)
 	}
 
 	currentNode.Methods = append(currentNode.Methods, method)

@@ -91,7 +91,7 @@ func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) domain.JP
 	paramType := ""
 	if paramCtx.TypeAnnotation() != nil {
 		annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
-		paramType = BuildAnnotationType(annotationContext)
+		paramType = BuildTypeAnnotation(annotationContext)
 	}
 	parameter := domain.JParameter{
 		Name: name,
@@ -100,6 +100,6 @@ func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) domain.JP
 	return parameter
 }
 
-func BuildAnnotationType(annotationContext *parser.TypeAnnotationContext) string {
+func BuildTypeAnnotation(annotationContext *parser.TypeAnnotationContext) string {
 	return annotationContext.Type_().GetText()
 }

@@ -1,6 +1,7 @@
 package ast
 
 import (
+	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
 	"reflect"
@@ -61,7 +62,26 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 		buildImplements(typeList)
 	}
 
+	for _, classElement := range ctx.ClassTail().(*parser.ClassTailContext).AllClassElement() {
+		if reflect.TypeOf(classElement.GetChild(0)).String() == "*parser.ConstructorDeclarationContext" {
+			constructorDeclCtx := classElement.GetChild(0).(*parser.ConstructorDeclarationContext)
+			appendConstructorMethod(constructorDeclCtx)
+		}
+	}
 	classNodeQueue = append(classNodeQueue, *currentNode)
+}
+
+func appendConstructorMethod(context *parser.ConstructorDeclarationContext) {
+	method := domain.NewJMethod()
+	method.Name = "constructor"
+
+	method.AddPosition(context.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+
+	if context.AccessibilityModifier() != nil  {
+		method.Modifiers = append(method.Modifiers, context.AccessibilityModifier().GetText())
+	}
+
+	currentNode.Methods = append(currentNode.Methods, method)
 }
 
 func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {

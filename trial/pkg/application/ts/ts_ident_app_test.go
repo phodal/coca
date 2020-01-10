@@ -40,6 +40,7 @@ class Person implements IPerson {
 
 	g.Expect(results[0].Class).To(Equal("IPerson"))
 	g.Expect(results[1].Class).To(Equal("Person"))
+	g.Expect(results[1].Methods[0].Name).To(Equal("constructor"))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
 }
 

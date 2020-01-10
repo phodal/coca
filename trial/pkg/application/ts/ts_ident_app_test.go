@@ -55,3 +55,19 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	g.Expect(len(results)).To(Equal(3))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
 }
+
+func Test_ShouldEnableGetClassMethod(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+class Employee  {
+    displayName():void {
+        console.log("hello, world");
+    }
+}
+`)
+
+	g.Expect(len(results[0].Methods)).To(Equal(1))
+}

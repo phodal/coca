@@ -63,22 +63,42 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 	}
 
 	for _, classElement := range ctx.ClassTail().(*parser.ClassTailContext).AllClassElement() {
-		if reflect.TypeOf(classElement.GetChild(0)).String() == "*parser.ConstructorDeclarationContext" {
-			constructorDeclCtx := classElement.GetChild(0).(*parser.ConstructorDeclarationContext)
+		elementChild := classElement.GetChild(0)
+		if reflect.TypeOf(elementChild).String() == "*parser.ConstructorDeclarationContext" {
+			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
 			appendConstructorMethod(constructorDeclCtx)
+		} else if reflect.TypeOf(elementChild).String() == "*parser.PropertyMemberDeclarationContext"{
+			propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
+			if propertyMemberCtx.GetChildCount() >= 3 {
+				if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
+					appendNormalMethod(propertyMemberCtx)
+				}
+			}
 		}
 	}
 	classNodeQueue = append(classNodeQueue, *currentNode)
 }
 
-func appendConstructorMethod(context *parser.ConstructorDeclarationContext) {
+func appendNormalMethod(ctx *parser.PropertyMemberDeclarationContext) {
+	method := domain.NewJMethod()
+	method.Name = ctx.PropertyName().GetText()
+
+	method.StartLine = ctx.GetStart().GetLine()
+	method.StartLinePosition = ctx.GetStart().GetColumn()
+	method.StopLine = ctx.GetStop().GetLine()
+	method.StopLinePosition = ctx.GetStop().GetColumn()
+
+	currentNode.Methods = append(currentNode.Methods, method)
+}
+
+func appendConstructorMethod(ctx *parser.ConstructorDeclarationContext) {
 	method := domain.NewJMethod()
 	method.Name = "constructor"
 
-	method.AddPosition(context.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
-	if context.AccessibilityModifier() != nil  {
-		method.Modifiers = append(method.Modifiers, context.AccessibilityModifier().GetText())
+	if ctx.AccessibilityModifier() != nil  {
+		method.Modifiers = append(method.Modifiers, ctx.AccessibilityModifier().GetText())
 	}
 
 	currentNode.Methods = append(currentNode.Methods, method)

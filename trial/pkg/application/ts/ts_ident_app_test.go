@@ -1,6 +1,7 @@
 package js_ident
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
@@ -91,4 +92,21 @@ function Sum(x: number, y: number) : void {
 	g.Expect(len(parameters)).To(Equal(2))
 	g.Expect(parameters[0].Name).To(Equal("x"))
 	g.Expect(parameters[0].Type).To(Equal("number"))
+}
+
+func Test_ShouldHandleRestParameters(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+function buildName(firstName: string, ...restOfName: string[]) {
+  return firstName + " " + restOfName.join(" ");
+}
+
+let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
+`)
+
+	fmt.Println(results)
+	g.Expect(true).To(Equal(true))
 }

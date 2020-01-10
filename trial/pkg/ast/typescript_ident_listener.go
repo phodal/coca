@@ -153,6 +153,7 @@ func handlePropertyMember(elementChild antlr.Tree) {
 			Value: "",
 		}
 		field.Value = propertyMemberCtx.PropertyName().GetText()
+		field.Modifier = propertyMemberCtx.PropertyMemberBase().GetText()
 		if propertyMemberCtx.TypeAnnotation() != nil {
 			field.Type = BuildTypeAnnotation(propertyMemberCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
 		}

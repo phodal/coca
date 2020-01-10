@@ -18,8 +18,9 @@ type JClassNode struct {
 }
 
 type JField struct {
-	Type  string
-	Value string
+	Type     string
+	Value    string
+	Modifier string
 }
 
 func NewClassNode() *JClassNode {

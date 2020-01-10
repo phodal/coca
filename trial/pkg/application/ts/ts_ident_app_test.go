@@ -191,5 +191,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 
 	results := app.Analysis(string(code))
 
-	g.Expect(len(results[1].Fields)).To(Equal(5))
+	fields := results[1].Fields
+	g.Expect(len(fields)).To(Equal(5))
+	g.Expect(fields[0].Modifier).To(Equal("public"))
 }

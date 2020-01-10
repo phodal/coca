@@ -58,26 +58,46 @@ func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParame
 	var parameters []domain.JParameter = nil
 	switch childType {
 	case "*parser.RequiredParameterListContext":
-		var requireParamsList []domain.JParameter = nil
-		for _, requiredParameter := range childNode.(*parser.RequiredParameterListContext).AllRequiredParameter() {
-			paramCtx := requiredParameter.(*parser.RequiredParameterContext)
-			name := paramCtx.IdentifierOrPattern().GetText()
-			paramType := ""
-			if paramCtx.TypeAnnotation() != nil {
-				annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
-				paramType = BuildAnnotationType(annotationContext)
-			}
-			parameter := domain.JParameter{
-				Name: name,
-				Type: paramType,
-			}
-			requireParamsList = append(requireParamsList, parameter)
-		}
+		listContext := childNode.(*parser.RequiredParameterListContext)
 
-		parameters = append(parameters, requireParamsList...)
+		parameters = append(parameters, buildRequireParameterList(listContext)...)
+
+		if context.RestParameter() != nil  {
+			restParamCtx := context.RestParameter().(*parser.RestParameterContext)
+			parameters = append(parameters, buildRestParameters(restParamCtx))
+		}
 	}
 
 	return parameters
+}
+
+func buildRestParameters(ctx *parser.RestParameterContext) domain.JParameter {
+	context := ctx.GetChild(1).(*parser.RequiredParameterContext)
+	return buildRequiredParameter(context)
+}
+
+func buildRequireParameterList(listContext *parser.RequiredParameterListContext) []domain.JParameter {
+	var requireParamsList []domain.JParameter = nil
+	for _, requiredParameter := range listContext.AllRequiredParameter() {
+		paramCtx := requiredParameter.(*parser.RequiredParameterContext)
+		parameter := buildRequiredParameter(paramCtx)
+		requireParamsList = append(requireParamsList, parameter)
+	}
+	return requireParamsList
+}
+
+func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) domain.JParameter {
+	name := paramCtx.IdentifierOrPattern().GetText()
+	paramType := ""
+	if paramCtx.TypeAnnotation() != nil {
+		annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
+		paramType = BuildAnnotationType(annotationContext)
+	}
+	parameter := domain.JParameter{
+		Name: name,
+		Type: paramType,
+	}
+	return parameter
 }
 
 func BuildAnnotationType(annotationContext *parser.TypeAnnotationContext) string {

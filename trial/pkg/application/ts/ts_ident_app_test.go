@@ -106,5 +106,7 @@ function buildName(firstName: string, ...restOfName: string[]) {
 
 	firstMethod := results[0].Methods[0]
 	parameters := firstMethod.Parameters
-	g.Expect(len(parameters)).To(Equal(1))
+	g.Expect(len(parameters)).To(Equal(2))
+	g.Expect(parameters[0].Name).To(Equal("firstName"))
+	g.Expect(parameters[1].Name).To(Equal("restOfName"))
 }

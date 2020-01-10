@@ -57,6 +57,18 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	g.Expect(results[3].Class).To(Equal("default"))
 }
 
+func Test_ShouldGetClassFromModule(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/Module.ts")
+
+	results := app.Analysis(string(code))
+
+	g.Expect(len(results)).To(Equal(2))
+	g.Expect(results[0].Class).To(Equal("Employee"))
+}
+
 func Test_ShouldEnableGetClassMethod(t *testing.T) {
 	g := NewGomegaWithT(t)
 

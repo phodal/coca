@@ -71,10 +71,6 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain
 				methodSignature := memberChild.(*parser.MethodSignatureContext)
 				method := domain.NewJMethod()
 				method.Name = methodSignature.PropertyName().GetText()
-				if typeMemberCtx.Type_() != nil {
-					// todo need a case ?
-					method.Type = typeMemberCtx.Type_().GetText()
-				}
 				FillMethodFromCallSignature(methodSignature.CallSignature().(*parser.CallSignatureContext), &method)
 
 				classNode.Methods = append(classNode.Methods, method)
@@ -122,6 +118,11 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 	if heritageContext.ImplementsClause() != nil {
 		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
 		currentNode.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
+	}
+
+	if heritageContext.ClassExtendsClause() != nil {
+		referenceContext := heritageContext.ClassExtendsClause().(*parser.ClassExtendsClauseContext).TypeReference().(*parser.TypeReferenceContext)
+		currentNode.Extend = referenceContext.TypeName().GetText()
 	}
 
 	for _, classElement := range ctx.ClassTail().(*parser.ClassTailContext).AllClassElement() {

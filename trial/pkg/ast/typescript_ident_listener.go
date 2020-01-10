@@ -10,11 +10,14 @@ var currentNode *domain.JClassNode
 var classNodeQueue []domain.JClassNode
 var classNodes []domain.JClassNode
 
+var default_class = "default"
+
 type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
 }
 
 func NewTypeScriptIdentListener() *TypeScriptIdentListener {
+	classNodes = nil
 	currentNode = domain.NewClassNode()
 	return &TypeScriptIdentListener{}
 }
@@ -55,6 +58,10 @@ func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarat
 }
 
 func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
+	if currentNode.Class == "" {
+		currentNode.Class = default_class
+	}
+
 	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.MemberDotExpressionContext" {
 		memberDotExprCtx := ctx.GetChild(0).(*parser.MemberDotExpressionContext)
 		buildMemberDotExpr(memberDotExprCtx)
@@ -74,5 +81,9 @@ func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDot
 }
 
 func (s *TypeScriptIdentListener) GetNodeInfo() []domain.JClassNode {
+	if currentNode.Class == default_class {
+		classNodes = append(classNodes, *currentNode)
+		currentNode = domain.NewClassNode()
+	}
 	return classNodes
 }

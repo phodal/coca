@@ -1,7 +1,6 @@
 package js_ident
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"

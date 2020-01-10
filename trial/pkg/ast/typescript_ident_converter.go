@@ -9,8 +9,11 @@ import (
 
 func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) domain.JMethodCall {
 	call := domain.NewJMethodCall()
-	call.Class = memberDotExprCtx.GetChild(0).(*parser.IdentifierExpressionContext).GetText()
-	call.MethodName = memberDotExprCtx.IdentifierName().GetText()
+	memberChild := memberDotExprCtx.GetChild(0)
+	if reflect.TypeOf(memberChild).String() == "*parser.IdentifierExpressionContext" {
+		call.Class = memberChild.(*parser.IdentifierExpressionContext).GetText()
+		call.MethodName = memberDotExprCtx.IdentifierName().GetText()
+	}
 
 	return call
 }

@@ -1,4 +1,4 @@
-package js_ident
+package ts
 
 import (
 	. "github.com/onsi/gomega"

@@ -14,6 +14,10 @@ var JavaFileFilter = func(path string) bool {
 	return strings.HasSuffix(path, ".java")
 }
 
+var TypeScriptFileFilter = func(path string) bool {
+	return strings.HasSuffix(path, ".ts")
+}
+
 var PomXmlFilter = func(path string) bool {
 	return strings.HasSuffix(path, "pom.xml")
 }

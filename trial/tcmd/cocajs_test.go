@@ -1,4 +1,4 @@
-package cmd
+package tcmd
 
 import (
 	"github.com/phodal/coca/cocatest"

@@ -231,8 +231,10 @@ optionalParameter
     : decoratorList? ( accessibilityModifier? identifierOrPattern ('?' typeAnnotation? | typeAnnotation? initializer))
     ;
 
+// todo: align typescript grammers
 restParameter
-    : '...' singleExpression
+    : '...' requiredParameter
+    | '...' singleExpression
     ;
 
 constructSignature

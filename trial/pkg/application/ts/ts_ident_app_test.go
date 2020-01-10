@@ -1,7 +1,6 @@
 package js_ident
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
@@ -103,10 +102,9 @@ func Test_ShouldHandleRestParameters(t *testing.T) {
 function buildName(firstName: string, ...restOfName: string[]) {
   return firstName + " " + restOfName.join(" ");
 }
-
-let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
 `)
 
-	fmt.Println(results)
-	g.Expect(true).To(Equal(true))
+	firstMethod := results[0].Methods[0]
+	parameters := firstMethod.Parameters
+	g.Expect(len(parameters)).To(Equal(1))
 }

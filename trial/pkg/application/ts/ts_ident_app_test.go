@@ -85,7 +85,9 @@ function Sum(x: number, y: number) : void {
 }
 `)
 
-	parameters := results[0].Methods[0].Parameters
+	firstMethod := results[0].Methods[0]
+	parameters := firstMethod.Parameters
+	g.Expect(firstMethod.Type).To(Equal("void"))
 	g.Expect(len(parameters)).To(Equal(2))
 	g.Expect(parameters[0].Name).To(Equal("x"))
 	g.Expect(parameters[0].Type).To(Equal("number"))

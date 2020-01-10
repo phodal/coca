@@ -64,7 +64,8 @@ func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParame
 			name := paramCtx.IdentifierOrPattern().GetText()
 			paramType := ""
 			if paramCtx.TypeAnnotation() != nil {
-				paramType = paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext).Type_().GetText()
+				annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
+				paramType = BuildAnnotationType(annotationContext)
 			}
 			parameter := domain.JParameter{
 				Name: name,
@@ -77,4 +78,8 @@ func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParame
 	}
 
 	return parameters
+}
+
+func BuildAnnotationType(annotationContext *parser.TypeAnnotationContext) string {
+	return annotationContext.Type_().GetText()
 }

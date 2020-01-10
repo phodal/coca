@@ -128,5 +128,10 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 		method.Parameters = append(method.Parameters, methodParameters...)
 	}
 
+	if callSignatureContext.TypeAnnotation() != nil {
+		annotationContext := callSignatureContext.TypeAnnotation().(*parser.TypeAnnotationContext)
+		method.Type = BuildAnnotationType(annotationContext)
+	}
+
 	currentNode.Methods = append(currentNode.Methods, method)
 }

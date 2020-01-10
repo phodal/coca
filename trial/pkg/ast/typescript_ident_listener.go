@@ -59,6 +59,11 @@ func (s *TypeScriptIdentListener) EnterImportAliasDeclaration(ctx *parser.Import
 	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
 }
 
+func (s *TypeScriptIdentListener) EnterImportAll(ctx *parser.ImportAllContext) {
+	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
+	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
+}
+
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	currentNode = domain.NewClassNode()
 	currentNode.Type = "Interface"

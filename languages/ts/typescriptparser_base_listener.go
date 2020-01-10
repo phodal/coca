@@ -413,6 +413,12 @@ func (s *BaseTypeScriptParserListener) EnterImportAliasDeclaration(ctx *ImportAl
 func (s *BaseTypeScriptParserListener) ExitImportAliasDeclaration(ctx *ImportAliasDeclarationContext) {
 }
 
+// EnterImportAll is called when production importAll is entered.
+func (s *BaseTypeScriptParserListener) EnterImportAll(ctx *ImportAllContext) {}
+
+// ExitImportAll is called when production importAll is exited.
+func (s *BaseTypeScriptParserListener) ExitImportAll(ctx *ImportAllContext) {}
+
 // EnterDecoratorList is called when production decoratorList is entered.
 func (s *BaseTypeScriptParserListener) EnterDecoratorList(ctx *DecoratorListContext) {}
 

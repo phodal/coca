@@ -200,6 +200,9 @@ type TypeScriptParserListener interface {
 	// EnterImportAliasDeclaration is called when entering the importAliasDeclaration production.
 	EnterImportAliasDeclaration(c *ImportAliasDeclarationContext)
 
+	// EnterImportAll is called when entering the importAll production.
+	EnterImportAll(c *ImportAllContext)
+
 	// EnterDecoratorList is called when entering the decoratorList production.
 	EnterDecoratorList(c *DecoratorListContext)
 
@@ -811,6 +814,9 @@ type TypeScriptParserListener interface {
 
 	// ExitImportAliasDeclaration is called when exiting the importAliasDeclaration production.
 	ExitImportAliasDeclaration(c *ImportAliasDeclarationContext)
+
+	// ExitImportAll is called when exiting the importAll production.
+	ExitImportAll(c *ImportAllContext)
 
 	// ExitDecoratorList is called when exiting the decoratorList production.
 	ExitDecoratorList(c *DecoratorListContext)

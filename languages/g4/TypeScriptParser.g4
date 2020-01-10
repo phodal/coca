@@ -304,6 +304,10 @@ importAliasDeclaration
     | Identifier '=' 'require' '(' StringLiteral ')' SemiColon
     ;
 
+importAll
+    : StringLiteral
+    ;
+
 // Ext.2 Additions to 1.8: Decorators
 
 decoratorList
@@ -375,7 +379,7 @@ abstractDeclaration
     ;
 
 importStatement
-    : Import (fromBlock | importAliasDeclaration)
+    : Import (fromBlock | importAliasDeclaration | importAll)
     ;
 
 fromBlock

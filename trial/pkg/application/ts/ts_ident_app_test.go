@@ -1,7 +1,6 @@
 package js_ident
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
@@ -232,5 +231,5 @@ func Test_ShouldReturnAllImports(t *testing.T) {
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Import.ts")
 	results := app.Analysis(string(code), "")
 
-	g.Expect(len(results.Imports)).To(Equal(4))
+	g.Expect(len(results.Imports)).To(Equal(5))
 }

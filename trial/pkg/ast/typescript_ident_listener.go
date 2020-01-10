@@ -44,10 +44,18 @@ func (s *TypeScriptIdentListener) GetNodeInfo() domain.CodeFile {
 }
 
 func (s *TypeScriptIdentListener) EnterFromBlock(ctx *parser.FromBlockContext) {
-	importText := ctx.StringLiteral().GetText()
+	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
+	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
+}
+
+func UpdateImportStr(importText string) string {
 	replaceDoubleQuote := strings.ReplaceAll(importText, "\"", "")
 	replaceSingleQuote := strings.ReplaceAll(replaceDoubleQuote, "'", "")
+	return replaceSingleQuote
+}
 
+func (s *TypeScriptIdentListener) EnterImportAliasDeclaration(ctx *parser.ImportAliasDeclarationContext) {
+	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
 	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
 }
 

@@ -196,7 +196,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	g.Expect(fields[0].Modifier).To(Equal("public"))
 }
 
-func Test_ShouldReturnImports(t *testing.T) {
+func Test_ShouldReturnBlockImports(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -208,4 +208,28 @@ import { ZipCodeValidator } from "./ZipCodeValidator";
 
 	g.Expect(len(results.Imports)).To(Equal(1))
 	g.Expect(results.Imports[0]).To(Equal("./ZipCodeValidator"))
+}
+
+func Test_ShouldReturnAsImports(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+
+	results := app.Analysis(`
+import zip = require("./ZipCodeValidator");
+`, "")
+
+	g.Expect(len(results.Imports)).To(Equal(1))
+	g.Expect(results.Imports[0]).To(Equal("./ZipCodeValidator"))
+}
+
+// Todo: fix for $ and *
+func Test_ShouldReturnAllImports(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptApiApp)
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Import.ts")
+	results := app.Analysis(string(code), "")
+
+	g.Expect(len(results.Imports)).To(Equal(3))
 }

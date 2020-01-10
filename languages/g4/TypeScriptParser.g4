@@ -301,6 +301,7 @@ namespaceName
 
 importAliasDeclaration
     : Identifier '=' namespaceName SemiColon
+    | Identifier '=' 'require' '(' StringLiteral ')' SemiColon
     ;
 
 // Ext.2 Additions to 1.8: Decorators

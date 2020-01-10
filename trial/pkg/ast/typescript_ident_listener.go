@@ -139,31 +139,27 @@ func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
 			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
 			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(constructorDeclCtx))
 		case "*parser.PropertyMemberDeclarationContext":
-			handlePropertyMember(elementChild)
+			HandlePropertyMember(elementChild.(*parser.PropertyMemberDeclarationContext), currentNode)
 		}
 	}
 }
 
-func handlePropertyMember(elementChild antlr.Tree) {
-	propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
+func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, node *domain.JClassNode) {
 	callSignaturePos := 3
 	if propertyMemberCtx.PropertyName() != nil {
-		field := domain.JField{
-			Type:  "",
-			Value: "",
-		}
+		field := domain.JField{}
 		field.Value = propertyMemberCtx.PropertyName().GetText()
 		field.Modifier = propertyMemberCtx.PropertyMemberBase().GetText()
 		if propertyMemberCtx.TypeAnnotation() != nil {
 			field.Type = BuildTypeAnnotation(propertyMemberCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
 		}
-		currentNode.Fields = append(currentNode.Fields, field)
+		node.Fields = append(currentNode.Fields, field)
 	}
 
 	if propertyMemberCtx.GetChildCount() >= callSignaturePos {
 		if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
 			method := BuildMemberMethod(propertyMemberCtx)
-			currentNode.Methods = append(currentNode.Methods, method)
+			node.Methods = append(currentNode.Methods, method)
 		}
 	}
 

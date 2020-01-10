@@ -1,6 +1,7 @@
 package ast
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
@@ -63,31 +64,35 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain
 		case "*parser.PropertySignatureContext":
 			{
 				signatureCtx := typeMemberContext.(*parser.PropertySignatureContext)
-				typeType := BuildTypeAnnotation(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
-				typeValue := signatureCtx.PropertyName().(*parser.PropertyNameContext).GetText()
-
-				isArrowFunc := signatureCtx.Type_() != nil
-				if isArrowFunc {
-					method := domain.NewJMethod()
-					method.Name = typeValue
-					parameter := domain.JParameter{
-						Name: "any",
-						Type: typeType,
-					}
-					method.Parameters = append(method.Parameters, parameter)
-					method.Type = signatureCtx.Type_().GetText()
-
-					classNode.Methods = append(classNode.Methods, method)
-				} else {
-					field := &domain.JAppField{
-						Type:  typeType,
-						Value: typeValue,
-					}
-
-					classNode.Fields = append(classNode.Fields, *field)
-				}
+				BuildInterfacePropertySignature(signatureCtx, classNode)
 			}
 		}
+	}
+}
+
+func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureContext, classNode *domain.JClassNode) {
+	typeType := BuildTypeAnnotation(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
+	typeValue := signatureCtx.PropertyName().(*parser.PropertyNameContext).GetText()
+
+	isArrowFunc := signatureCtx.Type_() != nil
+	if isArrowFunc {
+		method := domain.NewJMethod()
+		method.Name = typeValue
+		parameter := domain.JParameter{
+			Name: "any",
+			Type: typeType,
+		}
+		method.Parameters = append(method.Parameters, parameter)
+		method.Type = signatureCtx.Type_().GetText()
+
+		classNode.Methods = append(classNode.Methods, method)
+	} else {
+		field := &domain.JAppField{
+			Type:  typeType,
+			Value: typeValue,
+		}
+
+		classNode.Fields = append(classNode.Fields, *field)
 	}
 }
 

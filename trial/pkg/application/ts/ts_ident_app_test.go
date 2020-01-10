@@ -118,6 +118,7 @@ export interface IPerson {
     name: string;
     gender: string;
     getSalary: (number) => number;
+    getManagerName(number): string;
 }
 `)
 

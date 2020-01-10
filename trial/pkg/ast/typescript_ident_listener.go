@@ -138,7 +138,8 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 
 func (s *TypeScriptIdentListener) handlePropertyMember(elementChild antlr.Tree) {
 	propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
-	if propertyMemberCtx.GetChildCount() >= 3 {
+	callSignaturePos := 3
+	if propertyMemberCtx.GetChildCount() >= callSignaturePos {
 		if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
 			method := BuildMemberMethod(propertyMemberCtx)
 			currentNode.Methods = append(currentNode.Methods, method)

@@ -1,6 +1,7 @@
 package js_ident
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
@@ -112,7 +113,6 @@ func Test_ShouldGetInterfaceProperty(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-
 	results := app.Analysis(`
 export interface IPerson {
     name: string;
@@ -123,9 +123,12 @@ export interface IPerson {
 `)
 
 	firstMethod := results[0].Methods[0]
+	secondMethod := results[0].Methods[1]
+
 	g.Expect(len(results[0].Fields)).To(Equal(2))
-	g.Expect(len(results[0].Methods)).To(Equal(1))
+	g.Expect(len(results[0].Methods)).To(Equal(2))
 	g.Expect(firstMethod.Name).To(Equal("getSalary"))
+	g.Expect(secondMethod.Name).To(Equal("getManagerName"))
 }
 
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {

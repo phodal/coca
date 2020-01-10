@@ -1,7 +1,6 @@
 package ast
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
@@ -58,13 +57,27 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 
 func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain.JClassNode) {
 	for _, typeMember := range ctx.AllTypeMember() {
-		typeMemberContext := typeMember.(*parser.TypeMemberContext).GetChild(0)
-		currentType := reflect.TypeOf(typeMemberContext).String()
+		typeMemberCtx := typeMember.(*parser.TypeMemberContext)
+		memberChild := typeMemberCtx.GetChild(0)
+		currentType := reflect.TypeOf(memberChild).String()
 		switch currentType {
 		case "*parser.PropertySignatureContext":
 			{
-				signatureCtx := typeMemberContext.(*parser.PropertySignatureContext)
+				signatureCtx := memberChild.(*parser.PropertySignatureContext)
 				BuildInterfacePropertySignature(signatureCtx, classNode)
+			}
+		case "*parser.MethodSignatureContext":
+			{
+				methodSignature := memberChild.(*parser.MethodSignatureContext)
+				method := domain.NewJMethod()
+				method.Name = methodSignature.PropertyName().GetText()
+				if typeMemberCtx.Type_() != nil {
+					// todo need a case ?
+					method.Type = typeMemberCtx.Type_().GetText()
+				}
+				FillMethodFromCallSignature(methodSignature.CallSignature().(*parser.CallSignatureContext), &method)
+
+				classNode.Methods = append(classNode.Methods, method)
 			}
 		}
 	}
@@ -169,6 +182,12 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
+	FillMethodFromCallSignature(callSignatureContext, &method)
+
+	currentNode.Methods = append(currentNode.Methods, method)
+}
+
+func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, method *domain.JMethod) {
 	if callSignatureContext.ParameterList() != nil {
 		parameterListContext := callSignatureContext.ParameterList().(*parser.ParameterListContext)
 		methodParameters := BuildMethodParameter(parameterListContext)
@@ -179,6 +198,4 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 		annotationContext := callSignatureContext.TypeAnnotation().(*parser.TypeAnnotationContext)
 		method.Type = BuildTypeAnnotation(annotationContext)
 	}
-
-	currentNode.Methods = append(currentNode.Methods, method)
 }

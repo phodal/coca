@@ -147,12 +147,25 @@ func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
 func handlePropertyMember(elementChild antlr.Tree) {
 	propertyMemberCtx := elementChild.(*parser.PropertyMemberDeclarationContext)
 	callSignaturePos := 3
+	if propertyMemberCtx.PropertyName() != nil {
+		field := domain.JAppField{
+			Type:  "",
+			Value: "",
+		}
+		field.Value = propertyMemberCtx.PropertyName().GetText()
+		if propertyMemberCtx.TypeAnnotation() != nil {
+			field.Type = BuildTypeAnnotation(propertyMemberCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
+		}
+		currentNode.Fields = append(currentNode.Fields, field)
+	}
+
 	if propertyMemberCtx.GetChildCount() >= callSignaturePos {
 		if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
 			method := BuildMemberMethod(propertyMemberCtx)
 			currentNode.Methods = append(currentNode.Methods, method)
 		}
 	}
+
 }
 
 func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {

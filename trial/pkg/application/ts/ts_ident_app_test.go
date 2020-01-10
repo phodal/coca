@@ -191,5 +191,5 @@ func Test_ShouldGetClassFields(t *testing.T) {
 
 	results := app.Analysis(string(code))
 
-	g.Expect(len(results[1].Fields)).To(Equal(0))
+	g.Expect(len(results[1].Fields)).To(Equal(5))
 }

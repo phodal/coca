@@ -31,6 +31,8 @@ Minus:                          '-';
 BitNot:                         '~';
 Not:                            '!';
 Multiply:                       '*';
+Lodash:                         '_';
+Dollar:                         '$';
 Divide:                         '/';
 Modulus:                        '%';
 RightShiftArithmetic:           '>>';

@@ -66,6 +66,12 @@ func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParame
 			restParamCtx := context.RestParameter().(*parser.RestParameterContext)
 			parameters = append(parameters, buildRestParameters(restParamCtx))
 		}
+	case "*parser.PredefinedTypeContext":
+		predefinedTypeContext := childNode.(*parser.PredefinedTypeContext)
+		parameters = append(parameters, domain.JParameter{
+			Name: "any",
+			Type: predefinedTypeContext.GetText(),
+		})
 	}
 
 	return parameters

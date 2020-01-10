@@ -1,7 +1,6 @@
 package js_ident
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
@@ -129,6 +128,7 @@ export interface IPerson {
 	g.Expect(len(results[0].Methods)).To(Equal(2))
 	g.Expect(firstMethod.Name).To(Equal("getSalary"))
 	g.Expect(secondMethod.Name).To(Equal("getManagerName"))
+	g.Expect(secondMethod.Parameters[0].Type).To(Equal("number"))
 }
 
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {

@@ -48,7 +48,7 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/Class.ts")
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
 	results := app.Analysis(string(code))
 
@@ -61,7 +61,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/AbstractClass.ts")
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/AbstractClass.ts")
 
 	results := app.Analysis(string(code))
 
@@ -75,7 +75,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/Module.ts")
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Module.ts")
 
 	results := app.Analysis(string(code))
 
@@ -187,7 +187,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/Class.ts")
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
 	results := app.Analysis(string(code))
 

@@ -14,7 +14,7 @@ func Test_Regression(t *testing.T) {
 
 	results := app.Analysis(string(code), "")
 
-	g.Expect(len(results.Imports)).To(Equal(1))
+	g.Expect(len(results.Imports)).To(Equal(3))
 }
 //
 //func Test_ProcessErrorGrammar(t *testing.T) {

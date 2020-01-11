@@ -383,7 +383,7 @@ importStatement
     ;
 
 fromBlock
-    : (Dollar | Lodash | Multiply | multipleImportStatement) (As identifierName)? From StringLiteral eos
+    : (Dollar | Lodash | Multiply | multipleImportStatement | identifierName) (As identifierName)? From StringLiteral eos
     ;
 
 multipleImportStatement

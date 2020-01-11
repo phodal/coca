@@ -2,6 +2,7 @@ package tcmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain"
@@ -30,6 +31,8 @@ var analysisCmd = &cobra.Command{
 		app := new(ts.TypeScriptApiApp)
 		for _, file := range files {
 			bytes, _ := ioutil.ReadFile(file)
+			fmt.Println("Process parse TypeScript file : " + file)
+
 			result := app.Analysis(string(bytes), file)
 			results = append(results, result)
 		}

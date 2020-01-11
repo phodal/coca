@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-
 func Test_Regression(t *testing.T) {
 	g := NewGomegaWithT(t)
 

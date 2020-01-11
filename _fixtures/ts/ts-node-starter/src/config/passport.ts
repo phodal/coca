@@ -1,4 +1,4 @@
-import passport from "_fixtures/ts/ts-node-starter/src/config/passport";
+import passport from "passport";
 import passportLocal from "passport-local";
 import passportFacebook from "passport-facebook";
 import _ from "lodash";

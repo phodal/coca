@@ -16,6 +16,7 @@ require (
 	github.com/onsi/ginkgo v1.10.3 // indirect
 	github.com/onsi/gomega v1.7.1
 	github.com/pkg/errors v0.8.1
+	github.com/pkg/profile v1.3.0
 	github.com/sabhiram/go-gitignore v0.0.0-20180611051255-d3107576ba94
 	github.com/spf13/cobra v0.0.5
 	github.com/yourbasic/radix v0.0.0-20180308122924-cbe1cc82e907

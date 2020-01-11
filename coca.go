@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	//defer profile.Refactoring().Stop()
+	//defer profile.Start().Stop()
 	output := os.Stdout
 	rootCmd := cmd.NewRootCmd(output)
 	_ = rootCmd.Execute()

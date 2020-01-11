@@ -649,7 +649,7 @@ lastArgument                                  // ECMAScript 6: Spread Operator
     ;
 
 expressionSequence
-    : singleExpression (',' singleExpression)*
+    : singleExpression (',' singleExpression)* ','?
     ;
 
 functionExpressionDeclaration

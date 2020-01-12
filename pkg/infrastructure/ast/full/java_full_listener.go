@@ -597,13 +597,13 @@ func isChainCall(targetType string) bool {
 }
 
 func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
-	// TODO: refactor
-	if reflect.TypeOf(ctx.GetParent()).String() == "*parser.ExpressionContext" {
-		parentCtx := ctx.GetParent().(*parser.ExpressionContext)
-		if reflect.TypeOf(parentCtx.GetParent()).String() == "*parser.VariableInitializerContext" {
-			varParent := parentCtx.GetParent().(*parser.VariableInitializerContext).GetParent()
-			if reflect.TypeOf(varParent).String() == "*parser.VariableDeclaratorContext" {
-				targetType = getTargetFromVarDecl(varParent, targetType)
+	switch parentCtx := ctx.GetParent().(type) {
+	case *parser.ExpressionContext:
+		switch parentParentCtx := parentCtx.GetParent().(type) {
+		case *parser.VariableInitializerContext:
+			switch varDeclCtx := parentParentCtx.GetParent().(type) {
+			case *parser.VariableDeclaratorContext:
+				targetType = getTargetFromVarDecl(varDeclCtx, targetType)
 			}
 		}
 	}

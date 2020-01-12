@@ -16,15 +16,15 @@ type TrialAnalysisCmdConfig struct {
 }
 
 var (
-	analysisCmdConfig TrialAnalysisCmdConfig
+	analysisTypeScriptCmdConfig TrialAnalysisCmdConfig
 )
 
-var analysisCmd = &cobra.Command{
+var analysisTypeScriptCmd = &cobra.Command{
 	Use:   "analysis",
 	Short: "analysis code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		importPath := analysisCmdConfig.Path
+		importPath := analysisTypeScriptCmdConfig.Path
 
 		var results []domain.CodeFile
 		files := cocafile.GetFilesWithFilter(importPath, cocafile.TypeScriptFileFilter)
@@ -43,7 +43,7 @@ var analysisCmd = &cobra.Command{
 }
 
 func init() {
-	trialRootCmd.AddCommand(analysisCmd)
+	trialRootCmd.AddCommand(analysisTypeScriptCmd)
 
-	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Path, "path", "p", ".", "example -p core/main")
+	analysisTypeScriptCmd.PersistentFlags().StringVarP(&analysisTypeScriptCmdConfig.Path, "path", "p", ".", "example -p core/main")
 }

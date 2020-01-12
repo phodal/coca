@@ -1,7 +1,6 @@
-package ast
+package ts
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
@@ -45,7 +44,7 @@ func (s *TypeScriptIdentListener) GetNodeInfo() domain.CodeFile {
 }
 
 func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
-	fmt.Println(ctx.GetText())
+
 }
 
 func (s *TypeScriptIdentListener) EnterFromBlock(ctx *parser.FromBlockContext) {

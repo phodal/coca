@@ -1,11 +1,11 @@
 package ts
 
 import (
-"github.com/antlr/antlr4/runtime/Go/antlr"
-parser "github.com/phodal/coca/languages/ts"
-"github.com/phodal/coca/pkg/domain"
-"reflect"
-"strings"
+	"github.com/antlr/antlr4/runtime/Go/antlr"
+	parser "github.com/phodal/coca/languages/ts"
+	"github.com/phodal/coca/pkg/domain"
+	"reflect"
+	"strings"
 )
 
 var currentNode *domain.JClassNode
@@ -25,9 +25,9 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	filePath = fileName
 	currentNode = domain.NewClassNode()
 	codeFile = domain.CodeFile{
-		FullName: filePath,
-		Imports:  nil,
-		ClassNodes:  nil,
+		FullName:   filePath,
+		Imports:    nil,
+		ClassNodes: nil,
 	}
 	return &TypeScriptIdentListener{}
 }
@@ -93,17 +93,13 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain
 		memberChild := typeMemberCtx.GetChild(0)
 		switch x := memberChild.(type) {
 		case *parser.PropertySignatureContext:
-			{
-				BuildInterfacePropertySignature(x, classNode)
-			}
+			BuildInterfacePropertySignature(x, classNode)
 		case *parser.MethodSignatureContext:
-			{
-				method := domain.NewJMethod()
-				method.Name = x.PropertyName().GetText()
-				FillMethodFromCallSignature(x.CallSignature().(*parser.CallSignatureContext), &method)
+			method := domain.NewJMethod()
+			method.Name = x.PropertyName().GetText()
+			FillMethodFromCallSignature(x.CallSignature().(*parser.CallSignatureContext), &method)
 
-				classNode.Methods = append(classNode.Methods, method)
-			}
+			classNode.Methods = append(classNode.Methods, method)
 		}
 	}
 }
@@ -172,7 +168,7 @@ func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
 }
 
 func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, node *domain.JClassNode) {
-	callSignaturePos := 3
+	callSignatureSizePos := 3
 	if propertyMemberCtx.PropertyName() != nil {
 		field := domain.JField{}
 		field.Value = propertyMemberCtx.PropertyName().GetText()
@@ -183,8 +179,9 @@ func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationCon
 		node.Fields = append(currentNode.Fields, field)
 	}
 
-	if propertyMemberCtx.GetChildCount() >= callSignaturePos {
-		if reflect.TypeOf(propertyMemberCtx.GetChild(2)).String() == "*parser.CallSignatureContext" {
+	if propertyMemberCtx.GetChildCount() >= callSignatureSizePos {
+		callSignCtxPos := 2
+		if reflect.TypeOf(propertyMemberCtx.GetChild(callSignCtxPos)).String() == "*parser.CallSignatureContext" {
 			method := BuildMemberMethod(propertyMemberCtx)
 			node.Methods = append(currentNode.Methods, method)
 		}

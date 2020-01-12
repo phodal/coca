@@ -1,11 +1,11 @@
 package ts
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain"
-	"reflect"
-	"strings"
+"github.com/antlr/antlr4/runtime/Go/antlr"
+parser "github.com/phodal/coca/languages/ts"
+"github.com/phodal/coca/pkg/domain"
+"reflect"
+"strings"
 )
 
 var currentNode *domain.JClassNode
@@ -91,19 +91,16 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain
 	for _, typeMember := range ctx.AllTypeMember() {
 		typeMemberCtx := typeMember.(*parser.TypeMemberContext)
 		memberChild := typeMemberCtx.GetChild(0)
-		currentType := reflect.TypeOf(memberChild).String()
-		switch currentType {
-		case "*parser.PropertySignatureContext":
+		switch x := memberChild.(type) {
+		case *parser.PropertySignatureContext:
 			{
-				signatureCtx := memberChild.(*parser.PropertySignatureContext)
-				BuildInterfacePropertySignature(signatureCtx, classNode)
+				BuildInterfacePropertySignature(x, classNode)
 			}
-		case "*parser.MethodSignatureContext":
+		case *parser.MethodSignatureContext:
 			{
-				methodSignature := memberChild.(*parser.MethodSignatureContext)
 				method := domain.NewJMethod()
-				method.Name = methodSignature.PropertyName().GetText()
-				FillMethodFromCallSignature(methodSignature.CallSignature().(*parser.CallSignatureContext), &method)
+				method.Name = x.PropertyName().GetText()
+				FillMethodFromCallSignature(x.CallSignature().(*parser.CallSignatureContext), &method)
 
 				classNode.Methods = append(classNode.Methods, method)
 			}
@@ -165,13 +162,11 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
 	for _, classElement := range classTailContext.AllClassElement() {
 		elementChild := classElement.GetChild(0)
-		elementTypeStr := reflect.TypeOf(elementChild).String()
-		switch elementTypeStr {
-		case "*parser.ConstructorDeclarationContext":
-			constructorDeclCtx := elementChild.(*parser.ConstructorDeclarationContext)
-			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(constructorDeclCtx))
-		case "*parser.PropertyMemberDeclarationContext":
-			HandlePropertyMember(elementChild.(*parser.PropertyMemberDeclarationContext), currentNode)
+		switch x := elementChild.(type) {
+		case *parser.ConstructorDeclarationContext:
+			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(x))
+		case *parser.PropertyMemberDeclarationContext:
+			HandlePropertyMember(x, currentNode)
 		}
 	}
 }

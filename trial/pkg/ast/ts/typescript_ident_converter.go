@@ -57,11 +57,10 @@ func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string 
 
 func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParameter {
 	childNode := context.GetChild(0)
-	childType := reflect.TypeOf(childNode).String()
 	var parameters []domain.JParameter = nil
-	switch childType {
-	case "*parser.RequiredParameterListContext":
-		listContext := childNode.(*parser.RequiredParameterListContext)
+	switch x := childNode.(type) {
+	case *parser.RequiredParameterListContext:
+		listContext := x
 
 		parameters = append(parameters, buildRequireParameterList(listContext)...)
 
@@ -69,8 +68,8 @@ func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParame
 			restParamCtx := context.RestParameter().(*parser.RestParameterContext)
 			parameters = append(parameters, buildRestParameters(restParamCtx))
 		}
-	case "*parser.PredefinedTypeContext":
-		predefinedTypeContext := childNode.(*parser.PredefinedTypeContext)
+	case *parser.PredefinedTypeContext:
+		predefinedTypeContext := x
 		parameters = append(parameters, domain.JParameter{
 			Name: "any",
 			Type: predefinedTypeContext.GetText(),

@@ -221,10 +221,6 @@ func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDot
 
 }
 
-func (s *TypeScriptIdentListener) EnterFunctionExpressionDeclaration(ctx *parser.FunctionExpressionDeclarationContext) {
-
-}
-
 func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionDeclarationContext) {
 	method := domain.NewJMethod()
 

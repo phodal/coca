@@ -2,9 +2,9 @@ package full
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/languages/java"
 	"github.com/phodal/coca/pkg/domain"
 	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
-	"github.com/phodal/coca/languages/java"
 	"reflect"
 	"strconv"
 	"strings"
@@ -613,10 +613,13 @@ func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 
 func getTargetFromVarDecl(varParent antlr.Tree, targetType string) string {
 	varDeclParent := varParent.(*parser.VariableDeclaratorContext).GetParent()
-	if reflect.TypeOf(varDeclParent).String() == "*parser.VariableDeclaratorsContext" {
-		parent := varDeclParent.(*parser.VariableDeclaratorsContext).GetParent()
-		if reflect.TypeOf(parent).String() == "*parser.LocalVariableDeclarationContext" {
-			targetType = parent.(*parser.LocalVariableDeclarationContext).TypeType().GetText()
+	switch x := varDeclParent.(type) {
+	case *parser.VariableDeclaratorsContext:
+		switch parentType := x.GetParent().(type) {
+		case *parser.LocalVariableDeclarationContext:
+			{
+				targetType = parentType.TypeType().GetText()
+			}
 		}
 	}
 	return targetType

@@ -36,7 +36,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	jsonContent, _ := json.MarshalIndent(results, "", "\t")
 	content := cmd_util.ReadFile(filepath.FromSlash(codePath + "/" + "results.json"))
 
-	g.Expect(cocatest.JSONBytesEqual(jsonContent, content)).To(Equal(true))
+	g.Expect(cocatest.JSONBytesEqual(jsonContent, content, "")).To(Equal(true))
 }
 
 func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 	"reflect"
 )
 
-func JSONBytesEqual(actual, except []byte) (bool, error) {
+func JSONBytesEqual(actual, except []byte, exceptFile string) (bool, error) {
 	var actualInterface, exceptInterface interface{}
 	if err := json.Unmarshal(actual, &actualInterface); err != nil {
 		return false, err
@@ -23,6 +23,7 @@ func JSONBytesEqual(actual, except []byte) (bool, error) {
 		if string(except) == "{}" {
 			actualStr, _ := json.MarshalIndent(actualInterface, "", "\t")
 			fmt.Println(string(actualStr))
+			ioutil.WriteFile(exceptFile, actualStr, 0644)
 		} else {
 			formatNotEqualPrint(exceptInterface, actualInterface)
 		}
@@ -59,5 +60,5 @@ func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, e
 		return false, err
 	}
 
-	return JSONBytesEqual(actual, contents)
+	return JSONBytesEqual(actual, contents, exceptFile)
 }

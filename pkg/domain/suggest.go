@@ -14,7 +14,7 @@ type Suggest struct {
 
 func NewSuggest(clz JClassNode, pattern, reason string) Suggest {
 	return Suggest{
-		File:    clz.Path,
+		File:    clz.FilePath,
 		Package: clz.Package,
 		Class:   clz.Class,
 		Pattern: pattern,

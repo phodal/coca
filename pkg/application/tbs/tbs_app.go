@@ -33,8 +33,8 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 
 			var testType = ""
 			for _, annotation := range method.Annotations {
-				checkIgnoreTest(clz.Path, annotation, &results, &testType)
-				checkEmptyTest(clz.Path, annotation, &results, method, &testType)
+				checkIgnoreTest(clz.FilePath, annotation, &results, &testType)
+				checkEmptyTest(clz.FilePath, annotation, &results, method, &testType)
 			}
 
 			var methodCallMap = make(map[string][]domain.JMethodCall)
@@ -49,9 +49,9 @@ func (a TbsApp) AnalysisPath(deps []domain.JClassNode, identifiersMap map[string
 
 				methodCallMap[methodCall.BuildFullMethodName()] = append(methodCallMap[methodCall.BuildFullMethodName()], methodCall)
 
-				checkRedundantPrintTest(clz.Path, methodCall, &results, &testType)
-				checkSleepyTest(clz.Path, methodCall, method, &results, &testType)
-				checkRedundantAssertionTest(clz.Path, methodCall, method, &results, &testType)
+				checkRedundantPrintTest(clz.FilePath, methodCall, &results, &testType)
+				checkSleepyTest(clz.FilePath, methodCall, method, &results, &testType)
+				checkRedundantAssertionTest(clz.FilePath, methodCall, method, &results, &testType)
 
 				if methodCall.HasAssertion() {
 					hasAssert = true
@@ -73,7 +73,7 @@ func checkAssert(hasAssert bool, clz domain.JClassNode, method domain.JMethod, r
 	if !hasAssert {
 		*testType = "UnknownTest"
 		tbs := TestBadSmell{
-			FileName:    clz.Path,
+			FileName:    clz.FilePath,
 			Type:        *testType,
 			Description: "",
 			Line:        method.StartLine,
@@ -127,7 +127,7 @@ func checkDuplicateAssertTest(clz domain.JClassNode, results *[]TestBadSmell, me
 	if isDuplicateAssert {
 		*testType = "DuplicateAssertTest"
 		tbs := TestBadSmell{
-			FileName:    clz.Path,
+			FileName:    clz.FilePath,
 			Type:        *testType,
 			Description: "",
 			Line:        method.StartLine,

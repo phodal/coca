@@ -57,7 +57,7 @@ func methodCallToMethodModel(call domain.JMethodCall) domain.JMethod {
 }
 
 func updateSelfRefs(node domain.JClassNode, method domain.JMethod, info *support.PackageClassInfo) {
-	path := node.Path
+	path := node.FilePath
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
 		log.Fatalln(err)

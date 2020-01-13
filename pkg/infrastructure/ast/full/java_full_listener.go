@@ -89,7 +89,7 @@ func (s *JavaFullListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
 func (s *JavaFullListener) exitBody() {
 	if currentNode.Class != "" {
 		currentNode.Fields = fields
-		currentNode.Path = fileName
+		currentNode.FilePath = fileName
 		currentNode.SetMethodFromMap(methodMap)
 	}
 
@@ -432,7 +432,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 			Package:     currentPkg,
 			Class:       text,
 			Type:        "CreatorClass",
-			Path:        "",
+			FilePath:    "",
 			Fields:      nil,
 			Methods:     nil,
 			MethodCalls: nil,

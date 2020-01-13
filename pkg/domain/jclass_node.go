@@ -6,7 +6,7 @@ type JClassNode struct {
 	Package     string
 	Class       string
 	Type        string
-	Path        string
+	FilePath    string
 	Fields      []JField
 	Methods     []JMethod
 	MethodCalls []JMethodCall

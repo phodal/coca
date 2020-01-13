@@ -3,11 +3,13 @@ package cocatest
 import (
 	"encoding/json"
 	"fmt"
+	diff "github.com/yudai/gojsondiff"
+	"github.com/yudai/gojsondiff/formatter"
+
 	"io/ioutil"
 	"reflect"
 )
 
-// JSONBytesEqual compares the JSON in two byte slices.
 func JSONBytesEqual(actual, except []byte) (bool, error) {
 	var actualInterface, exceptInterface interface{}
 	if err := json.Unmarshal(actual, &actualInterface); err != nil {
@@ -18,12 +20,27 @@ func JSONBytesEqual(actual, except []byte) (bool, error) {
 	}
 	isEqual := reflect.DeepEqual(exceptInterface, actualInterface)
 	if !isEqual {
-		exceptStr, _ := json.Marshal(exceptInterface)
-		actualStr, _ := json.Marshal(actualInterface)
-		fmt.Println(string(actualStr))
-		fmt.Println(string(exceptStr))
+		formatNotEqualPrint(exceptInterface, actualInterface)
 	}
 	return isEqual, nil
+}
+
+func formatNotEqualPrint(exceptInterface interface{}, actualInterface interface{}) {
+	exceptStr, _ := json.Marshal(exceptInterface)
+	actualStr, _ := json.Marshal(actualInterface)
+
+	differ := diff.New()
+	diffResult, _ := differ.Compare(actualStr, exceptStr)
+	config := formatter.AsciiFormatterConfig{
+		ShowArrayIndex: true,
+		Coloring:       true,
+	}
+	var aJson map[string]interface{}
+	_ = json.Unmarshal(actualStr, &aJson)
+
+	aFormatter := formatter.NewAsciiFormatter(aJson, config)
+	diffString, _ := aFormatter.Format(diffResult)
+	fmt.Println(diffString)
 }
 
 func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, error) {
@@ -39,17 +56,3 @@ func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, e
 
 	return JSONBytesEqual(actual, contents)
 }
-
-//func JSONEqual(a, b io.Reader) (bool, error) {
-//	var j, j2 interface{}
-//	d := json.NewDecoder(a)
-//	if err := d.Decode(&j); err != nil {
-//		return false, err
-//	}
-//	d = json.NewDecoder(b)
-//	if err := d.Decode(&j2); err != nil {
-//		return false, err
-//	}
-//	return reflect.DeepEqual(j2, j), nil
-//}
-//

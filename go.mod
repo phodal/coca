@@ -18,8 +18,11 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/pkg/profile v1.3.0
 	github.com/sabhiram/go-gitignore v0.0.0-20180611051255-d3107576ba94
+	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/spf13/cobra v0.0.5
 	github.com/yourbasic/radix v0.0.0-20180308122924-cbe1cc82e907
+	github.com/yudai/gojsondiff v1.0.0
+	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	golang.org/x/exp v0.0.0-20191224044220-1fea468a75e9 // indirect
 	golang.org/x/lint v0.0.0-20191125180803-fdd1cda4f05f // indirect
 	golang.org/x/tools v0.0.0-20200108203644-89082a384178 // indirect

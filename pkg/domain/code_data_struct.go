@@ -1,6 +1,6 @@
 package domain
 
-type DataStruct struct {
+type CodeDataStruct struct {
 	Name string
 	ID   string
 	MemberIds    []string

@@ -21,7 +21,7 @@ func JSONBytesEqual(actual, except []byte, exceptFile string) (bool, error) {
 	isEqual := reflect.DeepEqual(exceptInterface, actualInterface)
 	if !isEqual {
 		if string(except) == "{}" {
-			actualStr, _ := json.MarshalIndent(actualInterface, "", "\t")
+			actualStr, _ := json.MarshalIndent(actualInterface, "", "  ")
 			fmt.Println(string(actualStr))
 			ioutil.WriteFile(exceptFile, actualStr, 0644)
 		} else {
@@ -50,7 +50,7 @@ func formatNotEqualPrint(exceptInterface interface{}, actualInterface interface{
 }
 
 func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, error) {
-	actual, err := json.MarshalIndent(actualInterface, "", "\t")
+	actual, err := json.MarshalIndent(actualInterface, "", "  ")
 	if err != nil {
 		return false, err
 	}

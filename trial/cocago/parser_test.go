@@ -11,5 +11,5 @@ func Test_ParserLog(t *testing.T) {
 
 	abs, _ := filepath.Abs("../../pkg/domain/code_file.go")
 	results := ProcessFile(abs)
-	g.Expect(len(results.Members)).To(Equal(2))
+	g.Expect(len(results.Members)).To(Equal(1))
 }

@@ -15,3 +15,6 @@ antlr -Dlanguage=Go -listener JavaScriptParser.g4 -o ../js
 
 antlr -Dlanguage=Go -listener TypeScriptLexer.g4 -o ../ts
 antlr -Dlanguage=Go -listener TypeScriptParser.g4 -o ../ts
+
+antlr -Dlanguage=Go -listener GoLexer.g4 -o ../go
+antlr -Dlanguage=Go -listener GoParser.g4 -o ../go

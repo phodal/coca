@@ -1,0 +1,55 @@
+{
+  "FullName": "",
+  "PackageName": "trial",
+  "Imports": null,
+  "Members": [
+    {
+      "ID": "",
+      "Name": "",
+      "Type": "struct",
+      "Properties": [
+        {
+          "Modifiers": null,
+          "Name": "FullName",
+          "TypeName": "string",
+          "TypeType": "Identify"
+        },
+        {
+          "Modifiers": null,
+          "Name": "PackageName",
+          "TypeName": "string",
+          "TypeType": "Identify"
+        },
+        {
+          "Modifiers": null,
+          "Name": "Imports",
+          "TypeName": "string",
+          "TypeType": "ArrayType"
+        },
+        {
+          "Modifiers": null,
+          "Name": "Members",
+          "TypeName": "CodeMember",
+          "TypeType": "ArrayType"
+        },
+        {
+          "Modifiers": null,
+          "Name": "ClassNodes",
+          "TypeName": "domain.JClassNode",
+          "TypeType": "ArrayType"
+        }
+      ],
+      "ClassNodes": null,
+      "Namespace": null,
+      "FileID": "",
+      "DataStructID": "trial",
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      }
+    }
+  ],
+  "ClassNodes": null
+}

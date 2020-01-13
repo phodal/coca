@@ -2,19 +2,42 @@ package cocatest
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"reflect"
 )
 
 // JSONBytesEqual compares the JSON in two byte slices.
-func JSONBytesEqual(a, b []byte) (bool, error) {
-	var j, j2 interface{}
-	if err := json.Unmarshal(a, &j); err != nil {
+func JSONBytesEqual(actual, except []byte) (bool, error) {
+	var actualInterface, exceptInterface interface{}
+	if err := json.Unmarshal(actual, &actualInterface); err != nil {
 		return false, err
 	}
-	if err := json.Unmarshal(b, &j2); err != nil {
+	if err := json.Unmarshal(except, &exceptInterface); err != nil {
 		return false, err
 	}
-	return reflect.DeepEqual(j2, j), nil
+	isEqual := reflect.DeepEqual(exceptInterface, actualInterface)
+	if !isEqual {
+		exceptStr, _ := json.Marshal(exceptInterface)
+		actualStr, _ := json.Marshal(actualInterface)
+		fmt.Println(string(actualStr))
+		fmt.Println(string(exceptStr))
+	}
+	return isEqual, nil
+}
+
+func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, error) {
+	actual, err := json.MarshalIndent(actualInterface, "", "\t")
+	if err != nil {
+		return false, err
+	}
+
+	contents, err := ioutil.ReadFile(exceptFile)
+	if err != nil {
+		return false, err
+	}
+
+	return JSONBytesEqual(actual, contents)
 }
 
 //func JSONEqual(a, b io.Reader) (bool, error) {

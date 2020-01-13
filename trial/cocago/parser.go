@@ -1,11 +1,13 @@
 package cocago
 
 import (
+	"fmt"
 	"github.com/phodal/coca/pkg/domain/trial"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"reflect"
 )
 
 type WalkFunc func(ast.Node) (ast.Node, bool)
@@ -78,7 +80,10 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 		switch typeX := x.Elt.(type) {
 		case *ast.Ident:
 			typeName = typeX.String()
-
+		case *ast.SelectorExpr:
+			typeName = typeX.X.(*ast.Ident).String() + "." + typeX.Sel.Name
+		default:
+			fmt.Println(reflect.TypeOf(x.Elt))
 		}
 	}
 	return typeName, typeType

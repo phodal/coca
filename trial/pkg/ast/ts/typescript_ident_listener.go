@@ -46,7 +46,7 @@ func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
 
 }
 
-func (s *TypeScriptIdentListener) EnterFromBlock(ctx *parser.FromBlockContext) {
+func (s *TypeScriptIdentListener) EnterImportFromBlock(ctx *parser.ImportFromBlockContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
 	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
 }

@@ -236,8 +236,8 @@ type TypeScriptParserListener interface {
 	// EnterImportStatement is called when entering the importStatement production.
 	EnterImportStatement(c *ImportStatementContext)
 
-	// EnterFromBlock is called when entering the fromBlock production.
-	EnterFromBlock(c *FromBlockContext)
+	// EnterImportFromBlock is called when entering the importFromBlock production.
+	EnterImportFromBlock(c *ImportFromBlockContext)
 
 	// EnterMultipleImportStatement is called when entering the multipleImportStatement production.
 	EnterMultipleImportStatement(c *MultipleImportStatementContext)
@@ -851,8 +851,8 @@ type TypeScriptParserListener interface {
 	// ExitImportStatement is called when exiting the importStatement production.
 	ExitImportStatement(c *ImportStatementContext)
 
-	// ExitFromBlock is called when exiting the fromBlock production.
-	ExitFromBlock(c *FromBlockContext)
+	// ExitImportFromBlock is called when exiting the importFromBlock production.
+	ExitImportFromBlock(c *ImportFromBlockContext)
 
 	// ExitMultipleImportStatement is called when exiting the multipleImportStatement production.
 	ExitMultipleImportStatement(c *MultipleImportStatementContext)

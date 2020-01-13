@@ -379,11 +379,11 @@ abstractDeclaration
     ;
 
 importStatement
-    : Import (fromBlock | importAliasDeclaration | importAll)
+    : Import (importFromBlock | importAliasDeclaration | importAll) eos
     ;
 
-fromBlock
-    : (Dollar | Lodash | Multiply | multipleImportStatement | identifierName) (As identifierName)? From StringLiteral eos
+importFromBlock
+    : (Dollar | Lodash | Multiply | multipleImportStatement | identifierName) (As identifierName)? From StringLiteral
     ;
 
 multipleImportStatement
@@ -391,7 +391,7 @@ multipleImportStatement
     ;
 
 exportStatement
-    : Export Default? (fromBlock | statement)
+    : Export Default? (importFromBlock | statement)
     ;
 
 variableStatement

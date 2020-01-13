@@ -489,11 +489,11 @@ func (s *BaseTypeScriptParserListener) EnterImportStatement(ctx *ImportStatement
 // ExitImportStatement is called when production importStatement is exited.
 func (s *BaseTypeScriptParserListener) ExitImportStatement(ctx *ImportStatementContext) {}
 
-// EnterFromBlock is called when production fromBlock is entered.
-func (s *BaseTypeScriptParserListener) EnterFromBlock(ctx *FromBlockContext) {}
+// EnterImportFromBlock is called when production importFromBlock is entered.
+func (s *BaseTypeScriptParserListener) EnterImportFromBlock(ctx *ImportFromBlockContext) {}
 
-// ExitFromBlock is called when production fromBlock is exited.
-func (s *BaseTypeScriptParserListener) ExitFromBlock(ctx *FromBlockContext) {}
+// ExitImportFromBlock is called when production importFromBlock is exited.
+func (s *BaseTypeScriptParserListener) ExitImportFromBlock(ctx *ImportFromBlockContext) {}
 
 // EnterMultipleImportStatement is called when production multipleImportStatement is entered.
 func (s *BaseTypeScriptParserListener) EnterMultipleImportStatement(ctx *MultipleImportStatementContext) {

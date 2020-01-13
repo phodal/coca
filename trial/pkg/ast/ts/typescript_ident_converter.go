@@ -4,14 +4,14 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
-	"reflect"
 )
 
 func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) domain.JMethodCall {
 	call := domain.NewJMethodCall()
 	memberChild := memberDotExprCtx.GetChild(0)
-	if reflect.TypeOf(memberChild).String() == "*parser.IdentifierExpressionContext" {
-		call.Class = memberChild.(*parser.IdentifierExpressionContext).GetText()
+	switch x := memberChild.(type){
+	case *parser.IdentifierExpressionContext:
+		call.Class = x.GetText()
 		call.MethodName = memberDotExprCtx.IdentifierName().GetText()
 	}
 

@@ -4,7 +4,6 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
-	"reflect"
 	"strings"
 )
 
@@ -181,9 +180,10 @@ func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationCon
 
 	if propertyMemberCtx.GetChildCount() >= callSignatureSizePos {
 		callSignCtxPos := 2
-		if reflect.TypeOf(propertyMemberCtx.GetChild(callSignCtxPos)).String() == "*parser.CallSignatureContext" {
-			method := BuildMemberMethod(propertyMemberCtx)
-			node.Methods = append(currentNode.Methods, method)
+		switch propertyMemberCtx.GetChild(callSignCtxPos).(type) {
+		case *parser.CallSignatureContext:
+			node.Methods = append(currentNode.Methods, BuildMemberMethod(propertyMemberCtx))
+
 		}
 	}
 
@@ -208,9 +208,9 @@ func exitClass() {
 }
 
 func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
-	if reflect.TypeOf(ctx.GetChild(0)).String() == "*parser.MemberDotExpressionContext" {
-		call := BuildArgExpressCall(ctx.GetChild(0).(*parser.MemberDotExpressionContext))
-		currentNode.MethodCalls = append(currentNode.MethodCalls, call)
+	switch x := ctx.GetChild(0).(type) {
+	case *parser.MemberDotExpressionContext:
+		currentNode.MethodCalls = append(currentNode.MethodCalls, BuildArgExpressCall(x))
 	}
 }
 

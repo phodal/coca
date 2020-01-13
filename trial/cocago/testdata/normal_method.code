@@ -1,0 +1,18 @@
+package testdata
+
+import (
+	"github.com/antlr/antlr4/runtime/Go/antlr"
+	parser "github.com/phodal/coca/languages/ts"
+)
+
+func ProcessTsString(code string) *parser.TypeScriptParser {
+	is := antlr.NewInputStream(code)
+	return processStream(is)
+}
+
+func processStream(is antlr.CharStream) *parser.TypeScriptParser {
+	lexer := parser.NewTypeScriptLexer(is)
+	stream := antlr.NewCommonTokenStream(lexer, 0)
+	parser := parser.NewTypeScriptParser(stream)
+	return parser
+}

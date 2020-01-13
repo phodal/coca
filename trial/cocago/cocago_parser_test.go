@@ -56,3 +56,11 @@ func Test_DataStructZero(t *testing.T) {
 	results := testParser.ProcessFile("testdata/struct_type_zero.code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_type_zero.json")).To(Equal(true))
 }
+
+func Test_Method(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	var test = "normal_method"
+	results := testParser.ProcessFile("testdata/" + test + ".code")
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
+}

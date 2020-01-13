@@ -64,15 +64,8 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 
 func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {
 	recv := ""
-	for _, item := range x.Recv.List {
-		switch x := item.Type.(type) {
-		case *ast.StarExpr:
-			recv = x.X.(*ast.Ident).Name
-		case *ast.Ident:
-			recv = x.Name
-		default:
-			fmt.Println("AddFunction", reflect.TypeOf(x))
-		}
+	if x.Recv != nil {
+		recv = BuildReceiver(x, recv)
 	}
 
 	codeFunc := BuildFunction(x)
@@ -82,11 +75,46 @@ func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFil
 		if member != nil {
 			member.MethodNodes = append(member.MethodNodes, *codeFunc)
 		} else {
-			createMember()
+			createMember(currentStruct)
 			// todo
 		}
 	} else {
+		member := GetMemberFromFile(currentFile, "default")
+		if member == nil {
+			member = &trial.CodeMember{
+				DataStructID: "default",
+				Type:         "struct",
+			}
+		}
 
+		member.MethodNodes = append(member.MethodNodes, *codeFunc)
+		currentFile.Members = append(currentFile.Members, member)
+	}
+}
+
+func BuildReceiver(x *ast.FuncDecl, recv string) string {
+	for _, item := range x.Recv.List {
+		switch x := item.Type.(type) {
+		case *ast.StarExpr:
+			recv = getStarExprName(*x)
+		case *ast.Ident:
+			recv = x.Name
+		default:
+			fmt.Println("AddFunction", reflect.TypeOf(x))
+		}
+	}
+	return recv
+}
+
+func getStarExprName(starExpr ast.StarExpr) string {
+	switch x := starExpr.X.(type) {
+	case *ast.Ident:
+		return x.Name
+	case *ast.SelectorExpr:
+		return getSelectorName(*x)
+	default:
+		fmt.Println("getStarExprName", reflect.TypeOf(x))
+		return ""
 	}
 }
 
@@ -109,7 +137,7 @@ func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
 	return codeFunc
 }
 
-func createMember() {
+func createMember(codeDataStruct trial.CodeDataStruct) {
 
 }
 
@@ -129,13 +157,20 @@ func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
 		typeName, typeType := BuildPropertyField(field)
 		property := trial.CodeProperty{
 			Modifiers: nil,
-			Name:      field.Names[0].String(),
-			TypeType:  typeType,
-			TypeName:  typeName,
+			Name:     getFieldName(field),
+			TypeType: typeType,
+			TypeName: typeName,
 		}
 		properties = append(properties, property)
 	}
 	return properties
+}
+
+func getFieldName(field *ast.Field) string {
+	if len(field.Names) < 1 {
+		return ""
+	}
+	return field.Names[0].Name
 }
 
 func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
@@ -147,7 +182,7 @@ func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curren
 		typeName, typeType := BuildPropertyField(field)
 		property := trial.CodeProperty{
 			Modifiers: nil,
-			Name:      field.Names[0].String(),
+			Name:      getFieldName(field),
 			TypeType:  typeType,
 			TypeName:  typeName,
 		}
@@ -171,15 +206,22 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 		case *ast.Ident:
 			typeName = typeX.String()
 		case *ast.SelectorExpr:
-			typeName = typeX.X.(*ast.Ident).String() + "." + typeX.Sel.Name
+			typeName = getSelectorName(*typeX)
 		default:
 			fmt.Println(reflect.TypeOf(x.Elt))
 		}
 	case *ast.FuncType:
 		typeType = "Function"
 		typeName = "func"
+	case *ast.StarExpr:
+		typeName = getStarExprName(*x)
+		typeType = "Star"
 	default:
 		fmt.Println(reflect.TypeOf(x))
 	}
 	return typeName, typeType
+}
+
+func getSelectorName(typeX ast.SelectorExpr) string {
+	return typeX.X.(*ast.Ident).String() + "." + typeX.Sel.Name
 }

@@ -11,7 +11,7 @@ func Test_DataStructProperty(t *testing.T) {
 
 	results := ProcessFile("testdata/data_struct_property.code")
 	g.Expect(len(results.Members)).To(Equal(1))
-	properties := results.Members[0].Properties
+	properties := results.DataStructures[0].Properties
 
 	g.Expect(len(properties)).To(Equal(5))
 	g.Expect(properties[0].Name).To(Equal("FullName"))

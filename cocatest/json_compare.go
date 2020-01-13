@@ -20,7 +20,12 @@ func JSONBytesEqual(actual, except []byte) (bool, error) {
 	}
 	isEqual := reflect.DeepEqual(exceptInterface, actualInterface)
 	if !isEqual {
-		formatNotEqualPrint(exceptInterface, actualInterface)
+		if string(except) == "{}" {
+			actualStr, _ := json.MarshalIndent(actualInterface, "", "\t")
+			fmt.Println(string(actualStr))
+		} else {
+			formatNotEqualPrint(exceptInterface, actualInterface)
+		}
 	}
 	return isEqual, nil
 }

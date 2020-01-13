@@ -42,7 +42,6 @@ func Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
 		case *ast.TypeSpec:
 			currentStruct = trial.CodeDataStruct{}
 			currentStruct.Name = x.Name.String()
-			currentStruct.ID = f.Name.String()
 		case *ast.StructType:
 			BuildStructType(currentStruct, x, &currentFile)
 		}
@@ -54,7 +53,7 @@ func Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
 
 func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
 	member := trial.CodeMember{
-		DataStructID: currentStruct.ID,
+		DataStructID: currentStruct.Name,
 		Type:         "struct",
 	}
 	for _, field := range x.Fields.List {
@@ -66,9 +65,10 @@ func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curr
 			TypeName:  typeName,
 		}
 		member.FileID = currentFile.FullName
-		member.Properties = append(member.Properties, property)
+		currentStruct.Properties = append(currentStruct.Properties, property)
 	}
 	currentFile.Members = append(currentFile.Members, member)
+	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)
 }
 
 func BuildPropertyField(field *ast.Field) (string, string) {

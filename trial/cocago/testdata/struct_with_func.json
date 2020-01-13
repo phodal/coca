@@ -1,21 +1,10 @@
 {
   "ClassNodes": null,
-  "FullName": "testdata/struct_with_func.code",
-  "Imports": null,
-  "Members": [
+  "DataStructures": [
     {
-      "ClassNodes": null,
-      "DataStructID": "testdata",
-      "FileID": "testdata/struct_with_func.code",
       "ID": "",
-      "Name": "",
-      "Namespace": null,
-      "Position": {
-        "StartLine": 0,
-        "StartLinePosition": 0,
-        "StopLine": 0,
-        "StopLinePosition": 0
-      },
+      "MemberIds": null,
+      "Name": "Person",
       "Properties": [
         {
           "Modifiers": null,
@@ -35,7 +24,25 @@
           "TypeName": "int32",
           "TypeType": "Identify"
         }
-      ],
+      ]
+    }
+  ],
+  "FullName": "testdata/struct_with_func.code",
+  "Imports": null,
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "Person",
+      "FileID": "testdata/struct_with_func.code",
+      "ID": "",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
       "Type": "struct"
     }
   ],

@@ -1,14 +1,10 @@
 {
-  "FullName": "testdata/data_struct_property.code",
-  "PackageName": "trial",
-  "Imports": [
-    "github.com/phodal/coca/pkg/domain"
-  ],
-  "Members": [
+  "ClassNodes": null,
+  "DataStructures": [
     {
       "ID": "",
-      "Name": "",
-      "Type": "struct",
+      "MemberIds": null,
+      "Name": "CodeFile",
       "Properties": [
         {
           "Modifiers": null,
@@ -40,18 +36,29 @@
           "TypeName": "domain.JClassNode",
           "TypeType": "ArrayType"
         }
-      ],
+      ]
+    }
+  ],
+  "FullName": "testdata/data_struct_property.code",
+  "Imports": [
+    "github.com/phodal/coca/pkg/domain"
+  ],
+  "Members": [
+    {
       "ClassNodes": null,
-      "Namespace": null,
+      "DataStructID": "CodeFile",
       "FileID": "testdata/data_struct_property.code",
-      "DataStructID": "trial",
+      "ID": "",
+      "Name": "",
+      "Namespace": null,
       "Position": {
         "StartLine": 0,
         "StartLinePosition": 0,
         "StopLine": 0,
         "StopLinePosition": 0
-      }
+      },
+      "Type": "struct"
     }
   ],
-  "ClassNodes": null
+  "PackageName": "trial"
 }

@@ -1,0 +1,13 @@
+package testdata
+
+import "fmt"
+
+type person struct {
+	name       string
+	age        int
+	personfunc func()
+}
+
+func (*person) outside() {
+	fmt.Println("Declared outside and invoked!!!")
+}

@@ -35,6 +35,7 @@
       "DataStructID": "Person",
       "FileID": "testdata/struct_with_func.code",
       "ID": "",
+      "MethodNodes": null,
       "Name": "",
       "Namespace": null,
       "Position": {

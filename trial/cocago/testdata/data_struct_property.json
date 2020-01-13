@@ -51,6 +51,7 @@
       "ID": "",
       "Name": "",
       "Namespace": null,
+      "MethodNodes": null,
       "Position": {
         "StartLine": 0,
         "StartLinePosition": 0,

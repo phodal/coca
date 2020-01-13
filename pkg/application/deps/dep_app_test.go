@@ -3,7 +3,7 @@ package deps
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cocatest"
+	"github.com/phodal/coca/cocatest/testhelper"
 	"testing"
 )
 
@@ -71,7 +71,7 @@ func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/examples/api/"
-	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
+	classNodes, _, _ := testhelper.BuildAnalysisDeps(codePath)
 
 	depApp := NewDepApp()
 	importMap := depApp.BuildImportMap(classNodes)
@@ -83,7 +83,7 @@ func Test_ListUnusedImportForOneGradleFile(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/deps/maven_sample/"
-	classNodes, _, _ := cocatest.BuildAnalysisDeps(codePath)
+	classNodes, _, _ := testhelper.BuildAnalysisDeps(codePath)
 
 	mavenDeps := AnalysisMaven(codePath + "pom.xml")
 	g.Expect(len(mavenDeps)).To(Equal(6))

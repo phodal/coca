@@ -2,7 +2,7 @@ package unused
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cocatest"
+	"github.com/phodal/coca/cocatest/testhelper"
 	"path/filepath"
 	"testing"
 )
@@ -12,9 +12,9 @@ func TestRemoveUnusedImportApp_Analysis(t *testing.T) {
 
 	codePath := "../../../../_fixtures/refactor/unused"
 	codePath = filepath.FromSlash(codePath)
-	cocatest.ResetGitDir(codePath)
+	testhelper.ResetGitDir(codePath)
 
-	deps1, _, _ := cocatest.BuildAnalysisDeps(codePath)
+	deps1, _, _ := testhelper.BuildAnalysisDeps(codePath)
 	g.Expect(len(deps1[0].Imports)).To(Equal(3))
 
 	app := NewRemoveUnusedImportApp(codePath)
@@ -27,7 +27,7 @@ func TestRemoveUnusedImportApp_Analysis(t *testing.T) {
 
 	app.Refactoring(results)
 
-	deps, _, _ := cocatest.BuildAnalysisDeps(codePath)
+	deps, _, _ := testhelper.BuildAnalysisDeps(codePath)
 	g.Expect(len(deps[0].Imports)).To(Equal(0))
-	cocatest.ResetGitDir(codePath)
+	testhelper.ResetGitDir(codePath)
 }

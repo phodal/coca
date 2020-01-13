@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cocatest"
+	"github.com/phodal/coca/cocatest/testhelper"
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
 	"github.com/phodal/coca/pkg/domain"
@@ -41,7 +41,7 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/examples/api"
-	callNodes, identifiersMap, identifiers := cocatest.BuildAnalysisDeps(codePath)
+	callNodes, identifiersMap, identifiers := testhelper.BuildAnalysisDeps(codePath)
 
 	diMap := domain.BuildDIMap(identifiers, identifiersMap)
 	app := new(api.JavaApiApp)

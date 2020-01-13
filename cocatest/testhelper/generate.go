@@ -1,4 +1,4 @@
-package cocatest
+package testhelper
 
 import (
 	"github.com/phodal/coca/pkg/application/analysis"

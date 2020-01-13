@@ -1,4 +1,4 @@
-package cocatest
+package testhelper
 
 import (
 	"fmt"

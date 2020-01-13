@@ -5,6 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest"
+	"github.com/phodal/coca/cocatest/testhelper"
 	"github.com/phodal/coca/pkg/application/arch/tequila"
 	"path/filepath"
 	"testing"
@@ -14,7 +15,7 @@ func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
-	callNodes, identifiersMap, _ := cocatest.BuildAnalysisDeps(codePath)
+	callNodes, identifiersMap, _ := testhelper.BuildAnalysisDeps(codePath)
 
 	app := NewArchApp()
 	results := app.Analysis(callNodes, identifiersMap)
@@ -42,7 +43,7 @@ func TestConceptAnalyser_AnalysisWithFans(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	codePath := "../../../_fixtures/arch/step2-java"
-	callNodes, identifiersMap, _ := cocatest.BuildAnalysisDeps(codePath)
+	callNodes, identifiersMap, _ := testhelper.BuildAnalysisDeps(codePath)
 
 	app := NewArchApp()
 	result := app.Analysis(callNodes, identifiersMap)

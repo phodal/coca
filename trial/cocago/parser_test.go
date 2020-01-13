@@ -10,7 +10,7 @@ import (
 func Test_DataStructProperty(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	abs, _ := filepath.Abs("../../pkg/domain/trial/code_file.go")
+	abs, _ := filepath.Abs("testdata/data_struct_property.code")
 	results := ProcessFile(abs)
 	g.Expect(len(results.Members)).To(Equal(1))
 	properties := results.Members[0].Properties

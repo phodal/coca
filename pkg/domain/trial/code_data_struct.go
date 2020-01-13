@@ -1,7 +1,7 @@
 package trial
 
 type CodeDataStruct struct {
-	Name string
-	ID   string
-	MemberIds    []string
+	Name      string
+	ID        string
+	MemberIds []string
 }

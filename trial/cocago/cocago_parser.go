@@ -68,6 +68,10 @@ func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFil
 		switch x := item.Type.(type) {
 		case *ast.StarExpr:
 			recv = x.X.(*ast.Ident).Name
+		case *ast.Ident:
+			recv = x.Name
+		default:
+			fmt.Println("AddFunction", reflect.TypeOf(x))
 		}
 	}
 

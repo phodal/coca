@@ -49,3 +49,10 @@ func Test_DataStructWithFuncDecl(t *testing.T) {
 	results := testParser.ProcessFile("testdata/struct_with_func_decl.code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_with_func_decl.json")).To(Equal(true))
 }
+
+func Test_DataStructZero(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	results := testParser.ProcessFile("testdata/struct_type_zero.code")
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_type_zero.json")).To(Equal(true))
+}

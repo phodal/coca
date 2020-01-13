@@ -1,7 +1,6 @@
 package cocago
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
 	"os"

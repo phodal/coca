@@ -88,10 +88,19 @@ func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentF
 
 	if recv != "" {
 		member := GetMemberFromFile(currentFile, recv)
-		member.MethodNodes = append(member.MethodNodes, *codeFunc)
+		if member != nil {
+			member.MethodNodes = append(member.MethodNodes, *codeFunc)
+		} else {
+			createMember()
+			// todo
+		}
 	} else {
 
 	}
+}
+
+func createMember() {
+
 }
 
 func GetMemberFromFile(file trial.CodeFile, recv string) *trial.CodeMember {

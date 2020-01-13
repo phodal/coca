@@ -19,3 +19,11 @@ func Test_DataStructProperty(t *testing.T) {
 	g.Expect(properties[0].Name).To(Equal("FullName"))
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/data_struct_property.json")).To(Equal(true))
 }
+
+func Test_DataStructWithFuncType(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	abs, _ := filepath.Abs("testdata/struct_with_func.code")
+	results := ProcessFile(abs)
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_with_func.json")).To(Equal(true))
+}

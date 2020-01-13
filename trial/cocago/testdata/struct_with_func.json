@@ -1,0 +1,43 @@
+{
+  "ClassNodes": null,
+  "FullName": "",
+  "Imports": null,
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "testdata",
+      "FileID": "",
+      "ID": "",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Properties": [
+        {
+          "Modifiers": null,
+          "Name": "work",
+          "TypeName": "func",
+          "TypeType": "Function"
+        },
+        {
+          "Modifiers": null,
+          "Name": "name",
+          "TypeName": "string",
+          "TypeType": "Identify"
+        },
+        {
+          "Modifiers": null,
+          "Name": "age",
+          "TypeName": "int32",
+          "TypeType": "Identify"
+        }
+      ],
+      "Type": "struct"
+    }
+  ],
+  "PackageName": "testdata"
+}

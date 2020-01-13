@@ -83,6 +83,11 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 		default:
 			fmt.Println(reflect.TypeOf(x.Elt))
 		}
+	case *ast.FuncType:
+		typeType = "Function"
+		typeName = "func"
+	default:
+		fmt.Println(reflect.TypeOf(x))
 	}
 	return typeName, typeType
 }

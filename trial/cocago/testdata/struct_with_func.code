@@ -1,0 +1,7 @@
+package testdata
+
+type Person struct {
+	work func()
+	name string
+	age int32
+}

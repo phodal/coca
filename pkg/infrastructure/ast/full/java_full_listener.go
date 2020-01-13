@@ -348,27 +348,10 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *d
 			return true
 		}
 
-		methodParams := getMethodParameters(parameters)
-
-		method.Parameters = methodParams
+		method.Parameters = BuildMethodParameters(parameters)
 		updateMethod(method)
 	}
 	return false
-}
-
-func getMethodParameters(parameters parser.IFormalParametersContext) []domain.JParameter {
-	var methodParams []domain.JParameter = nil
-	parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
-	formalParameter := parameterList.AllFormalParameter()
-	for _, param := range formalParameter {
-		paramContext := param.(*parser.FormalParameterContext)
-		paramType := paramContext.TypeType().GetText()
-		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
-
-		localVars[paramValue] = paramType
-		methodParams = append(methodParams, domain.JParameter{Name: paramValue, Type: paramType})
-	}
-	return methodParams
 }
 
 func updateMethod(method *domain.JMethod) {
@@ -482,10 +465,10 @@ func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 
 func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
-	fullType, _ := warpTargetFullType(createdName)
+	fullType, _ := WarpTargetFullType(createdName)
 
 	jMethodCall := &domain.JMethodCall{
-		Package:           removeTarget(fullType),
+		Package:           RemoveTarget(fullType),
 		Type:              "CreatorClass",
 		Class:             createdName,
 		MethodName:        "",
@@ -503,7 +486,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var jMethodCall = domain.NewJMethodCall()
 
 	targetCtx := ctx.GetParent().GetChild(0).(antlr.ParseTree)
-	var targetType = parseTargetType(targetCtx.GetText())
+	var targetType = ParseTargetType(targetCtx.GetText())
 
 	if targetCtx.GetChild(0) != nil {
 		if reflect.TypeOf(targetCtx.GetChild(0)).String() == "*parser.MethodCallContext" {
@@ -514,78 +497,11 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
-	buildMethodCallLocation(&jMethodCall, ctx, callee)
-	buildMethodCallMethods(&jMethodCall, callee, targetType, ctx)
-	buildMethodCallParameters(&jMethodCall, ctx)
+	BuildMethodCallLocation(&jMethodCall, ctx, callee)
+	BuildMethodCallMethods(&jMethodCall, callee, targetType, ctx)
+	BuildMethodCallParameters(&jMethodCall, ctx)
 
 	sendResultToMethodCallMap(jMethodCall)
-}
-
-func buildMethodCallParameters(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext) {
-	if ctx.ExpressionList() != nil {
-		var parameters []string
-		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {
-			expressionCtx := expression.(*parser.ExpressionContext)
-			parameters = append(parameters, expressionCtx.GetText())
-		}
-		jMethodCall.Parameters = parameters
-	}
-}
-
-func buildMethodCallMethods(jMethodCall *domain.JMethodCall, callee string, targetType string, ctx *parser.MethodCallContext) {
-	methodName := callee
-	packageName := currentPkg
-
-	fullType, callType := warpTargetFullType(targetType)
-	if targetType == "super" || callee == "super" {
-		callType = "super"
-		targetType = currentClzExtend
-	}
-	jMethodCall.Type = callType
-
-	if fullType != "" {
-		packageName = removeTarget(fullType)
-		methodName = callee
-	} else {
-		targetType, packageName = handleEmptyFullType(ctx, targetType, methodName, packageName)
-	}
-
-	// TODO: 处理链试调用
-	// for normal builder chain call
-	if isChainCall(targetType) {
-		split := strings.Split(targetType, ".")
-		targetType = split[0]
-	}
-
-	jMethodCall.Package = packageName
-	jMethodCall.MethodName = methodName
-	jMethodCall.Class = targetType
-}
-
-func handleEmptyFullType(ctx *parser.MethodCallContext, targetType string, methodName string, packageName string) (string, string) {
-	if ctx.GetText() == targetType {
-		clz := currentClz
-		// 处理 static 方法，如 now()
-		for _, imp := range imports {
-			if strings.HasSuffix(imp, "."+methodName) {
-				packageName = imp
-				clz = ""
-			}
-		}
-
-		targetType = clz
-	} else {
-		targetType = buildSelfThisTarget(targetType)
-		targetType = buildMethodNameForBuilder(ctx, targetType)
-	}
-	return targetType, packageName
-}
-
-func buildMethodCallLocation(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext, callee string) {
-	jMethodCall.StartLine = ctx.GetStart().GetLine()
-	jMethodCall.StartLinePosition = ctx.GetStart().GetColumn()
-	jMethodCall.StopLine = ctx.GetStop().GetLine()
-	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
 }
 
 func sendResultToMethodCallMap(jMethodCall domain.JMethodCall) {
@@ -598,34 +514,6 @@ func sendResultToMethodCallMap(jMethodCall domain.JMethodCall) {
 
 func isChainCall(targetType string) bool {
 	return strings.Contains(targetType, "(") && strings.Contains(targetType, ")") && strings.Contains(targetType, ".")
-}
-
-func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
-	switch parentCtx := ctx.GetParent().(type) {
-	case *parser.ExpressionContext:
-		switch parentParentCtx := parentCtx.GetParent().(type) {
-		case *parser.VariableInitializerContext:
-			switch varDeclCtx := parentParentCtx.GetParent().(type) {
-			case *parser.VariableDeclaratorContext:
-				targetType = getTargetFromVarDecl(varDeclCtx, targetType)
-			}
-		}
-	}
-
-	return targetType
-}
-
-func getTargetFromVarDecl(ctx *parser.VariableDeclaratorContext, targetType string) string {
-	switch x := ctx.GetParent().(type) {
-	case *parser.VariableDeclaratorsContext:
-		switch parentType := x.GetParent().(type) {
-		case *parser.LocalVariableDeclarationContext:
-			{
-				targetType = parentType.TypeType().GetText()
-			}
-		}
-	}
-	return targetType
 }
 
 func buildSelfThisTarget(targetType string) string {
@@ -650,9 +538,9 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 
 		text := ctx.Expression(0).GetText()
 		methodName := ctx.IDENTIFIER().GetText()
-		targetType := parseTargetType(text)
+		targetType := ParseTargetType(text)
 
-		fullType, _ := warpTargetFullType(targetType)
+		fullType, _ := WarpTargetFullType(targetType)
 
 		startLine := ctx.GetStart().GetLine()
 		startLinePosition := ctx.GetStart().GetColumn()
@@ -660,7 +548,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLinePosition := startLinePosition + len(text)
 
 		jMethodCall := &domain.JMethodCall{
-			Package:           removeTarget(fullType),
+			Package:           RemoveTarget(fullType),
 			Type:              "lambda",
 			Class:             targetType,
 			MethodName:        methodName,
@@ -678,92 +566,18 @@ func (s *JavaFullListener) AppendClasses(classes []string) {
 	clzs = classes
 }
 
-func removeTarget(fullType string) string {
-	split := strings.Split(fullType, ".")
-	return strings.Join(split[:len(split)-1], ".")
-}
-
-func parseTargetType(targetCtx string) string {
-	targetVar := targetCtx
-	targetType := targetVar
-
-	//TODO: update this reflect
-	typeOf := reflect.TypeOf(targetCtx).String()
-	if strings.HasSuffix(typeOf, "MethodCallContext") {
-		targetType = currentClz
-	} else {
-		fieldType := mapFields[targetVar]
-		formalType := formalParameters[targetVar]
-		localVarType := localVars[targetVar]
-		if fieldType != "" {
-			targetType = fieldType
-		} else if formalType != "" {
-			targetType = formalType
-		} else if localVarType != "" {
-			targetType = localVarType
-		}
-	}
-
-	return targetType
-}
-
-func warpTargetFullType(targetType string) (string, string) {
-	callType := ""
-	if strings.EqualFold(currentClz, targetType) {
-		callType = "self"
-		return currentPkg + "." + targetType, callType
-	}
-
-	// TODO: update for array
-	split := strings.Split(targetType, ".")
-	str := split[0]
-	pureTargetType := strings.ReplaceAll(strings.ReplaceAll(str, "[", ""), "]", "")
-
-	if pureTargetType != "" {
-		for _, imp := range imports {
-			if strings.HasSuffix(imp, pureTargetType) {
-				callType = "chain"
-				return imp, callType
-			}
-		}
-	}
-
-	for _, clz := range clzs {
-		if strings.HasSuffix(clz, "."+pureTargetType) {
-			callType = "same package"
-			return clz, callType
-		}
-	}
-
-	if pureTargetType == "super" || pureTargetType == "this" {
-		for _, imp := range imports {
-			if strings.HasSuffix(imp, currentClzExtend) {
-				callType = "super"
-				return imp, callType
-			}
-		}
-	}
-
-	if _, ok := identMap[currentPkg+"."+targetType]; ok {
-		callType = "same package 2"
-		return currentPkg + "." + targetType, callType
-	}
-
-	return "", callType
-}
-
 func buildExtend(extendName string) {
-	target, _ := warpTargetFullType(extendName)
+	target, _ := WarpTargetFullType(extendName)
 	if target != "" {
 		currentNode.Extend = target
 	}
 }
 
 func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
-	target, _ := warpTargetFullType(typeType)
+	target, _ := WarpTargetFullType(typeType)
 	if target != "" {
 		jMethodCall := &domain.JMethodCall{
-			Package:           removeTarget(target),
+			Package:           RemoveTarget(target),
 			Type:              "field",
 			Class:             typeType,
 			MethodName:        "",
@@ -778,6 +592,6 @@ func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 }
 
 func buildImplement(text string) {
-	target, _ := warpTargetFullType(text)
+	target, _ := WarpTargetFullType(text)
 	currentNode.Implements = append(currentNode.Implements, target)
 }

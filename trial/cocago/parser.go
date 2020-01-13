@@ -75,7 +75,11 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 		typeName = x.String()
 	case *ast.ArrayType:
 		typeType = "ArrayType"
-		typeName = x.Elt.(*ast.Ident).String()
+		switch typeX := x.Elt.(type) {
+		case *ast.Ident:
+			typeName = typeX.String()
+
+		}
 	}
 	return typeName, typeType
 }

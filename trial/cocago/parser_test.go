@@ -9,7 +9,7 @@ import (
 func Test_ParserLog(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	abs, _ := filepath.Abs("../../pkg/domain/code_file.go")
+	abs, _ := filepath.Abs("../../pkg/domain/trial/code_file.go")
 	results := ProcessFile(abs)
 	g.Expect(len(results.Members)).To(Equal(1))
 }

@@ -87,10 +87,21 @@ func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentF
 	}
 
 	if recv != "" {
-
+		member := GetMemberFromFile(currentFile, recv)
+		member.MethodNodes = append(member.MethodNodes, *codeFunc)
 	} else {
 
 	}
+}
+
+func GetMemberFromFile(file trial.CodeFile, recv string) *trial.CodeMember {
+	var identMember *trial.CodeMember
+	for _, member := range file.Members {
+		if member.DataStructID == recv {
+			identMember = member
+		}
+	}
+	return identMember
 }
 
 func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
@@ -124,7 +135,7 @@ func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curr
 		member.FileID = currentFile.FullName
 		currentStruct.Properties = append(currentStruct.Properties, property)
 	}
-	currentFile.Members = append(currentFile.Members, member)
+	currentFile.Members = append(currentFile.Members, &member)
 	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)
 }
 

@@ -6,7 +6,7 @@ type CodeFile struct {
 	FullName       string
 	PackageName    string
 	Imports        []string
-	Members        []CodeMember
+	Members        []*CodeMember
 	ClassNodes     []domain.JClassNode
 	DataStructures []CodeDataStruct
 }

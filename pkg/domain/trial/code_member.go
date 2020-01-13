@@ -7,6 +7,7 @@ type CodeMember struct {
 	Name         string
 	Type         string
 	ClassNodes   []domain.JClassNode
+	MethodNodes  []CodeFunction
 	Namespace    []string
 	FileID       string
 	DataStructID string

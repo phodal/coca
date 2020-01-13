@@ -515,10 +515,10 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
 	buildMethodCallLocation(&jMethodCall, ctx, callee)
-	buildMethodCallMethod(&jMethodCall, callee, targetType, ctx)
+	buildMethodCallMethods(&jMethodCall, callee, targetType, ctx)
 	buildMethodCallParameters(&jMethodCall, ctx)
 
-	addMethodCallToMap(jMethodCall)
+	sendResultToMethodCallMap(jMethodCall)
 }
 
 func buildMethodCallParameters(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext) {
@@ -532,7 +532,7 @@ func buildMethodCallParameters(jMethodCall *domain.JMethodCall, ctx *parser.Meth
 	}
 }
 
-func buildMethodCallMethod(jMethodCall *domain.JMethodCall, callee string, targetType string, ctx *parser.MethodCallContext) {
+func buildMethodCallMethods(jMethodCall *domain.JMethodCall, callee string, targetType string, ctx *parser.MethodCallContext) {
 	methodName := callee
 	packageName := currentPkg
 
@@ -588,7 +588,7 @@ func buildMethodCallLocation(jMethodCall *domain.JMethodCall, ctx *parser.Method
 	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
 }
 
-func addMethodCallToMap(jMethodCall domain.JMethodCall) {
+func sendResultToMethodCallMap(jMethodCall domain.JMethodCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
@@ -670,7 +670,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 			StopLine:          stopLine,
 			StopLinePosition:  stopLinePosition,
 		}
-		addMethodCallToMap(*jMethodCall)
+		sendResultToMethodCallMap(*jMethodCall)
 	}
 }
 

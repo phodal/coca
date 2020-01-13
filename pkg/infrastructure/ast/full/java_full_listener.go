@@ -615,9 +615,8 @@ func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 	return targetType
 }
 
-func getTargetFromVarDecl(varParent antlr.Tree, targetType string) string {
-	varDeclParent := varParent.(*parser.VariableDeclaratorContext).GetParent()
-	switch x := varDeclParent.(type) {
+func getTargetFromVarDecl(ctx *parser.VariableDeclaratorContext, targetType string) string {
+	switch x := ctx.GetParent().(type) {
 	case *parser.VariableDeclaratorsContext:
 		switch parentType := x.GetParent().(type) {
 		case *parser.LocalVariableDeclarationContext:

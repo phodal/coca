@@ -30,7 +30,7 @@ func formatNotEqualPrint(exceptInterface interface{}, actualInterface interface{
 	actualStr, _ := json.Marshal(actualInterface)
 
 	differ := diff.New()
-	diffResult, _ := differ.Compare(actualStr, exceptStr)
+	diffResult, _ := differ.Compare(exceptStr, actualStr)
 	config := formatter.AsciiFormatterConfig{
 		ShowArrayIndex: true,
 		Coloring:       true,

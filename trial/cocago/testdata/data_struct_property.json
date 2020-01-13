@@ -1,5 +1,5 @@
 {
-  "FullName": "",
+  "FullName": "testdata/data_struct_property.code",
   "PackageName": "trial",
   "Imports": [
     "github.com/phodal/coca/pkg/domain"
@@ -43,7 +43,7 @@
       ],
       "ClassNodes": null,
       "Namespace": null,
-      "FileID": "",
+      "FileID": "testdata/data_struct_property.code",
       "DataStructID": "trial",
       "Position": {
         "StartLine": 0,

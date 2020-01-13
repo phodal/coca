@@ -1,12 +1,12 @@
 {
   "ClassNodes": null,
-  "FullName": "",
+  "FullName": "testdata/struct_with_func.code",
   "Imports": null,
   "Members": [
     {
       "ClassNodes": null,
       "DataStructID": "testdata",
-      "FileID": "",
+      "FileID": "testdata/struct_with_func.code",
       "ID": "",
       "Name": "",
       "Namespace": null,

@@ -3,15 +3,13 @@ package cocago
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
-	"path/filepath"
 	"testing"
 )
 
 func Test_DataStructProperty(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	abs, _ := filepath.Abs("testdata/data_struct_property.code")
-	results := ProcessFile(abs)
+	results := ProcessFile("testdata/data_struct_property.code")
 	g.Expect(len(results.Members)).To(Equal(1))
 	properties := results.Members[0].Properties
 
@@ -23,7 +21,6 @@ func Test_DataStructProperty(t *testing.T) {
 func Test_DataStructWithFuncType(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	abs, _ := filepath.Abs("testdata/struct_with_func.code")
-	results := ProcessFile(abs)
+	results := ProcessFile("testdata/struct_with_func.code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_with_func.json")).To(Equal(true))
 }

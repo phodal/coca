@@ -7,26 +7,30 @@ import (
 	"go/parser"
 	"go/token"
 	"io/ioutil"
+	"path/filepath"
 	"reflect"
 )
 
 type WalkFunc func(ast.Node) (ast.Node, bool)
 
 func ProcessFile(fileName string) trial.CodeFile {
-	content, _ := ioutil.ReadFile(fileName)
+
+	absPath, _ := filepath.Abs(fileName)
+	content, _ := ioutil.ReadFile(absPath)
 
 	fset := token.NewFileSet()
-	f, err := parser.ParseFile(fset, "src.go", string(content), 0)
+	f, err := parser.ParseFile(fset, fileName, string(content), 0)
 	if err != nil {
 		panic(err)
 	}
 
-	return Visitor(f, fset)
+	return Visitor(f, fset, fileName)
 }
 
-func Visitor(f *ast.File, fset *token.FileSet) trial.CodeFile {
+func Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
 	var currentStruct trial.CodeDataStruct
 	var currentFile trial.CodeFile
+	currentFile.FullName = fileName
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
 		case *ast.File:
@@ -61,6 +65,7 @@ func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curr
 			TypeType:  typeType,
 			TypeName:  typeName,
 		}
+		member.FileID = currentFile.FullName
 		member.Properties = append(member.Properties, property)
 	}
 	currentFile.Members = append(currentFile.Members, member)

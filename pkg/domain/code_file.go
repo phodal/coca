@@ -7,16 +7,6 @@ type CodePosition struct {
 	StopLinePosition  int
 }
 
-type CodeMember struct {
-	ID           string
-	Name         string
-	ClassNodes   []JClassNode
-	Namespace    []string
-	FileID       string
-	DataStructID string
-	Position     CodePosition
-}
-
 type CodeFile struct {
 	FullName   string
 	Imports    []string

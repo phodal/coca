@@ -11,10 +11,15 @@ import (
 	"reflect"
 )
 
-type WalkFunc func(ast.Node) (ast.Node, bool)
+type CocagoParser struct {
 
-func ProcessFile(fileName string) trial.CodeFile {
+}
 
+func NewCocagoParser() *CocagoParser {
+	return &CocagoParser{}
+}
+
+func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 	absPath, _ := filepath.Abs(fileName)
 	content, _ := ioutil.ReadFile(absPath)
 
@@ -24,10 +29,10 @@ func ProcessFile(fileName string) trial.CodeFile {
 		panic(err)
 	}
 
-	return Visitor(f, fset, fileName)
+	return n.Visitor(f, fset, fileName)
 }
 
-func Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
+func (n *CocagoParser)Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
 	var currentStruct trial.CodeDataStruct
 	var currentFile trial.CodeFile
 	currentFile.FullName = fileName

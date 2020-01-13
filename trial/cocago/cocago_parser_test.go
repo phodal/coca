@@ -4,13 +4,31 @@ import (
 	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
+	"os"
 	"testing"
 )
+
+func TestMain(m *testing.M) {
+	setup()
+	code := m.Run()
+	shutdown()
+	os.Exit(code)
+}
+
+var testParser *CocagoParser
+
+func setup() {
+	testParser = NewCocagoParser()
+}
+
+func shutdown() {
+	testParser = nil
+}
 
 func Test_DataStructProperty(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	results := ProcessFile("testdata/data_struct_property.code")
+	results := testParser.ProcessFile("testdata/data_struct_property.code")
 	g.Expect(len(results.Members)).To(Equal(1))
 	properties := results.DataStructures[0].Properties
 
@@ -22,14 +40,14 @@ func Test_DataStructProperty(t *testing.T) {
 func Test_DataStructWithFuncType(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	results := ProcessFile("testdata/struct_with_func.code")
+	results := testParser.ProcessFile("testdata/struct_with_func.code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_with_func.json")).To(Equal(true))
 }
 
 func Test_DataStructWithFuncDecl(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	results := ProcessFile("testdata/struct_with_func_decl.code")
+	results := testParser.ProcessFile("testdata/struct_with_func_decl.code")
 	fmt.Println(results)
 	//g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_with_func_decl.json")).To(Equal(true))
 	g.Expect(true).To(Equal(true))

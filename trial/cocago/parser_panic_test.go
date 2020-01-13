@@ -12,5 +12,5 @@ func Test_ShouldPainWhenReadFileError(t *testing.T) {
 
 func errorReadFile() {
 	abs, _ := filepath.Abs("../../pkg/domain/code_file.go2")
-	ProcessFile(abs)
+	testParser.ProcessFile(abs)
 }

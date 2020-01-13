@@ -1,54 +1,54 @@
 {
-	"ClassNodes": null,
-	"DataStructures": null,
-	"FullName": "testdata/nested_method.code",
-	"Imports": [
-		"fmt"
-	],
-	"Members": [
-		{
-			"ClassNodes": null,
-			"DataStructID": "default",
-			"FileID": "",
-			"ID": "",
-			"MethodNodes": [
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": [
-						{
-							"Class": "",
-							"MethodName": "",
-							"Package": "",
-							"Parameters": [
-								{
-									"Modifiers": null,
-									"Name": "",
-									"TypeName": "\"Hello World!\"",
-									"TypeType": "STRING"
-								}
-							],
-							"Type": ""
-						}
-					],
-					"Modifiers": null,
-					"Name": "f",
-					"Override": false,
-					"Parameters": null,
-					"ReturnTypes": null
-				}
-			],
-			"Name": "",
-			"Namespace": null,
-			"Position": {
-				"StartLine": 0,
-				"StartLinePosition": 0,
-				"StopLine": 0,
-				"StopLinePosition": 0
-			},
-			"Type": "method"
-		}
-	],
-	"PackageName": "testdata"
+  "ClassNodes": null,
+  "DataStructures": null,
+  "FullName": "testdata/nested_method.code",
+  "Imports": [
+    "fmt"
+  ],
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "default",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": [
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": [
+            {
+              "Class": "foo",
+              "MethodName": "var",
+              "Package": "",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "Name": "",
+                  "TypeName": "\"Hello World!\"",
+                  "TypeType": "STRING"
+                }
+              ],
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "Name": "f",
+          "Override": false,
+          "Parameters": null,
+          "ReturnTypes": null
+        }
+      ],
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "method"
+    }
+  ],
+  "PackageName": "testdata"
 }

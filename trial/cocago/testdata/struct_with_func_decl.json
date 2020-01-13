@@ -1,64 +1,71 @@
 {
-  "ClassNodes": null,
-  "DataStructures": [
-    {
-      "ID": "",
-      "MemberIds": null,
-      "Name": "person",
-      "Properties": [
-        {
-          "Modifiers": null,
-          "Name": "name",
-          "TypeName": "string",
-          "TypeType": "Identify"
-        },
-        {
-          "Modifiers": null,
-          "Name": "age",
-          "TypeName": "int",
-          "TypeType": "Identify"
-        },
-        {
-          "Modifiers": null,
-          "Name": "personfunc",
-          "TypeName": "func",
-          "TypeType": "Function"
-        }
-      ]
-    }
-  ],
-  "FullName": "testdata/struct_with_func_decl.code",
-  "Imports": [
-    "fmt"
-  ],
-  "Members": [
-    {
-      "ClassNodes": null,
-      "DataStructID": "person",
-      "FileID": "testdata/struct_with_func_decl.code",
-      "ID": "",
-      "MethodNodes": [
-        {
-          "Annotations": null,
-          "Creators": null,
-          "MethodCalls": null,
-          "Modifiers": null,
-          "Name": "outside",
-          "Override": false,
-          "Parameters": null,
-          "ReturnTypes": null
-        }
-      ],
-      "Name": "",
-      "Namespace": null,
-      "Position": {
-        "StartLine": 0,
-        "StartLinePosition": 0,
-        "StopLine": 0,
-        "StopLinePosition": 0
-      },
-      "Type": "struct"
-    }
-  ],
-  "PackageName": "testdata"
+	"ClassNodes": null,
+	"DataStructures": [
+		{
+			"ID": "",
+			"MemberIds": null,
+			"Name": "person",
+			"Properties": [
+				{
+					"Modifiers": null,
+					"Name": "name",
+					"TypeName": "string",
+					"TypeType": "Identify"
+				},
+				{
+					"Modifiers": null,
+					"Name": "age",
+					"TypeName": "int",
+					"TypeType": "Identify"
+				},
+				{
+					"Modifiers": null,
+					"Name": "personfunc",
+					"TypeName": "func",
+					"TypeType": "Function"
+				}
+			]
+		}
+	],
+	"FullName": "testdata/struct_with_func_decl.code",
+	"Imports": [
+		"fmt"
+	],
+	"Members": [
+		{
+			"ClassNodes": null,
+			"DataStructID": "person",
+			"FileID": "testdata/struct_with_func_decl.code",
+			"ID": "",
+			"MethodNodes": [
+				{
+					"Annotations": null,
+					"Creators": null,
+					"MethodCalls": [
+						{
+							"Class": "fmt",
+							"MethodName": "Println",
+							"Package": "",
+							"Type": ""
+						}
+					],
+					"Modifiers": null,
+					"Name": "outside",
+					"Override": false,
+					"Parameters": null,
+					"ReturnTypes": null
+				}
+			],
+			"Name": "",
+			"Namespace": null,
+			"Position": {
+				"StartLine": 0,
+				"StartLinePosition": 0,
+				"StopLine": 0,
+				"StopLinePosition": 0
+			},
+			"Type": "struct"
+		}
+	],
+	"PackageName": "testdata"
 }

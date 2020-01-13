@@ -44,32 +44,35 @@ func Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
 			currentStruct.Name = x.Name.String()
 		case *ast.StructType:
 			BuildStructType(currentStruct, x, &currentFile)
-
 		case *ast.FuncDecl:
-			funcName := x.Name.String()
-			recv := ""
-			for _, item := range x.Recv.List {
-				switch x := item.Type.(type) {
-				case *ast.StarExpr:
-					recv = x.X.(*ast.Ident).Name
-				}
-			}
-
-			if recv != "" {
-
-			} else {
-				member := trial.CodeMember{
-					DataStructID: currentStruct.Name,
-					Type:         "function",
-					Name:         funcName,
-				}
-				currentFile.Members = append(currentFile.Members, member)
-			}
+			BuildFunction(currentStruct, x, currentFile)
 		}
 		return true
 	})
 
 	return currentFile
+}
+
+func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {
+	funcName := x.Name.String()
+	recv := ""
+	for _, item := range x.Recv.List {
+		switch x := item.Type.(type) {
+		case *ast.StarExpr:
+			recv = x.X.(*ast.Ident).Name
+		}
+	}
+
+	if recv != "" {
+
+	} else {
+		member := trial.CodeMember{
+			DataStructID: currentStruct.Name,
+			Type:         "function",
+			Name:         funcName,
+		}
+		currentFile.Members = append(currentFile.Members, member)
+	}
 }
 
 func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {

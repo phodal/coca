@@ -13,6 +13,3 @@ type CodeFunction struct {
 
 type CodeAnnotation struct {
 }
-
-type CodeParameter struct {
-}

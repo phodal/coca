@@ -20,6 +20,14 @@
               "Class": "fmt",
               "MethodName": "Println",
               "Package": "",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "Name": "",
+                  "TypeName": "\"hello, world\"",
+                  "TypeType": "STRING"
+                }
+              ],
               "Type": ""
             }
           ],

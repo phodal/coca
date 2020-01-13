@@ -5,4 +5,5 @@ type CodeCall struct {
 	Type       string
 	Class      string
 	MethodName string
+	Parameters []CodeProperty
 }

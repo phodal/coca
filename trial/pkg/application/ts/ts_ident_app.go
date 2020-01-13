@@ -10,8 +10,7 @@ import (
 func processStream(is antlr.CharStream) *parser.TypeScriptParser {
 	lexer := parser.NewTypeScriptLexer(is)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
-	parser := parser.NewTypeScriptParser(stream)
-	return parser
+	return parser.NewTypeScriptParser(stream)
 }
 
 func ProcessTsString(code string) *parser.TypeScriptParser {

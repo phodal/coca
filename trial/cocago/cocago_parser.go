@@ -144,25 +144,39 @@ func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
 	}
 
 	for _, item := range x.Body.List {
-		switch it := item.(type) {
-		case *ast.ExprStmt:
-			switch expr := it.X.(type) {
-			case *ast.CallExpr:
-				selector, selName := BuildExpr(expr.Fun.(ast.Expr))
-				call := trial.CodeCall{
-					Package:    "",
-					Type:       "",
-					Class:      selector,
-					MethodName: selName,
-				}
-
-				codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
-			}
-		default:
-			fmt.Println("methodCall", reflect.TypeOf(it))
-		}
+		BuildMethodCall(item, codeFunc)
 	}
 	return codeFunc
+}
+
+func BuildMethodCall(item ast.Stmt, codeFunc *trial.CodeFunction) {
+	switch it := item.(type) {
+	case *ast.ExprStmt:
+		switch expr := it.X.(type) {
+		case *ast.CallExpr:
+			selector, selName := BuildExpr(expr.Fun.(ast.Expr))
+			call := trial.CodeCall{
+				Package:    "",
+				Type:       "",
+				Class:      selector,
+				MethodName: selName,
+			}
+
+			for _, arg := range expr.Args {
+				value, kind := BuildExpr(arg.(ast.Expr))
+				property := &trial.CodeProperty{
+					TypeName: value,
+					TypeType: kind,
+				}
+
+				call.Parameters = append(call.Parameters, *property)
+			}
+
+			codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
+		}
+	default:
+		fmt.Println("methodCall", reflect.TypeOf(it))
+	}
 }
 
 func BuildExpr(expr ast.Expr) (string, string) {

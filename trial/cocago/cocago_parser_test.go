@@ -25,6 +25,7 @@ func shutdown() {
 }
 
 func Test_DataStructProperty(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	results := testParser.ProcessFile("testdata/data_struct_property.code")
@@ -37,6 +38,7 @@ func Test_DataStructProperty(t *testing.T) {
 }
 
 func Test_DataStructWithFuncType(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	results := testParser.ProcessFile("testdata/struct_with_func.code")
@@ -44,6 +46,7 @@ func Test_DataStructWithFuncType(t *testing.T) {
 }
 
 func Test_DataStructWithFuncDecl(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	results := testParser.ProcessFile("testdata/struct_with_func_decl.code")
@@ -51,6 +54,7 @@ func Test_DataStructWithFuncDecl(t *testing.T) {
 }
 
 func Test_DataStructZero(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	results := testParser.ProcessFile("testdata/struct_type_zero.code")
@@ -58,6 +62,7 @@ func Test_DataStructZero(t *testing.T) {
 }
 
 func Test_Method(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	var test = "normal_method"

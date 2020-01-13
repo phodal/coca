@@ -7,6 +7,7 @@ import (
 )
 
 func Test_ShouldPainWhenReadFileError(t *testing.T) {
+	t.Parallel()
 	cocatest.AssertPanic(t, errorReadFile)
 }
 

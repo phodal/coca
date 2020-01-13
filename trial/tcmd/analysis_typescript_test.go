@@ -8,7 +8,7 @@ import (
 func Test_AnalysisCmd(t *testing.T) {
 	tests := []testcase.CmdTestCase{{
 		Name:   "analysis",
-		Cmd:    "analysis -p ../../_fixtures/ts/grammar",
+		Cmd:    "analysis -p ../../_fixtures/ts/grammar/Class.ts",
 		Golden: "",
 	}}
 	RunTrialTestCmd(t, tests)

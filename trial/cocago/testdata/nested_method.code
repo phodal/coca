@@ -1,0 +1,11 @@
+package testdata
+
+import "fmt"
+
+func f() {
+	foo := func(s string) {
+		fmt.Println(s)
+	}
+
+	foo("Hello World!")
+}

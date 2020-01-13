@@ -1,19 +1,14 @@
 {
 	"ClassNodes": null,
-	"DataStructures": [
-		{
-			"ID": "",
-			"MemberIds": null,
-			"Name": "O",
-			"Properties": null
-		}
+	"DataStructures": null,
+	"FullName": "testdata/nested_method.code",
+	"Imports": [
+		"fmt"
 	],
-	"FullName": "testdata/struct_type_zero.code",
-	"Imports": null,
 	"Members": [
 		{
 			"ClassNodes": null,
-			"DataStructID": "O",
+			"DataStructID": "default",
 			"FileID": "",
 			"ID": "",
 			"MethodNodes": [
@@ -21,9 +16,24 @@
 					"Annotations": null,
 					"Creators": null,
 					"InnerFunctions": null,
-					"MethodCalls": null,
+					"MethodCalls": [
+						{
+							"Class": "",
+							"MethodName": "",
+							"Package": "",
+							"Parameters": [
+								{
+									"Modifiers": null,
+									"Name": "",
+									"TypeName": "\"Hello World!\"",
+									"TypeType": "STRING"
+								}
+							],
+							"Type": ""
+						}
+					],
 					"Modifiers": null,
-					"Name": "typee",
+					"Name": "f",
 					"Override": false,
 					"Parameters": null,
 					"ReturnTypes": null
@@ -37,7 +47,7 @@
 				"StopLine": 0,
 				"StopLinePosition": 0
 			},
-			"Type": "struct"
+			"Type": "method"
 		}
 	],
 	"PackageName": "testdata"

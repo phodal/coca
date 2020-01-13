@@ -61,7 +61,7 @@ func Test_DataStructZero(t *testing.T) {
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/struct_type_zero.json")).To(Equal(true))
 }
 
-func Test_Method(t *testing.T) {
+func Test_NormalMethod(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
@@ -75,6 +75,15 @@ func Test_MethodCallWithHelloWorld(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	var test = "hello_world"
+	results := testParser.ProcessFile("testdata/" + test + ".code")
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
+}
+
+func Test_NestedMethod(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	var test = "nested_method"
 	results := testParser.ProcessFile("testdata/" + test + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
 }

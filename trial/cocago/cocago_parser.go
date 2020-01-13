@@ -39,7 +39,11 @@ func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *trial.CodeFile {
 	var currentStruct trial.CodeDataStruct
 	var currentFile trial.CodeFile
+	var currentFunc *trial.CodeFunction
+
 	currentFile.FullName = fileName
+	var funcType = ""
+
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
 		case *ast.Ident:
@@ -56,12 +60,17 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.StructType:
 			AddStructType(currentStruct, x, &currentFile)
 		case *ast.FuncDecl:
-			AddFunction(currentStruct, x, &currentFile)
-		case *ast.CallExpr:
-			//fmt.Println(x.Fun, x.Args)
+			funcType = "FuncDecl"
+			currentFunc = AddFunctionDecl(currentStruct, x, &currentFile)
+		case *ast.FuncType:
+			if funcType != "FuncDecl" {
+				AddNestedFunction(currentFunc, x)
+			}
+
+			funcType = ""
 		default:
 			if reflect.TypeOf(x) != nil {
-				//fmt.Println("Visitor", reflect.TypeOf(x))
+				fmt.Println("Visitor case ", reflect.TypeOf(x))
 			}
 		}
 		return true
@@ -70,12 +79,15 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
-func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile *trial.CodeFile) {
+func AddNestedFunction(currentFunc *trial.CodeFunction, x *ast.FuncType) {
+
+}
+
+func AddFunctionDecl(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile *trial.CodeFile) *trial.CodeFunction {
 	recv := ""
 	if x.Recv != nil {
 		recv = BuildReceiver(x, recv)
 	}
-
 	codeFunc := BuildFunction(x)
 
 	if recv != "" {
@@ -98,6 +110,8 @@ func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFil
 		member.MethodNodes = append(member.MethodNodes, *codeFunc)
 		currentFile.Members = append(currentFile.Members, member)
 	}
+
+	return codeFunc
 }
 
 func BuildReceiver(x *ast.FuncDecl, recv string) string {
@@ -108,7 +122,7 @@ func BuildReceiver(x *ast.FuncDecl, recv string) string {
 		case *ast.Ident:
 			recv = x.Name
 		default:
-			fmt.Println("AddFunction", reflect.TypeOf(x))
+			fmt.Println("AddFunctionDecl", reflect.TypeOf(x))
 		}
 	}
 	return recv
@@ -132,24 +146,20 @@ func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
 	}
 
 	if x.Type.Params != nil {
-		fieldList := x.Type.Params.List
-		properties := BuildFieldToProperty(fieldList)
-		codeFunc.Parameters = append(codeFunc.Parameters, properties...)
+		codeFunc.Parameters = append(codeFunc.Parameters, BuildFieldToProperty(x.Type.Params.List)...)
 	}
 
 	if x.Type.Results != nil {
-		fieldList := x.Type.Results.List
-		properties := BuildFieldToProperty(fieldList)
-		codeFunc.ReturnTypes = append(codeFunc.Parameters, properties...)
+		codeFunc.ReturnTypes = append(codeFunc.Parameters, BuildFieldToProperty(x.Type.Results.List)...)
 	}
 
 	for _, item := range x.Body.List {
-		BuildMethodCall(item, codeFunc)
+		BuildMethodCall(codeFunc, item)
 	}
 	return codeFunc
 }
 
-func BuildMethodCall(item ast.Stmt, codeFunc *trial.CodeFunction) {
+func BuildMethodCall(codeFunc *trial.CodeFunction, item ast.Stmt) {
 	switch it := item.(type) {
 	case *ast.ExprStmt:
 		switch expr := it.X.(type) {

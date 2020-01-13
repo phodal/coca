@@ -54,7 +54,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.StructType:
 			AddStructType(currentStruct, x, &currentFile)
 		case *ast.FuncDecl:
-			AddFunction(currentStruct, x, currentFile)
+			AddFunction(currentStruct, x, &currentFile)
 		}
 		return true
 	})
@@ -62,7 +62,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
-func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {
+func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile *trial.CodeFile) {
 	recv := ""
 	if x.Recv != nil {
 		recv = BuildReceiver(x, recv)
@@ -71,7 +71,7 @@ func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFil
 	codeFunc := BuildFunction(x)
 
 	if recv != "" {
-		member := GetMemberFromFile(currentFile, recv)
+		member := GetMemberFromFile(*currentFile, recv)
 		if member != nil {
 			member.MethodNodes = append(member.MethodNodes, *codeFunc)
 		} else {
@@ -79,11 +79,11 @@ func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFil
 			// todo
 		}
 	} else {
-		member := GetMemberFromFile(currentFile, "default")
+		member := GetMemberFromFile(*currentFile, "default")
 		if member == nil {
 			member = &trial.CodeMember{
 				DataStructID: "default",
-				Type:         "struct",
+				Type:         "method",
 			}
 		}
 
@@ -208,7 +208,7 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 		case *ast.SelectorExpr:
 			typeName = getSelectorName(*typeX)
 		default:
-			fmt.Println(reflect.TypeOf(x.Elt))
+			fmt.Println("BuildPropertyField ArrayType", reflect.TypeOf(x.Elt))
 		}
 	case *ast.FuncType:
 		typeType = "Function"
@@ -216,8 +216,10 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 	case *ast.StarExpr:
 		typeName = getStarExprName(*x)
 		typeType = "Star"
+	case *ast.SelectorExpr:
+		typeName = getSelectorName(*x)
 	default:
-		fmt.Println(reflect.TypeOf(x))
+		fmt.Println("BuildPropertyField", reflect.TypeOf(x))
 	}
 	return typeName, typeType
 }

@@ -15,5 +15,6 @@ type CodeMember struct {
 type CodeProperty struct {
 	Modifiers []string
 	Name      string
-	Type      string
+	TypeName  string
+	TypeType  string
 }

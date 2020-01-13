@@ -1,0 +1,45 @@
+{
+  "ClassNodes": null,
+  "DataStructures": null,
+  "FullName": "testdata/hello_world.code",
+  "Imports": [
+    "fmt"
+  ],
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "default",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": [
+        {
+          "Annotations": null,
+          "Creators": null,
+          "MethodCalls": [
+            {
+              "Class": "fmt",
+              "MethodName": "Println",
+              "Package": "",
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "Name": "main",
+          "Override": false,
+          "Parameters": null,
+          "ReturnTypes": null
+        }
+      ],
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "method"
+    }
+  ],
+  "PackageName": "main"
+}

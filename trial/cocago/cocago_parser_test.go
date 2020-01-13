@@ -69,3 +69,12 @@ func Test_Method(t *testing.T) {
 	results := testParser.ProcessFile("testdata/" + test + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
 }
+
+func Test_MethodCallWithHelloWorld(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	var test = "hello_world"
+	results := testParser.ProcessFile("testdata/" + test + ".code")
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
+}

@@ -4,7 +4,7 @@ type CodeFunction struct {
 	Name          string
 	ReturnTypes   []CodeProperty
 	Parameters    []CodeProperty
-	MethodCalls   []CodeMethodCall
+	MethodCalls   []CodeCall
 	Override      bool
 	Annotations   []CodeAnnotation
 	Modifiers     []string
@@ -12,9 +12,6 @@ type CodeFunction struct {
 }
 
 type CodeAnnotation struct {
-}
-
-type CodeMethodCall struct {
 }
 
 type CodeParameter struct {

@@ -42,6 +42,8 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	currentFile.FullName = fileName
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
+		case *ast.Ident:
+
 		case *ast.File:
 			currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
@@ -55,6 +57,12 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			AddStructType(currentStruct, x, &currentFile)
 		case *ast.FuncDecl:
 			AddFunction(currentStruct, x, &currentFile)
+		case *ast.CallExpr:
+			//fmt.Println(x.Fun, x.Args)
+		default:
+			if reflect.TypeOf(x) != nil {
+				//fmt.Println("Visitor", reflect.TypeOf(x))
+			}
 		}
 		return true
 	})
@@ -134,7 +142,41 @@ func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
 		properties := BuildFieldToProperty(fieldList)
 		codeFunc.ReturnTypes = append(codeFunc.Parameters, properties...)
 	}
+
+	for _, item := range x.Body.List {
+		switch it := item.(type) {
+		case *ast.ExprStmt:
+			switch expr := it.X.(type) {
+			case *ast.CallExpr:
+				selector, selName := BuildExpr(expr.Fun.(ast.Expr))
+				call := trial.CodeCall{
+					Package:    "",
+					Type:       "",
+					Class:      selector,
+					MethodName: selName,
+				}
+
+				codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
+			}
+		default:
+			fmt.Println("methodCall", reflect.TypeOf(it))
+		}
+	}
 	return codeFunc
+}
+
+func BuildExpr(expr ast.Expr) (string, string) {
+	switch x := expr.(type) {
+	case *ast.SelectorExpr:
+		selector := x.X.(*ast.Ident).String()
+		selName := x.Sel.Name
+		return selector, selName
+	case *ast.BasicLit:
+		return x.Value, x.Kind.String()
+	default:
+		fmt.Println("BuildExpr", reflect.TypeOf(x))
+	}
+	return "", ""
 }
 
 func createMember(codeDataStruct trial.CodeDataStruct) {
@@ -157,9 +199,9 @@ func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
 		typeName, typeType := BuildPropertyField(field)
 		property := trial.CodeProperty{
 			Modifiers: nil,
-			Name:     getFieldName(field),
-			TypeType: typeType,
-			TypeName: typeName,
+			Name:      getFieldName(field),
+			TypeType:  typeType,
+			TypeName:  typeName,
 		}
 		properties = append(properties, property)
 	}
@@ -171,26 +213,6 @@ func getFieldName(field *ast.Field) string {
 		return ""
 	}
 	return field.Names[0].Name
-}
-
-func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
-	member := trial.CodeMember{
-		DataStructID: currentStruct.Name,
-		Type:         "struct",
-	}
-	for _, field := range x.Fields.List {
-		typeName, typeType := BuildPropertyField(field)
-		property := trial.CodeProperty{
-			Modifiers: nil,
-			Name:      getFieldName(field),
-			TypeType:  typeType,
-			TypeName:  typeName,
-		}
-		member.FileID = currentFile.FullName
-		currentStruct.Properties = append(currentStruct.Properties, property)
-	}
-	currentFile.Members = append(currentFile.Members, &member)
-	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)
 }
 
 func BuildPropertyField(field *ast.Field) (string, string) {

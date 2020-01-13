@@ -38,20 +38,7 @@ func Visitor(f *ast.File, fset *token.FileSet) domain.CodeFile {
 			currentStruct.Name = x.Name.String()
 			currentStruct.ID = f.Name.String()
 		case *ast.StructType:
-			member := domain.CodeMember{
-				DataStructID: currentStruct.ID,
-				Type: "struct",
-			}
-			for _, field := range x.Fields.List {
-				fmt.Println(field.Names, field.Type)
-				property := domain.CodeProperty{
-					Modifiers: nil,
-					Name:      field.Names[0].String(),
-					Type:      "",
-				}
-				member.Properties = append(member.Properties, property)
-			}
-			currentFile.Members = append(currentFile.Members, member)
+			BuildStructType(currentStruct, x, &currentFile)
 		}
 		if s != "" {
 			//fmt.Printf("%s:\t%s\n", fset.Position(n.Pos()), s)
@@ -60,4 +47,21 @@ func Visitor(f *ast.File, fset *token.FileSet) domain.CodeFile {
 	})
 
 	return currentFile
+}
+
+func BuildStructType(currentStruct domain.CodeDataStruct, x *ast.StructType, currentFile *domain.CodeFile) {
+	member := domain.CodeMember{
+		DataStructID: currentStruct.ID,
+		Type:         "struct",
+	}
+	for _, field := range x.Fields.List {
+		fmt.Println(field.Names, field.Type)
+		property := domain.CodeProperty{
+			Modifiers: nil,
+			Name:      field.Names[0].String(),
+			Type:      "",
+		}
+		member.Properties = append(member.Properties, property)
+	}
+	currentFile.Members = append(currentFile.Members, member)
 }

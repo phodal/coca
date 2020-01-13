@@ -28,21 +28,19 @@ func Visitor(f *ast.File, fset *token.FileSet) trial.CodeFile {
 	var currentStruct trial.CodeDataStruct
 	var currentFile trial.CodeFile
 	ast.Inspect(f, func(n ast.Node) bool {
-		var s string
 		switch x := n.(type) {
 		case *ast.File:
 			currentFile.PackageName = x.Name.String()
-		case *ast.Ident:
-			s = x.Name
+		case *ast.ImportSpec:
+			path := x.Path.Value
+			cleanPath := path[1 : len(path)-1]
+			currentFile.Imports = append(currentFile.Imports, cleanPath)
 		case *ast.TypeSpec:
 			currentStruct = trial.CodeDataStruct{}
 			currentStruct.Name = x.Name.String()
 			currentStruct.ID = f.Name.String()
 		case *ast.StructType:
 			BuildStructType(currentStruct, x, &currentFile)
-		}
-		if s != "" {
-			//fmt.Printf("%s:\t%s\n", fset.Position(n.Pos()), s)
 		}
 		return true
 	})

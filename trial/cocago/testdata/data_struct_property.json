@@ -1,7 +1,9 @@
 {
   "FullName": "",
   "PackageName": "trial",
-  "Imports": null,
+  "Imports": [
+    "github.com/phodal/coca/pkg/domain"
+  ],
   "Members": [
     {
       "ID": "",

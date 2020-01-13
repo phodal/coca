@@ -7,6 +7,7 @@ options {
 }
 
 
+HashBangLine:                   { p.IsStartOfFile()}? '#!' ~[\r\n\u2028\u2029]*; // only allowed at start
 MultiLineComment:               '/*' .*? '*/'             -> channel(HIDDEN);
 SingleLineComment:              '//' ~[\r\n\u2028\u2029]* -> channel(HIDDEN);
 RegularExpressionLiteral:       '/' RegularExpressionFirstChar RegularExpressionChar* {p.IsRegexPossible()}? '/' IdentifierPart*;
@@ -35,6 +36,9 @@ Lodash:                         '_';
 Dollar:                         '$';
 Divide:                         '/';
 Modulus:                        '%';
+Power:                          '**';
+NullCoalesce:                   '??';
+Hashtag:                        '#';
 RightShiftArithmetic:           '>>';
 LeftShiftArithmetic:            '<<';
 RightShiftLogical:              '>>>';
@@ -63,6 +67,7 @@ BitAndAssign:                   '&=';
 BitXorAssign:                   '^=';
 BitOrAssign:                    '|=';
 ARROW:                          '=>';
+PowerAssign:                    '**=';
 
 /// Null Literals
 
@@ -129,6 +134,8 @@ Super:                          'super';
 Const:                          'const';
 Export:                         'export';
 Import:                         'import';
+
+Await:                          'await';
 
 /// The following tokens are also considered to be FutureReservedWords
 /// when parsing strict mode

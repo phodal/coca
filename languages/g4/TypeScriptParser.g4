@@ -404,7 +404,7 @@ variableDeclarationList
     ;
 
 variableDeclaration
-    : ( Identifier | arrayLiteral | objectLiteral) typeAnnotation? singleExpression? ('=' typeParameters? singleExpression)? // ECMAScript 6: Array & Object Matching
+    : assignable typeAnnotation? singleExpression? ('=' typeParameters? singleExpression)? // ECMAScript 6: Array & Object Matching
     ;
 
 emptyStatement_
@@ -425,9 +425,10 @@ iterationStatement
     | While '(' expressionSequence ')' statement                                                                # WhileStatement
     | For '(' expressionSequence? SemiColon expressionSequence? SemiColon expressionSequence? ')' statement     # ForStatement
     | For '(' varModifier variableDeclarationList SemiColon expressionSequence? SemiColon expressionSequence? ')'
-          statement                                                                                             # ForVarStatement
-    | For '(' singleExpression (In | Identifier{p.p("of")}?) expressionSequence ')' statement                # ForInStatement
-    | For '(' varModifier variableDeclaration (In | Identifier{p.p("of")}?) expressionSequence ')' statement # ForVarInStatement
+statement                                                                                             # ForVarStatement
+    | For Await? '(' singleExpression (In | Identifier{p.p("of")}?) expressionSequence ')' statement                # ForInStatement
+    | For Await? '(' varModifier variableDeclaration (In | Identifier{p.p("of")}?) expressionSequence ')' statement # ForVarInStatement
+    // strange, 'of' is an identifier. and p.p("of") not work in sometime.
     ;
 
 varModifier
@@ -489,7 +490,13 @@ tryStatement
     ;
 
 catchProduction
-    : Catch '(' Identifier ')' block
+    : Catch ('(' assignable? ')')? block
+    ;
+
+assignable
+    : Identifier
+    | arrayLiteral
+    | objectLiteral
     ;
 
 finallyProduction
@@ -501,7 +508,7 @@ debuggerStatement
     ;
 
 functionDeclaration
-    : Function Identifier callSignature ( ('{' functionBody '}') | SemiColon)
+    : Async? Function '*'?  Identifier callSignature ( ('{' functionBody '}') | SemiColon)
     ;
 
 //Ovveride ECMA
@@ -534,9 +541,9 @@ classElement
     ;
 
 propertyMemberDeclaration
-    : propertyMemberBase propertyName typeAnnotation? initializer? SemiColon
-    | propertyMemberBase propertyName callSignature ( ('{' functionBody '}') | SemiColon)
-    | propertyMemberBase (getAccessor | setAccessor)
+    : propertyMemberBase '*'? '#'?  propertyName typeAnnotation? initializer? SemiColon
+    | propertyMemberBase '*'? '#'?  propertyName callSignature ( ('{' functionBody '}') | SemiColon)
+    | propertyMemberBase '*'? '#'?  (getAccessor | setAccessor)
     | abstractDeclaration
     ;
 
@@ -616,6 +623,7 @@ objectLiteral
 propertyAssignment
     : propertyName (':' |'=') singleExpression                # PropertyExpressionAssignment
     | '[' singleExpression ']' ':' singleExpression           # ComputedPropertyExpressionAssignment
+    | Async? '*'? propertyName '(' formalParameterList?  ')'  '{' functionBody '}'  # FunctionProperty
     | getAccessor                                             # PropertyGetter
     | setAccessor                                             # PropertySetter
     | generatorMethod                                         # MethodProperty
@@ -635,13 +643,11 @@ propertyName
     : identifierName
     | StringLiteral
     | numericLiteral
+    | '[' singleExpression ']'
     ;
 
 arguments
-    : '('(
-          singleExpression (',' singleExpression)* (',' lastArgument)? |
-          lastArgument
-       )?')'
+    : '('(singleExpression (',' singleExpression)* (',' lastArgument)? | lastArgument)?')'
     ;
 
 lastArgument                                  // ECMAScript 6: Spread Operator
@@ -653,7 +659,7 @@ expressionSequence
     ;
 
 functionExpressionDeclaration
-    : Function Identifier? '(' formalParameterList? ')' typeAnnotation? '{' functionBody '}'
+    : Async? Function Identifier? '(' formalParameterList? ')' typeAnnotation? '{' functionBody '}'
     ;
 
 singleExpression
@@ -661,11 +667,11 @@ singleExpression
     | arrowFunctionDeclaration                                               # ArrowFunctionExpression   // ECMAScript 6
     | Class Identifier? classTail                                            # ClassExpression
     | singleExpression '[' expressionSequence ']'                            # MemberIndexExpression
-    | singleExpression '.' identifierName                                    # MemberDotExpression
+    | singleExpression '?'? '.' '#'? identifierName                          # MemberDotExpression
     | singleExpression arguments                                             # ArgumentsExpression
     | New singleExpression typeArguments? arguments?                         # NewExpression
-    | singleExpression {p.notLineTerminator()}? '++'                      # PostIncrementExpression
-    | singleExpression {p.notLineTerminator()}? '--'                      # PostDecreaseExpression
+    | singleExpression {p.notLineTerminator()}? '++'                         # PostIncrementExpression
+    | singleExpression {p.notLineTerminator()}? '--'                         # PostDecreaseExpression
     | Delete singleExpression                                                # DeleteExpression
     | Void singleExpression                                                  # VoidExpression
     | Typeof singleExpression                                                # TypeofExpression
@@ -675,6 +681,7 @@ singleExpression
     | '-' singleExpression                                                   # UnaryMinusExpression
     | '~' singleExpression                                                   # BitNotExpression
     | '!' singleExpression                                                   # NotExpression
+    | Await singleExpression                                                 # AwaitExpression
     | singleExpression ('*' | '/' | '%') singleExpression                    # MultiplicativeExpression
     | singleExpression ('+' | '-') singleExpression                          # AdditiveExpression
     | singleExpression ('<<' | '>>' | '>>>') singleExpression                # BitShiftExpression
@@ -688,8 +695,9 @@ singleExpression
     | singleExpression '&&' singleExpression                                 # LogicalAndExpression
     | singleExpression '||' singleExpression                                 # LogicalOrExpression
     | singleExpression '?' singleExpression ':' singleExpression             # TernaryExpression
-    | singleExpression '=' singleExpression                                  # AssignmentExpression
-    | singleExpression assignmentOperator singleExpression                   # AssignmentOperatorExpression
+    | singleExpression '??' singleExpression                                 # CoalesceExpression
+    | <assoc=right> singleExpression '=' singleExpression                    # AssignmentExpression
+    | <assoc=right> singleExpression assignmentOperator singleExpression     # AssignmentOperatorExpression
     | singleExpression TemplateStringLiteral                                 # TemplateStringExpression  // ECMAScript 6
     | iteratorBlock                                                          # IteratorsExpression // ECMAScript 6
     | generatorBlock                                                         # GeneratorsExpression // ECMAScript 6
@@ -731,6 +739,7 @@ assignmentOperator
     | '&='
     | '^='
     | '|='
+    | '**='
     ;
 
 literal
@@ -808,6 +817,9 @@ keyword
     | Protected
     | Static
     | Yield
+    | Await
+    | From
+    | As
     ;
 
 getter

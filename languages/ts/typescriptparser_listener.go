@@ -326,6 +326,9 @@ type TypeScriptParserListener interface {
 	// EnterCatchProduction is called when entering the catchProduction production.
 	EnterCatchProduction(c *CatchProductionContext)
 
+	// EnterAssignable is called when entering the assignable production.
+	EnterAssignable(c *AssignableContext)
+
 	// EnterFinallyProduction is called when entering the finallyProduction production.
 	EnterFinallyProduction(c *FinallyProductionContext)
 
@@ -413,6 +416,9 @@ type TypeScriptParserListener interface {
 	// EnterComputedPropertyExpressionAssignment is called when entering the ComputedPropertyExpressionAssignment production.
 	EnterComputedPropertyExpressionAssignment(c *ComputedPropertyExpressionAssignmentContext)
 
+	// EnterFunctionProperty is called when entering the FunctionProperty production.
+	EnterFunctionProperty(c *FunctionPropertyContext)
+
 	// EnterPropertyGetter is called when entering the PropertyGetter production.
 	EnterPropertyGetter(c *PropertyGetterContext)
 
@@ -484,6 +490,9 @@ type TypeScriptParserListener interface {
 
 	// EnterArgumentsExpression is called when entering the ArgumentsExpression production.
 	EnterArgumentsExpression(c *ArgumentsExpressionContext)
+
+	// EnterAwaitExpression is called when entering the AwaitExpression production.
+	EnterAwaitExpression(c *AwaitExpressionContext)
 
 	// EnterThisExpression is called when entering the ThisExpression production.
 	EnterThisExpression(c *ThisExpressionContext)
@@ -586,6 +595,9 @@ type TypeScriptParserListener interface {
 
 	// EnterVoidExpression is called when entering the VoidExpression production.
 	EnterVoidExpression(c *VoidExpressionContext)
+
+	// EnterCoalesceExpression is called when entering the CoalesceExpression production.
+	EnterCoalesceExpression(c *CoalesceExpressionContext)
 
 	// EnterArrowFunctionDeclaration is called when entering the arrowFunctionDeclaration production.
 	EnterArrowFunctionDeclaration(c *ArrowFunctionDeclarationContext)
@@ -941,6 +953,9 @@ type TypeScriptParserListener interface {
 	// ExitCatchProduction is called when exiting the catchProduction production.
 	ExitCatchProduction(c *CatchProductionContext)
 
+	// ExitAssignable is called when exiting the assignable production.
+	ExitAssignable(c *AssignableContext)
+
 	// ExitFinallyProduction is called when exiting the finallyProduction production.
 	ExitFinallyProduction(c *FinallyProductionContext)
 
@@ -1028,6 +1043,9 @@ type TypeScriptParserListener interface {
 	// ExitComputedPropertyExpressionAssignment is called when exiting the ComputedPropertyExpressionAssignment production.
 	ExitComputedPropertyExpressionAssignment(c *ComputedPropertyExpressionAssignmentContext)
 
+	// ExitFunctionProperty is called when exiting the FunctionProperty production.
+	ExitFunctionProperty(c *FunctionPropertyContext)
+
 	// ExitPropertyGetter is called when exiting the PropertyGetter production.
 	ExitPropertyGetter(c *PropertyGetterContext)
 
@@ -1099,6 +1117,9 @@ type TypeScriptParserListener interface {
 
 	// ExitArgumentsExpression is called when exiting the ArgumentsExpression production.
 	ExitArgumentsExpression(c *ArgumentsExpressionContext)
+
+	// ExitAwaitExpression is called when exiting the AwaitExpression production.
+	ExitAwaitExpression(c *AwaitExpressionContext)
 
 	// ExitThisExpression is called when exiting the ThisExpression production.
 	ExitThisExpression(c *ThisExpressionContext)
@@ -1201,6 +1222,9 @@ type TypeScriptParserListener interface {
 
 	// ExitVoidExpression is called when exiting the VoidExpression production.
 	ExitVoidExpression(c *VoidExpressionContext)
+
+	// ExitCoalesceExpression is called when exiting the CoalesceExpression production.
+	ExitCoalesceExpression(c *CoalesceExpressionContext)
 
 	// ExitArrowFunctionDeclaration is called when exiting the arrowFunctionDeclaration production.
 	ExitArrowFunctionDeclaration(c *ArrowFunctionDeclarationContext)

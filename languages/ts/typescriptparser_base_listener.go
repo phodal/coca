@@ -673,6 +673,12 @@ func (s *BaseTypeScriptParserListener) EnterCatchProduction(ctx *CatchProduction
 // ExitCatchProduction is called when production catchProduction is exited.
 func (s *BaseTypeScriptParserListener) ExitCatchProduction(ctx *CatchProductionContext) {}
 
+// EnterAssignable is called when production assignable is entered.
+func (s *BaseTypeScriptParserListener) EnterAssignable(ctx *AssignableContext) {}
+
+// ExitAssignable is called when production assignable is exited.
+func (s *BaseTypeScriptParserListener) ExitAssignable(ctx *AssignableContext) {}
+
 // EnterFinallyProduction is called when production finallyProduction is entered.
 func (s *BaseTypeScriptParserListener) EnterFinallyProduction(ctx *FinallyProductionContext) {}
 
@@ -859,6 +865,12 @@ func (s *BaseTypeScriptParserListener) EnterComputedPropertyExpressionAssignment
 func (s *BaseTypeScriptParserListener) ExitComputedPropertyExpressionAssignment(ctx *ComputedPropertyExpressionAssignmentContext) {
 }
 
+// EnterFunctionProperty is called when production FunctionProperty is entered.
+func (s *BaseTypeScriptParserListener) EnterFunctionProperty(ctx *FunctionPropertyContext) {}
+
+// ExitFunctionProperty is called when production FunctionProperty is exited.
+func (s *BaseTypeScriptParserListener) ExitFunctionProperty(ctx *FunctionPropertyContext) {}
+
 // EnterPropertyGetter is called when production PropertyGetter is entered.
 func (s *BaseTypeScriptParserListener) EnterPropertyGetter(ctx *PropertyGetterContext) {}
 
@@ -1010,6 +1022,12 @@ func (s *BaseTypeScriptParserListener) EnterArgumentsExpression(ctx *ArgumentsEx
 
 // ExitArgumentsExpression is called when production ArgumentsExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitArgumentsExpression(ctx *ArgumentsExpressionContext) {}
+
+// EnterAwaitExpression is called when production AwaitExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterAwaitExpression(ctx *AwaitExpressionContext) {}
+
+// ExitAwaitExpression is called when production AwaitExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitAwaitExpression(ctx *AwaitExpressionContext) {}
 
 // EnterThisExpression is called when production ThisExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterThisExpression(ctx *ThisExpressionContext) {}
@@ -1230,6 +1248,12 @@ func (s *BaseTypeScriptParserListener) EnterVoidExpression(ctx *VoidExpressionCo
 
 // ExitVoidExpression is called when production VoidExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitVoidExpression(ctx *VoidExpressionContext) {}
+
+// EnterCoalesceExpression is called when production CoalesceExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterCoalesceExpression(ctx *CoalesceExpressionContext) {}
+
+// ExitCoalesceExpression is called when production CoalesceExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitCoalesceExpression(ctx *CoalesceExpressionContext) {}
 
 // EnterArrowFunctionDeclaration is called when production arrowFunctionDeclaration is entered.
 func (s *BaseTypeScriptParserListener) EnterArrowFunctionDeclaration(ctx *ArrowFunctionDeclarationContext) {

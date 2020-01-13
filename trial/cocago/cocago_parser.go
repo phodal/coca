@@ -11,11 +11,14 @@ import (
 	"reflect"
 )
 
+var currentPackage *trial.CodePackage
+
 type CocagoParser struct {
 
 }
 
 func NewCocagoParser() *CocagoParser {
+	currentPackage = &trial.CodePackage{}
 	return &CocagoParser{}
 }
 
@@ -29,10 +32,12 @@ func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 		panic(err)
 	}
 
-	return n.Visitor(f, fset, fileName)
+	codeFile := n.Visitor(f, fset, fileName)
+	currentPackage.CodeFiles = append(currentPackage.CodeFiles, *codeFile)
+	return *codeFile
 }
 
-func (n *CocagoParser)Visitor(f *ast.File, fset *token.FileSet, fileName string) trial.CodeFile {
+func (n *CocagoParser)Visitor(f *ast.File, fset *token.FileSet, fileName string) *trial.CodeFile {
 	var currentStruct trial.CodeDataStruct
 	var currentFile trial.CodeFile
 	currentFile.FullName = fileName
@@ -55,7 +60,7 @@ func (n *CocagoParser)Visitor(f *ast.File, fset *token.FileSet, fileName string)
 		return true
 	})
 
-	return currentFile
+	return &currentFile
 }
 
 func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {

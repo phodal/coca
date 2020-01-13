@@ -52,9 +52,9 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			currentStruct = trial.CodeDataStruct{}
 			currentStruct.Name = x.Name.String()
 		case *ast.StructType:
-			BuildStructType(currentStruct, x, &currentFile)
+			AddStructType(currentStruct, x, &currentFile)
 		case *ast.FuncDecl:
-			BuildFunction(currentStruct, x, currentFile)
+			AddFunction(currentStruct, x, currentFile)
 		}
 		return true
 	})
@@ -62,16 +62,33 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
-func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {
-	codeFunc := &trial.CodeFunction{
-		Name: x.Name.String(),
-	}
+func AddFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {
 	recv := ""
 	for _, item := range x.Recv.List {
 		switch x := item.Type.(type) {
 		case *ast.StarExpr:
 			recv = x.X.(*ast.Ident).Name
 		}
+	}
+
+	codeFunc := BuildFunction(x)
+
+	if recv != "" {
+		member := GetMemberFromFile(currentFile, recv)
+		if member != nil {
+			member.MethodNodes = append(member.MethodNodes, *codeFunc)
+		} else {
+			createMember()
+			// todo
+		}
+	} else {
+
+	}
+}
+
+func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
+	codeFunc := &trial.CodeFunction{
+		Name: x.Name.String(),
 	}
 
 	if x.Type.Params != nil {
@@ -85,18 +102,7 @@ func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentF
 		properties := BuildFieldToProperty(fieldList)
 		codeFunc.ReturnTypes = append(codeFunc.Parameters, properties...)
 	}
-
-	if recv != "" {
-		member := GetMemberFromFile(currentFile, recv)
-		if member != nil {
-			member.MethodNodes = append(member.MethodNodes, *codeFunc)
-		} else {
-			createMember()
-			// todo
-		}
-	} else {
-
-	}
+	return codeFunc
 }
 
 func createMember() {
@@ -128,7 +134,7 @@ func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
 	return properties
 }
 
-func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
+func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
 	member := trial.CodeMember{
 		DataStructID: currentStruct.Name,
 		Type:         "struct",

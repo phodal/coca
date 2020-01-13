@@ -1,4 +1,4 @@
-package domain
+package trial
 
 type CodeDataStruct struct {
 	Name string

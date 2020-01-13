@@ -4,6 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/trial"
 	"strings"
 )
 
@@ -13,7 +14,7 @@ var classNodes []domain.JClassNode
 
 var defaultClass = "default"
 var filePath string
-var codeFile domain.CodeFile
+var codeFile trial.CodeFile
 
 type TypeScriptIdentListener struct {
 	parser.BaseTypeScriptParserListener
@@ -23,7 +24,7 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	classNodes = nil
 	filePath = fileName
 	currentNode = domain.NewClassNode()
-	codeFile = domain.CodeFile{
+	codeFile = trial.CodeFile{
 		FullName:   filePath,
 		Imports:    nil,
 		ClassNodes: nil,
@@ -31,7 +32,7 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	return &TypeScriptIdentListener{}
 }
 
-func (s *TypeScriptIdentListener) GetNodeInfo() domain.CodeFile {
+func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
 	if currentNode.IsNotEmpty() {
 		currentNode.Class = defaultClass
 		classNodes = append(classNodes, *currentNode)

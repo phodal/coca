@@ -1,7 +1,7 @@
 package cocago
 
 import (
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/trial"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -10,7 +10,7 @@ import (
 
 type WalkFunc func(ast.Node) (ast.Node, bool)
 
-func ProcessFile(fileName string) domain.CodeFile {
+func ProcessFile(fileName string) trial.CodeFile {
 	content, _ := ioutil.ReadFile(fileName)
 
 	fset := token.NewFileSet()
@@ -22,9 +22,9 @@ func ProcessFile(fileName string) domain.CodeFile {
 	return Visitor(f, fset)
 }
 
-func Visitor(f *ast.File, fset *token.FileSet) domain.CodeFile {
-	var currentStruct domain.CodeDataStruct
-	var currentFile domain.CodeFile
+func Visitor(f *ast.File, fset *token.FileSet) trial.CodeFile {
+	var currentStruct trial.CodeDataStruct
+	var currentFile trial.CodeFile
 	ast.Inspect(f, func(n ast.Node) bool {
 		var s string
 		switch x := n.(type) {
@@ -33,7 +33,7 @@ func Visitor(f *ast.File, fset *token.FileSet) domain.CodeFile {
 		case *ast.Ident:
 			s = x.Name
 		case *ast.TypeSpec:
-			currentStruct = domain.CodeDataStruct{}
+			currentStruct = trial.CodeDataStruct{}
 			currentStruct.Name = x.Name.String()
 			currentStruct.ID = f.Name.String()
 		case *ast.StructType:
@@ -48,14 +48,14 @@ func Visitor(f *ast.File, fset *token.FileSet) domain.CodeFile {
 	return currentFile
 }
 
-func BuildStructType(currentStruct domain.CodeDataStruct, x *ast.StructType, currentFile *domain.CodeFile) {
-	member := domain.CodeMember{
+func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
+	member := trial.CodeMember{
 		DataStructID: currentStruct.ID,
 		Type:         "struct",
 	}
 	for _, field := range x.Fields.List {
 		typeName, typeType := BuildPropertyField(field)
-		property := domain.CodeProperty{
+		property := trial.CodeProperty{
 			Modifiers: nil,
 			Name:      field.Names[0].String(),
 			TypeType:  typeType,

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/trial"
 	"github.com/phodal/coca/trial/pkg/application/ts"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -26,7 +26,7 @@ var analysisTypeScriptCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := analysisTypeScriptCmdConfig.Path
 
-		var results []domain.CodeFile
+		var results []trial.CodeFile
 		files := cocafile.GetFilesWithFilter(importPath, cocafile.TypeScriptFileFilter)
 		app := new(ts.TypeScriptApiApp)
 		for _, file := range files {

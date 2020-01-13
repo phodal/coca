@@ -1,4 +1,4 @@
-package domain
+package trial
 
 type CodePackage struct {
 	CodeFiles []CodeFile

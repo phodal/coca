@@ -224,14 +224,10 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 	typeType := decelerators.GetParent().GetChild(0).(*parser.TypeTypeContext)
 	for _, declarator := range decelerators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
 		var typeCtx *parser.ClassOrInterfaceTypeContext = nil
-		if reflect.TypeOf(typeType.GetChild(0)).String() == "*parser.ClassOrInterfaceTypeContext" {
-			typeCtx = typeType.GetChild(0).(*parser.ClassOrInterfaceTypeContext)
-		}
 
+		typeCtx = BuildTypeCtxByIndex(typeType, typeCtx,0)
 		if typeType.GetChildCount() > 1 {
-			if reflect.TypeOf(typeType.GetChild(1)).String() == "*parser.ClassOrInterfaceTypeContext" {
-				typeCtx = typeType.GetChild(1).(*parser.ClassOrInterfaceTypeContext)
-			}
+			typeCtx = BuildTypeCtxByIndex(typeType, typeCtx,1)
 		}
 
 		if typeCtx == nil {
@@ -245,6 +241,14 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 
 		buildFieldCall(typeTypeText, ctx)
 	}
+}
+
+func BuildTypeCtxByIndex(typeType *parser.TypeTypeContext, typeCtx *parser.ClassOrInterfaceTypeContext, index int) *parser.ClassOrInterfaceTypeContext {
+	switch x := typeType.GetChild(index).(type) {
+	case *parser.ClassOrInterfaceTypeContext:
+		typeCtx = x
+	}
+	return typeCtx
 }
 
 func (s *JavaFullListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariableDeclarationContext) {

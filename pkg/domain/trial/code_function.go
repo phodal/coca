@@ -3,7 +3,7 @@ package trial
 type CodeFunction struct {
 	Name          string
 	ReturnTypes   []CodeProperty
-	Parameters    []CodeParameter
+	Parameters    []CodeProperty
 	MethodCalls   []CodeMethodCall
 	Override      bool
 	Annotations   []CodeAnnotation

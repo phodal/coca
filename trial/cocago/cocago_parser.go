@@ -14,7 +14,6 @@ import (
 var currentPackage *trial.CodePackage
 
 type CocagoParser struct {
-
 }
 
 func NewCocagoParser() *CocagoParser {
@@ -37,7 +36,7 @@ func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 	return *codeFile
 }
 
-func (n *CocagoParser)Visitor(f *ast.File, fset *token.FileSet, fileName string) *trial.CodeFile {
+func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *trial.CodeFile {
 	var currentStruct trial.CodeDataStruct
 	var currentFile trial.CodeFile
 	currentFile.FullName = fileName
@@ -64,7 +63,9 @@ func (n *CocagoParser)Visitor(f *ast.File, fset *token.FileSet, fileName string)
 }
 
 func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile trial.CodeFile) {
-	funcName := x.Name.String()
+	codeFunc := &trial.CodeFunction{
+		Name: x.Name.String(),
+	}
 	recv := ""
 	for _, item := range x.Recv.List {
 		switch x := item.Type.(type) {
@@ -73,16 +74,38 @@ func BuildFunction(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentF
 		}
 	}
 
+	if x.Type.Params != nil {
+		fieldList := x.Type.Params.List
+		properties := BuildFieldToProperty(fieldList)
+		codeFunc.Parameters = append(codeFunc.Parameters, properties...)
+	}
+
+	if x.Type.Results != nil {
+		fieldList := x.Type.Results.List
+		properties := BuildFieldToProperty(fieldList)
+		codeFunc.ReturnTypes = append(codeFunc.Parameters, properties...)
+	}
+
 	if recv != "" {
 
 	} else {
-		member := trial.CodeMember{
-			DataStructID: currentStruct.Name,
-			Type:         "function",
-			Name:         funcName,
-		}
-		currentFile.Members = append(currentFile.Members, member)
+
 	}
+}
+
+func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
+	var properties []trial.CodeProperty
+	for _, field := range fieldList {
+		typeName, typeType := BuildPropertyField(field)
+		property := trial.CodeProperty{
+			Modifiers: nil,
+			Name:      field.Names[0].String(),
+			TypeType:  typeType,
+			TypeName:  typeName,
+		}
+		properties = append(properties, property)
+	}
+	return properties
 }
 
 func BuildStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {

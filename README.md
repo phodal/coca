@@ -11,6 +11,8 @@
 
 Migration Guide (Chinese Version): 《[系统重构与迁移指南](https://github.com/phodal/migration)》
 
+Inspired by: [newlee](https://github.com/newlee) & [Tequila](https://github.com/newlee/tequila)
+
 Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)

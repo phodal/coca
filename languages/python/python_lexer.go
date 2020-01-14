@@ -548,7 +548,7 @@ var lexerRuleNames = []string{
 }
 
 type PythonLexer struct {
-	*PythonLexerBase
+	PythonBaseLexer
 	channelNames []string
 	modeNames    []string
 	// TODO: EOF string
@@ -718,7 +718,7 @@ func (l *PythonLexer) Action(localctx antlr.RuleContext, ruleIndex, actionIndex 
 func (l *PythonLexer) OPEN_PAREN_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 0:
-		IncIndentLevel()
+		l.IncIndentLevel()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -727,7 +727,7 @@ func (l *PythonLexer) OPEN_PAREN_Action(localctx antlr.RuleContext, actionIndex 
 func (l *PythonLexer) CLOSE_PAREN_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 1:
-		DecIndentLevel()
+		l.DecIndentLevel()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -736,7 +736,7 @@ func (l *PythonLexer) CLOSE_PAREN_Action(localctx antlr.RuleContext, actionIndex
 func (l *PythonLexer) OPEN_BRACE_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 2:
-		IncIndentLevel()
+		l.IncIndentLevel()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -745,7 +745,7 @@ func (l *PythonLexer) OPEN_BRACE_Action(localctx antlr.RuleContext, actionIndex 
 func (l *PythonLexer) CLOSE_BRACE_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 3:
-		DecIndentLevel()
+		l.DecIndentLevel()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -754,7 +754,7 @@ func (l *PythonLexer) CLOSE_BRACE_Action(localctx antlr.RuleContext, actionIndex
 func (l *PythonLexer) OPEN_BRACKET_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 4:
-		IncIndentLevel()
+		l.IncIndentLevel()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -763,7 +763,7 @@ func (l *PythonLexer) OPEN_BRACKET_Action(localctx antlr.RuleContext, actionInde
 func (l *PythonLexer) CLOSE_BRACKET_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 5:
-		DecIndentLevel()
+		l.DecIndentLevel()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -772,7 +772,7 @@ func (l *PythonLexer) CLOSE_BRACKET_Action(localctx antlr.RuleContext, actionInd
 func (l *PythonLexer) NEWLINE_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 6:
-		HandleNewLine()
+		l.HandleNewLine()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))
@@ -781,7 +781,7 @@ func (l *PythonLexer) NEWLINE_Action(localctx antlr.RuleContext, actionIndex int
 func (l *PythonLexer) WS_Action(localctx antlr.RuleContext, actionIndex int) {
 	switch actionIndex {
 	case 7:
-		HandleSpaces()
+		l.HandleSpaces()
 
 	default:
 		panic("No registered action for: " + fmt.Sprint(actionIndex))

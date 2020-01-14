@@ -542,7 +542,7 @@ func init() {
 }
 
 type PythonParser struct {
-	PythonParserBase
+	PythonBaseParser
 }
 
 func NewPythonParser(input antlr.TokenStream) *PythonParser {
@@ -3211,8 +3211,8 @@ func (p *PythonParser) Except_clause() (localctx IExcept_clauseContext) {
 		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 25, p.GetParserRuleContext()) == 1 {
 			p.SetState(268)
 
-			if !(CheckVersion(2)) {
-				panic(antlr.NewFailedPredicateException(p, "CheckVersion(2)", ""))
+			if !(p.CheckVersion(2)) {
+				panic(antlr.NewFailedPredicateException(p, "p.CheckVersion(2)", ""))
 			}
 			{
 				p.SetState(269)
@@ -3222,13 +3222,13 @@ func (p *PythonParser) Except_clause() (localctx IExcept_clauseContext) {
 				p.SetState(270)
 				p.Name()
 			}
-			SetVersion(2)
+			p.SetVersion(2)
 
 		} else if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 25, p.GetParserRuleContext()) == 2 {
 			p.SetState(273)
 
-			if !(CheckVersion(3)) {
-				panic(antlr.NewFailedPredicateException(p, "CheckVersion(3)", ""))
+			if !(p.CheckVersion(3)) {
+				panic(antlr.NewFailedPredicateException(p, "p.CheckVersion(3)", ""))
 			}
 			{
 				p.SetState(274)
@@ -3238,7 +3238,7 @@ func (p *PythonParser) Except_clause() (localctx IExcept_clauseContext) {
 				p.SetState(275)
 				p.Name()
 			}
-			SetVersion(3)
+			p.SetVersion(3)
 
 		}
 
@@ -5575,8 +5575,8 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 		p.EnterOuterAlt(localctx, 2)
 		p.SetState(384)
 
-		if !(CheckVersion(2)) {
-			panic(antlr.NewFailedPredicateException(p, "CheckVersion(2)", ""))
+		if !(p.CheckVersion(2)) {
+			panic(antlr.NewFailedPredicateException(p, "p.CheckVersion(2)", ""))
 		}
 		{
 			p.SetState(385)
@@ -5671,7 +5671,7 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 		default:
 			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 		}
-		SetVersion(2)
+		p.SetVersion(2)
 
 	case 3:
 		localctx = NewDel_stmtContext(p, localctx)
@@ -5946,8 +5946,8 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 		p.EnterOuterAlt(localctx, 13)
 		p.SetState(473)
 
-		if !(CheckVersion(2)) {
-			panic(antlr.NewFailedPredicateException(p, "CheckVersion(2)", ""))
+		if !(p.CheckVersion(2)) {
+			panic(antlr.NewFailedPredicateException(p, "p.CheckVersion(2)", ""))
 		}
 		{
 			p.SetState(474)
@@ -5987,7 +5987,7 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 			}
 
 		}
-		SetVersion(2)
+		p.SetVersion(2)
 
 	case 14:
 		localctx = NewAssert_stmtContext(p, localctx)
@@ -6021,8 +6021,8 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 		p.EnterOuterAlt(localctx, 15)
 		p.SetState(492)
 
-		if !(CheckVersion(3)) {
-			panic(antlr.NewFailedPredicateException(p, "CheckVersion(3)", ""))
+		if !(p.CheckVersion(3)) {
+			panic(antlr.NewFailedPredicateException(p, "p.CheckVersion(3)", ""))
 		}
 		{
 			p.SetState(493)
@@ -6050,7 +6050,7 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 			p.GetErrorHandler().Sync(p)
 			_la = p.GetTokenStream().LA(1)
 		}
-		SetVersion(3)
+		p.SetVersion(3)
 
 	}
 
@@ -6655,8 +6655,8 @@ func (p *PythonParser) Assign_part() (localctx IAssign_partContext) {
 		p.EnterOuterAlt(localctx, 2)
 		p.SetState(542)
 
-		if !(CheckVersion(3)) {
-			panic(antlr.NewFailedPredicateException(p, "CheckVersion(3)", ""))
+		if !(p.CheckVersion(3)) {
+			panic(antlr.NewFailedPredicateException(p, "p.CheckVersion(3)", ""))
 		}
 		{
 			p.SetState(543)
@@ -6681,7 +6681,7 @@ func (p *PythonParser) Assign_part() (localctx IAssign_partContext) {
 			}
 
 		}
-		SetVersion(3)
+		p.SetVersion(3)
 
 	case 3:
 		p.EnterOuterAlt(localctx, 3)
@@ -12654,10 +12654,10 @@ func (p *PythonParser) Sempred(localctx antlr.RuleContext, ruleIndex, predIndex 
 func (p *PythonParser) Except_clause_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 0:
-		return CheckVersion(2)
+		return p.CheckVersion(2)
 
 	case 1:
-		return CheckVersion(3)
+		return p.CheckVersion(3)
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -12667,13 +12667,13 @@ func (p *PythonParser) Except_clause_Sempred(localctx antlr.RuleContext, predInd
 func (p *PythonParser) Small_stmt_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 2:
-		return CheckVersion(2)
+		return p.CheckVersion(2)
 
 	case 3:
-		return CheckVersion(2)
+		return p.CheckVersion(2)
 
 	case 4:
-		return CheckVersion(3)
+		return p.CheckVersion(3)
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))
@@ -12683,7 +12683,7 @@ func (p *PythonParser) Small_stmt_Sempred(localctx antlr.RuleContext, predIndex 
 func (p *PythonParser) Assign_part_Sempred(localctx antlr.RuleContext, predIndex int) bool {
 	switch predIndex {
 	case 5:
-		return CheckVersion(3)
+		return p.CheckVersion(3)
 
 	default:
 		panic("No predicate with index: " + fmt.Sprint(predIndex))

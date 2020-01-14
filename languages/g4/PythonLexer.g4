@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 lexer grammar PythonLexer;
 
-options { superClass=PythonLexerBase; }
+options { superClass=PythonBaseLexer; }
 
 // Artificial tokens only for parser purposes
 
@@ -132,18 +132,18 @@ BIN_INTEGER        : '0' [bB] [01]+;
 IMAG_NUMBER        : (EXPONENT_OR_POINT_FLOAT | [0-9]+) [jJ];
 FLOAT_NUMBER       : EXPONENT_OR_POINT_FLOAT;
 
-OPEN_PAREN         : '(' {IncIndentLevel();};
-CLOSE_PAREN        : ')' {DecIndentLevel();};
-OPEN_BRACE         : '{' {IncIndentLevel();};
-CLOSE_BRACE        : '}' {DecIndentLevel();};
-OPEN_BRACKET       : '[' {IncIndentLevel();};
-CLOSE_BRACKET      : ']' {DecIndentLevel();};
+OPEN_PAREN         : '(' {l.IncIndentLevel();};
+CLOSE_PAREN        : ')' {l.DecIndentLevel();};
+OPEN_BRACE         : '{' {l.IncIndentLevel();};
+CLOSE_BRACE        : '}' {l.DecIndentLevel();};
+OPEN_BRACKET       : '[' {l.IncIndentLevel();};
+CLOSE_BRACKET      : ']' {l.DecIndentLevel();};
 
 NAME               : ID_START ID_CONTINUE*;
 
 LINE_JOIN          : '\\' [ \t]* RN                        -> channel(HIDDEN);
-NEWLINE            : RN                {HandleNewLine();}  -> channel(HIDDEN);
-WS                 : [ \t]+            {HandleSpaces();}   -> channel(HIDDEN);
+NEWLINE            : RN                {l.HandleNewLine();}  -> channel(HIDDEN);
+WS                 : [ \t]+            {l.HandleSpaces();}   -> channel(HIDDEN);
 COMMENT            : '#' ~[\r\n\f]*                        -> channel(HIDDEN);
 
 // Fragments

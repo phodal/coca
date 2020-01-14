@@ -14,11 +14,11 @@ func NewPythonIdentListener(fileName string) *PythonIdentListener {
 }
 
 func (s *PythonIdentListener) EnterRoot(ctx *parser.RootContext) {
-	fmt.Println(ctx)
+	//fmt.Println(reflect.TypeOf(ctx.GetChild(0)))
 }
 
-func (s *PythonIdentListener) EnterSingle_input(ctx *parser.Single_inputContext) {
 
+func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
+	fmt.Println(ctx.Name().GetText())
 }
-
 

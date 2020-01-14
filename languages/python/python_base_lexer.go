@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/infrastructure/container"
 )
@@ -23,15 +24,24 @@ type PythonBaseLexer struct {
 	lastToken       antlr.Token
 }
 
-func (l *PythonBaseLexer) BuildDefaultToken(tokenIndex int) antlr.Token {
-	return l.BuildTokenByType(tokenIndex, antlr.LexerDefaultTokenChannel, "")
+func (l *PythonBaseLexer) BuildDefaultToken(tokenType int) antlr.Token {
+	return l.BuildTokenByType(tokenType, antlr.LexerDefaultTokenChannel, "")
 }
 
-func (l *PythonBaseLexer) BuildTokenByType(tokenIndex int, channel int, text string) antlr.Token {
+func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text string) antlr.Token {
 	cpos := l.GetCharPositionInLine()
 	lpos := l.GetLine()
-	token := l.GetTokenFactory().Create(l.GetTokenSourceCharStreamPair(), tokenIndex, text, channel, l.GetInputStream().Index(), l.GetInputStream().Index()-1, lpos, cpos)
-	return token
+	commonToken := antlr.NewCommonTokenFactory(false).Create(
+		l.GetTokenSourceCharStreamPair(),
+		tokenType,
+		text,
+		channel,
+		l.GetCharIndex()-len(text),
+		l.GetCharIndex(),
+		lpos,
+		cpos)
+
+	return commonToken
 }
 
 func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
@@ -68,11 +78,11 @@ func (l *PythonBaseLexer) DecIndentLevel() {
 func (l *PythonBaseLexer) NextToken() antlr.Token {
 	if l.GetInputStream().LA(1) == antlr.TokenEOF && indents.Len() > 0 {
 		if buffer[l.lastTokenIndex] == nil || buffer[l.lastTokenIndex].GetTokenType() != PythonLexerLINE_BREAK {
-			l.BaseLexer.EmitToken(l.BuildDefaultToken(PythonLexerLINE_BREAK))
+			l.EmitToken(l.BuildDefaultToken(PythonLexerLINE_BREAK))
 		}
 
 		for indents.Len() != 0 {
-			l.BaseLexer.EmitToken(l.BuildDefaultToken(PythonLexerDEDENT))
+			l.EmitToken(l.BuildDefaultToken(PythonLexerDEDENT))
 			indents.Pop()
 		}
 	}
@@ -105,19 +115,20 @@ func (l *PythonBaseLexer) HandleNewLine() {
 func (l *PythonBaseLexer) HandleSpaces() {
 	next := string(rune(l.GetInputStream().LA(1)))
 
+	// class lost space here
 	if (l.lastToken == nil || l.lastToken.GetTokenType() == PythonLexerNEWLINE) && l.IsNotNewLineOrComment(next) {
 		indent := 0
 		text := l.GetText()
 
 		for _, char := range text {
 			if char == '\t' {
-				indent = indent + TabSize - indent&TabSize
+				indent = indent + TabSize - indent%TabSize
 			} else {
-				indent = 1
+				indent = indent + 1
 			}
 		}
 
-		l.ProcessNewLine(indent)
+		l.ProcessNewLine(0)
 	}
 
 	l.EmitToken(l.BuildTokenByType(PythonLexerWS, antlr.LexerHidden, l.GetText()))

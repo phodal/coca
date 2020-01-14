@@ -17,3 +17,8 @@ func (s *PythonIdentListener) EnterRoot(ctx *parser.RootContext) {
 	fmt.Println(ctx)
 }
 
+func (s *PythonIdentListener) EnterSingle_input(ctx *parser.Single_inputContext) {
+
+}
+
+

@@ -2,6 +2,7 @@ package xmlparse
 
 import (
 	"encoding/xml"
+	"github.com/phodal/coca/pkg/infrastructure/container"
 	"io"
 	"strings"
 )
@@ -29,7 +30,7 @@ func ParseXML(r io.Reader) *XMLNode {
 	parser := xml.NewDecoder(r)
 	var root XMLNode
 
-	st := NewStack()
+	st := container.NewStack()
 	for {
 		token, err := parser.Token()
 		if err != nil {

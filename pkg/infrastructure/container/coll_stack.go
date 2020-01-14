@@ -1,27 +1,27 @@
-package xmlparse
+package container
 
 import (
 	l "container/list"
 	"sync"
 )
 
-type stack struct {
+type Stack struct {
 	list *l.List
 	mu sync.Mutex
 }
 
-func NewStack() *stack {
+func NewStack() *Stack {
 	list := l.New()
-	return &stack{list: list,}
+	return &Stack{list: list,}
 }
 
-func (s *stack) Push(t interface{}){
+func (s *Stack) Push(t interface{}){
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.list.PushFront(t)
 }
 
-func  (s *stack) Pop() interface{} {
+func  (s *Stack) Pop() interface{} {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	ele := s.list.Front()
@@ -33,17 +33,17 @@ func  (s *stack) Pop() interface{} {
 	return nil
 }
 
-func (s *stack) Peak() interface{} {
+func (s *Stack) Peak() interface{} {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	ele := s.list.Front()
 	return ele.Value
 }
 
-func (s *stack) Len() int {
+func (s *Stack) Len() int {
 	return s.list.Len()
 }
 
-func (s *stack) IsEmpty() bool {
+func (s *Stack) IsEmpty() bool {
 	return s.list.Len() == 0
 }

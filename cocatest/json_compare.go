@@ -5,7 +5,6 @@ import (
 	"fmt"
 	diff "github.com/yudai/gojsondiff"
 	"github.com/yudai/gojsondiff/formatter"
-
 	"io/ioutil"
 	"reflect"
 )
@@ -49,16 +48,25 @@ func formatNotEqualPrint(exceptInterface interface{}, actualInterface interface{
 	fmt.Println(diffString)
 }
 
-func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, error) {
+func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) bool {
 	actual, err := json.MarshalIndent(actualInterface, "", "  ")
 	if err != nil {
-		return false, err
+		fmt.Println(err)
+		return false
 	}
 
 	contents, err := ioutil.ReadFile(exceptFile)
 	if err != nil {
+		fmt.Println(err)
 		_ = ioutil.WriteFile(exceptFile, []byte(`{}`), 0644)
+		return false
 	}
 
-	return JSONBytesEqual(actual, contents, exceptFile)
+	equal, err := JSONBytesEqual(actual, contents, exceptFile)
+	if err !=nil {
+		fmt.Println(err)
+		return false
+	}
+
+	return equal
 }

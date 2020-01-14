@@ -24,58 +24,48 @@ func shutdown() {
 	testParser = nil
 }
 
-func Test_DataStructProperty(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "data_struct_property"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
-}
-
-func Test_DataStructWithFuncType(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "struct_with_func"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
-}
-
-func Test_DataStructWithFuncDecl(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "struct_with_func_decl"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
-}
-
-func Test_DataStructZero(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "struct_type_zero"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
-}
-
-func Test_NormalMethod(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "normal_method"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
-}
-
-func Test_MethodCallWithHelloWorld(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "hello_world"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
+func TestCocagoParser_ProcessFile(t *testing.T) {
+	tests := []struct {
+		name     string
+		fileName string
+	}{
+		{
+			"data_struct_property",
+			"data_struct_property",
+		},
+		{
+			"struct_with_func",
+			"struct_with_func",
+		},
+		{
+			"struct_with_func_decl",
+			"struct_with_func_decl",
+		},
+		{
+			"struct_type_zero",
+			"struct_type_zero",
+		},
+		{
+			"normal_method",
+			"normal_method",
+		},
+		{
+			"hello_world",
+			"hello_world",
+		},
+		{
+			"basic_interface",
+			"basic_interface",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			n := &CocagoParser{}
+			if got := n.ProcessFile("testdata/" + tt.fileName + ".code"); !cocatest.JSONFileBytesEqual(got, "testdata/"+tt.fileName+".json") {
+				t.Errorf("ProcessFile() = %v, want %v", got, tt.fileName)
+			}
+		})
+	}
 }
 
 // todo: support it
@@ -85,15 +75,5 @@ func Test_NestedMethod(t *testing.T) {
 
 	var test = "nested_method"
 	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/"+test+".json")).To(Equal(true))
 }
-
-func Test_BasicInterface(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	var test = "basic_interface"
-	results := testParser.ProcessFile("testdata/" + test + ".code")
-	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
-}
-

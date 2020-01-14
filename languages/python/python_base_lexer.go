@@ -15,15 +15,8 @@ func init() {
 type PythonBaseLexer struct {
 	*antlr.BaseLexer
 
-	scopeStrictModes []bool
-	stackLength      int
-	stackIx          int
-
-	lastToken        antlr.Token
-	useStrictDefault bool
-	useStrictCurrent bool
-
-	_opened         int
+	lastToken       antlr.Token
+	opened          int
 	buffer          []antlr.Token
 	lastTokenIndex  int
 	firstTokenIndex int
@@ -51,12 +44,12 @@ func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
 }
 
 func (l *PythonBaseLexer) IncIndentLevel() {
-	l._opened++
+	l.opened++
 }
 
 func (l *PythonBaseLexer) DecIndentLevel() {
-	if l._opened > 0 {
-		l._opened--
+	if l.opened > 0 {
+		l.opened--
 	}
 }
 
@@ -113,7 +106,7 @@ func (l *PythonBaseLexer) HandleNewLine() {
 }
 
 func (l *PythonBaseLexer) IsNotNewLineOrComment(next string) bool {
-	return l._opened == 0 && next != "\r" && next != "\n" && next != "\f" && next != "#"
+	return l.opened == 0 && next != "\r" && next != "\n" && next != "\f" && next != "#"
 }
 
 func (l *PythonBaseLexer) HandleSpaces() {

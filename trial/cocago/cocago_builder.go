@@ -24,7 +24,7 @@ func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 		case *ast.SelectorExpr:
 			typeName = getSelectorName(*typeX)
 		default:
-			fmt.Println("BuildPropertyField ArrayType", reflect.TypeOf(x.Elt))
+			fmt.Fprintf(output, "BuildPropertyField ArrayType %s\n", reflect.TypeOf(x.Elt))
 		}
 	case *ast.FuncType:
 		typeType = "Function"
@@ -41,7 +41,7 @@ func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 	case *ast.SelectorExpr:
 		typeName = getSelectorName(*x)
 	default:
-		fmt.Println("BuildPropertyField", reflect.TypeOf(x))
+		fmt.Fprintf(output, "BuildPropertyField %s\n", reflect.TypeOf(x))
 	}
 
 	property := &trial.CodeProperty{

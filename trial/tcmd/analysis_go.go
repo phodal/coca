@@ -28,6 +28,7 @@ var analysisGoCmd = &cobra.Command{
 		files := cocafile.GetFilesWithFilter(importPath, cocafile.GoFileFilter)
 		for _, file := range files {
 			parser := cocago.NewCocagoParser()
+			parser.SetOutput(true)
 			result := parser.ProcessFile(file)
 
 			results = append(results, result)

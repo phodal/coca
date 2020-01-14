@@ -8,7 +8,7 @@ import (
 	"sync"
 )
 
-func ProcessPackage(path string) []*trial.CodeFile {
+func ProcessPackage(path string, debug bool) []*trial.CodeFile {
 	var wg sync.WaitGroup
 
 	var GoFileFilter = func(path string) bool {
@@ -18,6 +18,9 @@ func ProcessPackage(path string) []*trial.CodeFile {
 	files := cocafile.GetFilesWithFilter(path ,GoFileFilter)
 	filesData := make([]*trial.CodeFile, len(files))
 	parser := cocago.NewCocagoParser()
+	if debug {
+		parser.SetOutput(true)
+	}
 	for i, file := range files {
 		wg.Add(1)
 		go func(i int, file string) {

@@ -1,12 +1,15 @@
 package cocago
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/phodal/coca/pkg/domain/trial"
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"io"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"reflect"
 )
@@ -16,16 +19,27 @@ var currentPackage *trial.CodePackage
 type CocagoParser struct {
 }
 
+var debug = false
+var output io.Writer
+
 func NewCocagoParser() *CocagoParser {
 	currentPackage = &trial.CodePackage{}
+	output = os.Stdout
 	return &CocagoParser{}
+}
+
+func (n *CocagoParser) SetOutput(isDebug bool) io.Writer {
+	output = new(bytes.Buffer)
+	debug = isDebug
+
+	return output
 }
 
 func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 	absPath, _ := filepath.Abs(fileName)
 	content, _ := ioutil.ReadFile(absPath)
 
-	fmt.Println("process file", fileName)
+	fmt.Fprintf(output, "process file %s\n", fileName)
 
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, string(content), 0)
@@ -75,7 +89,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			AddInterface(x, lastIdent, &currentFile)
 		default:
 			if reflect.TypeOf(x) != nil {
-				fmt.Println("Visitor case ", reflect.TypeOf(x))
+				fmt.Fprintf(output, "Visitor case %s\n", reflect.TypeOf(x))
 			}
 		}
 		return true
@@ -146,7 +160,7 @@ func BuildReceiver(x *ast.FuncDecl, recv string) string {
 		case *ast.Ident:
 			recv = x.Name
 		default:
-			fmt.Println("AddFunctionDecl", reflect.TypeOf(x))
+			fmt.Fprintf(output, "AddFunctionDecl %s\n", reflect.TypeOf(x))
 		}
 	}
 	return recv
@@ -157,7 +171,7 @@ func BuildMethodCall(codeFunc *trial.CodeFunction, item ast.Stmt) {
 	case *ast.ExprStmt:
 		BuildMethodCallExprStmt(it, codeFunc)
 	default:
-		fmt.Println("methodCall", reflect.TypeOf(it))
+		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
 	}
 }
 
@@ -206,7 +220,7 @@ func BuildExpr(expr ast.Expr) (string, string) {
 		}
 		return x.Name, name
 	default:
-		fmt.Println("BuildExpr", reflect.TypeOf(x))
+		fmt.Fprintf(output, "BuildExpr %s\n", reflect.TypeOf(x))
 	}
 	return "", ""
 }
@@ -245,4 +259,3 @@ func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curren
 	currentFile.Members = append(currentFile.Members, &member)
 	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)
 }
-

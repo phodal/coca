@@ -18,6 +18,7 @@ var testParser *CocagoParser
 
 func setup() {
 	testParser = NewCocagoParser()
+	testParser.SetOutput(true)
 }
 
 func shutdown() {
@@ -60,9 +61,8 @@ func TestCocagoParser_ProcessFile(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			n := &CocagoParser{}
 			filePath := getFilePath(tt.fileName)
-			if got := n.ProcessFile(filePath + ".code"); !cocatest.JSONFileBytesEqual(got, filePath+".json") {
+			if got := testParser.ProcessFile(filePath + ".code"); !cocatest.JSONFileBytesEqual(got, filePath+".json") {
 				t.Errorf("ProcessFile() = %v, want %v", got, tt.fileName)
 			}
 		})

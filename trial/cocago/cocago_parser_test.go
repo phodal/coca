@@ -89,7 +89,6 @@ func Test_NestedMethod(t *testing.T) {
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
 }
 
-// todo: support it
 func Test_BasicInterface(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
@@ -98,3 +97,4 @@ func Test_BasicInterface(t *testing.T) {
 	results := testParser.ProcessFile("testdata/" + test + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
 }
+

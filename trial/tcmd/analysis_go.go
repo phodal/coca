@@ -14,7 +14,7 @@ type TrialAnalysisGoCmdConfig struct {
 }
 
 var (
-	analysisGoCmdConfig TrialAnalysisCmdConfig
+	analysisGoCmdConfig TrialAnalysisGoCmdConfig
 )
 
 var analysisGoCmd = &cobra.Command{

@@ -25,6 +25,8 @@ func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 	absPath, _ := filepath.Abs(fileName)
 	content, _ := ioutil.ReadFile(absPath)
 
+	fmt.Println("process file", fileName)
+
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, string(content), 0)
 	if err != nil {
@@ -70,7 +72,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			funcType = ""
 		default:
 			if reflect.TypeOf(x) != nil {
-				fmt.Println("Visitor case ", reflect.TypeOf(x))
+				//fmt.Println("Visitor case ", reflect.TypeOf(x))
 			}
 		}
 		return true
@@ -196,7 +198,12 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *trial.CodeFunction) {
 func BuildExpr(expr ast.Expr) (string, string) {
 	switch x := expr.(type) {
 	case *ast.SelectorExpr:
-		selector := x.X.(*ast.Ident).String()
+		selector := ""
+		switch sele := x.X.(type) {
+		case *ast.Ident:
+			selector = sele.String()
+		}
+
 		selName := x.Sel.Name
 		return selector, selName
 	case *ast.BasicLit:

@@ -10,6 +10,8 @@ import (
 func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 	var typeName string
 	var typeType string
+	var params []trial.CodeProperty
+	var results []trial.CodeProperty
 	switch x := field.Type.(type) {
 	case *ast.Ident:
 		typeType = "Identify"
@@ -27,6 +29,12 @@ func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 	case *ast.FuncType:
 		typeType = "Function"
 		typeName = "func"
+		if x.Params != nil {
+			params = BuildFieldToProperty(x.Params.List)
+		}
+		if x.Results != nil {
+			results = BuildFieldToProperty(x.Results.List)
+		}
 	case *ast.StarExpr:
 		typeName = getStarExprName(*x)
 		typeType = "Star"
@@ -37,10 +45,12 @@ func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 	}
 
 	property := &trial.CodeProperty{
-		Modifiers: nil,
-		Name:      name,
-		TypeType:  typeType,
-		TypeName:  typeName,
+		Modifiers:   nil,
+		Name:        name,
+		TypeType:    typeType,
+		TypeName:    typeName,
+		ReturnTypes: results,
+		Parameters:  params,
 	}
 	return property
 }
@@ -80,3 +90,11 @@ func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
 	return codeFunc
 }
 
+func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
+	var properties []trial.CodeProperty
+	for _, field := range fieldList {
+		property := BuildPropertyField(getFieldName(field), field)
+		properties = append(properties, *property)
+	}
+	return properties
+}

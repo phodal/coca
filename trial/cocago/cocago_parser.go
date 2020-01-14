@@ -225,15 +225,6 @@ func GetMemberFromFile(file trial.CodeFile, recv string) *trial.CodeMember {
 	return identMember
 }
 
-func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
-	var properties []trial.CodeProperty
-	for _, field := range fieldList {
-		property := BuildPropertyField(getFieldName(field), field)
-		properties = append(properties, *property)
-	}
-	return properties
-}
-
 func getFieldName(field *ast.Field) string {
 	if len(field.Names) < 1 {
 		return ""

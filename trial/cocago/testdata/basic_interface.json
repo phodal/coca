@@ -9,8 +9,26 @@
         {
           "Modifiers": null,
           "Name": "Area",
-          "Parameters": null,
-          "ReturnTypes": null,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "a",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "float64",
+              "TypeType": "Identify"
+            }
+          ],
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "float64",
+              "TypeType": "Identify"
+            }
+          ],
           "TypeName": "func",
           "TypeType": "Function"
         }
@@ -25,7 +43,16 @@
           "Modifiers": null,
           "Name": "Volume",
           "Parameters": null,
-          "ReturnTypes": null,
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "float64",
+              "TypeType": "Identify"
+            }
+          ],
           "TypeName": "func",
           "TypeType": "Function"
         }

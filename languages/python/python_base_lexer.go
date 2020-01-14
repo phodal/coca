@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/infrastructure/container"
 )
@@ -43,7 +44,9 @@ func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text stri
 	return commonToken
 }
 
+// override not success
 func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
+	fmt.Println(token.GetText())
 	l.BaseLexer.EmitToken(token)
 
 	if buffer[l.firstTokenIndex] != nil {
@@ -106,6 +109,8 @@ func (l *PythonBaseLexer) HandleNewLine() {
 	l.EmitToken(l.BuildTokenByType(PythonLexerNEWLINE, antlr.LexerHidden, l.GetText()))
 
 	next := string(rune(l.GetInputStream().LA(1)))
+
+	// Process whitespaces in HandleSpaces
 	if next != " " && next != "\t" && l.IsNotNewLineOrComment(next) {
 		l.ProcessNewLine(0)
 	}
@@ -116,6 +121,15 @@ func (l *PythonBaseLexer) HandleSpaces() {
 
 	// class lost space here
 	if (l.lastToken == nil || l.lastToken.GetTokenType() == PythonLexerNEWLINE) && l.IsNotNewLineOrComment(next) {
+		// Calculates the indentation of the provided spaces, taking the
+		// following rules into account:
+		//
+		// "Tabs are replaced (from left to right) by one to eight spaces
+		//  such that the total number of characters up to and including
+		//  the replacement is a multiple of eight [...]"
+		//
+		//  -- https://docs.python.org/3.1/reference/lexical_analysis.html#indentation
+
 		indent := 0
 		text := l.GetText()
 
@@ -127,7 +141,7 @@ func (l *PythonBaseLexer) HandleSpaces() {
 			}
 		}
 
-		l.ProcessNewLine(0)
+		l.ProcessNewLine(indent)
 	}
 
 	l.EmitToken(l.BuildTokenByType(PythonLexerWS, antlr.LexerHidden, l.GetText()))

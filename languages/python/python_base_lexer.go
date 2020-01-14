@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/infrastructure/container"
 )
@@ -15,11 +16,22 @@ func init() {
 type PythonBaseLexer struct {
 	*antlr.BaseLexer
 
-	lastToken       antlr.Token
+	firstTokenIndex int
+	lastTokenIndex  int
 	opened          int
 	buffer          []antlr.Token
-	lastTokenIndex  int
-	firstTokenIndex int
+	lastToken       antlr.Token
+}
+
+func (l *PythonBaseLexer) BuildDefaultToken(tokenIndex int) antlr.Token {
+	return l.BuildTokenByType(tokenIndex, antlr.LexerDefaultTokenChannel, "")
+}
+
+func (l *PythonBaseLexer) BuildTokenByType(tokenIndex int, channel int, text string) antlr.Token {
+	cpos := l.GetCharPositionInLine()
+	lpos := l.GetLine()
+	token := l.GetTokenFactory().Create(l.GetTokenSourceCharStreamPair(), tokenIndex, text, channel, l.GetInputStream().Index(), l.GetInputStream().Index()-1, lpos, cpos)
+	return token
 }
 
 func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
@@ -28,7 +40,7 @@ func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
 	if l.buffer[l.firstTokenIndex] != nil {
 		l.lastTokenIndex = l.IncTokenInd(l.lastTokenIndex)
 
-		if l.firstTokenIndex != l.lastTokenIndex {
+		if l.firstTokenIndex == l.lastTokenIndex {
 			var newArray = make([]antlr.Token, len(l.buffer)*2)
 			destIndex := len(newArray) - (len(l.buffer) - l.firstTokenIndex)
 			copy(newArray, l.buffer)
@@ -65,8 +77,9 @@ func (l *PythonBaseLexer) NextToken() antlr.Token {
 		}
 	}
 
-	next := l.BaseLexer.NextToken() // Get next token
+	next := l.BaseLexer.NextToken()
 
+	fmt.Println(next)
 	if l.buffer == nil {
 		return next
 	}
@@ -85,16 +98,6 @@ func (l *PythonBaseLexer) NextToken() antlr.Token {
 	return result
 }
 
-func (l *PythonBaseLexer) BuildDefaultToken(tokenIndex int) antlr.Token {
-	return l.BuildTokenByType(tokenIndex, antlr.LexerDefaultTokenChannel, "")
-}
-
-func (l *PythonBaseLexer) BuildTokenByType(tokenIndex int, channel int, text string) antlr.Token {
-	cpos := l.GetCharPositionInLine()
-	lpos := l.GetLine()
-	token := l.GetTokenFactory().Create(l.GetTokenSourceCharStreamPair(), tokenIndex, text, channel, l.GetInputStream().Index(), l.GetInputStream().Index()-1, lpos, cpos)
-	return token
-}
 
 func (l *PythonBaseLexer) HandleNewLine() {
 	l.EmitToken(l.BuildTokenByType(PythonLexerNEWLINE, antlr.LexerHidden, l.GetText()))
@@ -103,10 +106,6 @@ func (l *PythonBaseLexer) HandleNewLine() {
 	if next != " " && next != "\t" && l.IsNotNewLineOrComment(next) {
 		l.ProcessNewLine(0)
 	}
-}
-
-func (l *PythonBaseLexer) IsNotNewLineOrComment(next string) bool {
-	return l.opened == 0 && next != "\r" && next != "\n" && next != "\f" && next != "#"
 }
 
 func (l *PythonBaseLexer) HandleSpaces() {
@@ -128,6 +127,10 @@ func (l *PythonBaseLexer) HandleSpaces() {
 	}
 
 	l.EmitToken(l.BuildTokenByType(PythonLexerWS, antlr.LexerHidden, l.GetText()))
+}
+
+func (l *PythonBaseLexer) IsNotNewLineOrComment(next string) bool {
+	return l.opened == 0 && next != "\r" && next != "\n" && next != "\f" && next != "#"
 }
 
 func (l *PythonBaseLexer) IncTokenInd(index int) int {

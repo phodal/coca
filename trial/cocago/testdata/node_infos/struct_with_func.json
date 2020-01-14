@@ -33,13 +33,13 @@
       ]
     }
   ],
-  "FullName": "testdata/struct_with_func.code",
+  "FullName": "testdata/node_infos/struct_with_func.code",
   "Imports": null,
   "Members": [
     {
       "ClassNodes": null,
       "DataStructID": "Person",
-      "FileID": "testdata/struct_with_func.code",
+      "FileID": "testdata/node_infos/struct_with_func.code",
       "ID": "",
       "MethodNodes": null,
       "Name": "",

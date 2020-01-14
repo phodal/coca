@@ -33,7 +33,7 @@
       ]
     }
   ],
-  "FullName": "testdata/struct_with_func_decl.code",
+  "FullName": "testdata/node_infos/struct_with_func_decl.code",
   "Imports": [
     "fmt"
   ],
@@ -41,7 +41,7 @@
     {
       "ClassNodes": null,
       "DataStructID": "person",
-      "FileID": "testdata/struct_with_func_decl.code",
+      "FileID": "testdata/node_infos/struct_with_func_decl.code",
       "ID": "",
       "MethodNodes": [
         {

@@ -1,7 +1,7 @@
 {
   "ClassNodes": null,
   "DataStructures": null,
-  "FullName": "testdata/normal_method.code",
+  "FullName": "testdata/node_infos/normal_method.code",
   "Imports": [
     "github.com/antlr/antlr4/runtime/Go/antlr",
     "github.com/phodal/coca/languages/ts"

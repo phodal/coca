@@ -49,7 +49,7 @@
       ]
     }
   ],
-  "FullName": "testdata/data_struct_property.code",
+  "FullName": "testdata/node_infos/data_struct_property.code",
   "Imports": [
     "github.com/phodal/coca/pkg/domain"
   ],
@@ -57,7 +57,7 @@
     {
       "ClassNodes": null,
       "DataStructID": "CodeFile",
-      "FileID": "testdata/data_struct_property.code",
+      "FileID": "testdata/node_infos/data_struct_property.code",
       "ID": "",
       "MethodNodes": null,
       "Name": "",

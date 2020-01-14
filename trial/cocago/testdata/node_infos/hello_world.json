@@ -1,7 +1,7 @@
 {
   "ClassNodes": null,
   "DataStructures": null,
-  "FullName": "testdata/nested_method.code",
+  "FullName": "testdata/node_infos/hello_world.code",
   "Imports": [
     "fmt"
   ],
@@ -18,8 +18,8 @@
           "InnerFunctions": null,
           "MethodCalls": [
             {
-              "Class": "foo",
-              "MethodName": "var",
+              "Class": "fmt",
+              "MethodName": "Println",
               "Package": "",
               "Parameters": [
                 {
@@ -27,7 +27,7 @@
                   "Name": "",
                   "Parameters": null,
                   "ReturnTypes": null,
-                  "TypeName": "\"Hello World!\"",
+                  "TypeName": "\"hello, world\"",
                   "TypeType": "STRING"
                 }
               ],
@@ -35,7 +35,7 @@
             }
           ],
           "Modifiers": null,
-          "Name": "f",
+          "Name": "main",
           "Override": false,
           "Parameters": null,
           "ReturnTypes": null
@@ -52,5 +52,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "testdata"
+  "PackageName": "main"
 }

@@ -209,7 +209,11 @@ func BuildExpr(expr ast.Expr) (string, string) {
 	case *ast.BasicLit:
 		return x.Value, x.Kind.String()
 	case *ast.Ident:
-		return x.Name, x.Obj.Kind.String()
+		name := ""
+		if x.Obj != nil {
+			name = x.Obj.Kind.String()
+		}
+		return x.Name, name
 	default:
 		fmt.Println("BuildExpr", reflect.TypeOf(x))
 	}

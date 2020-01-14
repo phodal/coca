@@ -79,11 +79,22 @@ func Test_MethodCallWithHelloWorld(t *testing.T) {
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
 }
 
+// todo: support it
 func Test_NestedMethod(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	var test = "nested_method"
+	results := testParser.ProcessFile("testdata/" + test + ".code")
+	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
+}
+
+// todo: support it
+func Test_BasicInterface(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	var test = "basic_interface"
 	results := testParser.ProcessFile("testdata/" + test + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, "testdata/" + test + ".json")).To(Equal(true))
 }

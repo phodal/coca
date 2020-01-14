@@ -1,0 +1,15 @@
+package testdata
+
+
+type Shape interface {
+	Area(a float64) float64
+}
+
+type Object interface {
+	Volume() float64
+}
+
+type Material interface {
+	Shape
+	Object
+}

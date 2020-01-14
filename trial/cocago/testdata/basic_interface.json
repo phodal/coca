@@ -1,0 +1,103 @@
+{
+  "ClassNodes": null,
+  "DataStructures": [
+    {
+      "ID": "",
+      "MemberIds": null,
+      "Name": "Shape",
+      "Properties": [
+        {
+          "Modifiers": null,
+          "Name": "Area",
+          "TypeName": "func",
+          "TypeType": "Function"
+        }
+      ]
+    },
+    {
+      "ID": "",
+      "MemberIds": null,
+      "Name": "Object",
+      "Properties": [
+        {
+          "Modifiers": null,
+          "Name": "Volume",
+          "TypeName": "func",
+          "TypeType": "Function"
+        }
+      ]
+    },
+    {
+      "ID": "",
+      "MemberIds": null,
+      "Name": "Material",
+      "Properties": [
+        {
+          "Modifiers": null,
+          "Name": "",
+          "TypeName": "Shape",
+          "TypeType": "Identify"
+        },
+        {
+          "Modifiers": null,
+          "Name": "",
+          "TypeName": "Object",
+          "TypeType": "Identify"
+        }
+      ]
+    }
+  ],
+  "FullName": "testdata/basic_interface.code",
+  "Imports": null,
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "Shape",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": null,
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "interface"
+    },
+    {
+      "ClassNodes": null,
+      "DataStructID": "Object",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": null,
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "interface"
+    },
+    {
+      "ClassNodes": null,
+      "DataStructID": "Material",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": null,
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "interface"
+    }
+  ],
+  "PackageName": "testdata"
+}

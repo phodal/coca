@@ -45,11 +45,12 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 
 	currentFile.FullName = fileName
 	var funcType = ""
+	var lastIdent = ""
 
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
 		case *ast.Ident:
-
+			lastIdent = x.Name
 		case *ast.File:
 			currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
@@ -70,15 +71,36 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			}
 
 			funcType = ""
+		case *ast.InterfaceType:
+			AddInterface(x, lastIdent, &currentFile)
 		default:
 			if reflect.TypeOf(x) != nil {
-				//fmt.Println("Visitor case ", reflect.TypeOf(x))
+				fmt.Println("Visitor case ", reflect.TypeOf(x))
 			}
 		}
 		return true
 	})
 
 	return &currentFile
+}
+
+func AddInterface(x *ast.InterfaceType, ident string, codeFile *trial.CodeFile) {
+	properties := BuildFieldToProperty(x.Methods.List)
+
+	dataStruct := trial.CodeDataStruct{
+		Name:       ident,
+		ID:         "",
+		MemberIds:  nil,
+		Properties: properties,
+	}
+
+	member := trial.CodeMember{
+		DataStructID: dataStruct.Name,
+		Type:         "interface",
+	}
+
+	codeFile.Members = append(codeFile.Members, &member)
+	codeFile.DataStructures = append(codeFile.DataStructures, dataStruct)
 }
 
 func AddNestedFunction(currentFunc *trial.CodeFunction, x *ast.FuncType) {

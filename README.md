@@ -540,13 +540,18 @@ results:
     - [ ] expose WASM API
     - [ ] GitHub search code
  - [ ] Pluggable
-    - [ ] plugin support
+    - [ ] plugin support (Windows Issues)
  - [x] Dependence Analysis
     - [ ] Deps Related Counts
     - [x] 3rd-party analysis XML or Groovy Scripts
     - [x] Groovy Support
       - [x] migrate to Golang Styles
  - [ ] Story Cmd
+ - [ ] Languages Support
+    - [x] Java
+    - [ ] Golang (ongoing)
+    - [ ] TypeScript (ongoing)
+    - [ ] Python
 
 Documents Todo:
 

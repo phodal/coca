@@ -1,54 +1,56 @@
 {
-	"ClassNodes": null,
-	"DataStructures": null,
-	"FullName": "testdata/hello_world.code",
-	"Imports": [
-		"fmt"
-	],
-	"Members": [
-		{
-			"ClassNodes": null,
-			"DataStructID": "default",
-			"FileID": "",
-			"ID": "",
-			"MethodNodes": [
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": [
-						{
-							"Class": "fmt",
-							"MethodName": "Println",
-							"Package": "",
-							"Parameters": [
-								{
-									"Modifiers": null,
-									"Name": "",
-									"TypeName": "\"hello, world\"",
-									"TypeType": "STRING"
-								}
-							],
-							"Type": ""
-						}
-					],
-					"Modifiers": null,
-					"Name": "main",
-					"Override": false,
-					"Parameters": null,
-					"ReturnTypes": null
-				}
-			],
-			"Name": "",
-			"Namespace": null,
-			"Position": {
-				"StartLine": 0,
-				"StartLinePosition": 0,
-				"StopLine": 0,
-				"StopLinePosition": 0
-			},
-			"Type": "method"
-		}
-	],
-	"PackageName": "main"
+  "ClassNodes": null,
+  "DataStructures": null,
+  "FullName": "testdata/hello_world.code",
+  "Imports": [
+    "fmt"
+  ],
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "default",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": [
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": [
+            {
+              "Class": "fmt",
+              "MethodName": "Println",
+              "Package": "",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "Name": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeName": "\"hello, world\"",
+                  "TypeType": "STRING"
+                }
+              ],
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "Name": "main",
+          "Override": false,
+          "Parameters": null,
+          "ReturnTypes": null
+        }
+      ],
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "method"
+    }
+  ],
+  "PackageName": "main"
 }

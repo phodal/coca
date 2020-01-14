@@ -25,6 +25,8 @@
                 {
                   "Modifiers": null,
                   "Name": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
                   "TypeName": "\"Hello World!\"",
                   "TypeType": "STRING"
                 }

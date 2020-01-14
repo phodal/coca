@@ -1,170 +1,194 @@
 {
-	"ClassNodes": null,
-	"DataStructures": null,
-	"FullName": "testdata/normal_method.code",
-	"Imports": [
-		"github.com/antlr/antlr4/runtime/Go/antlr",
-		"github.com/phodal/coca/languages/ts"
-	],
-	"Members": [
-		{
-			"ClassNodes": null,
-			"DataStructID": "default",
-			"FileID": "",
-			"ID": "",
-			"MethodNodes": [
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": null,
-					"Modifiers": null,
-					"Name": "ProcessTsString",
-					"Override": false,
-					"Parameters": [
-						{
-							"Modifiers": null,
-							"Name": "code",
-							"TypeName": "string",
-							"TypeType": "Identify"
-						}
-					],
-					"ReturnTypes": [
-						{
-							"Modifiers": null,
-							"Name": "code",
-							"TypeName": "string",
-							"TypeType": "Identify"
-						},
-						{
-							"Modifiers": null,
-							"Name": "",
-							"TypeName": "parser.TypeScriptParser",
-							"TypeType": "Star"
-						}
-					]
-				},
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": null,
-					"Modifiers": null,
-					"Name": "processStream",
-					"Override": false,
-					"Parameters": [
-						{
-							"Modifiers": null,
-							"Name": "is",
-							"TypeName": "antlr.CharStream",
-							"TypeType": ""
-						}
-					],
-					"ReturnTypes": [
-						{
-							"Modifiers": null,
-							"Name": "is",
-							"TypeName": "antlr.CharStream",
-							"TypeType": ""
-						},
-						{
-							"Modifiers": null,
-							"Name": "",
-							"TypeName": "parser.TypeScriptParser",
-							"TypeType": "Star"
-						}
-					]
-				}
-			],
-			"Name": "",
-			"Namespace": null,
-			"Position": {
-				"StartLine": 0,
-				"StartLinePosition": 0,
-				"StopLine": 0,
-				"StopLinePosition": 0
-			},
-			"Type": "method"
-		},
-		{
-			"ClassNodes": null,
-			"DataStructID": "default",
-			"FileID": "",
-			"ID": "",
-			"MethodNodes": [
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": null,
-					"Modifiers": null,
-					"Name": "ProcessTsString",
-					"Override": false,
-					"Parameters": [
-						{
-							"Modifiers": null,
-							"Name": "code",
-							"TypeName": "string",
-							"TypeType": "Identify"
-						}
-					],
-					"ReturnTypes": [
-						{
-							"Modifiers": null,
-							"Name": "code",
-							"TypeName": "string",
-							"TypeType": "Identify"
-						},
-						{
-							"Modifiers": null,
-							"Name": "",
-							"TypeName": "parser.TypeScriptParser",
-							"TypeType": "Star"
-						}
-					]
-				},
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": null,
-					"Modifiers": null,
-					"Name": "processStream",
-					"Override": false,
-					"Parameters": [
-						{
-							"Modifiers": null,
-							"Name": "is",
-							"TypeName": "antlr.CharStream",
-							"TypeType": ""
-						}
-					],
-					"ReturnTypes": [
-						{
-							"Modifiers": null,
-							"Name": "is",
-							"TypeName": "antlr.CharStream",
-							"TypeType": ""
-						},
-						{
-							"Modifiers": null,
-							"Name": "",
-							"TypeName": "parser.TypeScriptParser",
-							"TypeType": "Star"
-						}
-					]
-				}
-			],
-			"Name": "",
-			"Namespace": null,
-			"Position": {
-				"StartLine": 0,
-				"StartLinePosition": 0,
-				"StopLine": 0,
-				"StopLinePosition": 0
-			},
-			"Type": "method"
-		}
-	],
-	"PackageName": "testdata"
+  "ClassNodes": null,
+  "DataStructures": null,
+  "FullName": "testdata/normal_method.code",
+  "Imports": [
+    "github.com/antlr/antlr4/runtime/Go/antlr",
+    "github.com/phodal/coca/languages/ts"
+  ],
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "default",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": [
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "Name": "ProcessTsString",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "code",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "string",
+              "TypeType": "Identify"
+            }
+          ],
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "code",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "string",
+              "TypeType": "Identify"
+            },
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "parser.TypeScriptParser",
+              "TypeType": "Star"
+            }
+          ]
+        },
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "Name": "processStream",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "is",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "antlr.CharStream",
+              "TypeType": ""
+            }
+          ],
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "is",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "antlr.CharStream",
+              "TypeType": ""
+            },
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "parser.TypeScriptParser",
+              "TypeType": "Star"
+            }
+          ]
+        }
+      ],
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "method"
+    },
+    {
+      "ClassNodes": null,
+      "DataStructID": "default",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": [
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "Name": "ProcessTsString",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "code",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "string",
+              "TypeType": "Identify"
+            }
+          ],
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "code",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "string",
+              "TypeType": "Identify"
+            },
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "parser.TypeScriptParser",
+              "TypeType": "Star"
+            }
+          ]
+        },
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "Name": "processStream",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "is",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "antlr.CharStream",
+              "TypeType": ""
+            }
+          ],
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "is",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "antlr.CharStream",
+              "TypeType": ""
+            },
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeName": "parser.TypeScriptParser",
+              "TypeType": "Star"
+            }
+          ]
+        }
+      ],
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "method"
+    }
+  ],
+  "PackageName": "testdata"
 }

@@ -57,7 +57,7 @@ func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) (bool, e
 
 	contents, err := ioutil.ReadFile(exceptFile)
 	if err != nil {
-		return false, err
+		_ = ioutil.WriteFile(exceptFile, []byte(`{}`), 0644)
 	}
 
 	return JSONBytesEqual(actual, contents, exceptFile)

@@ -11,17 +11,10 @@ func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curren
 		Type:         "struct",
 	}
 	for _, field := range x.Fields.List {
-		typeName, typeType := BuildPropertyField(field)
-		property := trial.CodeProperty{
-			Modifiers: nil,
-			Name:      getFieldName(field),
-			TypeType:  typeType,
-			TypeName:  typeName,
-		}
+		property := BuildPropertyField(getFieldName(field), field)
 		member.FileID = currentFile.FullName
-		currentStruct.Properties = append(currentStruct.Properties, property)
+		currentStruct.Properties = append(currentStruct.Properties, *property)
 	}
 	currentFile.Members = append(currentFile.Members, &member)
 	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)
 }
-

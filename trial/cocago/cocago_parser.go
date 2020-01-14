@@ -259,14 +259,8 @@ func GetMemberFromFile(file trial.CodeFile, recv string) *trial.CodeMember {
 func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
 	var properties []trial.CodeProperty
 	for _, field := range fieldList {
-		typeName, typeType := BuildPropertyField(field)
-		property := trial.CodeProperty{
-			Modifiers: nil,
-			Name:      getFieldName(field),
-			TypeType:  typeType,
-			TypeName:  typeName,
-		}
-		properties = append(properties, property)
+		property := BuildPropertyField(getFieldName(field), field)
+		properties = append(properties, *property)
 	}
 	return properties
 }
@@ -278,7 +272,7 @@ func getFieldName(field *ast.Field) string {
 	return field.Names[0].Name
 }
 
-func BuildPropertyField(field *ast.Field) (string, string) {
+func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 	var typeName string
 	var typeType string
 	switch x := field.Type.(type) {
@@ -306,7 +300,14 @@ func BuildPropertyField(field *ast.Field) (string, string) {
 	default:
 		fmt.Println("BuildPropertyField", reflect.TypeOf(x))
 	}
-	return typeName, typeType
+
+	property := &trial.CodeProperty{
+		Modifiers: nil,
+		Name:      name,
+		TypeType:  typeType,
+		TypeName:  typeName,
+	}
+	return property
 }
 
 func getSelectorName(typeX ast.SelectorExpr) string {

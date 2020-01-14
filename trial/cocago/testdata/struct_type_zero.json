@@ -1,44 +1,44 @@
 {
-	"ClassNodes": null,
-	"DataStructures": [
-		{
-			"ID": "",
-			"MemberIds": null,
-			"Name": "O",
-			"Properties": null
-		}
-	],
-	"FullName": "testdata/struct_type_zero.code",
-	"Imports": null,
-	"Members": [
-		{
-			"ClassNodes": null,
-			"DataStructID": "O",
-			"FileID": "",
-			"ID": "",
-			"MethodNodes": [
-				{
-					"Annotations": null,
-					"Creators": null,
-					"InnerFunctions": null,
-					"MethodCalls": null,
-					"Modifiers": null,
-					"Name": "typee",
-					"Override": false,
-					"Parameters": null,
-					"ReturnTypes": null
-				}
-			],
-			"Name": "",
-			"Namespace": null,
-			"Position": {
-				"StartLine": 0,
-				"StartLinePosition": 0,
-				"StopLine": 0,
-				"StopLinePosition": 0
-			},
-			"Type": "struct"
-		}
-	],
-	"PackageName": "testdata"
+  "ClassNodes": null,
+  "DataStructures": [
+    {
+      "ID": "",
+      "MemberIds": null,
+      "Name": "O",
+      "Properties": null
+    }
+  ],
+  "FullName": "testdata/struct_type_zero.code",
+  "Imports": null,
+  "Members": [
+    {
+      "ClassNodes": null,
+      "DataStructID": "O",
+      "FileID": "",
+      "ID": "",
+      "MethodNodes": [
+        {
+          "Annotations": null,
+          "Creators": null,
+          "InnerFunctions": null,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "Name": "typee",
+          "Override": false,
+          "Parameters": null,
+          "ReturnTypes": null
+        }
+      ],
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Type": "struct"
+    }
+  ],
+  "PackageName": "testdata"
 }

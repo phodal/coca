@@ -9,6 +9,8 @@
         {
           "Modifiers": null,
           "Name": "Area",
+          "Parameters": null,
+          "ReturnTypes": null,
           "TypeName": "func",
           "TypeType": "Function"
         }
@@ -22,6 +24,8 @@
         {
           "Modifiers": null,
           "Name": "Volume",
+          "Parameters": null,
+          "ReturnTypes": null,
           "TypeName": "func",
           "TypeType": "Function"
         }
@@ -35,12 +39,16 @@
         {
           "Modifiers": null,
           "Name": "",
+          "Parameters": null,
+          "ReturnTypes": null,
           "TypeName": "Shape",
           "TypeType": "Identify"
         },
         {
           "Modifiers": null,
           "Name": "",
+          "Parameters": null,
+          "ReturnTypes": null,
           "TypeName": "Object",
           "TypeType": "Identify"
         }

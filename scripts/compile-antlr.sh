@@ -21,3 +21,6 @@ antlr -Dlanguage=Go -listener TypeScriptParser.g4 -o ../ts
 
 antlr -Dlanguage=Go -listener PythonLexer.g4 -o ../python
 antlr -Dlanguage=Go -listener PythonParser.g4 -o ../python
+
+#antlr -Dlanguage=Java -listener PythonLexer.g4 -o ../compare/java
+#antlr -Dlanguage=Java -listener PythonParser.g4 -o ../compare/java

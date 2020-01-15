@@ -37,15 +37,32 @@ func (s *PythonIdentListener) SetDebugOutput(isDebug bool) io.Writer {
 func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
 	for _, asName := range ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name() {
 		nameContext := asName.(*parser.Dotted_as_nameContext)
-		asNameText := nameContext.Dotted_name().GetText()
-		name := ""
-		if nameContext.Name() != nil {
-			name = nameContext.Name().GetText()
-		}
+		codeImport := BuildCodeImport(nameContext)
 
+		fmt.Println(codeImport)
+	}
+}
+
+func BuildCodeImport(nameContext *parser.Dotted_as_nameContext) *trial.CodeImport {
+	asNameText := nameContext.Dotted_name().GetText()
+	name := ""
+	if nameContext.Name() != nil {
+		name = nameContext.Name().GetText()
+	}
+
+	codeImport := &trial.CodeImport{
+		Source: asNameText,
+		AsName: name,
+	}
+	return codeImport
+}
+
+func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
+	if ctx.Dotted_name() != nil {
+		asNameText := ctx.Dotted_name().GetText()
 		codeImport := &trial.CodeImport{
 			Source: asNameText,
-			AsName: name,
+			AsName: "",
 		}
 
 		fmt.Println(codeImport)

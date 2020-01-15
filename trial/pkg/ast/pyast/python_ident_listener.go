@@ -2,7 +2,6 @@ package pyast
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/trial"
@@ -35,29 +34,22 @@ func (s *PythonIdentListener) SetDebugOutput(isDebug bool) io.Writer {
 }
 
 func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
-	var imports []trial.CodeImport
-	for _, asName := range ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name() {
-		nameContext := asName.(*parser.Dotted_as_nameContext)
-		codeImport := BuildCodeImport(nameContext)
 
-		imports = append(imports, *codeImport)
+	dotNames := ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name()
+
+	codeImport := &trial.CodeImport{}
+	context := dotNames[0].(*parser.Dotted_as_nameContext)
+	codeImport.ImportName = context.Dotted_name().GetText()
+	if context.Name() != nil {
+		codeImport.UsageName = append(codeImport.UsageName, context.Name().GetText())
 	}
 
-	//currentCodeFile.Imports = append(currentCodeFile.Imports, imports)
-}
-
-func BuildCodeImport(nameContext *parser.Dotted_as_nameContext) *trial.CodeImport {
-	asNameText := nameContext.Dotted_name().GetText()
-	name := ""
-	if nameContext.Name() != nil {
-		name = nameContext.Name().GetText()
+	for _, usageName := range dotNames[1:] {
+		nameContext := usageName.(*parser.Dotted_as_nameContext)
+		codeImport.UsageName = append(codeImport.UsageName, nameContext.GetText())
 	}
 
-	codeImport := &trial.CodeImport{
-		Source: asNameText,
-		AsName: name,
-	}
-	return codeImport
+	currentCodeFile.Imports = append(currentCodeFile.Imports, *codeImport)
 }
 
 func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
@@ -68,7 +60,7 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 			AsName: "",
 		}
 
-		fmt.Println(codeImport)
+		currentCodeFile.Imports = append(currentCodeFile.Imports, *codeImport)
 	}
 }
 

@@ -99,6 +99,6 @@ func Test_PythonImport(t *testing.T) {
 	file, _ := ioutil.ReadFile("testdata/grammar/import_stmt.py")
 	codeFile := app.Analysis(string(file), "import_stmt")
 
-	fmt.Println(codeFile)
-	g.Expect(true).To(Equal(true))
+	g.Expect(len(codeFile.Imports)).To(Equal(8))
+	g.Expect(len(codeFile.Imports[2].UsageName)).To(Equal(2))
 }

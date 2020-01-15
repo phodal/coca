@@ -54,4 +54,6 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
 	g.Expect(codeFile.DataStructures[0].Annotations[0].(*trial.PythonAnnotation).Name).To(Equal("decorator"))
+
+	g.Expect(codeFile.Members[0].MethodNodes[0].Name).To(Equal("bar"))
 }

@@ -52,6 +52,19 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	currentCodeFile.DataStructures = append(currentCodeFile.DataStructures, dataStruct)
 }
 
+func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
+	function := trial.CodeFunction{
+		Name: ctx.Name().GetText(),
+	}
+
+	member := &trial.CodeMember{
+		Name: ctx.Name().GetText(),
+	}
+
+	member.MethodNodes = append(member.MethodNodes, function)
+	currentCodeFile.Members = append(currentCodeFile.Members, member)
+}
+
 func BuildDecorator(x *parser.DecoratorContext) *trial.PythonAnnotation {
 	text := x.Dotted_name().GetText()
 

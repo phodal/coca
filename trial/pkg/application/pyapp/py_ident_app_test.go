@@ -28,7 +28,18 @@ func Test_AllPythonGrammar(t *testing.T) {
 	g.Expect(1).To(Equal(1))
 }
 
-func Test_PythonClass(t *testing.T) {
+func Test_PythonClassForLexer(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(PythonApiApp)
+
+	file, _ := ioutil.ReadFile("testdata/grammar/class.py")
+	app.Analysis(string(file), "")
+
+	g.Expect(1).To(Equal(1))
+}
+
+func Test_PythonClassDef(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(PythonApiApp)

@@ -119,7 +119,11 @@ public abstract class PythonBaseLexer extends Lexer {
             String text = getText();
 
             for (int i = 0; i < text.length(); i++) {
-                indent += text.charAt(i) == '\t' ? TabSize - indent % TabSize : 1;
+                if (text.charAt(i) == '\t') {
+                    indent = indent + TabSize - indent % TabSize;
+                } else {
+                    indent = indent + 1;
+                }
             }
 
             ProcessNewLine(indent);

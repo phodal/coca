@@ -4,6 +4,8 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym
 github.com/ajstarks/svgo v0.0.0-20180226025133-644b8db467af/go.mod h1:K08gAheRH3/J6wwsYMMT4xOr94bZjxIelGM0+d/wbFw=
 github.com/antlr/antlr4 v0.0.0-20191031194250-3fcb6da1f690 h1:ZxuHyCRVyeoXhu/PK93BvZP66NoNIsSZzCykW5MezKc=
 github.com/antlr/antlr4 v0.0.0-20191031194250-3fcb6da1f690/go.mod h1:T7PbCXFs94rrTttyxjbyT5+/1V8T2TYDejxUfHJjw1Y=
+github.com/antlr/antlr4 v0.0.0-20200103163232-691acdc23f1f h1:wUtLHuPO/sScvJYvntGmS2jSll+CtxTDpzZNvCXJepw=
+github.com/antlr/antlr4 v0.0.0-20200103163232-691acdc23f1f/go.mod h1:T7PbCXFs94rrTttyxjbyT5+/1V8T2TYDejxUfHJjw1Y=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
 github.com/awalterschulze/gographviz v0.0.0-20190522210029-fa59802746ab h1:+cdNqtOJWjvepyhxy23G7z7vmpYCoC65AP0nqi1f53s=
 github.com/awalterschulze/gographviz v0.0.0-20190522210029-fa59802746ab/go.mod h1:GEV5wmg4YquNw7v1kkyoX9etIk8yVmXj+AkDHuuETHs=

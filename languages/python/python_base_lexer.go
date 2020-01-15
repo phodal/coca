@@ -132,8 +132,8 @@ func (l *PythonBaseLexer) HandleSpaces() {
 		indent := 0
 		text := l.GetText()
 
-		for _, char := range text {
-			if char == '\t' {
+		for i := 0; i < len(text);i++ {
+			if text[i] == '\t' {
 				indent = indent + TabSize - indent%TabSize
 			} else {
 				indent = indent + 1

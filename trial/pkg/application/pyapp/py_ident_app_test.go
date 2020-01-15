@@ -53,7 +53,8 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 	codeFile := app.Analysis(string(file), "testdata/grammar/class_or_func_def_stmt.py")
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
-	g.Expect(codeFile.DataStructures[0].Annotations[0].(*trial.PythonAnnotation).Name).To(Equal("decorator"))
+	g.Expect(len(codeFile.DataStructures[0].Annotations.([]trial.PythonAnnotation))).To(Equal(1))
 
 	g.Expect(codeFile.Members[0].MethodNodes[0].Name).To(Equal("bar"))
+	g.Expect(len(codeFile.Members[0].MethodNodes[0].Annotations.([]trial.PythonAnnotation))).To(Equal(2))
 }

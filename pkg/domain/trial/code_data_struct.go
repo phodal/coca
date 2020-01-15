@@ -6,7 +6,7 @@ type CodeDataStruct struct {
 	MemberIds   []string
 	Extend      string
 	Implements  []string
-	Annotations []interface{}
+	Annotations interface{}
 	Properties  []CodeProperty
 	Extension   interface{}
 }

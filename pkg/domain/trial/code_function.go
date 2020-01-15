@@ -6,11 +6,8 @@ type CodeFunction struct {
 	Parameters     []CodeProperty
 	MethodCalls    []CodeCall
 	Override       bool
-	Annotations    []CodeAnnotation
+	Annotations    interface{}
 	Modifiers      []string
 	Creators       []CodeDataStruct
 	InnerFunctions []CodeFunction
-}
-
-type CodeAnnotation struct {
 }

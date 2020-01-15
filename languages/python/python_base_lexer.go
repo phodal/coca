@@ -30,13 +30,14 @@ func (l *PythonBaseLexer) BuildDefaultToken(tokenType int) antlr.Token {
 func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text string) antlr.Token {
 	cpos := l.GetCharPositionInLine()
 	lpos := l.GetLine()
-	commonToken := antlr.NewCommonTokenFactory(false).Create(
+	charIndex := l.GetCharIndex()
+	commonToken := antlr.NewCommonTokenFactory(true).Create(
 		l.GetTokenSourceCharStreamPair(),
 		tokenType,
 		text,
 		channel,
-		l.GetCharIndex()-len(text),
-		l.GetCharIndex(),
+		charIndex-len(text),
+		charIndex,
 		lpos,
 		cpos)
 

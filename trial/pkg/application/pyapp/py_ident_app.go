@@ -3,6 +3,7 @@ package pyapp
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
+	"github.com/phodal/coca/pkg/domain/trial"
 	"github.com/phodal/coca/trial/pkg/ast/pyast"
 )
 
@@ -20,10 +21,12 @@ func ProcessTsString(code string) *parser.PythonParser {
 type PythonApiApp struct {
 }
 
-func (j *PythonApiApp) Analysis(code string, fileName string) {
+func (j *PythonApiApp) Analysis(code string, fileName string) *trial.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Root()
 
 	listener := pyast.NewPythonIdentListener(fileName)
 	antlr.NewParseTreeWalker().Walk(listener, context)
+
+	return listener.GetCodeFileInfo()
 }

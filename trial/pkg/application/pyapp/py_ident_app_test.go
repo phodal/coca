@@ -13,7 +13,6 @@ import (
 func Test_AllPythonGrammar(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-
 	var PyFileFilter = func(path string) bool {
 		return strings.HasSuffix(path, ".py")
 	}
@@ -35,47 +34,7 @@ func Test_PythonClass(t *testing.T) {
 	app := new(PythonApiApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/class.py")
-	app.Analysis(string(file), "")
+	codeFile := app.Analysis(string(file), "testdata/grammar/class.py")
 
-	g.Expect(1).To(Equal(1))
+	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
 }
-
-func Test_PythonVersion2(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	app := new(PythonApiApp)
-	app.Analysis("print 'a' ", "")
-
-	g.Expect(1).To(Equal(1))
-}
-
-func Test_PythonVersion3(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	app := new(PythonApiApp)
-	app.Analysis("print('a')", "")
-
-	g.Expect(1).To(Equal(1))
-}
-
-func Test_PythonPowerStar(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	app := new(PythonApiApp)
-	file, _ := ioutil.ReadFile("testdata/grammar/argument.py")
-	app.Analysis(string(file), "")
-
-	g.Expect(1).To(Equal(1))
-}
-
-func Test_PythonFuncDefStm(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	app := new(PythonApiApp)
-
-	file, _ := ioutil.ReadFile("testdata/grammar/class_or_func_def_stmt.py")
-	app.Analysis(string(file), "")
-
-	g.Expect(1).To(Equal(1))
-}
-

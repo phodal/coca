@@ -40,12 +40,19 @@ func Test_PythonClass(t *testing.T) {
 	g.Expect(1).To(Equal(1))
 }
 
-func Test_PythonVersion(t *testing.T) {
+func Test_PythonVersion2(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(PythonApiApp)
-
 	app.Analysis("print 'a' ", "")
+
+	g.Expect(1).To(Equal(1))
+}
+
+func Test_PythonVersion3(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(PythonApiApp)
 	app.Analysis("print('a')", "")
 
 	g.Expect(1).To(Equal(1))

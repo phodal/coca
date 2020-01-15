@@ -10,11 +10,11 @@ var (
 	Autodetect = 0
 	Python2    = 2
 	Python3    = 3
-	Version    int
+	Version    = Autodetect
 )
 
 func (p *PythonBaseParser) CheckVersion(ver int) bool {
-	return Version == Autodetect || ver == Version
+	return Version == Autodetect || Version == ver
 }
 
 func (p *PythonBaseParser) SetVersion(ver int) {

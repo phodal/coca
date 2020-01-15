@@ -35,12 +35,15 @@ func (s *PythonIdentListener) SetDebugOutput(isDebug bool) io.Writer {
 }
 
 func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
+	var imports []trial.CodeImport
 	for _, asName := range ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name() {
 		nameContext := asName.(*parser.Dotted_as_nameContext)
 		codeImport := BuildCodeImport(nameContext)
 
-		fmt.Println(codeImport)
+		imports = append(imports, *codeImport)
 	}
+
+	//currentCodeFile.Imports = append(currentCodeFile.Imports, imports)
 }
 
 func BuildCodeImport(nameContext *parser.Dotted_as_nameContext) *trial.CodeImport {

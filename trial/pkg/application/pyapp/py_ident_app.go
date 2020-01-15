@@ -6,15 +6,15 @@ import (
 	"github.com/phodal/coca/trial/pkg/ast/pyast"
 )
 
-func processStream(is antlr.CharStream) *parser.PythonParser {
+func streamToParser(is antlr.CharStream) *parser.PythonParser {
 	lexer := parser.NewPythonLexer(is)
-	stream := antlr.NewCommonTokenStream(lexer, 0)
-	return parser.NewPythonParser(stream)
+	tokens := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+	return parser.NewPythonParser(tokens)
 }
 
 func ProcessTsString(code string) *parser.PythonParser {
 	is := antlr.NewInputStream(code)
-	return processStream(is)
+	return streamToParser(is)
 }
 
 type PythonApiApp struct {

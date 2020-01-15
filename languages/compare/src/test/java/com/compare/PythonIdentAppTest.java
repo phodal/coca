@@ -11,4 +11,22 @@ class PythonIdentAppTest {
         String s = "class foo:\n    pass\n";
         PythonIdentApp.processString(s);
     }
+
+    @Test
+    void testStar() {
+        String s = "b(**z)\nb(*z)";
+        PythonIdentApp.processString(s);
+    }
+
+    @Test
+    void testPy2() {
+        String s = "print 'a'";
+        PythonIdentApp.processString(s);
+    }
+
+    @Test
+    void testPy3() {
+        String s = "print('a')";
+        PythonIdentApp.processString(s);
+    }
 }

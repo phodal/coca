@@ -18,7 +18,7 @@ func Test_AllPythonGrammar(t *testing.T) {
 	var PyFileFilter = func(path string) bool {
 		return strings.HasSuffix(path, ".py")
 	}
-	files := cocafile.GetFilesWithFilter("testdata/grammar/", PyFileFilter)
+	files := cocafile.GetFilesWithFilter("testdata/grammar", PyFileFilter)
 
 	for _, file := range files {
 		fmt.Println(file)
@@ -54,6 +54,16 @@ func Test_PythonVersion3(t *testing.T) {
 
 	app := new(PythonApiApp)
 	app.Analysis("print('a')", "")
+
+	g.Expect(1).To(Equal(1))
+}
+
+func Test_PythonPowerStar(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(PythonApiApp)
+	file, _ := ioutil.ReadFile("testdata/grammar/argument.py")
+	app.Analysis(string(file), "")
 
 	g.Expect(1).To(Equal(1))
 }

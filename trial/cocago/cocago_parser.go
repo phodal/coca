@@ -68,9 +68,8 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.File:
 			currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
-			path := x.Path.Value
-			cleanPath := path[1 : len(path)-1]
-			currentFile.Imports = append(currentFile.Imports, cleanPath)
+			imp := BuildImport(x)
+			currentFile.Imports = append(currentFile.Imports, *imp)
 		case *ast.TypeSpec:
 			currentStruct = trial.CodeDataStruct{}
 			currentStruct.Name = x.Name.String()
@@ -96,6 +95,23 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	})
 
 	return &currentFile
+}
+
+func BuildImport(x *ast.ImportSpec) *trial.CodeImport {
+	path := x.Path.Value
+	cleanPath := path[1 : len(path)-1]
+	asName := ""
+	if x.Name != nil {
+		asName = x.Name.String()
+	}
+	imp := &trial.CodeImport{
+		Source:     cleanPath,
+		AsName:     asName,
+		ImportName: "",
+		UsageName:  nil,
+		Scope:      "",
+	}
+	return imp
 }
 
 func AddInterface(x *ast.InterfaceType, ident string, codeFile *trial.CodeFile) {

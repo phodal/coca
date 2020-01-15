@@ -3,7 +3,13 @@
   "DataStructures": null,
   "FullName": "testdata/node_infos/hello_world.code",
   "Imports": [
-    "fmt"
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "fmt",
+      "UsageName": null
+    }
   ],
   "Members": [
     {

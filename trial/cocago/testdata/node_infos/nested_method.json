@@ -3,7 +3,13 @@
   "DataStructures": null,
   "FullName": "testdata/node_infos/nested_method.code",
   "Imports": [
-    "fmt"
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "fmt",
+      "UsageName": null
+    }
   ],
   "Members": [
     {

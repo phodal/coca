@@ -55,7 +55,13 @@
   ],
   "FullName": "testdata/node_infos/data_struct_property.code",
   "Imports": [
-    "github.com/phodal/coca/pkg/domain"
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "github.com/phodal/coca/pkg/domain",
+      "UsageName": null
+    }
   ],
   "Members": [
     {

@@ -3,8 +3,20 @@
   "DataStructures": null,
   "FullName": "testdata/node_infos/normal_method.code",
   "Imports": [
-    "github.com/antlr/antlr4/runtime/Go/antlr",
-    "github.com/phodal/coca/languages/ts"
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "github.com/antlr/antlr4/runtime/Go/antlr",
+      "UsageName": null
+    },
+    {
+      "AsName": "parser",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "github.com/phodal/coca/languages/ts",
+      "UsageName": null
+    }
   ],
   "Members": [
     {

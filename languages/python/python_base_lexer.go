@@ -23,11 +23,11 @@ type PythonBaseLexer struct {
 	lastToken       antlr.Token
 }
 
-func (l *PythonBaseLexer) BuildDefaultToken(tokenType int) antlr.Token {
-	return l.BuildTokenByType(tokenType, antlr.LexerDefaultTokenChannel, "")
+func (l *PythonBaseLexer) EmitDefaultToken(tokenType int) {
+	l.EmitTokenByType(tokenType, antlr.LexerDefaultTokenChannel, "")
 }
 
-func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text string) antlr.Token {
+func (l *PythonBaseLexer) EmitTokenByType(tokenType int, channel int, text string) {
 	cpos := l.GetCharPositionInLine()
 	lpos := l.GetLine()
 	charIndex := l.GetCharIndex()
@@ -41,7 +41,7 @@ func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text stri
 		lpos,
 		cpos)
 
-	return commonToken
+	l.EmitToken(commonToken)
 }
 
 func (l *PythonBaseLexer) Emit() antlr.Token {
@@ -85,11 +85,11 @@ func (l *PythonBaseLexer) DecIndentLevel() {
 func (l *PythonBaseLexer) NextToken() antlr.Token {
 	if l.GetInputStream().LA(1) == antlr.TokenEOF && indents.Len() > 0 {
 		if buffer[l.lastTokenIndex] == nil || buffer[l.lastTokenIndex].GetTokenType() != PythonLexerLINE_BREAK {
-			l.EmitToken(l.BuildDefaultToken(PythonLexerLINE_BREAK))
+			l.EmitDefaultToken(PythonLexerLINE_BREAK)
 		}
 
 		for indents.Len() != 0 {
-			l.EmitToken(l.BuildDefaultToken(PythonLexerDEDENT))
+			l.EmitDefaultToken(PythonLexerDEDENT)
 			indents.Pop()
 		}
 	}
@@ -112,7 +112,7 @@ func (l *PythonBaseLexer) NextToken() antlr.Token {
 }
 
 func (l *PythonBaseLexer) HandleNewLine() {
-	l.EmitToken(l.BuildTokenByType(PythonLexerNEWLINE, antlr.LexerHidden, l.GetText()))
+	l.EmitTokenByType(PythonLexerNEWLINE, antlr.LexerHidden, l.GetText())
 
 	next := string(rune(l.GetInputStream().LA(1)))
 
@@ -150,7 +150,7 @@ func (l *PythonBaseLexer) HandleSpaces() {
 		l.ProcessNewLine(indent)
 	}
 
-	l.EmitToken(l.BuildTokenByType(PythonLexerWS, antlr.LexerHidden, l.GetText()))
+	l.EmitTokenByType(PythonLexerWS, antlr.LexerHidden, l.GetText())
 }
 
 func (l *PythonBaseLexer) IsNotNewLineOrComment(next string) bool {
@@ -162,7 +162,7 @@ func (l *PythonBaseLexer) IncTokenInd(index int) int {
 }
 
 func (l *PythonBaseLexer) ProcessNewLine(indent int) {
-	l.EmitToken(l.BuildDefaultToken(PythonLexerLINE_BREAK))
+	l.EmitDefaultToken(PythonLexerLINE_BREAK)
 
 	var previous = 0
 	if indents.Len() != 0 {
@@ -171,10 +171,10 @@ func (l *PythonBaseLexer) ProcessNewLine(indent int) {
 
 	if indent > previous {
 		indents.Push(indent)
-		l.EmitToken(l.BuildDefaultToken(PythonLexerINDENT))
+		l.EmitDefaultToken(PythonLexerINDENT)
 	} else {
 		for indents.Len() != 0 && indents.Peak().(int) > indent {
-			l.EmitToken(l.BuildDefaultToken(PythonLexerDEDENT))
+			l.EmitDefaultToken(PythonLexerDEDENT)
 			indents.Pop()
 		}
 	}

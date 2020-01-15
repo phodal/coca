@@ -53,4 +53,39 @@ class PythonIdentAppTest {
         String s = "print('a')";
         PythonIdentApp.processString(s);
     }
+    @Test
+    void testTryStmt() {
+        String s = "# try_stmt: TRY COLON suite (except_clause+ else_clause? finaly_clause? | finaly_clause)\n" +
+                "\n" +
+                "# TRY COLON suite except_clause\n" +
+                "try:\n" +
+                "    pass\n" +
+                "except:\n" +
+                "    pass\n" +
+                "\n" +
+                "# TRY COLON suite except_clause except_clause else_clause\n" +
+                "try:\n" +
+                "    pass\n" +
+                "except Exception as ex:\n" +
+                "    pass\n" +
+                "except:\n" +
+                "    pass\n" +
+                "else:\n" +
+                "    pass\n" +
+                "\n" +
+                "# TRY COLON suite except_clause finaly_clause\n" +
+                "try:\n" +
+                "    pass\n" +
+                "except Exception:\n" +
+                "    pass\n" +
+                "finally:\n" +
+                "    pass\n" +
+                "\n" +
+                "# TRY COLON suite finaly_clause\n" +
+                "try:\n" +
+                "    pass\n" +
+                "finally:\n" +
+                "    pass\n";
+        PythonIdentApp.processString(s);
+    }
 }

@@ -14,7 +14,7 @@ var (
 )
 
 func (p *PythonBaseParser) CheckVersion(ver int) bool {
-	return ver == Autodetect || ver == Version
+	return Version == Autodetect || ver == Version
 }
 
 func (p *PythonBaseParser) SetVersion(ver int) {

@@ -10,7 +10,6 @@ import (
 	"testing"
 )
 
-
 func Test_AllPythonGrammar(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -57,4 +56,16 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 
 	g.Expect(codeFile.Members[0].MethodNodes[0].Name).To(Equal("bar"))
 	g.Expect(len(codeFile.Members[0].MethodNodes[0].Annotations.([]trial.PythonAnnotation))).To(Equal(2))
+}
+
+func Test_PythonImport(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(PythonApiApp)
+
+	file, _ := ioutil.ReadFile("testdata/grammar/import_stmt.py")
+	codeFile := app.Analysis(string(file), "import_stmt")
+
+	fmt.Println(codeFile)
+	g.Expect(true).To(Equal(true))
 }

@@ -9,5 +9,11 @@ type CodeFile struct {
 	Members        []*CodeMember
 	DataStructures []CodeDataStruct
 	// Deprecated: support for migration only
-	ClassNodes     []domain.JClassNode
+	ClassNodes []domain.JClassNode
+}
+
+type CodeImport struct {
+	Source    string
+	AsName    string
+	UsageName []string
 }

@@ -2,6 +2,7 @@ package pyast
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/trial"
@@ -16,6 +17,7 @@ type PythonIdentListener struct {
 var currentCodeFile *trial.CodeFile
 var debug = false
 var output io.Writer
+var hasEnterMember = false
 
 func NewPythonIdentListener(fileName string) *PythonIdentListener {
 	currentCodeFile = &trial.CodeFile{}
@@ -32,7 +34,26 @@ func (s *PythonIdentListener) SetDebugOutput(isDebug bool) io.Writer {
 	return output
 }
 
+func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
+	for _, asName := range ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name() {
+		nameContext := asName.(*parser.Dotted_as_nameContext)
+		asNameText := nameContext.Dotted_name().GetText()
+		name := ""
+		if nameContext.Name() != nil {
+			name = nameContext.Name().GetText()
+		}
+
+		codeImport := &trial.CodeImport{
+			Source: asNameText,
+			AsName: name,
+		}
+
+		fmt.Println(codeImport)
+	}
+}
+
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
+	hasEnterMember = true
 	dataStruct := trial.CodeDataStruct{
 		Name:       ctx.Name().GetText(),
 		ID:         "",
@@ -49,7 +70,12 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	currentCodeFile.DataStructures = append(currentCodeFile.DataStructures, dataStruct)
 }
 
+func (s *PythonIdentListener) ExitClassdef(ctx *parser.ClassdefContext) {
+	hasEnterMember = false
+}
+
 func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
+	hasEnterMember = true
 	function := trial.CodeFunction{
 		Name: ctx.Name().GetText(),
 	}
@@ -66,6 +92,10 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 
 	member.MethodNodes = append(member.MethodNodes, function)
 	currentCodeFile.Members = append(currentCodeFile.Members, member)
+}
+
+func (s *PythonIdentListener) ExitFuncdef(ctx *parser.FuncdefContext) {
+	hasEnterMember = false
 }
 
 func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []trial.PythonAnnotation {

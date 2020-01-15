@@ -37,4 +37,8 @@ func Test_PythonClass(t *testing.T) {
 	codeFile := app.Analysis(string(file), "testdata/grammar/class.py")
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
+
+	defs, _ := ioutil.ReadFile("testdata/grammar/classdef.py")
+	results := app.Analysis(string(defs), "testdata/grammar/classdef.py")
+	g.Expect(len(results.DataStructures)).To(Equal(3))
 }

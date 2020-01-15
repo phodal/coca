@@ -13,7 +13,6 @@ import (
 func Test_AllPythonGrammar(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
 
 	var PyFileFilter = func(path string) bool {
 		return strings.HasSuffix(path, ".py")
@@ -23,6 +22,7 @@ func Test_AllPythonGrammar(t *testing.T) {
 	for _, file := range files {
 		fmt.Println(file)
 		file, _ := ioutil.ReadFile(file)
+		app := new(PythonApiApp)
 		app.Analysis(string(file), "")
 	}
 

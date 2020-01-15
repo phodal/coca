@@ -216,7 +216,7 @@ import { ZipCodeValidator } from "./ZipCodeValidator";
 `, "")
 
 	g.Expect(len(results.Imports)).To(Equal(1))
-	g.Expect(results.Imports[0]).To(Equal("./ZipCodeValidator"))
+	g.Expect(results.Imports[0].Source).To(Equal("./ZipCodeValidator"))
 }
 
 func Test_ShouldReturnAsImports(t *testing.T) {
@@ -230,7 +230,8 @@ import zip = require("./ZipCodeValidator");
 `, "")
 
 	g.Expect(len(results.Imports)).To(Equal(1))
-	g.Expect(results.Imports[0]).To(Equal("./ZipCodeValidator"))
+
+	g.Expect(results.Imports[0].Source).To(Equal("./ZipCodeValidator"))
 }
 
 // Todo: fix for $ and *

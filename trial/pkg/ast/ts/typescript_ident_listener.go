@@ -49,7 +49,10 @@ func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
 
 func (s *TypeScriptIdentListener) EnterImportFromBlock(ctx *parser.ImportFromBlockContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
-	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
+	imp := &trial.CodeImport{Source: replaceSingleQuote}
+	importName := ctx.GetChild(0).(antlr.ParseTree).GetText()
+	imp.ImportName = importName
+	codeFile.Imports = append(codeFile.Imports, *imp)
 }
 
 func UpdateImportStr(importText string) string {
@@ -60,12 +63,14 @@ func UpdateImportStr(importText string) string {
 
 func (s *TypeScriptIdentListener) EnterImportAliasDeclaration(ctx *parser.ImportAliasDeclarationContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
-	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
+	imp := &trial.CodeImport{Source: replaceSingleQuote}
+	codeFile.Imports = append(codeFile.Imports, *imp)
 }
 
 func (s *TypeScriptIdentListener) EnterImportAll(ctx *parser.ImportAllContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
-	codeFile.Imports = append(codeFile.Imports, replaceSingleQuote)
+	imp := &trial.CodeImport{Source: replaceSingleQuote}
+	codeFile.Imports = append(codeFile.Imports, *imp)
 }
 
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {

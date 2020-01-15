@@ -5,7 +5,7 @@ import "github.com/phodal/coca/pkg/domain"
 type CodeFile struct {
 	FullName       string
 	PackageName    string
-	Imports        []string // CodeImports
+	Imports        []CodeImport
 	Members        []*CodeMember
 	DataStructures []CodeDataStruct
 	// Deprecated: support for migration only
@@ -13,8 +13,9 @@ type CodeFile struct {
 }
 
 type CodeImport struct {
-	Source    string
-	AsName    string
-	UsageName []string
-	Scope     string  // function, method or class
+	Source     string
+	AsName     string
+	ImportName string
+	UsageName  []string
+	Scope      string // function, method or class
 }

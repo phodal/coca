@@ -1,12 +1,9 @@
-// Generated from PythonParser.g4 by ANTLR 4.7.2
+package pyantlr;// Generated from PythonParser.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class PythonParser extends PythonBaseParser {
@@ -1319,23 +1316,23 @@ public class PythonParser extends PythonBaseParser {
 				case 1:
 					{
 					setState(268);
-					if (!(p.CheckVersion(2))) throw new FailedPredicateException(this, "p.CheckVersion(2)");
+					if (!(CheckVersion(2))) throw new FailedPredicateException(this, "CheckVersion(2)");
 					setState(269);
 					match(COMMA);
 					setState(270);
 					name();
-					p.SetVersion(2);
+					SetVersion(2);
 					}
 					break;
 				case 2:
 					{
 					setState(273);
-					if (!(p.CheckVersion(3))) throw new FailedPredicateException(this, "p.CheckVersion(3)");
+					if (!(CheckVersion(3))) throw new FailedPredicateException(this, "CheckVersion(3)");
 					setState(274);
 					match(AS);
 					setState(275);
 					name();
-					p.SetVersion(3);
+					SetVersion(3);
 					}
 					break;
 				}
@@ -2357,7 +2354,7 @@ public class PythonParser extends PythonBaseParser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(384);
-				if (!(p.CheckVersion(2))) throw new FailedPredicateException(this, "p.CheckVersion(2)");
+				if (!(CheckVersion(2))) throw new FailedPredicateException(this, "CheckVersion(2)");
 				setState(385);
 				match(PRINT);
 				setState(408);
@@ -2467,7 +2464,7 @@ public class PythonParser extends PythonBaseParser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				p.SetVersion(2);
+				SetVersion(2);
 				}
 				break;
 			case 3:
@@ -2723,7 +2720,7 @@ public class PythonParser extends PythonBaseParser {
 				enterOuterAlt(_localctx, 13);
 				{
 				setState(473);
-				if (!(p.CheckVersion(2))) throw new FailedPredicateException(this, "p.CheckVersion(2)");
+				if (!(CheckVersion(2))) throw new FailedPredicateException(this, "CheckVersion(2)");
 				setState(474);
 				match(EXEC);
 				setState(475);
@@ -2752,7 +2749,7 @@ public class PythonParser extends PythonBaseParser {
 					}
 				}
 
-				p.SetVersion(2);
+				SetVersion(2);
 				}
 				break;
 			case 14:
@@ -2782,7 +2779,7 @@ public class PythonParser extends PythonBaseParser {
 				enterOuterAlt(_localctx, 15);
 				{
 				setState(492);
-				if (!(p.CheckVersion(3))) throw new FailedPredicateException(this, "p.CheckVersion(3)");
+				if (!(CheckVersion(3))) throw new FailedPredicateException(this, "CheckVersion(3)");
 				setState(493);
 				match(NONLOCAL);
 				setState(494);
@@ -2803,7 +2800,7 @@ public class PythonParser extends PythonBaseParser {
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				p.SetVersion(3);
+				SetVersion(3);
 				}
 				break;
 			}
@@ -3146,7 +3143,7 @@ public class PythonParser extends PythonBaseParser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(542);
-				if (!(p.CheckVersion(3))) throw new FailedPredicateException(this, "p.CheckVersion(3)");
+				if (!(CheckVersion(3))) throw new FailedPredicateException(this, "CheckVersion(3)");
 				setState(543);
 				match(COLON);
 				setState(544);
@@ -3163,7 +3160,7 @@ public class PythonParser extends PythonBaseParser {
 					}
 				}
 
-				p.SetVersion(3);
+				SetVersion(3);
 				}
 				break;
 			case 3:
@@ -6484,27 +6481,27 @@ public class PythonParser extends PythonBaseParser {
 	private boolean except_clause_sempred(Except_clauseContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return p.CheckVersion(2);
+			return CheckVersion(2);
 		case 1:
-			return p.CheckVersion(3);
+			return CheckVersion(3);
 		}
 		return true;
 	}
 	private boolean small_stmt_sempred(Small_stmtContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 2:
-			return p.CheckVersion(2);
+			return CheckVersion(2);
 		case 3:
-			return p.CheckVersion(2);
+			return CheckVersion(2);
 		case 4:
-			return p.CheckVersion(3);
+			return CheckVersion(3);
 		}
 		return true;
 	}
 	private boolean assign_part_sempred(Assign_partContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 5:
-			return p.CheckVersion(3);
+			return CheckVersion(3);
 		}
 		return true;
 	}

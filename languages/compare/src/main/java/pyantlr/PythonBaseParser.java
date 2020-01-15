@@ -1,13 +1,13 @@
-package PythonParseTree;
+package pyantlr;
 
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.TokenStream;
 
-public abstract class PythonParserBase extends Parser
+public abstract class PythonBaseParser extends Parser
 {
     public PythonVersion Version = PythonVersion.Autodetect;
 
-    protected PythonParserBase(TokenStream input) {
+    protected PythonBaseParser(TokenStream input) {
         super(input);
     }
 

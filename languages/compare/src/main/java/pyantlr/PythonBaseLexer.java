@@ -1,4 +1,4 @@
-package PythonParseTree;
+package pyantlr;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonToken;
@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.Token;
 
 import java.util.Stack;
 
-public abstract class PythonLexerBase extends Lexer {
+public abstract class PythonBaseLexer extends Lexer {
     public static int TabSize = 8;
 
     // The amount of opened braces, brackets and parenthesis.
@@ -22,7 +22,7 @@ public abstract class PythonLexerBase extends Lexer {
     private Token[] _buffer = new Token[32];
     private Token _lastToken;
 
-    protected PythonLexerBase(CharStream input) {
+    protected PythonBaseLexer(CharStream input) {
         super(input);
     }
 

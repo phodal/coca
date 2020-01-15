@@ -1,12 +1,8 @@
-// Generated from PythonLexer.g4 by ANTLR 4.7.2
-import org.antlr.v4.runtime.Lexer;
+package pyantlr;// Generated from PythonLexer.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class PythonLexer extends PythonBaseLexer {
@@ -189,56 +185,56 @@ public class PythonLexer extends PythonBaseLexer {
 	private void OPEN_PAREN_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 0:
-			l.IncIndentLevel();
+			IncIndentLevel();
 			break;
 		}
 	}
 	private void CLOSE_PAREN_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 1:
-			l.DecIndentLevel();
+			DecIndentLevel();
 			break;
 		}
 	}
 	private void OPEN_BRACE_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 2:
-			l.IncIndentLevel();
+			IncIndentLevel();
 			break;
 		}
 	}
 	private void CLOSE_BRACE_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 3:
-			l.DecIndentLevel();
+			DecIndentLevel();
 			break;
 		}
 	}
 	private void OPEN_BRACKET_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 4:
-			l.IncIndentLevel();
+			IncIndentLevel();
 			break;
 		}
 	}
 	private void CLOSE_BRACKET_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 5:
-			l.DecIndentLevel();
+			DecIndentLevel();
 			break;
 		}
 	}
 	private void NEWLINE_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 6:
-			l.HandleNewLine();
+			HandleNewLine();
 			break;
 		}
 	}
 	private void WS_action(RuleContext _localctx, int actionIndex) {
 		switch (actionIndex) {
 		case 7:
-			l.HandleSpaces();
+			HandleSpaces();
 			break;
 		}
 	}

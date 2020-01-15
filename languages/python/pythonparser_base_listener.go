@@ -273,6 +273,18 @@ func (s *BasePythonParserListener) EnterNonlocal_stmt(ctx *Nonlocal_stmtContext)
 // ExitNonlocal_stmt is called when production nonlocal_stmt is exited.
 func (s *BasePythonParserListener) ExitNonlocal_stmt(ctx *Nonlocal_stmtContext) {}
 
+// EnterFrom_stmt_as_names is called when production from_stmt_as_names is entered.
+func (s *BasePythonParserListener) EnterFrom_stmt_as_names(ctx *From_stmt_as_namesContext) {}
+
+// ExitFrom_stmt_as_names is called when production from_stmt_as_names is exited.
+func (s *BasePythonParserListener) ExitFrom_stmt_as_names(ctx *From_stmt_as_namesContext) {}
+
+// EnterFrom_stmt_source is called when production from_stmt_source is entered.
+func (s *BasePythonParserListener) EnterFrom_stmt_source(ctx *From_stmt_sourceContext) {}
+
+// ExitFrom_stmt_source is called when production from_stmt_source is exited.
+func (s *BasePythonParserListener) ExitFrom_stmt_source(ctx *From_stmt_sourceContext) {}
+
 // EnterTestlist_star_expr is called when production testlist_star_expr is entered.
 func (s *BasePythonParserListener) EnterTestlist_star_expr(ctx *Testlist_star_exprContext) {}
 

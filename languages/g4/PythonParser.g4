@@ -144,7 +144,7 @@ simple_stmt
 small_stmt
     : testlist_star_expr assign_part?                                                 #expr_stmt
     | {p.CheckVersion(2)}? PRINT ((test (COMMA test)* COMMA?)
-                       | RIGHT_SHIFT test ((COMMA test)+ COMMA?)) {p.SetVersion(2);}    #print_stmt   // Python 2
+                       | RIGHT_SHIFT test ((COMMA test)+ COMMA?)) {p.SetVersion(2);}  #print_stmt   // Python 2
     | DEL exprlist                                                                    #del_stmt
     | PASS                                                                            #pass_stmt
     | BREAK                                                                           #break_stmt
@@ -153,13 +153,15 @@ small_stmt
     | RAISE (test (COMMA test (COMMA test)?)?)? (FROM test)?                          #raise_stmt
     | yield_expr                                                                      #yield_stmt
     | IMPORT dotted_as_names                                                          #import_stmt
-    | FROM ((DOT | ELLIPSIS)* dotted_name | (DOT | ELLIPSIS)+)
-      IMPORT (STAR | OPEN_PAREN import_as_names CLOSE_PAREN | import_as_names)        #from_stmt
+    | FROM from_stmt_source IMPORT from_stmt_as_names                                 #from_stmt
     | GLOBAL name (COMMA name)*                                                       #global_stmt
-    | {p.CheckVersion(2)}? EXEC expr (IN test (COMMA test)?)? {p.SetVersion(2);}          #exec_stmt     // Python 2
+    | {p.CheckVersion(2)}? EXEC expr (IN test (COMMA test)?)? {p.SetVersion(2);}      #exec_stmt     // Python 2
     | ASSERT test (COMMA test)?                                                       #assert_stmt
-    | {p.CheckVersion(3)}? NONLOCAL name (COMMA name)* {p.SetVersion(3);}                 #nonlocal_stmt // Python 3
+    | {p.CheckVersion(3)}? NONLOCAL name (COMMA name)* {p.SetVersion(3);}             #nonlocal_stmt // Python 3
     ;
+
+from_stmt_as_names : (STAR | OPEN_PAREN import_as_names CLOSE_PAREN | import_as_names);
+from_stmt_source : ((DOT | ELLIPSIS)* dotted_name | (DOT | ELLIPSIS)+) ;
 
 testlist_star_expr
     : ((test | star_expr) COMMA)+ (test | star_expr)?

@@ -134,6 +134,12 @@ type PythonParserListener interface {
 	// EnterNonlocal_stmt is called when entering the nonlocal_stmt production.
 	EnterNonlocal_stmt(c *Nonlocal_stmtContext)
 
+	// EnterFrom_stmt_as_names is called when entering the from_stmt_as_names production.
+	EnterFrom_stmt_as_names(c *From_stmt_as_namesContext)
+
+	// EnterFrom_stmt_source is called when entering the from_stmt_source production.
+	EnterFrom_stmt_source(c *From_stmt_sourceContext)
+
 	// EnterTestlist_star_expr is called when entering the testlist_star_expr production.
 	EnterTestlist_star_expr(c *Testlist_star_exprContext)
 
@@ -367,6 +373,12 @@ type PythonParserListener interface {
 
 	// ExitNonlocal_stmt is called when exiting the nonlocal_stmt production.
 	ExitNonlocal_stmt(c *Nonlocal_stmtContext)
+
+	// ExitFrom_stmt_as_names is called when exiting the from_stmt_as_names production.
+	ExitFrom_stmt_as_names(c *From_stmt_as_namesContext)
+
+	// ExitFrom_stmt_source is called when exiting the from_stmt_source production.
+	ExitFrom_stmt_source(c *From_stmt_sourceContext)
 
 	// ExitTestlist_star_expr is called when exiting the testlist_star_expr production.
 	ExitTestlist_star_expr(c *Testlist_star_exprContext)

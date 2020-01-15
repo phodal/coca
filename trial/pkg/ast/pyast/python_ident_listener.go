@@ -53,15 +53,11 @@ func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
 }
 
 func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
-	if ctx.Dotted_name() != nil {
-		asNameText := ctx.Dotted_name().GetText()
-		codeImport := &trial.CodeImport{
-			Source: asNameText,
-			AsName: "",
-		}
+	codeImport := &trial.CodeImport{}
+	codeImport.Source = ctx.From_stmt_source().GetText()
+	codeImport.UsageName = append(codeImport.UsageName, ctx.From_stmt_as_names().GetText())
 
-		currentCodeFile.Imports = append(currentCodeFile.Imports, *codeImport)
-	}
+	currentCodeFile.Imports = append(currentCodeFile.Imports, *codeImport)
 }
 
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {

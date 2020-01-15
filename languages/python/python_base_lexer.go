@@ -43,6 +43,11 @@ func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text stri
 	return commonToken
 }
 
+func (l *PythonBaseLexer) Emit() antlr.Token {
+	token := l.BaseLexer.Emit()
+	return token
+}
+
 // override not success
 func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
 	//l.BaseLexer.EmitToken(token)
@@ -87,6 +92,7 @@ func (l *PythonBaseLexer) NextToken() antlr.Token {
 		}
 	}
 
+	//l.BaseLexer.Virt = l
 	next := l.BaseLexer.NextToken()
 	l.EmitToken(next)
 

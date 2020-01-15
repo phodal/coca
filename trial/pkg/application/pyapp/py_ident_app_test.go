@@ -4,6 +4,7 @@ import (
 	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
+	"github.com/phodal/coca/pkg/domain/trial"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -52,4 +53,5 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 	codeFile := app.Analysis(string(file), "testdata/grammar/class_or_func_def_stmt.py")
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
+	g.Expect(codeFile.DataStructures[0].Annotations[0].(*trial.PythonAnnotation).Name).To(Equal("decorator"))
 }

@@ -4,10 +4,10 @@ type CodeDataStruct struct {
 	Name        string
 	ID          string
 	MemberIds   []string
-	Properties  []CodeProperty
 	Extend      string
 	Implements  []string
 	Annotations []interface{}
+	Properties  []CodeProperty
 	Extension   interface{}
 }
 

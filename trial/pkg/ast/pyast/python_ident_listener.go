@@ -1,8 +1,10 @@
 package pyast
 
 import (
+	"fmt"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/trial"
+	"reflect"
 )
 
 type PythonIdentListener struct {
@@ -23,6 +25,13 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 		ID:         "",
 		MemberIds:  nil,
 		Properties: nil,
+	}
+
+	switch x := ctx.GetParent().GetChild(0).(type) {
+	case *parser.DecoratorContext:
+
+	default:
+		fmt.Println(reflect.TypeOf(x))
 	}
 
 	currentCodeFile.DataStructures = append(currentCodeFile.DataStructures, dataStruct)

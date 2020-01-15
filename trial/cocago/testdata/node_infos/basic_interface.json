@@ -2,7 +2,11 @@
   "ClassNodes": null,
   "DataStructures": [
     {
+      "Annotations": null,
+      "Extend": "",
+      "Extension": null,
       "ID": "",
+      "Implements": null,
       "MemberIds": null,
       "Name": "Shape",
       "Properties": [
@@ -35,7 +39,11 @@
       ]
     },
     {
+      "Annotations": null,
+      "Extend": "",
+      "Extension": null,
       "ID": "",
+      "Implements": null,
       "MemberIds": null,
       "Name": "Object",
       "Properties": [
@@ -59,7 +67,11 @@
       ]
     },
     {
+      "Annotations": null,
+      "Extend": "",
+      "Extension": null,
       "ID": "",
+      "Implements": null,
       "MemberIds": null,
       "Name": "Material",
       "Properties": [

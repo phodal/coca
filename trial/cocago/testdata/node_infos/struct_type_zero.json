@@ -2,7 +2,11 @@
   "ClassNodes": null,
   "DataStructures": [
     {
+      "Annotations": null,
+      "Extend": "",
+      "Extension": null,
       "ID": "",
+      "Implements": null,
       "MemberIds": null,
       "Name": "O",
       "Properties": null

@@ -42,3 +42,14 @@ func Test_PythonClass(t *testing.T) {
 	results := app.Analysis(string(defs), "testdata/grammar/classdef.py")
 	g.Expect(len(results.DataStructures)).To(Equal(3))
 }
+
+func Test_PythonClassWithDecorator(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(PythonApiApp)
+
+	file, _ := ioutil.ReadFile("testdata/grammar/class_or_func_def_stmt.py")
+	codeFile := app.Analysis(string(file), "testdata/grammar/class_or_func_def_stmt.py")
+
+	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
+}

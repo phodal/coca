@@ -7,6 +7,7 @@ type CodeFile struct {
 	PackageName    string
 	Imports        []string
 	Members        []*CodeMember
-	ClassNodes     []domain.JClassNode
 	DataStructures []CodeDataStruct
+	// Deprecated: support for migration only
+	ClassNodes     []domain.JClassNode
 }

@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/infrastructure/container"
 )
@@ -9,10 +8,12 @@ import (
 var TabSize = 8
 var indents *container.Stack
 var buffer []antlr.Token
+var isFirstToken bool
 
 func init() {
 	indents = container.NewStack()
 	buffer = make([]antlr.Token, 32)
+	isFirstToken = true // first time run token will go to parent emittoken, not trigger child class. Still in debug, but, had a dirty fix.
 }
 
 type PythonBaseLexer struct {
@@ -46,7 +47,6 @@ func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text stri
 
 // override not success
 func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
-	fmt.Println(token.GetText())
 	l.BaseLexer.EmitToken(token)
 
 	if buffer[l.firstTokenIndex] != nil {

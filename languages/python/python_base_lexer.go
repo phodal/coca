@@ -47,8 +47,6 @@ func (l *PythonBaseLexer) BuildTokenByType(tokenType int, channel int, text stri
 
 // override not success
 func (l *PythonBaseLexer) EmitToken(token antlr.Token) {
-	l.BaseLexer.EmitToken(token)
-
 	if buffer[l.firstTokenIndex] != nil {
 		l.lastTokenIndex = l.IncTokenInd(l.lastTokenIndex)
 
@@ -90,6 +88,7 @@ func (l *PythonBaseLexer) NextToken() antlr.Token {
 	}
 
 	next := l.BaseLexer.NextToken()
+	l.EmitToken(next)
 
 	if buffer[l.firstTokenIndex] == nil {
 		return next

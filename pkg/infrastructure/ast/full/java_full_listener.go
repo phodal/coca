@@ -3,6 +3,7 @@ package full
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
 	"reflect"
@@ -132,7 +133,7 @@ func (s *JavaFullListener) EnterPackageDeclaration(ctx *parser.PackageDeclaratio
 func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
 	imports = append(imports, importText)
-	currentNode.Imports = append(currentNode.Imports, jdomain.NewJImport(importText))
+	currentNode.Imports = append(currentNode.Imports, core_domain.NewJImport(importText))
 }
 
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {

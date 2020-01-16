@@ -8,10 +8,3 @@ type CodeFile struct {
 	DataStructures []CodeDataStruct
 }
 
-type CodeImport struct {
-	Source     string
-	AsName     string
-	ImportName string
-	UsageName  []string
-	Scope      string // function, method or class
-}

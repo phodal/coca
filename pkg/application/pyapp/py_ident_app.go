@@ -4,7 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/trial/pkg/ast/pyast"
+	"github.com/phodal/coca/pkg/infrastructure/ast/pyast"
 )
 
 func streamToParser(is antlr.CharStream) *parser.PythonParser {

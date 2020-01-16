@@ -1,9 +1,9 @@
-package processor
+package goapp
 
 import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/trial/cocago"
+	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 	"strings"
 )
 

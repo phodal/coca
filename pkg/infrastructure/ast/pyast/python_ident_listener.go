@@ -5,7 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/trial/pkg/ast/ast_util"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_util"
 	"io"
 	"os"
 	"strings"

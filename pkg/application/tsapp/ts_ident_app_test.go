@@ -1,4 +1,4 @@
-package ts
+package tsapp
 
 import (
 	. "github.com/onsi/gomega"
@@ -39,7 +39,7 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
+	code, _ := ioutil.ReadFile("../../../_fixtures/ts/grammar/Class.ts")
 
 	codeFile := app.Analysis(string(code), "")
 
@@ -53,7 +53,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/AbstractClass.ts")
+	code, _ := ioutil.ReadFile("../../../_fixtures/ts/grammar/AbstractClass.ts")
 
 	codeFile := app.Analysis(string(code), "")
 
@@ -68,7 +68,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Module.ts")
+	code, _ := ioutil.ReadFile("../../../_fixtures/ts/grammar/Module.ts")
 
 	results := app.Analysis(string(code), "")
 
@@ -191,7 +191,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
+	code, _ := ioutil.ReadFile("../../../_fixtures/ts/grammar/Class.ts")
 
 	codeFile := app.Analysis(string(code), "")
 
@@ -236,7 +236,7 @@ func Test_ShouldReturnAllImports(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Import.ts")
+	code, _ := ioutil.ReadFile("../../../_fixtures/ts/grammar/Import.ts")
 	results := app.Analysis(string(code), "")
 
 	g.Expect(len(results.Imports)).To(Equal(5))

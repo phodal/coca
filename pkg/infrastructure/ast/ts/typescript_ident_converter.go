@@ -4,7 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/trial/pkg/ast/ast_util"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_util"
 )
 
 func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *core_domain.CodeFunction {

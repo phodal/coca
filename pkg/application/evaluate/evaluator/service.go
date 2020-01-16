@@ -12,7 +12,7 @@ type Service struct {
 
 var serviceNodeMap map[string]core_domain.JClassNode
 var returnTypeMap map[string][]string
-var longParameterList []core_domain.JMethod
+var longParameterList []core_domain.CodeFunction
 
 func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.JClassNode, nodeMap map[string]core_domain.JClassNode, identifiers []core_domain.JIdentifier) {
 	serviceNodeMap = nodeMap
@@ -27,7 +27,7 @@ func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.
 	findRelatedMethodParameters(evaluateModel, longParameterList)
 }
 
-func findRelatedMethodParameters(model *EvaluateModel, list []core_domain.JMethod) {
+func findRelatedMethodParameters(model *EvaluateModel, list []core_domain.CodeFunction) {
 	var dataset [][]string
 	for _, method := range list {
 		var paramTypeList []string
@@ -80,7 +80,7 @@ func (s Service) Evaluate(result *EvaluateModel, node core_domain.JClassNode) {
 	if s.enableSameReturnType() {
 		for _, method := range node.Methods {
 			if !method.IsJavaLangReturnType() {
-				methodType := method.Type
+				methodType := method.ReturnType
 
 				if _, ok := serviceNodeMap[methodType]; ok {
 					returnTypeMap[methodType] = append(returnTypeMap[methodType], method.BuildFullMethodName(node))

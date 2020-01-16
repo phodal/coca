@@ -8,7 +8,7 @@ type CodeDataStruct struct {
 	Extend          string
 	Implements      []string
 	InnerStructures []CodeDataStruct
-	Annotations     interface{}
+	Annotations     []CodeAnnotation
 	InOutProperties []CodeProperty
 	Functions       []CodeFunction
 	FunctionCalls   []CodeCall // for field call

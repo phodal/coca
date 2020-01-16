@@ -161,7 +161,7 @@ function Sum(x: number, y: number) : void {
 
 	firstFunction := ds[0].Functions[0]
 	params := firstFunction.Parameters
-	g.Expect(firstFunction.ReturnTypes[0].TypeType).To(Equal("void"))
+	g.Expect(firstFunction.MultipleReturns[0].TypeType).To(Equal("void"))
 	g.Expect(len(params)).To(Equal(2))
 	g.Expect(params[0].TypeValue).To(Equal("x"))
 	g.Expect(params[0].TypeType).To(Equal("number"))

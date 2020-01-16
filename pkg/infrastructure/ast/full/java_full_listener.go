@@ -22,11 +22,11 @@ var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtend = ""
-var currentMethod core_domain.JMethod
-var methodMap = make(map[string]core_domain.JMethod)
-var creatorMethodMap = make(map[string]core_domain.JMethod)
+var currentMethod core_domain.CodeFunction
+var methodMap = make(map[string]core_domain.CodeFunction)
+var creatorMethodMap = make(map[string]core_domain.CodeFunction)
 
-var methodQueue []core_domain.JMethod
+var methodQueue []core_domain.CodeFunction
 var classStringQueue []string
 
 var identMap map[string]core_domain.JIdentifier
@@ -62,7 +62,7 @@ func initClass() {
 	currentMethod = core_domain.NewJMethod()
 	currentNode.MethodCalls = nil
 
-	methodMap = make(map[string]core_domain.JMethod)
+	methodMap = make(map[string]core_domain.CodeFunction)
 	methodCalls = nil
 	fields = nil
 	isOverrideMethod = false
@@ -214,7 +214,7 @@ func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 		StopLinePosition:  stopLinePosition,
 	}
 
-	method := &core_domain.JMethod{Name: name, Type: typeType, Position: position}
+	method := &core_domain.CodeFunction{Name: name, ReturnType: typeType, Position: position}
 	updateMethod(method)
 }
 
@@ -296,9 +296,9 @@ func (s *JavaFullListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 		StopLinePosition:  ctx.GetStop().GetColumn(),
 	}
 
-	method := &core_domain.JMethod{
+	method := &core_domain.CodeFunction{
 		Name:          ctx.IDENTIFIER().GetText(),
-		Type:          "",
+		ReturnType:    "",
 		Override:      isOverrideMethod,
 		Parameters:    nil,
 		Annotations:   currentMethod.Annotations,
@@ -339,14 +339,14 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 		StopLinePosition:  stopLinePosition,
 	}
 
-	method := &core_domain.JMethod{
-		Name:        name,
-		Type:        typeType,
-		Annotations: currentMethod.Annotations,
-		Override:    isOverrideMethod,
-		Parameters:  nil,
-		Creators:    nil,
-		Position:    position,
+	method := &core_domain.CodeFunction{
+		Name:            name,
+		ReturnType:      typeType,
+		Annotations:     currentMethod.Annotations,
+		Override:        isOverrideMethod,
+		Parameters:      nil,
+		InnerStructures: nil,
+		Position:        position,
 	}
 
 	parameters := ctx.FormalParameters()
@@ -357,7 +357,7 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	updateMethod(method)
 }
 
-func buildMethodParameters(parameters parser.IFormalParametersContext, method *core_domain.JMethod) bool {
+func buildMethodParameters(parameters parser.IFormalParametersContext, method *core_domain.CodeFunction) bool {
 	if parameters != nil {
 		if parameters.GetChild(0) == nil || parameters.GetText() == "()" || parameters.GetChild(1) == nil {
 			updateMethod(method)
@@ -370,7 +370,7 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *c
 	return false
 }
 
-func updateMethod(method *core_domain.JMethod) {
+func updateMethod(method *core_domain.CodeFunction) {
 	if currentType == "CreatorClass" {
 		creatorMethodMap[getMethodMapName(*method)] = *method
 	} else {
@@ -410,7 +410,7 @@ func (s *JavaFullListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
 	currentClz = classStringQueue[len(classStringQueue)-1]
 }
 
-func getMethodMapName(method core_domain.JMethod) string {
+func getMethodMapName(method core_domain.CodeFunction) string {
 	name := method.Name
 	if name == "" && len(methodQueue) > 1 {
 		name = methodQueue[len(methodQueue)-1].Name
@@ -465,7 +465,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 	if currentCreatorNode.Class != "" {
 		method := methodMap[getMethodMapName(currentMethod)]
-		method.Creators = append(method.Creators, currentCreatorNode)
+		method.InnerStructures = append(method.InnerStructures, currentCreatorNode)
 		methodMap[getMethodMapName(currentMethod)] = method
 	}
 

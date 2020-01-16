@@ -28,7 +28,7 @@ func BuildAnnotation(ctx *parser.AnnotationContext) core_domain.CodeAnnotation {
 	return annotation
 }
 
-func BuildAnnotationForMethod(context *parser.ModifierContext, method *core_domain.JMethod) {
+func BuildAnnotationForMethod(context *parser.ModifierContext, method *core_domain.CodeFunction) {
 	if context.ClassOrInterfaceModifier() != nil {
 		if reflect.TypeOf(context.ClassOrInterfaceModifier().GetChild(0)).String() == "*parser.AnnotationContext" {
 			annotationCtx := context.ClassOrInterfaceModifier().GetChild(0).(*parser.AnnotationContext)

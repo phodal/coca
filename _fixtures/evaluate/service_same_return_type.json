@@ -17,7 +17,7 @@
     "Methods": [
       {
         "Name": "doSave",
-        "Type": "BookRepresentaion",
+        "ReturnType": "BookRepresentaion",
         "StartLine": 31,
         "StartLinePosition": 35,
         "StopLine": 33,
@@ -40,7 +40,7 @@
       },
       {
         "Name": "doUpdate",
-        "Type": "BookRepresentaion",
+        "ReturnType": "BookRepresentaion",
         "StartLine": 35,
         "StartLinePosition": 29,
         "StopLine": 38,

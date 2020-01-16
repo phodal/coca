@@ -52,21 +52,21 @@ func startParse(nodes []core_domain.JClassNode, relates []support.RefactorChange
 	}
 }
 
-func methodCallToMethodModel(call core_domain.CodeCall) core_domain.JMethod {
+func methodCallToMethodModel(call core_domain.CodeCall) core_domain.CodeFunction {
 	position := core_domain.CodePosition{
 		StartLine:         call.Position.StartLine,
 		StartLinePosition: call.Position.StartLinePosition,
 		StopLine:          call.Position.StopLine,
 		StopLinePosition:  call.Position.StopLinePosition,
 	}
-	return core_domain.JMethod{
-		Name:     call.MethodName,
-		Type:     call.Type,
-		Position: position,
+	return core_domain.CodeFunction{
+		Name:       call.MethodName,
+		ReturnType: call.Type,
+		Position:   position,
 	}
 }
 
-func updateSelfRefs(node core_domain.JClassNode, method core_domain.JMethod, info *support.PackageClassInfo) {
+func updateSelfRefs(node core_domain.JClassNode, method core_domain.CodeFunction, info *support.PackageClassInfo) {
 	path := node.FilePath
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

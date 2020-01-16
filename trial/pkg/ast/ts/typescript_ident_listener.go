@@ -132,7 +132,7 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 			TypeType: signatureCtx.Type_().GetText(),
 		}
 		function.Parameters = append(function.Parameters, param)
-		function.ReturnTypes = append(function.ReturnTypes, returnType)
+		function.MultipleReturns = append(function.MultipleReturns, returnType)
 
 		dataStruct.Functions = append(dataStruct.Functions, *function)
 	} else {
@@ -256,6 +256,6 @@ func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureConte
 		typeAnnotation := BuildTypeAnnotation(annotationContext)
 
 		returnType := function.BuildSingleReturnType(typeAnnotation)
-		function.ReturnTypes = append(function.ReturnTypes, *returnType)
+		function.MultipleReturns = append(function.MultipleReturns, *returnType)
 	}
 }

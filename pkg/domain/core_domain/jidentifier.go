@@ -1,6 +1,6 @@
 package core_domain
 
-var methods []JMethod
+var methods []CodeFunction
 
 type JIdentifier struct {
 	Package     string
@@ -9,7 +9,7 @@ type JIdentifier struct {
 	ExtendsName string
 	Extends     []string
 	Implements  []string
-	Methods     []JMethod
+	Methods     []CodeFunction
 	Annotations []CodeAnnotation
 }
 
@@ -19,11 +19,11 @@ func NewJIdentifier() *JIdentifier {
 	return identifier
 }
 
-func (identifier *JIdentifier) AddMethod(method JMethod) {
+func (identifier *JIdentifier) AddMethod(method CodeFunction) {
 	methods = append(methods, method)
 }
 
-func (identifier *JIdentifier) GetMethods() []JMethod {
+func (identifier *JIdentifier) GetMethods() []CodeFunction {
 	return methods
 }
 

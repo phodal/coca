@@ -20,6 +20,8 @@
           "Extension": null,
           "InnerFunctions": null,
           "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "MethodCalls": [
             {
               "Class": "foo",
@@ -45,6 +47,7 @@
             }
           ],
           "Modifiers": null,
+          "MultipleReturns": null,
           "Name": "f",
           "Override": false,
           "Parameters": null,
@@ -54,7 +57,7 @@
             "StopLine": 0,
             "StopLinePosition": 0
           },
-          "ReturnTypes": null
+          "ReturnType": ""
         }
       ],
       "ID": "",

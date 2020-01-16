@@ -10,7 +10,7 @@ type JClassNode struct {
 	Type        string
 	FilePath    string
 	Fields      []CodeField
-	Methods     []JMethod
+	Methods     []CodeFunction
 	MethodCalls []CodeCall
 	Extend      string
 	Implements  []string
@@ -31,8 +31,8 @@ func (j *JClassNode) IsServiceClass() bool {
 	return strings.Contains(strings.ToLower(j.Class), "service")
 }
 
-func (j *JClassNode) SetMethodFromMap(methodMap map[string]JMethod) {
-	var methodsArray []JMethod
+func (j *JClassNode) SetMethodFromMap(methodMap map[string]CodeFunction) {
+	var methodsArray []CodeFunction
 	for _, value := range methodMap {
 		methodsArray = append(methodsArray, value)
 	}
@@ -50,8 +50,8 @@ func (j *JClassNode) IsNotEmpty() bool {
 	return len(j.Methods) > 0 || len(j.MethodCalls) > 0
 }
 
-func BuildCallMethodMap(deps []JClassNode) map[string]JMethod {
-	var callMethodMap = make(map[string]JMethod)
+func BuildCallMethodMap(deps []JClassNode) map[string]CodeFunction {
+	var callMethodMap = make(map[string]CodeFunction)
 	for _, clz := range deps {
 		for _, method := range clz.Methods {
 			callMethodMap[method.BuildFullMethodName(clz)] = method

@@ -81,7 +81,7 @@ func BuildFunction(x *ast.FuncDecl) *core_domain.CodeFunction {
 	}
 
 	if x.Type.Results != nil {
-		codeFunc.ReturnTypes = append(codeFunc.Parameters, BuildFieldToProperty(x.Type.Results.List)...)
+		codeFunc.MultipleReturns = append(codeFunc.Parameters, BuildFieldToProperty(x.Type.Results.List)...)
 	}
 
 	for _, item := range x.Body.List {

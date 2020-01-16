@@ -12,7 +12,7 @@ import (
 var currentNode *core_domain.JIdentifier
 var nodes []core_domain.JIdentifier
 
-var currentMethod core_domain.JMethod
+var currentMethod core_domain.CodeFunction
 var hasEnterClass = false
 var imports []string
 
@@ -89,9 +89,9 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 		StopLinePosition:  ctx.GetStop().GetColumn(),
 	}
 
-	currentMethod = core_domain.JMethod{
+	currentMethod = core_domain.CodeFunction{
 		Name:          ctx.IDENTIFIER().GetText(),
-		Type:          "",
+		ReturnType:    "",
 		Override:      isOverrideMethod,
 		Annotations:   currentMethod.Annotations,
 		IsConstructor: true,
@@ -127,9 +127,9 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 		StopLinePosition:  stopLinePosition,
 	}
 
-	currentMethod = core_domain.JMethod{
+	currentMethod = core_domain.CodeFunction{
 		Name:        name,
-		Type:        typeType,
+		ReturnType:  typeType,
 		Override:    isOverrideMethod,
 		Annotations: currentMethod.Annotations,
 		Position:    position,
@@ -165,9 +165,9 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 		StopLinePosition:  stopLinePosition,
 	}
 
-	currentMethod = core_domain.JMethod{
+	currentMethod = core_domain.CodeFunction{
 		Name:        name,
-		Type:        typeType,
+		ReturnType:  typeType,
 		Override:    isOverrideMethod,
 		Annotations: currentMethod.Annotations,
 		Position:    position,

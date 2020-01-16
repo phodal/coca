@@ -28,8 +28,11 @@
           "Extension": null,
           "InnerFunctions": null,
           "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "MethodCalls": null,
           "Modifiers": null,
+          "MultipleReturns": null,
           "Name": "typee",
           "Override": false,
           "Parameters": null,
@@ -39,7 +42,7 @@
             "StopLine": 0,
             "StopLinePosition": 0
           },
-          "ReturnTypes": null
+          "ReturnType": ""
         }
       ],
       "ID": "",

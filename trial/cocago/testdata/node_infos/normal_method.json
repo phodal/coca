@@ -27,8 +27,28 @@
           "Extension": null,
           "InnerFunctions": null,
           "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "MethodCalls": null,
           "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "code",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "string"
+            },
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Star",
+              "TypeValue": "parser.TypeScriptParser"
+            }
+          ],
           "Name": "ProcessTsString",
           "Override": false,
           "Parameters": [
@@ -47,14 +67,25 @@
             "StopLine": 0,
             "StopLinePosition": 0
           },
-          "ReturnTypes": [
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "code",
+              "Name": "is",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeType": "Identify",
-              "TypeValue": "string"
+              "TypeType": "",
+              "TypeValue": "antlr.CharStream"
             },
             {
               "Modifiers": null,
@@ -64,15 +95,7 @@
               "TypeType": "Star",
               "TypeValue": "parser.TypeScriptParser"
             }
-          ]
-        },
-        {
-          "Annotations": null,
-          "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "MethodCalls": null,
-          "Modifiers": null,
+          ],
           "Name": "processStream",
           "Override": false,
           "Parameters": [
@@ -91,24 +114,7 @@
             "StopLine": 0,
             "StopLinePosition": 0
           },
-          "ReturnTypes": [
-            {
-              "Modifiers": null,
-              "Name": "is",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "",
-              "TypeValue": "antlr.CharStream"
-            },
-            {
-              "Modifiers": null,
-              "Name": "",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "Star",
-              "TypeValue": "parser.TypeScriptParser"
-            }
-          ]
+          "ReturnType": ""
         }
       ],
       "ID": "",
@@ -132,8 +138,28 @@
           "Extension": null,
           "InnerFunctions": null,
           "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "MethodCalls": null,
           "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "code",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "string"
+            },
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Star",
+              "TypeValue": "parser.TypeScriptParser"
+            }
+          ],
           "Name": "ProcessTsString",
           "Override": false,
           "Parameters": [
@@ -152,14 +178,25 @@
             "StopLine": 0,
             "StopLinePosition": 0
           },
-          "ReturnTypes": [
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "code",
+              "Name": "is",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeType": "Identify",
-              "TypeValue": "string"
+              "TypeType": "",
+              "TypeValue": "antlr.CharStream"
             },
             {
               "Modifiers": null,
@@ -169,15 +206,7 @@
               "TypeType": "Star",
               "TypeValue": "parser.TypeScriptParser"
             }
-          ]
-        },
-        {
-          "Annotations": null,
-          "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "MethodCalls": null,
-          "Modifiers": null,
+          ],
           "Name": "processStream",
           "Override": false,
           "Parameters": [
@@ -196,24 +225,7 @@
             "StopLine": 0,
             "StopLinePosition": 0
           },
-          "ReturnTypes": [
-            {
-              "Modifiers": null,
-              "Name": "is",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "",
-              "TypeValue": "antlr.CharStream"
-            },
-            {
-              "Modifiers": null,
-              "Name": "",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "Star",
-              "TypeValue": "parser.TypeScriptParser"
-            }
-          ]
+          "ReturnType": ""
         }
       ],
       "ID": "",

@@ -36,6 +36,6 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []c
 	evaluateModel.Nullable.Items = nullableList
 }
 
-func buildMethodPath(ident core_domain.JIdentifier, method core_domain.JMethod) string {
+func buildMethodPath(ident core_domain.JIdentifier, method core_domain.CodeFunction) string {
 	return ident.Package + "." + ident.ClassName + "." + method.Name
 }

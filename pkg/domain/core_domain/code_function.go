@@ -7,59 +7,50 @@ import (
 
 type CodeFunction struct {
 	Name            string
-	ReturnTypes     []CodeProperty
+	ReturnType      string
+	MultipleReturns []CodeProperty
 	Parameters      []CodeProperty
 	MethodCalls     []CodeCall
 	Override        bool
-	Annotations     interface{}
+	Annotations     []CodeAnnotation
+
+	IsConstructor bool // todo: move to extension
+	IsReturnNull  bool // todo: move to extension
+
 	Modifiers       []string
-	InnerStructures []CodeDataStruct // InnerClass
+	InnerStructures []JClassNode
 	InnerFunctions  []CodeFunction
 	Extension       interface{}
 	Position        CodePosition
 }
 
-func (c *CodeFunction) BuildSingleReturnType(typeType string) *CodeProperty {
+func (m *CodeFunction) BuildSingleReturnType(typeType string) *CodeProperty {
 	return &CodeProperty{
 		TypeType: typeType,
 	}
 }
 
-type JMethod struct {
-	Name              string
-	Type              string
-	Parameters        []CodeProperty
-	MethodCalls       []CodeCall
-	Override          bool
-	Annotations       []CodeAnnotation
-	IsConstructor     bool
-	IsReturnNull      bool
-	Modifiers         []string
-	Creators          []JClassNode
-	Position          CodePosition
+func NewJMethod() CodeFunction {
+	return CodeFunction{}
 }
 
-func NewJMethod() JMethod {
-	return JMethod{}
+func (m *CodeFunction) IsJavaLangReturnType() bool {
+	return m.ReturnType == "String" || m.ReturnType == "int" || m.ReturnType == "float" || m.ReturnType == "void" || m.ReturnType == "char" || m.ReturnType == "double"
 }
 
-func (m *JMethod) IsJavaLangReturnType() bool {
-	return m.Type == "String" || m.Type == "int" || m.Type == "float" || m.Type == "void" || m.Type == "char" || m.Type == "double"
-}
-
-func (m *JMethod) IsStatic() bool {
+func (m *CodeFunction) IsStatic() bool {
 	return string_helper.StringArrayContains(m.Modifiers, "static")
 }
 
-func (m *JMethod) IsGetterSetter() bool {
+func (m *CodeFunction) IsGetterSetter() bool {
 	return strings.HasPrefix(m.Name, "set") || strings.HasPrefix(m.Name, "get")
 }
 
-func (m *JMethod) BuildFullMethodName(node JClassNode) string {
+func (m *CodeFunction) BuildFullMethodName(node JClassNode) string {
 	return node.Package + "." + node.Class + "." + m.Name
 }
 
-func (m *JMethod) GetAllCallString() []string {
+func (m *CodeFunction) GetAllCallString() []string {
 	var calls []string
 	for _, call := range m.MethodCalls {
 		if call.Class != "" {
@@ -69,7 +60,7 @@ func (m *JMethod) GetAllCallString() []string {
 	return calls
 }
 
-func (m *JMethod) IsJunitTest() bool {
+func (m *CodeFunction) IsJunitTest() bool {
 	var isTest = false
 	for _, annotation := range m.Annotations {
 		if annotation.IsIgnoreOrTest() {

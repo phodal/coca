@@ -58,7 +58,7 @@ func TestLambda_Express(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[1].Methods {
 		methodMap[c.Name] = c
 	}
@@ -75,7 +75,7 @@ func TestInterface(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
@@ -93,7 +93,7 @@ func TestAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -110,7 +110,7 @@ func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -127,7 +127,7 @@ func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -147,7 +147,7 @@ func Test_CreatorAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -163,12 +163,12 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
 
-	g.Expect(len(methodMap["macOsXPositiveTest"].Creators)).To(Equal(2))
+	g.Expect(len(methodMap["macOsXPositiveTest"].InnerStructures)).To(Equal(2))
 }
 
 func Test_ShouldNotGetCreators(t *testing.T) {
@@ -179,12 +179,12 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]core_domain.JMethod)
+	methodMap := make(map[string]core_domain.CodeFunction)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
 
-	g.Expect(len(methodMap["testTrue"].Creators)).To(Equal(0))
+	g.Expect(len(methodMap["testTrue"].InnerStructures)).To(Equal(0))
 }
 
 func Test_ShouldGetMethodCallParameters(t *testing.T) {

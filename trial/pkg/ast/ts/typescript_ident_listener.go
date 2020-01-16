@@ -14,7 +14,7 @@ var classNodes []domain.JClassNode
 
 var currentDataStruct *trial.CodeDataStruct
 var dataStructures []trial.CodeDataStruct
-var dataStructQueue []domain.JClassNode
+var dataStructQueue []trial.CodeDataStruct
 
 var defaultClass = "default"
 var filePath string
@@ -39,6 +39,13 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 }
 
 func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
+	if currentNode.IsNotEmpty() {
+		currentNode.Class = defaultClass
+		currentNode.Type = "Default"
+		classNodes = append(classNodes, *currentNode)
+		currentNode = domain.NewClassNode()
+	}
+
 	isScriptCalls := currentDataStruct.IsNotEmpty()
 	if isScriptCalls {
 		//function := &trial.CodeFunction{}
@@ -220,14 +227,15 @@ func exitClass() {
 	} else {
 		currentNode = domain.NewClassNode()
 	}
+
+	dataStructures = append(dataStructures, *currentDataStruct)
+	if len(dataStructQueue) > 1 {
+		dataStructQueue = dataStructQueue[0 : len(dataStructQueue)-1]
+		currentDataStruct = &dataStructQueue[len(dataStructQueue)-1]
+	} else {
+		currentDataStruct = trial.NewDataStruct()
+	}
 }
-//
-//func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.ArgumentsExpressionContext) {
-//	switch x := ctx.GetChild(0).(type) {
-//	case *parser.MemberDotExpressionContext:
-//		currentNode.MethodCalls = append(currentNode.MethodCalls, BuildArgExpressCall(x))
-//	}
-//}
 
 func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionDeclarationContext) {
 	method := domain.NewJMethod()

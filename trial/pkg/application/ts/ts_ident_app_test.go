@@ -47,7 +47,8 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 
 	results := codeFile.ClassNodes
 
-	g.Expect(len(results)).To(Equal(3))
+	g.Expect(len(results)).To(Equal(4))
+	g.Expect(len(codeFile.DataStructures)).To(Equal(5))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
 }
 
@@ -60,7 +61,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 
 	results := app.Analysis(string(code), "").ClassNodes
 
-	g.Expect(len(results)).To(Equal(2))
+	g.Expect(len(results)).To(Equal(3))
 	g.Expect(results[0].Type).To(Equal("Class"))
 	g.Expect(results[1].Class).To(Equal("Employee"))
 	g.Expect(results[1].Extend).To(Equal("Person"))
@@ -77,7 +78,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	for _, node := range results.ClassNodes {
 		fmt.Println(node)
 	}
-	g.Expect(len(results.ClassNodes)).To(Equal(1))
+	g.Expect(len(results.ClassNodes)).To(Equal(2))
 	g.Expect(results.ClassNodes[0].Class).To(Equal("Employee"))
 }
 

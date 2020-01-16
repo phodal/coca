@@ -140,7 +140,7 @@ export interface IPerson {
 	g.Expect(len(results[0].Methods)).To(Equal(2))
 
 	//fmt.Println(codeFile.DataStructures)
-	//g.Expect(len(codeFile.DataStructures[0].Functions)).To(Equal(2))
+	g.Expect(len(codeFile.DataStructures[0].Functions)).To(Equal(2))
 
 	g.Expect(firstMethod.Name).To(Equal("getSalary"))
 	g.Expect(secondMethod.Name).To(Equal("getManagerName"))

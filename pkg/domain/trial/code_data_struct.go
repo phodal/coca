@@ -1,17 +1,25 @@
 package trial
 
 type CodeDataStruct struct {
-	Name          string
-	Type          string
-	ID            string
-	MemberIds     []string
-	Extend        string
-	Implements    []string
-	Annotations   interface{}
-	Properties    []CodeProperty
-	Functions     []CodeFunction
-	FunctionCalls []CodeCall
-	Extension     interface{}
+	Name       string
+	Type       string
+	ID         string
+	MemberIds  []string
+	Extend     string
+	Implements []string
+
+	Annotations     interface{}
+	InOutProperties []CodeProperty
+	Functions       []CodeFunction
+	FunctionCalls   []CodeCall // for field call
+
+	Extension interface{}
+	Fields    []CodeField
+}
+
+type CodeField struct {
+	CodeProperty
+	TypeValue string
 }
 
 type JavaExtension struct {

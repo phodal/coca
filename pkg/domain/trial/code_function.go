@@ -12,3 +12,9 @@ type CodeFunction struct {
 	InnerFunctions []CodeFunction
 	CodePosition   CodePosition
 }
+
+func (c *CodeFunction) BuildSingleReturnType(typeType string) *CodeProperty {
+	return &CodeProperty{
+		TypeType: typeType,
+	}
+}

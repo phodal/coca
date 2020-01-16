@@ -76,10 +76,10 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = true
 	dataStruct := &trial.CodeDataStruct{
-		Name:       ctx.Name().GetText(),
-		ID:         "",
-		MemberIds:  nil,
-		Properties: nil,
+		Name:            ctx.Name().GetText(),
+		ID:              "",
+		MemberIds:       nil,
+		InOutProperties: nil,
 	}
 
 	ctxIndex := ast_util.GetNodeIndex(ctx)

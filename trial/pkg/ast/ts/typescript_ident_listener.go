@@ -104,28 +104,34 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 	objectTypeCtx := ctx.ObjectType().(*parser.ObjectTypeContext)
 	if objectTypeCtx.TypeBody() != nil {
 		typeMemberListCtx := objectTypeCtx.TypeBody().(*parser.TypeBodyContext).TypeMemberList().(*parser.TypeMemberListContext)
-		BuildInterfaceTypeBody(typeMemberListCtx, s.currentNode)
+		BuildInterfaceTypeBody(typeMemberListCtx, s.currentNode, s.currentDataStruct)
 	}
 }
 
-func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain.JClassNode) {
+func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, classNode *domain.JClassNode, dataStruct *trial.CodeDataStruct) {
 	for _, typeMember := range ctx.AllTypeMember() {
 		typeMemberCtx := typeMember.(*parser.TypeMemberContext)
 		memberChild := typeMemberCtx.GetChild(0)
 		switch x := memberChild.(type) {
 		case *parser.PropertySignatureContext:
-			BuildInterfacePropertySignature(x, classNode)
+			BuildInterfacePropertySignature(x, classNode, dataStruct)
 		case *parser.MethodSignatureContext:
 			method := domain.NewJMethod()
 			method.Name = x.PropertyName().GetText()
-			FillMethodFromCallSignature(x.CallSignature().(*parser.CallSignatureContext), &method)
 
+			function := trial.CodeFunction{
+				Name: x.PropertyName().GetText(),
+			}
+
+			FillMethodFromCallSignature(x.CallSignature().(*parser.CallSignatureContext), &method, &function)
+
+			dataStruct.Functions = append(dataStruct.Functions, function)
 			classNode.Methods = append(classNode.Methods, method)
 		}
 	}
 }
 
-func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureContext, classNode *domain.JClassNode) {
+func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureContext, classNode *domain.JClassNode, dataStruct *trial.CodeDataStruct) {
 	typeType := BuildTypeAnnotation(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
 	typeValue := signatureCtx.PropertyName().(*parser.PropertyNameContext).GetText()
 
@@ -141,13 +147,34 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 		method.Type = signatureCtx.Type_().GetText()
 
 		classNode.Methods = append(classNode.Methods, method)
+
+		function := &trial.CodeFunction{
+			Name: typeValue,
+		}
+		param := trial.CodeProperty{
+			Name:     "any",
+			TypeType: typeType,
+		}
+
+		returnType := trial.CodeProperty{
+			TypeType: signatureCtx.Type_().GetText(),
+		}
+		function.Parameters = append(function.Parameters, param)
+		function.ReturnTypes = append(function.ReturnTypes, returnType)
+
+		dataStruct.Functions = append(dataStruct.Functions, *function)
 	} else {
 		field := &domain.JField{
 			Type:  typeType,
 			Value: typeValue,
 		}
 
+		codeField := &trial.CodeField{}
+		codeField.TypeType = typeType
+		codeField.TypeValue = typeValue
+
 		classNode.Fields = append(classNode.Fields, *field)
+		dataStruct.Fields = append(dataStruct.Fields, *codeField)
 	}
 }
 
@@ -257,7 +284,7 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	ast_util.AddPosition(&method, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
-	FillMethodFromCallSignature(callSignatureContext, &method)
+	FillMethodFromCallSignature(callSignatureContext, &method, nil)
 
 	function := &trial.CodeFunction{
 		Name: ctx.Identifier().GetText(),
@@ -274,15 +301,19 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	s.currentDataStruct.Functions = append(s.currentDataStruct.Functions, *function)
 }
 
-func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, method *domain.JMethod) {
+func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, method *domain.JMethod, function *trial.CodeFunction) {
 	if callSignatureContext.ParameterList() != nil {
 		parameterListContext := callSignatureContext.ParameterList().(*parser.ParameterListContext)
-		methodParameters := BuildMethodParameter(parameterListContext)
+		methodParameters, _ := BuildMethodParameter(parameterListContext)
+
 		method.Parameters = append(method.Parameters, methodParameters...)
 	}
 
 	if callSignatureContext.TypeAnnotation() != nil {
 		annotationContext := callSignatureContext.TypeAnnotation().(*parser.TypeAnnotationContext)
-		method.Type = BuildTypeAnnotation(annotationContext)
+		typeAnnotation := BuildTypeAnnotation(annotationContext)
+		method.Type = typeAnnotation
+
+		function.ReturnTypes = append(function.ReturnTypes, *function.BuildSingleReturnType(typeAnnotation))
 	}
 }

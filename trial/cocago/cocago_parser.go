@@ -118,10 +118,10 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *trial.CodeFile) 
 	properties := BuildFieldToProperty(x.Methods.List)
 
 	dataStruct := trial.CodeDataStruct{
-		Name:       ident,
-		ID:         "",
-		MemberIds:  nil,
-		Properties: properties,
+		Name:            ident,
+		ID:              "",
+		MemberIds:       nil,
+		InOutProperties: properties,
 	}
 
 	member := trial.CodeMember{
@@ -270,7 +270,7 @@ func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, curren
 	for _, field := range x.Fields.List {
 		property := BuildPropertyField(getFieldName(field), field)
 		member.FileID = currentFile.FullName
-		currentStruct.Properties = append(currentStruct.Properties, *property)
+		currentStruct.InOutProperties = append(currentStruct.InOutProperties, *property)
 	}
 	currentFile.Members = append(currentFile.Members, &member)
 	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)

@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/domain/trial"
 	"io"
 	"os"
+	"strings"
 )
 
 type PythonIdentListener struct {
@@ -38,7 +39,7 @@ func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
 
 	codeImport := &trial.CodeImport{}
 	context := dotNames[0].(*parser.Dotted_as_nameContext)
-	codeImport.ImportName = context.Dotted_name().GetText()
+	codeImport.Source = context.Dotted_name().GetText()
 	if context.Name() != nil {
 		codeImport.UsageName = append(codeImport.UsageName, context.Name().GetText())
 	}
@@ -60,8 +61,13 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 	if asNameCtx.OPEN_PAREN() != nil {
 		usageName = asNameCtx.Import_as_names().GetText()
 	}
+	if strings.Contains(usageName, ",") {
+		usageNames := strings.Split(usageName, ",")
+		codeImport.UsageName = append(codeImport.UsageName, usageNames...)
+	} else {
+		codeImport.UsageName = append(codeImport.UsageName, usageName)
+	}
 
-	codeImport.UsageName = append(codeImport.UsageName, usageName)
 	currentCodeFile.Imports = append(currentCodeFile.Imports, *codeImport)
 }
 

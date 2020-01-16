@@ -1,25 +1,25 @@
 [
   {
     "AsName": "",
-    "ImportName": "collections.abc",
+    "ImportName": "",
     "Scope": "",
-    "Source": "",
+    "Source": "collections.abc",
     "UsageName": null
   },
   {
     "AsName": "",
-    "ImportName": "collections.abc",
+    "ImportName": "",
     "Scope": "",
-    "Source": "",
+    "Source": "collections.abc",
     "UsageName": [
       "ss"
     ]
   },
   {
     "AsName": "",
-    "ImportName": "collections.abc",
+    "ImportName": "",
     "Scope": "",
-    "Source": "",
+    "Source": "collections.abc",
     "UsageName": [
       "ss",
       "itertools"
@@ -76,7 +76,8 @@
     "Scope": "",
     "Source": "collections",
     "UsageName": [
-      "bar,baz"
+      "bar",
+      "baz"
     ]
   },
   {

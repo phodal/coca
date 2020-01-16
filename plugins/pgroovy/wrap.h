@@ -1,5 +1,5 @@
-#ifndef HELLO_CPP_H
-#define HELLO_CPP_H
+#ifndef WRAP_CPP_H
+#define WRAP_CPP_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,4 +9,4 @@ int output();
 }
 #endif // __cplusplus
 
-#endif // HELLO_CPP_H
+#endif // WRAP_CPP_H

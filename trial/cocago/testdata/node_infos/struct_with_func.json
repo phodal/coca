@@ -1,5 +1,4 @@
 {
-  "ClassNodes": null,
   "DataStructures": [
     {
       "Annotations": null,
@@ -36,6 +35,7 @@
           "TypeType": "Identify"
         }
       ],
+      "InnerStructures": null,
       "MemberIds": null,
       "Name": "Person",
       "Type": ""

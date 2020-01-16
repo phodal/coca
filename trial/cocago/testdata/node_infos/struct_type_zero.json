@@ -1,5 +1,4 @@
 {
-  "ClassNodes": null,
   "DataStructures": [
     {
       "Annotations": null,
@@ -11,6 +10,7 @@
       "ID": "",
       "Implements": null,
       "InOutProperties": null,
+      "InnerStructures": null,
       "MemberIds": null,
       "Name": "O",
       "Type": ""
@@ -26,19 +26,20 @@
       "FunctionNodes": [
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": null,
           "Modifiers": null,
           "Name": "typee",
           "Override": false,
           "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": null
         }
       ],

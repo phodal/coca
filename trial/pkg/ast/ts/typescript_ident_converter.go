@@ -27,10 +27,10 @@ func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) *trial.Code
 	function := &trial.CodeFunction{
 		Name: ctx.PropertyName().GetText(),
 	}
-	function.CodePosition.StartLine = ctx.GetStart().GetLine()
-	function.CodePosition.StartLinePosition = ctx.GetStart().GetColumn()
-	function.CodePosition.StopLine = ctx.GetStop().GetLine()
-	function.CodePosition.StopLinePosition = ctx.GetStop().GetColumn()
+	function.Position.StartLine = ctx.GetStart().GetLine()
+	function.Position.StartLinePosition = ctx.GetStart().GetColumn()
+	function.Position.StopLine = ctx.GetStop().GetLine()
+	function.Position.StopLinePosition = ctx.GetStop().GetColumn()
 
 	return function
 }

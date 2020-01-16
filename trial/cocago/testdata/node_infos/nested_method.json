@@ -1,5 +1,4 @@
 {
-  "ClassNodes": null,
   "DataStructures": null,
   "FullName": "testdata/node_infos/nested_method.code",
   "Imports": [
@@ -19,14 +18,9 @@
       "FunctionNodes": [
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": [
             {
               "Class": "foo",
@@ -42,6 +36,12 @@
                   "TypeType": "STRING"
                 }
               ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
               "Type": ""
             }
           ],
@@ -49,6 +49,12 @@
           "Name": "f",
           "Override": false,
           "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": null
         }
       ],

@@ -15,9 +15,9 @@ func AddPosition(m *domain.JMethod, ctx *antlr.BaseParserRuleContext) {
 
 
 func AddFunctionPosition(m *trial.CodeFunction, ctx *antlr.BaseParserRuleContext) {
-	m.CodePosition.StartLine = ctx.GetStart().GetLine()
-	m.CodePosition.StartLinePosition = ctx.GetStart().GetColumn()
-	m.CodePosition.StopLine = ctx.GetStop().GetLine()
-	m.CodePosition.StopLinePosition = ctx.GetStop().GetColumn()
+	m.Position.StartLine = ctx.GetStart().GetLine()
+	m.Position.StartLinePosition = ctx.GetStart().GetColumn()
+	m.Position.StopLine = ctx.GetStop().GetLine()
+	m.Position.StopLinePosition = ctx.GetStop().GetColumn()
 }
 

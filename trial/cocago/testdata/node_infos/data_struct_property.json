@@ -1,5 +1,4 @@
 {
-  "ClassNodes": null,
   "DataStructures": [
     {
       "Annotations": null,
@@ -52,6 +51,7 @@
           "TypeType": "ArrayType"
         }
       ],
+      "InnerStructures": null,
       "MemberIds": null,
       "Name": "CodeFile",
       "Type": ""

@@ -1,20 +1,19 @@
 package trial
 
 type CodeDataStruct struct {
-	Name       string
-	Type       string
-	ID         string
-	MemberIds  []string
-	Extend     string
-	Implements []string
-
+	Name            string
+	Type            string
+	ID              string
+	MemberIds       []string
+	Extend          string
+	Implements      []string
+	InnerStructures []CodeDataStruct
 	Annotations     interface{}
 	InOutProperties []CodeProperty
 	Functions       []CodeFunction
 	FunctionCalls   []CodeCall // for field call
-
-	Extension interface{}
-	Fields    []CodeField
+	Fields          []CodeField
+	Extension       interface{}
 }
 
 type CodeField struct {

@@ -1,5 +1,4 @@
 {
-  "ClassNodes": null,
   "DataStructures": null,
   "FullName": "testdata/node_infos/normal_method.code",
   "Imports": [
@@ -26,14 +25,9 @@
       "FunctionNodes": [
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": null,
           "Modifiers": null,
           "Name": "ProcessTsString",
@@ -48,6 +42,12 @@
               "TypeType": "Identify"
             }
           ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": [
             {
               "Modifiers": null,
@@ -69,14 +69,9 @@
         },
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": null,
           "Modifiers": null,
           "Name": "processStream",
@@ -91,6 +86,12 @@
               "TypeType": ""
             }
           ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": [
             {
               "Modifiers": null,
@@ -129,14 +130,9 @@
       "FunctionNodes": [
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": null,
           "Modifiers": null,
           "Name": "ProcessTsString",
@@ -151,6 +147,12 @@
               "TypeType": "Identify"
             }
           ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": [
             {
               "Modifiers": null,
@@ -172,14 +174,9 @@
         },
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": null,
           "Modifiers": null,
           "Name": "processStream",
@@ -194,6 +191,12 @@
               "TypeType": ""
             }
           ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": [
             {
               "Modifiers": null,

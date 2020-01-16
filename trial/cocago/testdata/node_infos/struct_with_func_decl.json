@@ -1,5 +1,4 @@
 {
-  "ClassNodes": null,
   "DataStructures": [
     {
       "Annotations": null,
@@ -36,6 +35,7 @@
           "TypeType": "Function"
         }
       ],
+      "InnerStructures": null,
       "MemberIds": null,
       "Name": "person",
       "Type": ""
@@ -59,14 +59,9 @@
       "FunctionNodes": [
         {
           "Annotations": null,
-          "CodePosition": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "Creators": null,
+          "Extension": null,
           "InnerFunctions": null,
+          "InnerStructures": null,
           "MethodCalls": [
             {
               "Class": "fmt",
@@ -82,6 +77,12 @@
                   "TypeType": "STRING"
                 }
               ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
               "Type": ""
             }
           ],
@@ -89,6 +90,12 @@
           "Name": "outside",
           "Override": false,
           "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "ReturnTypes": null
         }
       ],

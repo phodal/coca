@@ -15,7 +15,7 @@ public class TsIdentApp {
         TypeScriptLexer lexer = new TypeScriptLexer(stream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         TypeScriptParser parser = new TypeScriptParser(tokens);
-        TypeScriptParser.InitializerContext tree = parser.initializer();
+        TypeScriptParser.ProgramContext tree = parser.program();
 
         TsIdentListener listener = new TsIdentListener();
         ParseTreeWalker.DEFAULT.walk(listener, tree);

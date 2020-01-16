@@ -6,16 +6,16 @@ import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
-func LoadIdentify(importPath string) []core_domain.JIdentifier {
+func LoadIdentify(importPath string) []core_domain.CodeDataStruct {
 	return readIdentify(importPath, "identify.json", analysisByPath)
 }
 
-func LoadTestIdentify(files []string) []core_domain.JIdentifier {
+func LoadTestIdentify(files []string) []core_domain.CodeDataStruct {
 	return readIdentify(files, "tidentify.json", analysisByFiles)
 }
 
-func readIdentify(importPath interface{}, fileName string, analysisApp func(importPath interface{}) []core_domain.JIdentifier) []core_domain.JIdentifier {
-	var identifiers []core_domain.JIdentifier
+func readIdentify(importPath interface{}, fileName string, analysisApp func(importPath interface{}) []core_domain.CodeDataStruct) []core_domain.CodeDataStruct {
+	var identifiers []core_domain.CodeDataStruct
 
 	apiContent := ReadCocaFile(fileName)
 	if apiContent == nil || string(apiContent) == "null" {
@@ -30,13 +30,13 @@ func readIdentify(importPath interface{}, fileName string, analysisApp func(impo
 	return identifiers
 }
 
-func analysisByPath(importPath interface{}) []core_domain.JIdentifier {
+func analysisByPath(importPath interface{}) []core_domain.CodeDataStruct {
 	identifierApp := new(analysis.JavaIdentifierApp)
 	ident := identifierApp.AnalysisPath(importPath.(string))
 	return ident
 }
 
-func analysisByFiles(files interface{}) []core_domain.JIdentifier {
+func analysisByFiles(files interface{}) []core_domain.CodeDataStruct {
 	identifierApp := analysis.NewJavaIdentifierApp()
 	ident := identifierApp.AnalysisFiles(files.([]string))
 	return ident

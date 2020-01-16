@@ -19,7 +19,7 @@ type TestBadSmell struct {
 	Line        int
 }
 
-func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.JIdentifier) []TestBadSmell {
+func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.CodeDataStruct) []TestBadSmell {
 	var results []TestBadSmell = nil
 	callMethodMap := core_domain.BuildCallMethodMap(deps)
 	for _, clz := range deps {

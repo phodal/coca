@@ -16,13 +16,13 @@ func NewJavaIdentifierApp() JavaIdentifierApp {
 	return JavaIdentifierApp{}
 }
 
-func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []core_domain.JIdentifier {
+func (j *JavaIdentifierApp) AnalysisPath(codeDir string) []core_domain.CodeDataStruct {
 	files := cocafile.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(files)
 }
 
-func (j *JavaIdentifierApp) AnalysisFiles(files []string) []core_domain.JIdentifier {
-	var nodeInfos []core_domain.JIdentifier = nil
+func (j *JavaIdentifierApp) AnalysisFiles(files []string) []core_domain.CodeDataStruct {
+	var nodeInfos []core_domain.CodeDataStruct = nil
 
 	for _, file := range files {
 		parser := ast.ProcessJavaFile(file)

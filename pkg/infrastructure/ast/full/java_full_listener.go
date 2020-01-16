@@ -29,7 +29,7 @@ var creatorMethodMap = make(map[string]core_domain.CodeFunction)
 var methodQueue []core_domain.CodeFunction
 var classStringQueue []string
 
-var identMap map[string]core_domain.JIdentifier
+var identMap map[string]core_domain.CodeDataStruct
 var isOverrideMethod = false
 
 var classNodeQueue []core_domain.CodeDataStruct
@@ -41,7 +41,7 @@ var currentCreatorNode core_domain.CodeDataStruct
 var fileName = ""
 var hasEnterClass = false
 
-func NewJavaFullListener(nodes map[string]core_domain.JIdentifier, file string) *JavaFullListener {
+func NewJavaFullListener(nodes map[string]core_domain.CodeDataStruct, file string) *JavaFullListener {
 	identMap = nodes
 	imports = nil
 	fileName = file

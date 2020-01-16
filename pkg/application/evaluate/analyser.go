@@ -13,7 +13,7 @@ func NewEvaluateAnalyser() Analyser {
 	return Analyser{}
 }
 
-func (a Analyser) Analysis(classNodes []core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) evaluator.EvaluateModel {
+func (a Analyser) Analysis(classNodes []core_domain.CodeDataStruct, identifiers []core_domain.CodeDataStruct) evaluator.EvaluateModel {
 	var servicesNode []core_domain.CodeDataStruct = nil
 	var evaluation Evaluation
 	var result = evaluator.NewEvaluateModel()
@@ -48,7 +48,7 @@ func (a Analyser) Analysis(classNodes []core_domain.CodeDataStruct, identifiers 
 	return result
 }
 
-func SummaryMethodIdentifier(identifiers []core_domain.JIdentifier, result *evaluator.EvaluateModel) {
+func SummaryMethodIdentifier(identifiers []core_domain.CodeDataStruct, result *evaluator.EvaluateModel) {
 	var methodLengthArray []float64
 	var methodCountArray []float64
 	for _, ident := range identifiers {

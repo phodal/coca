@@ -12,7 +12,7 @@ func NewArchApp() ArchApp {
 	return ArchApp{}
 }
 
-func (a ArchApp) Analysis(deps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.JIdentifier) *tequila.FullGraph {
+func (a ArchApp) Analysis(deps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.CodeDataStruct) *tequila.FullGraph {
 	fullGraph := &tequila.FullGraph{
 		NodeList:     make(map[string]string),
 		RelationList: make(map[string]*tequila.Relation),
@@ -57,7 +57,7 @@ func addCallInField(clz core_domain.CodeDataStruct, src string, fullGraph tequil
 	}
 }
 
-func addCallInMethod(clz core_domain.CodeDataStruct, identifiersMap map[string]core_domain.JIdentifier, src string, fullGraph tequila.FullGraph) {
+func addCallInMethod(clz core_domain.CodeDataStruct, identifiersMap map[string]core_domain.CodeDataStruct, src string, fullGraph tequila.FullGraph) {
 	for _, method := range clz.Functions {
 		if method.Name == "main" {
 			continue

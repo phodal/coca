@@ -14,7 +14,7 @@ var serviceNodeMap map[string]core_domain.CodeDataStruct
 var returnTypeMap map[string][]string
 var longParameterList []core_domain.CodeFunction
 
-func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) {
+func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.CodeDataStruct) {
 	serviceNodeMap = nodeMap
 	longParameterList = nil
 	returnTypeMap = make(map[string][]string)

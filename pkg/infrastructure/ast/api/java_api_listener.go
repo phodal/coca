@@ -22,11 +22,11 @@ var restAPIs []api_domain.RestAPI
 var currentClz string
 var currentPkg string
 
-var identMap map[string]core_domain.JIdentifier
+var identMap map[string]core_domain.CodeDataStruct
 var imports []string
 var currentImplements = ""
 
-func NewJavaAPIListener(jIdentMap map[string]core_domain.JIdentifier, diMap map[string]string) *JavaAPIListener {
+func NewJavaAPIListener(jIdentMap map[string]core_domain.CodeDataStruct, diMap map[string]string) *JavaAPIListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""

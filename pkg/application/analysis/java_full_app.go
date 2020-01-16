@@ -17,15 +17,15 @@ func NewJavaFullApp() JavaFullApp {
 	return JavaFullApp{}
 }
 
-func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []core_domain.JIdentifier) []core_domain.CodeDataStruct {
+func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []core_domain.CodeDataStruct) []core_domain.CodeDataStruct {
 	files := cocafile.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
-func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.JIdentifier, files []string, classes []string) []core_domain.CodeDataStruct {
+func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, files []string, classes []string) []core_domain.CodeDataStruct {
 	var nodeInfos []core_domain.CodeDataStruct
 
-	var identMap = make(map[string]core_domain.JIdentifier)
+	var identMap = make(map[string]core_domain.CodeDataStruct)
 	for _, ident := range identNodes {
 		identMap[ident.GetClassFullName()] = ident
 	}

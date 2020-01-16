@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-var currentNode *core_domain.JIdentifier
-var nodes []core_domain.JIdentifier
+var currentNode *core_domain.CodeDataStruct
+var nodes []core_domain.CodeDataStruct
 
 var currentMethod core_domain.CodeFunction
 var hasEnterClass = false
@@ -18,7 +18,7 @@ var imports []string
 
 func NewJavaIdentifierListener() *JavaIdentifierListener {
 	nodes = nil
-	currentNode = core_domain.NewJIdentifier()
+	currentNode = core_domain.NewDataStruct()
 	currentMethod = core_domain.NewJMethod()
 	return &JavaIdentifierListener{}
 }
@@ -68,7 +68,7 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	if currentNode.NodeName != "" {
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = core_domain.NewJIdentifier()
+	currentNode = core_domain.NewDataStruct()
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
@@ -76,7 +76,7 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 	if currentNode.NodeName != "" {
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = core_domain.NewJIdentifier()
+	currentNode = core_domain.NewDataStruct()
 }
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
@@ -216,6 +216,6 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 	}
 }
 
-func (s *JavaIdentifierListener) GetNodes() []core_domain.JIdentifier {
+func (s *JavaIdentifierListener) GetNodes() []core_domain.CodeDataStruct {
 	return nodes
 }

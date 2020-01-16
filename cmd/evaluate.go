@@ -34,7 +34,7 @@ var evaluateCmd = &cobra.Command{
 			log.Fatal("lost file:" + dependence)
 		}
 
-		var identifiers []core_domain.JIdentifier
+		var identifiers []core_domain.CodeDataStruct
 		identContent := cmd_util.ReadCocaFile("identify.json")
 
 		_ = json.Unmarshal(identContent, &identifiers)

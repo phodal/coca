@@ -21,45 +21,35 @@ type CodeDataStruct struct {
 	Extension interface{}
 }
 
-type JIdentifier struct {
-	NodeName    string
-	Package     string
-	Type        string
-	Extend      string
-	Implements  []string
-	Functions   []CodeFunction
-	Annotations []CodeAnnotation
-}
-
 func NewDataStruct() *CodeDataStruct {
 	return &CodeDataStruct{}
 }
 
-func (j *CodeDataStruct) IsUtilClass() bool {
-	return strings.Contains(strings.ToLower(j.NodeName), "util") || strings.Contains(strings.ToLower(j.NodeName), "utils")
+func (d *CodeDataStruct) IsUtilClass() bool {
+	return strings.Contains(strings.ToLower(d.NodeName), "util") || strings.Contains(strings.ToLower(d.NodeName), "utils")
 }
 
-func (j *CodeDataStruct) IsServiceClass() bool {
-	return strings.Contains(strings.ToLower(j.NodeName), "service")
+func (d *CodeDataStruct) IsServiceClass() bool {
+	return strings.Contains(strings.ToLower(d.NodeName), "service")
 }
 
-func (j *CodeDataStruct) SetMethodFromMap(methodMap map[string]CodeFunction) {
+func (d *CodeDataStruct) SetMethodFromMap(methodMap map[string]CodeFunction) {
 	var methodsArray []CodeFunction
 	for _, value := range methodMap {
 		methodsArray = append(methodsArray, value)
 	}
 
-	j.Functions = methodsArray
+	d.Functions = methodsArray
 }
 
-func (j *CodeDataStruct) BuildStringMethodMap(projectMethods map[string]string) {
-	for _, method := range j.Functions {
-		projectMethods[method.BuildFullMethodName(*j)] = method.BuildFullMethodName(*j)
+func (d *CodeDataStruct) BuildStringMethodMap(projectMethods map[string]string) {
+	for _, method := range d.Functions {
+		projectMethods[method.BuildFullMethodName(*d)] = method.BuildFullMethodName(*d)
 	}
 }
 
-func (j *CodeDataStruct) IsNotEmpty() bool {
-	return len(j.Functions) > 0 || len(j.FunctionCalls) > 0
+func (d *CodeDataStruct) IsNotEmpty() bool {
+	return len(d.Functions) > 0 || len(d.FunctionCalls) > 0
 }
 
 func BuildCallMethodMap(deps []CodeDataStruct) map[string]CodeFunction {
@@ -72,16 +62,12 @@ func BuildCallMethodMap(deps []CodeDataStruct) map[string]CodeFunction {
 	return callMethodMap
 }
 
-func NewJIdentifier() *JIdentifier {
-	return &JIdentifier{}
+func (d *CodeDataStruct) GetClassFullName() string {
+	return d.Package + "." + d.NodeName
 }
 
-func (identifier *JIdentifier) GetClassFullName() string {
-	return identifier.Package + "." + identifier.NodeName
-}
-
-func BuildIdentifierMap(identifiers []JIdentifier) map[string]JIdentifier {
-	var identifiersMap = make(map[string]JIdentifier)
+func BuildIdentifierMap(identifiers []CodeDataStruct) map[string]CodeDataStruct {
+	var identifiersMap = make(map[string]CodeDataStruct)
 
 	for _, ident := range identifiers {
 		identifiersMap[ident.Package+"."+ident.NodeName] = ident
@@ -89,7 +75,7 @@ func BuildIdentifierMap(identifiers []JIdentifier) map[string]JIdentifier {
 	return identifiersMap
 }
 
-func BuildDIMap(identifiers []JIdentifier, identifierMap map[string]JIdentifier) map[string]string {
+func BuildDIMap(identifiers []CodeDataStruct, identifierMap map[string]CodeDataStruct) map[string]string {
 	var diMap = make(map[string]string)
 	for _, clz := range identifiers {
 		if len(clz.Annotations) > 0 {

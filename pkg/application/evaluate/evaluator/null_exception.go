@@ -11,7 +11,7 @@ func (NullPointException) Evaluate(*EvaluateModel, core_domain.CodeDataStruct) {
 
 }
 
-func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) {
+func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.CodeDataStruct) {
 	var nullableList []string = nil
 	var nullableMap = make(map[string]string)
 	for _, ident := range identifiers {
@@ -36,6 +36,6 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []c
 	evaluateModel.Nullable.Items = nullableList
 }
 
-func buildMethodPath(ident core_domain.JIdentifier, method core_domain.CodeFunction) string {
+func buildMethodPath(ident core_domain.CodeDataStruct, method core_domain.CodeFunction) string {
 	return ident.Package + "." + ident.NodeName + "." + method.Name
 }

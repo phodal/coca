@@ -15,7 +15,7 @@ func NewSuggestApp() SuggestApp {
 func (a SuggestApp) AnalysisPath(deps []core_domain.JClassNode) []api_domain.Suggest {
 	var suggests []api_domain.Suggest
 	for _, clz := range deps {
-		if clz.Type == "Class" {
+		if clz.Type == "NodeName" {
 			// TODO: DSL => class constructor.len > 3
 			if len(clz.Functions) > 0 {
 				suggests = factorySuggest(clz, suggests)

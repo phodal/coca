@@ -49,7 +49,7 @@ func BuildMethodCallMethods(jMethodCall *core_domain.CodeCall, callee string, ta
 
 	jMethodCall.Package = packageName
 	jMethodCall.MethodName = methodName
-	jMethodCall.Class = targetType
+	jMethodCall.NodeName = targetType
 }
 
 func BuildMethodCallLocation(jMethodCall *core_domain.CodeCall, ctx *parser.MethodCallContext, callee string) {

@@ -3,7 +3,7 @@ package core_domain
 import "strings"
 
 type CodeDataStruct struct {
-	Name            string
+	NodeName        string
 	Type            string
 	Package         string
 	FilePath        string
@@ -21,12 +21,6 @@ type CodeDataStruct struct {
 	Extension interface{}
 }
 
-type JavaExtension struct {
-	MethodCalls []CodeCall
-	Fields      []CodeProperty
-	Tag         []interface{}
-}
-
 func NewDataStruct() *CodeDataStruct {
 	return &CodeDataStruct{}
 }
@@ -36,7 +30,7 @@ func (d *CodeDataStruct) IsNotEmpty() bool {
 }
 
 type JClassNode struct {
-	Class           string
+	NodeName        string
 	Type            string
 	Package         string
 	FilePath        string
@@ -55,11 +49,11 @@ func NewClassNode() *JClassNode {
 }
 
 func (j *JClassNode) IsUtilClass() bool {
-	return strings.Contains(strings.ToLower(j.Class), "util") || strings.Contains(strings.ToLower(j.Class), "utils")
+	return strings.Contains(strings.ToLower(j.NodeName), "util") || strings.Contains(strings.ToLower(j.NodeName), "utils")
 }
 
 func (j *JClassNode) IsServiceClass() bool {
-	return strings.Contains(strings.ToLower(j.Class), "service")
+	return strings.Contains(strings.ToLower(j.NodeName), "service")
 }
 
 func (j *JClassNode) SetMethodFromMap(methodMap map[string]CodeFunction) {

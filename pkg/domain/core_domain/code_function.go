@@ -47,13 +47,13 @@ func (m *CodeFunction) IsGetterSetter() bool {
 }
 
 func (m *CodeFunction) BuildFullMethodName(node JClassNode) string {
-	return node.Package + "." + node.Class + "." + m.Name
+	return node.Package + "." + node.NodeName + "." + m.Name
 }
 
 func (m *CodeFunction) GetAllCallString() []string {
 	var calls []string
 	for _, call := range m.MethodCalls {
-		if call.Class != "" {
+		if call.NodeName != "" {
 			calls = append(calls, call.BuildFullMethodName())
 		}
 	}

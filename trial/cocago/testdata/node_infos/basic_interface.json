@@ -40,7 +40,7 @@
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "Name": "Shape",
+      "NodeName": "Shape",
       "Package": "",
       "Type": ""
     },
@@ -75,7 +75,7 @@
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "Name": "Object",
+      "NodeName": "Object",
       "Package": "",
       "Type": ""
     },
@@ -109,7 +109,7 @@
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "Name": "Material",
+      "NodeName": "Material",
       "Package": "",
       "Type": ""
     }

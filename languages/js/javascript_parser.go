@@ -508,7 +508,7 @@ var symbolicNames = []string{
 	"BigDecimalIntegerLiteral", "Break", "Do", "Instanceof", "Typeof", "Case",
 	"Else", "New", "Var", "Catch", "Finally", "Return", "Void", "Continue",
 	"For", "Switch", "While", "Debugger", "Function", "This", "With", "Default",
-	"If", "Throw", "Delete", "In", "Try", "As", "From", "Class", "Enum", "Extends",
+	"If", "Throw", "Delete", "In", "Try", "As", "From", "NodeName", "Enum", "Extends",
 	"Super", "Const", "Export", "Import", "Async", "Await", "Implements", "Let",
 	"Private", "Public", "Interface", "Package", "Protected", "Static", "Yield",
 	"Identifier", "StringLiteral", "TemplateStringLiteral", "WhiteSpaces",

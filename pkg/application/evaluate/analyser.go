@@ -21,7 +21,7 @@ func (a Analyser) Analysis(classNodes []core_domain.JClassNode, identifiers []co
 	var nodeMap = make(map[string]core_domain.JClassNode)
 
 	for _, node := range classNodes {
-		nodeMap[node.Class] = node
+		nodeMap[node.NodeName] = node
 
 		if node.IsUtilClass() {
 			result.Summary.UtilsCount++

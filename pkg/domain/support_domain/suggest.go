@@ -19,7 +19,7 @@ func NewSuggest(clz core_domain.JClassNode, pattern, reason string) Suggest {
 	return Suggest{
 		File:    clz.FilePath,
 		Package: clz.Package,
-		Class:   clz.Class,
+		Class:   clz.NodeName,
 		Pattern: pattern,
 		Reason:  reason,
 	}

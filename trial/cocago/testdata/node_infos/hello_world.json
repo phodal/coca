@@ -24,8 +24,8 @@
           "IsReturnNull": false,
           "MethodCalls": [
             {
-              "Class": "fmt",
               "MethodName": "Println",
+              "NodeName": "fmt",
               "Package": "",
               "Parameters": [
                 {

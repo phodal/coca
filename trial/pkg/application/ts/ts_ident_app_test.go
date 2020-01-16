@@ -28,8 +28,8 @@ class Person implements IPerson {
 }
 `, "")
 
-	g.Expect(codefile.DataStructures[0].Name).To(Equal("IPerson"))
-	g.Expect(codefile.DataStructures[1].Name).To(Equal("Person"))
+	g.Expect(codefile.DataStructures[0].NodeName).To(Equal("IPerson"))
+	g.Expect(codefile.DataStructures[1].NodeName).To(Equal("Person"))
 	g.Expect(codefile.DataStructures[1].Functions[0].Name).To(Equal("constructor"))
 	g.Expect(codefile.DataStructures[1].Implements[0]).To(Equal("IPerson"))
 }
@@ -58,8 +58,8 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	codeFile := app.Analysis(string(code), "")
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(3))
-	g.Expect(codeFile.DataStructures[0].Type).To(Equal("Class"))
-	g.Expect(codeFile.DataStructures[1].Name).To(Equal("Employee"))
+	g.Expect(codeFile.DataStructures[0].Type).To(Equal("NodeName"))
+	g.Expect(codeFile.DataStructures[1].NodeName).To(Equal("Employee"))
 	g.Expect(codeFile.DataStructures[1].Extend).To(Equal("Person"))
 }
 
@@ -73,7 +73,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	results := app.Analysis(string(code), "")
 
 	g.Expect(len(results.DataStructures)).To(Equal(1))
-	g.Expect(results.DataStructures[0].Name).To(Equal("Employee"))
+	g.Expect(results.DataStructures[0].NodeName).To(Equal("Employee"))
 }
 
 func Test_ShouldEnableGetClassMethod(t *testing.T) {

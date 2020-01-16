@@ -72,8 +72,8 @@ func (s *TypeScriptIdentListener) EnterImportAll(ctx *parser.ImportAllContext) {
 
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	s.currentDataStruct = &core_domain.CodeDataStruct{
-		Type: "Interface",
-		Name: ctx.Identifier().GetText(),
+		Type:     "Interface",
+		NodeName: ctx.Identifier().GetText(),
 	}
 
 	if ctx.InterfaceExtendsClause() != nil {
@@ -150,8 +150,8 @@ func (s *TypeScriptIdentListener) ExitInterfaceDeclaration(ctx *parser.Interface
 
 func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	s.currentDataStruct = &core_domain.CodeDataStruct{
-		Type: "Class",
-		Name: ctx.Identifier().GetText(),
+		Type:     "NodeName",
+		NodeName: ctx.Identifier().GetText(),
 	}
 
 	heritageContext := ctx.ClassHeritage().(*parser.ClassHeritageContext)

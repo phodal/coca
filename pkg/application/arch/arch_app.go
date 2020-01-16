@@ -19,11 +19,11 @@ func (a ArchApp) Analysis(deps []core_domain.JClassNode, identifiersMap map[stri
 	}
 
 	for _, clz := range deps {
-		if clz.Class == "Main" {
+		if clz.NodeName == "Main" {
 			continue
 		}
 
-		src := clz.Package + "." + clz.Class
+		src := clz.Package + "." + clz.NodeName
 		fullGraph.NodeList[src] = src
 
 		for _, impl := range clz.Implements {
@@ -46,7 +46,7 @@ func (a ArchApp) Analysis(deps []core_domain.JClassNode, identifiersMap map[stri
 
 func addCallInField(clz core_domain.JClassNode, src string, fullGraph tequila.FullGraph) {
 	for _, field := range clz.FunctionCalls {
-		dst := field.Package + "." + field.Class
+		dst := field.Package + "." + field.NodeName
 		relation := &tequila.Relation{
 			From:  src,
 			To:    dst,
@@ -65,7 +65,7 @@ func addCallInMethod(clz core_domain.JClassNode, identifiersMap map[string]core_
 
 		// TODO: add implements, extends support
 		for _, call := range method.MethodCalls {
-			dst := call.Package + "." + call.Class
+			dst := call.Package + "." + call.NodeName
 			if src == dst {
 				continue
 			}

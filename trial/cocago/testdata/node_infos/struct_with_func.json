@@ -38,7 +38,7 @@
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "Name": "Person",
+      "NodeName": "Person",
       "Package": "",
       "Type": ""
     }

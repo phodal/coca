@@ -38,7 +38,7 @@
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "Name": "person",
+      "NodeName": "person",
       "Package": "",
       "Type": ""
     }
@@ -67,8 +67,8 @@
           "IsReturnNull": false,
           "MethodCalls": [
             {
-              "Class": "fmt",
               "MethodName": "Println",
+              "NodeName": "fmt",
               "Package": "",
               "Parameters": [
                 {

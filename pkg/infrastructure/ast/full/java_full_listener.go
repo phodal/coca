@@ -87,7 +87,7 @@ func (s *JavaFullListener) ExitInterfaceBody(ctx *parser.InterfaceBodyContext) {
 }
 
 func (s *JavaFullListener) exitBody() {
-	if currentNode.Class != "" {
+	if currentNode.NodeName != "" {
 		currentNode.Fields = fields
 		currentNode.FilePath = fileName
 		currentNode.SetMethodFromMap(methodMap)
@@ -98,7 +98,7 @@ func (s *JavaFullListener) exitBody() {
 		return
 	}
 
-	if currentNode.Class == "" {
+	if currentNode.NodeName == "" {
 		currentNode = core_domain.NewClassNode()
 		initClass()
 		return
@@ -137,18 +137,18 @@ func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	// TODO: support inner class
-	if currentNode.Class != "" {
+	if currentNode.NodeName != "" {
 		classNodeQueue = append(classNodeQueue, *currentNode)
 		currentType = "InnerStructures"
 	} else {
-		currentType = "Class"
+		currentType = "NodeName"
 	}
 
 	hasEnterClass = true
 	currentClzExtend = ""
 	if ctx.IDENTIFIER() != nil {
 		currentClz = ctx.IDENTIFIER().GetText()
-		currentNode.Class = currentClz
+		currentNode.NodeName = currentClz
 	}
 
 	if ctx.EXTENDS() != nil {
@@ -171,7 +171,7 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 func (s *JavaFullListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = true
 	currentType = "Interface"
-	currentNode.Class = ctx.IDENTIFIER().GetText()
+	currentNode.NodeName = ctx.IDENTIFIER().GetText()
 
 	if ctx.EXTENDS() != nil {
 		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
@@ -446,7 +446,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 		text := ctx.CreatedName().GetText()
 		creatorNode := &core_domain.JClassNode{
 			Package:       currentPkg,
-			Class:         text,
+			NodeName:      text,
 			Type:          "CreatorClass",
 			FilePath:      "",
 			Fields:        nil,
@@ -463,7 +463,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 }
 
 func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
-	if currentCreatorNode.Class != "" {
+	if currentCreatorNode.NodeName != "" {
 		method := methodMap[getMethodMapName(currentMethod)]
 		method.InnerStructures = append(method.InnerStructures, currentCreatorNode)
 		methodMap[getMethodMapName(currentMethod)] = method
@@ -493,7 +493,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	jMethodCall := &core_domain.CodeCall{
 		Package:  RemoveTarget(fullType),
 		Type:     "CreatorClass",
-		Class:    createdName,
+		NodeName: createdName,
 		Position: position,
 	}
 
@@ -573,7 +573,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 		jMethodCall := &core_domain.CodeCall{
 			Package:    RemoveTarget(fullType),
 			Type:       "lambda",
-			Class:      targetType,
+			NodeName:   targetType,
 			MethodName: methodName,
 			Position:   position,
 		}
@@ -605,7 +605,7 @@ func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 		jMethodCall := &core_domain.CodeCall{
 			Package:  RemoveTarget(target),
 			Type:     "field",
-			Class:    typeType,
+			NodeName: typeType,
 			Position: position,
 		}
 

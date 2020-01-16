@@ -76,7 +76,7 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = true
 	dataStruct := &core_domain.CodeDataStruct{
-		Name:            ctx.Name().GetText(),
+		NodeName:        ctx.Name().GetText(),
 		InOutProperties: nil,
 	}
 

@@ -910,7 +910,7 @@ var symbolicNames = []string{
 	"Break", "Do", "Instanceof", "Typeof", "Case", "Else", "New", "Var", "Catch",
 	"Finally", "Return", "Void", "Continue", "For", "Switch", "While", "Debugger",
 	"Function", "This", "With", "Default", "If", "Throw", "Delete", "In", "Try",
-	"As", "From", "ReadOnly", "Async", "Class", "Enum", "Extends", "Super",
+	"As", "From", "ReadOnly", "Async", "NodeName", "Enum", "Extends", "Super",
 	"Const", "Export", "Import", "Await", "Implements", "Let", "Private", "Public",
 	"Interface", "Package", "Protected", "Static", "Yield", "ANY", "NUMBER",
 	"BOOLEAN", "STRING", "SYMBOL", "TypeType", "Get", "Set", "Constructor", "Namespace",

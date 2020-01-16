@@ -221,8 +221,8 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 		}
 	}
 
-	g.Expect(methodCallMap["assertThat"].Class).To(Equal(""))
-	g.Expect(methodCallMap["isFalse"].Class).To(Equal("assertThat"))
+	g.Expect(methodCallMap["assertThat"].NodeName).To(Equal(""))
+	g.Expect(methodCallMap["isFalse"].NodeName).To(Equal("assertThat"))
 }
 
 func Test_InnerClass(t *testing.T) {
@@ -234,8 +234,8 @@ func Test_InnerClass(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	g.Expect(len(callNodes)).To(Equal(1))
-	g.Expect(callNodes[0].Class).To(Equal("Outer"))
-	g.Expect(callNodes[0].InnerStructures[0].Class).To(Equal("Inner"))
+	g.Expect(callNodes[0].NodeName).To(Equal("Outer"))
+	g.Expect(callNodes[0].InnerStructures[0].NodeName).To(Equal("Inner"))
 }
 
 func Test_DoubleClass(t *testing.T) {
@@ -247,6 +247,6 @@ func Test_DoubleClass(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	g.Expect(len(callNodes)).To(Equal(2))
-	g.Expect(callNodes[0].Class).To(Equal("ClassOne"))
-	g.Expect(callNodes[1].Class).To(Equal("ClassTwo"))
+	g.Expect(callNodes[0].NodeName).To(Equal("ClassOne"))
+	g.Expect(callNodes[1].NodeName).To(Equal("ClassTwo"))
 }

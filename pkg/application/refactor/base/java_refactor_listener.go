@@ -37,7 +37,7 @@ func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationCont
 }
 
 func (s *JavaRefactorListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
-	node.Type = "Class"
+	node.Type = "NodeName"
 	node.Name = ctx.IDENTIFIER().GetText()
 }
 

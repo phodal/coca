@@ -1,8 +1,8 @@
 [
   {
     "Package": "com.phodal.pholedge.book",
-    "Class": "BookService",
-    "Type": "Class",
+    "NodeName": "BookService",
+    "Type": "NodeName",
     "Path": "examples/api/BookService.java",
     "Fields": [
       {
@@ -27,7 +27,7 @@
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
-            "Class": "BookRepository",
+            "NodeName": "BookRepository",
             "MethodName": "list",
             "StartLine": 32,
             "StartLinePosition": 30,
@@ -66,8 +66,8 @@
   },
   {
     "Package": "com.phodal.pholedge.book.model",
-    "Class": "BookRepresentaion",
-    "Type": "Class",
+    "NodeName": "BookRepresentaion",
+    "Type": "NodeName",
     "Path": "examples/api/model/BookRepresentaion.java",
     "Fields": [
       {

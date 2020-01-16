@@ -24,8 +24,8 @@
           "IsReturnNull": false,
           "MethodCalls": [
             {
-              "Class": "foo",
               "MethodName": "var",
+              "NodeName": "foo",
               "Package": "",
               "Parameters": [
                 {

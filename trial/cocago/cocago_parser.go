@@ -72,7 +72,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			currentFile.Imports = append(currentFile.Imports, *imp)
 		case *ast.TypeSpec:
 			currentStruct = core_domain.CodeDataStruct{}
-			currentStruct.Name = x.Name.String()
+			currentStruct.NodeName = x.Name.String()
 		case *ast.StructType:
 			AddStructType(currentStruct, x, &currentFile)
 		case *ast.FuncDecl:
@@ -118,12 +118,12 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 	properties := BuildFieldToProperty(x.Methods.List)
 
 	dataStruct := core_domain.CodeDataStruct{
-		Name:            ident,
+		NodeName:        ident,
 		InOutProperties: properties,
 	}
 
 	member := core_domain.CodeMember{
-		DataStructID: dataStruct.Name,
+		DataStructID: dataStruct.NodeName,
 		Type:         "interface",
 	}
 
@@ -196,7 +196,7 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunctio
 		call := core_domain.CodeCall{
 			Package:    "",
 			Type:       "",
-			Class:      selector,
+			NodeName:   selector,
 			MethodName: selName,
 		}
 
@@ -262,7 +262,7 @@ func getFieldName(field *ast.Field) string {
 
 func AddStructType(currentStruct core_domain.CodeDataStruct, x *ast.StructType, currentFile *core_domain.CodeFile) {
 	member := core_domain.CodeMember{
-		DataStructID: currentStruct.Name,
+		DataStructID: currentStruct.NodeName,
 		Type:         "struct",
 	}
 	for _, field := range x.Fields.List {

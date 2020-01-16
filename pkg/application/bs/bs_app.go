@@ -74,7 +74,7 @@ func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
 }
 
 func checkLazyElement(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
-	if node.Type == "Class" && len(node.Methods) < 1 {
+	if node.Type == "NodeName" && len(node.Methods) < 1 {
 		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.Path, Bs: "lazyElement"})
 	}
 }
@@ -90,7 +90,7 @@ func checkLongMethod(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSme
 }
 
 func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
-	if onlyHaveGetterAndSetter && node.Type == "Class" && len(node.Methods) > 0 {
+	if onlyHaveGetterAndSetter && node.Type == "NodeName" && len(node.Methods) > 0 {
 		dataClass := &bs_domain.BadSmellModel{File: node.Path, Bs: "dataClass", Size: len(node.Methods)}
 		*badSmellList = append(*badSmellList, *dataClass)
 	}
@@ -106,7 +106,7 @@ func checkRefusedBequest(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadS
 
 func checkLargeClass(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
 	normalClassLength := withOutGetterSetterClass(node.Methods)
-	if node.Type == "Class" && normalClassLength >= BS_LARGE_LENGTH {
+	if node.Type == "NodeName" && normalClassLength >= BS_LARGE_LENGTH {
 		description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
 		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.Path, Bs: "largeClass", Description: description, Size: normalClassLength})
 	}

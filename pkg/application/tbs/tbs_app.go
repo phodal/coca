@@ -87,7 +87,7 @@ func checkAssert(hasAssert bool, clz core_domain.JClassNode, method core_domain.
 func updateMethodCallsForSelfCall(method core_domain.CodeFunction, clz core_domain.JClassNode, callMethodMap map[string]core_domain.CodeFunction) []core_domain.CodeCall {
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
-		if methodCall.Class == clz.Class {
+		if methodCall.NodeName == clz.NodeName {
 			jMethod := callMethodMap[methodCall.BuildFullMethodName()]
 			if jMethod.Name != "" {
 				currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)

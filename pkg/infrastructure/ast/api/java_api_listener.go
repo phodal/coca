@@ -290,7 +290,7 @@ func buildRestApiWithParameters(ctx *parser.MethodDeclarationContext) {
 func buildMethodParameters(requestBodyClass string) {
 	params := make(map[string]string)
 	for _, clz := range jClassNodes {
-		if clz.Class == requestBodyClass {
+		if clz.NodeName == requestBodyClass {
 			for _, field := range clz.Fields {
 				params[field.TypeValue] = field.TypeType
 			}

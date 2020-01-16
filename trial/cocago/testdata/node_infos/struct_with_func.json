@@ -5,13 +5,12 @@
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Fields": null,
       "FunctionCalls": null,
       "Functions": null,
       "ID": "",
       "Implements": null,
-      "MemberIds": null,
-      "Name": "Person",
-      "Properties": [
+      "InOutProperties": [
         {
           "Modifiers": null,
           "Name": "work",
@@ -37,6 +36,8 @@
           "TypeType": "Identify"
         }
       ],
+      "MemberIds": null,
+      "Name": "Person",
       "Type": ""
     }
   ],

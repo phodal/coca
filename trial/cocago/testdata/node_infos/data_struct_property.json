@@ -5,13 +5,12 @@
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Fields": null,
       "FunctionCalls": null,
       "Functions": null,
       "ID": "",
       "Implements": null,
-      "MemberIds": null,
-      "Name": "CodeFile",
-      "Properties": [
+      "InOutProperties": [
         {
           "Modifiers": null,
           "Name": "FullName",
@@ -53,6 +52,8 @@
           "TypeType": "ArrayType"
         }
       ],
+      "MemberIds": null,
+      "Name": "CodeFile",
       "Type": ""
     }
   ],

@@ -5,13 +5,14 @@
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Fields": null,
       "FunctionCalls": null,
       "Functions": null,
       "ID": "",
       "Implements": null,
+      "InOutProperties": null,
       "MemberIds": null,
       "Name": "O",
-      "Properties": null,
       "Type": ""
     }
   ],

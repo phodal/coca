@@ -5,13 +5,12 @@
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Fields": null,
       "FunctionCalls": null,
       "Functions": null,
       "ID": "",
       "Implements": null,
-      "MemberIds": null,
-      "Name": "Shape",
-      "Properties": [
+      "InOutProperties": [
         {
           "Modifiers": null,
           "Name": "Area",
@@ -39,19 +38,20 @@
           "TypeType": "Function"
         }
       ],
+      "MemberIds": null,
+      "Name": "Shape",
       "Type": ""
     },
     {
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Fields": null,
       "FunctionCalls": null,
       "Functions": null,
       "ID": "",
       "Implements": null,
-      "MemberIds": null,
-      "Name": "Object",
-      "Properties": [
+      "InOutProperties": [
         {
           "Modifiers": null,
           "Name": "Volume",
@@ -70,19 +70,20 @@
           "TypeType": "Function"
         }
       ],
+      "MemberIds": null,
+      "Name": "Object",
       "Type": ""
     },
     {
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Fields": null,
       "FunctionCalls": null,
       "Functions": null,
       "ID": "",
       "Implements": null,
-      "MemberIds": null,
-      "Name": "Material",
-      "Properties": [
+      "InOutProperties": [
         {
           "Modifiers": null,
           "Name": "",
@@ -100,6 +101,8 @@
           "TypeType": "Identify"
         }
       ],
+      "MemberIds": null,
+      "Name": "Material",
       "Type": ""
     }
   ],

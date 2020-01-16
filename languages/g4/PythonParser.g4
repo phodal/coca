@@ -160,8 +160,8 @@ small_stmt
     | {p.CheckVersion(3)}? NONLOCAL name (COMMA name)* {p.SetVersion(3);}             #nonlocal_stmt // Python 3
     ;
 
-from_stmt_as_names : (STAR | OPEN_PAREN import_as_names CLOSE_PAREN | import_as_names);
 from_stmt_source : ((DOT | ELLIPSIS)* dotted_name | (DOT | ELLIPSIS)+) ;
+from_stmt_as_names : (STAR | OPEN_PAREN import_as_names CLOSE_PAREN | import_as_names);
 
 testlist_star_expr
     : ((test | star_expr) COMMA)+ (test | star_expr)?

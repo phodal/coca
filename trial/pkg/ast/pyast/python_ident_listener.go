@@ -34,7 +34,6 @@ func (s *PythonIdentListener) SetDebugOutput(isDebug bool) io.Writer {
 }
 
 func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
-
 	dotNames := ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name()
 
 	codeImport := &trial.CodeImport{}
@@ -55,8 +54,14 @@ func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
 func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 	codeImport := &trial.CodeImport{}
 	codeImport.Source = ctx.From_stmt_source().GetText()
-	codeImport.UsageName = append(codeImport.UsageName, ctx.From_stmt_as_names().GetText())
+	usageName := ctx.From_stmt_as_names().GetText()
 
+	asNameCtx := ctx.From_stmt_as_names().(*parser.From_stmt_as_namesContext)
+	if asNameCtx.OPEN_PAREN() != nil {
+		usageName = asNameCtx.Import_as_names().GetText()
+	}
+
+	codeImport.UsageName = append(codeImport.UsageName, usageName)
 	currentCodeFile.Imports = append(currentCodeFile.Imports, *codeImport)
 }
 

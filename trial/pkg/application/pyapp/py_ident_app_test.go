@@ -19,7 +19,6 @@ func Test_AllPythonGrammar(t *testing.T) {
 	files := cocafile.GetFilesWithFilter("testdata/grammar", PyFileFilter)
 
 	for _, file := range files {
-		fmt.Println(file)
 		file, _ := ioutil.ReadFile(file)
 		app := new(PythonApiApp)
 		app.Analysis(string(file), "")

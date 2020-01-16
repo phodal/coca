@@ -56,10 +56,6 @@ func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
 	return codeFile
 }
 
-func (s *TypeScriptIdentListener) EnterProgram(ctx *parser.ProgramContext) {
-
-}
-
 func (s *TypeScriptIdentListener) EnterImportFromBlock(ctx *parser.ImportFromBlockContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
 	imp := &trial.CodeImport{Source: replaceSingleQuote}
@@ -89,13 +85,19 @@ func (s *TypeScriptIdentListener) EnterImportAll(ctx *parser.ImportAllContext) {
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	currentNode = domain.NewClassNode()
 	currentNode.Type = "Interface"
-
 	currentNode.Class = ctx.Identifier().GetText()
+
+	currentDataStruct = &trial.CodeDataStruct{
+		Type: "Interface",
+		Name: ctx.Identifier().GetText(),
+	}
 
 	if ctx.InterfaceExtendsClause() != nil {
 		extendsContext := ctx.InterfaceExtendsClause().(*parser.InterfaceExtendsClauseContext)
 		implements := BuildImplements(extendsContext.ClassOrInterfaceTypeList())
 		currentNode.Extend = implements[0]
+
+		currentDataStruct.Extend = implements[0]
 	}
 
 	objectTypeCtx := ctx.ObjectType().(*parser.ObjectTypeContext)
@@ -156,6 +158,11 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 	currentNode = domain.NewClassNode()
 	currentNode.Type = "Class"
 	currentNode.Class = ctx.Identifier().GetText()
+
+	currentDataStruct = &trial.CodeDataStruct{
+		Type: "Class",
+		Name: ctx.Identifier().GetText(),
+	}
 
 	heritageContext := ctx.ClassHeritage().(*parser.ClassHeritageContext)
 	if heritageContext.ImplementsClause() != nil {
@@ -231,10 +238,6 @@ func (s *TypeScriptIdentListener) EnterArgumentsExpression(ctx *parser.Arguments
 	case *parser.MemberDotExpressionContext:
 		currentNode.MethodCalls = append(currentNode.MethodCalls, BuildArgExpressCall(x))
 	}
-}
-
-func (s *TypeScriptIdentListener) EnterMemberDotExpression(ctx *parser.MemberDotExpressionContext) {
-
 }
 
 func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionDeclarationContext) {

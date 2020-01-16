@@ -36,7 +36,8 @@
           "TypeName": "func",
           "TypeType": "Function"
         }
-      ]
+      ],
+      "Type": ""
     }
   ],
   "FullName": "testdata/node_infos/struct_with_func_decl.code",

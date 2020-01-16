@@ -36,7 +36,8 @@
           "TypeName": "int32",
           "TypeType": "Identify"
         }
-      ]
+      ],
+      "Type": ""
     }
   ],
   "FullName": "testdata/node_infos/struct_with_func.code",

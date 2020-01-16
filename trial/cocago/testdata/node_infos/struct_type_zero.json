@@ -11,7 +11,8 @@
       "Implements": null,
       "MemberIds": null,
       "Name": "O",
-      "Properties": null
+      "Properties": null,
+      "Type": ""
     }
   ],
   "FullName": "testdata/node_infos/struct_type_zero.code",

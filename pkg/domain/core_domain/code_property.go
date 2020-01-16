@@ -1,4 +1,4 @@
-package trial
+package core_domain
 
 type CodeProperty struct {
 	Modifiers   []string

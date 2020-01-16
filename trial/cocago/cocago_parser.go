@@ -3,7 +3,7 @@ package cocago
 import (
 	"bytes"
 	"fmt"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -14,7 +14,7 @@ import (
 	"reflect"
 )
 
-var currentPackage *trial.CodePackage
+var currentPackage *core_domain.CodePackage
 
 type CocagoParser struct {
 }
@@ -23,7 +23,7 @@ var debug = false
 var output io.Writer
 
 func NewCocagoParser() *CocagoParser {
-	currentPackage = &trial.CodePackage{}
+	currentPackage = &core_domain.CodePackage{}
 	output = os.Stdout
 	return &CocagoParser{}
 }
@@ -35,7 +35,7 @@ func (n *CocagoParser) SetOutput(isDebug bool) io.Writer {
 	return output
 }
 
-func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
+func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
 	absPath, _ := filepath.Abs(fileName)
 	content, _ := ioutil.ReadFile(absPath)
 
@@ -52,10 +52,10 @@ func (n *CocagoParser) ProcessFile(fileName string) trial.CodeFile {
 	return *codeFile
 }
 
-func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *trial.CodeFile {
-	var currentStruct trial.CodeDataStruct
-	var currentFile trial.CodeFile
-	var currentFunc *trial.CodeFunction
+func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *core_domain.CodeFile {
+	var currentStruct core_domain.CodeDataStruct
+	var currentFile core_domain.CodeFile
+	var currentFunc *core_domain.CodeFunction
 
 	currentFile.FullName = fileName
 	var funcType = ""
@@ -71,7 +71,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			imp := BuildImport(x)
 			currentFile.Imports = append(currentFile.Imports, *imp)
 		case *ast.TypeSpec:
-			currentStruct = trial.CodeDataStruct{}
+			currentStruct = core_domain.CodeDataStruct{}
 			currentStruct.Name = x.Name.String()
 		case *ast.StructType:
 			AddStructType(currentStruct, x, &currentFile)
@@ -97,14 +97,14 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
-func BuildImport(x *ast.ImportSpec) *trial.CodeImport {
+func BuildImport(x *ast.ImportSpec) *core_domain.CodeImport {
 	path := x.Path.Value
 	cleanPath := path[1 : len(path)-1]
 	asName := ""
 	if x.Name != nil {
 		asName = x.Name.String()
 	}
-	imp := &trial.CodeImport{
+	imp := &core_domain.CodeImport{
 		Source:     cleanPath,
 		AsName:     asName,
 		ImportName: "",
@@ -114,17 +114,17 @@ func BuildImport(x *ast.ImportSpec) *trial.CodeImport {
 	return imp
 }
 
-func AddInterface(x *ast.InterfaceType, ident string, codeFile *trial.CodeFile) {
+func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.CodeFile) {
 	properties := BuildFieldToProperty(x.Methods.List)
 
-	dataStruct := trial.CodeDataStruct{
+	dataStruct := core_domain.CodeDataStruct{
 		Name:            ident,
 		ID:              "",
 		MemberIds:       nil,
 		InOutProperties: properties,
 	}
 
-	member := trial.CodeMember{
+	member := core_domain.CodeMember{
 		DataStructID: dataStruct.Name,
 		Type:         "interface",
 	}
@@ -133,11 +133,11 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *trial.CodeFile) 
 	codeFile.DataStructures = append(codeFile.DataStructures, dataStruct)
 }
 
-func AddNestedFunction(currentFunc *trial.CodeFunction, x *ast.FuncType) {
+func AddNestedFunction(currentFunc *core_domain.CodeFunction, x *ast.FuncType) {
 
 }
 
-func AddFunctionDecl(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, currentFile *trial.CodeFile) *trial.CodeFunction {
+func AddFunctionDecl(currentStruct core_domain.CodeDataStruct, x *ast.FuncDecl, currentFile *core_domain.CodeFile) *core_domain.CodeFunction {
 	recv := ""
 	if x.Recv != nil {
 		recv = BuildReceiver(x, recv)
@@ -155,7 +155,7 @@ func AddFunctionDecl(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, curren
 	} else {
 		member := GetMemberFromFile(*currentFile, "default")
 		if member == nil {
-			member = &trial.CodeMember{
+			member = &core_domain.CodeMember{
 				DataStructID: "default",
 				Type:         "method",
 			}
@@ -182,7 +182,7 @@ func BuildReceiver(x *ast.FuncDecl, recv string) string {
 	return recv
 }
 
-func BuildMethodCall(codeFunc *trial.CodeFunction, item ast.Stmt) {
+func BuildMethodCall(codeFunc *core_domain.CodeFunction, item ast.Stmt) {
 	switch it := item.(type) {
 	case *ast.ExprStmt:
 		BuildMethodCallExprStmt(it, codeFunc)
@@ -191,11 +191,11 @@ func BuildMethodCall(codeFunc *trial.CodeFunction, item ast.Stmt) {
 	}
 }
 
-func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *trial.CodeFunction) {
+func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunction) {
 	switch expr := it.X.(type) {
 	case *ast.CallExpr:
 		selector, selName := BuildExpr(expr.Fun.(ast.Expr))
-		call := trial.CodeCall{
+		call := core_domain.CodeCall{
 			Package:    "",
 			Type:       "",
 			Class:      selector,
@@ -204,7 +204,7 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *trial.CodeFunction) {
 
 		for _, arg := range expr.Args {
 			value, kind := BuildExpr(arg.(ast.Expr))
-			property := &trial.CodeProperty{
+			property := &core_domain.CodeProperty{
 				TypeName: value,
 				TypeType: kind,
 			}
@@ -241,12 +241,12 @@ func BuildExpr(expr ast.Expr) (string, string) {
 	return "", ""
 }
 
-func createMember(codeDataStruct trial.CodeDataStruct) {
+func createMember(codeDataStruct core_domain.CodeDataStruct) {
 
 }
 
-func GetMemberFromFile(file trial.CodeFile, recv string) *trial.CodeMember {
-	var identMember *trial.CodeMember
+func GetMemberFromFile(file core_domain.CodeFile, recv string) *core_domain.CodeMember {
+	var identMember *core_domain.CodeMember
 	for _, member := range file.Members {
 		if member.DataStructID == recv {
 			identMember = member
@@ -262,8 +262,8 @@ func getFieldName(field *ast.Field) string {
 	return field.Names[0].Name
 }
 
-func AddStructType(currentStruct trial.CodeDataStruct, x *ast.StructType, currentFile *trial.CodeFile) {
-	member := trial.CodeMember{
+func AddStructType(currentStruct core_domain.CodeDataStruct, x *ast.StructType, currentFile *core_domain.CodeFile) {
+	member := core_domain.CodeMember{
 		DataStructID: currentStruct.Name,
 		Type:         "struct",
 	}

@@ -1,4 +1,4 @@
-package trial
+package core_domain
 
 import "github.com/phodal/coca/pkg/domain"
 

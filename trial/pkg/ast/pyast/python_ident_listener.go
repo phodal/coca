@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 	"io"
 	"os"
@@ -15,14 +15,14 @@ type PythonIdentListener struct {
 	parser.BasePythonParserListener
 }
 
-var currentCodeFile *trial.CodeFile
-var currentDataStruct *trial.CodeDataStruct
+var currentCodeFile *core_domain.CodeFile
+var currentDataStruct *core_domain.CodeDataStruct
 var debug = false
 var output io.Writer
 var hasEnterMember = false
 
 func NewPythonIdentListener(fileName string) *PythonIdentListener {
-	currentCodeFile = &trial.CodeFile{}
+	currentCodeFile = &core_domain.CodeFile{}
 	currentCodeFile.FullName = fileName
 	output = os.Stdout
 
@@ -39,7 +39,7 @@ func (s *PythonIdentListener) SetDebugOutput(isDebug bool) io.Writer {
 func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
 	dotNames := ctx.Dotted_as_names().(*parser.Dotted_as_namesContext).AllDotted_as_name()
 
-	codeImport := &trial.CodeImport{}
+	codeImport := &core_domain.CodeImport{}
 	context := dotNames[0].(*parser.Dotted_as_nameContext)
 	codeImport.Source = context.Dotted_name().GetText()
 	if context.Name() != nil {
@@ -55,7 +55,7 @@ func (s *PythonIdentListener) EnterImport_stmt(ctx *parser.Import_stmtContext) {
 }
 
 func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
-	codeImport := &trial.CodeImport{}
+	codeImport := &core_domain.CodeImport{}
 	codeImport.Source = ctx.From_stmt_source().GetText()
 	usageName := ctx.From_stmt_as_names().GetText()
 
@@ -75,7 +75,7 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = true
-	dataStruct := &trial.CodeDataStruct{
+	dataStruct := &core_domain.CodeDataStruct{
 		Name:            ctx.Name().GetText(),
 		ID:              "",
 		MemberIds:       nil,
@@ -99,7 +99,7 @@ func (s *PythonIdentListener) ExitClassdef(ctx *parser.ClassdefContext) {
 
 func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 	hasEnterMember = true
-	function := trial.CodeFunction{
+	function := core_domain.CodeFunction{
 		Name: ctx.Name().GetText(),
 	}
 
@@ -109,7 +109,7 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 		function.Annotations = decorators
 	}
 
-	member := &trial.CodeMember{
+	member := &core_domain.CodeMember{
 		Name: ctx.Name().GetText(),
 	}
 
@@ -125,14 +125,14 @@ func (s *PythonIdentListener) ExitFuncdef(ctx *parser.FuncdefContext) {
 	hasEnterMember = false
 }
 
-func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []trial.PythonAnnotation {
+func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []core_domain.PythonAnnotation {
 	var nodes []parser.DecoratorContext
 	for i := 0; i < index; i++ {
 		context := node.GetParent().GetChild(i).(*parser.DecoratorContext)
 		nodes = append(nodes, *context)
 	}
 
-	var annotations []trial.PythonAnnotation
+	var annotations []core_domain.PythonAnnotation
 	for _, node := range nodes {
 		decorator := BuildDecorator(&node)
 		annotations = append(annotations, *decorator)
@@ -141,10 +141,10 @@ func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []trial.PythonAnnot
 	return annotations
 }
 
-func BuildDecorator(x *parser.DecoratorContext) *trial.PythonAnnotation {
+func BuildDecorator(x *parser.DecoratorContext) *core_domain.PythonAnnotation {
 	text := x.Dotted_name().GetText()
 
-	annotation := &trial.PythonAnnotation{
+	annotation := &core_domain.PythonAnnotation{
 		Name: text,
 	}
 
@@ -155,11 +155,11 @@ func BuildDecorator(x *parser.DecoratorContext) *trial.PythonAnnotation {
 	return annotation
 }
 
-func BuildArgList(context *parser.ArglistContext) []trial.CodeProperty {
-	var arguments []trial.CodeProperty
+func BuildArgList(context *parser.ArglistContext) []core_domain.CodeProperty {
+	var arguments []core_domain.CodeProperty
 	for _, arg := range context.AllArgument() {
 		argContext := arg.(*parser.ArgumentContext)
-		argument := &trial.CodeProperty{
+		argument := &core_domain.CodeProperty{
 			Name:     "",
 			TypeName: argContext.GetText(),
 		}
@@ -169,6 +169,6 @@ func BuildArgList(context *parser.ArglistContext) []trial.CodeProperty {
 	return arguments
 }
 
-func (s *PythonIdentListener) GetCodeFileInfo() *trial.CodeFile {
+func (s *PythonIdentListener) GetCodeFileInfo() *core_domain.CodeFile {
 	return currentCodeFile
 }

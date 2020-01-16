@@ -3,12 +3,12 @@ package ts
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 )
 
-func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *trial.CodeFunction {
-	function := &trial.CodeFunction{
+func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *core_domain.CodeFunction {
+	function := &core_domain.CodeFunction{
 		Name: "constructor",
 	}
 
@@ -23,8 +23,8 @@ func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *trial.Co
 	return function
 }
 
-func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) *trial.CodeFunction {
-	function := &trial.CodeFunction{
+func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) *core_domain.CodeFunction {
+	function := &core_domain.CodeFunction{
 		Name: ctx.PropertyName().GetText(),
 	}
 	function.Position.StartLine = ctx.GetStart().GetLine()
@@ -47,9 +47,9 @@ func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string 
 	return implements
 }
 
-func BuildMethodParameter(context *parser.ParameterListContext) ([]trial.CodeProperty) {
+func BuildMethodParameter(context *parser.ParameterListContext) ([]core_domain.CodeProperty) {
 	childNode := context.GetChild(0)
-	var parameters []trial.CodeProperty = nil
+	var parameters []core_domain.CodeProperty = nil
 
 	switch x := childNode.(type) {
 	case *parser.RequiredParameterListContext:
@@ -66,7 +66,7 @@ func BuildMethodParameter(context *parser.ParameterListContext) ([]trial.CodePro
 		}
 	case *parser.PredefinedTypeContext:
 		predefinedTypeContext := x
-		parameter := trial.CodeProperty{
+		parameter := core_domain.CodeProperty{
 			TypeName: "any",
 			TypeType: predefinedTypeContext.GetText(),
 		}
@@ -76,13 +76,13 @@ func BuildMethodParameter(context *parser.ParameterListContext) ([]trial.CodePro
 	return parameters
 }
 
-func buildRestParameters(ctx *parser.RestParameterContext) trial.CodeProperty {
+func buildRestParameters(ctx *parser.RestParameterContext) core_domain.CodeProperty {
 	context := ctx.GetChild(1).(*parser.RequiredParameterContext)
 	return buildRequiredParameter(context)
 }
 
-func buildRequireParameterList(listContext *parser.RequiredParameterListContext) []trial.CodeProperty {
-	var requireCodeParams []trial.CodeProperty = nil
+func buildRequireParameterList(listContext *parser.RequiredParameterListContext) []core_domain.CodeProperty {
+	var requireCodeParams []core_domain.CodeProperty = nil
 
 	for _, requiredParameter := range listContext.AllRequiredParameter() {
 		paramCtx := requiredParameter.(*parser.RequiredParameterContext)
@@ -93,13 +93,13 @@ func buildRequireParameterList(listContext *parser.RequiredParameterListContext)
 	return requireCodeParams
 }
 
-func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) trial.CodeProperty {
+func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) core_domain.CodeProperty {
 	paramType := ""
 	if paramCtx.TypeAnnotation() != nil {
 		annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
 		paramType = BuildTypeAnnotation(annotationContext)
 	}
-	parameter := trial.CodeProperty{
+	parameter := core_domain.CodeProperty{
 		TypeName: paramCtx.IdentifierOrPattern().GetText(),
 		TypeType: paramType,
 	}

@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -84,10 +84,10 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 	codeFile := app.Analysis(string(file), "testdata/grammar/class_or_func_def_stmt.py")
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
-	g.Expect(len(codeFile.DataStructures[0].Annotations.([]trial.PythonAnnotation))).To(Equal(1))
+	g.Expect(len(codeFile.DataStructures[0].Annotations.([]core_domain.PythonAnnotation))).To(Equal(1))
 
 	g.Expect(codeFile.Members[0].FunctionNodes[0].Name).To(Equal("bar"))
-	g.Expect(len(codeFile.Members[0].FunctionNodes[0].Annotations.([]trial.PythonAnnotation))).To(Equal(2))
+	g.Expect(len(codeFile.Members[0].FunctionNodes[0].Annotations.([]core_domain.PythonAnnotation))).To(Equal(2))
 }
 
 func Test_PythonImport(t *testing.T) {

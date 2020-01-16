@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/trial/cocago"
 	"github.com/spf13/cobra"
 )
@@ -24,7 +24,7 @@ var analysisGoCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		importPath := analysisGoCmdConfig.Path
 
-		var results []trial.CodeFile
+		var results []core_domain.CodeFile
 		files := cocafile.GetFilesWithFilter(importPath, cocafile.GoFileFilter)
 		for _, file := range files {
 			parser := cocago.NewCocagoParser()

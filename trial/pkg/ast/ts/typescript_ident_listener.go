@@ -4,7 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 	"strings"
 )
@@ -12,11 +12,11 @@ import (
 var defaultClass = "default"
 
 type TypeScriptIdentListener struct {
-	currentDataStruct *trial.CodeDataStruct
-	dataStructures    []trial.CodeDataStruct
-	dataStructQueue   []trial.CodeDataStruct
+	currentDataStruct *core_domain.CodeDataStruct
+	dataStructures    []core_domain.CodeDataStruct
+	dataStructQueue   []core_domain.CodeDataStruct
 	filePath          string
-	codeFile          trial.CodeFile
+	codeFile          core_domain.CodeFile
 
 	parser.BaseTypeScriptParserListener
 }
@@ -27,11 +27,11 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	return listener
 }
 
-func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
+func (s *TypeScriptIdentListener) GetNodeInfo() core_domain.CodeFile {
 	isScriptCalls := s.currentDataStruct != nil && s.currentDataStruct.IsNotEmpty()
 	if isScriptCalls {
 		if len(s.currentDataStruct.Functions) < 1 {
-			function := &trial.CodeFunction{}
+			function := &core_domain.CodeFunction{}
 			function.Name = "default"
 			function.MethodCalls = append(function.MethodCalls, s.currentDataStruct.FunctionCalls...)
 
@@ -47,7 +47,7 @@ func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
 
 func (s *TypeScriptIdentListener) EnterImportFromBlock(ctx *parser.ImportFromBlockContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
-	imp := &trial.CodeImport{Source: replaceSingleQuote}
+	imp := &core_domain.CodeImport{Source: replaceSingleQuote}
 	importName := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	imp.ImportName = importName
 	s.codeFile.Imports = append(s.codeFile.Imports, *imp)
@@ -61,18 +61,18 @@ func UpdateImportStr(importText string) string {
 
 func (s *TypeScriptIdentListener) EnterImportAliasDeclaration(ctx *parser.ImportAliasDeclarationContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
-	imp := &trial.CodeImport{Source: replaceSingleQuote}
+	imp := &core_domain.CodeImport{Source: replaceSingleQuote}
 	s.codeFile.Imports = append(s.codeFile.Imports, *imp)
 }
 
 func (s *TypeScriptIdentListener) EnterImportAll(ctx *parser.ImportAllContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
-	imp := &trial.CodeImport{Source: replaceSingleQuote}
+	imp := &core_domain.CodeImport{Source: replaceSingleQuote}
 	s.codeFile.Imports = append(s.codeFile.Imports, *imp)
 }
 
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
-	s.currentDataStruct = &trial.CodeDataStruct{
+	s.currentDataStruct = &core_domain.CodeDataStruct{
 		Type: "Interface",
 		Name: ctx.Identifier().GetText(),
 	}
@@ -93,7 +93,7 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 	}
 }
 
-func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, dataStruct *trial.CodeDataStruct) {
+func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, dataStruct *core_domain.CodeDataStruct) {
 	for _, typeMember := range ctx.AllTypeMember() {
 		typeMemberCtx := typeMember.(*parser.TypeMemberContext)
 		memberChild := typeMemberCtx.GetChild(0)
@@ -104,7 +104,7 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, dataStruct *trial
 			method := domain.NewJMethod()
 			method.Name = x.PropertyName().GetText()
 
-			function := trial.CodeFunction{
+			function := core_domain.CodeFunction{
 				Name: x.PropertyName().GetText(),
 			}
 
@@ -115,21 +115,21 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, dataStruct *trial
 	}
 }
 
-func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureContext, dataStruct *trial.CodeDataStruct) {
+func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureContext, dataStruct *core_domain.CodeDataStruct) {
 	typeType := BuildTypeAnnotation(signatureCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
 	typeValue := signatureCtx.PropertyName().(*parser.PropertyNameContext).GetText()
 
 	isArrowFunc := signatureCtx.Type_() != nil
 	if isArrowFunc {
-		function := &trial.CodeFunction{
+		function := &core_domain.CodeFunction{
 			Name: typeValue,
 		}
-		param := trial.CodeProperty{
+		param := core_domain.CodeProperty{
 			TypeName: "any",
 			TypeType: typeType,
 		}
 
-		returnType := trial.CodeProperty{
+		returnType := core_domain.CodeProperty{
 			TypeType: signatureCtx.Type_().GetText(),
 		}
 		function.Parameters = append(function.Parameters, param)
@@ -137,7 +137,7 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 
 		dataStruct.Functions = append(dataStruct.Functions, *function)
 	} else {
-		codeField := &trial.CodeField{}
+		codeField := &core_domain.CodeField{}
 		codeField.TypeType = typeType
 		codeField.TypeValue = typeValue
 
@@ -150,7 +150,7 @@ func (s *TypeScriptIdentListener) ExitInterfaceDeclaration(ctx *parser.Interface
 }
 
 func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
-	s.currentDataStruct = &trial.CodeDataStruct{
+	s.currentDataStruct = &core_domain.CodeDataStruct{
 		Type: "Class",
 		Name: ctx.Identifier().GetText(),
 	}
@@ -189,11 +189,11 @@ func (s *TypeScriptIdentListener) handleClassBodyElements(classTailContext *pars
 	}
 }
 
-func (s *TypeScriptIdentListener) HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, dataStruct *trial.CodeDataStruct) {
+func (s *TypeScriptIdentListener) HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, dataStruct *core_domain.CodeDataStruct) {
 	callSignatureSizePos := 3
 	if propertyMemberCtx.PropertyName() != nil {
 		modifier := propertyMemberCtx.PropertyMemberBase().GetText()
-		codeField := trial.CodeField{
+		codeField := core_domain.CodeField{
 			TypeValue: propertyMemberCtx.PropertyName().GetText(),
 		}
 		codeField.Modifiers = append(codeField.Modifiers, modifier)
@@ -224,12 +224,12 @@ func (s *TypeScriptIdentListener) exitClass() {
 		s.dataStructQueue = s.dataStructQueue[0 : len(s.dataStructQueue)-1]
 		s.currentDataStruct = &s.dataStructQueue[len(s.dataStructQueue)-1]
 	} else {
-		s.currentDataStruct = trial.NewDataStruct()
+		s.currentDataStruct = core_domain.NewDataStruct()
 	}
 }
 
 func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionDeclarationContext) {
-	function := &trial.CodeFunction{
+	function := &core_domain.CodeFunction{
 		Name: ctx.Identifier().GetText(),
 	}
 
@@ -239,12 +239,12 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	ast_util.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if s.currentDataStruct == nil {
-		s.currentDataStruct = &trial.CodeDataStruct{}
+		s.currentDataStruct = &core_domain.CodeDataStruct{}
 	}
 	s.currentDataStruct.Functions = append(s.currentDataStruct.Functions, *function)
 }
 
-func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, function *trial.CodeFunction) {
+func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, function *core_domain.CodeFunction) {
 	if callSignatureContext.ParameterList() != nil {
 		parameterListContext := callSignatureContext.ParameterList().(*parser.ParameterListContext)
 		functionParameters := BuildMethodParameter(parameterListContext)

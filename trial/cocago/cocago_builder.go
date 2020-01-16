@@ -2,16 +2,16 @@ package cocago
 
 import (
 	"fmt"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"go/ast"
 	"reflect"
 )
 
-func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
+func BuildPropertyField(name string, field *ast.Field) *core_domain.CodeProperty {
 	var typeName string
 	var typeType string
-	var params []trial.CodeProperty
-	var results []trial.CodeProperty
+	var params []core_domain.CodeProperty
+	var results []core_domain.CodeProperty
 	switch x := field.Type.(type) {
 	case *ast.Ident:
 		typeType = "Identify"
@@ -44,7 +44,7 @@ func BuildPropertyField(name string, field *ast.Field) *trial.CodeProperty {
 		fmt.Fprintf(output, "BuildPropertyField %s\n", reflect.TypeOf(x))
 	}
 
-	property := &trial.CodeProperty{
+	property := &core_domain.CodeProperty{
 		Modifiers:   nil,
 		Name:        name,
 		TypeType:    typeType,
@@ -71,8 +71,8 @@ func getStarExprName(starExpr ast.StarExpr) string {
 	}
 }
 
-func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
-	codeFunc := &trial.CodeFunction{
+func BuildFunction(x *ast.FuncDecl) *core_domain.CodeFunction {
+	codeFunc := &core_domain.CodeFunction{
 		Name: x.Name.String(),
 	}
 
@@ -90,8 +90,8 @@ func BuildFunction(x *ast.FuncDecl) *trial.CodeFunction {
 	return codeFunc
 }
 
-func BuildFieldToProperty(fieldList []*ast.Field) []trial.CodeProperty {
-	var properties []trial.CodeProperty
+func BuildFieldToProperty(fieldList []*ast.Field) []core_domain.CodeProperty {
+	var properties []core_domain.CodeProperty
 	for _, field := range fieldList {
 		property := BuildPropertyField(getFieldName(field), field)
 		properties = append(properties, *property)

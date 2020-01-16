@@ -2,18 +2,18 @@ package processor
 
 import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/trial/cocago"
 	"strings"
 )
 
-func ProcessPackage(path string, debug bool) []*trial.CodeFile {
+func ProcessPackage(path string, debug bool) []*core_domain.CodeFile {
 	var GoFileFilter = func(path string) bool {
 		return strings.HasSuffix(path, ".go")
 	}
 
 	files := cocafile.GetFilesWithFilter(path, GoFileFilter)
-	filesData := make([]*trial.CodeFile, len(files))
+	filesData := make([]*core_domain.CodeFile, len(files))
 	parser := cocago.NewCocagoParser()
 	if debug {
 		parser.SetOutput(true)

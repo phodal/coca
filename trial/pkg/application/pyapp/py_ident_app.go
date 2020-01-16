@@ -3,7 +3,7 @@ package pyapp
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
-	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/trial/pkg/ast/pyast"
 )
 
@@ -21,7 +21,7 @@ func ProcessTsString(code string) *parser.PythonParser {
 type PythonApiApp struct {
 }
 
-func (j *PythonApiApp) Analysis(code string, fileName string) *trial.CodeFile {
+func (j *PythonApiApp) Analysis(code string, fileName string) *core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Root()
 

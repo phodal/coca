@@ -195,12 +195,6 @@ func Test_ShouldGetClassFields(t *testing.T) {
 
 	codeFile := app.Analysis(string(code), "")
 
-	results := codeFile.ClassNodes
-
-	fields := results[1].Fields
-	g.Expect(len(fields)).To(Equal(5))
-	g.Expect(fields[0].Modifier).To(Equal("public"))
-
 	codeFields := codeFile.DataStructures[1].Fields
 	g.Expect(len(codeFields)).To(Equal(5))
 	g.Expect(codeFields[0].Modifiers[0]).To(Equal("public"))

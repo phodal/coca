@@ -3,52 +3,27 @@ package ts
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain"
 	"github.com/phodal/coca/pkg/domain/trial"
 	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 )
 
-func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) domain.JMethodCall {
-	call := domain.NewJMethodCall()
-	memberChild := memberDotExprCtx.GetChild(0)
-	switch x := memberChild.(type) {
-	case *parser.IdentifierExpressionContext:
-		call.Class = x.GetText()
-		call.MethodName = memberDotExprCtx.IdentifierName().GetText()
-	}
-
-	return call
-}
-
-func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) (domain.JMethod, *trial.CodeFunction) {
-	method := domain.NewJMethod()
-	method.Name = "constructor"
-
+func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *trial.CodeFunction {
 	function := &trial.CodeFunction{
 		Name: "constructor",
 	}
 
-	ast_util.AddPosition(&method, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+	ast_util.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if ctx.AccessibilityModifier() != nil {
 		modifier := ctx.AccessibilityModifier().GetText()
 
-		method.Modifiers = append(method.Modifiers, modifier)
 		function.Modifiers = append(function.Modifiers, modifier)
 	}
 
-	return method, function
+	return function
 }
 
-func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) (domain.JMethod, *trial.CodeFunction) {
-	method := domain.NewJMethod()
-	method.Name = ctx.PropertyName().GetText()
-
-	method.StartLine = ctx.GetStart().GetLine()
-	method.StartLinePosition = ctx.GetStart().GetColumn()
-	method.StopLine = ctx.GetStop().GetLine()
-	method.StopLinePosition = ctx.GetStop().GetColumn()
-
+func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) *trial.CodeFunction {
 	function := &trial.CodeFunction{
 		Name: ctx.PropertyName().GetText(),
 	}
@@ -57,7 +32,7 @@ func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) (domain.JMe
 	function.CodePosition.StopLine = ctx.GetStop().GetLine()
 	function.CodePosition.StopLinePosition = ctx.GetStop().GetColumn()
 
-	return method, function
+	return function
 }
 
 func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string {
@@ -72,78 +47,64 @@ func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string 
 	return implements
 }
 
-func BuildMethodParameter(context *parser.ParameterListContext) ([]domain.JParameter, []trial.CodeProperty) {
+func BuildMethodParameter(context *parser.ParameterListContext) ([]trial.CodeProperty) {
 	childNode := context.GetChild(0)
-	var parameters []domain.JParameter = nil
-	var codeParameters []trial.CodeProperty = nil
+	var parameters []trial.CodeProperty = nil
 
 	switch x := childNode.(type) {
 	case *parser.RequiredParameterListContext:
 		listContext := x
 
-		list, properties := buildRequireParameterList(listContext)
-		parameters = append(parameters, list...)
-		codeParameters = append(codeParameters, properties...)
+		properties := buildRequireParameterList(listContext)
+		parameters = append(parameters, properties...)
 
 		if context.RestParameter() != nil {
 			restParamCtx := context.RestParameter().(*parser.RestParameterContext)
-			restParameters, codeProperty := buildRestParameters(restParamCtx)
+			codeProperty := buildRestParameters(restParamCtx)
 
-			parameters = append(parameters, restParameters)
-			codeParameters = append(codeParameters, codeProperty)
+			parameters = append(parameters, codeProperty)
 		}
 	case *parser.PredefinedTypeContext:
 		predefinedTypeContext := x
-		parameters = append(parameters, domain.JParameter{
-			Name: "any",
-			Type: predefinedTypeContext.GetText(),
-		})
-
 		parameter := trial.CodeProperty{
 			TypeName: "any",
 			TypeType: predefinedTypeContext.GetText(),
 		}
-		codeParameters = append(codeParameters, parameter)
+		parameters = append(parameters, parameter)
 	}
 
-	return parameters, codeParameters
+	return parameters
 }
 
-func buildRestParameters(ctx *parser.RestParameterContext) (domain.JParameter, trial.CodeProperty) {
+func buildRestParameters(ctx *parser.RestParameterContext) trial.CodeProperty {
 	context := ctx.GetChild(1).(*parser.RequiredParameterContext)
 	return buildRequiredParameter(context)
 }
 
-func buildRequireParameterList(listContext *parser.RequiredParameterListContext) ([]domain.JParameter, []trial.CodeProperty) {
-	var requireParamsList []domain.JParameter = nil
+func buildRequireParameterList(listContext *parser.RequiredParameterListContext) []trial.CodeProperty {
 	var requireCodeParams []trial.CodeProperty = nil
 
 	for _, requiredParameter := range listContext.AllRequiredParameter() {
 		paramCtx := requiredParameter.(*parser.RequiredParameterContext)
-		parameter, property := buildRequiredParameter(paramCtx)
-		requireParamsList = append(requireParamsList, parameter)
+		property := buildRequiredParameter(paramCtx)
 
 		requireCodeParams = append(requireCodeParams, property)
 	}
-	return requireParamsList, requireCodeParams
+	return requireCodeParams
 }
 
-func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) (domain.JParameter, trial.CodeProperty) {
+func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) trial.CodeProperty {
 	paramType := ""
 	if paramCtx.TypeAnnotation() != nil {
 		annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
 		paramType = BuildTypeAnnotation(annotationContext)
 	}
-	parameter := domain.JParameter{
-		Name: paramCtx.IdentifierOrPattern().GetText(),
-		Type: paramType,
-	}
-	codeParamter := trial.CodeProperty{
+	parameter := trial.CodeProperty{
 		TypeName: paramCtx.IdentifierOrPattern().GetText(),
 		TypeType: paramType,
 	}
 
-	return parameter, codeParamter
+	return parameter
 }
 
 func BuildTypeAnnotation(annotationContext *parser.TypeAnnotationContext) string {

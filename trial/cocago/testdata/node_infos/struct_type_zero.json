@@ -5,6 +5,7 @@
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Functions": null,
       "ID": "",
       "Implements": null,
       "MemberIds": null,
@@ -19,8 +20,7 @@
       "ClassNodes": null,
       "DataStructID": "O",
       "FileID": "",
-      "ID": "",
-      "MethodNodes": [
+      "FunctionNodes": [
         {
           "Annotations": null,
           "Creators": null,
@@ -33,6 +33,7 @@
           "ReturnTypes": null
         }
       ],
+      "ID": "",
       "Name": "",
       "Namespace": null,
       "Position": {

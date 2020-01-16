@@ -8,6 +8,7 @@ type CodeDataStruct struct {
 	Implements  []string
 	Annotations interface{}
 	Properties  []CodeProperty
+	Functions   []CodeFunction
 	Extension   interface{}
 }
 

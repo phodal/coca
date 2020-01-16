@@ -5,6 +5,7 @@
       "Annotations": null,
       "Extend": "",
       "Extension": null,
+      "Functions": null,
       "ID": "",
       "Implements": null,
       "MemberIds": null,
@@ -68,8 +69,8 @@
       "ClassNodes": null,
       "DataStructID": "CodeFile",
       "FileID": "testdata/node_infos/data_struct_property.code",
+      "FunctionNodes": null,
       "ID": "",
-      "MethodNodes": null,
       "Name": "",
       "Namespace": null,
       "Position": {

@@ -16,8 +16,7 @@
       "ClassNodes": null,
       "DataStructID": "default",
       "FileID": "",
-      "ID": "",
-      "MethodNodes": [
+      "FunctionNodes": [
         {
           "Annotations": null,
           "Creators": null,
@@ -47,6 +46,7 @@
           "ReturnTypes": null
         }
       ],
+      "ID": "",
       "Name": "",
       "Namespace": null,
       "Position": {

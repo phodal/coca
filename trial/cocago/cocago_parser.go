@@ -147,7 +147,7 @@ func AddFunctionDecl(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, curren
 	if recv != "" {
 		member := GetMemberFromFile(*currentFile, recv)
 		if member != nil {
-			member.MethodNodes = append(member.MethodNodes, *codeFunc)
+			member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
 		} else {
 			createMember(currentStruct)
 			// todo
@@ -161,7 +161,7 @@ func AddFunctionDecl(currentStruct trial.CodeDataStruct, x *ast.FuncDecl, curren
 			}
 		}
 
-		member.MethodNodes = append(member.MethodNodes, *codeFunc)
+		member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
 		currentFile.Members = append(currentFile.Members, member)
 	}
 

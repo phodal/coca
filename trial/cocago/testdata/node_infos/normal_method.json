@@ -23,8 +23,7 @@
       "ClassNodes": null,
       "DataStructID": "default",
       "FileID": "",
-      "ID": "",
-      "MethodNodes": [
+      "FunctionNodes": [
         {
           "Annotations": null,
           "Creators": null,
@@ -100,6 +99,7 @@
           ]
         }
       ],
+      "ID": "",
       "Name": "",
       "Namespace": null,
       "Position": {
@@ -114,8 +114,7 @@
       "ClassNodes": null,
       "DataStructID": "default",
       "FileID": "",
-      "ID": "",
-      "MethodNodes": [
+      "FunctionNodes": [
         {
           "Annotations": null,
           "Creators": null,
@@ -191,6 +190,7 @@
           ]
         }
       ],
+      "ID": "",
       "Name": "",
       "Namespace": null,
       "Position": {

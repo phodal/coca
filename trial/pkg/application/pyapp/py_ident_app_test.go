@@ -86,8 +86,8 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
 	g.Expect(len(codeFile.DataStructures[0].Annotations.([]trial.PythonAnnotation))).To(Equal(1))
 
-	g.Expect(codeFile.Members[0].MethodNodes[0].Name).To(Equal("bar"))
-	g.Expect(len(codeFile.Members[0].MethodNodes[0].Annotations.([]trial.PythonAnnotation))).To(Equal(2))
+	g.Expect(codeFile.Members[0].FunctionNodes[0].Name).To(Equal("bar"))
+	g.Expect(len(codeFile.Members[0].FunctionNodes[0].Annotations.([]trial.PythonAnnotation))).To(Equal(2))
 }
 
 func Test_PythonImport(t *testing.T) {
@@ -101,4 +101,16 @@ func Test_PythonImport(t *testing.T) {
 	g.Expect(len(codeFile.Imports)).To(Equal(10))
 	g.Expect(len(codeFile.Imports[2].UsageName)).To(Equal(2))
 	g.Expect(cocatest.JSONFileBytesEqual(codeFile.Imports, "testdata/compare/import_stmt"+".json")).To(Equal(true))
+}
+
+func Test_PythonClassWithFunctionDef(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(PythonApiApp)
+
+	file, _ := ioutil.ReadFile("testdata/compare/blog_entity.py")
+	codeFile := app.Analysis(string(file), "testdata/compare/blog_entity.py")
+
+	g.Expect(len(codeFile.DataStructures)).To(Equal(1))
+	g.Expect(len(codeFile.DataStructures[0].Functions)).To(Equal(4))
 }

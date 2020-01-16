@@ -15,6 +15,7 @@ type PythonIdentListener struct {
 }
 
 var currentCodeFile *trial.CodeFile
+var currentDataStruct *trial.CodeDataStruct
 var debug = false
 var output io.Writer
 var hasEnterMember = false
@@ -73,7 +74,7 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = true
-	dataStruct := trial.CodeDataStruct{
+	dataStruct := &trial.CodeDataStruct{
 		Name:       ctx.Name().GetText(),
 		ID:         "",
 		MemberIds:  nil,
@@ -86,11 +87,13 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 		dataStruct.Annotations = decorators
 	}
 
-	currentCodeFile.DataStructures = append(currentCodeFile.DataStructures, dataStruct)
+	currentDataStruct = dataStruct
 }
 
 func (s *PythonIdentListener) ExitClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = false
+	currentCodeFile.DataStructures = append(currentCodeFile.DataStructures, *currentDataStruct)
+	currentDataStruct = nil
 }
 
 func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
@@ -109,8 +112,12 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 		Name: ctx.Name().GetText(),
 	}
 
-	member.MethodNodes = append(member.MethodNodes, function)
-	currentCodeFile.Members = append(currentCodeFile.Members, member)
+	if currentDataStruct != nil {
+		currentDataStruct.Functions = append(currentDataStruct.Functions, function)
+	} else {
+		member.FunctionNodes = append(member.FunctionNodes, function)
+		currentCodeFile.Members = append(currentCodeFile.Members, member)
+	}
 }
 
 func (s *PythonIdentListener) ExitFuncdef(ctx *parser.FuncdefContext) {

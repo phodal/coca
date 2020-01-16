@@ -17,7 +17,7 @@ func TestJavaIdentifierApp_AnalysisPath(t *testing.T) {
 	g.Expect(identifiers[0].Methods[0].Name).To(Equal("BookController"))
 	g.Expect(identifiers[0].Methods[1].Name).To(Equal("createBook"))
 
-	g.Expect(identifiers[0].Annotations[0].QualifiedName).To(Equal("RestController"))
+	g.Expect(identifiers[0].Annotations[0].Name).To(Equal("RestController"))
 }
 
 func TestPolymorphism_Method(t *testing.T) {

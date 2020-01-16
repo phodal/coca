@@ -1,5 +1,7 @@
 package jdomain
 
+import "github.com/phodal/coca/pkg/domain/core_domain"
+
 var methods []JMethod
 
 type JIdentifier struct {
@@ -10,7 +12,7 @@ type JIdentifier struct {
 	Extends     []string
 	Implements  []string
 	Methods     []JMethod
-	Annotations []Annotation
+	Annotations []core_domain.CodeAnnotation
 }
 
 func NewJIdentifier() *JIdentifier {

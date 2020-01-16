@@ -15,7 +15,7 @@ type JClassNode struct {
 	MethodCalls []JMethodCall
 	Extend      string
 	Implements  []string
-	Annotations []Annotation
+	Annotations []core_domain.CodeAnnotation
 	InnerClass  []JClassNode
 	Imports     []core_domain.CodeImport
 }

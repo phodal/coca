@@ -149,7 +149,7 @@ func BuildDecorator(x *parser.DecoratorContext) *core_domain.CodeAnnotation {
 	}
 
 	if x.Arglist() != nil {
-		annotation.Properties = BuildArgList(x.Arglist().(*parser.ArglistContext))
+		annotation.KeyValues = BuildArgList(x.Arglist().(*parser.ArglistContext))
 	}
 
 	return annotation

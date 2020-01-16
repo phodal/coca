@@ -21,7 +21,7 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []j
 				nullableMap[methodName] = methodName
 			} else {
 				for _, annotation := range method.Annotations {
-					if annotation.QualifiedName == "Nullable" || annotation.QualifiedName == "CheckForNull"  {
+					if annotation.Name == "Nullable" || annotation.Name == "CheckForNull"  {
 						nullableMap[methodName] = methodName
 					}
 				}

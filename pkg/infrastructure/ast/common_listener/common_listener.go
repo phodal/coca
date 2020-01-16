@@ -7,10 +7,10 @@ import (
 	"reflect"
 )
 
-func BuildAnnotation(ctx *parser.AnnotationContext) jdomain.Annotation {
+func BuildAnnotation(ctx *parser.AnnotationContext) core_domain.CodeAnnotation {
 	annotationName := ctx.QualifiedName().GetText()
-	annotation := jdomain.NewAnnotation()
-	annotation.QualifiedName = annotationName
+	annotation := core_domain.NewAnnotation()
+	annotation.Name = annotationName
 	if ctx.ElementValuePairs() != nil {
 		pairs := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
 		for _, pair := range pairs {
@@ -19,11 +19,11 @@ func BuildAnnotation(ctx *parser.AnnotationContext) jdomain.Annotation {
 
 			key := pairCtx.IDENTIFIER().GetText()
 			value := pairCtx.ElementValue().GetText()
-			annotation.ValuePairs = append(annotation.ValuePairs, core_domain.NewAnnotationKeyValue(key, value))
+			annotation.KeyValues = append(annotation.KeyValues, core_domain.NewAnnotationKeyValue(key, value))
 		}
 	} else if ctx.ElementValue() != nil {
 		value := ctx.ElementValue().GetText()
-		annotation.ValuePairs = append(annotation.ValuePairs, core_domain.NewAnnotationKeyValue(value, value))
+		annotation.KeyValues = append(annotation.KeyValues, core_domain.NewAnnotationKeyValue(value, value))
 	}
 
 	return annotation

@@ -1,6 +1,7 @@
 package tbs
 
 import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/constants"
 )
@@ -165,7 +166,7 @@ func checkRedundantPrintTest(path string, mCall jdomain.JMethodCall, results *[]
 	}
 }
 
-func checkEmptyTest(path string, annotation jdomain.Annotation, results *[]TestBadSmell, method jdomain.JMethod, testType *string) {
+func checkEmptyTest(path string, annotation core_domain.CodeAnnotation, results *[]TestBadSmell, method jdomain.JMethod, testType *string) {
 	if annotation.IsTest() {
 		if len(method.MethodCalls) <= 1 {
 			*testType = "EmptyTest"
@@ -181,7 +182,7 @@ func checkEmptyTest(path string, annotation jdomain.Annotation, results *[]TestB
 	}
 }
 
-func checkIgnoreTest(clzPath string, annotation jdomain.Annotation, results *[]TestBadSmell, testType *string) {
+func checkIgnoreTest(clzPath string, annotation core_domain.CodeAnnotation, results *[]TestBadSmell, testType *string) {
 	if annotation.IsIgnoreTest() {
 		*testType = "IgnoreTest"
 		tbs := TestBadSmell{

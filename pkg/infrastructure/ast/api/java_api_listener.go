@@ -223,7 +223,7 @@ func buildApiForInterfaceAnnotation(methodName string) bool {
 		for _, method := range identMap[superClz].Methods {
 			if method.Name == methodName {
 				for _, annotation := range method.Annotations {
-					if annotation.QualifiedName == "ServiceMethod" {
+					if annotation.Name == "ServiceMethod" {
 						currentRestAPI.PackageName = currentPkg
 						currentRestAPI.ClassName = currentClz
 						currentRestAPI.MethodName = methodName

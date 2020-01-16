@@ -16,7 +16,7 @@ type JMethod struct {
 	Parameters        []core_domain.CodeProperty
 	MethodCalls       []JMethodCall
 	Override          bool
-	Annotations       []Annotation
+	Annotations       []core_domain.CodeAnnotation
 	IsConstructor     bool
 	IsReturnNull      bool
 	Modifiers         []string

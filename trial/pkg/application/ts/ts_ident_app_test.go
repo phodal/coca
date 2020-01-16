@@ -1,20 +1,11 @@
 package ts
 
 import (
+	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
 )
-
-func Test_TypeScriptConsoleLog(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	app := new(TypeScriptApiApp)
-	results := app.Analysis("console.log('hello, world')", "").ClassNodes
-
-	g.Expect(len(results[0].MethodCalls)).To(Equal(1))
-	g.Expect(results[0].MethodCalls[0].Class).To(Equal("console"))
-}
 
 func Test_TypeScriptClassNode(t *testing.T) {
 	g := NewGomegaWithT(t)
@@ -58,7 +49,6 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 }
 
 func Test_TypeScriptAbstractClass(t *testing.T) {
-	t.Parallel()
 
 	g := NewGomegaWithT(t)
 
@@ -74,20 +64,22 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 }
 
 func Test_ShouldGetClassFromModule(t *testing.T) {
-	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Module.ts")
 
-	results := app.Analysis(string(code), "").ClassNodes
+	results := app.Analysis(string(code), "")
 
-	g.Expect(len(results)).To(Equal(2))
-	g.Expect(results[0].Class).To(Equal("Employee"))
+	for _, node := range results.ClassNodes {
+		fmt.Println(node)
+	}
+	g.Expect(len(results.ClassNodes)).To(Equal(2))
+	g.Expect(results.ClassNodes[0].Class).To(Equal("Employee"))
 }
 
 func Test_ShouldEnableGetClassMethod(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -104,7 +96,7 @@ class Employee  {
 }
 
 func Test_ShouldGetInterfaceImplements(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -128,7 +120,7 @@ interface IEmployee extends IPerson{
 }
 
 func Test_ShouldGetInterfaceProperty(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -152,7 +144,7 @@ export interface IPerson {
 }
 
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -173,7 +165,7 @@ function Sum(x: number, y: number) : void {
 }
 
 func Test_ShouldHandleRestParameters(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -205,7 +197,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 }
 
 func Test_ShouldReturnBlockImports(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -220,7 +212,7 @@ import { ZipCodeValidator } from "./ZipCodeValidator";
 }
 
 func Test_ShouldReturnAsImports(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -236,7 +228,7 @@ import zip = require("./ZipCodeValidator");
 
 // Todo: fix for $ and *
 func Test_ShouldReturnAllImports(t *testing.T) {
-	t.Parallel()
+
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)

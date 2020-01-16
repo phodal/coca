@@ -2,6 +2,7 @@ package common_listener
 
 import (
 	"github.com/phodal/coca/languages/java"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"reflect"
 )
@@ -18,11 +19,11 @@ func BuildAnnotation(ctx *parser.AnnotationContext) jdomain.Annotation {
 
 			key := pairCtx.IDENTIFIER().GetText()
 			value := pairCtx.ElementValue().GetText()
-			annotation.ValuePairs = append(annotation.ValuePairs, jdomain.NewAnnotationKeyValue(key, value))
+			annotation.ValuePairs = append(annotation.ValuePairs, core_domain.NewAnnotationKeyValue(key, value))
 		}
 	} else if ctx.ElementValue() != nil {
 		value := ctx.ElementValue().GetText()
-		annotation.ValuePairs = append(annotation.ValuePairs, jdomain.NewAnnotationKeyValue(value, value))
+		annotation.ValuePairs = append(annotation.ValuePairs, core_domain.NewAnnotationKeyValue(value, value))
 	}
 
 	return annotation

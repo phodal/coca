@@ -1,20 +1,10 @@
 package jdomain
 
+import "github.com/phodal/coca/pkg/domain/core_domain"
+
 type Annotation struct {
 	QualifiedName string
-	ValuePairs    []AnnotationKeyValue
-}
-
-type AnnotationKeyValue struct {
-	Key   string
-	Value string
-}
-
-func NewAnnotationKeyValue(key string, value string) AnnotationKeyValue {
-	return AnnotationKeyValue{
-		Key:   key,
-		Value: value,
-	}
+	ValuePairs    []core_domain.AnnotationKeyValue
 }
 
 func NewAnnotation() Annotation {

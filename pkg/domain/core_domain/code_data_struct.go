@@ -27,11 +27,6 @@ type JavaExtension struct {
 	Tag         []interface{}
 }
 
-type PythonAnnotation struct {
-	Name       string
-	Properties []CodeProperty
-}
-
 func NewDataStruct() *CodeDataStruct {
 	return &CodeDataStruct{}
 }

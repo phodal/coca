@@ -125,14 +125,14 @@ func (s *PythonIdentListener) ExitFuncdef(ctx *parser.FuncdefContext) {
 	hasEnterMember = false
 }
 
-func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []core_domain.PythonAnnotation {
+func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []core_domain.CodeAnnotation {
 	var nodes []parser.DecoratorContext
 	for i := 0; i < index; i++ {
 		context := node.GetParent().GetChild(i).(*parser.DecoratorContext)
 		nodes = append(nodes, *context)
 	}
 
-	var annotations []core_domain.PythonAnnotation
+	var annotations []core_domain.CodeAnnotation
 	for _, node := range nodes {
 		decorator := BuildDecorator(&node)
 		annotations = append(annotations, *decorator)
@@ -141,10 +141,10 @@ func BuildDecoratorsByIndex(node antlr.ParseTree, index int) []core_domain.Pytho
 	return annotations
 }
 
-func BuildDecorator(x *parser.DecoratorContext) *core_domain.PythonAnnotation {
+func BuildDecorator(x *parser.DecoratorContext) *core_domain.CodeAnnotation {
 	text := x.Dotted_name().GetText()
 
-	annotation := &core_domain.PythonAnnotation{
+	annotation := &core_domain.CodeAnnotation{
 		Name: text,
 	}
 
@@ -155,13 +155,13 @@ func BuildDecorator(x *parser.DecoratorContext) *core_domain.PythonAnnotation {
 	return annotation
 }
 
-func BuildArgList(context *parser.ArglistContext) []core_domain.CodeProperty {
-	var arguments []core_domain.CodeProperty
+func BuildArgList(context *parser.ArglistContext) []core_domain.AnnotationKeyValue {
+	var arguments []core_domain.AnnotationKeyValue
 	for _, arg := range context.AllArgument() {
 		argContext := arg.(*parser.ArgumentContext)
-		argument := &core_domain.CodeProperty{
-			Name:     "",
-			TypeName: argContext.GetText(),
+		argument := &core_domain.AnnotationKeyValue{
+			Key:     "",
+			Value: argContext.GetText(),
 		}
 		arguments = append(arguments, *argument)
 	}

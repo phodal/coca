@@ -1,8 +1,8 @@
 package pyapp
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cocatest"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain/trial"
 	"io/ioutil"
@@ -98,7 +98,7 @@ func Test_PythonImport(t *testing.T) {
 	file, _ := ioutil.ReadFile("testdata/grammar/import_stmt.py")
 	codeFile := app.Analysis(string(file), "import_stmt")
 
-	fmt.Println(codeFile.Imports)
 	g.Expect(len(codeFile.Imports)).To(Equal(10))
 	g.Expect(len(codeFile.Imports[2].UsageName)).To(Equal(2))
+	g.Expect(cocatest.JSONFileBytesEqual(codeFile.Imports, "testdata/compare/import_stmt"+".json")).To(Equal(true))
 }

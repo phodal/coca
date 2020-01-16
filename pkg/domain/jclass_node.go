@@ -24,7 +24,7 @@ type JField struct {
 }
 
 func NewClassNode() *JClassNode {
-	return &JClassNode{"", "", "", "", nil, nil, nil, "", nil, nil, nil, nil}
+	return &JClassNode{}
 }
 
 func (j *JClassNode) IsUtilClass() bool {

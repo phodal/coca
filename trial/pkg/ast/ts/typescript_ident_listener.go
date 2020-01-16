@@ -12,6 +12,10 @@ var currentNode *domain.JClassNode
 var classNodeQueue []domain.JClassNode
 var classNodes []domain.JClassNode
 
+var currentDataStruct *trial.CodeDataStruct
+var dataStructures []trial.CodeDataStruct
+var dataStructQueue []domain.JClassNode
+
 var defaultClass = "default"
 var filePath string
 var codeFile trial.CodeFile
@@ -24,10 +28,12 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	classNodes = nil
 	filePath = fileName
 	currentNode = domain.NewClassNode()
+	currentDataStruct = trial.NewDataStruct()
 	codeFile = trial.CodeFile{
-		FullName:   filePath,
-		Imports:    nil,
-		ClassNodes: nil,
+		FullName:       filePath,
+		Imports:        nil,
+		ClassNodes:     nil,
+		DataStructures: nil,
 	}
 	return &TypeScriptIdentListener{}
 }
@@ -39,7 +45,14 @@ func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
 		currentNode = domain.NewClassNode()
 	}
 
+	if currentDataStruct.IsNotEmpty() {
+		currentDataStruct.Name = defaultClass
+		dataStructures = append(dataStructures, *currentDataStruct)
+		currentDataStruct = trial.NewDataStruct()
+	}
+
 	codeFile.ClassNodes = classNodes
+	codeFile.DataStructures = dataStructures
 	return codeFile
 }
 

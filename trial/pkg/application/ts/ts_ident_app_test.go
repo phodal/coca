@@ -38,6 +38,7 @@ class Person implements IPerson {
 }
 
 func Test_TypeScriptMultipleClass(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -53,7 +54,7 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 }
 
 func Test_TypeScriptAbstractClass(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -68,6 +69,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 }
 
 func Test_ShouldGetClassFromModule(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -83,7 +85,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 }
 
 func Test_ShouldEnableGetClassMethod(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -101,7 +103,7 @@ class Employee  {
 }
 
 func Test_ShouldGetInterfaceImplements(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -125,7 +127,7 @@ interface IEmployee extends IPerson{
 }
 
 func Test_ShouldGetInterfaceProperty(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -149,7 +151,7 @@ export interface IPerson {
 }
 
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -170,7 +172,7 @@ function Sum(x: number, y: number) : void {
 }
 
 func Test_ShouldHandleRestParameters(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -189,6 +191,7 @@ function buildName(firstName: string, ...restOfName: string[]) {
 }
 
 func Test_ShouldGetClassFields(t *testing.T) {
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -202,7 +205,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 }
 
 func Test_ShouldReturnBlockImports(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -217,7 +220,7 @@ import { ZipCodeValidator } from "./ZipCodeValidator";
 }
 
 func Test_ShouldReturnAsImports(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
@@ -233,7 +236,7 @@ import zip = require("./ZipCodeValidator");
 
 // Todo: fix for $ and *
 func Test_ShouldReturnAllImports(t *testing.T) {
-
+	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)

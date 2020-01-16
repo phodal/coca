@@ -1,7 +1,6 @@
 package ts
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
 	"io/ioutil"
 	"testing"
@@ -29,12 +28,10 @@ class Person implements IPerson {
 }
 `, "")
 
-	results := codefile.ClassNodes
-
-	g.Expect(results[0].Class).To(Equal("IPerson"))
-	g.Expect(results[1].Class).To(Equal("Person"))
-	g.Expect(results[1].Methods[0].Name).To(Equal("constructor"))
-	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
+	g.Expect(codefile.DataStructures[0].Name).To(Equal("IPerson"))
+	g.Expect(codefile.DataStructures[1].Name).To(Equal("Person"))
+	g.Expect(codefile.DataStructures[1].Functions[0].Name).To(Equal("constructor"))
+	g.Expect(codefile.DataStructures[1].Implements[0]).To(Equal("IPerson"))
 }
 
 func Test_TypeScriptMultipleClass(t *testing.T) {
@@ -58,12 +55,12 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/AbstractClass.ts")
 
-	results := app.Analysis(string(code), "").ClassNodes
+	codeFile := app.Analysis(string(code), "")
 
-	g.Expect(len(results)).To(Equal(3))
-	g.Expect(results[0].Type).To(Equal("Class"))
-	g.Expect(results[1].Class).To(Equal("Employee"))
-	g.Expect(results[1].Extend).To(Equal("Person"))
+	g.Expect(len(codeFile.DataStructures)).To(Equal(3))
+	g.Expect(codeFile.DataStructures[0].Type).To(Equal("Class"))
+	g.Expect(codeFile.DataStructures[1].Name).To(Equal("Employee"))
+	g.Expect(codeFile.DataStructures[1].Extend).To(Equal("Person"))
 }
 
 func Test_ShouldGetClassFromModule(t *testing.T) {
@@ -75,11 +72,8 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 
 	results := app.Analysis(string(code), "")
 
-	for _, node := range results.ClassNodes {
-		fmt.Println(node)
-	}
-	g.Expect(len(results.ClassNodes)).To(Equal(1))
-	g.Expect(results.ClassNodes[0].Class).To(Equal("Employee"))
+	g.Expect(len(results.DataStructures)).To(Equal(1))
+	g.Expect(results.DataStructures[0].Name).To(Equal("Employee"))
 }
 
 func Test_ShouldEnableGetClassMethod(t *testing.T) {
@@ -97,7 +91,6 @@ class Employee  {
 `, "")
 
 	g.Expect(len(codefile.DataStructures[0].Functions)).To(Equal(1))
-	g.Expect(len(codefile.ClassNodes[0].Methods)).To(Equal(1))
 }
 
 func Test_ShouldGetInterfaceImplements(t *testing.T) {
@@ -119,9 +112,9 @@ interface IEmployee extends IPerson{
     getSalary: (number) => number; // arrow function
     getManagerName(number): string;
 }
-`, "").ClassNodes
+`, "")
 
-	g.Expect(results[1].Extend).To(Equal("IPerson"))
+	g.Expect(results.DataStructures[1].Extend).To(Equal("IPerson"))
 }
 
 func Test_ShouldGetInterfaceProperty(t *testing.T) {
@@ -129,20 +122,25 @@ func Test_ShouldGetInterfaceProperty(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	results := app.Analysis(`
+	codeFile := app.Analysis(`
 export interface IPerson {
     name: string;
     gender: string;
     getSalary: (number) => number;
     getManagerName(number): string;
 }
-`, "").ClassNodes
+`, "")
+
+	results := codeFile.ClassNodes
 
 	firstMethod := results[0].Methods[0]
 	secondMethod := results[0].Methods[1]
 
 	g.Expect(len(results[0].Fields)).To(Equal(2))
 	g.Expect(len(results[0].Methods)).To(Equal(2))
+
+	//g.Expect(len(codeFile.DataStructures[0].Functions)).To(Equal(2))
+
 	g.Expect(firstMethod.Name).To(Equal("getSalary"))
 	g.Expect(secondMethod.Name).To(Equal("getManagerName"))
 	g.Expect(secondMethod.Parameters[0].Type).To(Equal("number"))

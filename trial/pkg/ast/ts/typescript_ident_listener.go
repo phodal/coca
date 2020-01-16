@@ -8,63 +8,52 @@ import (
 	"strings"
 )
 
-var currentNode *domain.JClassNode
-var classNodeQueue []domain.JClassNode
-var classNodes []domain.JClassNode
-
-var currentDataStruct *trial.CodeDataStruct
-var dataStructures []trial.CodeDataStruct
-var dataStructQueue []trial.CodeDataStruct
-
 var defaultClass = "default"
-var filePath string
-var codeFile trial.CodeFile
 
 type TypeScriptIdentListener struct {
+	currentNode    *domain.JClassNode
+	classNodeQueue []domain.JClassNode
+	classNodes     []domain.JClassNode
+
+	currentDataStruct *trial.CodeDataStruct
+	dataStructures    []trial.CodeDataStruct
+	dataStructQueue   []trial.CodeDataStruct
+	filePath          string
+	codeFile          trial.CodeFile
+
 	parser.BaseTypeScriptParserListener
 }
 
 func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
-	filePath = fileName
-
-	classNodes = nil
-	currentNode = domain.NewClassNode()
-	classNodeQueue = nil
-
-	currentDataStruct = trial.NewDataStruct()
-	dataStructures = nil
-	dataStructQueue = nil
-
-	codeFile = trial.CodeFile{
-		FullName: filePath,
-	}
-	return &TypeScriptIdentListener{}
+	listener := &TypeScriptIdentListener{}
+	listener.filePath = fileName
+	return listener
 }
 
 func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
-	if currentNode.IsNotEmpty() {
-		currentNode.Class = defaultClass
-		currentNode.Type = "Default"
-		classNodes = append(classNodes, *currentNode)
-		currentNode = domain.NewClassNode()
+	if s.currentNode != nil && s.currentNode.IsNotEmpty() {
+		s.currentNode.Class = defaultClass
+		s.currentNode.Type = "Default"
+		s.classNodes = append(s.classNodes, *s.currentNode)
+		s.currentNode = domain.NewClassNode()
 	}
 
-	isScriptCalls := currentDataStruct.IsNotEmpty()
+	isScriptCalls := s.currentDataStruct != nil && s.currentDataStruct.IsNotEmpty()
 	if isScriptCalls {
-		if len(currentDataStruct.Functions) < 1 {
+		if len(s.currentDataStruct.Functions) < 1 {
 			function := &trial.CodeFunction{}
 			function.Name = "default"
-			function.MethodCalls = append(function.MethodCalls, currentDataStruct.FunctionCalls...)
+			function.MethodCalls = append(function.MethodCalls, s.currentDataStruct.FunctionCalls...)
 
-			currentDataStruct.Functions = append(currentDataStruct.Functions, *function)
+			s.currentDataStruct.Functions = append(s.currentDataStruct.Functions, *function)
 		}
 
-		dataStructures = append(dataStructures, *currentDataStruct)
+		s.dataStructures = append(s.dataStructures, *s.currentDataStruct)
 	}
 
-	codeFile.ClassNodes = classNodes
-	codeFile.DataStructures = dataStructures
-	return codeFile
+	s.codeFile.ClassNodes = s.classNodes
+	s.codeFile.DataStructures = s.dataStructures
+	return s.codeFile
 }
 
 func (s *TypeScriptIdentListener) EnterImportFromBlock(ctx *parser.ImportFromBlockContext) {
@@ -72,7 +61,7 @@ func (s *TypeScriptIdentListener) EnterImportFromBlock(ctx *parser.ImportFromBlo
 	imp := &trial.CodeImport{Source: replaceSingleQuote}
 	importName := ctx.GetChild(0).(antlr.ParseTree).GetText()
 	imp.ImportName = importName
-	codeFile.Imports = append(codeFile.Imports, *imp)
+	s.codeFile.Imports = append(s.codeFile.Imports, *imp)
 }
 
 func UpdateImportStr(importText string) string {
@@ -84,21 +73,21 @@ func UpdateImportStr(importText string) string {
 func (s *TypeScriptIdentListener) EnterImportAliasDeclaration(ctx *parser.ImportAliasDeclarationContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
 	imp := &trial.CodeImport{Source: replaceSingleQuote}
-	codeFile.Imports = append(codeFile.Imports, *imp)
+	s.codeFile.Imports = append(s.codeFile.Imports, *imp)
 }
 
 func (s *TypeScriptIdentListener) EnterImportAll(ctx *parser.ImportAllContext) {
 	replaceSingleQuote := UpdateImportStr(ctx.StringLiteral().GetText())
 	imp := &trial.CodeImport{Source: replaceSingleQuote}
-	codeFile.Imports = append(codeFile.Imports, *imp)
+	s.codeFile.Imports = append(s.codeFile.Imports, *imp)
 }
 
 func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
-	currentNode = domain.NewClassNode()
-	currentNode.Type = "Interface"
-	currentNode.Class = ctx.Identifier().GetText()
+	s.currentNode = domain.NewClassNode()
+	s.currentNode.Type = "Interface"
+	s.currentNode.Class = ctx.Identifier().GetText()
 
-	currentDataStruct = &trial.CodeDataStruct{
+	s.currentDataStruct = &trial.CodeDataStruct{
 		Type: "Interface",
 		Name: ctx.Identifier().GetText(),
 	}
@@ -106,15 +95,15 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 	if ctx.InterfaceExtendsClause() != nil {
 		extendsContext := ctx.InterfaceExtendsClause().(*parser.InterfaceExtendsClauseContext)
 		implements := BuildImplements(extendsContext.ClassOrInterfaceTypeList())
-		currentNode.Extend = implements[0]
+		s.currentNode.Extend = implements[0]
 
-		currentDataStruct.Extend = implements[0]
+		s.currentDataStruct.Extend = implements[0]
 	}
 
 	objectTypeCtx := ctx.ObjectType().(*parser.ObjectTypeContext)
 	if objectTypeCtx.TypeBody() != nil {
 		typeMemberListCtx := objectTypeCtx.TypeBody().(*parser.TypeBodyContext).TypeMemberList().(*parser.TypeMemberListContext)
-		BuildInterfaceTypeBody(typeMemberListCtx, currentNode)
+		BuildInterfaceTypeBody(typeMemberListCtx, s.currentNode)
 	}
 }
 
@@ -162,15 +151,15 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 }
 
 func (s *TypeScriptIdentListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
-	exitClass()
+	s.exitClass()
 }
 
 func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
-	currentNode = domain.NewClassNode()
-	currentNode.Type = "Class"
-	currentNode.Class = ctx.Identifier().GetText()
+	s.currentNode = domain.NewClassNode()
+	s.currentNode.Type = "Class"
+	s.currentNode.Class = ctx.Identifier().GetText()
 
-	currentDataStruct = &trial.CodeDataStruct{
+	s.currentDataStruct = &trial.CodeDataStruct{
 		Type: "Class",
 		Name: ctx.Identifier().GetText(),
 	}
@@ -180,40 +169,40 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
 
 		implements := BuildImplements(typeList)
-		currentNode.Implements = implements
-		currentDataStruct.Implements = implements
+		s.currentNode.Implements = implements
+		s.currentDataStruct.Implements = implements
 	}
 
 	if heritageContext.ClassExtendsClause() != nil {
 		referenceContext := heritageContext.ClassExtendsClause().(*parser.ClassExtendsClauseContext).TypeReference().(*parser.TypeReferenceContext)
 
-		currentNode.Extend = referenceContext.TypeName().GetText()
-		currentDataStruct.Extend = referenceContext.TypeName().GetText()
+		s.currentNode.Extend = referenceContext.TypeName().GetText()
+		s.currentDataStruct.Extend = referenceContext.TypeName().GetText()
 	}
 
 	classTailContext := ctx.ClassTail().(*parser.ClassTailContext)
-	handleClassBodyElements(classTailContext)
+	s.handleClassBodyElements(classTailContext)
 
-	classNodeQueue = append(classNodeQueue, *currentNode)
-	dataStructQueue = append(dataStructQueue, *currentDataStruct)
+	s.classNodeQueue = append(s.classNodeQueue, *s.currentNode)
+	s.dataStructQueue = append(s.dataStructQueue, *s.currentDataStruct)
 }
 
-func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
+func (s *TypeScriptIdentListener) handleClassBodyElements(classTailContext *parser.ClassTailContext) {
 	for _, classElement := range classTailContext.AllClassElement() {
 		elementChild := classElement.GetChild(0)
 		switch x := elementChild.(type) {
 		case *parser.ConstructorDeclarationContext:
 			constructorMethod, codeFunction := BuildConstructorMethod(x)
 
-			currentNode.Methods = append(currentNode.Methods, constructorMethod)
-			currentDataStruct.Functions = append(currentDataStruct.Functions, *codeFunction)
+			s.currentNode.Methods = append(s.currentNode.Methods, constructorMethod)
+			s.currentDataStruct.Functions = append(s.currentDataStruct.Functions, *codeFunction)
 		case *parser.PropertyMemberDeclarationContext:
-			HandlePropertyMember(x, currentNode, currentDataStruct)
+			s.HandlePropertyMember(x, s.currentNode, s.currentDataStruct)
 		}
 	}
 }
 
-func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, node *domain.JClassNode, dataStruct *trial.CodeDataStruct) {
+func (s *TypeScriptIdentListener) HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, node *domain.JClassNode, dataStruct *trial.CodeDataStruct) {
 	callSignatureSizePos := 3
 	if propertyMemberCtx.PropertyName() != nil {
 		field := domain.JField{}
@@ -222,7 +211,7 @@ func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationCon
 		if propertyMemberCtx.TypeAnnotation() != nil {
 			field.Type = BuildTypeAnnotation(propertyMemberCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
 		}
-		node.Fields = append(currentNode.Fields, field)
+		node.Fields = append(s.currentNode.Fields, field)
 	}
 
 	if propertyMemberCtx.GetChildCount() >= callSignatureSizePos {
@@ -230,7 +219,7 @@ func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationCon
 		switch propertyMemberCtx.GetChild(callSignCtxPos).(type) {
 		case *parser.CallSignatureContext:
 			memberMethod, memberFunction := BuildMemberMethod(propertyMemberCtx)
-			node.Methods = append(currentNode.Methods, memberMethod)
+			node.Methods = append(s.currentNode.Methods, memberMethod)
 
 			dataStruct.Functions = append(dataStruct.Functions, *memberFunction)
 		}
@@ -239,24 +228,24 @@ func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationCon
 }
 
 func (s *TypeScriptIdentListener) ExitClassDeclaration(ctx *parser.ClassDeclarationContext) {
-	exitClass()
+	s.exitClass()
 }
 
-func exitClass() {
-	classNodes = append(classNodes, *currentNode)
-	if len(classNodeQueue) > 1 {
-		classNodeQueue = classNodeQueue[0 : len(classNodeQueue)-1]
-		currentNode = &classNodeQueue[len(classNodeQueue)-1]
+func (s *TypeScriptIdentListener) exitClass() {
+	s.classNodes = append(s.classNodes, *s.currentNode)
+	if len(s.classNodeQueue) > 1 {
+		s.classNodeQueue = s.classNodeQueue[0 : len(s.classNodeQueue)-1]
+		s.currentNode = &s.classNodeQueue[len(s.classNodeQueue)-1]
 	} else {
-		currentNode = domain.NewClassNode()
+		s.currentNode = domain.NewClassNode()
 	}
 
-	dataStructures = append(dataStructures, *currentDataStruct)
-	if len(dataStructQueue) > 1 {
-		dataStructQueue = dataStructQueue[0 : len(dataStructQueue)-1]
-		currentDataStruct = &dataStructQueue[len(dataStructQueue)-1]
+	s.dataStructures = append(s.dataStructures, *s.currentDataStruct)
+	if len(s.dataStructQueue) > 1 {
+		s.dataStructQueue = s.dataStructQueue[0 : len(s.dataStructQueue)-1]
+		s.currentDataStruct = &s.dataStructQueue[len(s.dataStructQueue)-1]
 	} else {
-		currentDataStruct = trial.NewDataStruct()
+		s.currentDataStruct = trial.NewDataStruct()
 	}
 }
 
@@ -269,7 +258,10 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
 	FillMethodFromCallSignature(callSignatureContext, &method)
 
-	currentNode.Methods = append(currentNode.Methods, method)
+	if s.currentNode == nil {
+		s.currentNode = domain.NewClassNode()
+	}
+	s.currentNode.Methods = append(s.currentNode.Methods, method)
 }
 
 func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, method *domain.JMethod) {

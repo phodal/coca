@@ -2,6 +2,7 @@ package analysis
 
 import (
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"path/filepath"
 	"testing"
@@ -195,14 +196,15 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodCallMap := make(map[string]jdomain.JMethodCall)
+	methodCallMap := make(map[string]core_domain.CodeCall)
 	for _, method := range callNodes[0].Methods {
 		for _, call := range method.MethodCalls {
 			methodCallMap[call.MethodName] = call
 		}
 	}
 
-	g.Expect(methodCallMap["assertEquals"].Parameters).To(Equal([]string{"true", "true"}))
+	g.Expect(methodCallMap["assertEquals"].Parameters[0].TypeValue).To(Equal("true"))
+	g.Expect(methodCallMap["assertEquals"].Parameters[1].TypeValue).To(Equal("true"))
 }
 
 func Test_BuilderCallSplitIssue(t *testing.T) {
@@ -213,7 +215,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodCallMap := make(map[string]jdomain.JMethodCall)
+	methodCallMap := make(map[string]core_domain.CodeCall)
 	for _, method := range callNodes[0].Methods {
 		for _, call := range method.MethodCalls {
 			methodCallMap[call.MethodName] = call

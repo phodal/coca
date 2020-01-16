@@ -14,7 +14,7 @@ type JMethod struct {
 	StopLine          int
 	StopLinePosition  int
 	Parameters        []core_domain.CodeProperty
-	MethodCalls       []JMethodCall
+	MethodCalls       []core_domain.CodeCall
 	Override          bool
 	Annotations       []core_domain.CodeAnnotation
 	IsConstructor     bool

@@ -12,7 +12,7 @@ type JClassNode struct {
 	FilePath    string
 	Fields      []core_domain.CodeField
 	Methods     []JMethod
-	MethodCalls []JMethodCall
+	MethodCalls []core_domain.CodeCall
 	Extend      string
 	Implements  []string
 	Annotations []core_domain.CodeAnnotation

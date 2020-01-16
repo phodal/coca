@@ -16,7 +16,7 @@ var clzs []string
 var currentPkg string
 var currentClz string
 var fields []core_domain.CodeField
-var methodCalls []jdomain.JMethodCall
+var methodCalls []core_domain.CodeCall
 var currentType string
 
 var mapFields = make(map[string]string)
@@ -226,9 +226,9 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 	for _, declarator := range decelerators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
 		var typeCtx *parser.ClassOrInterfaceTypeContext = nil
 
-		typeCtx = BuildTypeCtxByIndex(typeType, typeCtx,0)
+		typeCtx = BuildTypeCtxByIndex(typeType, typeCtx, 0)
 		if typeType.GetChildCount() > 1 {
-			typeCtx = BuildTypeCtxByIndex(typeType, typeCtx,1)
+			typeCtx = BuildTypeCtxByIndex(typeType, typeCtx, 1)
 		}
 
 		if typeCtx == nil {
@@ -469,15 +469,18 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType, _ := WarpTargetFullType(createdName)
 
-	jMethodCall := &jdomain.JMethodCall{
-		Package:           RemoveTarget(fullType),
-		Type:              "CreatorClass",
-		Class:             createdName,
-		MethodName:        "",
+	position := core_domain.CodePosition{
 		StartLine:         ctx.GetStart().GetLine(),
 		StartLinePosition: ctx.GetStart().GetColumn(),
 		StopLine:          ctx.GetStop().GetLine(),
 		StopLinePosition:  ctx.GetStop().GetColumn(),
+	}
+
+	jMethodCall := &core_domain.CodeCall{
+		Package:  RemoveTarget(fullType),
+		Type:     "CreatorClass",
+		Class:    createdName,
+		Position: position,
 	}
 
 	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
@@ -485,7 +488,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 }
 
 func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
-	var jMethodCall = jdomain.NewJMethodCall()
+	var jMethodCall = core_domain.NewCodeMethodCall()
 
 	targetCtx := ctx.GetParent().GetChild(0).(antlr.ParseTree)
 	var targetType = ParseTargetType(targetCtx.GetText())
@@ -506,7 +509,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	sendResultToMethodCallMap(jMethodCall)
 }
 
-func sendResultToMethodCallMap(jMethodCall jdomain.JMethodCall) {
+func sendResultToMethodCallMap(jMethodCall core_domain.CodeCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
@@ -544,21 +547,21 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 
 		fullType, _ := WarpTargetFullType(targetType)
 
-		startLine := ctx.GetStart().GetLine()
 		startLinePosition := ctx.GetStart().GetColumn()
-		stopLine := ctx.GetStop().GetLine()
-		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &jdomain.JMethodCall{
-			Package:           RemoveTarget(fullType),
-			Type:              "lambda",
-			Class:             targetType,
-			MethodName:        methodName,
-			Parameters:        nil,
-			StartLine:         startLine,
+		position := core_domain.CodePosition{
+			StartLine:         ctx.GetStart().GetLine(),
 			StartLinePosition: startLinePosition,
-			StopLine:          stopLine,
-			StopLinePosition:  stopLinePosition,
+			StopLine:          ctx.GetStop().GetLine(),
+			StopLinePosition:  startLinePosition + len(text),
+		}
+
+		jMethodCall := &core_domain.CodeCall{
+			Package:    RemoveTarget(fullType),
+			Type:       "lambda",
+			Class:      targetType,
+			MethodName: methodName,
+			Position:   position,
 		}
 		sendResultToMethodCallMap(*jMethodCall)
 	}
@@ -578,15 +581,18 @@ func buildExtend(extendName string) {
 func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 	target, _ := WarpTargetFullType(typeType)
 	if target != "" {
-		jMethodCall := &jdomain.JMethodCall{
-			Package:           RemoveTarget(target),
-			Type:              "field",
-			Class:             typeType,
-			MethodName:        "",
+		position := core_domain.CodePosition{
 			StartLine:         ctx.GetStart().GetLine(),
 			StartLinePosition: ctx.GetStart().GetColumn(),
 			StopLine:          ctx.GetStop().GetLine(),
 			StopLinePosition:  ctx.GetStop().GetColumn(),
+		}
+
+		jMethodCall := &core_domain.CodeCall{
+			Package:    RemoveTarget(target),
+			Type:       "field",
+			Class:      typeType,
+			Position:   position,
 		}
 
 		currentNode.MethodCalls = append(currentNode.MethodCalls, *jMethodCall)

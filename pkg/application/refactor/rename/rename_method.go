@@ -2,6 +2,7 @@ package unused
 
 import (
 	"github.com/phodal/coca/pkg/application/refactor/rename/support"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"io/ioutil"
 	"log"
@@ -52,8 +53,15 @@ func startParse(nodes []jdomain.JClassNode, relates []support.RefactorChangeRela
 	}
 }
 
-func methodCallToMethodModel(call jdomain.JMethodCall) jdomain.JMethod {
-	return jdomain.JMethod{Name: call.MethodName, Type: call.Type, StartLine: call.StartLine, StartLinePosition: call.StartLinePosition, StopLine: call.StopLine, StopLinePosition: call.StopLinePosition}
+func methodCallToMethodModel(call core_domain.CodeCall) jdomain.JMethod {
+	return jdomain.JMethod{
+		Name: call.MethodName,
+		Type: call.Type,
+		StartLine: call.Position.StartLine,
+		StartLinePosition: call.Position.StartLinePosition,
+		StopLine: call.Position.StopLine,
+		StopLinePosition: call.Position.StopLinePosition,
+	}
 }
 
 func updateSelfRefs(node jdomain.JClassNode, method jdomain.JMethod, info *support.PackageClassInfo) {

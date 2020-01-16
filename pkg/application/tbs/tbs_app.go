@@ -38,7 +38,7 @@ func (a TbsApp) AnalysisPath(deps []jdomain.JClassNode, identifiersMap map[strin
 				checkEmptyTest(clz.FilePath, annotation, &results, method, &testType)
 			}
 
-			var methodCallMap = make(map[string][]jdomain.JMethodCall)
+			var methodCallMap = make(map[string][]core_domain.CodeCall)
 			var hasAssert = false
 			for index, methodCall := range currentMethodCalls {
 				if methodCall.MethodName == "" {
@@ -85,7 +85,7 @@ func checkAssert(hasAssert bool, clz jdomain.JClassNode, method jdomain.JMethod,
 	}
 }
 
-func updateMethodCallsForSelfCall(method jdomain.JMethod, clz jdomain.JClassNode, callMethodMap map[string]jdomain.JMethod) []jdomain.JMethodCall {
+func updateMethodCallsForSelfCall(method jdomain.JMethod, clz jdomain.JClassNode, callMethodMap map[string]jdomain.JMethod) []core_domain.CodeCall {
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.Class == clz.Class {
@@ -98,10 +98,10 @@ func updateMethodCallsForSelfCall(method jdomain.JMethod, clz jdomain.JClassNode
 	return currentMethodCalls
 }
 
-func checkRedundantAssertionTest(path string, call jdomain.JMethodCall, method jdomain.JMethod, results *[]TestBadSmell, testType *string) {
+func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method jdomain.JMethod, results *[]TestBadSmell, testType *string) {
 	TWO_PARAMETERS := 2
 	if len(call.Parameters) == TWO_PARAMETERS {
-		if call.Parameters[0] == call.Parameters[1] {
+		if call.Parameters[0].TypeValue == call.Parameters[1].TypeValue {
 			*testType = "RedundantAssertionTest"
 			tbs := TestBadSmell{
 				FileName:    path,
@@ -115,7 +115,7 @@ func checkRedundantAssertionTest(path string, call jdomain.JMethodCall, method j
 	}
 }
 
-func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]jdomain.JMethodCall, method jdomain.JMethod, testType *string) {
+func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method jdomain.JMethod, testType *string) {
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
 		if len(methodCall) >= constants.DuplicatedAssertionLimitLength {
@@ -138,28 +138,28 @@ func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, m
 	}
 }
 
-func checkSleepyTest(path string, method jdomain.JMethodCall, jMethod jdomain.JMethod, results *[]TestBadSmell, testType *string) {
+func checkSleepyTest(path string, method core_domain.CodeCall, jMethod jdomain.JMethod, results *[]TestBadSmell, testType *string) {
 	if method.IsThreadSleep() {
 		*testType = "SleepyTest"
 		tbs := TestBadSmell{
 			FileName:    path,
 			Type:        *testType,
 			Description: "",
-			Line:        method.StartLine,
+			Line:        method.Position.StartLine,
 		}
 
 		*results = append(*results, tbs)
 	}
 }
 
-func checkRedundantPrintTest(path string, mCall jdomain.JMethodCall, results *[]TestBadSmell, testType *string) {
+func checkRedundantPrintTest(path string, mCall core_domain.CodeCall, results *[]TestBadSmell, testType *string) {
 	if mCall.IsSystemOutput() {
 		*testType = "RedundantPrintTest"
 		tbs := TestBadSmell{
 			FileName:    path,
 			Type:        *testType,
 			Description: "",
-			Line:        mCall.StartLine,
+			Line:        mCall.Position.StartLine,
 		}
 
 		*results = append(*results, tbs)

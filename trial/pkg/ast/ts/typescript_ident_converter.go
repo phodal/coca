@@ -5,6 +5,7 @@ import (
 	"github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
 	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 )
 
 func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) domain.JMethodCall {
@@ -27,7 +28,7 @@ func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) (domain.J
 		Name: "constructor",
 	}
 
-	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+	ast_util.AddPosition(&method, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if ctx.AccessibilityModifier() != nil {
 		modifier := ctx.AccessibilityModifier().GetText()

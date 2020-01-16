@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/infrastructure/string_helper"
 	"strings"
 )
@@ -68,12 +67,5 @@ func (m *JMethod) IsJunitTest() bool {
 		}
 	}
 	return isTest
-}
-
-func (m *JMethod) AddPosition(ctx *antlr.BaseParserRuleContext) {
-	m.StartLine = ctx.GetStart().GetLine()
-	m.StartLinePosition = ctx.GetStart().GetColumn()
-	m.StopLine = ctx.GetStop().GetLine()
-	m.StopLinePosition = ctx.GetStop().GetColumn()
 }
 

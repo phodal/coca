@@ -5,6 +5,7 @@ import (
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
 	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 	"strings"
 )
 
@@ -253,15 +254,24 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	method := domain.NewJMethod()
 
 	method.Name = ctx.Identifier().GetText()
-	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+	ast_util.AddPosition(&method, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
 	FillMethodFromCallSignature(callSignatureContext, &method)
 
+	function := &trial.CodeFunction{
+		Name: ctx.Identifier().GetText(),
+	}
+	ast_util.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+
 	if s.currentNode == nil {
 		s.currentNode = domain.NewClassNode()
 	}
+	if s.currentDataStruct == nil {
+		s.currentDataStruct = &trial.CodeDataStruct{}
+	}
 	s.currentNode.Methods = append(s.currentNode.Methods, method)
+	s.currentDataStruct.Functions = append(s.currentDataStruct.Functions, *function)
 }
 
 func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, method *domain.JMethod) {

@@ -1,4 +1,4 @@
-package pyast
+package ast_util
 
 import "github.com/antlr/antlr4/runtime/Go/antlr"
 

@@ -5,6 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/trial"
+	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 	"io"
 	"os"
 	"strings"
@@ -81,7 +82,7 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 		Properties: nil,
 	}
 
-	ctxIndex := GetNodeIndex(ctx)
+	ctxIndex := ast_util.GetNodeIndex(ctx)
 	if ctxIndex > 0 {
 		decorators := BuildDecoratorsByIndex(ctx, ctxIndex)
 		dataStruct.Annotations = decorators
@@ -102,7 +103,7 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 		Name: ctx.Name().GetText(),
 	}
 
-	ctxIndex := GetNodeIndex(ctx)
+	ctxIndex := ast_util.GetNodeIndex(ctx)
 	if ctxIndex > 0 {
 		decorators := BuildDecoratorsByIndex(ctx, ctxIndex)
 		function.Annotations = decorators

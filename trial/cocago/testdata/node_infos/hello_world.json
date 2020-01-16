@@ -12,7 +12,6 @@
   ],
   "Members": [
     {
-      "ClassNodes": null,
       "DataStructID": "default",
       "FileID": "",
       "FunctionNodes": [
@@ -67,6 +66,7 @@
         "StopLine": 0,
         "StopLinePosition": 0
       },
+      "Structures": null,
       "Type": "method"
     }
   ],

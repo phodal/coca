@@ -2,6 +2,7 @@ package deps
 
 import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 	"path/filepath"
@@ -15,8 +16,8 @@ func NewDepApp() *DepAnalysisApp {
 	return &DepAnalysisApp{}
 }
 
-func (d *DepAnalysisApp) BuildImportMap(deps []jdomain.JClassNode) map[string]jdomain.JImport {
-	var impMap = make(map[string]jdomain.JImport)
+func (d *DepAnalysisApp) BuildImportMap(deps []jdomain.JClassNode) map[string]core_domain.CodeImport {
+	var impMap = make(map[string]core_domain.CodeImport)
 	for _, clz := range deps {
 		for _, imp := range clz.Imports {
 			impMap[imp.Source] = imp

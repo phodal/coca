@@ -69,7 +69,6 @@
   ],
   "Members": [
     {
-      "ClassNodes": null,
       "DataStructID": "CodeFile",
       "FileID": "testdata/node_infos/data_struct_property.code",
       "FunctionNodes": null,
@@ -82,6 +81,7 @@
         "StopLine": 0,
         "StopLinePosition": 0
       },
+      "Structures": null,
       "Type": "struct"
     }
   ],

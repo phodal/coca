@@ -1,6 +1,9 @@
 package jdomain
 
-import "strings"
+import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
+	"strings"
+)
 
 type JClassNode struct {
 	Package     string
@@ -14,7 +17,7 @@ type JClassNode struct {
 	Implements  []string
 	Annotations []Annotation
 	InnerClass  []JClassNode
-	Imports     []JImport
+	Imports     []core_domain.CodeImport
 }
 
 type JField struct {

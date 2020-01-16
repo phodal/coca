@@ -112,7 +112,6 @@
   "Imports": null,
   "Members": [
     {
-      "ClassNodes": null,
       "DataStructID": "Shape",
       "FileID": "",
       "FunctionNodes": null,
@@ -125,10 +124,10 @@
         "StopLine": 0,
         "StopLinePosition": 0
       },
+      "Structures": null,
       "Type": "interface"
     },
     {
-      "ClassNodes": null,
       "DataStructID": "Object",
       "FileID": "",
       "FunctionNodes": null,
@@ -141,10 +140,10 @@
         "StopLine": 0,
         "StopLinePosition": 0
       },
+      "Structures": null,
       "Type": "interface"
     },
     {
-      "ClassNodes": null,
       "DataStructID": "Material",
       "FileID": "",
       "FunctionNodes": null,
@@ -157,6 +156,7 @@
         "StopLine": 0,
         "StopLinePosition": 0
       },
+      "Structures": null,
       "Type": "interface"
     }
   ],

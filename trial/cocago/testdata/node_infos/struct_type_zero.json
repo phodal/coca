@@ -20,7 +20,6 @@
   "Imports": null,
   "Members": [
     {
-      "ClassNodes": null,
       "DataStructID": "O",
       "FileID": "",
       "FunctionNodes": [
@@ -52,6 +51,7 @@
         "StopLine": 0,
         "StopLinePosition": 0
       },
+      "Structures": null,
       "Type": "struct"
     }
   ],

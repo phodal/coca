@@ -1,11 +1,9 @@
 package jdomain
 
-type JImport struct {
-	Source string
-}
+import "github.com/phodal/coca/pkg/domain/core_domain"
 
-func NewJImport(str string) JImport {
-	return JImport{
+func NewJImport(str string) core_domain.CodeImport {
+	return core_domain.CodeImport{
 		Source: str,
 	}
 }

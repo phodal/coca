@@ -27,13 +27,6 @@ func NewJMethod() JMethod {
 	return JMethod{}
 }
 
-type JMethodInfo struct {
-	Name       string
-	Type       string
-	Parameters []core_domain.CodeProperty
-	Length     string
-}
-
 func (m *JMethod) IsJavaLangReturnType() bool {
 	return m.Type == "String" || m.Type == "int" || m.Type == "float" || m.Type == "void" || m.Type == "char" || m.Type == "double"
 }

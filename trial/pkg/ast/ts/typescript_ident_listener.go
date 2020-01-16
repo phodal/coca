@@ -39,18 +39,9 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 }
 
 func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
-	if currentNode.IsNotEmpty() {
-		currentNode.Class = defaultClass
-		currentNode.Type = "Default"
-		classNodes = append(classNodes, *currentNode)
-		currentNode = domain.NewClassNode()
-	}
-
-	if currentDataStruct.IsNotEmpty() {
-		currentDataStruct.Name = defaultClass
-		currentDataStruct.Type = "Default"
-		dataStructures = append(dataStructures, *currentDataStruct)
-		currentDataStruct = trial.NewDataStruct()
+	isScriptCalls := currentDataStruct.IsNotEmpty()
+	if isScriptCalls {
+		//function := &trial.CodeFunction{}
 	}
 
 	codeFile.ClassNodes = classNodes

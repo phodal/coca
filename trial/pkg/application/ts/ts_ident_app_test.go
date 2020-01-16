@@ -11,7 +11,7 @@ func Test_TypeScriptClassNode(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	results := app.Analysis(`
+	codefile := app.Analysis(`
 interface IPerson {
     name: string;
 }
@@ -27,7 +27,9 @@ class Person implements IPerson {
         this.name = name;
     }
 }
-`, "").ClassNodes
+`, "")
+
+	results := codefile.ClassNodes
 
 	g.Expect(results[0].Class).To(Equal("IPerson"))
 	g.Expect(results[1].Class).To(Equal("Person"))
@@ -41,11 +43,12 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
-	results := app.Analysis(string(code), "").ClassNodes
+	codeFile := app.Analysis(string(code), "")
 
-	g.Expect(len(results)).To(Equal(4))
+	results := codeFile.ClassNodes
+
+	g.Expect(len(results)).To(Equal(3))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
-	g.Expect(results[3].Class).To(Equal("default"))
 }
 
 func Test_TypeScriptAbstractClass(t *testing.T) {
@@ -57,7 +60,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 
 	results := app.Analysis(string(code), "").ClassNodes
 
-	g.Expect(len(results)).To(Equal(3))
+	g.Expect(len(results)).To(Equal(2))
 	g.Expect(results[0].Type).To(Equal("Class"))
 	g.Expect(results[1].Class).To(Equal("Employee"))
 	g.Expect(results[1].Extend).To(Equal("Person"))
@@ -74,7 +77,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	for _, node := range results.ClassNodes {
 		fmt.Println(node)
 	}
-	g.Expect(len(results.ClassNodes)).To(Equal(2))
+	g.Expect(len(results.ClassNodes)).To(Equal(1))
 	g.Expect(results.ClassNodes[0].Class).To(Equal("Employee"))
 }
 

@@ -5,12 +5,12 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/concept"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"strconv"
 )
 
-var parsedDeps []jdomain.JClassNode
+var parsedDeps []core_domain.JClassNode
 
 var conceptCmd = &cobra.Command{
 	Use:   "concept",

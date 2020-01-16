@@ -2,7 +2,7 @@ package arch
 
 import (
 	"github.com/phodal/coca/pkg/application/arch/tequila"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
 type ArchApp struct {
@@ -12,7 +12,7 @@ func NewArchApp() ArchApp {
 	return ArchApp{}
 }
 
-func (a ArchApp) Analysis(deps []jdomain.JClassNode, identifiersMap map[string]jdomain.JIdentifier) *tequila.FullGraph {
+func (a ArchApp) Analysis(deps []core_domain.JClassNode, identifiersMap map[string]core_domain.JIdentifier) *tequila.FullGraph {
 	fullGraph := &tequila.FullGraph{
 		NodeList:     make(map[string]string),
 		RelationList: make(map[string]*tequila.Relation),
@@ -44,7 +44,7 @@ func (a ArchApp) Analysis(deps []jdomain.JClassNode, identifiersMap map[string]j
 	return fullGraph
 }
 
-func addCallInField(clz jdomain.JClassNode, src string, fullGraph tequila.FullGraph) {
+func addCallInField(clz core_domain.JClassNode, src string, fullGraph tequila.FullGraph) {
 	for _, field := range clz.MethodCalls {
 		dst := field.Package + "." + field.Class
 		relation := &tequila.Relation{
@@ -57,7 +57,7 @@ func addCallInField(clz jdomain.JClassNode, src string, fullGraph tequila.FullGr
 	}
 }
 
-func addCallInMethod(clz jdomain.JClassNode, identifiersMap map[string]jdomain.JIdentifier, src string, fullGraph tequila.FullGraph) {
+func addCallInMethod(clz core_domain.JClassNode, identifiersMap map[string]core_domain.JIdentifier, src string, fullGraph tequila.FullGraph) {
 	for _, method := range clz.Methods {
 		if method.Name == "main" {
 			continue
@@ -83,7 +83,7 @@ func addCallInMethod(clz jdomain.JClassNode, identifiersMap map[string]jdomain.J
 	}
 }
 
-func addExtend(clz jdomain.JClassNode, src string, fullGraph tequila.FullGraph) {
+func addExtend(clz core_domain.JClassNode, src string, fullGraph tequila.FullGraph) {
 	if clz.Extend != "" {
 		relation := &tequila.Relation{
 			From:  src,

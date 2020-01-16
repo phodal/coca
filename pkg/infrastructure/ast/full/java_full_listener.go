@@ -4,7 +4,6 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
 	"reflect"
 	"strconv"
@@ -30,25 +29,25 @@ var creatorMethodMap = make(map[string]core_domain.JMethod)
 var methodQueue []core_domain.JMethod
 var classStringQueue []string
 
-var identMap map[string]jdomain.JIdentifier
+var identMap map[string]core_domain.JIdentifier
 var isOverrideMethod = false
 
-var classNodeQueue []jdomain.JClassNode
+var classNodeQueue []core_domain.JClassNode
 
-var currentNode *jdomain.JClassNode
-var classNodes []jdomain.JClassNode
-var creatorNodes []jdomain.JClassNode
-var currentCreatorNode jdomain.JClassNode
+var currentNode *core_domain.JClassNode
+var classNodes []core_domain.JClassNode
+var creatorNodes []core_domain.JClassNode
+var currentCreatorNode core_domain.JClassNode
 var fileName = ""
 var hasEnterClass = false
 
-func NewJavaFullListener(nodes map[string]jdomain.JIdentifier, file string) *JavaFullListener {
+func NewJavaFullListener(nodes map[string]core_domain.JIdentifier, file string) *JavaFullListener {
 	identMap = nodes
 	imports = nil
 	fileName = file
 	currentPkg = ""
 	classNodes = nil
-	currentNode = jdomain.NewClassNode()
+	currentNode = core_domain.NewClassNode()
 	classStringQueue = nil
 	classNodeQueue = nil
 	methodQueue = nil
@@ -73,7 +72,7 @@ type JavaFullListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaFullListener) GetNodeInfo() []jdomain.JClassNode {
+func (s *JavaFullListener) GetNodeInfo() []core_domain.JClassNode {
 	return classNodes
 }
 
@@ -100,7 +99,7 @@ func (s *JavaFullListener) exitBody() {
 	}
 
 	if currentNode.Class == "" {
-		currentNode = jdomain.NewClassNode()
+		currentNode = core_domain.NewClassNode()
 		initClass()
 		return
 	}
@@ -119,7 +118,7 @@ func (s *JavaFullListener) exitBody() {
 			currentNode = &classNodeQueue[len(classNodeQueue)-1]
 		}
 	} else {
-		currentNode = jdomain.NewClassNode()
+		currentNode = core_domain.NewClassNode()
 	}
 
 	initClass()
@@ -445,7 +444,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
-		creatorNode := &jdomain.JClassNode{
+		creatorNode := &core_domain.JClassNode{
 			Package:     currentPkg,
 			Class:       text,
 			Type:        "CreatorClass",
@@ -473,7 +472,7 @@ func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 	if currentType == "CreatorClass" {
 		currentType = ""
 	}
-	currentCreatorNode = *jdomain.NewClassNode()
+	currentCreatorNode = *core_domain.NewClassNode()
 
 	if classNodeQueue == nil || len(classNodeQueue) < 1 {
 		return

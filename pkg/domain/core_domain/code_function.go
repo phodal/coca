@@ -1,7 +1,6 @@
 package core_domain
 
 import (
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/string_helper"
 	"strings"
 )
@@ -36,7 +35,7 @@ type JMethod struct {
 	IsConstructor     bool
 	IsReturnNull      bool
 	Modifiers         []string
-	Creators          []jdomain.JClassNode
+	Creators          []JClassNode
 	Position          CodePosition
 }
 
@@ -56,7 +55,7 @@ func (m *JMethod) IsGetterSetter() bool {
 	return strings.HasPrefix(m.Name, "set") || strings.HasPrefix(m.Name, "get")
 }
 
-func (m *JMethod) BuildFullMethodName(node jdomain.JClassNode) string {
+func (m *JMethod) BuildFullMethodName(node JClassNode) string {
 	return node.Package + "." + node.Class + "." + m.Name
 }
 

@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/evaluate"
 	"github.com/phodal/coca/pkg/application/evaluate/evaluator"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"log"
 	"strconv"
@@ -34,7 +34,7 @@ var evaluateCmd = &cobra.Command{
 			log.Fatal("lost file:" + dependence)
 		}
 
-		var identifiers []jdomain.JIdentifier
+		var identifiers []core_domain.JIdentifier
 		identContent := cmd_util.ReadCocaFile("identify.json")
 
 		_ = json.Unmarshal(identContent, &identifiers)

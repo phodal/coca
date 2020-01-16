@@ -6,7 +6,7 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest/testhelper"
 	"github.com/phodal/coca/pkg/application/evaluate/evaluator"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"path/filepath"
 	"testing"
 )
@@ -14,7 +14,7 @@ import (
 func TestAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service.json"
 	codePath = filepath.FromSlash(codePath)
@@ -29,7 +29,7 @@ func TestAnalyser_Analysis(t *testing.T) {
 func Test_Service_LifeCycle(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_lifecycle.json"
 	codePath = filepath.FromSlash(codePath)
@@ -46,7 +46,7 @@ func Test_Service_LifeCycle(t *testing.T) {
 func Test_Service_Same_Return_Type(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_same_return_type.json"
 	codePath = filepath.FromSlash(codePath)
@@ -61,7 +61,7 @@ func Test_Service_Same_Return_Type(t *testing.T) {
 func Test_Long_Parameters(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := NewEvaluateAnalyser()
 	codePath := "../../../_fixtures/evaluate/service_long_parameters.json"
 	codePath = filepath.FromSlash(codePath)

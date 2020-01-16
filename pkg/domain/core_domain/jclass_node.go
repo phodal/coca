@@ -1,7 +1,6 @@
-package jdomain
+package core_domain
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
 	"strings"
 )
 
@@ -10,14 +9,14 @@ type JClassNode struct {
 	Class       string
 	Type        string
 	FilePath    string
-	Fields      []core_domain.CodeField
-	Methods     []core_domain.JMethod
-	MethodCalls []core_domain.CodeCall
+	Fields      []CodeField
+	Methods     []JMethod
+	MethodCalls []CodeCall
 	Extend      string
 	Implements  []string
-	Annotations []core_domain.CodeAnnotation
+	Annotations []CodeAnnotation
 	InnerClass  []JClassNode
-	Imports     []core_domain.CodeImport
+	Imports     []CodeImport
 }
 
 func NewClassNode() *JClassNode {
@@ -32,8 +31,8 @@ func (j *JClassNode) IsServiceClass() bool {
 	return strings.Contains(strings.ToLower(j.Class), "service")
 }
 
-func (j *JClassNode) SetMethodFromMap(methodMap map[string]core_domain.JMethod) {
-	var methodsArray []core_domain.JMethod
+func (j *JClassNode) SetMethodFromMap(methodMap map[string]JMethod) {
+	var methodsArray []JMethod
 	for _, value := range methodMap {
 		methodsArray = append(methodsArray, value)
 	}
@@ -51,8 +50,8 @@ func (j *JClassNode) IsNotEmpty() bool {
 	return len(j.Methods) > 0 || len(j.MethodCalls) > 0
 }
 
-func BuildCallMethodMap(deps []JClassNode) map[string]core_domain.JMethod {
-	var callMethodMap = make(map[string]core_domain.JMethod)
+func BuildCallMethodMap(deps []JClassNode) map[string]JMethod {
+	var callMethodMap = make(map[string]JMethod)
 	for _, clz := range deps {
 		for _, method := range clz.Methods {
 			callMethodMap[method.BuildFullMethodName(clz)] = method

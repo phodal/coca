@@ -3,7 +3,6 @@ package unused
 import (
 	"github.com/phodal/coca/pkg/application/refactor/rename/support"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -14,9 +13,9 @@ var parsedChange []support.RefactorChangeRelate
 type RemoveMethodApp struct {
 }
 
-var parsedDeps []jdomain.JClassNode
+var parsedDeps []core_domain.JClassNode
 
-func RenameMethodApp(deps []jdomain.JClassNode) *RemoveMethodApp {
+func RenameMethodApp(deps []core_domain.JClassNode) *RemoveMethodApp {
 	parsedDeps = deps
 	return &RemoveMethodApp{}
 }
@@ -26,7 +25,7 @@ func (j *RemoveMethodApp) Refactoring(conf string) {
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []jdomain.JClassNode, relates []support.RefactorChangeRelate) {
+func startParse(nodes []core_domain.JClassNode, relates []support.RefactorChangeRelate) {
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
 			oldInfo := support.BuildMethodPackageInfo(related.OldObj)
@@ -67,7 +66,7 @@ func methodCallToMethodModel(call core_domain.CodeCall) core_domain.JMethod {
 	}
 }
 
-func updateSelfRefs(node jdomain.JClassNode, method core_domain.JMethod, info *support.PackageClassInfo) {
+func updateSelfRefs(node core_domain.JClassNode, method core_domain.JMethod, info *support.PackageClassInfo) {
 	path := node.FilePath
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

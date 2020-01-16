@@ -3,7 +3,6 @@ package analysis
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"path/filepath"
 	"testing"
 )
@@ -37,7 +36,7 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 	g.Expect(len(callNodes[0].Methods)).To(Equal(3))
 }
 
-func getCallNodes(codePath string) []jdomain.JClassNode {
+func getCallNodes(codePath string) []core_domain.JClassNode {
 	identifierApp := NewJavaIdentifierApp()
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil

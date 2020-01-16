@@ -3,20 +3,86 @@
 		"Package": "factory",
 		"Class": "Insect",
 		"Type": "Class",
-		"Path": "_fixtures/suggest/factory/Bee.java",
+		"FilePath": "_fixtures/suggest/factory/Bee.java",
 		"Fields": null,
 		"Methods": [
 			{
 				"Name": "Insect",
 				"Type": "",
-				"StartLine": 4,
-				"StartLinePosition": 11,
-				"StopLine": 7,
-				"StopLinePosition": 4,
 				"Parameters": [
 					{
-						"Name": "size",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
+					},
+					{
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "height",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
+					},
+					{
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "color",
+						"TypeType": "String",
+						"ReturnTypes": null,
+						"Parameters": null
+					}
+				],
+				"MethodCalls": [
+					{
+						"Package": "factory",
+						"Type": "",
+						"Class": "System.out",
+						"MethodName": "println",
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Insect size, height\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 14,
+							"StartLinePosition": 19,
+							"StopLine": 14,
+							"StopLinePosition": 26
+						}
+					}
+				],
+				"Override": false,
+				"Annotations": null,
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 13,
+					"StartLinePosition": 11,
+					"StopLine": 15,
+					"StopLinePosition": 4
+				}
+			},
+			{
+				"Name": "Insect",
+				"Type": "",
+				"Parameters": [
+					{
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					}
 				],
 				"MethodCalls": [
@@ -25,41 +91,86 @@
 						"Type": "",
 						"Class": "Insect",
 						"MethodName": "this",
-						"StartLine": 5,
-						"StartLinePosition": 8,
-						"StopLine": 5,
-						"StopLinePosition": 12
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "size",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							},
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "123",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 5,
+							"StartLinePosition": 8,
+							"StopLine": 5,
+							"StopLinePosition": 12
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 6,
-						"StartLinePosition": 19,
-						"StopLine": 6,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Insect size\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 6,
+							"StartLinePosition": 19,
+							"StopLine": 6,
+							"StopLinePosition": 26
+						}
 					}
 				],
 				"Override": false,
 				"Annotations": null,
-				"IsConstructor": true
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 4,
+					"StartLinePosition": 11,
+					"StopLine": 7,
+					"StopLinePosition": 4
+				}
 			},
 			{
 				"Name": "Insect",
 				"Type": "",
-				"StartLine": 9,
-				"StartLinePosition": 11,
-				"StopLine": 11,
-				"StopLinePosition": 4,
 				"Parameters": [
 					{
-						"Name": "size",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "height",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "height",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					}
 				],
 				"MethodCalls": [
@@ -68,117 +179,63 @@
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 10,
-						"StartLinePosition": 19,
-						"StopLine": 10,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Insect size, height\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 10,
+							"StartLinePosition": 19,
+							"StopLine": 10,
+							"StopLinePosition": 26
+						}
 					}
 				],
 				"Override": false,
 				"Annotations": null,
-				"IsConstructor": true
-			},
-			{
-				"Name": "Insect",
-				"Type": "",
-				"StartLine": 13,
-				"StartLinePosition": 11,
-				"StopLine": 15,
-				"StopLinePosition": 4,
-				"Parameters": [
-					{
-						"Name": "size",
-						"Type": "int"
-					},
-					{
-						"Name": "height",
-						"Type": "int"
-					},
-					{
-						"Name": "color",
-						"Type": "String"
-					}
-				],
-				"MethodCalls": [
-					{
-						"Package": "factory",
-						"Type": "",
-						"Class": "System.out",
-						"MethodName": "println",
-						"StartLine": 14,
-						"StartLinePosition": 19,
-						"StopLine": 14,
-						"StopLinePosition": 26
-					}
-				],
-				"Override": false,
-				"Annotations": null,
-				"IsConstructor": true
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 9,
+					"StartLinePosition": 11,
+					"StopLine": 11,
+					"StopLinePosition": 4
+				}
 			}
 		],
-		"MethodCalls": [
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "Insect",
-				"MethodName": "this",
-				"StartLine": 5,
-				"StartLinePosition": 8,
-				"StopLine": 5,
-				"StopLinePosition": 12
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 6,
-				"StartLinePosition": 19,
-				"StopLine": 6,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 10,
-				"StartLinePosition": 19,
-				"StopLine": 10,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 14,
-				"StartLinePosition": 19,
-				"StopLine": 14,
-				"StopLinePosition": 26
-			}
-		],
+		"MethodCalls": null,
 		"Extend": "",
-		"Implements": null
+		"Implements": null,
+		"Annotations": null,
+		"InnerClass": null,
+		"Imports": null
 	},
 	{
 		"Package": "",
 		"Class": "Bee",
 		"Type": "Class",
-		"Path": "_fixtures/suggest/factory/Bee.java",
+		"FilePath": "_fixtures/suggest/factory/Bee.java",
 		"Fields": null,
 		"Methods": [
 			{
 				"Name": "Bee",
 				"Type": "",
-				"StartLine": 19,
-				"StartLinePosition": 11,
-				"StopLine": 22,
-				"StopLinePosition": 4,
 				"Parameters": [
 					{
-						"Name": "size",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					}
 				],
 				"MethodCalls": [
@@ -187,41 +244,78 @@
 						"Type": "super",
 						"Class": "Insect",
 						"MethodName": "super",
-						"StartLine": 20,
-						"StartLinePosition": 8,
-						"StopLine": 20,
-						"StopLinePosition": 13
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "size",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 20,
+							"StartLinePosition": 8,
+							"StopLine": 20,
+							"StopLinePosition": 13
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 21,
-						"StartLinePosition": 19,
-						"StopLine": 21,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 21,
+							"StartLinePosition": 19,
+							"StopLine": 21,
+							"StopLinePosition": 26
+						}
 					}
 				],
 				"Override": false,
 				"Annotations": null,
-				"IsConstructor": true
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 19,
+					"StartLinePosition": 11,
+					"StopLine": 22,
+					"StopLinePosition": 4
+				}
 			},
 			{
 				"Name": "Bee",
 				"Type": "",
-				"StartLine": 24,
-				"StartLinePosition": 11,
-				"StopLine": 27,
-				"StopLinePosition": 4,
 				"Parameters": [
 					{
-						"Name": "size",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "height",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "height",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					}
 				],
 				"MethodCalls": [
@@ -230,45 +324,94 @@
 						"Type": "super",
 						"Class": "Insect",
 						"MethodName": "super",
-						"StartLine": 25,
-						"StartLinePosition": 8,
-						"StopLine": 25,
-						"StopLinePosition": 13
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "size",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							},
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "height",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 25,
+							"StartLinePosition": 8,
+							"StopLine": 25,
+							"StopLinePosition": 13
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 26,
-						"StartLinePosition": 19,
-						"StopLine": 26,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 26,
+							"StartLinePosition": 19,
+							"StopLine": 26,
+							"StopLinePosition": 26
+						}
 					}
 				],
 				"Override": false,
 				"Annotations": null,
-				"IsConstructor": true
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 24,
+					"StartLinePosition": 11,
+					"StopLine": 27,
+					"StopLinePosition": 4
+				}
 			},
 			{
 				"Name": "Bee",
 				"Type": "",
-				"StartLine": 29,
-				"StartLinePosition": 11,
-				"StopLine": 32,
-				"StopLinePosition": 4,
 				"Parameters": [
 					{
-						"Name": "size",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "height",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "height",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "color",
-						"Type": "String"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "color",
+						"TypeType": "String",
+						"ReturnTypes": null,
+						"Parameters": null
 					}
 				],
 				"MethodCalls": [
@@ -277,57 +420,118 @@
 						"Type": "super",
 						"Class": "Insect",
 						"MethodName": "super",
-						"StartLine": 30,
-						"StartLinePosition": 8,
-						"StopLine": 30,
-						"StopLinePosition": 13
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "size",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							},
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "height",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 30,
+							"StartLinePosition": 8,
+							"StopLine": 30,
+							"StopLinePosition": 13
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 31,
-						"StartLinePosition": 19,
-						"StopLine": 31,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 31,
+							"StartLinePosition": 19,
+							"StopLine": 31,
+							"StopLinePosition": 26
+						}
 					}
 				],
 				"Override": false,
 				"Annotations": null,
-				"IsConstructor": true
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 29,
+					"StartLinePosition": 11,
+					"StopLine": 32,
+					"StopLinePosition": 4
+				}
 			},
 			{
 				"Name": "Bee",
 				"Type": "",
-				"StartLine": 34,
-				"StartLinePosition": 11,
-				"StopLine": 46,
-				"StopLinePosition": 4,
 				"Parameters": [
 					{
-						"Name": "size",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "size",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "height",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "height",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "color",
-						"Type": "String"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "color",
+						"TypeType": "String",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "x",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "x",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "y",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "y",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					},
 					{
-						"Name": "z",
-						"Type": "int"
+						"Modifiers": null,
+						"Name": "",
+						"TypeValue": "z",
+						"TypeType": "int",
+						"ReturnTypes": null,
+						"Parameters": null
 					}
 				],
 				"MethodCalls": [
@@ -336,290 +540,271 @@
 						"Type": "super",
 						"Class": "Insect",
 						"MethodName": "super",
-						"StartLine": 35,
-						"StartLinePosition": 8,
-						"StopLine": 35,
-						"StopLinePosition": 13
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "size",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							},
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "height",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 35,
+							"StartLinePosition": 8,
+							"StopLine": 35,
+							"StopLinePosition": 13
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 36,
-						"StartLinePosition": 19,
-						"StopLine": 36,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 36,
+							"StartLinePosition": 19,
+							"StopLine": 36,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 37,
-						"StartLinePosition": 19,
-						"StopLine": 37,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 37,
+							"StartLinePosition": 19,
+							"StopLine": 37,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 38,
-						"StartLinePosition": 19,
-						"StopLine": 38,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 38,
+							"StartLinePosition": 19,
+							"StopLine": 38,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 39,
-						"StartLinePosition": 19,
-						"StopLine": 39,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 39,
+							"StartLinePosition": 19,
+							"StopLine": 39,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 40,
-						"StartLinePosition": 19,
-						"StopLine": 40,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 40,
+							"StartLinePosition": 19,
+							"StopLine": 40,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 41,
-						"StartLinePosition": 19,
-						"StopLine": 41,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 41,
+							"StartLinePosition": 19,
+							"StopLine": 41,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 42,
-						"StartLinePosition": 19,
-						"StopLine": 42,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 42,
+							"StartLinePosition": 19,
+							"StopLine": 42,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 43,
-						"StartLinePosition": 19,
-						"StopLine": 43,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 43,
+							"StartLinePosition": 19,
+							"StopLine": 43,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 44,
-						"StartLinePosition": 19,
-						"StopLine": 44,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 44,
+							"StartLinePosition": 19,
+							"StopLine": 44,
+							"StopLinePosition": 26
+						}
 					},
 					{
 						"Package": "factory",
 						"Type": "",
 						"Class": "System.out",
 						"MethodName": "println",
-						"StartLine": 45,
-						"StartLinePosition": 19,
-						"StopLine": 45,
-						"StopLinePosition": 26
+						"Parameters": [
+							{
+								"Modifiers": null,
+								"Name": "",
+								"TypeValue": "\"Constructor: Bee size, height, color\"",
+								"TypeType": "",
+								"ReturnTypes": null,
+								"Parameters": null
+							}
+						],
+						"Position": {
+							"StartLine": 45,
+							"StartLinePosition": 19,
+							"StopLine": 45,
+							"StopLinePosition": 26
+						}
 					}
 				],
 				"Override": false,
 				"Annotations": null,
-				"IsConstructor": true
+				"IsConstructor": true,
+				"IsReturnNull": false,
+				"Modifiers": null,
+				"Creators": null,
+				"Position": {
+					"StartLine": 34,
+					"StartLinePosition": 11,
+					"StopLine": 46,
+					"StopLinePosition": 4
+				}
 			}
 		],
-		"MethodCalls": [
-			{
-				"Package": "factory",
-				"Type": "super",
-				"Class": "Insect",
-				"MethodName": "super",
-				"StartLine": 20,
-				"StartLinePosition": 8,
-				"StopLine": 20,
-				"StopLinePosition": 13
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 21,
-				"StartLinePosition": 19,
-				"StopLine": 21,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "super",
-				"Class": "Insect",
-				"MethodName": "super",
-				"StartLine": 25,
-				"StartLinePosition": 8,
-				"StopLine": 25,
-				"StopLinePosition": 13
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 26,
-				"StartLinePosition": 19,
-				"StopLine": 26,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "super",
-				"Class": "Insect",
-				"MethodName": "super",
-				"StartLine": 30,
-				"StartLinePosition": 8,
-				"StopLine": 30,
-				"StopLinePosition": 13
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 31,
-				"StartLinePosition": 19,
-				"StopLine": 31,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "super",
-				"Class": "Insect",
-				"MethodName": "super",
-				"StartLine": 35,
-				"StartLinePosition": 8,
-				"StopLine": 35,
-				"StopLinePosition": 13
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 36,
-				"StartLinePosition": 19,
-				"StopLine": 36,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 37,
-				"StartLinePosition": 19,
-				"StopLine": 37,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 38,
-				"StartLinePosition": 19,
-				"StopLine": 38,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 39,
-				"StartLinePosition": 19,
-				"StopLine": 39,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 40,
-				"StartLinePosition": 19,
-				"StopLine": 40,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 41,
-				"StartLinePosition": 19,
-				"StopLine": 41,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 42,
-				"StartLinePosition": 19,
-				"StopLine": 42,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 43,
-				"StartLinePosition": 19,
-				"StopLine": 43,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 44,
-				"StartLinePosition": 19,
-				"StopLine": 44,
-				"StopLinePosition": 26
-			},
-			{
-				"Package": "factory",
-				"Type": "",
-				"Class": "System.out",
-				"MethodName": "println",
-				"StartLine": 45,
-				"StartLinePosition": 19,
-				"StopLine": 45,
-				"StopLinePosition": 26
-			}
-		],
-		"Extend": "",
-		"Implements": null
+		"MethodCalls": null,
+		"Extend": "factory.Insect",
+		"Implements": null,
+		"Annotations": null,
+		"InnerClass": null,
+		"Imports": null
 	}
 ]

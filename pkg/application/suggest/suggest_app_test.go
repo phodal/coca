@@ -3,7 +3,7 @@ package suggest
 import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"log"
 	"path/filepath"
 	"testing"
@@ -14,7 +14,7 @@ import (
 func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := NewSuggestApp()
 	codePath := "../../../_fixtures/suggest/factory/factory_suggest.json"
 	codePath = filepath.FromSlash(codePath)

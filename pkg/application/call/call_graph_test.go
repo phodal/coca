@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/cocatest/testhelper"
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 	"path/filepath"
 	"testing"
@@ -16,7 +16,7 @@ import (
 func Test_ShouldBuildSuccessDataFromJson(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := call.NewCallGraph()
 	codePath := "../../../_fixtures/call/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)
@@ -44,7 +44,7 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	codePath := "../../../_fixtures/examples/api"
 	callNodes, identifiersMap, identifiers := testhelper.BuildAnalysisDeps(codePath)
 
-	diMap := jdomain.BuildDIMap(identifiers, identifiersMap)
+	diMap := core_domain.BuildDIMap(identifiers, identifiersMap)
 	app := new(api.JavaApiApp)
 	restApis := app.AnalysisPath(codePath, callNodes, identifiersMap, diMap)
 

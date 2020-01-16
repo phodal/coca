@@ -4,14 +4,13 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
 	"reflect"
 	"strings"
 )
 
-var currentNode *jdomain.JIdentifier
-var nodes []jdomain.JIdentifier
+var currentNode *core_domain.JIdentifier
+var nodes []core_domain.JIdentifier
 
 var currentMethod core_domain.JMethod
 var hasEnterClass = false
@@ -19,7 +18,7 @@ var imports []string
 
 func NewJavaIdentifierListener() *JavaIdentifierListener {
 	nodes = nil
-	currentNode = jdomain.NewJIdentifier()
+	currentNode = core_domain.NewJIdentifier()
 	currentMethod = core_domain.NewJMethod()
 	return &JavaIdentifierListener{}
 }
@@ -70,7 +69,7 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = jdomain.NewJIdentifier()
+	currentNode = core_domain.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
@@ -79,7 +78,7 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = jdomain.NewJIdentifier()
+	currentNode = core_domain.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
@@ -219,6 +218,6 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 	}
 }
 
-func (s *JavaIdentifierListener) GetNodes() []jdomain.JIdentifier {
+func (s *JavaIdentifierListener) GetNodes() []core_domain.JIdentifier {
 	return nodes
 }

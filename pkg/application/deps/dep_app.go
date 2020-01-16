@@ -3,7 +3,6 @@ package deps
 import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 	"path/filepath"
 	"strings"
@@ -16,7 +15,7 @@ func NewDepApp() *DepAnalysisApp {
 	return &DepAnalysisApp{}
 }
 
-func (d *DepAnalysisApp) BuildImportMap(deps []jdomain.JClassNode) map[string]core_domain.CodeImport {
+func (d *DepAnalysisApp) BuildImportMap(deps []core_domain.JClassNode) map[string]core_domain.CodeImport {
 	var impMap = make(map[string]core_domain.CodeImport)
 	for _, clz := range deps {
 		for _, imp := range clz.Imports {
@@ -27,7 +26,7 @@ func (d *DepAnalysisApp) BuildImportMap(deps []jdomain.JClassNode) map[string]co
 	return impMap
 }
 
-func (d *DepAnalysisApp) AnalysisPath(path string, nodes []jdomain.JClassNode) []api_domain.JDependency {
+func (d *DepAnalysisApp) AnalysisPath(path string, nodes []core_domain.JClassNode) []api_domain.JDependency {
 	path, _ = filepath.Abs(path)
 	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
 	gradleFiles := cocafile.GetFilesWithFilter(path, cocafile.BuildGradleFilter)

@@ -3,7 +3,7 @@ package concept
 import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"log"
 	"path/filepath"
 	"testing"
@@ -14,7 +14,7 @@ import (
 func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []jdomain.JClassNode
+	var parsedDeps []core_domain.JClassNode
 	analyser := NewConceptAnalyser()
 	codePath := "../../../_fixtures/call/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)

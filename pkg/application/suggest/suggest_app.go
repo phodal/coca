@@ -1,7 +1,7 @@
 package suggest
 
 import (
-	"github.com/phodal/coca/pkg/domain/jdomain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 )
 
@@ -12,7 +12,7 @@ func NewSuggestApp() SuggestApp {
 	return SuggestApp{}
 }
 
-func (a SuggestApp) AnalysisPath(deps []jdomain.JClassNode) []api_domain.Suggest {
+func (a SuggestApp) AnalysisPath(deps []core_domain.JClassNode) []api_domain.Suggest {
 	var suggests []api_domain.Suggest
 	for _, clz := range deps {
 		if clz.Type == "Class" {
@@ -27,7 +27,7 @@ func (a SuggestApp) AnalysisPath(deps []jdomain.JClassNode) []api_domain.Suggest
 	return suggests
 }
 
-func factorySuggest(clz jdomain.JClassNode, suggests []api_domain.Suggest) []api_domain.Suggest {
+func factorySuggest(clz core_domain.JClassNode, suggests []api_domain.Suggest) []api_domain.Suggest {
 	var constructorCount = 0
 	var longestParaConstructorMethod = clz.Methods[0]
 

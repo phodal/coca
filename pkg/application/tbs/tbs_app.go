@@ -2,7 +2,6 @@ package tbs
 
 import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/constants"
 )
 
@@ -20,9 +19,9 @@ type TestBadSmell struct {
 	Line        int
 }
 
-func (a TbsApp) AnalysisPath(deps []jdomain.JClassNode, identifiersMap map[string]jdomain.JIdentifier) []TestBadSmell {
+func (a TbsApp) AnalysisPath(deps []core_domain.JClassNode, identifiersMap map[string]core_domain.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
-	callMethodMap := jdomain.BuildCallMethodMap(deps)
+	callMethodMap := core_domain.BuildCallMethodMap(deps)
 	for _, clz := range deps {
 		for _, method := range clz.Methods {
 			if !method.IsJunitTest() {
@@ -70,7 +69,7 @@ func (a TbsApp) AnalysisPath(deps []jdomain.JClassNode, identifiersMap map[strin
 	return results
 }
 
-func checkAssert(hasAssert bool, clz jdomain.JClassNode, method core_domain.JMethod, results *[]TestBadSmell, testType *string) {
+func checkAssert(hasAssert bool, clz core_domain.JClassNode, method core_domain.JMethod, results *[]TestBadSmell, testType *string) {
 	if !hasAssert {
 		*testType = "UnknownTest"
 		tbs := TestBadSmell{
@@ -85,7 +84,7 @@ func checkAssert(hasAssert bool, clz jdomain.JClassNode, method core_domain.JMet
 	}
 }
 
-func updateMethodCallsForSelfCall(method core_domain.JMethod, clz jdomain.JClassNode, callMethodMap map[string]core_domain.JMethod) []core_domain.CodeCall {
+func updateMethodCallsForSelfCall(method core_domain.JMethod, clz core_domain.JClassNode, callMethodMap map[string]core_domain.JMethod) []core_domain.CodeCall {
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.Class == clz.Class {
@@ -115,7 +114,7 @@ func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method 
 	}
 }
 
-func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method core_domain.JMethod, testType *string) {
+func checkDuplicateAssertTest(clz core_domain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method core_domain.JMethod, testType *string) {
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
 		if len(methodCall) >= constants.DuplicatedAssertionLimitLength {

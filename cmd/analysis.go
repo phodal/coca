@@ -32,7 +32,7 @@ var analysisCmd = &cobra.Command{
 		var classes []string = nil
 
 		for _, node := range iNodes {
-			classes = append(classes, node.Package+"."+node.ClassName)
+			classes = append(classes, node.Package+"."+node.NodeName)
 		}
 
 		callApp := analysis.NewJavaFullApp()

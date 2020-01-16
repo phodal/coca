@@ -15,7 +15,7 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []c
 	var nullableList []string = nil
 	var nullableMap = make(map[string]string)
 	for _, ident := range identifiers {
-		for _, method := range ident.Methods {
+		for _, method := range ident.Functions {
 			methodName := buildMethodPath(ident, method)
 			if method.IsReturnNull {
 				nullableMap[methodName] = methodName
@@ -37,5 +37,5 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []c
 }
 
 func buildMethodPath(ident core_domain.JIdentifier, method core_domain.CodeFunction) string {
-	return ident.Package + "." + ident.ClassName + "." + method.Name
+	return ident.Package + "." + ident.NodeName + "." + method.Name
 }

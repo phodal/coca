@@ -21,6 +21,16 @@ type CodeDataStruct struct {
 	Extension interface{}
 }
 
+type JIdentifier struct {
+	NodeName    string
+	Package     string
+	Type        string
+	Extend      string
+	Implements  []string
+	Functions   []CodeFunction
+	Annotations []CodeAnnotation
+}
+
 func NewDataStruct() *CodeDataStruct {
 	return &CodeDataStruct{}
 }
@@ -60,4 +70,37 @@ func BuildCallMethodMap(deps []CodeDataStruct) map[string]CodeFunction {
 		}
 	}
 	return callMethodMap
+}
+
+func NewJIdentifier() *JIdentifier {
+	return &JIdentifier{}
+}
+
+func (identifier *JIdentifier) GetClassFullName() string {
+	return identifier.Package + "." + identifier.NodeName
+}
+
+func BuildIdentifierMap(identifiers []JIdentifier) map[string]JIdentifier {
+	var identifiersMap = make(map[string]JIdentifier)
+
+	for _, ident := range identifiers {
+		identifiersMap[ident.Package+"."+ident.NodeName] = ident
+	}
+	return identifiersMap
+}
+
+func BuildDIMap(identifiers []JIdentifier, identifierMap map[string]JIdentifier) map[string]string {
+	var diMap = make(map[string]string)
+	for _, clz := range identifiers {
+		if len(clz.Annotations) > 0 {
+			for _, annotation := range clz.Annotations {
+				if (annotation.IsComponentOrRepository()) && len(clz.Implements) > 0 {
+					superClz := identifierMap[clz.Implements[0]]
+					diMap[superClz.GetClassFullName()] = superClz.GetClassFullName()
+				}
+			}
+		}
+	}
+
+	return diMap
 }

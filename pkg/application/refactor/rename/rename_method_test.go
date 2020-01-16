@@ -21,7 +21,7 @@ func TestRenameMethodApp(t *testing.T) {
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
+		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
 	callApp := analysis.NewJavaFullApp()

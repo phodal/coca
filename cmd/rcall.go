@@ -31,7 +31,7 @@ var reverseCmd = &cobra.Command{
 		remove := reverseConfig.RemovePackage
 
 		if className == "" {
-			log.Fatal("lost ClassName")
+			log.Fatal("lost NodeName")
 		}
 
 		analyser := rcall.NewRCallGraph()

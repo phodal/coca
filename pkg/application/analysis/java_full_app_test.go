@@ -17,7 +17,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range iNodes {
-		classes = append(classes, node.Package+"."+node.ClassName)
+		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
 	callApp := NewJavaFullApp()
@@ -41,7 +41,7 @@ func getCallNodes(codePath string) []core_domain.CodeDataStruct {
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range iNodes {
-		classes = append(classes, node.Package+"."+node.ClassName)
+		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
 	callApp := NewJavaFullApp()

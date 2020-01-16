@@ -220,7 +220,7 @@ func buildApiForInterfaceAnnotation(methodName string) bool {
 	}
 
 	if _, ok := identMap[superClz]; ok {
-		for _, method := range identMap[superClz].Methods {
+		for _, method := range identMap[superClz].Functions {
 			if method.Name == methodName {
 				for _, annotation := range method.Annotations {
 					if annotation.Name == "ServiceMethod" {

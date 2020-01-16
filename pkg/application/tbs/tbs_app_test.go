@@ -147,7 +147,7 @@ func BuildTestAnalysisResultsByPath(codePath string) (map[string]core_domain.JId
 
 	var classes []string = nil
 	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
+		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
 	analysisApp := analysis.NewJavaFullApp()

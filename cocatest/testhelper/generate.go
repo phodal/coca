@@ -13,7 +13,7 @@ func BuildAnalysisDeps(codePath string) ([]core_domain.CodeDataStruct, map[strin
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
-		classes = append(classes, node.Package+"."+node.ClassName)
+		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
 	callApp := analysis.NewJavaFullApp()

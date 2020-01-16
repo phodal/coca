@@ -54,9 +54,9 @@ func SummaryMethodIdentifier(identifiers []core_domain.JIdentifier, result *eval
 	for _, ident := range identifiers {
 		result.Summary.ClassCount++
 
-		methodCountArray = append(methodCountArray, float64(len(ident.Methods)))
+		methodCountArray = append(methodCountArray, float64(len(ident.Functions)))
 
-		for _, method := range ident.Methods {
+		for _, method := range ident.Functions {
 			result.Summary.MethodCount++
 
 			if method.IsStatic() {

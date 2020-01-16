@@ -29,5 +29,5 @@ public class DataClass {
 	antlr.NewParseTreeWalker().Walk(listener, context)
 
 	identifiers := listener.GetNodes()
-	g.Expect(identifiers[0].ClassName).To(Equal("DataClass"))
+	g.Expect(identifiers[0].NodeName).To(Equal("DataClass"))
 }

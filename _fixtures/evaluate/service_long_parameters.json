@@ -24,24 +24,24 @@
         "StopLinePosition": 40,
         "Parameters": [
           {
-            "Name": "String",
-            "Type": "firstname"
+            "TypeType": "String",
+            "TypeName": "firstname"
           },
           {
-            "Name": "String",
-            "Type": "lastname"
+            "TypeType": "String",
+            "TypeName": "lastname"
           },
           {
-            "Name": "String",
-            "Type": "address"
+            "TypeType": "String",
+            "TypeName": "address"
           },
           {
-            "Name": "String",
-            "Type": "age"
+            "TypeType": "String",
+            "TypeName": "age"
           },
           {
-            "Name": "String",
-            "Type": "id"
+            "TypeType": "String",
+            "TypeName": "id"
           }
         ],
         "MethodCalls": [],
@@ -50,7 +50,6 @@
       }
     ],
     "MethodCalls": [
-
     ],
     "Extend": "",
     "Implements": [
@@ -82,24 +81,24 @@
         "StopLinePosition": 40,
         "Parameters": [
           {
-            "Name": "String",
-            "Type": "name"
+            "TypeType": "String",
+            "TypeName": "name"
           },
           {
-            "Name": "String",
-            "Type": "firstname"
+            "TypeType": "String",
+            "TypeName": "firstname"
           },
           {
-            "Name": "String",
-            "Type": "lastname"
+            "TypeType": "String",
+            "TypeName": "lastname"
           },
           {
-            "Name": "String",
-            "Type": "address"
+            "TypeType": "String",
+            "TypeName": "address"
           },
           {
-            "Name": "String",
-            "Type": "age"
+            "TypeType": "String",
+            "TypeName": "age"
           }
         ],
         "MethodCalls": [],
@@ -136,7 +135,7 @@
         "StopLinePosition": 40,
         "Parameters": [
           {
-            "Name": "String",
+            "TypeType": "String",
             "Type": "age"
           }
         ],

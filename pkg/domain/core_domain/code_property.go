@@ -8,3 +8,11 @@ type CodeProperty struct {
 	ReturnTypes []CodeProperty
 	Parameters  []CodeProperty
 }
+
+func NewCodeParameter(typeName string, typeType string) CodeProperty {
+	return CodeProperty{
+		TypeName: typeName,
+		TypeType: typeType,
+	}
+}
+

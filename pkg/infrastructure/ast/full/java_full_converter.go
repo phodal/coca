@@ -2,12 +2,13 @@ package full
 
 import (
 	"github.com/phodal/coca/languages/java"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"strings"
 )
 
-func BuildMethodParameters(parameters parser.IFormalParametersContext) []jdomain.JParameter {
-	var methodParams []jdomain.JParameter = nil
+func BuildMethodParameters(parameters parser.IFormalParametersContext) []core_domain.CodeProperty {
+	var methodParams []core_domain.CodeProperty = nil
 	parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
 	formalParameter := parameterList.AllFormalParameter()
 	for _, param := range formalParameter {
@@ -16,7 +17,8 @@ func BuildMethodParameters(parameters parser.IFormalParametersContext) []jdomain
 		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 		localVars[paramValue] = paramType
-		methodParams = append(methodParams, jdomain.JParameter{Name: paramValue, Type: paramType})
+		parameter := core_domain.NewCodeParameter(paramValue, paramType)
+		methodParams = append(methodParams, parameter)
 	}
 	return methodParams
 }

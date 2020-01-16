@@ -1,6 +1,7 @@
 package jdomain
 
 import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/string_helper"
 	"strings"
 )
@@ -12,7 +13,7 @@ type JMethod struct {
 	StartLinePosition int
 	StopLine          int
 	StopLinePosition  int
-	Parameters        []JParameter
+	Parameters        []core_domain.CodeProperty
 	MethodCalls       []JMethodCall
 	Override          bool
 	Annotations       []Annotation
@@ -29,7 +30,7 @@ func NewJMethod() JMethod {
 type JMethodInfo struct {
 	Name       string
 	Type       string
-	Parameters []JParameter
+	Parameters []core_domain.CodeProperty
 	Length     string
 }
 

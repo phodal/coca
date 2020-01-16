@@ -24,17 +24,17 @@ func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []jdomain.JCla
 	}
 
 	evaluateModel.ServiceSummary.ReturnTypeMap = returnTypeMap
-	findRelatedMethodParameter(evaluateModel, longParameterList)
+	findRelatedMethodParameters(evaluateModel, longParameterList)
 }
 
-func findRelatedMethodParameter(model *EvaluateModel, list []jdomain.JMethod) {
+func findRelatedMethodParameters(model *EvaluateModel, list []jdomain.JMethod) {
 	var dataset [][]string
 	for _, method := range list {
-		var methodlist []string
+		var paramTypeList []string
 		for _, param := range method.Parameters {
-			methodlist = append(methodlist, param.Type)
+			paramTypeList = append(paramTypeList, param.TypeName)
 		}
-		dataset = append(dataset, methodlist)
+		dataset = append(dataset, paramTypeList)
 	}
 
 	var newOptions = apriori.NewOptions(0.8, 0.8, 0, 0)

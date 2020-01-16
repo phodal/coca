@@ -26,6 +26,12 @@
       "FunctionNodes": [
         {
           "Annotations": null,
+          "CodePosition": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "Creators": null,
           "InnerFunctions": null,
           "MethodCalls": null,
@@ -63,6 +69,12 @@
         },
         {
           "Annotations": null,
+          "CodePosition": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "Creators": null,
           "InnerFunctions": null,
           "MethodCalls": null,
@@ -117,6 +129,12 @@
       "FunctionNodes": [
         {
           "Annotations": null,
+          "CodePosition": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "Creators": null,
           "InnerFunctions": null,
           "MethodCalls": null,
@@ -154,6 +172,12 @@
         },
         {
           "Annotations": null,
+          "CodePosition": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
           "Creators": null,
           "InnerFunctions": null,
           "MethodCalls": null,

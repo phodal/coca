@@ -78,7 +78,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	for _, node := range results.ClassNodes {
 		fmt.Println(node)
 	}
-	g.Expect(len(results.ClassNodes)).To(Equal(2))
+	g.Expect(len(results.ClassNodes)).To(Equal(1))
 	g.Expect(results.ClassNodes[0].Class).To(Equal("Employee"))
 }
 
@@ -88,15 +88,16 @@ func Test_ShouldEnableGetClassMethod(t *testing.T) {
 
 	app := new(TypeScriptApiApp)
 
-	results := app.Analysis(`
+	codefile := app.Analysis(`
 class Employee  {
     displayName():void {
         console.log("hello, world");
     }
 }
-`, "").ClassNodes
+`, "")
 
-	g.Expect(len(results[0].Methods)).To(Equal(1))
+	g.Expect(len(codefile.DataStructures[0].Functions)).To(Equal(1))
+	g.Expect(len(codefile.ClassNodes[0].Methods)).To(Equal(1))
 }
 
 func Test_ShouldGetInterfaceImplements(t *testing.T) {

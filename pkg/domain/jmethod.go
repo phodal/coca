@@ -24,18 +24,7 @@ type JMethod struct {
 }
 
 func NewJMethod() JMethod {
-	return JMethod{
-		Name:              "",
-		Type:              "",
-		Annotations:       nil,
-		StartLine:         0,
-		StartLinePosition: 0,
-		StopLine:          0,
-		StopLinePosition:  0,
-		Parameters:        nil,
-		MethodCalls:       nil,
-		IsConstructor:     false,
-	}
+	return JMethod{}
 }
 
 type JMethodInfo struct {

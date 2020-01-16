@@ -167,17 +167,23 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 	heritageContext := ctx.ClassHeritage().(*parser.ClassHeritageContext)
 	if heritageContext.ImplementsClause() != nil {
 		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
+
 		currentNode.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
+		currentDataStruct.Implements  = append(currentNode.Implements, BuildImplements(typeList)...)
 	}
 
 	if heritageContext.ClassExtendsClause() != nil {
 		referenceContext := heritageContext.ClassExtendsClause().(*parser.ClassExtendsClauseContext).TypeReference().(*parser.TypeReferenceContext)
+
 		currentNode.Extend = referenceContext.TypeName().GetText()
+		currentDataStruct.Extend = referenceContext.TypeName().GetText()
 	}
 
 	classTailContext := ctx.ClassTail().(*parser.ClassTailContext)
 	handleClassBodyElements(classTailContext)
+
 	classNodeQueue = append(classNodeQueue, *currentNode)
+	dataStructQueue = append(dataStructQueue, *currentDataStruct)
 }
 
 func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
@@ -185,14 +191,17 @@ func handleClassBodyElements(classTailContext *parser.ClassTailContext) {
 		elementChild := classElement.GetChild(0)
 		switch x := elementChild.(type) {
 		case *parser.ConstructorDeclarationContext:
-			currentNode.Methods = append(currentNode.Methods, BuildConstructorMethod(x))
+			constructorMethod, codeFunction := BuildConstructorMethod(x)
+
+			currentNode.Methods = append(currentNode.Methods, constructorMethod)
+			currentDataStruct.Functions = append(currentDataStruct.Functions, *codeFunction)
 		case *parser.PropertyMemberDeclarationContext:
-			HandlePropertyMember(x, currentNode)
+			HandlePropertyMember(x, currentNode, currentDataStruct)
 		}
 	}
 }
 
-func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, node *domain.JClassNode) {
+func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationContext, node *domain.JClassNode, dataStruct *trial.CodeDataStruct) {
 	callSignatureSizePos := 3
 	if propertyMemberCtx.PropertyName() != nil {
 		field := domain.JField{}
@@ -208,8 +217,10 @@ func HandlePropertyMember(propertyMemberCtx *parser.PropertyMemberDeclarationCon
 		callSignCtxPos := 2
 		switch propertyMemberCtx.GetChild(callSignCtxPos).(type) {
 		case *parser.CallSignatureContext:
-			node.Methods = append(currentNode.Methods, BuildMemberMethod(propertyMemberCtx))
+			memberMethod, memberFunction := BuildMemberMethod(propertyMemberCtx)
+			node.Methods = append(currentNode.Methods, memberMethod)
 
+			dataStruct.Functions = append(dataStruct.Functions, *memberFunction)
 		}
 	}
 

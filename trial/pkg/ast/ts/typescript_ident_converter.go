@@ -4,12 +4,13 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/trial"
 )
 
 func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) domain.JMethodCall {
 	call := domain.NewJMethodCall()
 	memberChild := memberDotExprCtx.GetChild(0)
-	switch x := memberChild.(type){
+	switch x := memberChild.(type) {
 	case *parser.IdentifierExpressionContext:
 		call.Class = x.GetText()
 		call.MethodName = memberDotExprCtx.IdentifierName().GetText()
@@ -18,20 +19,27 @@ func BuildArgExpressCall(memberDotExprCtx *parser.MemberDotExpressionContext) do
 	return call
 }
 
-func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) domain.JMethod {
+func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) (domain.JMethod, *trial.CodeFunction) {
 	method := domain.NewJMethod()
 	method.Name = "constructor"
+
+	function := &trial.CodeFunction{
+		Name: "constructor",
+	}
 
 	method.AddPosition(ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if ctx.AccessibilityModifier() != nil {
-		method.Modifiers = append(method.Modifiers, ctx.AccessibilityModifier().GetText())
+		modifier := ctx.AccessibilityModifier().GetText()
+
+		method.Modifiers = append(method.Modifiers, modifier)
+		function.Modifiers = append(function.Modifiers, modifier)
 	}
 
-	return method
+	return method, function
 }
 
-func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) domain.JMethod {
+func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) (domain.JMethod, *trial.CodeFunction) {
 	method := domain.NewJMethod()
 	method.Name = ctx.PropertyName().GetText()
 
@@ -40,7 +48,15 @@ func BuildMemberMethod(ctx *parser.PropertyMemberDeclarationContext) domain.JMet
 	method.StopLine = ctx.GetStop().GetLine()
 	method.StopLinePosition = ctx.GetStop().GetColumn()
 
-	return method
+	function := &trial.CodeFunction{
+		Name: ctx.PropertyName().GetText(),
+	}
+	function.CodePosition.StartLine = ctx.GetStart().GetLine()
+	function.CodePosition.StartLinePosition = ctx.GetStart().GetColumn()
+	function.CodePosition.StopLine = ctx.GetStop().GetLine()
+	function.CodePosition.StopLinePosition = ctx.GetStop().GetColumn()
+
+	return method, function
 }
 
 func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string {
@@ -64,7 +80,7 @@ func BuildMethodParameter(context *parser.ParameterListContext) []domain.JParame
 
 		parameters = append(parameters, buildRequireParameterList(listContext)...)
 
-		if context.RestParameter() != nil  {
+		if context.RestParameter() != nil {
 			restParamCtx := context.RestParameter().(*parser.RestParameterContext)
 			parameters = append(parameters, buildRestParameters(restParamCtx))
 		}

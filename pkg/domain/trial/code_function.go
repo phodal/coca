@@ -10,4 +10,5 @@ type CodeFunction struct {
 	Modifiers      []string
 	Creators       []CodeDataStruct
 	InnerFunctions []CodeFunction
+	CodePosition   CodePosition
 }

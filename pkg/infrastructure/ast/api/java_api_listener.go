@@ -4,7 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
 	models "github.com/phodal/coca/pkg/domain"
-	"github.com/phodal/coca/pkg/domain/api_domain"
+	"github.com/phodal/coca/pkg/domain/support_domain"
 	"reflect"
 	"strings"
 )

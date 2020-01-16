@@ -5,7 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain"
-	"github.com/phodal/coca/pkg/domain/api_domain"
+	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast"
 	"github.com/phodal/coca/pkg/infrastructure/ast/api"
 	"path/filepath"

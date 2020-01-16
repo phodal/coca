@@ -1,6 +1,9 @@
-package domain
+package api_domain
 
-import "strings"
+import (
+	"github.com/phodal/coca/pkg/domain"
+	"strings"
+)
 
 type Suggest struct {
 	File    string
@@ -12,7 +15,7 @@ type Suggest struct {
 	Line    int
 }
 
-func NewSuggest(clz JClassNode, pattern, reason string) Suggest {
+func NewSuggest(clz domain.JClassNode, pattern, reason string) Suggest {
 	return Suggest{
 		File:    clz.FilePath,
 		Package: clz.Package,
@@ -22,7 +25,7 @@ func NewSuggest(clz JClassNode, pattern, reason string) Suggest {
 	}
 }
 
-func MergeSuggest(clz JClassNode, currentSuggestList []Suggest) Suggest {
+func MergeSuggest(clz domain.JClassNode, currentSuggestList []Suggest) Suggest {
 	var suggest = NewSuggest(clz, "", "")
 	for _, s := range currentSuggestList {
 		if !strings.Contains(suggest.Pattern, s.Pattern) {

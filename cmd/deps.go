@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/application/deps"
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/spf13/cobra"
 	"path/filepath"
 )
@@ -20,7 +21,7 @@ var (
 )
 
 type DepApp interface {
-	AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency
+	AnalysisPath(path string, nodes []domain.JClassNode) []api_domain.JDependency
 }
 
 var depsCmd = &cobra.Command{

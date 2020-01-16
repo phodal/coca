@@ -2,6 +2,7 @@ package suggest
 
 import (
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/support_domain"
 )
 
 type SuggestApp struct {
@@ -11,8 +12,8 @@ func NewSuggestApp() SuggestApp {
 	return SuggestApp{}
 }
 
-func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []domain.Suggest {
-	var suggests []domain.Suggest
+func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []api_domain.Suggest {
+	var suggests []api_domain.Suggest
 	for _, clz := range deps {
 		if clz.Type == "Class" {
 			// TODO: DSL => class constructor.len > 3
@@ -26,11 +27,11 @@ func (a SuggestApp) AnalysisPath(deps []domain.JClassNode) []domain.Suggest {
 	return suggests
 }
 
-func factorySuggest(clz domain.JClassNode, suggests []domain.Suggest) []domain.Suggest {
+func factorySuggest(clz domain.JClassNode, suggests []api_domain.Suggest) []api_domain.Suggest {
 	var constructorCount = 0
 	var longestParaConstructorMethod = clz.Methods[0]
 
-	var currentSuggestList []domain.Suggest = nil
+	var currentSuggestList []api_domain.Suggest = nil
 	for _, method := range clz.Methods {
 		if method.IsConstructor {
 			constructorCount++
@@ -44,7 +45,7 @@ func factorySuggest(clz domain.JClassNode, suggests []domain.Suggest) []domain.S
 			PARAMETER_LINE_OFFSET := 3
 			PARAMETER_METHOD_CALL_OFFSET := 3
 			if declLineNum > len(method.Parameters)-PARAMETER_LINE_OFFSET && (len(method.MethodCalls) > len(method.Parameters)+PARAMETER_METHOD_CALL_OFFSET) {
-				suggest := domain.NewSuggest(clz, "factory", "complex constructor")
+				suggest := api_domain.NewSuggest(clz, "factory", "complex constructor")
 				suggest.Line = method.StartLine
 				currentSuggestList = append(currentSuggestList, suggest)
 			}
@@ -53,18 +54,18 @@ func factorySuggest(clz domain.JClassNode, suggests []domain.Suggest) []domain.S
 
 	// TODO 合并 suggest
 	if constructorCount >= 3 {
-		suggest := domain.NewSuggest(clz, "factory", "too many constructor")
+		suggest := api_domain.NewSuggest(clz, "factory", "too many constructor")
 		suggest.Size = constructorCount
 		currentSuggestList = append(currentSuggestList, suggest)
 	}
 
 	if len(longestParaConstructorMethod.Parameters) >= 5 {
-		suggest := domain.NewSuggest(clz, "builder", "too many parameters")
+		suggest := api_domain.NewSuggest(clz, "builder", "too many parameters")
 		suggest.Size = len(longestParaConstructorMethod.Parameters)
 		currentSuggestList = append(currentSuggestList, suggest)
 	}
 
-	suggest := domain.MergeSuggest(clz, currentSuggestList)
+	suggest := api_domain.MergeSuggest(clz, currentSuggestList)
 
 	if suggest.Pattern != "" {
 		suggests = append(suggests, suggest)

@@ -3,6 +3,7 @@ package deps
 import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/support_domain"
 	"path/filepath"
 	"strings"
 )
@@ -25,12 +26,12 @@ func (d *DepAnalysisApp) BuildImportMap(deps []domain.JClassNode) map[string]dom
 	return impMap
 }
 
-func (d *DepAnalysisApp) AnalysisPath(path string, nodes []domain.JClassNode) []domain.JDependency {
+func (d *DepAnalysisApp) AnalysisPath(path string, nodes []domain.JClassNode) []api_domain.JDependency {
 	path, _ = filepath.Abs(path)
 	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
 	gradleFiles := cocafile.GetFilesWithFilter(path, cocafile.BuildGradleFilter)
 
-	var mavenDeps []domain.JDependency = nil
+	var mavenDeps []api_domain.JDependency = nil
 	for _, pomFile := range pomXmls {
 		currentMavenDeps := AnalysisMaven(pomFile)
 		mavenDeps = append(mavenDeps, currentMavenDeps...)
@@ -52,7 +53,7 @@ func (d *DepAnalysisApp) AnalysisPath(path string, nodes []domain.JClassNode) []
 		}
 	}
 
-	var results []domain.JDependency = nil
+	var results []api_domain.JDependency = nil
 	for index, dep := range mavenDeps {
 		if _, ok := needRemoveMap[index]; !ok {
 			results = append(results, dep)

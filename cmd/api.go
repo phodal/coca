@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
 	"github.com/phodal/coca/pkg/domain"
-	"github.com/phodal/coca/pkg/domain/api_domain"
+	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/spf13/cobra"
 	"log"
 	"path/filepath"

@@ -32,12 +32,12 @@ var classStringQueue []string
 var identMap map[string]core_domain.JIdentifier
 var isOverrideMethod = false
 
-var classNodeQueue []core_domain.JClassNode
+var classNodeQueue []core_domain.CodeDataStruct
 
-var currentNode *core_domain.JClassNode
-var classNodes []core_domain.JClassNode
-var creatorNodes []core_domain.JClassNode
-var currentCreatorNode core_domain.JClassNode
+var currentNode *core_domain.CodeDataStruct
+var classNodes []core_domain.CodeDataStruct
+var creatorNodes []core_domain.CodeDataStruct
+var currentCreatorNode core_domain.CodeDataStruct
 var fileName = ""
 var hasEnterClass = false
 
@@ -47,7 +47,7 @@ func NewJavaFullListener(nodes map[string]core_domain.JIdentifier, file string) 
 	fileName = file
 	currentPkg = ""
 	classNodes = nil
-	currentNode = core_domain.NewClassNode()
+	currentNode = core_domain.NewDataStruct()
 	classStringQueue = nil
 	classNodeQueue = nil
 	methodQueue = nil
@@ -72,7 +72,7 @@ type JavaFullListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaFullListener) GetNodeInfo() []core_domain.JClassNode {
+func (s *JavaFullListener) GetNodeInfo() []core_domain.CodeDataStruct {
 	return classNodes
 }
 
@@ -99,7 +99,7 @@ func (s *JavaFullListener) exitBody() {
 	}
 
 	if currentNode.NodeName == "" {
-		currentNode = core_domain.NewClassNode()
+		currentNode = core_domain.NewDataStruct()
 		initClass()
 		return
 	}
@@ -118,7 +118,7 @@ func (s *JavaFullListener) exitBody() {
 			currentNode = &classNodeQueue[len(classNodeQueue)-1]
 		}
 	} else {
-		currentNode = core_domain.NewClassNode()
+		currentNode = core_domain.NewDataStruct()
 	}
 
 	initClass()
@@ -444,7 +444,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
-		creatorNode := &core_domain.JClassNode{
+		creatorNode := &core_domain.CodeDataStruct{
 			Package:       currentPkg,
 			NodeName:      text,
 			Type:          "CreatorClass",
@@ -472,7 +472,7 @@ func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 	if currentType == "CreatorClass" {
 		currentType = ""
 	}
-	currentCreatorNode = *core_domain.NewClassNode()
+	currentCreatorNode = *core_domain.NewDataStruct()
 
 	if classNodeQueue == nil || len(classNodeQueue) < 1 {
 		return

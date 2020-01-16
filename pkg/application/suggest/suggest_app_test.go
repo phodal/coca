@@ -14,7 +14,7 @@ import (
 func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []core_domain.JClassNode
+	var parsedDeps []core_domain.CodeDataStruct
 	analyser := NewSuggestApp()
 	codePath := "../../../_fixtures/suggest/factory/factory_suggest.json"
 	codePath = filepath.FromSlash(codePath)

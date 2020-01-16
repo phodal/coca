@@ -18,7 +18,7 @@ type CodeFunction struct {
 	IsReturnNull  bool // todo: move to extension
 
 	Modifiers       []string
-	InnerStructures []JClassNode
+	InnerStructures []CodeDataStruct
 	InnerFunctions  []CodeFunction
 	Extension       interface{}
 	Position        CodePosition
@@ -46,7 +46,7 @@ func (m *CodeFunction) IsGetterSetter() bool {
 	return strings.HasPrefix(m.Name, "set") || strings.HasPrefix(m.Name, "get")
 }
 
-func (m *CodeFunction) BuildFullMethodName(node JClassNode) string {
+func (m *CodeFunction) BuildFullMethodName(node CodeDataStruct) string {
 	return node.Package + "." + node.NodeName + "." + m.Name
 }
 

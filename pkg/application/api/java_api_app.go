@@ -16,7 +16,7 @@ var allApis []api_domain.RestAPI
 type JavaApiApp struct {
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []core_domain.JClassNode, identifiersMap map[string]core_domain.JIdentifier, diMap map[string]string) []api_domain.RestAPI {
+func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.JIdentifier, diMap map[string]string) []api_domain.RestAPI {
 	files := cocafile.GetJavaFiles(codeDir)
 	allApis = nil
 	for index := range files {

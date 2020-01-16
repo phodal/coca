@@ -4,7 +4,7 @@ import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
-func BuildCallMap(parserDeps []core_domain.JClassNode) map[string]int {
+func BuildCallMap(parserDeps []core_domain.CodeDataStruct) map[string]int {
 	var projectMethods = make(map[string]string)
 	for _, clz := range parserDeps {
 		clz.BuildStringMethodMap(projectMethods)

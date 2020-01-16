@@ -7,11 +7,11 @@ import (
 type NullPointException struct {
 }
 
-func (NullPointException) Evaluate(*EvaluateModel, core_domain.JClassNode) {
+func (NullPointException) Evaluate(*EvaluateModel, core_domain.CodeDataStruct) {
 
 }
 
-func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.JClassNode, nodeMap map[string]core_domain.JClassNode, identifiers []core_domain.JIdentifier) {
+func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) {
 	var nullableList []string = nil
 	var nullableMap = make(map[string]string)
 	for _, ident := range identifiers {

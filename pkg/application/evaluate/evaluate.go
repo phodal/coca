@@ -6,18 +6,18 @@ import (
 )
 
 type Evaluator interface {
-	Evaluate(result *evaluator.EvaluateModel, node core_domain.JClassNode)
-	EvaluateList(evaluateModel *evaluator.EvaluateModel, nodes []core_domain.JClassNode, nodeMap map[string]core_domain.JClassNode, identifiers []core_domain.JIdentifier)
+	Evaluate(result *evaluator.EvaluateModel, node core_domain.CodeDataStruct)
+	EvaluateList(evaluateModel *evaluator.EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier)
 }
 
 type Evaluation struct {
 	Evaluator Evaluator
 }
 
-func (o *Evaluation) Evaluate(result *evaluator.EvaluateModel, node core_domain.JClassNode) {
+func (o *Evaluation) Evaluate(result *evaluator.EvaluateModel, node core_domain.CodeDataStruct) {
 	o.Evaluator.Evaluate(result, node)
 }
 
-func (o *Evaluation) EvaluateList(evaluateModel *evaluator.EvaluateModel, nodes []core_domain.JClassNode, nodeMap map[string]core_domain.JClassNode, identifiers []core_domain.JIdentifier) {
+func (o *Evaluation) EvaluateList(evaluateModel *evaluator.EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) {
 	o.Evaluator.EvaluateList(evaluateModel, nodes, nodeMap, identifiers)
 }

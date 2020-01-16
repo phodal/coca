@@ -14,11 +14,11 @@ func NewConceptAnalyser() ConceptAnalyser {
 	return ConceptAnalyser{}
 }
 
-func (c ConceptAnalyser) Analysis(clzs *[]core_domain.JClassNode) string_helper.PairList {
+func (c ConceptAnalyser) Analysis(clzs *[]core_domain.CodeDataStruct) string_helper.PairList {
 	return buildMethodsFromDeps(*clzs)
 }
 
-func buildMethodsFromDeps(clzs []core_domain.JClassNode) string_helper.PairList {
+func buildMethodsFromDeps(clzs []core_domain.CodeDataStruct) string_helper.PairList {
 	var methodsName []string
 	var methodStr string
 	for _, clz := range clzs {

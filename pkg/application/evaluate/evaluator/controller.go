@@ -9,6 +9,6 @@ type Controller struct {
 
 }
 
-func (Controller) Evaluate(node core_domain.JClassNode) {
+func (Controller) Evaluate(node core_domain.CodeDataStruct) {
 	fmt.Println("controller")
 }

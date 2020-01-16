@@ -12,7 +12,7 @@ func NewSuggestApp() SuggestApp {
 	return SuggestApp{}
 }
 
-func (a SuggestApp) AnalysisPath(deps []core_domain.JClassNode) []api_domain.Suggest {
+func (a SuggestApp) AnalysisPath(deps []core_domain.CodeDataStruct) []api_domain.Suggest {
 	var suggests []api_domain.Suggest
 	for _, clz := range deps {
 		if clz.Type == "NodeName" {
@@ -27,7 +27,7 @@ func (a SuggestApp) AnalysisPath(deps []core_domain.JClassNode) []api_domain.Sug
 	return suggests
 }
 
-func factorySuggest(clz core_domain.JClassNode, suggests []api_domain.Suggest) []api_domain.Suggest {
+func factorySuggest(clz core_domain.CodeDataStruct, suggests []api_domain.Suggest) []api_domain.Suggest {
 	var constructorCount = 0
 	var longestParaConstructorMethod = clz.Functions[0]
 

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func BuildAnalysisDeps(codePath string) ([]core_domain.JClassNode, map[string]core_domain.JIdentifier, []core_domain.JIdentifier) {
+func BuildAnalysisDeps(codePath string) ([]core_domain.CodeDataStruct, map[string]core_domain.JIdentifier, []core_domain.JIdentifier) {
 	codePath = filepath.FromSlash(codePath)
 
 	identifierApp := analysis.NewJavaIdentifierApp()

@@ -8,7 +8,7 @@ import (
 
 var analysisPackage = ""
 
-func Refactoring(parsedDeps []core_domain.JClassNode) []string {
+func Refactoring(parsedDeps []core_domain.CodeDataStruct) []string {
 	sourceClasses := make(map[string]string)
 	targetClasses := make(map[string]string)
 

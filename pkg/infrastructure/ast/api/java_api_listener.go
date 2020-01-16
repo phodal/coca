@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var jClassNodes []core_domain.JClassNode
+var jClassNodes []core_domain.CodeDataStruct
 
 var hasEnterClass = false
 var isSpringRestController = false
@@ -300,7 +300,7 @@ func buildMethodParameters(requestBodyClass string) {
 	currentRestAPI.MethodParams = params
 }
 
-func (s *JavaAPIListener) AppendClasses(classes []core_domain.JClassNode) {
+func (s *JavaAPIListener) AppendClasses(classes []core_domain.CodeDataStruct) {
 	jClassNodes = classes
 }
 

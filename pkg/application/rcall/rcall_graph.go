@@ -12,7 +12,7 @@ func NewRCallGraph() RCallGraph {
 	return RCallGraph{}
 }
 
-func (c RCallGraph) Analysis(funcName string, clzs []core_domain.JClassNode, writeCallback func(rcallMap map[string][]string)) string {
+func (c RCallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct, writeCallback func(rcallMap map[string][]string)) string {
 	var projectMethodMap = BuildProjectMethodMap(clzs)
 	rcallMap := BuildRCallMethodMap(clzs, projectMethodMap)
 
@@ -26,7 +26,7 @@ func (c RCallGraph) Analysis(funcName string, clzs []core_domain.JClassNode, wri
 	return dotContent
 }
 
-func BuildProjectMethodMap(clzs []core_domain.JClassNode) map[string]int {
+func BuildProjectMethodMap(clzs []core_domain.CodeDataStruct) map[string]int {
 	var maps = make(map[string]int)
 	for _, clz := range clzs {
 		for _, method := range clz.Functions {
@@ -37,7 +37,7 @@ func BuildProjectMethodMap(clzs []core_domain.JClassNode) map[string]int {
 	return maps
 }
 
-func BuildRCallMethodMap(parserDeps []core_domain.JClassNode, projectMaps map[string]int) map[string][]string {
+func BuildRCallMethodMap(parserDeps []core_domain.CodeDataStruct, projectMaps map[string]int) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range parserDeps {
 		for _, method := range clz.Functions {

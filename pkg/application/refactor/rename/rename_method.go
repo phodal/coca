@@ -13,9 +13,9 @@ var parsedChange []support.RefactorChangeRelate
 type RemoveMethodApp struct {
 }
 
-var parsedDeps []core_domain.JClassNode
+var parsedDeps []core_domain.CodeDataStruct
 
-func RenameMethodApp(deps []core_domain.JClassNode) *RemoveMethodApp {
+func RenameMethodApp(deps []core_domain.CodeDataStruct) *RemoveMethodApp {
 	parsedDeps = deps
 	return &RemoveMethodApp{}
 }
@@ -25,7 +25,7 @@ func (j *RemoveMethodApp) Refactoring(conf string) {
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []core_domain.JClassNode, relates []support.RefactorChangeRelate) {
+func startParse(nodes []core_domain.CodeDataStruct, relates []support.RefactorChangeRelate) {
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
 			oldInfo := support.BuildMethodPackageInfo(related.OldObj)
@@ -66,7 +66,7 @@ func methodCallToMethodModel(call core_domain.CodeCall) core_domain.CodeFunction
 	}
 }
 
-func updateSelfRefs(node core_domain.JClassNode, method core_domain.CodeFunction, info *support.PackageClassInfo) {
+func updateSelfRefs(node core_domain.CodeDataStruct, method core_domain.CodeFunction, info *support.PackageClassInfo) {
 	path := node.FilePath
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

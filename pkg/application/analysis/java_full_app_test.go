@@ -36,7 +36,7 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 	g.Expect(len(callNodes[0].Functions)).To(Equal(3))
 }
 
-func getCallNodes(codePath string) []core_domain.JClassNode {
+func getCallNodes(codePath string) []core_domain.CodeDataStruct {
 	identifierApp := NewJavaIdentifierApp()
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil

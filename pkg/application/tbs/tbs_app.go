@@ -19,7 +19,7 @@ type TestBadSmell struct {
 	Line        int
 }
 
-func (a TbsApp) AnalysisPath(deps []core_domain.JClassNode, identifiersMap map[string]core_domain.JIdentifier) []TestBadSmell {
+func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.JIdentifier) []TestBadSmell {
 	var results []TestBadSmell = nil
 	callMethodMap := core_domain.BuildCallMethodMap(deps)
 	for _, clz := range deps {
@@ -69,7 +69,7 @@ func (a TbsApp) AnalysisPath(deps []core_domain.JClassNode, identifiersMap map[s
 	return results
 }
 
-func checkAssert(hasAssert bool, clz core_domain.JClassNode, method core_domain.CodeFunction, results *[]TestBadSmell, testType *string) {
+func checkAssert(hasAssert bool, clz core_domain.CodeDataStruct, method core_domain.CodeFunction, results *[]TestBadSmell, testType *string) {
 	if !hasAssert {
 		*testType = "UnknownTest"
 		tbs := TestBadSmell{
@@ -84,7 +84,7 @@ func checkAssert(hasAssert bool, clz core_domain.JClassNode, method core_domain.
 	}
 }
 
-func updateMethodCallsForSelfCall(method core_domain.CodeFunction, clz core_domain.JClassNode, callMethodMap map[string]core_domain.CodeFunction) []core_domain.CodeCall {
+func updateMethodCallsForSelfCall(method core_domain.CodeFunction, clz core_domain.CodeDataStruct, callMethodMap map[string]core_domain.CodeFunction) []core_domain.CodeCall {
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.NodeName == clz.NodeName {
@@ -114,7 +114,7 @@ func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method 
 	}
 }
 
-func checkDuplicateAssertTest(clz core_domain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method core_domain.CodeFunction, testType *string) {
+func checkDuplicateAssertTest(clz core_domain.CodeDataStruct, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method core_domain.CodeFunction, testType *string) {
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
 		if len(methodCall) >= constants.DuplicatedAssertionLimitLength {

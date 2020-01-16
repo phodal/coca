@@ -139,7 +139,7 @@ func buildTbsResult(codePath string) []TestBadSmell {
 	return result
 }
 
-func BuildTestAnalysisResultsByPath(codePath string) (map[string]core_domain.JIdentifier, []core_domain.JClassNode) {
+func BuildTestAnalysisResultsByPath(codePath string) (map[string]core_domain.JIdentifier, []core_domain.CodeDataStruct) {
 	files := cocafile.GetJavaTestFiles(codePath)
 
 	identifiers := cmd_util.LoadTestIdentify(files)

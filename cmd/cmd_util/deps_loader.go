@@ -5,8 +5,8 @@ import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
-func GetDepsFromJson(depPath string) []core_domain.JClassNode {
-	var parsedDeps []core_domain.JClassNode
+func GetDepsFromJson(depPath string) []core_domain.CodeDataStruct {
+	var parsedDeps []core_domain.CodeDataStruct
 	file := ReadFile(depPath)
 	_ = json.Unmarshal(file, &parsedDeps)
 

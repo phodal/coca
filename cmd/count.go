@@ -20,7 +20,7 @@ var (
 	countCmdConfig CountCmdConfig
 )
 
-var cparsedDeps []core_domain.JClassNode
+var cparsedDeps []core_domain.CodeDataStruct
 
 var countCmd = &cobra.Command{
 	Use:   "count",

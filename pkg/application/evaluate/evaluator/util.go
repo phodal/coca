@@ -7,10 +7,10 @@ import (
 type Util struct {
 }
 
-func (Util) Evaluate(result *EvaluateModel, node core_domain.JClassNode) {
+func (Util) Evaluate(result *EvaluateModel, node core_domain.CodeDataStruct) {
 
 }
 
-func (s Util) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.JClassNode, nodeMap map[string]core_domain.JClassNode, identifiers []core_domain.JIdentifier) {
+func (s Util) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) {
 
 }

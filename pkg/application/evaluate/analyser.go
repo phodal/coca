@@ -13,12 +13,12 @@ func NewEvaluateAnalyser() Analyser {
 	return Analyser{}
 }
 
-func (a Analyser) Analysis(classNodes []core_domain.JClassNode, identifiers []core_domain.JIdentifier) evaluator.EvaluateModel {
-	var servicesNode []core_domain.JClassNode = nil
+func (a Analyser) Analysis(classNodes []core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) evaluator.EvaluateModel {
+	var servicesNode []core_domain.CodeDataStruct = nil
 	var evaluation Evaluation
 	var result = evaluator.NewEvaluateModel()
 
-	var nodeMap = make(map[string]core_domain.JClassNode)
+	var nodeMap = make(map[string]core_domain.CodeDataStruct)
 
 	for _, node := range classNodes {
 		nodeMap[node.NodeName] = node

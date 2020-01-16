@@ -15,7 +15,7 @@ func NewDepApp() *DepAnalysisApp {
 	return &DepAnalysisApp{}
 }
 
-func (d *DepAnalysisApp) BuildImportMap(deps []core_domain.JClassNode) map[string]core_domain.CodeImport {
+func (d *DepAnalysisApp) BuildImportMap(deps []core_domain.CodeDataStruct) map[string]core_domain.CodeImport {
 	var impMap = make(map[string]core_domain.CodeImport)
 	for _, clz := range deps {
 		for _, imp := range clz.Imports {
@@ -26,7 +26,7 @@ func (d *DepAnalysisApp) BuildImportMap(deps []core_domain.JClassNode) map[strin
 	return impMap
 }
 
-func (d *DepAnalysisApp) AnalysisPath(path string, nodes []core_domain.JClassNode) []api_domain.JDependency {
+func (d *DepAnalysisApp) AnalysisPath(path string, nodes []core_domain.CodeDataStruct) []api_domain.JDependency {
 	path, _ = filepath.Abs(path)
 	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
 	gradleFiles := cocafile.GetFilesWithFilter(path, cocafile.BuildGradleFilter)

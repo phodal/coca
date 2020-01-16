@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-var parsedDeps []core_domain.JClassNode
+var parsedDeps []core_domain.CodeDataStruct
 
 var conceptCmd = &cobra.Command{
 	Use:   "concept",

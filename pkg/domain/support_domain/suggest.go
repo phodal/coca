@@ -15,7 +15,7 @@ type Suggest struct {
 	Line    int
 }
 
-func NewSuggest(clz core_domain.JClassNode, pattern, reason string) Suggest {
+func NewSuggest(clz core_domain.CodeDataStruct, pattern, reason string) Suggest {
 	return Suggest{
 		File:    clz.FilePath,
 		Package: clz.Package,
@@ -25,7 +25,7 @@ func NewSuggest(clz core_domain.JClassNode, pattern, reason string) Suggest {
 	}
 }
 
-func MergeSuggest(clz core_domain.JClassNode, currentSuggestList []Suggest) Suggest {
+func MergeSuggest(clz core_domain.CodeDataStruct, currentSuggestList []Suggest) Suggest {
 	var suggest = NewSuggest(clz, "", "")
 	for _, s := range currentSuggestList {
 		if !strings.Contains(suggest.Pattern, s.Pattern) {

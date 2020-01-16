@@ -13,7 +13,7 @@ func TestRefactoring(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 
-	var parsedDeps []core_domain.JClassNode
+	var parsedDeps []core_domain.CodeDataStruct
 	codePath := "../../../../_fixtures/count/call.json"
 	codePath = filepath.FromSlash(codePath)
 	file := cmd_util.ReadFile(codePath)

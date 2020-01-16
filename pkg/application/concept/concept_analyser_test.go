@@ -14,7 +14,7 @@ import (
 func TestConceptAnalyser_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []core_domain.JClassNode
+	var parsedDeps []core_domain.CodeDataStruct
 	analyser := NewConceptAnalyser()
 	codePath := "../../../_fixtures/call/call_api_test.json"
 	codePath = filepath.FromSlash(codePath)

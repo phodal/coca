@@ -10,11 +10,11 @@ import (
 type Service struct {
 }
 
-var serviceNodeMap map[string]core_domain.JClassNode
+var serviceNodeMap map[string]core_domain.CodeDataStruct
 var returnTypeMap map[string][]string
 var longParameterList []core_domain.CodeFunction
 
-func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.JClassNode, nodeMap map[string]core_domain.JClassNode, identifiers []core_domain.JIdentifier) {
+func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []core_domain.CodeDataStruct, nodeMap map[string]core_domain.CodeDataStruct, identifiers []core_domain.JIdentifier) {
 	serviceNodeMap = nodeMap
 	longParameterList = nil
 	returnTypeMap = make(map[string][]string)
@@ -49,7 +49,7 @@ func findRelatedMethodParameters(model *EvaluateModel, list []core_domain.CodeFu
 	}
 }
 
-func (s Service) Evaluate(result *EvaluateModel, node core_domain.JClassNode) {
+func (s Service) Evaluate(result *EvaluateModel, node core_domain.CodeDataStruct) {
 	var methodNameArray [][]string
 	for _, method := range node.Functions {
 		methodNameArray = append(methodNameArray, SplitCamelcase(method.Name))

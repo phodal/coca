@@ -17,7 +17,7 @@ func MockWriteCallMap(rcallMap map[string][]string) {
 func TestRCallGraph_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []core_domain.JClassNode
+	var parsedDeps []core_domain.CodeDataStruct
 	analyser := NewRCallGraph()
 	file := cmd_util.ReadFile("../../../_fixtures/call/call_api_test.json")
 	if file == nil {
@@ -39,7 +39,7 @@ edge [dir="back"];
 func TestRCallGraph_Constructor(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []core_domain.JClassNode
+	var parsedDeps []core_domain.CodeDataStruct
 	analyser := NewRCallGraph()
 	file := cmd_util.ReadFile("../../../_fixtures/rcall/constructor_call.json")
 	if file == nil {

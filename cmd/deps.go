@@ -21,7 +21,7 @@ var (
 )
 
 type DepApp interface {
-	AnalysisPath(path string, nodes []core_domain.JClassNode) []api_domain.JDependency
+	AnalysisPath(path string, nodes []core_domain.CodeDataStruct) []api_domain.JDependency
 }
 
 var depsCmd = &cobra.Command{

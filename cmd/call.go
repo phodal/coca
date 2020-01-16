@@ -24,7 +24,7 @@ var callGraphCmd = &cobra.Command{
 	Short: "show call graph with specific method",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		var parsedDeps []core_domain.JClassNode
+		var parsedDeps []core_domain.CodeDataStruct
 		dependence := callCmdConfig.Path
 
 		className := cmd.Flag("className").Value.String()

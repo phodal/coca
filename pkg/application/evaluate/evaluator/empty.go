@@ -8,10 +8,10 @@ type Empty struct {
 
 }
 
-func (Empty) Evaluate(*EvaluateModel, core_domain.JClassNode) {
+func (Empty) Evaluate(*EvaluateModel, core_domain.CodeDataStruct) {
 
 }
 
-func (Empty) EvaluateList(*EvaluateModel, []core_domain.JClassNode, map[string]core_domain.JClassNode, []core_domain.JIdentifier) {
+func (Empty) EvaluateList(*EvaluateModel, []core_domain.CodeDataStruct, map[string]core_domain.CodeDataStruct, []core_domain.JIdentifier) {
 
 }

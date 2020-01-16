@@ -2,6 +2,7 @@ package call
 
 import (
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/infrastructure/jpackage"
 	"strings"
 )
@@ -55,9 +56,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []domain.RestAPI, deps []domain.JClassNode, diMap map[string]string) (string, []domain.CallAPI) {
+func (c CallGraph) AnalysisByFiles(restApis []api_domain.RestAPI, deps []domain.JClassNode, diMap map[string]string) (string, []api_domain.CallAPI) {
 	methodMap := BuildMethodMap(deps)
-	var apiCallSCounts []domain.CallAPI
+	var apiCallSCounts []api_domain.CallAPI
 
 	results := "digraph G { \n"
 
@@ -69,7 +70,7 @@ func (c CallGraph) AnalysisByFiles(restApis []domain.RestAPI, deps []domain.JCla
 		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
-		count := &domain.CallAPI{
+		count := &api_domain.CallAPI{
 			HTTPMethod: restApi.HttpMethod,
 			Caller:     caller,
 			URI:        restApi.Uri,

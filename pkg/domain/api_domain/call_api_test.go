@@ -1,4 +1,4 @@
-package domain
+package api_domain
 
 import (
 	. "github.com/onsi/gomega"

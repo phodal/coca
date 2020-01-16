@@ -8,6 +8,7 @@ import (
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
 	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/api_domain"
 	"path/filepath"
 	"testing"
 )
@@ -50,7 +51,7 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	analyser := call.NewCallGraph()
 	dotContent, apis := analyser.AnalysisByFiles(restApis, callNodes, diMap)
 
-	domain.SortAPIs(apis)
+	api_domain.SortAPIs(apis)
 	g.Expect(len(apis)).To(Equal(4))
 	g.Expect(apis[0].Size).To(Equal(4))
 	g.Expect(apis[1].Size).To(Equal(7))

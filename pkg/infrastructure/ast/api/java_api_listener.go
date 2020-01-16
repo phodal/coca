@@ -4,6 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
 	models "github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/api_domain"
 	"reflect"
 	"strings"
 )
@@ -16,8 +17,8 @@ var hasEnterRestController = false
 var baseApiUrl string
 var localVars = make(map[string]string)
 
-var currentRestAPI models.RestAPI
-var restAPIs []models.RestAPI
+var currentRestAPI api_domain.RestAPI
+var restAPIs []api_domain.RestAPI
 var currentClz string
 var currentPkg string
 
@@ -37,7 +38,7 @@ func NewJavaAPIListener(jIdentMap map[string]models.JIdentifier, diMap map[strin
 	identMap = jIdentMap
 
 	params := make(map[string]string)
-	currentRestAPI = models.RestAPI{MethodParams: params}
+	currentRestAPI = api_domain.RestAPI{MethodParams: params}
 	return &JavaAPIListener{}
 }
 
@@ -98,7 +99,7 @@ func (s *JavaAPIListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestAPI = models.RestAPI{Uri: uriRemoveQuote}
+	currentRestAPI = api_domain.RestAPI{Uri: uriRemoveQuote}
 	if annotationName != "RequestMapping" {
 		if hasEnterClass {
 			addApiMethod(annotationName)
@@ -303,6 +304,6 @@ func (s *JavaAPIListener) AppendClasses(classes []models.JClassNode) {
 	jClassNodes = classes
 }
 
-func (s *JavaAPIListener) GetClassApis() []models.RestAPI {
+func (s *JavaAPIListener) GetClassApis() []api_domain.RestAPI {
 	return restAPIs
 }

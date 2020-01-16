@@ -51,7 +51,15 @@ func (s *TypeScriptIdentListener) GetNodeInfo() trial.CodeFile {
 
 	isScriptCalls := currentDataStruct.IsNotEmpty()
 	if isScriptCalls {
-		//function := &trial.CodeFunction{}
+		if len(currentDataStruct.Functions) < 1 {
+			function := &trial.CodeFunction{}
+			function.Name = "default"
+			function.MethodCalls = append(function.MethodCalls, currentDataStruct.FunctionCalls...)
+
+			currentDataStruct.Functions = append(currentDataStruct.Functions, *function)
+		}
+
+		dataStructures = append(dataStructures, *currentDataStruct)
 	}
 
 	codeFile.ClassNodes = classNodes
@@ -171,8 +179,9 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 	if heritageContext.ImplementsClause() != nil {
 		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
 
-		currentNode.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
-		currentDataStruct.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
+		implements := BuildImplements(typeList)
+		currentNode.Implements = implements
+		currentDataStruct.Implements = implements
 	}
 
 	if heritageContext.ClassExtendsClause() != nil {

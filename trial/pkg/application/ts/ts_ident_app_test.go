@@ -46,11 +46,9 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 
 	codeFile := app.Analysis(string(code), "")
 
-	results := codeFile.ClassNodes
-
-	g.Expect(len(results)).To(Equal(4))
-	g.Expect(len(codeFile.DataStructures)).To(Equal(3))
-	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
+	g.Expect(len(codeFile.DataStructures)).To(Equal(4))
+	g.Expect(len(codeFile.DataStructures[1].Implements)).To(Equal(1))
+	g.Expect(codeFile.DataStructures[1].Implements[0]).To(Equal("IPerson"))
 }
 
 func Test_TypeScriptAbstractClass(t *testing.T) {

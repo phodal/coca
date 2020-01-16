@@ -17,7 +17,7 @@ func (a SuggestApp) AnalysisPath(deps []core_domain.JClassNode) []api_domain.Sug
 	for _, clz := range deps {
 		if clz.Type == "Class" {
 			// TODO: DSL => class constructor.len > 3
-			if len(clz.Methods) > 0 {
+			if len(clz.Functions) > 0 {
 				suggests = factorySuggest(clz, suggests)
 			}
 		}
@@ -29,10 +29,10 @@ func (a SuggestApp) AnalysisPath(deps []core_domain.JClassNode) []api_domain.Sug
 
 func factorySuggest(clz core_domain.JClassNode, suggests []api_domain.Suggest) []api_domain.Suggest {
 	var constructorCount = 0
-	var longestParaConstructorMethod = clz.Methods[0]
+	var longestParaConstructorMethod = clz.Functions[0]
 
 	var currentSuggestList []api_domain.Suggest = nil
-	for _, method := range clz.Methods {
+	for _, method := range clz.Functions {
 		if method.IsConstructor {
 			constructorCount++
 

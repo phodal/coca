@@ -51,7 +51,7 @@ func findRelatedMethodParameters(model *EvaluateModel, list []core_domain.CodeFu
 
 func (s Service) Evaluate(result *EvaluateModel, node core_domain.JClassNode) {
 	var methodNameArray [][]string
-	for _, method := range node.Methods {
+	for _, method := range node.Functions {
 		methodNameArray = append(methodNameArray, SplitCamelcase(method.Name))
 	}
 
@@ -69,7 +69,7 @@ func (s Service) Evaluate(result *EvaluateModel, node core_domain.JClassNode) {
 	//}
 
 	if s.enableAbstractParameters() {
-		for _, method := range node.Methods {
+		for _, method := range node.Functions {
 			PARAMETERR_LENGTH_LIMIT := 4
 			if len(method.Parameters) >= PARAMETERR_LENGTH_LIMIT {
 				longParameterList = append(longParameterList, method)
@@ -78,7 +78,7 @@ func (s Service) Evaluate(result *EvaluateModel, node core_domain.JClassNode) {
 	}
 
 	if s.enableSameReturnType() {
-		for _, method := range node.Methods {
+		for _, method := range node.Functions {
 			if !method.IsJavaLangReturnType() {
 				methodType := method.ReturnType
 

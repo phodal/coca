@@ -31,7 +31,7 @@ func TestRenameMethodApp(t *testing.T) {
 	RenameMethodApp(callNodes).Refactoring(string(configBytes))
 
 	newnodes := callApp.AnalysisPath(codePath, classes, identifiers)
-	g.Expect(newnodes[0].Methods[0].Name).To(Equal("demo"))
+	g.Expect(newnodes[0].Functions[0].Name).To(Equal("demo"))
 
 	testhelper.ResetGitDir(codePath)
 }

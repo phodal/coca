@@ -23,7 +23,7 @@ func (a TbsApp) AnalysisPath(deps []core_domain.JClassNode, identifiersMap map[s
 	var results []TestBadSmell = nil
 	callMethodMap := core_domain.BuildCallMethodMap(deps)
 	for _, clz := range deps {
-		for _, method := range clz.Methods {
+		for _, method := range clz.Functions {
 			if !method.IsJunitTest() {
 				continue
 			}

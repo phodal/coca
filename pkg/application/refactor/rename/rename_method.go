@@ -32,14 +32,14 @@ func startParse(nodes []core_domain.JClassNode, relates []support.RefactorChange
 			newInfo := support.BuildMethodPackageInfo(related.NewObj)
 
 			if pkgNode.Package+pkgNode.Class == oldInfo.Package+oldInfo.Class {
-				for _, method := range pkgNode.Methods {
+				for _, method := range pkgNode.Functions {
 					if method.Name == oldInfo.Method {
 						updateSelfRefs(pkgNode, method, newInfo)
 					}
 				}
 			}
 
-			for _, method := range pkgNode.Methods {
+			for _, method := range pkgNode.Functions {
 				for _, methodCall := range method.MethodCalls {
 					if methodCall.Package+methodCall.Class == oldInfo.Package+oldInfo.Class {
 						if methodCall.MethodName == oldInfo.Method {

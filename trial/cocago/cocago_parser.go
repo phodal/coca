@@ -119,8 +119,6 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 
 	dataStruct := core_domain.CodeDataStruct{
 		Name:            ident,
-		ID:              "",
-		MemberIds:       nil,
 		InOutProperties: properties,
 	}
 

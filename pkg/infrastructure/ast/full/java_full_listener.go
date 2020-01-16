@@ -60,7 +60,7 @@ func initClass() {
 	currentClz = ""
 	currentClzExtend = ""
 	currentMethod = core_domain.NewJMethod()
-	currentNode.MethodCalls = nil
+	currentNode.FunctionCalls = nil
 
 	methodMap = make(map[string]core_domain.CodeFunction)
 	methodCalls = nil
@@ -104,8 +104,8 @@ func (s *JavaFullListener) exitBody() {
 		return
 	}
 
-	if currentNode.Type == "InnerClass" && len(classNodeQueue) >= 1 {
-		classNodeQueue[0].InnerClass = append(currentNode.InnerClass, *currentNode)
+	if currentNode.Type == "InnerStructures" && len(classNodeQueue) >= 1 {
+		classNodeQueue[0].InnerStructures = append(currentNode.InnerStructures, *currentNode)
 	} else {
 		classNodes = append(classNodes, *currentNode)
 	}
@@ -139,7 +139,7 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	// TODO: support inner class
 	if currentNode.Class != "" {
 		classNodeQueue = append(classNodeQueue, *currentNode)
-		currentType = "InnerClass"
+		currentType = "InnerStructures"
 	} else {
 		currentType = "Class"
 	}
@@ -445,16 +445,16 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
 		creatorNode := &core_domain.JClassNode{
-			Package:     currentPkg,
-			Class:       text,
-			Type:        "CreatorClass",
-			FilePath:    "",
-			Fields:      nil,
-			Methods:     nil,
-			MethodCalls: nil,
-			Extend:      "",
-			Implements:  nil,
-			Annotations: nil,
+			Package:       currentPkg,
+			Class:         text,
+			Type:          "CreatorClass",
+			FilePath:      "",
+			Fields:        nil,
+			Functions:     nil,
+			FunctionCalls: nil,
+			Extend:        "",
+			Implements:    nil,
+			Annotations:   nil,
 		}
 
 		currentCreatorNode = *creatorNode
@@ -609,7 +609,7 @@ func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 			Position: position,
 		}
 
-		currentNode.MethodCalls = append(currentNode.MethodCalls, *jMethodCall)
+		currentNode.FunctionCalls = append(currentNode.FunctionCalls, *jMethodCall)
 	}
 }
 

@@ -22,7 +22,7 @@ func buildMethodsFromDeps(clzs []core_domain.JClassNode) string_helper.PairList 
 	var methodsName []string
 	var methodStr string
 	for _, clz := range clzs {
-		for _, method := range clz.Methods {
+		for _, method := range clz.Functions {
 			methodName := method.Name
 			methodsName = append(methodsName, methodName)
 			methodStr = methodStr + " " + methodName

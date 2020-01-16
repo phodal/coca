@@ -29,7 +29,7 @@ func (c RCallGraph) Analysis(funcName string, clzs []core_domain.JClassNode, wri
 func BuildProjectMethodMap(clzs []core_domain.JClassNode) map[string]int {
 	var maps = make(map[string]int)
 	for _, clz := range clzs {
-		for _, method := range clz.Methods {
+		for _, method := range clz.Functions {
 			maps[method.BuildFullMethodName(clz)] = 1
 		}
 	}
@@ -40,7 +40,7 @@ func BuildProjectMethodMap(clzs []core_domain.JClassNode) map[string]int {
 func BuildRCallMethodMap(parserDeps []core_domain.JClassNode, projectMaps map[string]int) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range parserDeps {
-		for _, method := range clz.Methods {
+		for _, method := range clz.Functions {
 			var caller = method.BuildFullMethodName(clz)
 			for _, jMethodCall := range method.MethodCalls {
 				if jMethodCall.Class != "" {

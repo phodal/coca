@@ -91,7 +91,7 @@ func escapeStr(caller string) string {
 func BuildMethodMap(clzs []core_domain.JClassNode) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range clzs {
-		for _, method := range clz.Methods {
+		for _, method := range clz.Functions {
 			methodName := method.BuildFullMethodName(clz)
 			methodMap[methodName] = method.GetAllCallString()
 		}

@@ -18,7 +18,7 @@ func Refactoring(parsedDeps []core_domain.JClassNode) []string {
 			sourceClasses[className] = className
 		}
 
-		for _, method := range node.Methods {
+		for _, method := range node.Functions {
 			for _, methodCall := range method.MethodCalls {
 				if strings.Contains(methodCall.Package, analysisPackage) {
 					className := methodCall.Package + "." + methodCall.Class

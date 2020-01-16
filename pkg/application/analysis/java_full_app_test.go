@@ -33,7 +33,7 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
-	g.Expect(len(callNodes[0].Methods)).To(Equal(3))
+	g.Expect(len(callNodes[0].Functions)).To(Equal(3))
 }
 
 func getCallNodes(codePath string) []core_domain.JClassNode {
@@ -59,7 +59,7 @@ func TestLambda_Express(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[1].Methods {
+	for _, c := range callNodes[1].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -77,11 +77,11 @@ func TestInterface(t *testing.T) {
 
 	methodMap := make(map[string]core_domain.CodeFunction)
 
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
-	g.Expect(len(callNodes[0].Methods)).To(Equal(6))
+	g.Expect(len(callNodes[0].Functions)).To(Equal(6))
 	g.Expect(methodMap["count"].Name).To(Equal("count"))
 }
 
@@ -94,7 +94,7 @@ func TestAnnotation(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -111,7 +111,7 @@ func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -128,7 +128,7 @@ func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -148,7 +148,7 @@ func Test_CreatorAnnotation(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -164,7 +164,7 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -180,7 +180,7 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodMap := make(map[string]core_domain.CodeFunction)
-	for _, c := range callNodes[0].Methods {
+	for _, c := range callNodes[0].Functions {
 		methodMap[c.Name] = c
 	}
 
@@ -196,7 +196,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodCallMap := make(map[string]core_domain.CodeCall)
-	for _, method := range callNodes[0].Methods {
+	for _, method := range callNodes[0].Functions {
 		for _, call := range method.MethodCalls {
 			methodCallMap[call.MethodName] = call
 		}
@@ -215,7 +215,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 	callNodes := getCallNodes(codePath)
 
 	methodCallMap := make(map[string]core_domain.CodeCall)
-	for _, method := range callNodes[0].Methods {
+	for _, method := range callNodes[0].Functions {
 		for _, call := range method.MethodCalls {
 			methodCallMap[call.MethodName] = call
 		}
@@ -228,14 +228,14 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 func Test_InnerClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/abug/InnerClass.java"
+	codePath := "../../../_fixtures/abug/InnerStructures.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
 
 	g.Expect(len(callNodes)).To(Equal(1))
 	g.Expect(callNodes[0].Class).To(Equal("Outer"))
-	g.Expect(callNodes[0].InnerClass[0].Class).To(Equal("Inner"))
+	g.Expect(callNodes[0].InnerStructures[0].Class).To(Equal("Inner"))
 }
 
 func Test_DoubleClass(t *testing.T) {

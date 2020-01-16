@@ -15,17 +15,14 @@ func BuildAnnotation(ctx *parser.AnnotationContext) jdomain.Annotation {
 		for _, pair := range pairs {
 			pairCtx := pair.(*parser.ElementValuePairContext)
 			pairCtx.ElementValue()
-			annotation.ValuePairs = append(annotation.ValuePairs, jdomain.AnnotationKeyValue{
-				Key:   pairCtx.IDENTIFIER().GetText(),
-				Value: pairCtx.ElementValue().GetText(),
-			})
+
+			key := pairCtx.IDENTIFIER().GetText()
+			value := pairCtx.ElementValue().GetText()
+			annotation.ValuePairs = append(annotation.ValuePairs, jdomain.NewAnnotationKeyValue(key, value))
 		}
 	} else if ctx.ElementValue() != nil {
 		value := ctx.ElementValue().GetText()
-		annotation.ValuePairs = append(annotation.ValuePairs, jdomain.AnnotationKeyValue{
-			Key:   value,
-			Value: value,
-		})
+		annotation.ValuePairs = append(annotation.ValuePairs, jdomain.NewAnnotationKeyValue(value, value))
 	}
 
 	return annotation

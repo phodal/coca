@@ -7,4 +7,3 @@ type CodeFile struct {
 	Members        []*CodeMember
 	DataStructures []CodeDataStruct
 }
-

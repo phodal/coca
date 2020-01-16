@@ -10,6 +10,13 @@ type AnnotationKeyValue struct {
 	Value string
 }
 
+func NewAnnotationKeyValue(key string, value string) AnnotationKeyValue {
+	return AnnotationKeyValue{
+		Key:   key,
+		Value: value,
+	}
+}
+
 func NewAnnotation() Annotation {
 	return Annotation{
 		QualifiedName: "",

@@ -1,7 +1,5 @@
 package core_domain
 
-var methods []CodeFunction
-
 type JIdentifier struct {
 	Package     string
 	ClassName   string
@@ -14,17 +12,7 @@ type JIdentifier struct {
 }
 
 func NewJIdentifier() *JIdentifier {
-	identifier := &JIdentifier{"", "", "", "", nil, nil, nil, nil}
-	methods = nil
-	return identifier
-}
-
-func (identifier *JIdentifier) AddMethod(method CodeFunction) {
-	methods = append(methods, method)
-}
-
-func (identifier *JIdentifier) GetMethods() []CodeFunction {
-	return methods
+	return &JIdentifier{}
 }
 
 func (identifier *JIdentifier) GetClassFullName() string {

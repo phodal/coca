@@ -66,7 +66,6 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	hasEnterClass = false
 	if currentNode.ClassName != "" {
-		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
 	currentNode = core_domain.NewJIdentifier()
@@ -75,7 +74,6 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = false
 	if currentNode.ClassName != "" {
-		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
 	currentNode = core_domain.NewJIdentifier()
@@ -100,7 +98,7 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 }
 
 func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	currentNode.AddMethod(currentMethod)
+	currentNode.Methods = append(currentNode.Methods, currentMethod)
 }
 
 func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
@@ -137,7 +135,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	currentNode.AddMethod(currentMethod)
+	currentNode.Methods = append(currentNode.Methods, currentMethod)
 	currentMethod = core_domain.NewJMethod()
 }
 
@@ -186,7 +184,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 }
 
 func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	currentNode.AddMethod(currentMethod)
+	currentNode.Methods = append(currentNode.Methods, currentMethod)
 	currentMethod = core_domain.NewJMethod()
 }
 

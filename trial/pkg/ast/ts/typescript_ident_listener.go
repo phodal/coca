@@ -282,13 +282,13 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 
 	method.Name = ctx.Identifier().GetText()
 	ast_util.AddPosition(&method, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
-
-	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
-	FillMethodFromCallSignature(callSignatureContext, &method, nil)
-
 	function := &trial.CodeFunction{
 		Name: ctx.Identifier().GetText(),
 	}
+	
+	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
+	FillMethodFromCallSignature(callSignatureContext, &method, function)
+
 	ast_util.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if s.currentNode == nil {
@@ -314,6 +314,7 @@ func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureConte
 		typeAnnotation := BuildTypeAnnotation(annotationContext)
 		method.Type = typeAnnotation
 
-		function.ReturnTypes = append(function.ReturnTypes, *function.BuildSingleReturnType(typeAnnotation))
+		returnType := function.BuildSingleReturnType(typeAnnotation)
+		function.ReturnTypes = append(function.ReturnTypes, *returnType)
 	}
 }

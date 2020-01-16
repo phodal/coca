@@ -81,11 +81,16 @@ func BuildMethodParameter(context *parser.ParameterListContext) ([]domain.JParam
 	case *parser.RequiredParameterListContext:
 		listContext := x
 
-		parameters = append(parameters, buildRequireParameterList(listContext)...)
+		list, properties := buildRequireParameterList(listContext)
+		parameters = append(parameters, list...)
+		codeParameters = append(codeParameters, properties...)
 
 		if context.RestParameter() != nil {
 			restParamCtx := context.RestParameter().(*parser.RestParameterContext)
-			parameters = append(parameters, buildRestParameters(restParamCtx))
+			restParameters, codeProperty := buildRestParameters(restParamCtx)
+
+			parameters = append(parameters, restParameters)
+			codeParameters = append(codeParameters, codeProperty)
 		}
 	case *parser.PredefinedTypeContext:
 		predefinedTypeContext := x
@@ -104,33 +109,41 @@ func BuildMethodParameter(context *parser.ParameterListContext) ([]domain.JParam
 	return parameters, codeParameters
 }
 
-func buildRestParameters(ctx *parser.RestParameterContext) domain.JParameter {
+func buildRestParameters(ctx *parser.RestParameterContext) (domain.JParameter, trial.CodeProperty) {
 	context := ctx.GetChild(1).(*parser.RequiredParameterContext)
 	return buildRequiredParameter(context)
 }
 
-func buildRequireParameterList(listContext *parser.RequiredParameterListContext) []domain.JParameter {
+func buildRequireParameterList(listContext *parser.RequiredParameterListContext) ([]domain.JParameter, []trial.CodeProperty) {
 	var requireParamsList []domain.JParameter = nil
+	var requireCodeParams []trial.CodeProperty = nil
+
 	for _, requiredParameter := range listContext.AllRequiredParameter() {
 		paramCtx := requiredParameter.(*parser.RequiredParameterContext)
-		parameter := buildRequiredParameter(paramCtx)
+		parameter, property := buildRequiredParameter(paramCtx)
 		requireParamsList = append(requireParamsList, parameter)
+
+		requireCodeParams = append(requireCodeParams, property)
 	}
-	return requireParamsList
+	return requireParamsList, requireCodeParams
 }
 
-func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) domain.JParameter {
-	name := paramCtx.IdentifierOrPattern().GetText()
+func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) (domain.JParameter, trial.CodeProperty) {
 	paramType := ""
 	if paramCtx.TypeAnnotation() != nil {
 		annotationContext := paramCtx.TypeAnnotation().(*parser.TypeAnnotationContext)
 		paramType = BuildTypeAnnotation(annotationContext)
 	}
 	parameter := domain.JParameter{
-		Name: name,
+		Name: paramCtx.IdentifierOrPattern().GetText(),
 		Type: paramType,
 	}
-	return parameter
+	codeParamter := trial.CodeProperty{
+		TypeName: paramCtx.IdentifierOrPattern().GetText(),
+		TypeType: paramType,
+	}
+
+	return parameter, codeParamter
 }
 
 func BuildTypeAnnotation(annotationContext *parser.TypeAnnotationContext) string {

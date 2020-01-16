@@ -68,13 +68,18 @@ public abstract class TypeScriptBaseLexer extends Lexer
 
     protected void ProcessOpenBrace()
     {
-        useStrictCurrent = scopeStrictModes.size() > 0 && scopeStrictModes.peek() ? true : useStrictDefault;
+        if (scopeStrictModes.size() > 0 && scopeStrictModes.peek()) {
+            useStrictCurrent = true;
+        } else {
+            useStrictCurrent = useStrictDefault;
+        }
         scopeStrictModes.push(useStrictCurrent);
     }
 
     protected void ProcessCloseBrace()
     {
-        useStrictCurrent = scopeStrictModes.size() > 0 ? scopeStrictModes.pop() : useStrictDefault;
+        if (scopeStrictModes.size() > 0) useStrictCurrent = scopeStrictModes.pop();
+        else useStrictCurrent = useStrictDefault;
     }
 
     protected void ProcessStringLiteral()

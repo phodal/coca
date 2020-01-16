@@ -1,14 +1,19 @@
 package parser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import (
+	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/phodal/coca/pkg/infrastructure/container"
+)
+
+var scopeStrictModes *container.Stack
+
+func init() {
+	scopeStrictModes = container.NewStack()
+}
 
 // TypeScriptBaseLexer state
 type TypeScriptBaseLexer struct {
 	*antlr.BaseLexer
-
-	scopeStrictModes []bool
-	stackLength      int
-	stackIx          int
 
 	lastToken        antlr.Token
 	useStrictDefault bool
@@ -19,26 +24,18 @@ func (l *TypeScriptBaseLexer) IsStartOfFile() bool {
 	return l.lastToken == nil
 }
 
-func (l *TypeScriptBaseLexer) pushStrictModeScope(v bool) {
-	if l.stackIx == l.stackLength {
-		l.scopeStrictModes = append(l.scopeStrictModes, v)
-		l.stackLength++
-	} else {
-		l.scopeStrictModes[l.stackIx] = v
-	}
-	l.stackIx++
-}
-
-func (l *TypeScriptBaseLexer) popStrictModeScope() bool {
-	l.stackIx--
-	v := l.scopeStrictModes[l.stackIx]
-	l.scopeStrictModes[l.stackIx] = false
-	return v
-}
-
 // IsStrictMode is self explanatory.
 func (l *TypeScriptBaseLexer) IsStrictMode() bool {
 	return l.useStrictCurrent
+}
+
+func (l *TypeScriptBaseLexer) SetUseStrictDefault(value bool) {
+	l.useStrictCurrent = value
+	l.useStrictDefault = value
+}
+
+func (l *TypeScriptBaseLexer) GetStrictDefault() bool {
+	return l.useStrictDefault
 }
 
 // NextToken from the character stream.
@@ -55,18 +52,18 @@ func (l *TypeScriptBaseLexer) NextToken() antlr.Token {
 // lexing, we push a new scope everytime.
 func (l *TypeScriptBaseLexer) ProcessOpenBrace() {
 	l.useStrictCurrent = l.useStrictDefault
-	if l.stackIx > 0 && l.scopeStrictModes[l.stackIx-1] {
+	if scopeStrictModes.Len() > 0 && scopeStrictModes.Peak().(bool) {
 		l.useStrictCurrent = true
 	}
-	l.pushStrictModeScope(l.useStrictCurrent)
+	scopeStrictModes.Push(l.useStrictCurrent)
 }
 
 // ProcessCloseBrace is called when a } is encountered during
 // lexing, we pop a scope unless we're inside global scope.
 func (l *TypeScriptBaseLexer) ProcessCloseBrace() {
 	l.useStrictCurrent = l.useStrictDefault
-	if l.stackIx > 0 {
-		l.useStrictCurrent = l.popStrictModeScope()
+	if scopeStrictModes.Len() > 0 {
+		l.useStrictCurrent = scopeStrictModes.Pop().(bool)
 	}
 }
 
@@ -74,11 +71,11 @@ func (l *TypeScriptBaseLexer) ProcessCloseBrace() {
 func (l *TypeScriptBaseLexer) ProcessStringLiteral() {
 	if l.lastToken == nil || l.lastToken.GetTokenType() == TypeScriptLexerOpenBrace {
 		if l.GetText() == `"use strict"` || l.GetText() == "'use strict'" {
-			if l.stackIx > 0 {
-				l.popStrictModeScope()
+			if scopeStrictModes.Len() > 0 {
+				scopeStrictModes.Pop()
 			}
 			l.useStrictCurrent = true
-			l.pushStrictModeScope(l.useStrictCurrent)
+			scopeStrictModes.Push(l.useStrictCurrent)
 		}
 	}
 }
@@ -90,12 +87,19 @@ func (l *TypeScriptBaseLexer) IsRegexPossible() bool {
 		return true
 	}
 	switch l.lastToken.GetTokenType() {
-	case TypeScriptLexerIdentifier, TypeScriptLexerNullLiteral,
-		TypeScriptLexerBooleanLiteral, TypeScriptLexerThis,
-		TypeScriptLexerCloseBracket, TypeScriptLexerCloseParen,
-		TypeScriptLexerOctalIntegerLiteral, TypeScriptLexerDecimalLiteral,
-		TypeScriptLexerHexIntegerLiteral, TypeScriptLexerStringLiteral,
-		TypeScriptLexerPlusPlus, TypeScriptLexerMinusMinus:
+	case
+		TypeScriptLexerIdentifier,
+		TypeScriptLexerNullLiteral,
+		TypeScriptLexerBooleanLiteral,
+		TypeScriptLexerThis,
+		TypeScriptLexerCloseBracket,
+		TypeScriptLexerCloseParen,
+		TypeScriptLexerOctalIntegerLiteral,
+		TypeScriptLexerDecimalLiteral,
+		TypeScriptLexerHexIntegerLiteral,
+		TypeScriptLexerStringLiteral,
+		TypeScriptLexerPlusPlus,
+		TypeScriptLexerMinusMinus:
 		return false
 	default:
 		return true

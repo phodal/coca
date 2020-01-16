@@ -3,7 +3,6 @@ package common_listener
 import (
 	"github.com/phodal/coca/languages/java"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/jdomain"
 	"reflect"
 )
 
@@ -29,7 +28,7 @@ func BuildAnnotation(ctx *parser.AnnotationContext) core_domain.CodeAnnotation {
 	return annotation
 }
 
-func BuildAnnotationForMethod(context *parser.ModifierContext, method *jdomain.JMethod) {
+func BuildAnnotationForMethod(context *parser.ModifierContext, method *core_domain.JMethod) {
 	if context.ClassOrInterfaceModifier() != nil {
 		if reflect.TypeOf(context.ClassOrInterfaceModifier().GetChild(0)).String() == "*parser.AnnotationContext" {
 			annotationCtx := context.ClassOrInterfaceModifier().GetChild(0).(*parser.AnnotationContext)

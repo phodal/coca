@@ -2,7 +2,7 @@ package jdomain
 
 import "github.com/phodal/coca/pkg/domain/core_domain"
 
-var methods []JMethod
+var methods []core_domain.JMethod
 
 type JIdentifier struct {
 	Package     string
@@ -11,7 +11,7 @@ type JIdentifier struct {
 	ExtendsName string
 	Extends     []string
 	Implements  []string
-	Methods     []JMethod
+	Methods     []core_domain.JMethod
 	Annotations []core_domain.CodeAnnotation
 }
 
@@ -21,11 +21,11 @@ func NewJIdentifier() *JIdentifier {
 	return identifier
 }
 
-func (identifier *JIdentifier) AddMethod(method JMethod) {
+func (identifier *JIdentifier) AddMethod(method core_domain.JMethod) {
 	methods = append(methods, method)
 }
 
-func (identifier *JIdentifier) GetMethods() []JMethod {
+func (identifier *JIdentifier) GetMethods() []core_domain.JMethod {
 	return methods
 }
 

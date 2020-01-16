@@ -1,6 +1,7 @@
 	package evaluator
 
 import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 )
 
@@ -36,6 +37,6 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []j
 	evaluateModel.Nullable.Items = nullableList
 }
 
-func buildMethodPath(ident jdomain.JIdentifier, method jdomain.JMethod) string {
+func buildMethodPath(ident jdomain.JIdentifier, method core_domain.JMethod) string {
 	return ident.Package + "." + ident.ClassName + "." + method.Name
 }

@@ -40,13 +40,13 @@ func factorySuggest(clz jdomain.JClassNode, suggests []api_domain.Suggest) []api
 				longestParaConstructorMethod = method
 			}
 
-			declLineNum := method.StopLine - method.StartLine
+			declLineNum := method.Position.StopLine - method.Position.StartLine
 			// 参数过多，且在构造函数里调用过多
 			PARAMETER_LINE_OFFSET := 3
 			PARAMETER_METHOD_CALL_OFFSET := 3
 			if declLineNum > len(method.Parameters)-PARAMETER_LINE_OFFSET && (len(method.MethodCalls) > len(method.Parameters)+PARAMETER_METHOD_CALL_OFFSET) {
 				suggest := api_domain.NewSuggest(clz, "factory", "complex constructor")
-				suggest.Line = method.StartLine
+				suggest.Line = method.Position.StartLine
 				currentSuggestList = append(currentSuggestList, suggest)
 			}
 		}

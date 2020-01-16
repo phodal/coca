@@ -59,7 +59,7 @@ func TestLambda_Express(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[1].Methods {
 		methodMap[c.Name] = c
 	}
@@ -76,7 +76,7 @@ func TestInterface(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
@@ -94,7 +94,7 @@ func TestAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -111,7 +111,7 @@ func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -128,7 +128,7 @@ func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -148,7 +148,7 @@ func Test_CreatorAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -164,7 +164,7 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -180,7 +180,7 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]jdomain.JMethod)
+	methodMap := make(map[string]core_domain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}

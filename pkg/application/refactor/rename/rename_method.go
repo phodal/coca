@@ -53,18 +53,21 @@ func startParse(nodes []jdomain.JClassNode, relates []support.RefactorChangeRela
 	}
 }
 
-func methodCallToMethodModel(call core_domain.CodeCall) jdomain.JMethod {
-	return jdomain.JMethod{
-		Name: call.MethodName,
-		Type: call.Type,
-		StartLine: call.Position.StartLine,
+func methodCallToMethodModel(call core_domain.CodeCall) core_domain.JMethod {
+	position := core_domain.CodePosition{
+		StartLine:         call.Position.StartLine,
 		StartLinePosition: call.Position.StartLinePosition,
-		StopLine: call.Position.StopLine,
-		StopLinePosition: call.Position.StopLinePosition,
+		StopLine:          call.Position.StopLine,
+		StopLinePosition:  call.Position.StopLinePosition,
+	}
+	return core_domain.JMethod{
+		Name:     call.MethodName,
+		Type:     call.Type,
+		Position: position,
 	}
 }
 
-func updateSelfRefs(node jdomain.JClassNode, method jdomain.JMethod, info *support.PackageClassInfo) {
+func updateSelfRefs(node jdomain.JClassNode, method core_domain.JMethod, info *support.PackageClassInfo) {
 	path := node.FilePath
 	input, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -74,8 +77,8 @@ func updateSelfRefs(node jdomain.JClassNode, method jdomain.JMethod, info *suppo
 	lines := strings.Split(string(input), "\n")
 
 	for i, line := range lines {
-		if i == method.StartLine-1 {
-			newLine := line[:method.StartLinePosition] + info.Method + line[method.StopLinePosition:]
+		if i == method.Position.StartLine-1 {
+			newLine := line[:method.Position.StartLinePosition] + info.Method + line[method.Position.StopLinePosition:]
 			lines[i] = newLine
 		}
 	}

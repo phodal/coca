@@ -70,14 +70,14 @@ func (a TbsApp) AnalysisPath(deps []jdomain.JClassNode, identifiersMap map[strin
 	return results
 }
 
-func checkAssert(hasAssert bool, clz jdomain.JClassNode, method jdomain.JMethod, results *[]TestBadSmell, testType *string) {
+func checkAssert(hasAssert bool, clz jdomain.JClassNode, method core_domain.JMethod, results *[]TestBadSmell, testType *string) {
 	if !hasAssert {
 		*testType = "UnknownTest"
 		tbs := TestBadSmell{
 			FileName:    clz.FilePath,
 			Type:        *testType,
 			Description: "",
-			Line:        method.StartLine,
+			Line:        method.Position.StartLine,
 		}
 
 		*results = append(*results, tbs)
@@ -85,7 +85,7 @@ func checkAssert(hasAssert bool, clz jdomain.JClassNode, method jdomain.JMethod,
 	}
 }
 
-func updateMethodCallsForSelfCall(method jdomain.JMethod, clz jdomain.JClassNode, callMethodMap map[string]jdomain.JMethod) []core_domain.CodeCall {
+func updateMethodCallsForSelfCall(method core_domain.JMethod, clz jdomain.JClassNode, callMethodMap map[string]core_domain.JMethod) []core_domain.CodeCall {
 	currentMethodCalls := method.MethodCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.Class == clz.Class {
@@ -98,7 +98,7 @@ func updateMethodCallsForSelfCall(method jdomain.JMethod, clz jdomain.JClassNode
 	return currentMethodCalls
 }
 
-func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method jdomain.JMethod, results *[]TestBadSmell, testType *string) {
+func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method core_domain.JMethod, results *[]TestBadSmell, testType *string) {
 	TWO_PARAMETERS := 2
 	if len(call.Parameters) == TWO_PARAMETERS {
 		if call.Parameters[0].TypeValue == call.Parameters[1].TypeValue {
@@ -107,7 +107,7 @@ func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method 
 				FileName:    path,
 				Type:        *testType,
 				Description: "",
-				Line:        method.StartLine,
+				Line:        method.Position.StartLine,
 			}
 
 			*results = append(*results, tbs)
@@ -115,7 +115,7 @@ func checkRedundantAssertionTest(path string, call core_domain.CodeCall, method 
 	}
 }
 
-func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method jdomain.JMethod, testType *string) {
+func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, methodCallMap map[string][]core_domain.CodeCall, method core_domain.JMethod, testType *string) {
 	var isDuplicateAssert = false
 	for _, methodCall := range methodCallMap {
 		if len(methodCall) >= constants.DuplicatedAssertionLimitLength {
@@ -131,21 +131,21 @@ func checkDuplicateAssertTest(clz jdomain.JClassNode, results *[]TestBadSmell, m
 			FileName:    clz.FilePath,
 			Type:        *testType,
 			Description: "",
-			Line:        method.StartLine,
+			Line:        method.Position.StartLine,
 		}
 
 		*results = append(*results, tbs)
 	}
 }
 
-func checkSleepyTest(path string, method core_domain.CodeCall, jMethod jdomain.JMethod, results *[]TestBadSmell, testType *string) {
-	if method.IsThreadSleep() {
+func checkSleepyTest(path string, call core_domain.CodeCall, jMethod core_domain.JMethod, results *[]TestBadSmell, testType *string) {
+	if call.IsThreadSleep() {
 		*testType = "SleepyTest"
 		tbs := TestBadSmell{
 			FileName:    path,
 			Type:        *testType,
 			Description: "",
-			Line:        method.Position.StartLine,
+			Line:        call.Position.StartLine,
 		}
 
 		*results = append(*results, tbs)
@@ -166,7 +166,7 @@ func checkRedundantPrintTest(path string, mCall core_domain.CodeCall, results *[
 	}
 }
 
-func checkEmptyTest(path string, annotation core_domain.CodeAnnotation, results *[]TestBadSmell, method jdomain.JMethod, testType *string) {
+func checkEmptyTest(path string, annotation core_domain.CodeAnnotation, results *[]TestBadSmell, method core_domain.JMethod, testType *string) {
 	if annotation.IsTest() {
 		if len(method.MethodCalls) <= 1 {
 			*testType = "EmptyTest"
@@ -174,7 +174,7 @@ func checkEmptyTest(path string, annotation core_domain.CodeAnnotation, results 
 				FileName:    path,
 				Type:        *testType,
 				Description: "",
-				Line:        method.StartLine,
+				Line:        method.Position.StartLine,
 			}
 
 			*results = append(*results, tbs)

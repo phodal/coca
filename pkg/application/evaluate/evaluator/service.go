@@ -1,6 +1,7 @@
 package evaluator
 
 import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/apriori"
 	"github.com/phodal/coca/pkg/infrastructure/constants"
@@ -12,7 +13,7 @@ type Service struct {
 
 var serviceNodeMap map[string]jdomain.JClassNode
 var returnTypeMap map[string][]string
-var longParameterList []jdomain.JMethod
+var longParameterList []core_domain.JMethod
 
 func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []jdomain.JClassNode, nodeMap map[string]jdomain.JClassNode, identifiers []jdomain.JIdentifier) {
 	serviceNodeMap = nodeMap
@@ -27,7 +28,7 @@ func (s Service) EvaluateList(evaluateModel *EvaluateModel, nodes []jdomain.JCla
 	findRelatedMethodParameters(evaluateModel, longParameterList)
 }
 
-func findRelatedMethodParameters(model *EvaluateModel, list []jdomain.JMethod) {
+func findRelatedMethodParameters(model *EvaluateModel, list []core_domain.JMethod) {
 	var dataset [][]string
 	for _, method := range list {
 		var paramTypeList []string

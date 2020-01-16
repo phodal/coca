@@ -65,7 +65,7 @@ func SummaryMethodIdentifier(identifiers []jdomain.JIdentifier, result *evaluato
 
 			if method.IsGetterSetter() {
 				result.Summary.NormalMethodCount++
-				methodLength := method.StopLine - method.StartLine + 1
+				methodLength := method.Position.StopLine - method.Position.StartLine + 1
 				result.Summary.TotalMethodLength = result.Summary.TotalMethodLength + methodLength
 
 				methodLengthArray = append(methodLengthArray, float64(methodLength))

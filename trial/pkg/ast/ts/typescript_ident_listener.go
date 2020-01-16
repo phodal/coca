@@ -103,7 +103,9 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 
 	objectTypeCtx := ctx.ObjectType().(*parser.ObjectTypeContext)
 	if objectTypeCtx.TypeBody() != nil {
-		typeMemberListCtx := objectTypeCtx.TypeBody().(*parser.TypeBodyContext).TypeMemberList().(*parser.TypeMemberListContext)
+		bodyCtx := objectTypeCtx.TypeBody().(*parser.TypeBodyContext)
+		typeMemberListCtx := bodyCtx.TypeMemberList().(*parser.TypeMemberListContext)
+
 		BuildInterfaceTypeBody(typeMemberListCtx, s.currentNode, s.currentDataStruct)
 	}
 }
@@ -152,7 +154,7 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 			Name: typeValue,
 		}
 		param := trial.CodeProperty{
-			Name:     "any",
+			TypeName:     "any",
 			TypeType: typeType,
 		}
 
@@ -240,6 +242,17 @@ func (s *TypeScriptIdentListener) HandlePropertyMember(propertyMemberCtx *parser
 			field.Type = BuildTypeAnnotation(propertyMemberCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
 		}
 		node.Fields = append(s.currentNode.Fields, field)
+
+		modifier := propertyMemberCtx.PropertyMemberBase().GetText()
+		codeField := trial.CodeField{
+			TypeValue: propertyMemberCtx.PropertyName().GetText(),
+		}
+		codeField.Modifiers = append(codeField.Modifiers, modifier)
+		if propertyMemberCtx.TypeAnnotation() != nil {
+			codeField.TypeType = BuildTypeAnnotation(propertyMemberCtx.TypeAnnotation().(*parser.TypeAnnotationContext))
+		}
+
+		dataStruct.Fields = append(dataStruct.Fields, codeField)
 	}
 
 	if propertyMemberCtx.GetChildCount() >= callSignatureSizePos {
@@ -285,7 +298,7 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	function := &trial.CodeFunction{
 		Name: ctx.Identifier().GetText(),
 	}
-	
+
 	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
 	FillMethodFromCallSignature(callSignatureContext, &method, function)
 
@@ -304,9 +317,10 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 func FillMethodFromCallSignature(callSignatureContext *parser.CallSignatureContext, method *domain.JMethod, function *trial.CodeFunction) {
 	if callSignatureContext.ParameterList() != nil {
 		parameterListContext := callSignatureContext.ParameterList().(*parser.ParameterListContext)
-		methodParameters, _ := BuildMethodParameter(parameterListContext)
+		methodParameters, functionParameters := BuildMethodParameter(parameterListContext)
 
 		method.Parameters = append(method.Parameters, methodParameters...)
+		function.Parameters = append(function.Parameters, functionParameters...)
 	}
 
 	if callSignatureContext.TypeAnnotation() != nil {

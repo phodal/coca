@@ -131,20 +131,17 @@ export interface IPerson {
 }
 `, "")
 
-	results := codeFile.ClassNodes
+	firstDataStruct := codeFile.DataStructures[0]
 
-	firstMethod := results[0].Methods[0]
-	secondMethod := results[0].Methods[1]
+	g.Expect(len(firstDataStruct.Fields)).To(Equal(2))
+	g.Expect(len(firstDataStruct.Functions)).To(Equal(2))
 
-	g.Expect(len(results[0].Fields)).To(Equal(2))
-	g.Expect(len(results[0].Methods)).To(Equal(2))
-
-	//fmt.Println(codeFile.DataStructures)
-	g.Expect(len(codeFile.DataStructures[0].Functions)).To(Equal(2))
+	firstMethod := firstDataStruct.Functions[0]
+	secondMethod := firstDataStruct.Functions[1]
 
 	g.Expect(firstMethod.Name).To(Equal("getSalary"))
 	g.Expect(secondMethod.Name).To(Equal("getManagerName"))
-	g.Expect(secondMethod.Parameters[0].Type).To(Equal("number"))
+	g.Expect(secondMethod.Parameters[0].TypeType).To(Equal("number"))
 }
 
 func Test_ShouldGetDefaultFunctionName(t *testing.T) {
@@ -153,19 +150,21 @@ func Test_ShouldGetDefaultFunctionName(t *testing.T) {
 
 	app := new(TypeScriptApiApp)
 
-	results := app.Analysis(`
+	codeFile := app.Analysis(`
 function Sum(x: number, y: number) : void {
     console.log('processNumKeyPairs: key = ' + key + ', value = ' + value)
     return x + y;
 }
-`, "").ClassNodes
+`, "")
 
-	firstMethod := results[0].Methods[0]
-	parameters := firstMethod.Parameters
-	g.Expect(firstMethod.Type).To(Equal("void"))
-	g.Expect(len(parameters)).To(Equal(2))
-	g.Expect(parameters[0].Name).To(Equal("x"))
-	g.Expect(parameters[0].Type).To(Equal("number"))
+	ds := codeFile.DataStructures
+
+	firstFunction := ds[0].Functions[0]
+	params := firstFunction.Parameters
+	g.Expect(firstFunction.ReturnTypes[0].TypeType).To(Equal("void"))
+	g.Expect(len(params)).To(Equal(2))
+	g.Expect(params[0].TypeName).To(Equal("x"))
+	g.Expect(params[0].TypeType).To(Equal("number"))
 }
 
 func Test_ShouldHandleRestParameters(t *testing.T) {
@@ -174,17 +173,17 @@ func Test_ShouldHandleRestParameters(t *testing.T) {
 
 	app := new(TypeScriptApiApp)
 
-	results := app.Analysis(`
+	codeFile := app.Analysis(`
 function buildName(firstName: string, ...restOfName: string[]) {
   return firstName + " " + restOfName.join(" ");
 }
-`, "").ClassNodes
+`, "")
 
-	firstMethod := results[0].Methods[0]
-	parameters := firstMethod.Parameters
-	g.Expect(len(parameters)).To(Equal(2))
-	g.Expect(parameters[0].Name).To(Equal("firstName"))
-	g.Expect(parameters[1].Name).To(Equal("restOfName"))
+	firstFunction:= codeFile.DataStructures[0].Functions[0]
+	params := firstFunction.Parameters
+	g.Expect(len(params)).To(Equal(2))
+	g.Expect(params[0].TypeName).To(Equal("firstName"))
+	g.Expect(params[1].TypeName).To(Equal("restOfName"))
 }
 
 func Test_ShouldGetClassFields(t *testing.T) {
@@ -194,11 +193,17 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	app := new(TypeScriptApiApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
-	results := app.Analysis(string(code), "").ClassNodes
+	codeFile := app.Analysis(string(code), "")
+
+	results := codeFile.ClassNodes
 
 	fields := results[1].Fields
 	g.Expect(len(fields)).To(Equal(5))
 	g.Expect(fields[0].Modifier).To(Equal("public"))
+
+	codeFields := codeFile.DataStructures[1].Fields
+	g.Expect(len(codeFields)).To(Equal(5))
+	g.Expect(codeFields[0].Modifiers[0]).To(Equal("public"))
 }
 
 func Test_ShouldReturnBlockImports(t *testing.T) {

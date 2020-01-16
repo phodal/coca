@@ -2,7 +2,7 @@ package analysis
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"path/filepath"
 	"testing"
 )
@@ -36,7 +36,7 @@ func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 	g.Expect(len(callNodes[0].Methods)).To(Equal(3))
 }
 
-func getCallNodes(codePath string) []domain.JClassNode {
+func getCallNodes(codePath string) []jdomain.JClassNode {
 	identifierApp := NewJavaIdentifierApp()
 	iNodes := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
@@ -58,7 +58,7 @@ func TestLambda_Express(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[1].Methods {
 		methodMap[c.Name] = c
 	}
@@ -75,7 +75,7 @@ func TestInterface(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
@@ -93,7 +93,7 @@ func TestAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -110,7 +110,7 @@ func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -127,7 +127,7 @@ func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -147,7 +147,7 @@ func Test_CreatorAnnotation(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -163,7 +163,7 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -179,7 +179,7 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodMap := make(map[string]domain.JMethod)
+	methodMap := make(map[string]jdomain.JMethod)
 	for _, c := range callNodes[0].Methods {
 		methodMap[c.Name] = c
 	}
@@ -195,7 +195,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodCallMap := make(map[string]domain.JMethodCall)
+	methodCallMap := make(map[string]jdomain.JMethodCall)
 	for _, method := range callNodes[0].Methods {
 		for _, call := range method.MethodCalls {
 			methodCallMap[call.MethodName] = call
@@ -213,7 +213,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 
 	callNodes := getCallNodes(codePath)
 
-	methodCallMap := make(map[string]domain.JMethodCall)
+	methodCallMap := make(map[string]jdomain.JMethodCall)
 	for _, method := range callNodes[0].Methods {
 		for _, call := range method.MethodCalls {
 			methodCallMap[call.MethodName] = call

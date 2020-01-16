@@ -2,7 +2,7 @@ package unused
 
 import (
 	"github.com/phodal/coca/pkg/application/refactor/rename/support"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -13,9 +13,9 @@ var parsedChange []support.RefactorChangeRelate
 type RemoveMethodApp struct {
 }
 
-var parsedDeps []domain.JClassNode
+var parsedDeps []jdomain.JClassNode
 
-func RenameMethodApp(deps []domain.JClassNode) *RemoveMethodApp {
+func RenameMethodApp(deps []jdomain.JClassNode) *RemoveMethodApp {
 	parsedDeps = deps
 	return &RemoveMethodApp{}
 }
@@ -25,7 +25,7 @@ func (j *RemoveMethodApp) Refactoring(conf string) {
 	startParse(parsedDeps, parsedChange)
 }
 
-func startParse(nodes []domain.JClassNode, relates []support.RefactorChangeRelate) {
+func startParse(nodes []jdomain.JClassNode, relates []support.RefactorChangeRelate) {
 	for _, pkgNode := range nodes {
 		for _, related := range relates {
 			oldInfo := support.BuildMethodPackageInfo(related.OldObj)
@@ -52,11 +52,11 @@ func startParse(nodes []domain.JClassNode, relates []support.RefactorChangeRelat
 	}
 }
 
-func methodCallToMethodModel(call domain.JMethodCall) domain.JMethod {
-	return domain.JMethod{Name: call.MethodName, Type: call.Type, StartLine: call.StartLine, StartLinePosition: call.StartLinePosition, StopLine: call.StopLine, StopLinePosition: call.StopLinePosition}
+func methodCallToMethodModel(call jdomain.JMethodCall) jdomain.JMethod {
+	return jdomain.JMethod{Name: call.MethodName, Type: call.Type, StartLine: call.StartLine, StartLinePosition: call.StartLinePosition, StopLine: call.StopLine, StopLinePosition: call.StopLinePosition}
 }
 
-func updateSelfRefs(node domain.JClassNode, method domain.JMethod, info *support.PackageClassInfo) {
+func updateSelfRefs(node jdomain.JClassNode, method jdomain.JMethod, info *support.PackageClassInfo) {
 	path := node.FilePath
 	input, err := ioutil.ReadFile(path)
 	if err != nil {

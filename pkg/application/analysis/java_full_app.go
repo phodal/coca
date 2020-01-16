@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/ast"
 	"github.com/phodal/coca/pkg/infrastructure/ast/full"
 	"path/filepath"
@@ -17,15 +17,15 @@ func NewJavaFullApp() JavaFullApp {
 	return JavaFullApp{}
 }
 
-func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []domain.JIdentifier) []domain.JClassNode {
+func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []jdomain.JIdentifier) []jdomain.JClassNode {
 	files := cocafile.GetJavaFiles(codeDir)
 	return j.AnalysisFiles(identNodes, files, classes)
 }
 
-func (j *JavaFullApp) AnalysisFiles(identNodes []domain.JIdentifier, files []string, classes []string) []domain.JClassNode {
-	var nodeInfos []domain.JClassNode
+func (j *JavaFullApp) AnalysisFiles(identNodes []jdomain.JIdentifier, files []string, classes []string) []jdomain.JClassNode {
+	var nodeInfos []jdomain.JClassNode
 
-	var identMap = make(map[string]domain.JIdentifier)
+	var identMap = make(map[string]jdomain.JIdentifier)
 	for _, ident := range identNodes {
 		identMap[ident.GetClassFullName()] = ident
 	}

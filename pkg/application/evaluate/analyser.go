@@ -2,7 +2,7 @@ package evaluate
 
 import (
 	"github.com/phodal/coca/pkg/application/evaluate/evaluator"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"gonum.org/v1/gonum/stat"
 )
 
@@ -13,12 +13,12 @@ func NewEvaluateAnalyser() Analyser {
 	return Analyser{}
 }
 
-func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.JIdentifier) evaluator.EvaluateModel {
-	var servicesNode []domain.JClassNode = nil
+func (a Analyser) Analysis(classNodes []jdomain.JClassNode, identifiers []jdomain.JIdentifier) evaluator.EvaluateModel {
+	var servicesNode []jdomain.JClassNode = nil
 	var evaluation Evaluation
 	var result = evaluator.NewEvaluateModel()
 
-	var nodeMap = make(map[string]domain.JClassNode)
+	var nodeMap = make(map[string]jdomain.JClassNode)
 
 	for _, node := range classNodes {
 		nodeMap[node.Class] = node
@@ -48,7 +48,7 @@ func (a Analyser) Analysis(classNodes []domain.JClassNode, identifiers []domain.
 	return result
 }
 
-func SummaryMethodIdentifier(identifiers []domain.JIdentifier, result *evaluator.EvaluateModel) {
+func SummaryMethodIdentifier(identifiers []jdomain.JIdentifier, result *evaluator.EvaluateModel) {
 	var methodLengthArray []float64
 	var methodCountArray []float64
 	for _, ident := range identifiers {

@@ -6,7 +6,7 @@ import (
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/spf13/cobra"
 	"log"
@@ -31,8 +31,8 @@ var (
 	restApis     []api_domain.RestAPI
 
 	identifiers    = cmd_util.LoadIdentify(apiCmdConfig.DependencePath)
-	identifiersMap = domain.BuildIdentifierMap(identifiers)
-	diMap          = domain.BuildDIMap(identifiers, identifiersMap)
+	identifiersMap = jdomain.BuildIdentifierMap(identifiers)
+	diMap          = jdomain.BuildDIMap(identifiers, identifiersMap)
 )
 
 var apiCmd = &cobra.Command{

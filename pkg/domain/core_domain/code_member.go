@@ -1,12 +1,14 @@
 package core_domain
 
-import "github.com/phodal/coca/pkg/domain"
+import (
+	"github.com/phodal/coca/pkg/domain/jdomain"
+)
 
 type CodeMember struct {
 	ID            string
 	Name          string
 	Type          string
-	ClassNodes    []domain.JClassNode
+	ClassNodes    []jdomain.JClassNode
 	FunctionNodes []CodeFunction
 	Namespace     []string
 	FileID        string

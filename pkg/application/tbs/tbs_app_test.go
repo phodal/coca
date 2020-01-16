@@ -5,7 +5,7 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/application/analysis"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"path/filepath"
 	"testing"
 )
@@ -139,11 +139,11 @@ func buildTbsResult(codePath string) []TestBadSmell {
 	return result
 }
 
-func BuildTestAnalysisResultsByPath(codePath string) (map[string]domain.JIdentifier, []domain.JClassNode) {
+func BuildTestAnalysisResultsByPath(codePath string) (map[string]jdomain.JIdentifier, []jdomain.JClassNode) {
 	files := cocafile.GetJavaTestFiles(codePath)
 
 	identifiers := cmd_util.LoadTestIdentify(files)
-	identifiersMap := domain.BuildIdentifierMap(identifiers)
+	identifiersMap := jdomain.BuildIdentifierMap(identifiers)
 
 	var classes []string = nil
 	for _, node := range identifiers {

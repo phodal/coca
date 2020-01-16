@@ -5,7 +5,7 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	. "github.com/phodal/coca/pkg/application/call"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
@@ -24,7 +24,7 @@ var callGraphCmd = &cobra.Command{
 	Short: "show call graph with specific method",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		var parsedDeps []domain.JClassNode
+		var parsedDeps []jdomain.JClassNode
 		dependence := callCmdConfig.Path
 
 		className := cmd.Flag("className").Value.String()

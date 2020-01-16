@@ -3,13 +3,13 @@ package api
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
-	models "github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 	"reflect"
 	"strings"
 )
 
-var jClassNodes []models.JClassNode
+var jClassNodes []jdomain.JClassNode
 
 var hasEnterClass = false
 var isSpringRestController = false
@@ -22,11 +22,11 @@ var restAPIs []api_domain.RestAPI
 var currentClz string
 var currentPkg string
 
-var identMap map[string]models.JIdentifier
+var identMap map[string]jdomain.JIdentifier
 var imports []string
 var currentImplements = ""
 
-func NewJavaAPIListener(jIdentMap map[string]models.JIdentifier, diMap map[string]string) *JavaAPIListener {
+func NewJavaAPIListener(jIdentMap map[string]jdomain.JIdentifier, diMap map[string]string) *JavaAPIListener {
 	isSpringRestController = false
 	currentClz = ""
 	currentPkg = ""
@@ -300,7 +300,7 @@ func buildMethodParameters(requestBodyClass string) {
 	currentRestAPI.MethodParams = params
 }
 
-func (s *JavaAPIListener) AppendClasses(classes []models.JClassNode) {
+func (s *JavaAPIListener) AppendClasses(classes []jdomain.JClassNode) {
 	jClassNodes = classes
 }
 

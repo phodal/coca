@@ -1,4 +1,4 @@
-package domain
+package jdomain
 
 import (
 	"github.com/phodal/coca/pkg/infrastructure/string_helper"

@@ -1,8 +1,10 @@
 package count
 
-import "github.com/phodal/coca/pkg/domain"
+import (
+	"github.com/phodal/coca/pkg/domain/jdomain"
+)
 
-func BuildCallMap(parserDeps []domain.JClassNode) map[string]int {
+func BuildCallMap(parserDeps []jdomain.JClassNode) map[string]int {
 	var projectMethods = make(map[string]string)
 	for _, clz := range parserDeps {
 		clz.BuildStringMethodMap(projectMethods)

@@ -2,11 +2,11 @@ package testhelper
 
 import (
 	"github.com/phodal/coca/pkg/application/analysis"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"path/filepath"
 )
 
-func BuildAnalysisDeps(codePath string) ([]domain.JClassNode, map[string]domain.JIdentifier, []domain.JIdentifier) {
+func BuildAnalysisDeps(codePath string) ([]jdomain.JClassNode, map[string]jdomain.JIdentifier, []jdomain.JIdentifier) {
 	codePath = filepath.FromSlash(codePath)
 
 	identifierApp := analysis.NewJavaIdentifierApp()
@@ -19,7 +19,7 @@ func BuildAnalysisDeps(codePath string) ([]domain.JClassNode, map[string]domain.
 	callApp := analysis.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
-	identifiersMap := domain.BuildIdentifierMap(identifiers)
+	identifiersMap := jdomain.BuildIdentifierMap(identifiers)
 	return callNodes, identifiersMap, identifiers
 }
 

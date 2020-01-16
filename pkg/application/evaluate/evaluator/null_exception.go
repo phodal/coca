@@ -1,17 +1,17 @@
 	package evaluator
 
 import (
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 )
 
 type NullPointException struct {
 }
 
-func (NullPointException) Evaluate(*EvaluateModel, domain.JClassNode) {
+func (NullPointException) Evaluate(*EvaluateModel, jdomain.JClassNode) {
 
 }
 
-func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []domain.JClassNode, nodeMap map[string]domain.JClassNode, identifiers []domain.JIdentifier) {
+func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []jdomain.JClassNode, nodeMap map[string]jdomain.JClassNode, identifiers []jdomain.JIdentifier) {
 	var nullableList []string = nil
 	var nullableMap = make(map[string]string)
 	for _, ident := range identifiers {
@@ -36,6 +36,6 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []d
 	evaluateModel.Nullable.Items = nullableList
 }
 
-func buildMethodPath(ident domain.JIdentifier, method domain.JMethod) string {
+func buildMethodPath(ident jdomain.JIdentifier, method jdomain.JMethod) string {
 	return ident.Package + "." + ident.ClassName + "." + method.Name
 }

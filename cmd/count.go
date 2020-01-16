@@ -5,7 +5,7 @@ import (
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/count"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"strconv"
@@ -20,7 +20,7 @@ var (
 	countCmdConfig CountCmdConfig
 )
 
-var cparsedDeps []domain.JClassNode
+var cparsedDeps []jdomain.JClassNode
 
 var countCmd = &cobra.Command{
 	Use:   "count",

@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/application/tbs"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/spf13/cobra"
 	"strconv"
 )
@@ -29,7 +29,7 @@ var tbsCmd = &cobra.Command{
 		files := cocafile.GetJavaTestFiles(tbsCmdConfig.Path)
 
 		identifiers := cmd_util.LoadTestIdentify(files)
-		identifiersMap := domain.BuildIdentifierMap(identifiers)
+		identifiersMap := jdomain.BuildIdentifierMap(identifiers)
 
 		var classes []string = nil
 		for _, node := range identifiers {

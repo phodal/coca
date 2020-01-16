@@ -3,7 +3,7 @@ package api
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest/testhelper"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"testing"
 )
 
@@ -12,7 +12,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 
 	codePath := "../../../_fixtures/call"
 	callNodes, identifiersMap, identifiers := testhelper.BuildAnalysisDeps(codePath)
-	diMap := domain.BuildDIMap(identifiers, identifiersMap)
+	diMap := jdomain.BuildDIMap(identifiers, identifiersMap)
 
 	app := new(JavaApiApp)
 	restApis := app.AnalysisPath(codePath, callNodes, identifiersMap, diMap)

@@ -1,4 +1,4 @@
-package domain
+package jdomain
 
 type Annotation struct {
 	QualifiedName string

@@ -3,7 +3,7 @@ package rcall
 import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"log"
 	"testing"
 
@@ -17,7 +17,7 @@ func MockWriteCallMap(rcallMap map[string][]string) {
 func TestRCallGraph_Analysis(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []domain.JClassNode
+	var parsedDeps []jdomain.JClassNode
 	analyser := NewRCallGraph()
 	file := cmd_util.ReadFile("../../../_fixtures/call/call_api_test.json")
 	if file == nil {
@@ -39,7 +39,7 @@ edge [dir="back"];
 func TestRCallGraph_Constructor(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	var parsedDeps []domain.JClassNode
+	var parsedDeps []jdomain.JClassNode
 	analyser := NewRCallGraph()
 	file := cmd_util.ReadFile("../../../_fixtures/rcall/constructor_call.json")
 	if file == nil {

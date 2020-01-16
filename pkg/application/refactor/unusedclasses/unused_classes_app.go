@@ -1,14 +1,14 @@
 package unusedclasses
 
 import (
-	. "github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"sort"
 	"strings"
 )
 
 var analysisPackage = ""
 
-func Refactoring(parsedDeps []JClassNode) []string {
+func Refactoring(parsedDeps []jdomain.JClassNode) []string {
 	sourceClasses := make(map[string]string)
 	targetClasses := make(map[string]string)
 

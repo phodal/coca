@@ -3,8 +3,8 @@ package ts
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/trial/pkg/ast/ast_util"
 	"strings"
 )
@@ -101,7 +101,7 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, dataStruct *core_
 		case *parser.PropertySignatureContext:
 			BuildInterfacePropertySignature(x, dataStruct)
 		case *parser.MethodSignatureContext:
-			method := domain.NewJMethod()
+			method := jdomain.NewJMethod()
 			method.Name = x.PropertyName().GetText()
 
 			function := core_domain.CodeFunction{

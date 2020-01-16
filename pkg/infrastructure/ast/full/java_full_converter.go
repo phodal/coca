@@ -2,12 +2,12 @@ package full
 
 import (
 	"github.com/phodal/coca/languages/java"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"strings"
 )
 
-func BuildMethodParameters(parameters parser.IFormalParametersContext) []domain.JParameter {
-	var methodParams []domain.JParameter = nil
+func BuildMethodParameters(parameters parser.IFormalParametersContext) []jdomain.JParameter {
+	var methodParams []jdomain.JParameter = nil
 	parameterList := parameters.GetChild(1).(*parser.FormalParameterListContext)
 	formalParameter := parameterList.AllFormalParameter()
 	for _, param := range formalParameter {
@@ -16,12 +16,12 @@ func BuildMethodParameters(parameters parser.IFormalParametersContext) []domain.
 		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 		localVars[paramValue] = paramType
-		methodParams = append(methodParams, domain.JParameter{Name: paramValue, Type: paramType})
+		methodParams = append(methodParams, jdomain.JParameter{Name: paramValue, Type: paramType})
 	}
 	return methodParams
 }
 
-func BuildMethodCallMethods(jMethodCall *domain.JMethodCall, callee string, targetType string, ctx *parser.MethodCallContext) {
+func BuildMethodCallMethods(jMethodCall *jdomain.JMethodCall, callee string, targetType string, ctx *parser.MethodCallContext) {
 	methodName := callee
 	packageName := currentPkg
 
@@ -51,14 +51,14 @@ func BuildMethodCallMethods(jMethodCall *domain.JMethodCall, callee string, targ
 	jMethodCall.Class = targetType
 }
 
-func BuildMethodCallLocation(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext, callee string) {
+func BuildMethodCallLocation(jMethodCall *jdomain.JMethodCall, ctx *parser.MethodCallContext, callee string) {
 	jMethodCall.StartLine = ctx.GetStart().GetLine()
 	jMethodCall.StartLinePosition = ctx.GetStart().GetColumn()
 	jMethodCall.StopLine = ctx.GetStop().GetLine()
 	jMethodCall.StopLinePosition = jMethodCall.StartLinePosition + len(callee)
 }
 
-func BuildMethodCallParameters(jMethodCall *domain.JMethodCall, ctx *parser.MethodCallContext) {
+func BuildMethodCallParameters(jMethodCall *jdomain.JMethodCall, ctx *parser.MethodCallContext) {
 	if ctx.ExpressionList() != nil {
 		var parameters []string
 		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {

@@ -2,24 +2,24 @@ package identifier
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/domain"
-	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
 	"github.com/phodal/coca/languages/java"
+	"github.com/phodal/coca/pkg/domain/jdomain"
+	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
 	"reflect"
 	"strings"
 )
 
-var currentNode *domain.JIdentifier
-var nodes []domain.JIdentifier
+var currentNode *jdomain.JIdentifier
+var nodes []jdomain.JIdentifier
 
-var currentMethod domain.JMethod
+var currentMethod jdomain.JMethod
 var hasEnterClass = false
 var imports []string
 
 func NewJavaIdentifierListener() *JavaIdentifierListener {
 	nodes = nil
-	currentNode = domain.NewJIdentifier()
-	currentMethod = domain.NewJMethod()
+	currentNode = jdomain.NewJIdentifier()
+	currentMethod = jdomain.NewJMethod()
 	return &JavaIdentifierListener{}
 }
 
@@ -60,7 +60,7 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 		}
 	}
 
-	currentMethod = domain.NewJMethod()
+	currentMethod = jdomain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
@@ -69,7 +69,7 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = domain.NewJIdentifier()
+	currentNode = jdomain.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
@@ -78,11 +78,11 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 		currentNode.Methods = currentNode.GetMethods()
 		nodes = append(nodes, *currentNode)
 	}
-	currentNode = domain.NewJIdentifier()
+	currentNode = jdomain.NewJIdentifier()
 }
 
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	currentMethod = domain.JMethod{
+	currentMethod = jdomain.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
 		StartLine:         ctx.GetStart().GetLine(),
@@ -116,7 +116,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	currentMethod = domain.JMethod{
+	currentMethod = jdomain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -130,7 +130,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 
 func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	currentNode.AddMethod(currentMethod)
-	currentMethod = domain.NewJMethod()
+	currentMethod = jdomain.NewJMethod()
 }
 
 var isOverrideMethod = false
@@ -150,7 +150,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	currentMethod = domain.JMethod{
+	currentMethod = jdomain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -175,7 +175,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 
 func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	currentNode.AddMethod(currentMethod)
-	currentMethod = domain.NewJMethod()
+	currentMethod = jdomain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
@@ -206,6 +206,6 @@ func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) 
 	}
 }
 
-func (s *JavaIdentifierListener) GetNodes() []domain.JIdentifier {
+func (s *JavaIdentifierListener) GetNodes() []jdomain.JIdentifier {
 	return nodes
 }

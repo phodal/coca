@@ -2,13 +2,13 @@ package evaluator
 
 import (
 	"fmt"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 )
 
 type Controller struct {
 
 }
 
-func (Controller) Evaluate(node domain.JClassNode) {
+func (Controller) Evaluate(node jdomain.JClassNode) {
 	fmt.Println("controller")
 }

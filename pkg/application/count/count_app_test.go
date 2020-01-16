@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"path/filepath"
 	"testing"
 )
 
 func TestBuildCallMap(t *testing.T) {
 	g := NewGomegaWithT(t)
-	var parsedDeps []domain.JClassNode
+	var parsedDeps []jdomain.JClassNode
 	codePath := "../../../_fixtures/count/call.json"
 	codePath = filepath.FromSlash(codePath)
 	file := cmd_util.ReadFile(codePath)

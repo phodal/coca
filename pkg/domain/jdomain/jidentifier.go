@@ -1,4 +1,4 @@
-package domain
+package jdomain
 
 var methods []JMethod
 

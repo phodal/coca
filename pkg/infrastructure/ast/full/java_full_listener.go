@@ -3,7 +3,7 @@ package full
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
 	"reflect"
 	"strconv"
@@ -14,40 +14,40 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
-var fields []domain.JField
-var methodCalls []domain.JMethodCall
+var fields []jdomain.JField
+var methodCalls []jdomain.JMethodCall
 var currentType string
 
 var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
 var currentClzExtend = ""
-var currentMethod domain.JMethod
-var methodMap = make(map[string]domain.JMethod)
-var creatorMethodMap = make(map[string]domain.JMethod)
+var currentMethod jdomain.JMethod
+var methodMap = make(map[string]jdomain.JMethod)
+var creatorMethodMap = make(map[string]jdomain.JMethod)
 
-var methodQueue []domain.JMethod
+var methodQueue []jdomain.JMethod
 var classStringQueue []string
 
-var identMap map[string]domain.JIdentifier
+var identMap map[string]jdomain.JIdentifier
 var isOverrideMethod = false
 
-var classNodeQueue []domain.JClassNode
+var classNodeQueue []jdomain.JClassNode
 
-var currentNode *domain.JClassNode
-var classNodes []domain.JClassNode
-var creatorNodes []domain.JClassNode
-var currentCreatorNode domain.JClassNode
+var currentNode *jdomain.JClassNode
+var classNodes []jdomain.JClassNode
+var creatorNodes []jdomain.JClassNode
+var currentCreatorNode jdomain.JClassNode
 var fileName = ""
 var hasEnterClass = false
 
-func NewJavaFullListener(nodes map[string]domain.JIdentifier, file string) *JavaFullListener {
+func NewJavaFullListener(nodes map[string]jdomain.JIdentifier, file string) *JavaFullListener {
 	identMap = nodes
 	imports = nil
 	fileName = file
 	currentPkg = ""
 	classNodes = nil
-	currentNode = domain.NewClassNode()
+	currentNode = jdomain.NewClassNode()
 	classStringQueue = nil
 	classNodeQueue = nil
 	methodQueue = nil
@@ -59,10 +59,10 @@ func NewJavaFullListener(nodes map[string]domain.JIdentifier, file string) *Java
 func initClass() {
 	currentClz = ""
 	currentClzExtend = ""
-	currentMethod = domain.NewJMethod()
+	currentMethod = jdomain.NewJMethod()
 	currentNode.MethodCalls = nil
 
-	methodMap = make(map[string]domain.JMethod)
+	methodMap = make(map[string]jdomain.JMethod)
 	methodCalls = nil
 	fields = nil
 	isOverrideMethod = false
@@ -72,7 +72,7 @@ type JavaFullListener struct {
 	parser.BaseJavaParserListener
 }
 
-func (s *JavaFullListener) GetNodeInfo() []domain.JClassNode {
+func (s *JavaFullListener) GetNodeInfo() []jdomain.JClassNode {
 	return classNodes
 }
 
@@ -99,7 +99,7 @@ func (s *JavaFullListener) exitBody() {
 	}
 
 	if currentNode.Class == "" {
-		currentNode = domain.NewClassNode()
+		currentNode = jdomain.NewClassNode()
 		initClass()
 		return
 	}
@@ -118,7 +118,7 @@ func (s *JavaFullListener) exitBody() {
 			currentNode = &classNodeQueue[len(classNodeQueue)-1]
 		}
 	} else {
-		currentNode = domain.NewClassNode()
+		currentNode = jdomain.NewClassNode()
 	}
 
 	initClass()
@@ -132,7 +132,7 @@ func (s *JavaFullListener) EnterPackageDeclaration(ctx *parser.PackageDeclaratio
 func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationContext) {
 	importText := ctx.QualifiedName().GetText()
 	imports = append(imports, importText)
-	currentNode.Imports = append(currentNode.Imports, domain.NewJImport(importText))
+	currentNode.Imports = append(currentNode.Imports, jdomain.NewJImport(importText))
 }
 
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
@@ -207,7 +207,7 @@ func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	method := &domain.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+	method := &jdomain.JMethod{Name: name, Type: typeType, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
 	updateMethod(method)
 }
 
@@ -237,7 +237,7 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeTypeText
-		fields = append(fields, domain.JField{Type: typeTypeText, Value: value})
+		fields = append(fields, jdomain.JField{Type: typeTypeText, Value: value})
 
 		buildFieldCall(typeTypeText, ctx)
 	}
@@ -281,7 +281,7 @@ func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 }
 
 func (s *JavaFullListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	method := &domain.JMethod{
+	method := &jdomain.JMethod{
 		Name:              ctx.IDENTIFIER().GetText(),
 		Type:              "",
 		StartLine:         ctx.GetStart().GetLine(),
@@ -303,7 +303,7 @@ func (s *JavaFullListener) EnterConstructorDeclaration(ctx *parser.ConstructorDe
 }
 
 func (s *JavaFullListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	currentMethod = domain.NewJMethod()
+	currentMethod = jdomain.NewJMethod()
 	isOverrideMethod = false
 }
 
@@ -320,7 +320,7 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	method := &domain.JMethod{
+	method := &jdomain.JMethod{
 		Name:              name,
 		Type:              typeType,
 		StartLine:         startLine,
@@ -341,7 +341,7 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	updateMethod(method)
 }
 
-func buildMethodParameters(parameters parser.IFormalParametersContext, method *domain.JMethod) bool {
+func buildMethodParameters(parameters parser.IFormalParametersContext, method *jdomain.JMethod) bool {
 	if parameters != nil {
 		if parameters.GetChild(0) == nil || parameters.GetText() == "()" || parameters.GetChild(1) == nil {
 			updateMethod(method)
@@ -354,7 +354,7 @@ func buildMethodParameters(parameters parser.IFormalParametersContext, method *d
 	return false
 }
 
-func updateMethod(method *domain.JMethod) {
+func updateMethod(method *jdomain.JMethod) {
 	if currentType == "CreatorClass" {
 		creatorMethodMap[getMethodMapName(*method)] = *method
 	} else {
@@ -373,7 +373,7 @@ func exitMethod() {
 		return
 	}
 
-	currentMethod = domain.NewJMethod()
+	currentMethod = jdomain.NewJMethod()
 }
 
 // TODO: add inner creator examples
@@ -394,7 +394,7 @@ func (s *JavaFullListener) ExitInnerCreator(ctx *parser.InnerCreatorContext) {
 	currentClz = classStringQueue[len(classStringQueue)-1]
 }
 
-func getMethodMapName(method domain.JMethod) string {
+func getMethodMapName(method jdomain.JMethod) string {
 	name := method.Name
 	if name == "" && len(methodQueue) > 1 {
 		name = methodQueue[len(methodQueue)-1].Name
@@ -428,7 +428,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
-		creatorNode := &domain.JClassNode{
+		creatorNode := &jdomain.JClassNode{
 			Package:     currentPkg,
 			Class:       text,
 			Type:        "CreatorClass",
@@ -456,7 +456,7 @@ func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 	if currentType == "CreatorClass" {
 		currentType = ""
 	}
-	currentCreatorNode = *domain.NewClassNode()
+	currentCreatorNode = *jdomain.NewClassNode()
 
 	if classNodeQueue == nil || len(classNodeQueue) < 1 {
 		return
@@ -467,7 +467,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType, _ := WarpTargetFullType(createdName)
 
-	jMethodCall := &domain.JMethodCall{
+	jMethodCall := &jdomain.JMethodCall{
 		Package:           RemoveTarget(fullType),
 		Type:              "CreatorClass",
 		Class:             createdName,
@@ -483,7 +483,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 }
 
 func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
-	var jMethodCall = domain.NewJMethodCall()
+	var jMethodCall = jdomain.NewJMethodCall()
 
 	targetCtx := ctx.GetParent().GetChild(0).(antlr.ParseTree)
 	var targetType = ParseTargetType(targetCtx.GetText())
@@ -504,7 +504,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	sendResultToMethodCallMap(jMethodCall)
 }
 
-func sendResultToMethodCallMap(jMethodCall domain.JMethodCall) {
+func sendResultToMethodCallMap(jMethodCall jdomain.JMethodCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
@@ -547,7 +547,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 		stopLine := ctx.GetStop().GetLine()
 		stopLinePosition := startLinePosition + len(text)
 
-		jMethodCall := &domain.JMethodCall{
+		jMethodCall := &jdomain.JMethodCall{
 			Package:           RemoveTarget(fullType),
 			Type:              "lambda",
 			Class:             targetType,
@@ -576,7 +576,7 @@ func buildExtend(extendName string) {
 func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 	target, _ := WarpTargetFullType(typeType)
 	if target != "" {
-		jMethodCall := &domain.JMethodCall{
+		jMethodCall := &jdomain.JMethodCall{
 			Package:           RemoveTarget(target),
 			Type:              "field",
 			Class:             typeType,

@@ -1,7 +1,7 @@
 package call
 
 import (
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/phodal/coca/pkg/infrastructure/jpackage"
 	"strings"
@@ -14,7 +14,7 @@ func NewCallGraph() CallGraph {
 	return CallGraph{}
 }
 
-func (c CallGraph) Analysis(funcName string, clzs []domain.JClassNode) string {
+func (c CallGraph) Analysis(funcName string, clzs []jdomain.JClassNode) string {
 	methodMap := BuildMethodMap(clzs)
 	chain := BuildCallChain(funcName, methodMap, nil)
 	dotContent := ToGraphviz(chain)
@@ -56,7 +56,7 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []api_domain.RestAPI, deps []domain.JClassNode, diMap map[string]string) (string, []api_domain.CallAPI) {
+func (c CallGraph) AnalysisByFiles(restApis []api_domain.RestAPI, deps []jdomain.JClassNode, diMap map[string]string) (string, []api_domain.CallAPI) {
 	methodMap := BuildMethodMap(deps)
 	var apiCallSCounts []api_domain.CallAPI
 
@@ -88,7 +88,7 @@ func escapeStr(caller string) string {
 	return strings.ReplaceAll(caller, "\"", "\\\"")
 }
 
-func BuildMethodMap(clzs []domain.JClassNode) map[string][]string {
+func BuildMethodMap(clzs []jdomain.JClassNode) map[string][]string {
 	var methodMap = make(map[string][]string)
 	for _, clz := range clzs {
 		for _, method := range clz.Methods {

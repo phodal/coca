@@ -2,11 +2,11 @@ package cmd_util
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/pkg/domain"
+	"github.com/phodal/coca/pkg/domain/jdomain"
 )
 
-func GetDepsFromJson(depPath string) []domain.JClassNode {
-	var parsedDeps []domain.JClassNode
+func GetDepsFromJson(depPath string) []jdomain.JClassNode {
+	var parsedDeps []jdomain.JClassNode
 	file := ReadFile(depPath)
 	_ = json.Unmarshal(file, &parsedDeps)
 

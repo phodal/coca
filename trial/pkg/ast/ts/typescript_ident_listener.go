@@ -25,15 +25,18 @@ type TypeScriptIdentListener struct {
 }
 
 func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
-	classNodes = nil
 	filePath = fileName
+
+	classNodes = nil
 	currentNode = domain.NewClassNode()
+	classNodeQueue = nil
+
 	currentDataStruct = trial.NewDataStruct()
+	dataStructures = nil
+	dataStructQueue = nil
+
 	codeFile = trial.CodeFile{
-		FullName:       filePath,
-		Imports:        nil,
-		ClassNodes:     nil,
-		DataStructures: nil,
+		FullName: filePath,
 	}
 	return &TypeScriptIdentListener{}
 }
@@ -169,7 +172,7 @@ func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclara
 		typeList := heritageContext.ImplementsClause().(*parser.ImplementsClauseContext).ClassOrInterfaceTypeList()
 
 		currentNode.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
-		currentDataStruct.Implements  = append(currentNode.Implements, BuildImplements(typeList)...)
+		currentDataStruct.Implements = append(currentNode.Implements, BuildImplements(typeList)...)
 	}
 
 	if heritageContext.ClassExtendsClause() != nil {

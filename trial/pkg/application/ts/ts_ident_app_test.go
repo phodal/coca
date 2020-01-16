@@ -48,7 +48,7 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	results := codeFile.ClassNodes
 
 	g.Expect(len(results)).To(Equal(4))
-	g.Expect(len(codeFile.DataStructures)).To(Equal(5))
+	g.Expect(len(codeFile.DataStructures)).To(Equal(3))
 	g.Expect(results[1].Implements[0]).To(Equal("IPerson"))
 }
 

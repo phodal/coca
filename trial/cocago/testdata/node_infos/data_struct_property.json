@@ -15,40 +15,40 @@
           "Name": "FullName",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "string",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "string"
         },
         {
           "Modifiers": null,
           "Name": "PackageName",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "string",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "string"
         },
         {
           "Modifiers": null,
           "Name": "Imports",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "string",
-          "TypeType": "ArrayType"
+          "TypeType": "ArrayType",
+          "TypeValue": "string"
         },
         {
           "Modifiers": null,
           "Name": "Members",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "CodeMember",
-          "TypeType": "ArrayType"
+          "TypeType": "ArrayType",
+          "TypeValue": "CodeMember"
         },
         {
           "Modifiers": null,
           "Name": "ClassNodes",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "domain.JClassNode",
-          "TypeType": "ArrayType"
+          "TypeType": "ArrayType",
+          "TypeValue": "domain.JClassNode"
         }
       ],
       "InnerStructures": null,

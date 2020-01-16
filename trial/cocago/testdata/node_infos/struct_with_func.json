@@ -15,24 +15,24 @@
           "Name": "work",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "func",
-          "TypeType": "Function"
+          "TypeType": "Function",
+          "TypeValue": "func"
         },
         {
           "Modifiers": null,
           "Name": "name",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "string",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "string"
         },
         {
           "Modifiers": null,
           "Name": "age",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "int32",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "int32"
         }
       ],
       "InnerStructures": null,

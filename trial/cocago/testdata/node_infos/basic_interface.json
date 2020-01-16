@@ -19,8 +19,8 @@
               "Name": "a",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "float64",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "float64"
             }
           ],
           "ReturnTypes": [
@@ -29,12 +29,12 @@
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "float64",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "float64"
             }
           ],
-          "TypeName": "func",
-          "TypeType": "Function"
+          "TypeType": "Function",
+          "TypeValue": "func"
         }
       ],
       "InnerStructures": null,
@@ -62,12 +62,12 @@
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "float64",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "float64"
             }
           ],
-          "TypeName": "func",
-          "TypeType": "Function"
+          "TypeType": "Function",
+          "TypeValue": "func"
         }
       ],
       "InnerStructures": null,
@@ -90,16 +90,16 @@
           "Name": "",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "Shape",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "Shape"
         },
         {
           "Modifiers": null,
           "Name": "",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "Object",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "Object"
         }
       ],
       "InnerStructures": null,

@@ -125,8 +125,8 @@ func BuildInterfacePropertySignature(signatureCtx *parser.PropertySignatureConte
 			Name: typeValue,
 		}
 		param := core_domain.CodeProperty{
-			TypeName: "any",
-			TypeType: typeType,
+			TypeValue: "any",
+			TypeType:  typeType,
 		}
 
 		returnType := core_domain.CodeProperty{

@@ -10,7 +10,7 @@ type JClassNode struct {
 	Class       string
 	Type        string
 	FilePath    string
-	Fields      []JField
+	Fields      []core_domain.CodeField
 	Methods     []JMethod
 	MethodCalls []JMethodCall
 	Extend      string
@@ -18,12 +18,6 @@ type JClassNode struct {
 	Annotations []core_domain.CodeAnnotation
 	InnerClass  []JClassNode
 	Imports     []core_domain.CodeImport
-}
-
-type JField struct {
-	Type     string
-	Value    string
-	Modifier string
 }
 
 func NewClassNode() *JClassNode {

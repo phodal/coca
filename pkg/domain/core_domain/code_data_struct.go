@@ -16,11 +16,6 @@ type CodeDataStruct struct {
 	Extension       interface{}
 }
 
-type CodeField struct {
-	CodeProperty
-	TypeValue string
-}
-
 type JavaExtension struct {
 	MethodCalls []CodeCall
 	Fields      []CodeProperty

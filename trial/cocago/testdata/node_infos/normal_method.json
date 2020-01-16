@@ -37,8 +37,8 @@
               "Name": "code",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "string",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "string"
             }
           ],
           "Position": {
@@ -53,16 +53,16 @@
               "Name": "code",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "string",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "string"
             },
             {
               "Modifiers": null,
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "parser.TypeScriptParser",
-              "TypeType": "Star"
+              "TypeType": "Star",
+              "TypeValue": "parser.TypeScriptParser"
             }
           ]
         },
@@ -81,8 +81,8 @@
               "Name": "is",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "antlr.CharStream",
-              "TypeType": ""
+              "TypeType": "",
+              "TypeValue": "antlr.CharStream"
             }
           ],
           "Position": {
@@ -97,16 +97,16 @@
               "Name": "is",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "antlr.CharStream",
-              "TypeType": ""
+              "TypeType": "",
+              "TypeValue": "antlr.CharStream"
             },
             {
               "Modifiers": null,
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "parser.TypeScriptParser",
-              "TypeType": "Star"
+              "TypeType": "Star",
+              "TypeValue": "parser.TypeScriptParser"
             }
           ]
         }
@@ -142,8 +142,8 @@
               "Name": "code",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "string",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "string"
             }
           ],
           "Position": {
@@ -158,16 +158,16 @@
               "Name": "code",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "string",
-              "TypeType": "Identify"
+              "TypeType": "Identify",
+              "TypeValue": "string"
             },
             {
               "Modifiers": null,
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "parser.TypeScriptParser",
-              "TypeType": "Star"
+              "TypeType": "Star",
+              "TypeValue": "parser.TypeScriptParser"
             }
           ]
         },
@@ -186,8 +186,8 @@
               "Name": "is",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "antlr.CharStream",
-              "TypeType": ""
+              "TypeType": "",
+              "TypeValue": "antlr.CharStream"
             }
           ],
           "Position": {
@@ -202,16 +202,16 @@
               "Name": "is",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "antlr.CharStream",
-              "TypeType": ""
+              "TypeType": "",
+              "TypeValue": "antlr.CharStream"
             },
             {
               "Modifiers": null,
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeName": "parser.TypeScriptParser",
-              "TypeType": "Star"
+              "TypeType": "Star",
+              "TypeValue": "parser.TypeScriptParser"
             }
           ]
         }

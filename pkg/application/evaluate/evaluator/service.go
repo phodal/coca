@@ -32,7 +32,7 @@ func findRelatedMethodParameters(model *EvaluateModel, list []jdomain.JMethod) {
 	for _, method := range list {
 		var paramTypeList []string
 		for _, param := range method.Parameters {
-			paramTypeList = append(paramTypeList, param.TypeName)
+			paramTypeList = append(paramTypeList, param.TypeValue)
 		}
 		dataset = append(dataset, paramTypeList)
 	}

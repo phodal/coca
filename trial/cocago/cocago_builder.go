@@ -48,7 +48,7 @@ func BuildPropertyField(name string, field *ast.Field) *core_domain.CodeProperty
 		Modifiers:   nil,
 		Name:        name,
 		TypeType:    typeType,
-		TypeName:    typeName,
+		TypeValue:   typeName,
 		ReturnTypes: results,
 		Parameters:  params,
 	}

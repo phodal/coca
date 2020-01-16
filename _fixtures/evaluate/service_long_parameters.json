@@ -25,23 +25,23 @@
         "Parameters": [
           {
             "TypeType": "String",
-            "TypeName": "firstname"
+            "TypeValue": "firstname"
           },
           {
             "TypeType": "String",
-            "TypeName": "lastname"
+            "TypeValue": "lastname"
           },
           {
             "TypeType": "String",
-            "TypeName": "address"
+            "TypeValue": "address"
           },
           {
             "TypeType": "String",
-            "TypeName": "age"
+            "TypeValue": "age"
           },
           {
             "TypeType": "String",
-            "TypeName": "id"
+            "TypeValue": "id"
           }
         ],
         "MethodCalls": [],
@@ -82,23 +82,23 @@
         "Parameters": [
           {
             "TypeType": "String",
-            "TypeName": "name"
+            "TypeValue": "name"
           },
           {
             "TypeType": "String",
-            "TypeName": "firstname"
+            "TypeValue": "firstname"
           },
           {
             "TypeType": "String",
-            "TypeName": "lastname"
+            "TypeValue": "lastname"
           },
           {
             "TypeType": "String",
-            "TypeName": "address"
+            "TypeValue": "address"
           },
           {
             "TypeType": "String",
-            "TypeName": "age"
+            "TypeValue": "age"
           }
         ],
         "MethodCalls": [],

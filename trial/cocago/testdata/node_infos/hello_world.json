@@ -31,8 +31,8 @@
                   "Name": "",
                   "Parameters": null,
                   "ReturnTypes": null,
-                  "TypeName": "\"hello, world\"",
-                  "TypeType": "STRING"
+                  "TypeType": "STRING",
+                  "TypeValue": "\"hello, world\""
                 }
               ],
               "Position": {

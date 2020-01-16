@@ -15,24 +15,24 @@
           "Name": "name",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "string",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "string"
         },
         {
           "Modifiers": null,
           "Name": "age",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "int",
-          "TypeType": "Identify"
+          "TypeType": "Identify",
+          "TypeValue": "int"
         },
         {
           "Modifiers": null,
           "Name": "personfunc",
           "Parameters": null,
           "ReturnTypes": null,
-          "TypeName": "func",
-          "TypeType": "Function"
+          "TypeType": "Function",
+          "TypeValue": "func"
         }
       ],
       "InnerStructures": null,
@@ -72,8 +72,8 @@
                   "Name": "",
                   "Parameters": null,
                   "ReturnTypes": null,
-                  "TypeName": "\"Declared outside and invoked!!!\"",
-                  "TypeType": "STRING"
+                  "TypeType": "STRING",
+                  "TypeValue": "\"Declared outside and invoked!!!\""
                 }
               ],
               "Position": {

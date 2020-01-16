@@ -205,8 +205,8 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunctio
 		for _, arg := range expr.Args {
 			value, kind := BuildExpr(arg.(ast.Expr))
 			property := &core_domain.CodeProperty{
-				TypeName: value,
-				TypeType: kind,
+				TypeValue: value,
+				TypeType:  kind,
 			}
 
 			call.Parameters = append(call.Parameters, *property)

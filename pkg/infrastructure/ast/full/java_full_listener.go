@@ -15,7 +15,7 @@ var imports []string
 var clzs []string
 var currentPkg string
 var currentClz string
-var fields []jdomain.JField
+var fields []core_domain.CodeField
 var methodCalls []jdomain.JMethodCall
 var currentType string
 
@@ -238,7 +238,8 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeTypeText
-		fields = append(fields, jdomain.JField{Type: typeTypeText, Value: value})
+		field := core_domain.NewJField(value, typeTypeText, "")
+		fields = append(fields, field)
 
 		buildFieldCall(typeTypeText, ctx)
 	}
@@ -522,8 +523,8 @@ func buildSelfThisTarget(targetType string) string {
 	if isSelfFieldCall {
 		targetType = strings.ReplaceAll(targetType, "this.", "")
 		for _, field := range fields {
-			if field.Value == targetType {
-				targetType = field.Type
+			if field.TypeValue == targetType {
+				targetType = field.TypeType
 			}
 		}
 	}

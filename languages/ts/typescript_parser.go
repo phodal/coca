@@ -913,7 +913,7 @@ var symbolicNames = []string{
 	"As", "From", "ReadOnly", "Async", "Class", "Enum", "Extends", "Super",
 	"Const", "Export", "Import", "Await", "Implements", "Let", "Private", "Public",
 	"Interface", "Package", "Protected", "Static", "Yield", "ANY", "NUMBER",
-	"BOOLEAN", "STRING", "SYMBOL", "Type", "Get", "Set", "Constructor", "Namespace",
+	"BOOLEAN", "STRING", "SYMBOL", "TypeType", "Get", "Set", "Constructor", "Namespace",
 	"Require", "Module", "Declare", "Abstract", "Is", "At", "Identifier", "StringLiteral",
 	"TemplateStringLiteral", "WhiteSpaces", "LineTerminator", "HtmlComment",
 	"CDataComment", "UnexpectedCharacter",

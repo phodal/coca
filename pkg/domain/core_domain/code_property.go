@@ -3,7 +3,7 @@ package core_domain
 type CodeProperty struct {
 	Modifiers   []string
 	Name        string
-	TypeName    string
+	TypeValue   string
 	TypeType    string
 	ReturnTypes []CodeProperty
 	Parameters  []CodeProperty
@@ -11,8 +11,23 @@ type CodeProperty struct {
 
 func NewCodeParameter(typeName string, typeType string) CodeProperty {
 	return CodeProperty{
-		TypeName: typeName,
-		TypeType: typeType,
+		TypeValue: typeName,
+		TypeType:  typeType,
 	}
 }
 
+type CodeField struct {
+	TypeType  string
+	TypeValue string
+	Modifiers []string
+}
+
+func NewJField(typeValue string, typeType string, modifier string) CodeField {
+	property := CodeField{
+		TypeValue: typeValue,
+		TypeType:  typeType,
+	}
+	property.Modifiers = append(property.Modifiers, modifier)
+
+	return property
+}

@@ -292,7 +292,7 @@ func buildMethodParameters(requestBodyClass string) {
 	for _, clz := range jClassNodes {
 		if clz.Class == requestBodyClass {
 			for _, field := range clz.Fields {
-				params[field.Value] = field.Type
+				params[field.TypeValue] = field.TypeType
 			}
 		}
 	}

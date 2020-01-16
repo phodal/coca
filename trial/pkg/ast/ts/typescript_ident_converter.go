@@ -67,8 +67,8 @@ func BuildMethodParameter(context *parser.ParameterListContext) ([]core_domain.C
 	case *parser.PredefinedTypeContext:
 		predefinedTypeContext := x
 		parameter := core_domain.CodeProperty{
-			TypeName: "any",
-			TypeType: predefinedTypeContext.GetText(),
+			TypeValue: "any",
+			TypeType:  predefinedTypeContext.GetText(),
 		}
 		parameters = append(parameters, parameter)
 	}
@@ -100,8 +100,8 @@ func buildRequiredParameter(paramCtx *parser.RequiredParameterContext) core_doma
 		paramType = BuildTypeAnnotation(annotationContext)
 	}
 	parameter := core_domain.CodeProperty{
-		TypeName: paramCtx.IdentifierOrPattern().GetText(),
-		TypeType: paramType,
+		TypeValue: paramCtx.IdentifierOrPattern().GetText(),
+		TypeType:  paramType,
 	}
 
 	return parameter

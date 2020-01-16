@@ -163,7 +163,7 @@ function Sum(x: number, y: number) : void {
 	params := firstFunction.Parameters
 	g.Expect(firstFunction.ReturnTypes[0].TypeType).To(Equal("void"))
 	g.Expect(len(params)).To(Equal(2))
-	g.Expect(params[0].TypeName).To(Equal("x"))
+	g.Expect(params[0].TypeValue).To(Equal("x"))
 	g.Expect(params[0].TypeType).To(Equal("number"))
 }
 
@@ -182,8 +182,8 @@ function buildName(firstName: string, ...restOfName: string[]) {
 	firstFunction:= codeFile.DataStructures[0].Functions[0]
 	params := firstFunction.Parameters
 	g.Expect(len(params)).To(Equal(2))
-	g.Expect(params[0].TypeName).To(Equal("firstName"))
-	g.Expect(params[1].TypeName).To(Equal("restOfName"))
+	g.Expect(params[0].TypeValue).To(Equal("firstName"))
+	g.Expect(params[1].TypeValue).To(Equal("restOfName"))
 }
 
 func Test_ShouldGetClassFields(t *testing.T) {

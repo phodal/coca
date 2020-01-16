@@ -10,7 +10,7 @@
         "Value": "applicationService"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "BookController",
         "Type": "",
@@ -225,7 +225,7 @@
         "Value": "bookRepository"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "createBook",
         "Type": "String",

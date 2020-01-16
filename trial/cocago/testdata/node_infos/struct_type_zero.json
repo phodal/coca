@@ -5,14 +5,16 @@
       "Extend": "",
       "Extension": null,
       "Fields": null,
+      "FilePath": "",
       "FunctionCalls": null,
       "Functions": null,
-      "ID": "",
       "Implements": null,
+      "Imports": null,
       "InOutProperties": null,
       "InnerStructures": null,
-      "MemberIds": null,
+      "MultipleExtend": null,
       "Name": "O",
+      "Package": "",
       "Type": ""
     }
   ],

@@ -228,7 +228,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 func Test_InnerClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/abug/InnerStructures.java"
+	codePath := "../../../_fixtures/abug/InnerClass.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)

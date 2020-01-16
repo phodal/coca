@@ -10,7 +10,7 @@
         "Value": "applicationService"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "createBook",
         "Type": "Map\u003cString,String\u003e",
@@ -203,7 +203,7 @@
         "Value": "bookRepository"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "getBookById",
         "Type": "BookRepresentaion",

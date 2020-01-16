@@ -14,7 +14,7 @@
         "Value": "bookRepository"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "getBooksLists",
         "Type": "List\u003cBookRepresentaion\u003e",

@@ -5,10 +5,11 @@
       "Extend": "",
       "Extension": null,
       "Fields": null,
+      "FilePath": "",
       "FunctionCalls": null,
       "Functions": null,
-      "ID": "",
       "Implements": null,
+      "Imports": null,
       "InOutProperties": [
         {
           "Modifiers": null,
@@ -52,8 +53,9 @@
         }
       ],
       "InnerStructures": null,
-      "MemberIds": null,
+      "MultipleExtend": null,
       "Name": "CodeFile",
+      "Package": "",
       "Type": ""
     }
   ],

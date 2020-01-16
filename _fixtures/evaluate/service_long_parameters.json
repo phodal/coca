@@ -14,7 +14,7 @@
         "Value": "bookRepository"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "updateA",
         "Type": "BookA",
@@ -71,7 +71,7 @@
         "Value": "name"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "updateB",
         "Type": "BookB",
@@ -125,7 +125,7 @@
         "Value": "name"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "doUpdate",
         "Type": "String",

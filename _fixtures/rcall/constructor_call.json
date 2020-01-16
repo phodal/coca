@@ -10,7 +10,7 @@
         "Value": "daoParser"
       }
     ],
-    "Methods": [
+    "Functions": [
       {
         "Name": "parse",
         "Type": "void",

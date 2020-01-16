@@ -5,7 +5,7 @@
 		"Type": "Class",
 		"FilePath": "_fixtures/suggest/factory/Bee.java",
 		"Fields": null,
-		"Methods": [
+		"Functions": [
 			{
 				"Name": "Insect",
 				"Type": "",
@@ -224,7 +224,7 @@
 		"Type": "Class",
 		"FilePath": "_fixtures/suggest/factory/Bee.java",
 		"Fields": null,
-		"Methods": [
+		"Functions": [
 			{
 				"Name": "Bee",
 				"Type": "",

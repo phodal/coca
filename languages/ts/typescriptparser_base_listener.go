@@ -953,39 +953,17 @@ func (s *BaseTypeScriptParserListener) EnterTemplateStringExpression(ctx *Templa
 func (s *BaseTypeScriptParserListener) ExitTemplateStringExpression(ctx *TemplateStringExpressionContext) {
 }
 
-// EnterTernaryExpression is called when production TernaryExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterTernaryExpression(ctx *TernaryExpressionContext) {}
-
-// ExitTernaryExpression is called when production TernaryExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitTernaryExpression(ctx *TernaryExpressionContext) {}
-
-// EnterLogicalAndExpression is called when production LogicalAndExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterLogicalAndExpression(ctx *LogicalAndExpressionContext) {}
-
-// ExitLogicalAndExpression is called when production LogicalAndExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitLogicalAndExpression(ctx *LogicalAndExpressionContext) {}
-
 // EnterGeneratorsExpression is called when production GeneratorsExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterGeneratorsExpression(ctx *GeneratorsExpressionContext) {}
 
 // ExitGeneratorsExpression is called when production GeneratorsExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitGeneratorsExpression(ctx *GeneratorsExpressionContext) {}
 
-// EnterPreIncrementExpression is called when production PreIncrementExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterPreIncrementExpression(ctx *PreIncrementExpressionContext) {
-}
+// EnterPowerExpression is called when production PowerExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterPowerExpression(ctx *PowerExpressionContext) {}
 
-// ExitPreIncrementExpression is called when production PreIncrementExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitPreIncrementExpression(ctx *PreIncrementExpressionContext) {
-}
-
-// EnterObjectLiteralExpression is called when production ObjectLiteralExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterObjectLiteralExpression(ctx *ObjectLiteralExpressionContext) {
-}
-
-// ExitObjectLiteralExpression is called when production ObjectLiteralExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitObjectLiteralExpression(ctx *ObjectLiteralExpressionContext) {
-}
+// ExitPowerExpression is called when production PowerExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitPowerExpression(ctx *PowerExpressionContext) {}
 
 // EnterInExpression is called when production InExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterInExpression(ctx *InExpressionContext) {}
@@ -993,29 +971,11 @@ func (s *BaseTypeScriptParserListener) EnterInExpression(ctx *InExpressionContex
 // ExitInExpression is called when production InExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitInExpression(ctx *InExpressionContext) {}
 
-// EnterLogicalOrExpression is called when production LogicalOrExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterLogicalOrExpression(ctx *LogicalOrExpressionContext) {}
-
-// ExitLogicalOrExpression is called when production LogicalOrExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitLogicalOrExpression(ctx *LogicalOrExpressionContext) {}
-
 // EnterGenericTypes is called when production GenericTypes is entered.
 func (s *BaseTypeScriptParserListener) EnterGenericTypes(ctx *GenericTypesContext) {}
 
 // ExitGenericTypes is called when production GenericTypes is exited.
 func (s *BaseTypeScriptParserListener) ExitGenericTypes(ctx *GenericTypesContext) {}
-
-// EnterNotExpression is called when production NotExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterNotExpression(ctx *NotExpressionContext) {}
-
-// ExitNotExpression is called when production NotExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitNotExpression(ctx *NotExpressionContext) {}
-
-// EnterPreDecreaseExpression is called when production PreDecreaseExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
-
-// ExitPreDecreaseExpression is called when production PreDecreaseExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
 
 // EnterArgumentsExpression is called when production ArgumentsExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterArgumentsExpression(ctx *ArgumentsExpressionContext) {}
@@ -1023,67 +983,17 @@ func (s *BaseTypeScriptParserListener) EnterArgumentsExpression(ctx *ArgumentsEx
 // ExitArgumentsExpression is called when production ArgumentsExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitArgumentsExpression(ctx *ArgumentsExpressionContext) {}
 
-// EnterAwaitExpression is called when production AwaitExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterAwaitExpression(ctx *AwaitExpressionContext) {}
-
-// ExitAwaitExpression is called when production AwaitExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitAwaitExpression(ctx *AwaitExpressionContext) {}
-
 // EnterThisExpression is called when production ThisExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterThisExpression(ctx *ThisExpressionContext) {}
 
 // ExitThisExpression is called when production ThisExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitThisExpression(ctx *ThisExpressionContext) {}
 
-// EnterFunctionExpression is called when production FunctionExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterFunctionExpression(ctx *FunctionExpressionContext) {}
-
-// ExitFunctionExpression is called when production FunctionExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitFunctionExpression(ctx *FunctionExpressionContext) {}
-
-// EnterUnaryMinusExpression is called when production UnaryMinusExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterUnaryMinusExpression(ctx *UnaryMinusExpressionContext) {}
-
-// ExitUnaryMinusExpression is called when production UnaryMinusExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitUnaryMinusExpression(ctx *UnaryMinusExpressionContext) {}
-
-// EnterAssignmentExpression is called when production AssignmentExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterAssignmentExpression(ctx *AssignmentExpressionContext) {}
-
-// ExitAssignmentExpression is called when production AssignmentExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitAssignmentExpression(ctx *AssignmentExpressionContext) {}
-
-// EnterPostDecreaseExpression is called when production PostDecreaseExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterPostDecreaseExpression(ctx *PostDecreaseExpressionContext) {
-}
-
-// ExitPostDecreaseExpression is called when production PostDecreaseExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitPostDecreaseExpression(ctx *PostDecreaseExpressionContext) {
-}
-
 // EnterTypeofExpression is called when production TypeofExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterTypeofExpression(ctx *TypeofExpressionContext) {}
 
 // ExitTypeofExpression is called when production TypeofExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitTypeofExpression(ctx *TypeofExpressionContext) {}
-
-// EnterInstanceofExpression is called when production InstanceofExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterInstanceofExpression(ctx *InstanceofExpressionContext) {}
-
-// ExitInstanceofExpression is called when production InstanceofExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitInstanceofExpression(ctx *InstanceofExpressionContext) {}
-
-// EnterUnaryPlusExpression is called when production UnaryPlusExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterUnaryPlusExpression(ctx *UnaryPlusExpressionContext) {}
-
-// ExitUnaryPlusExpression is called when production UnaryPlusExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitUnaryPlusExpression(ctx *UnaryPlusExpressionContext) {}
-
-// EnterDeleteExpression is called when production DeleteExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterDeleteExpression(ctx *DeleteExpressionContext) {}
-
-// ExitDeleteExpression is called when production DeleteExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitDeleteExpression(ctx *DeleteExpressionContext) {}
 
 // EnterGeneratorsFunctionExpression is called when production GeneratorsFunctionExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterGeneratorsFunctionExpression(ctx *GeneratorsFunctionExpressionContext) {
@@ -1092,20 +1002,6 @@ func (s *BaseTypeScriptParserListener) EnterGeneratorsFunctionExpression(ctx *Ge
 // ExitGeneratorsFunctionExpression is called when production GeneratorsFunctionExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitGeneratorsFunctionExpression(ctx *GeneratorsFunctionExpressionContext) {
 }
-
-// EnterArrowFunctionExpression is called when production ArrowFunctionExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterArrowFunctionExpression(ctx *ArrowFunctionExpressionContext) {
-}
-
-// ExitArrowFunctionExpression is called when production ArrowFunctionExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitArrowFunctionExpression(ctx *ArrowFunctionExpressionContext) {
-}
-
-// EnterIteratorsExpression is called when production IteratorsExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterIteratorsExpression(ctx *IteratorsExpressionContext) {}
-
-// ExitIteratorsExpression is called when production IteratorsExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitIteratorsExpression(ctx *IteratorsExpressionContext) {}
 
 // EnterEqualityExpression is called when production EqualityExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterEqualityExpression(ctx *EqualityExpressionContext) {}
@@ -1118,12 +1014,6 @@ func (s *BaseTypeScriptParserListener) EnterBitXOrExpression(ctx *BitXOrExpressi
 
 // ExitBitXOrExpression is called when production BitXOrExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitBitXOrExpression(ctx *BitXOrExpressionContext) {}
-
-// EnterSuperExpression is called when production SuperExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterSuperExpression(ctx *SuperExpressionContext) {}
-
-// ExitSuperExpression is called when production SuperExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitSuperExpression(ctx *SuperExpressionContext) {}
 
 // EnterMultiplicativeExpression is called when production MultiplicativeExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterMultiplicativeExpression(ctx *MultiplicativeExpressionContext) {
@@ -1139,14 +1029,6 @@ func (s *BaseTypeScriptParserListener) EnterBitShiftExpression(ctx *BitShiftExpr
 // ExitBitShiftExpression is called when production BitShiftExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitBitShiftExpression(ctx *BitShiftExpressionContext) {}
 
-// EnterParenthesizedExpression is called when production ParenthesizedExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterParenthesizedExpression(ctx *ParenthesizedExpressionContext) {
-}
-
-// ExitParenthesizedExpression is called when production ParenthesizedExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitParenthesizedExpression(ctx *ParenthesizedExpressionContext) {
-}
-
 // EnterAdditiveExpression is called when production AdditiveExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterAdditiveExpression(ctx *AdditiveExpressionContext) {}
 
@@ -1158,20 +1040,6 @@ func (s *BaseTypeScriptParserListener) EnterRelationalExpression(ctx *Relational
 
 // ExitRelationalExpression is called when production RelationalExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitRelationalExpression(ctx *RelationalExpressionContext) {}
-
-// EnterPostIncrementExpression is called when production PostIncrementExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterPostIncrementExpression(ctx *PostIncrementExpressionContext) {
-}
-
-// ExitPostIncrementExpression is called when production PostIncrementExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitPostIncrementExpression(ctx *PostIncrementExpressionContext) {
-}
-
-// EnterYieldExpression is called when production YieldExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterYieldExpression(ctx *YieldExpressionContext) {}
-
-// ExitYieldExpression is called when production YieldExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitYieldExpression(ctx *YieldExpressionContext) {}
 
 // EnterBitNotExpression is called when production BitNotExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterBitNotExpression(ctx *BitNotExpressionContext) {}
@@ -1205,23 +1073,11 @@ func (s *BaseTypeScriptParserListener) EnterMemberDotExpression(ctx *MemberDotEx
 // ExitMemberDotExpression is called when production MemberDotExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitMemberDotExpression(ctx *MemberDotExpressionContext) {}
 
-// EnterClassExpression is called when production ClassExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterClassExpression(ctx *ClassExpressionContext) {}
-
-// ExitClassExpression is called when production ClassExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitClassExpression(ctx *ClassExpressionContext) {}
-
 // EnterMemberIndexExpression is called when production MemberIndexExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterMemberIndexExpression(ctx *MemberIndexExpressionContext) {}
 
 // ExitMemberIndexExpression is called when production MemberIndexExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitMemberIndexExpression(ctx *MemberIndexExpressionContext) {}
-
-// EnterIdentifierExpression is called when production IdentifierExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterIdentifierExpression(ctx *IdentifierExpressionContext) {}
-
-// ExitIdentifierExpression is called when production IdentifierExpression is exited.
-func (s *BaseTypeScriptParserListener) ExitIdentifierExpression(ctx *IdentifierExpressionContext) {}
 
 // EnterBitAndExpression is called when production BitAndExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterBitAndExpression(ctx *BitAndExpressionContext) {}
@@ -1248,6 +1104,156 @@ func (s *BaseTypeScriptParserListener) EnterVoidExpression(ctx *VoidExpressionCo
 
 // ExitVoidExpression is called when production VoidExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitVoidExpression(ctx *VoidExpressionContext) {}
+
+// EnterTernaryExpression is called when production TernaryExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterTernaryExpression(ctx *TernaryExpressionContext) {}
+
+// ExitTernaryExpression is called when production TernaryExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitTernaryExpression(ctx *TernaryExpressionContext) {}
+
+// EnterLogicalAndExpression is called when production LogicalAndExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterLogicalAndExpression(ctx *LogicalAndExpressionContext) {}
+
+// ExitLogicalAndExpression is called when production LogicalAndExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitLogicalAndExpression(ctx *LogicalAndExpressionContext) {}
+
+// EnterPreIncrementExpression is called when production PreIncrementExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterPreIncrementExpression(ctx *PreIncrementExpressionContext) {
+}
+
+// ExitPreIncrementExpression is called when production PreIncrementExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitPreIncrementExpression(ctx *PreIncrementExpressionContext) {
+}
+
+// EnterObjectLiteralExpression is called when production ObjectLiteralExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterObjectLiteralExpression(ctx *ObjectLiteralExpressionContext) {
+}
+
+// ExitObjectLiteralExpression is called when production ObjectLiteralExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitObjectLiteralExpression(ctx *ObjectLiteralExpressionContext) {
+}
+
+// EnterLogicalOrExpression is called when production LogicalOrExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterLogicalOrExpression(ctx *LogicalOrExpressionContext) {}
+
+// ExitLogicalOrExpression is called when production LogicalOrExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitLogicalOrExpression(ctx *LogicalOrExpressionContext) {}
+
+// EnterNotExpression is called when production NotExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterNotExpression(ctx *NotExpressionContext) {}
+
+// ExitNotExpression is called when production NotExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitNotExpression(ctx *NotExpressionContext) {}
+
+// EnterPreDecreaseExpression is called when production PreDecreaseExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
+
+// ExitPreDecreaseExpression is called when production PreDecreaseExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
+
+// EnterAwaitExpression is called when production AwaitExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterAwaitExpression(ctx *AwaitExpressionContext) {}
+
+// ExitAwaitExpression is called when production AwaitExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitAwaitExpression(ctx *AwaitExpressionContext) {}
+
+// EnterFunctionExpression is called when production FunctionExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterFunctionExpression(ctx *FunctionExpressionContext) {}
+
+// ExitFunctionExpression is called when production FunctionExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitFunctionExpression(ctx *FunctionExpressionContext) {}
+
+// EnterUnaryMinusExpression is called when production UnaryMinusExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterUnaryMinusExpression(ctx *UnaryMinusExpressionContext) {}
+
+// ExitUnaryMinusExpression is called when production UnaryMinusExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitUnaryMinusExpression(ctx *UnaryMinusExpressionContext) {}
+
+// EnterAssignmentExpression is called when production AssignmentExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterAssignmentExpression(ctx *AssignmentExpressionContext) {}
+
+// ExitAssignmentExpression is called when production AssignmentExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitAssignmentExpression(ctx *AssignmentExpressionContext) {}
+
+// EnterPostDecreaseExpression is called when production PostDecreaseExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterPostDecreaseExpression(ctx *PostDecreaseExpressionContext) {
+}
+
+// ExitPostDecreaseExpression is called when production PostDecreaseExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitPostDecreaseExpression(ctx *PostDecreaseExpressionContext) {
+}
+
+// EnterInstanceofExpression is called when production InstanceofExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterInstanceofExpression(ctx *InstanceofExpressionContext) {}
+
+// ExitInstanceofExpression is called when production InstanceofExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitInstanceofExpression(ctx *InstanceofExpressionContext) {}
+
+// EnterUnaryPlusExpression is called when production UnaryPlusExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterUnaryPlusExpression(ctx *UnaryPlusExpressionContext) {}
+
+// ExitUnaryPlusExpression is called when production UnaryPlusExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitUnaryPlusExpression(ctx *UnaryPlusExpressionContext) {}
+
+// EnterDeleteExpression is called when production DeleteExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterDeleteExpression(ctx *DeleteExpressionContext) {}
+
+// ExitDeleteExpression is called when production DeleteExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitDeleteExpression(ctx *DeleteExpressionContext) {}
+
+// EnterArrowFunctionExpression is called when production ArrowFunctionExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterArrowFunctionExpression(ctx *ArrowFunctionExpressionContext) {
+}
+
+// ExitArrowFunctionExpression is called when production ArrowFunctionExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitArrowFunctionExpression(ctx *ArrowFunctionExpressionContext) {
+}
+
+// EnterIteratorsExpression is called when production IteratorsExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterIteratorsExpression(ctx *IteratorsExpressionContext) {}
+
+// ExitIteratorsExpression is called when production IteratorsExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitIteratorsExpression(ctx *IteratorsExpressionContext) {}
+
+// EnterSuperExpression is called when production SuperExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterSuperExpression(ctx *SuperExpressionContext) {}
+
+// ExitSuperExpression is called when production SuperExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitSuperExpression(ctx *SuperExpressionContext) {}
+
+// EnterParenthesizedExpression is called when production ParenthesizedExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterParenthesizedExpression(ctx *ParenthesizedExpressionContext) {
+}
+
+// ExitParenthesizedExpression is called when production ParenthesizedExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitParenthesizedExpression(ctx *ParenthesizedExpressionContext) {
+}
+
+// EnterPostIncrementExpression is called when production PostIncrementExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterPostIncrementExpression(ctx *PostIncrementExpressionContext) {
+}
+
+// ExitPostIncrementExpression is called when production PostIncrementExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitPostIncrementExpression(ctx *PostIncrementExpressionContext) {
+}
+
+// EnterYieldExpression is called when production YieldExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterYieldExpression(ctx *YieldExpressionContext) {}
+
+// ExitYieldExpression is called when production YieldExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitYieldExpression(ctx *YieldExpressionContext) {}
+
+// EnterClassExpression is called when production ClassExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterClassExpression(ctx *ClassExpressionContext) {}
+
+// ExitClassExpression is called when production ClassExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitClassExpression(ctx *ClassExpressionContext) {}
+
+// EnterIdentifierExpression is called when production IdentifierExpression is entered.
+func (s *BaseTypeScriptParserListener) EnterIdentifierExpression(ctx *IdentifierExpressionContext) {}
+
+// ExitIdentifierExpression is called when production IdentifierExpression is exited.
+func (s *BaseTypeScriptParserListener) ExitIdentifierExpression(ctx *IdentifierExpressionContext) {}
 
 // EnterCoalesceExpression is called when production CoalesceExpression is entered.
 func (s *BaseTypeScriptParserListener) EnterCoalesceExpression(ctx *CoalesceExpressionContext) {}

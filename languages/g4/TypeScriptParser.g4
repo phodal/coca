@@ -682,6 +682,7 @@ singleExpression
     | '~' singleExpression                                                   # BitNotExpression
     | '!' singleExpression                                                   # NotExpression
     | Await singleExpression                                                 # AwaitExpression
+    | <assoc=right> singleExpression '**' singleExpression                   # PowerExpression
     | singleExpression ('*' | '/' | '%') singleExpression                    # MultiplicativeExpression
     | singleExpression ('+' | '-') singleExpression                          # AdditiveExpression
     | singleExpression ('<<' | '>>' | '>>>') singleExpression                # BitShiftExpression

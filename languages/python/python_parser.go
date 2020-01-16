@@ -68,102 +68,102 @@ var parserATN = []uint16{
 	11, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 5, 24, 468, 10,
 	24, 5, 24, 470, 10, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 5, 24,
 	478, 10, 24, 3, 24, 3, 24, 3, 24, 3, 24, 3, 24, 7, 24, 485, 10, 24, 12,
-	24, 14, 24, 488, 11, 24, 3, 24, 3, 24, 5, 24, 492, 10, 24, 3, 25, 3, 25,
-	3, 25, 3, 25, 3, 25, 3, 25, 5, 25, 500, 10, 25, 3, 26, 7, 26, 503, 10,
-	26, 12, 26, 14, 26, 506, 11, 26, 3, 26, 3, 26, 6, 26, 510, 10, 26, 13,
-	26, 14, 26, 511, 5, 26, 514, 10, 26, 3, 27, 3, 27, 5, 27, 518, 10, 27,
-	3, 27, 3, 27, 6, 27, 522, 10, 27, 13, 27, 14, 27, 523, 3, 27, 3, 27, 5,
-	27, 528, 10, 27, 3, 27, 5, 27, 531, 10, 27, 3, 28, 3, 28, 3, 28, 3, 29,
-	3, 29, 3, 29, 3, 29, 7, 29, 540, 10, 29, 12, 29, 14, 29, 543, 11, 29, 3,
-	29, 3, 29, 5, 29, 547, 10, 29, 3, 29, 5, 29, 550, 10, 29, 3, 29, 3, 29,
-	3, 29, 3, 29, 3, 29, 5, 29, 557, 10, 29, 3, 29, 3, 29, 3, 29, 3, 29, 3,
-	29, 5, 29, 564, 10, 29, 5, 29, 566, 10, 29, 3, 30, 3, 30, 3, 30, 7, 30,
-	571, 10, 30, 12, 30, 14, 30, 574, 11, 30, 3, 30, 5, 30, 577, 10, 30, 3,
-	31, 3, 31, 3, 31, 7, 31, 582, 10, 31, 12, 31, 14, 31, 585, 11, 31, 3, 31,
-	5, 31, 588, 10, 31, 3, 32, 3, 32, 3, 32, 5, 32, 593, 10, 32, 3, 33, 3,
-	33, 3, 33, 7, 33, 598, 10, 33, 12, 33, 14, 33, 601, 11, 33, 3, 34, 3, 34,
-	3, 34, 5, 34, 606, 10, 34, 3, 35, 3, 35, 3, 35, 3, 35, 3, 35, 3, 35, 5,
-	35, 614, 10, 35, 3, 35, 3, 35, 5, 35, 618, 10, 35, 3, 35, 3, 35, 5, 35,
-	622, 10, 35, 3, 36, 3, 36, 3, 36, 5, 36, 627, 10, 36, 3, 36, 3, 36, 3,
-	36, 5, 36, 632, 10, 36, 3, 36, 3, 36, 5, 36, 636, 10, 36, 3, 36, 5, 36,
-	639, 10, 36, 3, 36, 5, 36, 642, 10, 36, 3, 36, 3, 36, 5, 36, 646, 10, 36,
-	5, 36, 648, 10, 36, 3, 37, 3, 37, 3, 37, 7, 37, 653, 10, 37, 12, 37, 14,
-	37, 656, 11, 37, 3, 38, 3, 38, 3, 38, 5, 38, 661, 10, 38, 3, 38, 5, 38,
-	664, 10, 38, 3, 39, 3, 39, 3, 39, 3, 40, 3, 40, 3, 40, 3, 41, 3, 41, 3,
-	41, 3, 41, 5, 41, 676, 10, 41, 3, 41, 3, 41, 3, 41, 3, 41, 3, 41, 3, 41,
-	7, 41, 684, 10, 41, 12, 41, 14, 41, 687, 11, 41, 3, 42, 3, 42, 3, 42, 3,
-	42, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 5, 42, 701,
-	10, 42, 3, 42, 3, 42, 3, 42, 5, 42, 706, 10, 42, 5, 42, 708, 10, 42, 3,
-	42, 7, 42, 711, 10, 42, 12, 42, 14, 42, 714, 11, 42, 3, 43, 3, 43, 5, 43,
-	718, 10, 43, 3, 43, 3, 43, 7, 43, 722, 10, 43, 12, 43, 14, 43, 725, 11,
-	43, 3, 43, 3, 43, 5, 43, 729, 10, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43,
-	3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3,
-	43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 7, 43, 752, 10, 43, 12, 43, 14,
-	43, 755, 11, 43, 3, 44, 3, 44, 3, 44, 5, 44, 760, 10, 44, 3, 44, 3, 44,
-	3, 44, 5, 44, 765, 10, 44, 3, 44, 3, 44, 3, 44, 5, 44, 770, 10, 44, 3,
-	44, 3, 44, 3, 44, 3, 44, 5, 44, 776, 10, 44, 3, 44, 3, 44, 3, 44, 3, 44,
-	3, 44, 3, 44, 3, 44, 5, 44, 785, 10, 44, 3, 44, 3, 44, 3, 44, 6, 44, 790,
-	10, 44, 13, 44, 14, 44, 791, 5, 44, 794, 10, 44, 3, 45, 3, 45, 3, 45, 3,
-	45, 3, 45, 3, 45, 5, 45, 802, 10, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45,
-	3, 45, 3, 45, 5, 45, 811, 10, 45, 7, 45, 813, 10, 45, 12, 45, 14, 45, 816,
-	11, 45, 3, 45, 5, 45, 819, 10, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3,
-	45, 5, 45, 827, 10, 45, 3, 46, 3, 46, 5, 46, 831, 10, 46, 3, 46, 3, 46,
-	3, 46, 3, 46, 5, 46, 837, 10, 46, 7, 46, 839, 10, 46, 12, 46, 14, 46, 842,
-	11, 46, 3, 46, 5, 46, 845, 10, 46, 5, 46, 847, 10, 46, 3, 47, 3, 47, 3,
-	47, 7, 47, 852, 10, 47, 12, 47, 14, 47, 855, 11, 47, 3, 47, 5, 47, 858,
-	10, 47, 3, 48, 3, 48, 3, 48, 3, 48, 3, 48, 3, 48, 7, 48, 866, 10, 48, 12,
-	48, 14, 48, 869, 11, 48, 3, 49, 3, 49, 3, 50, 3, 50, 3, 50, 5, 50, 876,
-	10, 50, 3, 51, 3, 51, 3, 52, 3, 52, 5, 52, 882, 10, 52, 3, 53, 3, 53, 3,
-	53, 5, 53, 887, 10, 53, 3, 54, 3, 54, 3, 54, 5, 54, 892, 10, 54, 3, 54,
-	5, 54, 895, 10, 54, 3, 55, 3, 55, 5, 55, 899, 10, 55, 3, 55, 3, 55, 3,
-	55, 3, 55, 3, 55, 5, 55, 906, 10, 55, 3, 56, 3, 56, 3, 56, 7, 56, 911,
-	10, 56, 12, 56, 14, 56, 914, 11, 56, 3, 56, 5, 56, 917, 10, 56, 3, 57,
-	3, 57, 3, 57, 3, 57, 5, 57, 923, 10, 57, 3, 57, 3, 57, 5, 57, 927, 10,
-	57, 3, 58, 3, 58, 3, 58, 7, 58, 932, 10, 58, 12, 58, 14, 58, 935, 11, 58,
-	3, 58, 5, 58, 938, 10, 58, 3, 59, 3, 59, 3, 59, 3, 59, 5, 59, 944, 10,
-	59, 3, 59, 5, 59, 947, 10, 59, 5, 59, 949, 10, 59, 3, 59, 3, 59, 5, 59,
-	953, 10, 59, 3, 59, 5, 59, 956, 10, 59, 5, 59, 958, 10, 59, 3, 60, 3, 60,
-	5, 60, 962, 10, 60, 3, 61, 3, 61, 3, 61, 3, 61, 3, 61, 5, 61, 969, 10,
-	61, 3, 62, 3, 62, 3, 62, 3, 62, 5, 62, 975, 10, 62, 5, 62, 977, 10, 62,
-	3, 62, 2, 6, 80, 82, 84, 94, 63, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22,
-	24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58,
-	60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94,
-	96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 2,
-	12, 3, 3, 5, 5, 3, 2, 43, 44, 3, 2, 72, 84, 4, 2, 57, 58, 62, 62, 5, 2,
-	46, 46, 59, 61, 70, 70, 3, 2, 57, 58, 3, 2, 55, 56, 4, 2, 41, 42, 98, 98,
-	3, 2, 86, 89, 4, 2, 46, 46, 50, 50, 2, 1118, 2, 127, 3, 2, 2, 2, 4, 136,
-	3, 2, 2, 2, 6, 140, 3, 2, 2, 2, 8, 144, 3, 2, 2, 2, 10, 153, 3, 2, 2, 2,
-	12, 229, 3, 2, 2, 2, 14, 241, 3, 2, 2, 2, 16, 243, 3, 2, 2, 2, 18, 254,
-	3, 2, 2, 2, 20, 259, 3, 2, 2, 2, 22, 263, 3, 2, 2, 2, 24, 267, 3, 2, 2,
-	2, 26, 272, 3, 2, 2, 2, 28, 291, 3, 2, 2, 2, 30, 304, 3, 2, 2, 2, 32, 344,
-	3, 2, 2, 2, 34, 346, 3, 2, 2, 2, 36, 349, 3, 2, 2, 2, 38, 352, 3, 2, 2,
-	2, 40, 366, 3, 2, 2, 2, 42, 368, 3, 2, 2, 2, 44, 373, 3, 2, 2, 2, 46, 491,
-	3, 2, 2, 2, 48, 499, 3, 2, 2, 2, 50, 513, 3, 2, 2, 2, 52, 530, 3, 2, 2,
-	2, 54, 532, 3, 2, 2, 2, 56, 565, 3, 2, 2, 2, 58, 567, 3, 2, 2, 2, 60, 578,
-	3, 2, 2, 2, 62, 589, 3, 2, 2, 2, 64, 594, 3, 2, 2, 2, 66, 602, 3, 2, 2,
-	2, 68, 621, 3, 2, 2, 2, 70, 647, 3, 2, 2, 2, 72, 649, 3, 2, 2, 2, 74, 663,
-	3, 2, 2, 2, 76, 665, 3, 2, 2, 2, 78, 668, 3, 2, 2, 2, 80, 675, 3, 2, 2,
-	2, 82, 688, 3, 2, 2, 2, 84, 728, 3, 2, 2, 2, 86, 793, 3, 2, 2, 2, 88, 826,
-	3, 2, 2, 2, 90, 830, 3, 2, 2, 2, 92, 848, 3, 2, 2, 2, 94, 859, 3, 2, 2,
-	2, 96, 870, 3, 2, 2, 2, 98, 875, 3, 2, 2, 2, 100, 877, 3, 2, 2, 2, 102,
-	879, 3, 2, 2, 2, 104, 886, 3, 2, 2, 2, 106, 894, 3, 2, 2, 2, 108, 905,
-	3, 2, 2, 2, 110, 907, 3, 2, 2, 2, 112, 926, 3, 2, 2, 2, 114, 928, 3, 2,
-	2, 2, 116, 957, 3, 2, 2, 2, 118, 959, 3, 2, 2, 2, 120, 963, 3, 2, 2, 2,
-	122, 976, 3, 2, 2, 2, 124, 128, 5, 4, 3, 2, 125, 128, 5, 6, 4, 2, 126,
-	128, 5, 8, 5, 2, 127, 124, 3, 2, 2, 2, 127, 125, 3, 2, 2, 2, 127, 126,
-	3, 2, 2, 2, 127, 128, 3, 2, 2, 2, 128, 129, 3, 2, 2, 2, 129, 130, 7, 2,
-	2, 3, 130, 3, 3, 2, 2, 2, 131, 137, 7, 5, 2, 2, 132, 137, 5, 44, 23, 2,
-	133, 134, 5, 12, 7, 2, 134, 135, 7, 5, 2, 2, 135, 137, 3, 2, 2, 2, 136,
-	131, 3, 2, 2, 2, 136, 132, 3, 2, 2, 2, 136, 133, 3, 2, 2, 2, 137, 5, 3,
-	2, 2, 2, 138, 141, 7, 5, 2, 2, 139, 141, 5, 10, 6, 2, 140, 138, 3, 2, 2,
-	2, 140, 139, 3, 2, 2, 2, 141, 142, 3, 2, 2, 2, 142, 140, 3, 2, 2, 2, 142,
-	143, 3, 2, 2, 2, 143, 7, 3, 2, 2, 2, 144, 148, 5, 92, 47, 2, 145, 147,
-	7, 5, 2, 2, 146, 145, 3, 2, 2, 2, 147, 150, 3, 2, 2, 2, 148, 146, 3, 2,
-	2, 2, 148, 149, 3, 2, 2, 2, 149, 9, 3, 2, 2, 2, 150, 148, 3, 2, 2, 2, 151,
-	154, 5, 44, 23, 2, 152, 154, 5, 12, 7, 2, 153, 151, 3, 2, 2, 2, 153, 152,
-	3, 2, 2, 2, 154, 11, 3, 2, 2, 2, 155, 156, 7, 15, 2, 2, 156, 157, 5, 68,
-	35, 2, 157, 158, 7, 48, 2, 2, 158, 162, 5, 14, 8, 2, 159, 161, 5, 18, 10,
-	2, 160, 159, 3, 2, 2, 2, 161, 164, 3, 2, 2, 2, 162, 160, 3, 2, 2, 2, 162,
+	24, 14, 24, 488, 11, 24, 3, 24, 3, 24, 5, 24, 492, 10, 24, 3, 25, 7, 25,
+	495, 10, 25, 12, 25, 14, 25, 498, 11, 25, 3, 25, 3, 25, 6, 25, 502, 10,
+	25, 13, 25, 14, 25, 503, 5, 25, 506, 10, 25, 3, 26, 3, 26, 3, 26, 3, 26,
+	3, 26, 3, 26, 5, 26, 514, 10, 26, 3, 27, 3, 27, 5, 27, 518, 10, 27, 3,
+	27, 3, 27, 6, 27, 522, 10, 27, 13, 27, 14, 27, 523, 3, 27, 3, 27, 5, 27,
+	528, 10, 27, 3, 27, 5, 27, 531, 10, 27, 3, 28, 3, 28, 3, 28, 3, 29, 3,
+	29, 3, 29, 3, 29, 7, 29, 540, 10, 29, 12, 29, 14, 29, 543, 11, 29, 3, 29,
+	3, 29, 5, 29, 547, 10, 29, 3, 29, 5, 29, 550, 10, 29, 3, 29, 3, 29, 3,
+	29, 3, 29, 3, 29, 5, 29, 557, 10, 29, 3, 29, 3, 29, 3, 29, 3, 29, 3, 29,
+	5, 29, 564, 10, 29, 5, 29, 566, 10, 29, 3, 30, 3, 30, 3, 30, 7, 30, 571,
+	10, 30, 12, 30, 14, 30, 574, 11, 30, 3, 30, 5, 30, 577, 10, 30, 3, 31,
+	3, 31, 3, 31, 7, 31, 582, 10, 31, 12, 31, 14, 31, 585, 11, 31, 3, 31, 5,
+	31, 588, 10, 31, 3, 32, 3, 32, 3, 32, 5, 32, 593, 10, 32, 3, 33, 3, 33,
+	3, 33, 7, 33, 598, 10, 33, 12, 33, 14, 33, 601, 11, 33, 3, 34, 3, 34, 3,
+	34, 5, 34, 606, 10, 34, 3, 35, 3, 35, 3, 35, 3, 35, 3, 35, 3, 35, 5, 35,
+	614, 10, 35, 3, 35, 3, 35, 5, 35, 618, 10, 35, 3, 35, 3, 35, 5, 35, 622,
+	10, 35, 3, 36, 3, 36, 3, 36, 5, 36, 627, 10, 36, 3, 36, 3, 36, 3, 36, 5,
+	36, 632, 10, 36, 3, 36, 3, 36, 5, 36, 636, 10, 36, 3, 36, 5, 36, 639, 10,
+	36, 3, 36, 5, 36, 642, 10, 36, 3, 36, 3, 36, 5, 36, 646, 10, 36, 5, 36,
+	648, 10, 36, 3, 37, 3, 37, 3, 37, 7, 37, 653, 10, 37, 12, 37, 14, 37, 656,
+	11, 37, 3, 38, 3, 38, 3, 38, 5, 38, 661, 10, 38, 3, 38, 5, 38, 664, 10,
+	38, 3, 39, 3, 39, 3, 39, 3, 40, 3, 40, 3, 40, 3, 41, 3, 41, 3, 41, 3, 41,
+	5, 41, 676, 10, 41, 3, 41, 3, 41, 3, 41, 3, 41, 3, 41, 3, 41, 7, 41, 684,
+	10, 41, 12, 41, 14, 41, 687, 11, 41, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42,
+	3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 3, 42, 5, 42, 701, 10, 42, 3,
+	42, 3, 42, 3, 42, 5, 42, 706, 10, 42, 5, 42, 708, 10, 42, 3, 42, 7, 42,
+	711, 10, 42, 12, 42, 14, 42, 714, 11, 42, 3, 43, 3, 43, 5, 43, 718, 10,
+	43, 3, 43, 3, 43, 7, 43, 722, 10, 43, 12, 43, 14, 43, 725, 11, 43, 3, 43,
+	3, 43, 5, 43, 729, 10, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3,
+	43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43, 3, 43,
+	3, 43, 3, 43, 3, 43, 3, 43, 7, 43, 752, 10, 43, 12, 43, 14, 43, 755, 11,
+	43, 3, 44, 3, 44, 3, 44, 5, 44, 760, 10, 44, 3, 44, 3, 44, 3, 44, 5, 44,
+	765, 10, 44, 3, 44, 3, 44, 3, 44, 5, 44, 770, 10, 44, 3, 44, 3, 44, 3,
+	44, 3, 44, 5, 44, 776, 10, 44, 3, 44, 3, 44, 3, 44, 3, 44, 3, 44, 3, 44,
+	3, 44, 5, 44, 785, 10, 44, 3, 44, 3, 44, 3, 44, 6, 44, 790, 10, 44, 13,
+	44, 14, 44, 791, 5, 44, 794, 10, 44, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45,
+	3, 45, 5, 45, 802, 10, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3,
+	45, 5, 45, 811, 10, 45, 7, 45, 813, 10, 45, 12, 45, 14, 45, 816, 11, 45,
+	3, 45, 5, 45, 819, 10, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45, 3, 45, 5,
+	45, 827, 10, 45, 3, 46, 3, 46, 5, 46, 831, 10, 46, 3, 46, 3, 46, 3, 46,
+	3, 46, 5, 46, 837, 10, 46, 7, 46, 839, 10, 46, 12, 46, 14, 46, 842, 11,
+	46, 3, 46, 5, 46, 845, 10, 46, 5, 46, 847, 10, 46, 3, 47, 3, 47, 3, 47,
+	7, 47, 852, 10, 47, 12, 47, 14, 47, 855, 11, 47, 3, 47, 5, 47, 858, 10,
+	47, 3, 48, 3, 48, 3, 48, 3, 48, 3, 48, 3, 48, 7, 48, 866, 10, 48, 12, 48,
+	14, 48, 869, 11, 48, 3, 49, 3, 49, 3, 50, 3, 50, 3, 50, 5, 50, 876, 10,
+	50, 3, 51, 3, 51, 3, 52, 3, 52, 5, 52, 882, 10, 52, 3, 53, 3, 53, 3, 53,
+	5, 53, 887, 10, 53, 3, 54, 3, 54, 3, 54, 5, 54, 892, 10, 54, 3, 54, 5,
+	54, 895, 10, 54, 3, 55, 3, 55, 5, 55, 899, 10, 55, 3, 55, 3, 55, 3, 55,
+	3, 55, 3, 55, 5, 55, 906, 10, 55, 3, 56, 3, 56, 3, 56, 7, 56, 911, 10,
+	56, 12, 56, 14, 56, 914, 11, 56, 3, 56, 5, 56, 917, 10, 56, 3, 57, 3, 57,
+	3, 57, 3, 57, 5, 57, 923, 10, 57, 3, 57, 3, 57, 5, 57, 927, 10, 57, 3,
+	58, 3, 58, 3, 58, 7, 58, 932, 10, 58, 12, 58, 14, 58, 935, 11, 58, 3, 58,
+	5, 58, 938, 10, 58, 3, 59, 3, 59, 3, 59, 3, 59, 5, 59, 944, 10, 59, 3,
+	59, 5, 59, 947, 10, 59, 5, 59, 949, 10, 59, 3, 59, 3, 59, 5, 59, 953, 10,
+	59, 3, 59, 5, 59, 956, 10, 59, 5, 59, 958, 10, 59, 3, 60, 3, 60, 5, 60,
+	962, 10, 60, 3, 61, 3, 61, 3, 61, 3, 61, 3, 61, 5, 61, 969, 10, 61, 3,
+	62, 3, 62, 3, 62, 3, 62, 5, 62, 975, 10, 62, 5, 62, 977, 10, 62, 3, 62,
+	2, 6, 80, 82, 84, 94, 63, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26,
+	28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62,
+	64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98,
+	100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 2, 12, 3, 3,
+	5, 5, 3, 2, 43, 44, 3, 2, 72, 84, 4, 2, 57, 58, 62, 62, 5, 2, 46, 46, 59,
+	61, 70, 70, 3, 2, 57, 58, 3, 2, 55, 56, 4, 2, 41, 42, 98, 98, 3, 2, 86,
+	89, 4, 2, 46, 46, 50, 50, 2, 1118, 2, 127, 3, 2, 2, 2, 4, 136, 3, 2, 2,
+	2, 6, 140, 3, 2, 2, 2, 8, 144, 3, 2, 2, 2, 10, 153, 3, 2, 2, 2, 12, 229,
+	3, 2, 2, 2, 14, 241, 3, 2, 2, 2, 16, 243, 3, 2, 2, 2, 18, 254, 3, 2, 2,
+	2, 20, 259, 3, 2, 2, 2, 22, 263, 3, 2, 2, 2, 24, 267, 3, 2, 2, 2, 26, 272,
+	3, 2, 2, 2, 28, 291, 3, 2, 2, 2, 30, 304, 3, 2, 2, 2, 32, 344, 3, 2, 2,
+	2, 34, 346, 3, 2, 2, 2, 36, 349, 3, 2, 2, 2, 38, 352, 3, 2, 2, 2, 40, 366,
+	3, 2, 2, 2, 42, 368, 3, 2, 2, 2, 44, 373, 3, 2, 2, 2, 46, 491, 3, 2, 2,
+	2, 48, 505, 3, 2, 2, 2, 50, 513, 3, 2, 2, 2, 52, 530, 3, 2, 2, 2, 54, 532,
+	3, 2, 2, 2, 56, 565, 3, 2, 2, 2, 58, 567, 3, 2, 2, 2, 60, 578, 3, 2, 2,
+	2, 62, 589, 3, 2, 2, 2, 64, 594, 3, 2, 2, 2, 66, 602, 3, 2, 2, 2, 68, 621,
+	3, 2, 2, 2, 70, 647, 3, 2, 2, 2, 72, 649, 3, 2, 2, 2, 74, 663, 3, 2, 2,
+	2, 76, 665, 3, 2, 2, 2, 78, 668, 3, 2, 2, 2, 80, 675, 3, 2, 2, 2, 82, 688,
+	3, 2, 2, 2, 84, 728, 3, 2, 2, 2, 86, 793, 3, 2, 2, 2, 88, 826, 3, 2, 2,
+	2, 90, 830, 3, 2, 2, 2, 92, 848, 3, 2, 2, 2, 94, 859, 3, 2, 2, 2, 96, 870,
+	3, 2, 2, 2, 98, 875, 3, 2, 2, 2, 100, 877, 3, 2, 2, 2, 102, 879, 3, 2,
+	2, 2, 104, 886, 3, 2, 2, 2, 106, 894, 3, 2, 2, 2, 108, 905, 3, 2, 2, 2,
+	110, 907, 3, 2, 2, 2, 112, 926, 3, 2, 2, 2, 114, 928, 3, 2, 2, 2, 116,
+	957, 3, 2, 2, 2, 118, 959, 3, 2, 2, 2, 120, 963, 3, 2, 2, 2, 122, 976,
+	3, 2, 2, 2, 124, 128, 5, 4, 3, 2, 125, 128, 5, 6, 4, 2, 126, 128, 5, 8,
+	5, 2, 127, 124, 3, 2, 2, 2, 127, 125, 3, 2, 2, 2, 127, 126, 3, 2, 2, 2,
+	127, 128, 3, 2, 2, 2, 128, 129, 3, 2, 2, 2, 129, 130, 7, 2, 2, 3, 130,
+	3, 3, 2, 2, 2, 131, 137, 7, 5, 2, 2, 132, 137, 5, 44, 23, 2, 133, 134,
+	5, 12, 7, 2, 134, 135, 7, 5, 2, 2, 135, 137, 3, 2, 2, 2, 136, 131, 3, 2,
+	2, 2, 136, 132, 3, 2, 2, 2, 136, 133, 3, 2, 2, 2, 137, 5, 3, 2, 2, 2, 138,
+	141, 7, 5, 2, 2, 139, 141, 5, 10, 6, 2, 140, 138, 3, 2, 2, 2, 140, 139,
+	3, 2, 2, 2, 141, 142, 3, 2, 2, 2, 142, 140, 3, 2, 2, 2, 142, 143, 3, 2,
+	2, 2, 143, 7, 3, 2, 2, 2, 144, 148, 5, 92, 47, 2, 145, 147, 7, 5, 2, 2,
+	146, 145, 3, 2, 2, 2, 147, 150, 3, 2, 2, 2, 148, 146, 3, 2, 2, 2, 148,
+	149, 3, 2, 2, 2, 149, 9, 3, 2, 2, 2, 150, 148, 3, 2, 2, 2, 151, 154, 5,
+	44, 23, 2, 152, 154, 5, 12, 7, 2, 153, 151, 3, 2, 2, 2, 153, 152, 3, 2,
+	2, 2, 154, 11, 3, 2, 2, 2, 155, 156, 7, 15, 2, 2, 156, 157, 5, 68, 35,
+	2, 157, 158, 7, 48, 2, 2, 158, 162, 5, 14, 8, 2, 159, 161, 5, 18, 10, 2,
+	160, 159, 3, 2, 2, 2, 161, 164, 3, 2, 2, 2, 162, 160, 3, 2, 2, 2, 162,
 	163, 3, 2, 2, 2, 163, 166, 3, 2, 2, 2, 164, 162, 3, 2, 2, 2, 165, 167,
 	5, 20, 11, 2, 166, 165, 3, 2, 2, 2, 166, 167, 3, 2, 2, 2, 167, 230, 3,
 	2, 2, 2, 168, 169, 7, 18, 2, 2, 169, 170, 5, 68, 35, 2, 170, 171, 7, 48,
@@ -269,8 +269,8 @@ var parserATN = []uint16{
 	438, 3, 2, 2, 2, 438, 441, 3, 2, 2, 2, 439, 440, 7, 9, 2, 2, 440, 442,
 	5, 68, 35, 2, 441, 439, 3, 2, 2, 2, 441, 442, 3, 2, 2, 2, 442, 492, 3,
 	2, 2, 2, 443, 492, 5, 102, 52, 2, 444, 445, 7, 10, 2, 2, 445, 492, 5, 64,
-	33, 2, 446, 447, 7, 9, 2, 2, 447, 448, 5, 50, 26, 2, 448, 449, 7, 10, 2,
-	2, 449, 450, 5, 48, 25, 2, 450, 492, 3, 2, 2, 2, 451, 452, 7, 13, 2, 2,
+	33, 2, 446, 447, 7, 9, 2, 2, 447, 448, 5, 48, 25, 2, 448, 449, 7, 10, 2,
+	2, 449, 450, 5, 50, 26, 2, 450, 492, 3, 2, 2, 2, 451, 452, 7, 13, 2, 2,
 	452, 457, 5, 96, 49, 2, 453, 454, 7, 47, 2, 2, 454, 456, 5, 96, 49, 2,
 	455, 453, 3, 2, 2, 2, 456, 459, 3, 2, 2, 2, 457, 455, 3, 2, 2, 2, 457,
 	458, 3, 2, 2, 2, 458, 492, 3, 2, 2, 2, 459, 457, 3, 2, 2, 2, 460, 461,
@@ -289,15 +289,15 @@ var parserATN = []uint16{
 	2, 2, 491, 421, 3, 2, 2, 2, 491, 422, 3, 2, 2, 2, 491, 423, 3, 2, 2, 2,
 	491, 427, 3, 2, 2, 2, 491, 443, 3, 2, 2, 2, 491, 444, 3, 2, 2, 2, 491,
 	446, 3, 2, 2, 2, 491, 451, 3, 2, 2, 2, 491, 460, 3, 2, 2, 2, 491, 473,
-	3, 2, 2, 2, 491, 479, 3, 2, 2, 2, 492, 47, 3, 2, 2, 2, 493, 500, 7, 46,
-	2, 2, 494, 495, 7, 92, 2, 2, 495, 496, 5, 60, 31, 2, 496, 497, 7, 93, 2,
-	2, 497, 500, 3, 2, 2, 2, 498, 500, 5, 60, 31, 2, 499, 493, 3, 2, 2, 2,
-	499, 494, 3, 2, 2, 2, 499, 498, 3, 2, 2, 2, 500, 49, 3, 2, 2, 2, 501, 503,
-	9, 3, 2, 2, 502, 501, 3, 2, 2, 2, 503, 506, 3, 2, 2, 2, 504, 502, 3, 2,
-	2, 2, 504, 505, 3, 2, 2, 2, 505, 507, 3, 2, 2, 2, 506, 504, 3, 2, 2, 2,
-	507, 514, 5, 94, 48, 2, 508, 510, 9, 3, 2, 2, 509, 508, 3, 2, 2, 2, 510,
-	511, 3, 2, 2, 2, 511, 509, 3, 2, 2, 2, 511, 512, 3, 2, 2, 2, 512, 514,
-	3, 2, 2, 2, 513, 504, 3, 2, 2, 2, 513, 509, 3, 2, 2, 2, 514, 51, 3, 2,
+	3, 2, 2, 2, 491, 479, 3, 2, 2, 2, 492, 47, 3, 2, 2, 2, 493, 495, 9, 3,
+	2, 2, 494, 493, 3, 2, 2, 2, 495, 498, 3, 2, 2, 2, 496, 494, 3, 2, 2, 2,
+	496, 497, 3, 2, 2, 2, 497, 499, 3, 2, 2, 2, 498, 496, 3, 2, 2, 2, 499,
+	506, 5, 94, 48, 2, 500, 502, 9, 3, 2, 2, 501, 500, 3, 2, 2, 2, 502, 503,
+	3, 2, 2, 2, 503, 501, 3, 2, 2, 2, 503, 504, 3, 2, 2, 2, 504, 506, 3, 2,
+	2, 2, 505, 496, 3, 2, 2, 2, 505, 501, 3, 2, 2, 2, 506, 49, 3, 2, 2, 2,
+	507, 514, 7, 46, 2, 2, 508, 509, 7, 92, 2, 2, 509, 510, 5, 60, 31, 2, 510,
+	511, 7, 93, 2, 2, 511, 514, 3, 2, 2, 2, 512, 514, 5, 60, 31, 2, 513, 507,
+	3, 2, 2, 2, 513, 508, 3, 2, 2, 2, 513, 512, 3, 2, 2, 2, 514, 51, 3, 2,
 	2, 2, 515, 518, 5, 68, 35, 2, 516, 518, 5, 54, 28, 2, 517, 515, 3, 2, 2,
 	2, 517, 516, 3, 2, 2, 2, 518, 519, 3, 2, 2, 2, 519, 520, 7, 47, 2, 2, 520,
 	522, 3, 2, 2, 2, 521, 517, 3, 2, 2, 2, 522, 523, 3, 2, 2, 2, 523, 521,
@@ -481,8 +481,8 @@ var parserATN = []uint16{
 	148, 153, 162, 166, 173, 176, 185, 193, 196, 199, 202, 205, 213, 222, 227,
 	229, 237, 241, 247, 250, 270, 284, 286, 295, 298, 304, 310, 315, 323, 328,
 	332, 335, 338, 342, 344, 357, 363, 366, 371, 378, 382, 388, 397, 401, 409,
-	412, 414, 425, 433, 435, 437, 441, 457, 467, 469, 477, 486, 491, 499, 504,
-	511, 513, 517, 523, 527, 530, 541, 546, 549, 556, 563, 565, 572, 576, 583,
+	412, 414, 425, 433, 435, 437, 441, 457, 467, 469, 477, 486, 491, 496, 503,
+	505, 513, 517, 523, 527, 530, 541, 546, 549, 556, 563, 565, 572, 576, 583,
 	587, 592, 599, 605, 613, 617, 621, 626, 631, 635, 638, 641, 645, 647, 654,
 	660, 663, 675, 683, 685, 700, 705, 707, 712, 717, 723, 728, 751, 753, 759,
 	764, 769, 775, 784, 791, 793, 801, 810, 814, 818, 826, 830, 836, 840, 844,
@@ -528,7 +528,7 @@ var ruleNames = []string{
 	"suite", "decorator", "elif_clause", "else_clause", "finally_clause", "with_item",
 	"except_clause", "classdef", "funcdef", "typedargslist", "args", "kwargs",
 	"def_parameters", "def_parameter", "named_parameter", "simple_stmt", "small_stmt",
-	"from_stmt_as_names", "from_stmt_source", "testlist_star_expr", "star_expr",
+	"from_stmt_source", "from_stmt_as_names", "testlist_star_expr", "star_expr",
 	"assign_part", "exprlist", "import_as_names", "import_as_name", "dotted_as_names",
 	"dotted_as_name", "test", "varargslist", "vardef_parameters", "vardef_parameter",
 	"varargs", "varkwargs", "logical_test", "comparison", "expr", "atom", "dictorsetmaker",
@@ -692,8 +692,8 @@ const (
 	PythonParserRULE_named_parameter    = 20
 	PythonParserRULE_simple_stmt        = 21
 	PythonParserRULE_small_stmt         = 22
-	PythonParserRULE_from_stmt_as_names = 23
-	PythonParserRULE_from_stmt_source   = 24
+	PythonParserRULE_from_stmt_source   = 23
+	PythonParserRULE_from_stmt_as_names = 24
 	PythonParserRULE_testlist_star_expr = 25
 	PythonParserRULE_star_expr          = 26
 	PythonParserRULE_assign_part        = 27
@@ -5955,144 +5955,6 @@ func (p *PythonParser) Small_stmt() (localctx ISmall_stmtContext) {
 	return localctx
 }
 
-// IFrom_stmt_as_namesContext is an interface to support dynamic dispatch.
-type IFrom_stmt_as_namesContext interface {
-	antlr.ParserRuleContext
-
-	// GetParser returns the parser.
-	GetParser() antlr.Parser
-
-	// IsFrom_stmt_as_namesContext differentiates from other interfaces.
-	IsFrom_stmt_as_namesContext()
-}
-
-type From_stmt_as_namesContext struct {
-	*antlr.BaseParserRuleContext
-	parser antlr.Parser
-}
-
-func NewEmptyFrom_stmt_as_namesContext() *From_stmt_as_namesContext {
-	var p = new(From_stmt_as_namesContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
-	p.RuleIndex = PythonParserRULE_from_stmt_as_names
-	return p
-}
-
-func (*From_stmt_as_namesContext) IsFrom_stmt_as_namesContext() {}
-
-func NewFrom_stmt_as_namesContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *From_stmt_as_namesContext {
-	var p = new(From_stmt_as_namesContext)
-
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
-
-	p.parser = parser
-	p.RuleIndex = PythonParserRULE_from_stmt_as_names
-
-	return p
-}
-
-func (s *From_stmt_as_namesContext) GetParser() antlr.Parser { return s.parser }
-
-func (s *From_stmt_as_namesContext) STAR() antlr.TerminalNode {
-	return s.GetToken(PythonParserSTAR, 0)
-}
-
-func (s *From_stmt_as_namesContext) OPEN_PAREN() antlr.TerminalNode {
-	return s.GetToken(PythonParserOPEN_PAREN, 0)
-}
-
-func (s *From_stmt_as_namesContext) Import_as_names() IImport_as_namesContext {
-	var t = s.GetTypedRuleContext(reflect.TypeOf((*IImport_as_namesContext)(nil)).Elem(), 0)
-
-	if t == nil {
-		return nil
-	}
-
-	return t.(IImport_as_namesContext)
-}
-
-func (s *From_stmt_as_namesContext) CLOSE_PAREN() antlr.TerminalNode {
-	return s.GetToken(PythonParserCLOSE_PAREN, 0)
-}
-
-func (s *From_stmt_as_namesContext) GetRuleContext() antlr.RuleContext {
-	return s
-}
-
-func (s *From_stmt_as_namesContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
-	return antlr.TreesStringTree(s, ruleNames, recog)
-}
-
-func (s *From_stmt_as_namesContext) EnterRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(PythonParserListener); ok {
-		listenerT.EnterFrom_stmt_as_names(s)
-	}
-}
-
-func (s *From_stmt_as_namesContext) ExitRule(listener antlr.ParseTreeListener) {
-	if listenerT, ok := listener.(PythonParserListener); ok {
-		listenerT.ExitFrom_stmt_as_names(s)
-	}
-}
-
-func (p *PythonParser) From_stmt_as_names() (localctx IFrom_stmt_as_namesContext) {
-	localctx = NewFrom_stmt_as_namesContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 46, PythonParserRULE_from_stmt_as_names)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
-	p.EnterOuterAlt(localctx, 1)
-	p.SetState(497)
-	p.GetErrorHandler().Sync(p)
-
-	switch p.GetTokenStream().LA(1) {
-	case PythonParserSTAR:
-		{
-			p.SetState(491)
-			p.Match(PythonParserSTAR)
-		}
-
-	case PythonParserOPEN_PAREN:
-		{
-			p.SetState(492)
-			p.Match(PythonParserOPEN_PAREN)
-		}
-		{
-			p.SetState(493)
-			p.Import_as_names()
-		}
-		{
-			p.SetState(494)
-			p.Match(PythonParserCLOSE_PAREN)
-		}
-
-	case PythonParserTRUE, PythonParserFALSE, PythonParserNAME:
-		{
-			p.SetState(496)
-			p.Import_as_names()
-		}
-
-	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
-	}
-
-	return localctx
-}
-
 // IFrom_stmt_sourceContext is an interface to support dynamic dispatch.
 type IFrom_stmt_sourceContext interface {
 	antlr.ParserRuleContext
@@ -6179,8 +6041,167 @@ func (s *From_stmt_sourceContext) ExitRule(listener antlr.ParseTreeListener) {
 
 func (p *PythonParser) From_stmt_source() (localctx IFrom_stmt_sourceContext) {
 	localctx = NewFrom_stmt_sourceContext(p, p.GetParserRuleContext(), p.GetState())
-	p.EnterRule(localctx, 48, PythonParserRULE_from_stmt_source)
+	p.EnterRule(localctx, 46, PythonParserRULE_from_stmt_source)
 	var _la int
+
+	defer func() {
+		p.ExitRule()
+	}()
+
+	defer func() {
+		if err := recover(); err != nil {
+			if v, ok := err.(antlr.RecognitionException); ok {
+				localctx.SetException(v)
+				p.GetErrorHandler().ReportError(p, v)
+				p.GetErrorHandler().Recover(p, v)
+			} else {
+				panic(err)
+			}
+		}
+	}()
+
+	p.EnterOuterAlt(localctx, 1)
+	p.SetState(503)
+	p.GetErrorHandler().Sync(p)
+	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 64, p.GetParserRuleContext()) {
+	case 1:
+		p.SetState(494)
+		p.GetErrorHandler().Sync(p)
+		_la = p.GetTokenStream().LA(1)
+
+		for _la == PythonParserDOT || _la == PythonParserELLIPSIS {
+			{
+				p.SetState(491)
+				_la = p.GetTokenStream().LA(1)
+
+				if !(_la == PythonParserDOT || _la == PythonParserELLIPSIS) {
+					p.GetErrorHandler().RecoverInline(p)
+				} else {
+					p.GetErrorHandler().ReportMatch(p)
+					p.Consume()
+				}
+			}
+
+			p.SetState(496)
+			p.GetErrorHandler().Sync(p)
+			_la = p.GetTokenStream().LA(1)
+		}
+		{
+			p.SetState(497)
+			p.dotted_name(0)
+		}
+
+	case 2:
+		p.SetState(499)
+		p.GetErrorHandler().Sync(p)
+		_la = p.GetTokenStream().LA(1)
+
+		for ok := true; ok; ok = _la == PythonParserDOT || _la == PythonParserELLIPSIS {
+			{
+				p.SetState(498)
+				_la = p.GetTokenStream().LA(1)
+
+				if !(_la == PythonParserDOT || _la == PythonParserELLIPSIS) {
+					p.GetErrorHandler().RecoverInline(p)
+				} else {
+					p.GetErrorHandler().ReportMatch(p)
+					p.Consume()
+				}
+			}
+
+			p.SetState(501)
+			p.GetErrorHandler().Sync(p)
+			_la = p.GetTokenStream().LA(1)
+		}
+
+	}
+
+	return localctx
+}
+
+// IFrom_stmt_as_namesContext is an interface to support dynamic dispatch.
+type IFrom_stmt_as_namesContext interface {
+	antlr.ParserRuleContext
+
+	// GetParser returns the parser.
+	GetParser() antlr.Parser
+
+	// IsFrom_stmt_as_namesContext differentiates from other interfaces.
+	IsFrom_stmt_as_namesContext()
+}
+
+type From_stmt_as_namesContext struct {
+	*antlr.BaseParserRuleContext
+	parser antlr.Parser
+}
+
+func NewEmptyFrom_stmt_as_namesContext() *From_stmt_as_namesContext {
+	var p = new(From_stmt_as_namesContext)
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	p.RuleIndex = PythonParserRULE_from_stmt_as_names
+	return p
+}
+
+func (*From_stmt_as_namesContext) IsFrom_stmt_as_namesContext() {}
+
+func NewFrom_stmt_as_namesContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *From_stmt_as_namesContext {
+	var p = new(From_stmt_as_namesContext)
+
+	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+
+	p.parser = parser
+	p.RuleIndex = PythonParserRULE_from_stmt_as_names
+
+	return p
+}
+
+func (s *From_stmt_as_namesContext) GetParser() antlr.Parser { return s.parser }
+
+func (s *From_stmt_as_namesContext) STAR() antlr.TerminalNode {
+	return s.GetToken(PythonParserSTAR, 0)
+}
+
+func (s *From_stmt_as_namesContext) OPEN_PAREN() antlr.TerminalNode {
+	return s.GetToken(PythonParserOPEN_PAREN, 0)
+}
+
+func (s *From_stmt_as_namesContext) Import_as_names() IImport_as_namesContext {
+	var t = s.GetTypedRuleContext(reflect.TypeOf((*IImport_as_namesContext)(nil)).Elem(), 0)
+
+	if t == nil {
+		return nil
+	}
+
+	return t.(IImport_as_namesContext)
+}
+
+func (s *From_stmt_as_namesContext) CLOSE_PAREN() antlr.TerminalNode {
+	return s.GetToken(PythonParserCLOSE_PAREN, 0)
+}
+
+func (s *From_stmt_as_namesContext) GetRuleContext() antlr.RuleContext {
+	return s
+}
+
+func (s *From_stmt_as_namesContext) ToStringTree(ruleNames []string, recog antlr.Recognizer) string {
+	return antlr.TreesStringTree(s, ruleNames, recog)
+}
+
+func (s *From_stmt_as_namesContext) EnterRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(PythonParserListener); ok {
+		listenerT.EnterFrom_stmt_as_names(s)
+	}
+}
+
+func (s *From_stmt_as_namesContext) ExitRule(listener antlr.ParseTreeListener) {
+	if listenerT, ok := listener.(PythonParserListener); ok {
+		listenerT.ExitFrom_stmt_as_names(s)
+	}
+}
+
+func (p *PythonParser) From_stmt_as_names() (localctx IFrom_stmt_as_namesContext) {
+	localctx = NewFrom_stmt_as_namesContext(p, p.GetParserRuleContext(), p.GetState())
+	p.EnterRule(localctx, 48, PythonParserRULE_from_stmt_as_names)
 
 	defer func() {
 		p.ExitRule()
@@ -6201,57 +6222,36 @@ func (p *PythonParser) From_stmt_source() (localctx IFrom_stmt_sourceContext) {
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(511)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 65, p.GetParserRuleContext()) {
-	case 1:
-		p.SetState(502)
-		p.GetErrorHandler().Sync(p)
-		_la = p.GetTokenStream().LA(1)
 
-		for _la == PythonParserDOT || _la == PythonParserELLIPSIS {
-			{
-				p.SetState(499)
-				_la = p.GetTokenStream().LA(1)
-
-				if !(_la == PythonParserDOT || _la == PythonParserELLIPSIS) {
-					p.GetErrorHandler().RecoverInline(p)
-				} else {
-					p.GetErrorHandler().ReportMatch(p)
-					p.Consume()
-				}
-			}
-
-			p.SetState(504)
-			p.GetErrorHandler().Sync(p)
-			_la = p.GetTokenStream().LA(1)
-		}
+	switch p.GetTokenStream().LA(1) {
+	case PythonParserSTAR:
 		{
 			p.SetState(505)
-			p.dotted_name(0)
+			p.Match(PythonParserSTAR)
 		}
 
-	case 2:
-		p.SetState(507)
-		p.GetErrorHandler().Sync(p)
-		_la = p.GetTokenStream().LA(1)
-
-		for ok := true; ok; ok = _la == PythonParserDOT || _la == PythonParserELLIPSIS {
-			{
-				p.SetState(506)
-				_la = p.GetTokenStream().LA(1)
-
-				if !(_la == PythonParserDOT || _la == PythonParserELLIPSIS) {
-					p.GetErrorHandler().RecoverInline(p)
-				} else {
-					p.GetErrorHandler().ReportMatch(p)
-					p.Consume()
-				}
-			}
-
-			p.SetState(509)
-			p.GetErrorHandler().Sync(p)
-			_la = p.GetTokenStream().LA(1)
+	case PythonParserOPEN_PAREN:
+		{
+			p.SetState(506)
+			p.Match(PythonParserOPEN_PAREN)
+		}
+		{
+			p.SetState(507)
+			p.Import_as_names()
+		}
+		{
+			p.SetState(508)
+			p.Match(PythonParserCLOSE_PAREN)
 		}
 
+	case PythonParserTRUE, PythonParserFALSE, PythonParserNAME:
+		{
+			p.SetState(510)
+			p.Import_as_names()
+		}
+
+	default:
+		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
 	}
 
 	return localctx

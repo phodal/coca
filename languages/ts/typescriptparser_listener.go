@@ -458,77 +458,29 @@ type TypeScriptParserListener interface {
 	// EnterTemplateStringExpression is called when entering the TemplateStringExpression production.
 	EnterTemplateStringExpression(c *TemplateStringExpressionContext)
 
-	// EnterTernaryExpression is called when entering the TernaryExpression production.
-	EnterTernaryExpression(c *TernaryExpressionContext)
-
-	// EnterLogicalAndExpression is called when entering the LogicalAndExpression production.
-	EnterLogicalAndExpression(c *LogicalAndExpressionContext)
-
 	// EnterGeneratorsExpression is called when entering the GeneratorsExpression production.
 	EnterGeneratorsExpression(c *GeneratorsExpressionContext)
 
-	// EnterPreIncrementExpression is called when entering the PreIncrementExpression production.
-	EnterPreIncrementExpression(c *PreIncrementExpressionContext)
-
-	// EnterObjectLiteralExpression is called when entering the ObjectLiteralExpression production.
-	EnterObjectLiteralExpression(c *ObjectLiteralExpressionContext)
+	// EnterPowerExpression is called when entering the PowerExpression production.
+	EnterPowerExpression(c *PowerExpressionContext)
 
 	// EnterInExpression is called when entering the InExpression production.
 	EnterInExpression(c *InExpressionContext)
 
-	// EnterLogicalOrExpression is called when entering the LogicalOrExpression production.
-	EnterLogicalOrExpression(c *LogicalOrExpressionContext)
-
 	// EnterGenericTypes is called when entering the GenericTypes production.
 	EnterGenericTypes(c *GenericTypesContext)
-
-	// EnterNotExpression is called when entering the NotExpression production.
-	EnterNotExpression(c *NotExpressionContext)
-
-	// EnterPreDecreaseExpression is called when entering the PreDecreaseExpression production.
-	EnterPreDecreaseExpression(c *PreDecreaseExpressionContext)
 
 	// EnterArgumentsExpression is called when entering the ArgumentsExpression production.
 	EnterArgumentsExpression(c *ArgumentsExpressionContext)
 
-	// EnterAwaitExpression is called when entering the AwaitExpression production.
-	EnterAwaitExpression(c *AwaitExpressionContext)
-
 	// EnterThisExpression is called when entering the ThisExpression production.
 	EnterThisExpression(c *ThisExpressionContext)
-
-	// EnterFunctionExpression is called when entering the FunctionExpression production.
-	EnterFunctionExpression(c *FunctionExpressionContext)
-
-	// EnterUnaryMinusExpression is called when entering the UnaryMinusExpression production.
-	EnterUnaryMinusExpression(c *UnaryMinusExpressionContext)
-
-	// EnterAssignmentExpression is called when entering the AssignmentExpression production.
-	EnterAssignmentExpression(c *AssignmentExpressionContext)
-
-	// EnterPostDecreaseExpression is called when entering the PostDecreaseExpression production.
-	EnterPostDecreaseExpression(c *PostDecreaseExpressionContext)
 
 	// EnterTypeofExpression is called when entering the TypeofExpression production.
 	EnterTypeofExpression(c *TypeofExpressionContext)
 
-	// EnterInstanceofExpression is called when entering the InstanceofExpression production.
-	EnterInstanceofExpression(c *InstanceofExpressionContext)
-
-	// EnterUnaryPlusExpression is called when entering the UnaryPlusExpression production.
-	EnterUnaryPlusExpression(c *UnaryPlusExpressionContext)
-
-	// EnterDeleteExpression is called when entering the DeleteExpression production.
-	EnterDeleteExpression(c *DeleteExpressionContext)
-
 	// EnterGeneratorsFunctionExpression is called when entering the GeneratorsFunctionExpression production.
 	EnterGeneratorsFunctionExpression(c *GeneratorsFunctionExpressionContext)
-
-	// EnterArrowFunctionExpression is called when entering the ArrowFunctionExpression production.
-	EnterArrowFunctionExpression(c *ArrowFunctionExpressionContext)
-
-	// EnterIteratorsExpression is called when entering the IteratorsExpression production.
-	EnterIteratorsExpression(c *IteratorsExpressionContext)
 
 	// EnterEqualityExpression is called when entering the EqualityExpression production.
 	EnterEqualityExpression(c *EqualityExpressionContext)
@@ -536,29 +488,17 @@ type TypeScriptParserListener interface {
 	// EnterBitXOrExpression is called when entering the BitXOrExpression production.
 	EnterBitXOrExpression(c *BitXOrExpressionContext)
 
-	// EnterSuperExpression is called when entering the SuperExpression production.
-	EnterSuperExpression(c *SuperExpressionContext)
-
 	// EnterMultiplicativeExpression is called when entering the MultiplicativeExpression production.
 	EnterMultiplicativeExpression(c *MultiplicativeExpressionContext)
 
 	// EnterBitShiftExpression is called when entering the BitShiftExpression production.
 	EnterBitShiftExpression(c *BitShiftExpressionContext)
 
-	// EnterParenthesizedExpression is called when entering the ParenthesizedExpression production.
-	EnterParenthesizedExpression(c *ParenthesizedExpressionContext)
-
 	// EnterAdditiveExpression is called when entering the AdditiveExpression production.
 	EnterAdditiveExpression(c *AdditiveExpressionContext)
 
 	// EnterRelationalExpression is called when entering the RelationalExpression production.
 	EnterRelationalExpression(c *RelationalExpressionContext)
-
-	// EnterPostIncrementExpression is called when entering the PostIncrementExpression production.
-	EnterPostIncrementExpression(c *PostIncrementExpressionContext)
-
-	// EnterYieldExpression is called when entering the YieldExpression production.
-	EnterYieldExpression(c *YieldExpressionContext)
 
 	// EnterBitNotExpression is called when entering the BitNotExpression production.
 	EnterBitNotExpression(c *BitNotExpressionContext)
@@ -575,14 +515,8 @@ type TypeScriptParserListener interface {
 	// EnterMemberDotExpression is called when entering the MemberDotExpression production.
 	EnterMemberDotExpression(c *MemberDotExpressionContext)
 
-	// EnterClassExpression is called when entering the ClassExpression production.
-	EnterClassExpression(c *ClassExpressionContext)
-
 	// EnterMemberIndexExpression is called when entering the MemberIndexExpression production.
 	EnterMemberIndexExpression(c *MemberIndexExpressionContext)
-
-	// EnterIdentifierExpression is called when entering the IdentifierExpression production.
-	EnterIdentifierExpression(c *IdentifierExpressionContext)
 
 	// EnterBitAndExpression is called when entering the BitAndExpression production.
 	EnterBitAndExpression(c *BitAndExpressionContext)
@@ -595,6 +529,75 @@ type TypeScriptParserListener interface {
 
 	// EnterVoidExpression is called when entering the VoidExpression production.
 	EnterVoidExpression(c *VoidExpressionContext)
+
+	// EnterTernaryExpression is called when entering the TernaryExpression production.
+	EnterTernaryExpression(c *TernaryExpressionContext)
+
+	// EnterLogicalAndExpression is called when entering the LogicalAndExpression production.
+	EnterLogicalAndExpression(c *LogicalAndExpressionContext)
+
+	// EnterPreIncrementExpression is called when entering the PreIncrementExpression production.
+	EnterPreIncrementExpression(c *PreIncrementExpressionContext)
+
+	// EnterObjectLiteralExpression is called when entering the ObjectLiteralExpression production.
+	EnterObjectLiteralExpression(c *ObjectLiteralExpressionContext)
+
+	// EnterLogicalOrExpression is called when entering the LogicalOrExpression production.
+	EnterLogicalOrExpression(c *LogicalOrExpressionContext)
+
+	// EnterNotExpression is called when entering the NotExpression production.
+	EnterNotExpression(c *NotExpressionContext)
+
+	// EnterPreDecreaseExpression is called when entering the PreDecreaseExpression production.
+	EnterPreDecreaseExpression(c *PreDecreaseExpressionContext)
+
+	// EnterAwaitExpression is called when entering the AwaitExpression production.
+	EnterAwaitExpression(c *AwaitExpressionContext)
+
+	// EnterFunctionExpression is called when entering the FunctionExpression production.
+	EnterFunctionExpression(c *FunctionExpressionContext)
+
+	// EnterUnaryMinusExpression is called when entering the UnaryMinusExpression production.
+	EnterUnaryMinusExpression(c *UnaryMinusExpressionContext)
+
+	// EnterAssignmentExpression is called when entering the AssignmentExpression production.
+	EnterAssignmentExpression(c *AssignmentExpressionContext)
+
+	// EnterPostDecreaseExpression is called when entering the PostDecreaseExpression production.
+	EnterPostDecreaseExpression(c *PostDecreaseExpressionContext)
+
+	// EnterInstanceofExpression is called when entering the InstanceofExpression production.
+	EnterInstanceofExpression(c *InstanceofExpressionContext)
+
+	// EnterUnaryPlusExpression is called when entering the UnaryPlusExpression production.
+	EnterUnaryPlusExpression(c *UnaryPlusExpressionContext)
+
+	// EnterDeleteExpression is called when entering the DeleteExpression production.
+	EnterDeleteExpression(c *DeleteExpressionContext)
+
+	// EnterArrowFunctionExpression is called when entering the ArrowFunctionExpression production.
+	EnterArrowFunctionExpression(c *ArrowFunctionExpressionContext)
+
+	// EnterIteratorsExpression is called when entering the IteratorsExpression production.
+	EnterIteratorsExpression(c *IteratorsExpressionContext)
+
+	// EnterSuperExpression is called when entering the SuperExpression production.
+	EnterSuperExpression(c *SuperExpressionContext)
+
+	// EnterParenthesizedExpression is called when entering the ParenthesizedExpression production.
+	EnterParenthesizedExpression(c *ParenthesizedExpressionContext)
+
+	// EnterPostIncrementExpression is called when entering the PostIncrementExpression production.
+	EnterPostIncrementExpression(c *PostIncrementExpressionContext)
+
+	// EnterYieldExpression is called when entering the YieldExpression production.
+	EnterYieldExpression(c *YieldExpressionContext)
+
+	// EnterClassExpression is called when entering the ClassExpression production.
+	EnterClassExpression(c *ClassExpressionContext)
+
+	// EnterIdentifierExpression is called when entering the IdentifierExpression production.
+	EnterIdentifierExpression(c *IdentifierExpressionContext)
 
 	// EnterCoalesceExpression is called when entering the CoalesceExpression production.
 	EnterCoalesceExpression(c *CoalesceExpressionContext)
@@ -1085,77 +1088,29 @@ type TypeScriptParserListener interface {
 	// ExitTemplateStringExpression is called when exiting the TemplateStringExpression production.
 	ExitTemplateStringExpression(c *TemplateStringExpressionContext)
 
-	// ExitTernaryExpression is called when exiting the TernaryExpression production.
-	ExitTernaryExpression(c *TernaryExpressionContext)
-
-	// ExitLogicalAndExpression is called when exiting the LogicalAndExpression production.
-	ExitLogicalAndExpression(c *LogicalAndExpressionContext)
-
 	// ExitGeneratorsExpression is called when exiting the GeneratorsExpression production.
 	ExitGeneratorsExpression(c *GeneratorsExpressionContext)
 
-	// ExitPreIncrementExpression is called when exiting the PreIncrementExpression production.
-	ExitPreIncrementExpression(c *PreIncrementExpressionContext)
-
-	// ExitObjectLiteralExpression is called when exiting the ObjectLiteralExpression production.
-	ExitObjectLiteralExpression(c *ObjectLiteralExpressionContext)
+	// ExitPowerExpression is called when exiting the PowerExpression production.
+	ExitPowerExpression(c *PowerExpressionContext)
 
 	// ExitInExpression is called when exiting the InExpression production.
 	ExitInExpression(c *InExpressionContext)
 
-	// ExitLogicalOrExpression is called when exiting the LogicalOrExpression production.
-	ExitLogicalOrExpression(c *LogicalOrExpressionContext)
-
 	// ExitGenericTypes is called when exiting the GenericTypes production.
 	ExitGenericTypes(c *GenericTypesContext)
-
-	// ExitNotExpression is called when exiting the NotExpression production.
-	ExitNotExpression(c *NotExpressionContext)
-
-	// ExitPreDecreaseExpression is called when exiting the PreDecreaseExpression production.
-	ExitPreDecreaseExpression(c *PreDecreaseExpressionContext)
 
 	// ExitArgumentsExpression is called when exiting the ArgumentsExpression production.
 	ExitArgumentsExpression(c *ArgumentsExpressionContext)
 
-	// ExitAwaitExpression is called when exiting the AwaitExpression production.
-	ExitAwaitExpression(c *AwaitExpressionContext)
-
 	// ExitThisExpression is called when exiting the ThisExpression production.
 	ExitThisExpression(c *ThisExpressionContext)
-
-	// ExitFunctionExpression is called when exiting the FunctionExpression production.
-	ExitFunctionExpression(c *FunctionExpressionContext)
-
-	// ExitUnaryMinusExpression is called when exiting the UnaryMinusExpression production.
-	ExitUnaryMinusExpression(c *UnaryMinusExpressionContext)
-
-	// ExitAssignmentExpression is called when exiting the AssignmentExpression production.
-	ExitAssignmentExpression(c *AssignmentExpressionContext)
-
-	// ExitPostDecreaseExpression is called when exiting the PostDecreaseExpression production.
-	ExitPostDecreaseExpression(c *PostDecreaseExpressionContext)
 
 	// ExitTypeofExpression is called when exiting the TypeofExpression production.
 	ExitTypeofExpression(c *TypeofExpressionContext)
 
-	// ExitInstanceofExpression is called when exiting the InstanceofExpression production.
-	ExitInstanceofExpression(c *InstanceofExpressionContext)
-
-	// ExitUnaryPlusExpression is called when exiting the UnaryPlusExpression production.
-	ExitUnaryPlusExpression(c *UnaryPlusExpressionContext)
-
-	// ExitDeleteExpression is called when exiting the DeleteExpression production.
-	ExitDeleteExpression(c *DeleteExpressionContext)
-
 	// ExitGeneratorsFunctionExpression is called when exiting the GeneratorsFunctionExpression production.
 	ExitGeneratorsFunctionExpression(c *GeneratorsFunctionExpressionContext)
-
-	// ExitArrowFunctionExpression is called when exiting the ArrowFunctionExpression production.
-	ExitArrowFunctionExpression(c *ArrowFunctionExpressionContext)
-
-	// ExitIteratorsExpression is called when exiting the IteratorsExpression production.
-	ExitIteratorsExpression(c *IteratorsExpressionContext)
 
 	// ExitEqualityExpression is called when exiting the EqualityExpression production.
 	ExitEqualityExpression(c *EqualityExpressionContext)
@@ -1163,29 +1118,17 @@ type TypeScriptParserListener interface {
 	// ExitBitXOrExpression is called when exiting the BitXOrExpression production.
 	ExitBitXOrExpression(c *BitXOrExpressionContext)
 
-	// ExitSuperExpression is called when exiting the SuperExpression production.
-	ExitSuperExpression(c *SuperExpressionContext)
-
 	// ExitMultiplicativeExpression is called when exiting the MultiplicativeExpression production.
 	ExitMultiplicativeExpression(c *MultiplicativeExpressionContext)
 
 	// ExitBitShiftExpression is called when exiting the BitShiftExpression production.
 	ExitBitShiftExpression(c *BitShiftExpressionContext)
 
-	// ExitParenthesizedExpression is called when exiting the ParenthesizedExpression production.
-	ExitParenthesizedExpression(c *ParenthesizedExpressionContext)
-
 	// ExitAdditiveExpression is called when exiting the AdditiveExpression production.
 	ExitAdditiveExpression(c *AdditiveExpressionContext)
 
 	// ExitRelationalExpression is called when exiting the RelationalExpression production.
 	ExitRelationalExpression(c *RelationalExpressionContext)
-
-	// ExitPostIncrementExpression is called when exiting the PostIncrementExpression production.
-	ExitPostIncrementExpression(c *PostIncrementExpressionContext)
-
-	// ExitYieldExpression is called when exiting the YieldExpression production.
-	ExitYieldExpression(c *YieldExpressionContext)
 
 	// ExitBitNotExpression is called when exiting the BitNotExpression production.
 	ExitBitNotExpression(c *BitNotExpressionContext)
@@ -1202,14 +1145,8 @@ type TypeScriptParserListener interface {
 	// ExitMemberDotExpression is called when exiting the MemberDotExpression production.
 	ExitMemberDotExpression(c *MemberDotExpressionContext)
 
-	// ExitClassExpression is called when exiting the ClassExpression production.
-	ExitClassExpression(c *ClassExpressionContext)
-
 	// ExitMemberIndexExpression is called when exiting the MemberIndexExpression production.
 	ExitMemberIndexExpression(c *MemberIndexExpressionContext)
-
-	// ExitIdentifierExpression is called when exiting the IdentifierExpression production.
-	ExitIdentifierExpression(c *IdentifierExpressionContext)
 
 	// ExitBitAndExpression is called when exiting the BitAndExpression production.
 	ExitBitAndExpression(c *BitAndExpressionContext)
@@ -1222,6 +1159,75 @@ type TypeScriptParserListener interface {
 
 	// ExitVoidExpression is called when exiting the VoidExpression production.
 	ExitVoidExpression(c *VoidExpressionContext)
+
+	// ExitTernaryExpression is called when exiting the TernaryExpression production.
+	ExitTernaryExpression(c *TernaryExpressionContext)
+
+	// ExitLogicalAndExpression is called when exiting the LogicalAndExpression production.
+	ExitLogicalAndExpression(c *LogicalAndExpressionContext)
+
+	// ExitPreIncrementExpression is called when exiting the PreIncrementExpression production.
+	ExitPreIncrementExpression(c *PreIncrementExpressionContext)
+
+	// ExitObjectLiteralExpression is called when exiting the ObjectLiteralExpression production.
+	ExitObjectLiteralExpression(c *ObjectLiteralExpressionContext)
+
+	// ExitLogicalOrExpression is called when exiting the LogicalOrExpression production.
+	ExitLogicalOrExpression(c *LogicalOrExpressionContext)
+
+	// ExitNotExpression is called when exiting the NotExpression production.
+	ExitNotExpression(c *NotExpressionContext)
+
+	// ExitPreDecreaseExpression is called when exiting the PreDecreaseExpression production.
+	ExitPreDecreaseExpression(c *PreDecreaseExpressionContext)
+
+	// ExitAwaitExpression is called when exiting the AwaitExpression production.
+	ExitAwaitExpression(c *AwaitExpressionContext)
+
+	// ExitFunctionExpression is called when exiting the FunctionExpression production.
+	ExitFunctionExpression(c *FunctionExpressionContext)
+
+	// ExitUnaryMinusExpression is called when exiting the UnaryMinusExpression production.
+	ExitUnaryMinusExpression(c *UnaryMinusExpressionContext)
+
+	// ExitAssignmentExpression is called when exiting the AssignmentExpression production.
+	ExitAssignmentExpression(c *AssignmentExpressionContext)
+
+	// ExitPostDecreaseExpression is called when exiting the PostDecreaseExpression production.
+	ExitPostDecreaseExpression(c *PostDecreaseExpressionContext)
+
+	// ExitInstanceofExpression is called when exiting the InstanceofExpression production.
+	ExitInstanceofExpression(c *InstanceofExpressionContext)
+
+	// ExitUnaryPlusExpression is called when exiting the UnaryPlusExpression production.
+	ExitUnaryPlusExpression(c *UnaryPlusExpressionContext)
+
+	// ExitDeleteExpression is called when exiting the DeleteExpression production.
+	ExitDeleteExpression(c *DeleteExpressionContext)
+
+	// ExitArrowFunctionExpression is called when exiting the ArrowFunctionExpression production.
+	ExitArrowFunctionExpression(c *ArrowFunctionExpressionContext)
+
+	// ExitIteratorsExpression is called when exiting the IteratorsExpression production.
+	ExitIteratorsExpression(c *IteratorsExpressionContext)
+
+	// ExitSuperExpression is called when exiting the SuperExpression production.
+	ExitSuperExpression(c *SuperExpressionContext)
+
+	// ExitParenthesizedExpression is called when exiting the ParenthesizedExpression production.
+	ExitParenthesizedExpression(c *ParenthesizedExpressionContext)
+
+	// ExitPostIncrementExpression is called when exiting the PostIncrementExpression production.
+	ExitPostIncrementExpression(c *PostIncrementExpressionContext)
+
+	// ExitYieldExpression is called when exiting the YieldExpression production.
+	ExitYieldExpression(c *YieldExpressionContext)
+
+	// ExitClassExpression is called when exiting the ClassExpression production.
+	ExitClassExpression(c *ClassExpressionContext)
+
+	// ExitIdentifierExpression is called when exiting the IdentifierExpression production.
+	ExitIdentifierExpression(c *IdentifierExpressionContext)
 
 	// ExitCoalesceExpression is called when exiting the CoalesceExpression production.
 	ExitCoalesceExpression(c *CoalesceExpressionContext)

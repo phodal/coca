@@ -8,4 +8,4 @@ var CocaConfig = &TypeCocaConfig{
 	ReporterPath: "coca_reporter",
 }
 
-const VERSION = "1.3.2"
+const VERSION = "1.9.9-beta"

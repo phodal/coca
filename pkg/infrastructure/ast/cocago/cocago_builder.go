@@ -139,7 +139,7 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []
 			call.Parameters = append(call.Parameters, *property)
 		}
 
-		codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
+		codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
 	}
 }
 

@@ -42,7 +42,7 @@ func BuildRCallMethodMap(parserDeps []core_domain.CodeDataStruct, projectMaps ma
 	for _, clz := range parserDeps {
 		for _, method := range clz.Functions {
 			var caller = method.BuildFullMethodName(clz)
-			for _, jMethodCall := range method.MethodCalls {
+			for _, jMethodCall := range method.FunctionCalls {
 				if jMethodCall.NodeName != "" {
 					callee := jMethodCall.BuildFullMethodName()
 					if projectMaps[callee] < 1 {

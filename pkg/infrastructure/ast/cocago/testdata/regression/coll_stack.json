@@ -11,11 +11,7 @@
         {
           "Annotations": null,
           "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "IsConstructor": false,
-          "IsReturnNull": false,
-          "MethodCalls": [
+          "FunctionCalls": [
             {
               "MethodName": "Lock",
               "NodeName": "",
@@ -52,6 +48,10 @@
               "Type": ""
             }
           ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "Modifiers": null,
           "MultipleReturns": null,
           "Name": "Push",
@@ -77,11 +77,7 @@
         {
           "Annotations": null,
           "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "IsConstructor": false,
-          "IsReturnNull": false,
-          "MethodCalls": [
+          "FunctionCalls": [
             {
               "MethodName": "Lock",
               "NodeName": "",
@@ -96,6 +92,10 @@
               "Type": ""
             }
           ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "Modifiers": null,
           "MultipleReturns": [
             {
@@ -121,11 +121,7 @@
         {
           "Annotations": null,
           "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "IsConstructor": false,
-          "IsReturnNull": false,
-          "MethodCalls": [
+          "FunctionCalls": [
             {
               "MethodName": "Lock",
               "NodeName": "",
@@ -140,6 +136,10 @@
               "Type": ""
             }
           ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "Modifiers": null,
           "MultipleReturns": [
             {
@@ -165,11 +165,11 @@
         {
           "Annotations": null,
           "Extension": null,
+          "FunctionCalls": null,
           "InnerFunctions": null,
           "InnerStructures": null,
           "IsConstructor": false,
           "IsReturnNull": false,
-          "MethodCalls": null,
           "Modifiers": null,
           "MultipleReturns": [
             {
@@ -195,11 +195,11 @@
         {
           "Annotations": null,
           "Extension": null,
+          "FunctionCalls": null,
           "InnerFunctions": null,
           "InnerStructures": null,
           "IsConstructor": false,
           "IsReturnNull": false,
-          "MethodCalls": null,
           "Modifiers": null,
           "MultipleReturns": [
             {
@@ -292,11 +292,11 @@
         {
           "Annotations": null,
           "Extension": null,
+          "FunctionCalls": null,
           "InnerFunctions": null,
           "InnerStructures": null,
           "IsConstructor": false,
           "IsReturnNull": false,
-          "MethodCalls": null,
           "Modifiers": null,
           "MultipleReturns": [
             {

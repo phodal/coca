@@ -29,7 +29,7 @@ func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap m
 			}
 
 			currentMethodCalls := updateMethodCallsForSelfCall(method, clz, callMethodMap)
-			method.MethodCalls = currentMethodCalls
+			method.FunctionCalls = currentMethodCalls
 
 			var testType = ""
 			for _, annotation := range method.Annotations {
@@ -85,12 +85,12 @@ func checkAssert(hasAssert bool, clz core_domain.CodeDataStruct, method core_dom
 }
 
 func updateMethodCallsForSelfCall(method core_domain.CodeFunction, clz core_domain.CodeDataStruct, callMethodMap map[string]core_domain.CodeFunction) []core_domain.CodeCall {
-	currentMethodCalls := method.MethodCalls
+	currentMethodCalls := method.FunctionCalls
 	for _, methodCall := range currentMethodCalls {
 		if methodCall.NodeName == clz.NodeName {
 			jMethod := callMethodMap[methodCall.BuildFullMethodName()]
 			if jMethod.Name != "" {
-				currentMethodCalls = append(currentMethodCalls, jMethod.MethodCalls...)
+				currentMethodCalls = append(currentMethodCalls, jMethod.FunctionCalls...)
 			}
 		}
 	}
@@ -167,7 +167,7 @@ func checkRedundantPrintTest(path string, mCall core_domain.CodeCall, results *[
 
 func checkEmptyTest(path string, annotation core_domain.CodeAnnotation, results *[]TestBadSmell, method core_domain.CodeFunction, testType *string) {
 	if annotation.IsTest() {
-		if len(method.MethodCalls) <= 1 {
+		if len(method.FunctionCalls) <= 1 {
 			*testType = "EmptyTest"
 			tbs := TestBadSmell{
 				FileName:    path,

@@ -10,7 +10,7 @@ type CodeFunction struct {
 	ReturnType      string
 	MultipleReturns []CodeProperty
 	Parameters      []CodeProperty
-	MethodCalls     []CodeCall
+	FunctionCalls   []CodeCall
 	Override        bool
 	Annotations     []CodeAnnotation
 
@@ -52,7 +52,7 @@ func (m *CodeFunction) BuildFullMethodName(node CodeDataStruct) string {
 
 func (m *CodeFunction) GetAllCallString() []string {
 	var calls []string
-	for _, call := range m.MethodCalls {
+	for _, call := range m.FunctionCalls {
 		if call.NodeName != "" {
 			calls = append(calls, call.BuildFullMethodName())
 		}

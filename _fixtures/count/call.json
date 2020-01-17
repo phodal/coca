@@ -24,7 +24,7 @@
             "Type": "BookService"
           }
         ],
-        "MethodCalls": null,
+        "FunctionCalls": null,
         "Override": false,
         "Annotations": null,
         "IsConstructor": true
@@ -42,7 +42,7 @@
             "Type": "CreateBookCommand"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.google.common.collect.ImmutableSortedMap.of",
             "Type": "",
@@ -85,7 +85,7 @@
             "Type": "UpdateBookCommand"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -109,7 +109,7 @@
         "StopLine": 39,
         "StopLinePosition": 46,
         "Parameters": null,
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -138,7 +138,7 @@
             "Type": "String"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -155,7 +155,7 @@
         "IsConstructor": false
       }
     ],
-    "MethodCalls": [
+    "FunctionCalls": [
       {
         "Package": "com.google.common.collect.ImmutableSortedMap.of",
         "Type": "",
@@ -239,7 +239,7 @@
             "Type": "CreateBookCommand"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -303,7 +303,7 @@
         "StopLine": 33,
         "StopLinePosition": 48,
         "Parameters": null,
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -332,7 +332,7 @@
             "Type": "String"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -375,7 +375,7 @@
             "Type": "UpdateBookCommand"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "",
@@ -458,13 +458,13 @@
             "Type": "BookRepository"
           }
         ],
-        "MethodCalls": null,
+        "FunctionCalls": null,
         "Override": false,
         "Annotations": null,
         "IsConstructor": true
       }
     ],
-    "MethodCalls": [
+    "FunctionCalls": [
       {
         "Package": "com.phodal.pholedge.book",
         "Type": "",

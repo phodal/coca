@@ -14,7 +14,7 @@ func BuildCallMap(parserDeps []core_domain.CodeDataStruct) map[string]int {
 	var callMap = make(map[string]int)
 	for _, clz := range parserDeps {
 		for _, method := range clz.Functions {
-			for _, call := range method.MethodCalls {
+			for _, call := range method.FunctionCalls {
 				callMethod := call.BuildFullMethodName()
 				if _, ok := projectMethods[callMethod]; ok {
 					if callMap[callMethod] == 0 {

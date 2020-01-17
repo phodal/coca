@@ -35,7 +35,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "",
@@ -85,7 +85,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "",
@@ -173,7 +173,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "",
@@ -211,7 +211,7 @@
 				}
 			}
 		],
-		"MethodCalls": null,
+		"FunctionCalls": null,
 		"Extend": "",
 		"Implements": null,
 		"Annotations": null,
@@ -238,7 +238,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "super",
@@ -318,7 +318,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "super",
@@ -414,7 +414,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "super",
@@ -534,7 +534,7 @@
 						"Parameters": null
 					}
 				],
-				"MethodCalls": [
+				"FunctionCalls": [
 					{
 						"Package": "factory",
 						"Type": "super",
@@ -800,7 +800,7 @@
 				}
 			}
 		],
-		"MethodCalls": null,
+		"FunctionCalls": null,
 		"Extend": "factory.Insect",
 		"Implements": null,
 		"Annotations": null,

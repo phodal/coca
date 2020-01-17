@@ -64,7 +64,7 @@ func addCallInMethod(clz core_domain.CodeDataStruct, identifiersMap map[string]c
 		}
 
 		// TODO: add implements, extends support
-		for _, call := range method.MethodCalls {
+		for _, call := range method.FunctionCalls {
 			dst := call.Package + "." + call.NodeName
 			if src == dst {
 				continue

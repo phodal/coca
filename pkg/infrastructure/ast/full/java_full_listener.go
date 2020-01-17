@@ -474,7 +474,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 		Position: position,
 	}
 
-	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
+	method.FunctionCalls = append(method.FunctionCalls, *jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method
 }
 
@@ -515,7 +515,7 @@ func sendResultToMethodCallMap(jMethodCall core_domain.CodeCall) {
 	methodCalls = append(methodCalls, jMethodCall)
 
 	method := methodMap[getMethodMapName(currentMethod)]
-	method.MethodCalls = append(method.MethodCalls, jMethodCall)
+	method.FunctionCalls = append(method.FunctionCalls, jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method
 }
 

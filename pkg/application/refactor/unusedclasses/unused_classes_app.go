@@ -19,7 +19,7 @@ func Refactoring(parsedDeps []core_domain.CodeDataStruct) []string {
 		}
 
 		for _, method := range node.Functions {
-			for _, methodCall := range method.MethodCalls {
+			for _, methodCall := range method.FunctionCalls {
 				if strings.Contains(methodCall.Package, analysisPackage) {
 					className := methodCall.Package + "." + methodCall.NodeName
 					targetClasses[className] = className

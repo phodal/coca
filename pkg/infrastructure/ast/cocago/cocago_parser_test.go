@@ -114,7 +114,7 @@ func main() {
 	fmt.Println("1")
 }
 `, "call")
-	calls := results.Members[0].FunctionNodes[0].MethodCalls
+	calls := results.Members[0].FunctionNodes[0].FunctionCalls
 	fmt.Println(calls)
 	g.Expect(len(results.Fields)).To(Equal(1))
 	g.Expect(calls[0].Package).To(Equal("sync"))

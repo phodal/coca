@@ -24,7 +24,7 @@
             "Type": "command"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.google.common.collect.ImmutableSortedMap.of",
             "Type": "",
@@ -66,7 +66,7 @@
             "Type": "command"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -89,7 +89,7 @@
         "StopLine": 39,
         "StopLinePosition": 46,
         "Parameters": null,
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -117,7 +117,7 @@
             "Type": "id"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -133,7 +133,7 @@
         "Annotations": null
       }
     ],
-    "MethodCalls": [
+    "FunctionCalls": [
       {
         "Package": "com.google.common.collect.ImmutableSortedMap.of",
         "Type": "",
@@ -217,7 +217,7 @@
             "Type": "id"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -259,7 +259,7 @@
             "Type": "command"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -337,7 +337,7 @@
             "Type": "command"
           }
         ],
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -400,7 +400,7 @@
         "StopLine": 33,
         "StopLinePosition": 48,
         "Parameters": null,
-        "MethodCalls": [
+        "FunctionCalls": [
           {
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
@@ -416,7 +416,7 @@
         "Annotations": null
       }
     ],
-    "MethodCalls": [
+    "FunctionCalls": [
       {
         "Package": "com.phodal.pholedge.book",
         "Type": "same package",

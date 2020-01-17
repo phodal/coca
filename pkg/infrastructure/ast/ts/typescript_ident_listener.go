@@ -32,7 +32,7 @@ func (s *TypeScriptIdentListener) GetNodeInfo() core_domain.CodeFile {
 		if len(s.currentDataStruct.Functions) < 1 {
 			function := &core_domain.CodeFunction{}
 			function.Name = "default"
-			function.MethodCalls = append(function.MethodCalls, s.currentDataStruct.FunctionCalls...)
+			function.FunctionCalls = append(function.FunctionCalls, s.currentDataStruct.FunctionCalls...)
 
 			s.currentDataStruct.Functions = append(s.currentDataStruct.Functions, *function)
 		}

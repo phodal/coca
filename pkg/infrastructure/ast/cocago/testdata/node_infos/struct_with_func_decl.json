@@ -11,11 +11,7 @@
         {
           "Annotations": null,
           "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "IsConstructor": false,
-          "IsReturnNull": false,
-          "MethodCalls": [
+          "FunctionCalls": [
             {
               "MethodName": "Println",
               "NodeName": "fmt",
@@ -39,6 +35,10 @@
               "Type": ""
             }
           ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
           "Modifiers": null,
           "MultipleReturns": null,
           "Name": "outside",

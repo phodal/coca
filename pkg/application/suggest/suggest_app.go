@@ -44,7 +44,7 @@ func factorySuggest(clz core_domain.CodeDataStruct, suggests []api_domain.Sugges
 			// 参数过多，且在构造函数里调用过多
 			PARAMETER_LINE_OFFSET := 3
 			PARAMETER_METHOD_CALL_OFFSET := 3
-			if declLineNum > len(method.Parameters)-PARAMETER_LINE_OFFSET && (len(method.MethodCalls) > len(method.Parameters)+PARAMETER_METHOD_CALL_OFFSET) {
+			if declLineNum > len(method.Parameters)-PARAMETER_LINE_OFFSET && (len(method.FunctionCalls) > len(method.Parameters)+PARAMETER_METHOD_CALL_OFFSET) {
 				suggest := api_domain.NewSuggest(clz, "factory", "complex constructor")
 				suggest.Line = method.Position.StartLine
 				currentSuggestList = append(currentSuggestList, suggest)

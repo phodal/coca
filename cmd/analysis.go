@@ -95,8 +95,9 @@ func BuildMethodDs(result core_domain.CodeFile) []core_domain.CodeDataStruct {
 		for _, node := range member.FunctionNodes {
 			if unicode.IsUpper(rune(node.Name[0])) {
 				methodDs := core_domain.CodeDataStruct{
-					NodeName: node.Name,
-					Package:  result.PackageName,
+					NodeName:      node.Name,
+					Package:       result.PackageName,
+					FunctionCalls: node.FunctionCalls,
 				}
 				methodsDs = append(methodsDs, methodDs)
 			}

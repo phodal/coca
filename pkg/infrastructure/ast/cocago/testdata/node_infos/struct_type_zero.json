@@ -11,11 +11,11 @@
         {
           "Annotations": null,
           "Extension": null,
+          "FunctionCalls": null,
           "InnerFunctions": null,
           "InnerStructures": null,
           "IsConstructor": false,
           "IsReturnNull": false,
-          "MethodCalls": null,
           "Modifiers": null,
           "MultipleReturns": null,
           "Name": "typee",

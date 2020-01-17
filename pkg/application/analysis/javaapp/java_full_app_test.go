@@ -63,8 +63,8 @@ func TestLambda_Express(t *testing.T) {
 		methodMap[c.Name] = c
 	}
 
-	g.Expect(methodMap["save"].MethodCalls[0].MethodName).To(Equal("of"))
-	g.Expect(methodMap["findById"].MethodCalls[3].MethodName).To(Equal("toDomainModel"))
+	g.Expect(methodMap["save"].FunctionCalls[0].MethodName).To(Equal("of"))
+	g.Expect(methodMap["findById"].FunctionCalls[3].MethodName).To(Equal("toDomainModel"))
 }
 
 func TestInterface(t *testing.T) {
@@ -197,7 +197,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 
 	methodCallMap := make(map[string]core_domain.CodeCall)
 	for _, method := range callNodes[0].Functions {
-		for _, call := range method.MethodCalls {
+		for _, call := range method.FunctionCalls {
 			methodCallMap[call.MethodName] = call
 		}
 	}
@@ -216,7 +216,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 
 	methodCallMap := make(map[string]core_domain.CodeCall)
 	for _, method := range callNodes[0].Functions {
-		for _, call := range method.MethodCalls {
+		for _, call := range method.FunctionCalls {
 			methodCallMap[call.MethodName] = call
 		}
 	}

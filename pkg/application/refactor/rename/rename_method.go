@@ -40,7 +40,7 @@ func startParse(nodes []core_domain.CodeDataStruct, relates []support.RefactorCh
 			}
 
 			for _, method := range pkgNode.Functions {
-				for _, methodCall := range method.MethodCalls {
+				for _, methodCall := range method.FunctionCalls {
 					if methodCall.Package+methodCall.NodeName == oldInfo.Package+oldInfo.Class {
 						if methodCall.MethodName == oldInfo.Method {
 							updateSelfRefs(pkgNode, methodCallToMethodModel(methodCall), newInfo)

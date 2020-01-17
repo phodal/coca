@@ -29,20 +29,29 @@ var analysisCmd = &cobra.Command{
 	Short: "analysis code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		var outputName string
+		var ds []core_domain.CodeDataStruct
 		switch analysisCmdConfig.Lang {
 		case "go":
-			analysisGo()
+			ds = AnalysisGo()
+			outputName = "godeps.json"
 		case "py", "python":
-			analysisPython()
+			ds = AnalysisPython()
+			outputName = "pydeps.json"
 		case "ts", "typescript":
-			analysisTypeScript()
+			ds = AnalysisTypeScript()
+			outputName = "tsdeps.json"
 		default:
-			analysisJava()
+			ds = AnalysisJava()
+			outputName = "deps.json"
 		}
+
+		cModel, _ := json.MarshalIndent(ds, "", "\t")
+		cmd_util.WriteToCocaFile(outputName, string(cModel))
 	},
 }
 
-func analysisTypeScript() {
+func AnalysisTypeScript() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path
 
 	var results []core_domain.CodeFile
@@ -61,11 +70,10 @@ func analysisTypeScript() {
 		ds = append(ds, result.DataStructures...)
 	}
 
-	cModel, _ := json.MarshalIndent(ds, "", "\t")
-	cmd_util.WriteToCocaFile("tsdeps.json", string(cModel))
+	return ds
 }
 
-func analysisPython() {
+func AnalysisPython() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path
 
 	var results []core_domain.CodeFile
@@ -83,11 +91,10 @@ func analysisPython() {
 		ds = append(ds, result.DataStructures...)
 	}
 
-	cModel, _ := json.MarshalIndent(ds, "", "\t")
-	cmd_util.WriteToCocaFile("pydeps.json", string(cModel))
+	return ds
 }
 
-func analysisGo() {
+func AnalysisGo() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path
 
 	var results []core_domain.CodeFile
@@ -105,11 +112,10 @@ func analysisGo() {
 		ds = append(ds, result.DataStructures...)
 	}
 
-	cModel, _ := json.MarshalIndent(ds, "", "\t")
-	cmd_util.WriteToCocaFile("godeps.json", string(cModel))
+	return ds
 }
 
-func analysisJava() {
+func AnalysisJava() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path
 	identifierApp := javaapp.NewJavaIdentifierApp()
 	iNodes := identifierApp.AnalysisPath(importPath)
@@ -126,8 +132,7 @@ func analysisJava() {
 	callApp := javaapp.NewJavaFullApp()
 
 	callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
-	cModel, _ := json.MarshalIndent(callNodes, "", "\t")
-	cmd_util.WriteToCocaFile("deps.json", string(cModel))
+	return callNodes
 }
 
 func init() {

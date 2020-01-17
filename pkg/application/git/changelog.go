@@ -16,7 +16,7 @@ var (
 func ShowChangeLogSummary(commits []CommitMessage, output io.Writer) {
 	changeMap := BuildChangeMap(commits)
 	for key, value := range changeMap {
-		sortValue := string_helper.RankByWordCount(value)
+		sortValue := string_helper.SortWord(value)
 		maxSize := len(sortValue)
 		if maxSize > 10 {
 			maxSize = 10

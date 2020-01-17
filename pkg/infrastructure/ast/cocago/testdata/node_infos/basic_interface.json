@@ -13,34 +13,24 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "Area",
-          "Parameters": [
-            {
-              "Modifiers": null,
-              "Name": "a",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "Identify",
-              "TypeValue": "float64"
-            }
-          ],
-          "ReturnTypes": [
-            {
-              "Modifiers": null,
-              "Name": "",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "Identify",
-              "TypeValue": "float64"
-            }
-          ],
-          "TypeType": "Function",
-          "TypeValue": "func"
+          "Name": "",
+          "Parameters": null,
+          "ReturnTypes": null,
+          "TypeType": "Identify",
+          "TypeValue": "Shape"
+        },
+        {
+          "Modifiers": null,
+          "Name": "",
+          "Parameters": null,
+          "ReturnTypes": null,
+          "TypeType": "Identify",
+          "TypeValue": "Object"
         }
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "NodeName": "Shape",
+      "NodeName": "Material",
       "Package": "",
       "Type": ""
     },
@@ -92,24 +82,34 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "",
-          "Parameters": null,
-          "ReturnTypes": null,
-          "TypeType": "Identify",
-          "TypeValue": "Shape"
-        },
-        {
-          "Modifiers": null,
-          "Name": "",
-          "Parameters": null,
-          "ReturnTypes": null,
-          "TypeType": "Identify",
-          "TypeValue": "Object"
+          "Name": "Area",
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "a",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "float64"
+            }
+          ],
+          "ReturnTypes": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "float64"
+            }
+          ],
+          "TypeType": "Function",
+          "TypeValue": "func"
         }
       ],
       "InnerStructures": null,
       "MultipleExtend": null,
-      "NodeName": "Material",
+      "NodeName": "Shape",
       "Package": "",
       "Type": ""
     }

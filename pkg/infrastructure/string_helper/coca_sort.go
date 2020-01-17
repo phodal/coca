@@ -5,7 +5,7 @@ import (
 )
 
 // from: https://stackoverflow.com/questions/18695346/how-to-sort-a-mapstringint-by-its-values
-func RankByWordCount(wordFrequencies map[string]int) PairList {
+func SortWord(wordFrequencies map[string]int) PairList {
 	pl := make(PairList, len(wordFrequencies))
 	i := 0
 	for k, v := range wordFrequencies {

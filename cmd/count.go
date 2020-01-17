@@ -34,7 +34,7 @@ var countCmd = &cobra.Command{
 
 		callMap := count.BuildCallMap(cparsedDeps)
 
-		callMapSort := string_helper.RankByWordCount(callMap)
+		callMapSort := string_helper.SortWord(callMap)
 
 		if countCmdConfig.Top > 0 {
 			callMapSort = callMapSort[:countCmdConfig.Top]

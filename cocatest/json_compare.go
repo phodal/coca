@@ -46,6 +46,7 @@ func formatNotEqualPrint(exceptInterface interface{}, actualInterface interface{
 	aFormatter := formatter.NewAsciiFormatter(aJson, config)
 	diffString, _ := aFormatter.Format(diffResult)
 	fmt.Println(diffString)
+	fmt.Println(string(actualStr))
 }
 
 func JSONFileBytesEqual(actualInterface interface{}, exceptFile string) bool {

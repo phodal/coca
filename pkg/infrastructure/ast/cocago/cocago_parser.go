@@ -3,6 +3,7 @@ package cocago
 import (
 	"fmt"
 	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/yourbasic/radix"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -98,11 +99,17 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	})
 
 	currentFile.DataStructures = nil
+
 	for _, ds := range dsMap {
 		currentFile.DataStructures = append(currentFile.DataStructures, *ds)
 	}
+	SortInterface(currentFile.DataStructures)
 
 	return &currentFile
+}
+
+func SortInterface(slice []core_domain.CodeDataStruct) {
+	radix.SortSlice(slice, func(i int) string { return slice[i].NodeName })
 }
 
 func BuildImport(x *ast.ImportSpec) *core_domain.CodeImport {

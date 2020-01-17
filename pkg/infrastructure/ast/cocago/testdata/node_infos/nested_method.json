@@ -5,7 +5,7 @@
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "",
+      "ImportName": "testdata/node_infos",
       "Scope": "",
       "Source": "fmt",
       "UsageName": null

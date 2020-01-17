@@ -5,14 +5,14 @@
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "",
+      "ImportName": "testdata/node_infos",
       "Scope": "",
       "Source": "github.com/antlr/antlr4/runtime/Go/antlr",
       "UsageName": null
     },
     {
       "AsName": "parser",
-      "ImportName": "",
+      "ImportName": "testdata/node_infos",
       "Scope": "",
       "Source": "github.com/phodal/coca/languages/ts",
       "UsageName": null

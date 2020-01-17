@@ -75,7 +75,7 @@ func (n *CocagoParser) VisitorImport(f *ast.File, fset *token.FileSet, fileName 
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
 		case *ast.ImportSpec:
-			imp := BuildImport(x)
+			imp := BuildImport(x, fileName)
 			imports = append(imports, *imp)
 		}
 		return true
@@ -101,7 +101,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.File:
 			currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
-			imp := BuildImport(x)
+			imp := BuildImport(x, fileName)
 			currentFile.Imports = append(currentFile.Imports, *imp)
 		case *ast.ValueSpec:
 			names := x.Names
@@ -142,7 +142,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			dsMap[currentStruct.NodeName] = &currentStruct
 		default:
 			if reflect.TypeOf(x) != nil && reflect.TypeOf(output).String() != "*bytes.Buffer" {
-				fmt.Fprintf(output, "Visitor case %s\n", reflect.TypeOf(x))
+				//fmt.Fprintf(output, "Visitor case %s\n", reflect.TypeOf(x))
 			}
 		}
 		return true
@@ -172,7 +172,14 @@ func SortInterface(slice []core_domain.CodeDataStruct) {
 	radix.SortSlice(slice, func(i int) string { return slice[i].NodeName })
 }
 
-func BuildImport(x *ast.ImportSpec) *core_domain.CodeImport {
+func BuildImport(x *ast.ImportSpec, fileName string) *core_domain.CodeImport {
+	splitFileName := strings.Split(fileName, string(filepath.Separator))
+	importName := ""
+	if len(splitFileName) > 2 {
+		importName = strings.Join(splitFileName[:len(splitFileName)-1], "/")
+	}
+
+	fmt.Println(importName)
 	path := x.Path.Value
 	cleanPath := path[1 : len(path)-1]
 	asName := ""
@@ -182,10 +189,11 @@ func BuildImport(x *ast.ImportSpec) *core_domain.CodeImport {
 	imp := &core_domain.CodeImport{
 		Source:     cleanPath,
 		AsName:     asName,
-		ImportName: "",
+		ImportName: importName,
 		UsageName:  nil,
 		Scope:      "",
 	}
+
 	return imp
 }
 

@@ -19,8 +19,9 @@ func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile
 }
 
 func (g *GoIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
-	parser := cocago.NewCocagoParser()
-	return 	parser.ProcessImports(code, fileName)
+	//parser := cocago.NewCocagoParser()
+	//return 	parser.ProcessImports(code, fileName)
+	return nil
 }
 
 func (g *GoIdentApp) SetExtensions(extension interface{})  {

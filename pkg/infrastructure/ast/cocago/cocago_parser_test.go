@@ -57,6 +57,10 @@ func TestCocagoParser_ProcessFile(t *testing.T) {
 			"hello_world",
 			"hello_world",
 		},
+		{
+			"multiple_method_call",
+			"multiple_method_call",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -128,7 +132,6 @@ func Test_LocalMethodCall(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	results := testParser.ProcessString(`
-
 package main
  
 import (
@@ -149,4 +152,34 @@ func main() {
 	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
 	g.Expect(calls[2].Package).To(Equal("fmt"))
 	g.Expect(len(calls)).To(Equal(3))
+}
+
+func Test_RelatedImport(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	results := testParser.ProcessString(`
+package goapp
+
+import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
+)
+
+type GoIdentApp struct {
+	Extensions interface{}
+}
+
+func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
+	parser := cocago.NewCocagoParser()
+	var imports []core_domain.CodeImport
+	if g.Extensions != nil {
+		imports = g.Extensions.([]core_domain.CodeImport)
+	}
+	return 	*parser.ProcessString(code, fileName, imports)
+}
+`, "call", nil)
+
+	fmt.Println(results)
+	g.Expect(len(results.DataStructures)).To(Equal(1))
 }

@@ -64,7 +64,7 @@
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "",
+      "ImportName": "testdata/node_infos",
       "Scope": "",
       "Source": "github.com/phodal/coca/pkg/domain",
       "UsageName": null

@@ -294,14 +294,14 @@
   "Imports": [
     {
       "AsName": "l",
-      "ImportName": "",
+      "ImportName": "testdata/regression",
       "Scope": "",
       "Source": "container/list",
       "UsageName": null
     },
     {
       "AsName": "",
-      "ImportName": "",
+      "ImportName": "testdata/regression",
       "Scope": "",
       "Source": "sync",
       "UsageName": null

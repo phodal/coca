@@ -1,0 +1,1 @@
+process file config/cmd_config.go

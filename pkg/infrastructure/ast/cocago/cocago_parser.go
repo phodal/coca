@@ -1,7 +1,6 @@
 package cocago
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"go/ast"
@@ -19,7 +18,6 @@ var currentPackage *core_domain.CodePackage
 type CocagoParser struct {
 }
 
-var debug = false
 var output io.Writer
 
 func NewCocagoParser() *CocagoParser {
@@ -28,10 +26,8 @@ func NewCocagoParser() *CocagoParser {
 	return &CocagoParser{}
 }
 
-func (n *CocagoParser) SetOutput(isDebug bool) io.Writer {
-	output = new(bytes.Buffer)
-	debug = isDebug
-
+func (n *CocagoParser) SetOutput(out io.Writer) io.Writer {
+	output = out
 	return output
 }
 
@@ -56,6 +52,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	var currentStruct core_domain.CodeDataStruct
 	var currentFile core_domain.CodeFile
 	var currentFunc *core_domain.CodeFunction
+	var dsMap = make(map[string]*core_domain.CodeDataStruct)
 
 	currentFile.FullName = fileName
 	var funcType = ""
@@ -72,12 +69,17 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			currentFile.Imports = append(currentFile.Imports, *imp)
 		case *ast.TypeSpec:
 			currentStruct = core_domain.CodeDataStruct{}
-			currentStruct.NodeName = x.Name.String()
+			currentStruct.NodeName = x.Name.Name
+			dsMap[currentStruct.NodeName] = &currentStruct
 		case *ast.StructType:
-			AddStructType(currentStruct, x, &currentFile)
+			fmt.Println(currentStruct.NodeName)
+			AddStructType(currentStruct.NodeName, x, &currentFile, dsMap)
 		case *ast.FuncDecl:
 			funcType = "FuncDecl"
-			currentFunc = AddFunctionDecl(currentStruct, x, &currentFile)
+			currentFunc, recv := AddFunctionDecl(x, &currentFile)
+			if recv != "" {
+				dsMap[recv].Functions = append(dsMap[recv].Functions, *currentFunc)
+			}
 		case *ast.FuncType:
 			if funcType != "FuncDecl" {
 				AddNestedFunction(currentFunc, x)
@@ -85,14 +87,20 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 
 			funcType = ""
 		case *ast.InterfaceType:
-			AddInterface(x, lastIdent, &currentFile)
+			currentStruct := AddInterface(x, lastIdent, &currentFile)
+			dsMap[currentStruct.NodeName] = &currentStruct
 		default:
-			if reflect.TypeOf(x) != nil {
+			if reflect.TypeOf(x) != nil && reflect.TypeOf(output).String() != "*bytes.Buffer" {
 				fmt.Fprintf(output, "Visitor case %s\n", reflect.TypeOf(x))
 			}
 		}
 		return true
 	})
+
+	currentFile.DataStructures = nil
+	for _, ds := range dsMap {
+		currentFile.DataStructures = append(currentFile.DataStructures, *ds)
+	}
 
 	return &currentFile
 }
@@ -114,7 +122,7 @@ func BuildImport(x *ast.ImportSpec) *core_domain.CodeImport {
 	return imp
 }
 
-func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.CodeFile) {
+func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.CodeFile) core_domain.CodeDataStruct {
 	properties := BuildFieldToProperty(x.Methods.List)
 
 	dataStruct := core_domain.CodeDataStruct{
@@ -123,34 +131,27 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 	}
 
 	member := core_domain.CodeMember{
-		DataStructID: dataStruct.NodeName,
+		DataStructID: ident,
 		Type:         "interface",
 	}
 
 	codeFile.Members = append(codeFile.Members, &member)
-	codeFile.DataStructures = append(codeFile.DataStructures, dataStruct)
+
+	return dataStruct
 }
 
 func AddNestedFunction(currentFunc *core_domain.CodeFunction, x *ast.FuncType) {
 
 }
 
-func AddFunctionDecl(currentStruct core_domain.CodeDataStruct, x *ast.FuncDecl, currentFile *core_domain.CodeFile) *core_domain.CodeFunction {
+func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_domain.CodeFunction, string) {
 	recv := ""
 	if x.Recv != nil {
 		recv = BuildReceiver(x, recv)
 	}
 	codeFunc := BuildFunction(x)
 
-	if recv != "" {
-		member := GetMemberFromFile(*currentFile, recv)
-		if member != nil {
-			member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
-		} else {
-			createMember(currentStruct)
-			// todo
-		}
-	} else {
+	if recv == "" {
 		member := GetMemberFromFile(*currentFile, "default")
 		if member == nil {
 			member = &core_domain.CodeMember{
@@ -163,7 +164,7 @@ func AddFunctionDecl(currentStruct core_domain.CodeDataStruct, x *ast.FuncDecl, 
 		currentFile.Members = append(currentFile.Members, member)
 	}
 
-	return codeFunc
+	return codeFunc, recv
 }
 
 func BuildReceiver(x *ast.FuncDecl, recv string) string {
@@ -260,16 +261,16 @@ func getFieldName(field *ast.Field) string {
 	return field.Names[0].Name
 }
 
-func AddStructType(currentStruct core_domain.CodeDataStruct, x *ast.StructType, currentFile *core_domain.CodeFile) {
+func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_domain.CodeFile, dsMap map[string]*core_domain.CodeDataStruct) {
 	member := core_domain.CodeMember{
-		DataStructID: currentStruct.NodeName,
+		DataStructID: currentNodeName,
 		Type:         "struct",
 	}
 	for _, field := range x.Fields.List {
 		property := BuildPropertyField(getFieldName(field), field)
 		member.FileID = currentFile.FullName
-		currentStruct.InOutProperties = append(currentStruct.InOutProperties, *property)
+		dsMap[currentNodeName].InOutProperties = append(dsMap[currentNodeName].InOutProperties, *property)
 	}
+
 	currentFile.Members = append(currentFile.Members, &member)
-	currentFile.DataStructures = append(currentFile.DataStructures, currentStruct)
 }

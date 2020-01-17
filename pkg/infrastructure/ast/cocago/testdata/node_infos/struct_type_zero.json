@@ -7,24 +7,7 @@
       "Fields": null,
       "FilePath": "",
       "FunctionCalls": null,
-      "Functions": null,
-      "Implements": null,
-      "Imports": null,
-      "InOutProperties": null,
-      "InnerStructures": null,
-      "MultipleExtend": null,
-      "NodeName": "O",
-      "Package": "",
-      "Type": ""
-    }
-  ],
-  "FullName": "testdata/node_infos/struct_type_zero.code",
-  "Imports": null,
-  "Members": [
-    {
-      "DataStructID": "O",
-      "FileID": "",
-      "FunctionNodes": [
+      "Functions": [
         {
           "Annotations": null,
           "Extension": null,
@@ -47,6 +30,23 @@
           "ReturnType": ""
         }
       ],
+      "Implements": null,
+      "Imports": null,
+      "InOutProperties": null,
+      "InnerStructures": null,
+      "MultipleExtend": null,
+      "NodeName": "O",
+      "Package": "",
+      "Type": ""
+    }
+  ],
+  "FullName": "testdata/node_infos/struct_type_zero.code",
+  "Imports": null,
+  "Members": [
+    {
+      "DataStructID": "O",
+      "FileID": "",
+      "FunctionNodes": null,
       "ID": "",
       "Name": "",
       "Namespace": null,

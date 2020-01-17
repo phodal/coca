@@ -1,6 +1,7 @@
 package cocago
 
 import (
+	"bytes"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
 	"os"
@@ -18,7 +19,8 @@ var testParser *CocagoParser
 
 func setup() {
 	testParser = NewCocagoParser()
-	testParser.SetOutput(true)
+	buf := new(bytes.Buffer)
+	testParser.SetOutput(buf)
 }
 
 func shutdown() {

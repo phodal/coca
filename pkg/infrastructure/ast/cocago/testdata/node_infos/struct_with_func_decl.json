@@ -7,7 +7,52 @@
       "Fields": null,
       "FilePath": "",
       "FunctionCalls": null,
-      "Functions": null,
+      "Functions": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": [
+            {
+              "MethodName": "Println",
+              "NodeName": "fmt",
+              "Package": "",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "Name": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeType": "STRING",
+                  "TypeValue": "\"Declared outside and invoked!!!\""
+                }
+              ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "MultipleReturns": null,
+          "Name": "outside",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
       "Implements": null,
       "Imports": null,
       "InOutProperties": [
@@ -57,52 +102,7 @@
     {
       "DataStructID": "person",
       "FileID": "testdata/node_infos/struct_with_func_decl.code",
-      "FunctionNodes": [
-        {
-          "Annotations": null,
-          "Extension": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "IsConstructor": false,
-          "IsReturnNull": false,
-          "MethodCalls": [
-            {
-              "MethodName": "Println",
-              "NodeName": "fmt",
-              "Package": "",
-              "Parameters": [
-                {
-                  "Modifiers": null,
-                  "Name": "",
-                  "Parameters": null,
-                  "ReturnTypes": null,
-                  "TypeType": "STRING",
-                  "TypeValue": "\"Declared outside and invoked!!!\""
-                }
-              ],
-              "Position": {
-                "StartLine": 0,
-                "StartLinePosition": 0,
-                "StopLine": 0,
-                "StopLinePosition": 0
-              },
-              "Type": ""
-            }
-          ],
-          "Modifiers": null,
-          "MultipleReturns": null,
-          "Name": "outside",
-          "Override": false,
-          "Parameters": null,
-          "Position": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "ReturnType": ""
-        }
-      ],
+      "FunctionNodes": null,
       "ID": "",
       "Name": "",
       "Namespace": null,

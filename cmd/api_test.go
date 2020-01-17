@@ -10,7 +10,7 @@ func TestApi(t *testing.T) {
 
 	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
-		Cmd:    "analysis -p " + path,
+		Cmd:    "analysis -l java -p " + path,
 		Golden: "",
 	}}
 	RunTestCmd(t, analysis)

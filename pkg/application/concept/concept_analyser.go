@@ -30,7 +30,6 @@ func buildMethodsFromDeps(clzs []core_domain.CodeDataStruct) string_helper.PairL
 	}
 
 	words := SegmentConceptCamelcase(methodsName)
-
 	words = removeNormalWords(words)
 
 	wordCounts := string_helper.RankByWordCount(words)

@@ -126,7 +126,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 }
 
 func BuildValSpec(expr ast.Expr) (string, string) {
-	switch  x:= expr.(type) {
+	switch x := expr.(type) {
 	case *ast.StarExpr:
 		return BuildExpr(x.X)
 	default:
@@ -266,11 +266,17 @@ func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_
 		DataStructID: currentNodeName,
 		Type:         "struct",
 	}
+
+	var ioproperties []core_domain.CodeProperty
 	for _, field := range x.Fields.List {
 		property := BuildPropertyField(getFieldName(field), field)
 		member.FileID = currentFile.FullName
-		dsMap[currentNodeName].InOutProperties = append(dsMap[currentNodeName].InOutProperties, *property)
+		ioproperties = append(ioproperties, *property)
 	}
 
+    // todo : when dsMap key-value create it
+	if dsMap[currentNodeName] != nil {
+		dsMap[currentNodeName].InOutProperties = ioproperties
+	}
 	currentFile.Members = append(currentFile.Members, &member)
 }

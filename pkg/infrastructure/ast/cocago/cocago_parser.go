@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 )
 
 var currentPackage *core_domain.CodePackage
@@ -78,7 +79,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.ValueSpec:
 			names := x.Names
 			for _, name := range names {
-				selSource, selName := BuildValSpec(x.Type)
+				_, selSource, selName := BuildValSpec(x.Type)
 				field := core_domain.CodeField{
 					TypeType:  selSource + "." + selName,
 					TypeValue: name.Name,
@@ -130,14 +131,14 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
-func BuildValSpec(expr ast.Expr) (string, string) {
+func BuildValSpec(expr ast.Expr) (string, string, string) {
 	switch x := expr.(type) {
 	case *ast.StarExpr:
 		return BuildExpr(x.X)
 	default:
 		fmt.Fprintf(output, "Visitor case %s\n", reflect.TypeOf(x))
 	}
-	return "", ""
+	return "", "", ""
 }
 
 func SortInterface(slice []core_domain.CodeDataStruct) {
@@ -220,7 +221,7 @@ func BuildReceiver(x *ast.FuncDecl, recv string) string {
 	return recv
 }
 
-func BuildExpr(expr ast.Expr) (string, string) {
+func BuildExpr(expr ast.Expr) (string, string, string) {
 	switch x := expr.(type) {
 	case *ast.SelectorExpr:
 		selector := ""
@@ -230,19 +231,29 @@ func BuildExpr(expr ast.Expr) (string, string) {
 		}
 
 		selName := x.Sel.Name
-		return selector, selName
+		return "selector", selector, selName
 	case *ast.BasicLit:
-		return x.Value, x.Kind.String()
+		return "basiclit", x.Value, x.Kind.String()
 	case *ast.Ident:
 		name := ""
 		if x.Obj != nil {
 			name = x.Obj.Kind.String()
 		}
-		return x.Name, name
+		return "ident", x.Name, name
+	case *ast.CallExpr:
+		_, value, _ := BuildExpr(x.Fun)
+		var callArgs []string
+		for _, arg := range x.Args {
+			argType, argValue, argKind := BuildExpr(arg)
+			if argType == "selector" {
+				callArgs = append(callArgs, argValue + "." + argKind)
+			}
+		}
+		return "call", value, strings.Join(callArgs, ",")
 	default:
 		fmt.Fprintf(output, "BuildExpr %s\n", reflect.TypeOf(x))
 	}
-	return "", ""
+	return "", "", ""
 }
 
 func createMember(codeDataStruct core_domain.CodeDataStruct) {

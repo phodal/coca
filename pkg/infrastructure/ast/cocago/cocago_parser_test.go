@@ -119,5 +119,33 @@ func main() {
 	g.Expect(len(results.Fields)).To(Equal(1))
 	g.Expect(calls[0].Package).To(Equal("sync"))
 	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
-	g.Expect(len(calls)).To(Equal(2))
+	g.Expect(len(calls)).To(Equal(3))
+}
+
+// should call local
+func Test_LocalMethodCall(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	results := testParser.ProcessString(`
+
+package main
+ 
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	l := new(sync.Mutex)
+	l.Lock()
+	defer l.Unlock()
+	fmt.Println("1")
+}
+`, "call")
+	calls := results.Members[0].FunctionNodes[0].FunctionCalls
+	fmt.Println(calls)
+	g.Expect(calls[0].Package).To(Equal("sync"))
+	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
+	g.Expect(len(calls)).To(Equal(3))
 }

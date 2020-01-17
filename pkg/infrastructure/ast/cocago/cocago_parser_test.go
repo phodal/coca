@@ -2,6 +2,7 @@ package cocago
 
 import (
 	"bytes"
+	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
 	"os"
@@ -71,7 +72,6 @@ func getFilePath(name string) string {
 	return "testdata/node_infos/" + name
 }
 
-// todo: may fill in para
 func Test_basic_interface(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
@@ -89,4 +89,33 @@ func Test_NestedMethod(t *testing.T) {
 	filePath := getFilePath("nested_method")
 	results := testParser.ProcessFile(filePath + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, filePath+".json")).To(Equal(true))
+}
+
+// var call
+func Test_VarMethodCall(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	results := testParser.ProcessString(`
+
+package main
+ 
+import (
+	"fmt"
+	"sync"
+)
+
+var l *sync.Mutex
+ 
+func main() {
+	l = new(sync.Mutex)
+	l.Lock()
+	defer l.Unlock()
+	fmt.Println("1")
+}
+`, "call")
+	calls := results.Members[0].FunctionNodes[0].MethodCalls
+	fmt.Println(calls)
+	g.Expect(len(results.Fields)).To(Equal(1))
+	g.Expect(len(calls)).To(Equal(2))
 }

@@ -75,6 +75,17 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.ImportSpec:
 			imp := BuildImport(x)
 			currentFile.Imports = append(currentFile.Imports, *imp)
+		case *ast.ValueSpec:
+			names := x.Names
+			for _, name := range names {
+				selSource, selName := BuildValSpec(x.Type)
+				field := core_domain.CodeField{
+					TypeType:  selSource + "." + selName,
+					TypeValue: name.Name,
+				}
+
+				currentFile.Fields = append(currentFile.Fields, field)
+			}
 		case *ast.TypeSpec:
 			currentStruct = core_domain.CodeDataStruct{}
 			currentStruct.NodeName = x.Name.Name
@@ -112,6 +123,16 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	SortInterface(currentFile.DataStructures)
 
 	return &currentFile
+}
+
+func BuildValSpec(expr ast.Expr) (string, string) {
+	switch  x:= expr.(type) {
+	case *ast.StarExpr:
+		return BuildExpr(x.X)
+	default:
+		fmt.Fprintf(output, "Visitor case %s\n", reflect.TypeOf(x))
+	}
+	return "", ""
 }
 
 func SortInterface(slice []core_domain.CodeDataStruct) {

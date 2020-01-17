@@ -6,4 +6,5 @@ type CodeFile struct {
 	Imports        []CodeImport
 	Members        []*CodeMember
 	DataStructures []CodeDataStruct
+	Fields         []CodeField
 }

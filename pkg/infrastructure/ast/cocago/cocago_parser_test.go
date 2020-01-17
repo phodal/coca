@@ -56,10 +56,6 @@ func TestCocagoParser_ProcessFile(t *testing.T) {
 			"hello_world",
 			"hello_world",
 		},
-		{
-			"basic_interface",
-			"basic_interface",
-		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -73,6 +69,16 @@ func TestCocagoParser_ProcessFile(t *testing.T) {
 
 func getFilePath(name string) string {
 	return "testdata/node_infos/" + name
+}
+
+// todo: may fill in para
+func Test_basic_interface(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	filePath := getFilePath("basic_interface")
+	results := testParser.ProcessFile(filePath + ".code")
+	g.Expect(cocatest.JSONFileBytesEqual(results, filePath+".json")).To(Equal(true))
 }
 
 // todo: support it

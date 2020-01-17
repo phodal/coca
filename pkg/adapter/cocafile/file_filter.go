@@ -18,6 +18,10 @@ var TypeScriptFileFilter = func(path string) bool {
 	return strings.HasSuffix(path, ".ts")
 }
 
+var PythonFileFilter = func(path string) bool {
+	return strings.HasSuffix(path, ".py")
+}
+
 var GoFileFilter = func(path string) bool {
 	return strings.HasSuffix(path, ".go")
 }

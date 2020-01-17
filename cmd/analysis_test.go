@@ -15,3 +15,14 @@ func Test_Analysis_Go(t *testing.T) {
 	}}
 	RunTestCmd(t, analysis)
 }
+
+func Test_Analysis_Python(t *testing.T) {
+	path := "../_fixtures/grammar/python"
+
+	analysis := []testcase.CmdTestCase{{
+		Name:   "analysis",
+		Cmd:    "analysis -f -l py -p " + path,
+		Golden: "testdata/analysis_python.txt",
+	}}
+	RunTestCmd(t, analysis)
+}

@@ -21,7 +21,7 @@ func ProcessTsString(code string) *parser.PythonParser {
 type PythonApiApp struct {
 }
 
-func (j *PythonApiApp) Analysis(code string, fileName string) *core_domain.CodeFile {
+func (j *PythonApiApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Root()
 

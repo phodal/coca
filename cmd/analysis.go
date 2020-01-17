@@ -2,12 +2,15 @@ package cmd
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/application/analysis"
+	"github.com/phodal/coca/pkg/application/pyapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 	"github.com/spf13/cobra"
+	"io/ioutil"
 )
 
 type AnalysisCmdConfig struct {
@@ -25,12 +28,38 @@ var analysisCmd = &cobra.Command{
 	Short: "analysis code",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		if analysisCmdConfig.Lang == "go" {
+		switch analysisCmdConfig.Lang {
+		case "go":
 			analysisGo()
-		} else {
+		case "py":
+		case "python":
+			analysisPython()
+		default:
 			analysisJava()
 		}
 	},
+}
+
+func analysisPython() {
+	importPath := analysisCmdConfig.Path
+
+	var results []core_domain.CodeFile
+	files := cocafile.GetFilesWithFilter(importPath, cocafile.PythonFileFilter)
+	for _, file := range files {
+		fmt.Fprintf(output, "Process Python file: %s\n", file)
+		app := new(pyapp.PythonApiApp)
+		content, _ := ioutil.ReadFile(file)
+		result := app.Analysis(string(content), "")
+		results = append(results, result)
+	}
+
+	var ds []core_domain.CodeDataStruct
+	for _, result := range results {
+		ds = append(ds, result.DataStructures...)
+	}
+
+	cModel, _ := json.MarshalIndent(ds, "", "\t")
+	cmd_util.WriteToCocaFile("pydeps.json", string(cModel))
 }
 
 func analysisGo() {

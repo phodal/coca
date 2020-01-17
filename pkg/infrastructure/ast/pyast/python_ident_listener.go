@@ -167,6 +167,6 @@ func BuildArgList(context *parser.ArglistContext) []core_domain.AnnotationKeyVal
 	return arguments
 }
 
-func (s *PythonIdentListener) GetCodeFileInfo() *core_domain.CodeFile {
-	return currentCodeFile
+func (s *PythonIdentListener) GetCodeFileInfo() core_domain.CodeFile {
+	return *currentCodeFile
 }

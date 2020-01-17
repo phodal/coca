@@ -215,40 +215,6 @@ func BuildReceiver(x *ast.FuncDecl, recv string) string {
 	return recv
 }
 
-func BuildMethodCall(codeFunc *core_domain.CodeFunction, item ast.Stmt) {
-	switch it := item.(type) {
-	case *ast.ExprStmt:
-		BuildMethodCallExprStmt(it, codeFunc)
-	default:
-		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
-	}
-}
-
-func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunction) {
-	switch expr := it.X.(type) {
-	case *ast.CallExpr:
-		selector, selName := BuildExpr(expr.Fun.(ast.Expr))
-		call := core_domain.CodeCall{
-			Package:    "",
-			Type:       "",
-			NodeName:   selector,
-			MethodName: selName,
-		}
-
-		for _, arg := range expr.Args {
-			value, kind := BuildExpr(arg.(ast.Expr))
-			property := &core_domain.CodeProperty{
-				TypeValue: value,
-				TypeType:  kind,
-			}
-
-			call.Parameters = append(call.Parameters, *property)
-		}
-
-		codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
-	}
-}
-
 func BuildExpr(expr ast.Expr) (string, string) {
 	switch x := expr.(type) {
 	case *ast.SelectorExpr:

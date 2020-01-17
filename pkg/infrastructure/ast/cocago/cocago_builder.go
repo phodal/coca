@@ -85,7 +85,7 @@ func BuildFunction(x *ast.FuncDecl, file *core_domain.CodeFile) *core_domain.Cod
 	}
 
 	for _, item := range x.Body.List {
-		BuildMethodCall(codeFunc, item)
+		BuildMethodCall(codeFunc, item, file)
 	}
 	return codeFunc
 }
@@ -97,4 +97,38 @@ func BuildFieldToProperty(fieldList []*ast.Field) []core_domain.CodeProperty {
 		properties = append(properties, *property)
 	}
 	return properties
+}
+
+func BuildMethodCall(codeFunc *core_domain.CodeFunction, item ast.Stmt, file *core_domain.CodeFile) {
+	switch it := item.(type) {
+	case *ast.ExprStmt:
+		BuildMethodCallExprStmt(it, codeFunc)
+	default:
+		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
+	}
+}
+
+func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunction) {
+	switch expr := it.X.(type) {
+	case *ast.CallExpr:
+		selector, selName := BuildExpr(expr.Fun.(ast.Expr))
+		call := core_domain.CodeCall{
+			Package:    "",
+			Type:       "",
+			NodeName:   selector,
+			MethodName: selName,
+		}
+
+		for _, arg := range expr.Args {
+			value, kind := BuildExpr(arg.(ast.Expr))
+			property := &core_domain.CodeProperty{
+				TypeValue: value,
+				TypeType:  kind,
+			}
+
+			call.Parameters = append(call.Parameters, *property)
+		}
+
+		codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
+	}
 }

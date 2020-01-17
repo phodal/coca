@@ -4,6 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/phodal/coca/languages/java"
 	"github.com/phodal/coca/pkg/domain/bs_domain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"reflect"
 	"strings"
 )
@@ -131,17 +132,21 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	methodBSInfo := bs_domain.NewMethodBadSmellInfo()
 
-	method := &bs_domain.BsJMethod{
-		Name:              name,
-		Type:              typeType,
+	position := core_domain.CodePosition{
 		StartLine:         startLine,
 		StartLinePosition: startLinePosition,
 		StopLine:          stopLine,
 		StopLinePosition:  stopLinePosition,
-		MethodBody:        methodBody,
-		Modifier:          modifiers,
-		Parameters:        methodParams,
-		MethodBs:          methodBSInfo,
+	}
+
+	method := &bs_domain.BsJMethod{
+		Name:       name,
+		Type:       typeType,
+		MethodBody: methodBody,
+		Modifier:   modifiers,
+		Parameters: methodParams,
+		MethodBs:   methodBSInfo,
+		Position:   position,
 	}
 
 	methods = append(methods, *method)
@@ -199,17 +204,21 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	methodBSInfo := bs_domain.NewMethodBadSmellInfo()
 	methodBadSmellInfo := buildMethodBSInfo(ctx, methodBSInfo)
 
-	method := &bs_domain.BsJMethod{
-		Name:              name,
-		Type:              typeType,
+	position := core_domain.CodePosition{
 		StartLine:         startLine,
 		StartLinePosition: startLinePosition,
 		StopLine:          stopLine,
 		StopLinePosition:  stopLinePosition,
-		MethodBody:        methodBody,
-		Modifier:          modifier,
-		Parameters:        methodParams,
-		MethodBs:          methodBadSmellInfo,
+	}
+
+	method := &bs_domain.BsJMethod{
+		Name:       name,
+		Type:       typeType,
+		MethodBody: methodBody,
+		Modifier:   modifier,
+		Parameters: methodParams,
+		MethodBs:   methodBadSmellInfo,
+		Position:   position,
 	}
 	methods = append(methods, *method)
 }
@@ -289,11 +298,6 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 	var targetType = parseTargetType(targetCtx)
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := startLinePosition + len(callee)
-
 	// TODO: 处理链试调用
 	if strings.Contains(targetType, "()") && strings.Contains(targetType, ".") {
 		split := strings.Split(targetType, ".")
@@ -301,19 +305,26 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = localVars[sourceTarget]
 	}
 
+	position := core_domain.CodePosition{
+		StartLine:         ctx.GetStart().GetLine(),
+		StartLinePosition: ctx.GetStart().GetColumn(),
+		StopLine:          ctx.GetStop().GetLine(),
+		StopLinePosition:  ctx.GetStart().GetColumn() + len(callee),
+	}
+
 	fullType := warpTargetFullType(targetType)
 	if targetType == "super" {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := bs_domain.BsJMethodCall{Package: removeTarget(fullType), Class: targetType, MethodName: callee, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+		jMethodCall := bs_domain.BsJMethodCall{Package: removeTarget(fullType), Class: targetType, MethodName: callee, Position: position}
 		methodCalls = append(methodCalls, jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
-			jMethodCall := bs_domain.BsJMethodCall{Package: currentPkg, Class: currentClz, MethodName: callee, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+			jMethodCall := bs_domain.BsJMethodCall{Package: currentPkg, Class: currentClz, MethodName: callee, Position: position}
 			methodCalls = append(methodCalls, jMethodCall)
 		} else {
-			jMethodCall := bs_domain.BsJMethodCall{Package: currentPkg, Type: "NEEDFIX", Class: targetType, MethodName: callee, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+			jMethodCall := bs_domain.BsJMethodCall{Package: currentPkg, Type: "NEEDFIX", Class: targetType, MethodName: callee, Position: position}
 			methodCalls = append(methodCalls, jMethodCall)
 		}
 	}
@@ -327,12 +338,14 @@ func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 		targetType := parseTargetType(text)
 		fullType := warpTargetFullType(targetType)
 
-		startLine := ctx.GetStart().GetLine()
-		startLinePosition := ctx.GetStart().GetColumn()
-		stopLine := ctx.GetStop().GetLine()
-		stopLinePosition := startLinePosition + len(text)
+		position := core_domain.CodePosition{
+			StartLine:         ctx.GetStart().GetLine(),
+			StartLinePosition: ctx.GetStart().GetColumn(),
+			StopLine:          ctx.GetStop().GetLine(),
+			StopLinePosition:  ctx.GetStart().GetColumn() + len(text),
+		}
 
-		jMethodCall := &bs_domain.BsJMethodCall{Package: removeTarget(fullType), Class: targetType, MethodName: methodName, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
+		jMethodCall := &bs_domain.BsJMethodCall{Package: removeTarget(fullType), Class: targetType, MethodName: methodName, Position: position}
 		methodCalls = append(methodCalls, *jMethodCall)
 	}
 }

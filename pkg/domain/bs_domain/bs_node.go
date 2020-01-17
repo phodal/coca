@@ -1,6 +1,7 @@
 package bs_domain
 
 import (
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"strings"
 )
 
@@ -17,27 +18,21 @@ type BsJClass struct {
 }
 
 type BsJMethodCall struct {
-	Package           string
-	Type              string
-	Class             string
-	MethodName        string
-	StartLine         int
-	StartLinePosition int
-	StopLine          int
-	StopLinePosition  int
+	Package    string
+	Type       string
+	Class      string
+	MethodName string
+	Position   core_domain.CodePosition
 }
 
 type BsJMethod struct {
-	Name              string
-	Type              string
-	StartLine         int
-	StartLinePosition int
-	StopLine          int
-	StopLinePosition  int
-	MethodBody        string
-	Modifier          string
-	Parameters        []JFullParameter
-	MethodBs          MethodBadSmellInfo
+	Name       string
+	Type       string
+	MethodBody string
+	Modifier   string
+	Parameters []JFullParameter
+	MethodBs   MethodBadSmellInfo
+	Position   core_domain.CodePosition
 }
 
 type MethodBadSmellInfo struct {
@@ -111,4 +106,3 @@ func (b *BsJClass) ClassFullName() string {
 func (c *BsJMethodCall) ClassFullName() string {
 	return c.Package + "." + c.Class
 }
-

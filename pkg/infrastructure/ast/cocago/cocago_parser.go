@@ -73,7 +73,6 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			currentStruct.NodeName = x.Name.Name
 			dsMap[currentStruct.NodeName] = &currentStruct
 		case *ast.StructType:
-			fmt.Println(currentStruct.NodeName)
 			AddStructType(currentStruct.NodeName, x, &currentFile, dsMap)
 		case *ast.FuncDecl:
 			funcType = "FuncDecl"

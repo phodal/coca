@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis"
+	"github.com/phodal/coca/pkg/application/analysis/javaapp"
 	"github.com/phodal/coca/pkg/application/deps"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/domain/support_domain"
@@ -34,7 +34,7 @@ var depsCmd = &cobra.Command{
 		path, _ = filepath.Abs(path)
 		files := cocafile.GetFilesWithFilter(path, cocafile.JavaFileFilter)
 
-		identifierApp := analysis.NewJavaIdentifierApp()
+		identifierApp := javaapp.NewJavaIdentifierApp()
 		iNodes := identifierApp.AnalysisFiles(files)
 
 		var classes []string = nil
@@ -43,7 +43,7 @@ var depsCmd = &cobra.Command{
 			classes = append(classes, node.Package+"."+node.NodeName)
 		}
 
-		callApp := analysis.NewJavaFullApp()
+		callApp := javaapp.NewJavaFullApp()
 		classNodes := callApp.AnalysisFiles(iNodes, files, classes)
 
 		//app := loadPlugins()

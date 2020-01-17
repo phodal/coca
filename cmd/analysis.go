@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis"
-	"github.com/phodal/coca/pkg/application/pyapp"
-	"github.com/phodal/coca/pkg/application/tsapp"
+	"github.com/phodal/coca/pkg/application/analysis/javaapp"
+	"github.com/phodal/coca/pkg/application/analysis/pyapp"
+	"github.com/phodal/coca/pkg/application/analysis/tsapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 	"github.com/spf13/cobra"
@@ -111,7 +111,7 @@ func analysisGo() {
 
 func analysisJava() {
 	importPath := analysisCmdConfig.Path
-	identifierApp := analysis.NewJavaIdentifierApp()
+	identifierApp := javaapp.NewJavaIdentifierApp()
 	iNodes := identifierApp.AnalysisPath(importPath)
 
 	identModel, _ := json.MarshalIndent(iNodes, "", "\t")
@@ -123,7 +123,7 @@ func analysisJava() {
 		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
-	callApp := analysis.NewJavaFullApp()
+	callApp := javaapp.NewJavaFullApp()
 
 	callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
 	cModel, _ := json.MarshalIndent(callNodes, "", "\t")

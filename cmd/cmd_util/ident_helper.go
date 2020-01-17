@@ -2,7 +2,7 @@ package cmd_util
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/pkg/application/analysis"
+	"github.com/phodal/coca/pkg/application/analysis/javaapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
@@ -31,13 +31,13 @@ func readIdentify(importPath interface{}, fileName string, analysisApp func(impo
 }
 
 func analysisByPath(importPath interface{}) []core_domain.CodeDataStruct {
-	identifierApp := new(analysis.JavaIdentifierApp)
+	identifierApp := new(javaapp.JavaIdentifierApp)
 	ident := identifierApp.AnalysisPath(importPath.(string))
 	return ident
 }
 
 func analysisByFiles(files interface{}) []core_domain.CodeDataStruct {
-	identifierApp := analysis.NewJavaIdentifierApp()
+	identifierApp := javaapp.NewJavaIdentifierApp()
 	ident := identifierApp.AnalysisFiles(files.([]string))
 	return ident
 }

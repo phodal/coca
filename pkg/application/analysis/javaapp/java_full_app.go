@@ -1,4 +1,4 @@
-package analysis
+package javaapp
 
 import (
 	"fmt"

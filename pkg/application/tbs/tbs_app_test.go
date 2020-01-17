@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis"
+	"github.com/phodal/coca/pkg/application/analysis/javaapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"path/filepath"
 	"testing"
@@ -150,7 +150,7 @@ func BuildTestAnalysisResultsByPath(codePath string) (map[string]core_domain.Cod
 		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
-	analysisApp := analysis.NewJavaFullApp()
+	analysisApp := javaapp.NewJavaFullApp()
 	classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
 	return identifiersMap, classNodes
 }

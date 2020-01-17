@@ -9,6 +9,6 @@ func Test_ProcessPackage(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	results := ProcessPackage("../../../pkg/domain", true)
+	results := ProcessPackage("../../../../pkg/domain", true)
 	g.Expect(len(results)).To(Equal(21))
 }

@@ -1,4 +1,4 @@
-package analysis
+package javaapp
 
 import (
 	. "github.com/onsi/gomega"
@@ -10,7 +10,7 @@ import (
 func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/call"
+	codePath := "../../../../_fixtures/call"
 	codePath = filepath.FromSlash(codePath)
 
 	identifierApp := new(JavaIdentifierApp)
@@ -29,7 +29,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 func TestJavaCallListener_EnterConstructorDeclaration(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/suggest/factory"
+	codePath := "../../../../_fixtures/suggest/factory"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -53,7 +53,7 @@ func getCallNodes(codePath string) []core_domain.CodeDataStruct {
 func TestLambda_Express(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/lambda"
+	codePath := "../../../../_fixtures/lambda"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -70,7 +70,7 @@ func TestLambda_Express(t *testing.T) {
 func TestInterface(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/grammar/interface"
+	codePath := "../../../../_fixtures/grammar/interface"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -88,7 +88,7 @@ func TestInterface(t *testing.T) {
 func TestAnnotation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath := "../../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -105,7 +105,7 @@ func TestAnnotation(t *testing.T) {
 func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/tbs/regression/CallAssertInClassTests.java"
+	codePath := "../../../../_fixtures/tbs/regression/CallAssertInClassTests.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -122,7 +122,7 @@ func Test_ShouldHaveOnlyOneAnnotation(t *testing.T) {
 func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/tbs/regression/EnvironmentSystemIntegrationTests.java"
+	codePath := "../../../../_fixtures/tbs/regression/EnvironmentSystemIntegrationTests.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -142,7 +142,7 @@ func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 func Test_CreatorAnnotation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath := "../../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -158,7 +158,7 @@ func Test_CreatorAnnotation(t *testing.T) {
 func Test_ShouldGetMethodCreators(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath := "../../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -174,7 +174,7 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 func Test_ShouldNotGetCreators(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath := "../../../../_fixtures/tbs/code/RedundantAssertionTest.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -190,7 +190,7 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 func Test_ShouldGetMethodCallParameters(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath := "../../../../_fixtures/tbs/code/RedundantAssertionTest.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -209,7 +209,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 func Test_BuilderCallSplitIssue(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/abug/BuilderCallSplitIssue.java"
+	codePath := "../../../../_fixtures/abug/BuilderCallSplitIssue.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -228,7 +228,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 func Test_InnerClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/abug/InnerClass.java"
+	codePath := "../../../../_fixtures/abug/InnerClass.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -241,7 +241,7 @@ func Test_InnerClass(t *testing.T) {
 func Test_DoubleClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/abug/DoubleClass.java"
+	codePath := "../../../../_fixtures/abug/DoubleClass.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)

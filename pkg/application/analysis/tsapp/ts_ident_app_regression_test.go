@@ -10,7 +10,7 @@ func Test_Regression(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	app := new(TypeScriptApiApp)
-	code, _ := ioutil.ReadFile("../../../_fixtures/ts/regressions/import_comma_issue.ts")
+	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/regressions/import_comma_issue.ts")
 
 	results := app.Analysis(string(code), "")
 
@@ -22,7 +22,7 @@ func Test_Regression(t *testing.T) {
 //	g := NewGomegaWithT(t)
 //
 //	app := new(TypeScriptApiApp)
-//	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/regressions/callback_hell.ts")
+//	code, _ := ioutil.ReadFile("../../../../../_fixtures/ts/regressions/callback_hell.ts")
 //
 //	results := app.Analysis(string(code), "")
 //

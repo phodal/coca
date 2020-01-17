@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cocatest/testhelper"
-	"github.com/phodal/coca/pkg/application/analysis"
+	"github.com/phodal/coca/pkg/application/analysis/javaapp"
 	"path/filepath"
 	"testing"
 )
@@ -17,14 +17,14 @@ func TestRenameMethodApp(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	configPath = filepath.FromSlash(configPath)
 
-	identifierApp := new(analysis.JavaIdentifierApp)
+	identifierApp := new(javaapp.JavaIdentifierApp)
 	identifiers := identifierApp.AnalysisPath(codePath)
 	var classes []string = nil
 	for _, node := range identifiers {
 		classes = append(classes, node.Package+"."+node.NodeName)
 	}
 
-	callApp := analysis.NewJavaFullApp()
+	callApp := javaapp.NewJavaFullApp()
 	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
 
 	configBytes := cmd_util.ReadFile(configPath)

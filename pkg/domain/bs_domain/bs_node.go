@@ -65,7 +65,3 @@ func (b *BsJClass) HaveCallParent() bool {
 	}
 	return hasCallParentMethod
 }
-
-func (b *BsJClass) ClassFullName() string {
-	return b.Package + "." + b.NodeName
-}

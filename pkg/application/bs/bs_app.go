@@ -45,10 +45,10 @@ func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_doma
 	var classNodes = map[string][]string{}
 	var classNodeMaps = map[string]bool{}
 	for _, node := range nodes {
-		classNodeMaps[node.ClassFullName()] = true
+		classNodeMaps[node.GetClassFullName()] = true
 	}
 	for _, node := range nodes {
-		classNodes[node.ClassFullName()] = getCalledClasses(node, classNodeMaps)
+		classNodes[node.GetClassFullName()] = getCalledClasses(node, classNodeMaps)
 	}
 	var badSmellGraphCall = graphcall.NewBadSmellGraphCall()
 	var descriptions = badSmellGraphCall.AnalysisGraphCallPath(classNodes)
@@ -57,12 +57,12 @@ func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_doma
 	}
 }
 
-//fixme java lamda & recursive
+//fixme java lambda & recursive
 func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
 	var calledClassesMap = make(map[string]struct{})
 	var calledClasses []string
 	for _, methodCalled := range class.FunctionCalls {
-		if methodCalled.NodeName == "" || !maps[methodCalled.BuildClassFullName()] || class.ClassFullName() == methodCalled.BuildClassFullName() {
+		if methodCalled.NodeName == "" || !maps[methodCalled.BuildClassFullName()] || class.GetClassFullName() == methodCalled.BuildClassFullName() {
 			continue
 		}
 		calledClassesMap[methodCalled.BuildClassFullName()] = struct{}{}

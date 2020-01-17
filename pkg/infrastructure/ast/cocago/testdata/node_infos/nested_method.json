@@ -27,7 +27,7 @@
             {
               "MethodName": "var",
               "NodeName": "foo",
-              "Package": "",
+              "Package": "testdata",
               "Parameters": [
                 {
                   "Modifiers": null,

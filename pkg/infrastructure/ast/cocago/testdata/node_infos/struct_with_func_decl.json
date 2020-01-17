@@ -19,7 +19,7 @@
             {
               "MethodName": "Println",
               "NodeName": "fmt",
-              "Package": "",
+              "Package": "testdata",
               "Parameters": [
                 {
                   "Modifiers": null,
@@ -84,7 +84,7 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "person",
-      "Package": "",
+      "Package": "testdata",
       "Type": ""
     }
   ],

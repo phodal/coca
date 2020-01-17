@@ -13,6 +13,7 @@ import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"io/ioutil"
+	"unicode"
 )
 
 type AnalysisCmdConfig struct {
@@ -53,18 +54,18 @@ var analysisCmd = &cobra.Command{
 }
 
 func AnalysisTypeScript() []core_domain.CodeDataStruct {
-	return CommentAnalysis(analysisCmdConfig.Path, new(tsapp.TypeScriptIdentApp), cocafile.TypeScriptFileFilter)
+	return CommentAnalysis(analysisCmdConfig.Path, new(tsapp.TypeScriptIdentApp), cocafile.TypeScriptFileFilter, true)
 }
 
 func AnalysisPython() []core_domain.CodeDataStruct {
-	return CommentAnalysis(analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.PythonFileFilter)
+	return CommentAnalysis(analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.PythonFileFilter, true)
 }
 
 func AnalysisGo() []core_domain.CodeDataStruct {
-	return CommentAnalysis(analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter)
+	return CommentAnalysis(analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter, true)
 }
 
-func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter func(path string) bool) []core_domain.CodeDataStruct {
+func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter func(path string) bool, isFunctionBase bool) []core_domain.CodeDataStruct {
 	var results []core_domain.CodeFile
 	files := cocafile.GetFilesWithFilter(path, filter)
 	fmt.Println(files)
@@ -78,9 +79,31 @@ func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter fu
 	var ds []core_domain.CodeDataStruct
 	for _, result := range results {
 		ds = append(ds, result.DataStructures...)
+
+		if isFunctionBase {
+			methodDs := BuildMethodDs(result)
+			ds = append(ds, methodDs...)
+		}
 	}
 
 	return ds
+}
+
+func BuildMethodDs(result core_domain.CodeFile) []core_domain.CodeDataStruct {
+	var methodsDs []core_domain.CodeDataStruct
+	for _, member := range result.Members {
+		for _, node := range member.FunctionNodes {
+			if unicode.IsUpper(rune(node.Name[0])) {
+				methodDs := core_domain.CodeDataStruct{
+					NodeName: node.Name,
+					Package:  result.PackageName,
+				}
+				methodsDs = append(methodsDs, methodDs)
+			}
+		}
+	}
+
+	return methodsDs
 }
 
 func AnalysisJava() []core_domain.CodeDataStruct {

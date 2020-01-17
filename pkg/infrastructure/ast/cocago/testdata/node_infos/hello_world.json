@@ -27,7 +27,7 @@
             {
               "MethodName": "Println",
               "NodeName": "fmt",
-              "Package": "",
+              "Package": "main",
               "Parameters": [
                 {
                   "Modifiers": null,

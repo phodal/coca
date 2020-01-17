@@ -39,7 +39,7 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "Person",
-      "Package": "",
+      "Package": "testdata",
       "Type": ""
     }
   ],

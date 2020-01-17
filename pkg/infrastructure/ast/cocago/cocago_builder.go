@@ -2,16 +2,16 @@ package cocago
 
 import (
 	"fmt"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	. "github.com/phodal/coca/pkg/domain/core_domain"
 	"go/ast"
 	"reflect"
 )
 
-func BuildPropertyField(name string, field *ast.Field) *core_domain.CodeProperty {
+func BuildPropertyField(name string, field *ast.Field) *CodeProperty {
 	var typeName string
 	var typeType string
-	var params []core_domain.CodeProperty
-	var results []core_domain.CodeProperty
+	var params []CodeProperty
+	var results []CodeProperty
 	switch x := field.Type.(type) {
 	case *ast.Ident:
 		typeType = "Identify"
@@ -44,7 +44,7 @@ func BuildPropertyField(name string, field *ast.Field) *core_domain.CodeProperty
 		fmt.Fprintf(output, "BuildPropertyField %s\n", reflect.TypeOf(x))
 	}
 
-	property := &core_domain.CodeProperty{
+	property := &CodeProperty{
 		Modifiers:   nil,
 		Name:        name,
 		TypeType:    typeType,
@@ -71,8 +71,8 @@ func getStarExprName(starExpr ast.StarExpr) string {
 	}
 }
 
-func BuildFunction(x *ast.FuncDecl, file *core_domain.CodeFile) *core_domain.CodeFunction {
-	codeFunc := &core_domain.CodeFunction{
+func BuildFunction(x *ast.FuncDecl, file *CodeFile) *CodeFunction {
+	codeFunc := &CodeFunction{
 		Name: x.Name.String(),
 	}
 
@@ -84,14 +84,16 @@ func BuildFunction(x *ast.FuncDecl, file *core_domain.CodeFile) *core_domain.Cod
 		codeFunc.MultipleReturns = append(codeFunc.Parameters, BuildFieldToProperty(x.Type.Results.List)...)
 	}
 
+	fields := file.Fields
+	var localVars []CodeProperty
 	for _, item := range x.Body.List {
-		BuildMethodCall(codeFunc, item, file)
+		BuildMethodCall(codeFunc, item, fields, localVars)
 	}
 	return codeFunc
 }
 
-func BuildFieldToProperty(fieldList []*ast.Field) []core_domain.CodeProperty {
-	var properties []core_domain.CodeProperty
+func BuildFieldToProperty(fieldList []*ast.Field) []CodeProperty {
+	var properties []CodeProperty
 	for _, field := range fieldList {
 		property := BuildPropertyField(getFieldName(field), field)
 		properties = append(properties, *property)
@@ -99,21 +101,23 @@ func BuildFieldToProperty(fieldList []*ast.Field) []core_domain.CodeProperty {
 	return properties
 }
 
-func BuildMethodCall(codeFunc *core_domain.CodeFunction, item ast.Stmt, file *core_domain.CodeFile) {
+func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty) {
 	switch it := item.(type) {
 	case *ast.ExprStmt:
-		BuildMethodCallExprStmt(it, codeFunc)
+		BuildMethodCallExprStmt(it, codeFunc, fields)
 	default:
 		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
 	}
 }
 
-func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunction) {
+func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField) {
 	switch expr := it.X.(type) {
 	case *ast.CallExpr:
 		selector, selName := BuildExpr(expr.Fun.(ast.Expr))
-		call := core_domain.CodeCall{
-			Package:    "",
+		target := ParseTarget(selector, fields)
+		fmt.Println(target)
+		call := CodeCall{
+			Package:    target,
 			Type:       "",
 			NodeName:   selector,
 			MethodName: selName,
@@ -121,7 +125,7 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunctio
 
 		for _, arg := range expr.Args {
 			value, kind := BuildExpr(arg.(ast.Expr))
-			property := &core_domain.CodeProperty{
+			property := &CodeProperty{
 				TypeValue: value,
 				TypeType:  kind,
 			}
@@ -131,4 +135,13 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *core_domain.CodeFunctio
 
 		codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
 	}
+}
+
+func ParseTarget(selector string, fields []CodeField) string {
+	for _, field := range fields {
+		if field.TypeValue == selector {
+			return field.TypeType
+		}
+	}
+	return ""
 }

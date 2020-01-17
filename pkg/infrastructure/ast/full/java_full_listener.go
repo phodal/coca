@@ -496,9 +496,9 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	var targetType = ParseTargetType(targetCtx.GetText())
 
 	if targetCtx.GetChild(0) != nil {
-		if reflect.TypeOf(targetCtx.GetChild(0)).String() == "*parser.MethodCallContext" {
-			methodCallContext := targetCtx.GetChild(0).(*parser.MethodCallContext)
-			targetType = methodCallContext.IDENTIFIER().GetText()
+		switch x := targetCtx.GetChild(0).(type) {
+		case *parser.MethodCallContext:
+			targetType = x.IDENTIFIER().GetText()
 		}
 	}
 

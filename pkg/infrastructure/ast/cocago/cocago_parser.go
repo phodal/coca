@@ -106,6 +106,10 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 
 			funcType = ""
 		case *ast.InterfaceType:
+			// todo: dirty fix
+			if len(x.Methods.List) < 1 {
+				break
+			}
 			currentStruct := AddInterface(x, lastIdent, &currentFile)
 			dsMap[currentStruct.NodeName] = &currentStruct
 		default:

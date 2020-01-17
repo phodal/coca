@@ -1,0 +1,337 @@
+{
+  "DataStructures": [
+    {
+      "Annotations": null,
+      "Extend": "",
+      "Extension": null,
+      "Fields": null,
+      "FilePath": "",
+      "FunctionCalls": null,
+      "Functions": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": [
+            {
+              "MethodName": "Lock",
+              "NodeName": "",
+              "Package": "container",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "PushFront",
+              "NodeName": "",
+              "Package": "container",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "Name": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeType": "var",
+                  "TypeValue": "t"
+                }
+              ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "MultipleReturns": null,
+          "Name": "Push",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "Name": "t",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "",
+              "TypeValue": ""
+            }
+          ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": [
+            {
+              "MethodName": "Lock",
+              "NodeName": "",
+              "Package": "container",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "",
+              "TypeValue": ""
+            }
+          ],
+          "Name": "Pop",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": [
+            {
+              "MethodName": "Lock",
+              "NodeName": "",
+              "Package": "container",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "",
+              "TypeValue": ""
+            }
+          ],
+          "Name": "Peak",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "int"
+            }
+          ],
+          "Name": "Len",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "bool"
+            }
+          ],
+          "Name": "IsEmpty",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
+      "Implements": null,
+      "Imports": null,
+      "InOutProperties": [
+        {
+          "Modifiers": null,
+          "Name": "list",
+          "Parameters": null,
+          "ReturnTypes": null,
+          "TypeType": "Star",
+          "TypeValue": "l.List"
+        },
+        {
+          "Modifiers": null,
+          "Name": "mu",
+          "Parameters": null,
+          "ReturnTypes": null,
+          "TypeType": "",
+          "TypeValue": "sync.Mutex"
+        }
+      ],
+      "InnerStructures": null,
+      "MultipleExtend": null,
+      "NodeName": "Stack",
+      "Package": "container",
+      "Type": ""
+    }
+  ],
+  "Fields": null,
+  "FullName": "testdata/regression/coll_stack.code",
+  "Imports": [
+    {
+      "AsName": "l",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "container/list",
+      "UsageName": null
+    },
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "sync",
+      "UsageName": null
+    }
+  ],
+  "Members": [
+    {
+      "DataStructID": "Stack",
+      "FileID": "testdata/regression/coll_stack.code",
+      "FunctionNodes": null,
+      "ID": "",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Structures": null,
+      "Type": "struct"
+    },
+    {
+      "DataStructID": "default",
+      "FileID": "",
+      "FunctionNodes": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "MethodCalls": null,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "Name": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Star",
+              "TypeValue": "Stack"
+            }
+          ],
+          "Name": "NewStack",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
+      "ID": "",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Structures": null,
+      "Type": "method"
+    }
+  ],
+  "PackageName": "container"
+}

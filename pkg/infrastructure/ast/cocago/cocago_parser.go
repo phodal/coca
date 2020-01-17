@@ -90,7 +90,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	var currentFunc *core_domain.CodeFunction
 	var dsMap = make(map[string]*core_domain.CodeDataStruct)
 
-	currentFile.FullName = fileName
+	currentFile.FullName = BuildImportName(fileName)
 	var funcType = ""
 	var lastIdent = ""
 
@@ -99,7 +99,8 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.Ident:
 			lastIdent = x.Name
 		case *ast.File:
-			currentFile.PackageName = x.Name.String()
+			currentFile.PackageName = BuildImportName(fileName)
+			//currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
 			imp := BuildImport(x, fileName)
 			currentFile.Imports = append(currentFile.Imports, *imp)
@@ -118,6 +119,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			currentStruct = core_domain.CodeDataStruct{}
 			currentStruct.NodeName = x.Name.Name
 			currentStruct.Package = currentFile.PackageName
+			//currentStruct.FilePath = BuildImportName(fileName)
 			dsMap[currentStruct.NodeName] = &currentStruct
 		case *ast.StructType:
 			AddStructType(currentStruct.NodeName, x, &currentFile, dsMap)
@@ -173,28 +175,33 @@ func SortInterface(slice []core_domain.CodeDataStruct) {
 }
 
 func BuildImport(x *ast.ImportSpec, fileName string) *core_domain.CodeImport {
-	splitFileName := strings.Split(fileName, string(filepath.Separator))
-	importName := ""
-	if len(splitFileName) > 2 {
-		importName = strings.Join(splitFileName[:len(splitFileName)-1], "/")
-	}
-
-	fmt.Println(importName)
 	path := x.Path.Value
 	cleanPath := path[1 : len(path)-1]
 	asName := ""
 	if x.Name != nil {
 		asName = x.Name.String()
 	}
+	moduleName := "github.com/phodal/coca"
+	withOutModuleName := strings.ReplaceAll(cleanPath, moduleName, "")
+	all := strings.ReplaceAll(withOutModuleName, "/", ".")
 	imp := &core_domain.CodeImport{
-		Source:     cleanPath,
+		Source:     all,
 		AsName:     asName,
-		ImportName: importName,
+		ImportName: "",
 		UsageName:  nil,
 		Scope:      "",
 	}
 
 	return imp
+}
+
+func BuildImportName(fileName string) string {
+	splitFileName := strings.Split(fileName, string(filepath.Separator))
+	importName := ""
+	if len(splitFileName) > 2 {
+		importName = strings.Join(splitFileName[:len(splitFileName)-1], ".")
+	}
+	return importName
 }
 
 func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.CodeFile) core_domain.CodeDataStruct {

@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
+	"github.com/phodal/coca/pkg/application/analysis/app_concept"
+	"github.com/phodal/coca/pkg/application/analysis/goapp"
 	"github.com/phodal/coca/pkg/application/analysis/javaapp"
 	"github.com/phodal/coca/pkg/application/analysis/pyapp"
 	"github.com/phodal/coca/pkg/application/analysis/tsapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 )
@@ -52,58 +53,25 @@ var analysisCmd = &cobra.Command{
 }
 
 func AnalysisTypeScript() []core_domain.CodeDataStruct {
-	importPath := analysisCmdConfig.Path
-
-	var results []core_domain.CodeFile
-	files := cocafile.GetFilesWithFilter(importPath, cocafile.TypeScriptFileFilter)
-	fmt.Println(files)
-	for _, file := range files {
-		fmt.Fprintf(output, "Process TypeScript file: %s\n", file)
-		app := new(tsapp.TypeScriptApiApp)
-		content, _ := ioutil.ReadFile(file)
-		result := app.Analysis(string(content), "")
-		results = append(results, result)
-	}
-
-	var ds []core_domain.CodeDataStruct
-	for _, result := range results {
-		ds = append(ds, result.DataStructures...)
-	}
-
-	return ds
+	return CommentAnalysis(analysisCmdConfig.Path, new(tsapp.TypeScriptIdentApp), cocafile.TypeScriptFileFilter)
 }
 
 func AnalysisPython() []core_domain.CodeDataStruct {
-	importPath := analysisCmdConfig.Path
-
-	var results []core_domain.CodeFile
-	files := cocafile.GetFilesWithFilter(importPath, cocafile.PythonFileFilter)
-	for _, file := range files {
-		fmt.Fprintf(output, "Process Python file: %s\n", file)
-		app := new(pyapp.PythonApiApp)
-		content, _ := ioutil.ReadFile(file)
-		result := app.Analysis(string(content), "")
-		results = append(results, result)
-	}
-
-	var ds []core_domain.CodeDataStruct
-	for _, result := range results {
-		ds = append(ds, result.DataStructures...)
-	}
-
-	return ds
+	return CommentAnalysis(analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.PythonFileFilter)
 }
 
 func AnalysisGo() []core_domain.CodeDataStruct {
-	importPath := analysisCmdConfig.Path
+	return CommentAnalysis(analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter)
+}
 
+func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter func(path string) bool) []core_domain.CodeDataStruct {
 	var results []core_domain.CodeFile
-	files := cocafile.GetFilesWithFilter(importPath, cocafile.GoFileFilter)
+	files := cocafile.GetFilesWithFilter(path, filter)
+	fmt.Println(files)
 	for _, file := range files {
-		parser := cocago.NewCocagoParser()
-		parser.SetOutput(output)
-		result := parser.ProcessFile(file)
-
+		fmt.Fprintf(output, "Process file: %s\n", file)
+		content, _ := ioutil.ReadFile(file)
+		result := app.Analysis(string(content), file)
 		results = append(results, result)
 	}
 

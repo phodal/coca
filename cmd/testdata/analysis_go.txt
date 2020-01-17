@@ -1,1 +1,1 @@
-process file config/cmd_config.go
+Process file: config/cmd_config.go

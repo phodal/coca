@@ -18,10 +18,11 @@ func ProcessTsString(code string) *parser.TypeScriptParser {
 	return processStream(is)
 }
 
-type TypeScriptApiApp struct {
+type TypeScriptIdentApp struct {
+
 }
 
-func (j *TypeScriptApiApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (j *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Program()
 

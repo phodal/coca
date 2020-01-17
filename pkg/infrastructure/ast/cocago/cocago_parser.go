@@ -38,15 +38,22 @@ func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
 
 	fmt.Fprintf(output, "process file %s\n", fileName)
 
+	code := string(content)
+
+	codeFile := n.ProcessString(code, fileName)
+	return *codeFile
+}
+
+func (n *CocagoParser) ProcessString(code string, fileName string) *core_domain.CodeFile {
 	fset := token.NewFileSet()
-	f, err := parser.ParseFile(fset, fileName, string(content), 0)
+	f, err := parser.ParseFile(fset, fileName, code, 0)
 	if err != nil {
 		panic(err)
 	}
 
 	codeFile := n.Visitor(f, fset, fileName)
 	currentPackage.CodeFiles = append(currentPackage.CodeFiles, *codeFile)
-	return *codeFile
+	return codeFile
 }
 
 func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *core_domain.CodeFile {

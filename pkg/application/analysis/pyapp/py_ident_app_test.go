@@ -19,7 +19,7 @@ func Test_AllPythonGrammar(t *testing.T) {
 
 	for _, file := range files {
 		file, _ := ioutil.ReadFile(file)
-		app := new(PythonApiApp)
+		app := new(PythonIdentApp)
 		app.Analysis(string(file), "")
 	}
 
@@ -29,7 +29,7 @@ func Test_AllPythonGrammar(t *testing.T) {
 func Test_PythonClassForLexer(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/class.py")
 	app.Analysis(string(file), "")
@@ -40,7 +40,7 @@ func Test_PythonClassForLexer(t *testing.T) {
 func Test_PythonArgumentsForLexer(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/argument.py")
 	app.Analysis(string(file), "")
@@ -51,7 +51,7 @@ func Test_PythonArgumentsForLexer(t *testing.T) {
 func Test_PythonArgumentsForTryStmt(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/try_stmt.py")
 	app.Analysis(string(file), "")
@@ -62,7 +62,7 @@ func Test_PythonArgumentsForTryStmt(t *testing.T) {
 func Test_PythonClassDef(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/class.py")
 	codeFile := app.Analysis(string(file), "testdata/grammar/class.py")
@@ -77,7 +77,7 @@ func Test_PythonClassDef(t *testing.T) {
 func Test_PythonClassWithDecorator(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/class_or_func_def_stmt.py")
 	codeFile := app.Analysis(string(file), "testdata/grammar/class_or_func_def_stmt.py")
@@ -92,7 +92,7 @@ func Test_PythonClassWithDecorator(t *testing.T) {
 func Test_PythonImport(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/grammar/import_stmt.py")
 	codeFile := app.Analysis(string(file), "import_stmt")
@@ -105,7 +105,7 @@ func Test_PythonImport(t *testing.T) {
 func Test_PythonClassWithFunctionDef(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(PythonApiApp)
+	app := new(PythonIdentApp)
 
 	file, _ := ioutil.ReadFile("testdata/compare/blog_entity.py")
 	codeFile := app.Analysis(string(file), "testdata/compare/blog_entity.py")

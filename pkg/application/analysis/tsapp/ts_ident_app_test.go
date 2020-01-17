@@ -9,7 +9,7 @@ import (
 func Test_TypeScriptClassNode(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	codefile := app.Analysis(`
 interface IPerson {
     name: string;
@@ -38,7 +38,7 @@ func Test_TypeScriptMultipleClass(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
 	codeFile := app.Analysis(string(code), "")
@@ -52,7 +52,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/AbstractClass.ts")
 
 	codeFile := app.Analysis(string(code), "")
@@ -67,7 +67,7 @@ func Test_ShouldGetClassFromModule(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Module.ts")
 
 	results := app.Analysis(string(code), "")
@@ -80,7 +80,7 @@ func Test_ShouldEnableGetClassMethod(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 
 	codefile := app.Analysis(`
 class Employee  {
@@ -97,7 +97,7 @@ func Test_ShouldGetInterfaceImplements(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 
 	results := app.Analysis(`
 export interface IPerson {
@@ -121,7 +121,7 @@ func Test_ShouldGetInterfaceProperty(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	codeFile := app.Analysis(`
 export interface IPerson {
     name: string;
@@ -148,7 +148,7 @@ func Test_ShouldGetDefaultFunctionName(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 
 	codeFile := app.Analysis(`
 function Sum(x: number, y: number) : void {
@@ -171,7 +171,7 @@ func Test_ShouldHandleRestParameters(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 
 	codeFile := app.Analysis(`
 function buildName(firstName: string, ...restOfName: string[]) {
@@ -190,7 +190,7 @@ func Test_ShouldGetClassFields(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Class.ts")
 
 	codeFile := app.Analysis(string(code), "")
@@ -204,7 +204,7 @@ func Test_ShouldReturnBlockImports(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 
 	results := app.Analysis(`
 import { ZipCodeValidator } from "./ZipCodeValidator";
@@ -219,7 +219,7 @@ func Test_ShouldReturnAsImports(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 
 	results := app.Analysis(`
 import zip = require("./ZipCodeValidator");
@@ -235,7 +235,7 @@ func Test_ShouldReturnAllImports(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
-	app := new(TypeScriptApiApp)
+	app := new(TypeScriptIdentApp)
 	code, _ := ioutil.ReadFile("../../../../_fixtures/ts/grammar/Import.ts")
 	results := app.Analysis(string(code), "")
 

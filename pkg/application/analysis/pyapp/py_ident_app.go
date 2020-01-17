@@ -18,10 +18,11 @@ func ProcessTsString(code string) *parser.PythonParser {
 	return streamToParser(is)
 }
 
-type PythonApiApp struct {
+type PythonIdentApp struct {
+
 }
 
-func (j *PythonApiApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (j *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Root()
 

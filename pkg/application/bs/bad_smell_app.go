@@ -37,7 +37,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 		antlr.NewParseTreeWalker().Walk(listener, context)
 
 		nodeInfo = listener.GetNodeInfo()
-		nodeInfo.Path = file
+		nodeInfo.FilePath = file
 		nodeInfos = append(nodeInfos, nodeInfo)
 	}
 

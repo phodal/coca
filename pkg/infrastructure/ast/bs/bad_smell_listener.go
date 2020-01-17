@@ -42,14 +42,14 @@ type BadSmellListener struct {
 
 func (s *BadSmellListener) GetNodeInfo() bs_domain.BsJClass {
 	return bs_domain.BsJClass{
-		Package:     currentPkg,
-		Class:       currentClz,
-		Type:        currentClzType,
-		Extends:     currentClzExtends,
-		Implements:  currentClzImplements,
-		Methods:     methods,
-		MethodCalls: methodCalls,
-		ClassBS:     currentClassBs,
+		Package:       currentPkg,
+		NodeName:      currentClz,
+		Type:          currentClzType,
+		Extend:        currentClzExtends,
+		Implements:    currentClzImplements,
+		Functions:     methods,
+		FunctionCalls: methodCalls,
+		ClassBS:       currentClassBs,
 	}
 }
 
@@ -103,14 +103,9 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 	stopLinePosition := startLinePosition + len(name)
 	methodBody := ctx.MethodBody().GetText()
 
-	var modifiers = ""
-	allModifier := ctx.AllInterfaceMethodModifier()
-	methodModifierLen := len(allModifier)
-	for index, modifier := range allModifier {
-		modifiers = modifiers + modifier.GetText()
-		if index < methodModifierLen-1 {
-			modifiers = modifiers + ","
-		}
+	var modifiers []string
+	for _, mo := range ctx.AllInterfaceMethodModifier() {
+		modifiers = append(modifiers, mo.GetText())
 	}
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
@@ -141,7 +136,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	method := &bs_domain.BsJMethod{
 		Name:       name,
-		Type:       typeType,
+		ReturnType: typeType,
 		MethodBody: methodBody,
 		Modifier:   modifiers,
 		Parameters: methodParams,
@@ -211,11 +206,14 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		StopLinePosition:  stopLinePosition,
 	}
 
+	var modifiers []string = nil
+	modifiers = append(modifiers, modifier)
+
 	method := &bs_domain.BsJMethod{
 		Name:       name,
-		Type:       typeType,
+		ReturnType: typeType,
 		MethodBody: methodBody,
-		Modifier:   modifier,
+		Modifier:   modifiers,
 		Parameters: methodParams,
 		MethodBs:   methodBadSmellInfo,
 		Position:   position,

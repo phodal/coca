@@ -19,9 +19,9 @@ func Test_IsGetter(t *testing.T) {
 
 	bs := &BsJMethod{
 		Name:       "getHome",
-		Type:       "",
+		ReturnType: "",
 		MethodBody: "",
-		Modifier:   "",
+		Modifier:   nil,
 		Parameters: nil,
 		MethodBs:   MethodBadSmellInfo{},
 		Position:   position,
@@ -43,9 +43,9 @@ func Test_IsSetter(t *testing.T) {
 
 	bs := &BsJMethod{
 		Name:       "setHome",
-		Type:       "",
+		ReturnType: "",
 		MethodBody: "",
-		Modifier:   "",
+		Modifier:   nil,
 		Parameters: nil,
 		MethodBs:   MethodBadSmellInfo{},
 		Position:   position,

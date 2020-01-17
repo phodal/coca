@@ -6,25 +6,26 @@ import (
 )
 
 type BsJClass struct {
-	Package     string
-	Class       string
-	Type        string
-	Path        string
-	Extends     string
-	Implements  []string
-	Methods     []BsJMethod
-	MethodCalls []core_domain.CodeCall
-	ClassBS     ClassBadSmellInfo
+	Package       string
+	Type          string
+	NodeName      string
+	FilePath      string
+	Extend        string
+	Implements    []string
+	Functions     []BsJMethod
+	FunctionCalls []core_domain.CodeCall
+	ClassBS       ClassBadSmellInfo
 }
 
 type BsJMethod struct {
 	Name       string
-	Type       string
-	MethodBody string
-	Modifier   string
+	ReturnType string
+	Modifier   []string
 	Parameters []core_domain.CodeProperty
-	MethodBs   MethodBadSmellInfo
 	Position   core_domain.CodePosition
+
+	MethodBody string
+	MethodBs   MethodBadSmellInfo
 }
 
 type MethodBadSmellInfo struct {
@@ -78,8 +79,8 @@ func (b *BsJMethod) IsGetterSetter() bool {
 
 func (b *BsJClass) HaveCallParent() bool {
 	hasCallParentMethod := false
-	for _, methodCall := range b.MethodCalls {
-		if methodCall.NodeName == b.Extends {
+	for _, methodCall := range b.FunctionCalls {
+		if methodCall.NodeName == b.Extend {
 			hasCallParentMethod = true
 		}
 	}
@@ -87,5 +88,5 @@ func (b *BsJClass) HaveCallParent() bool {
 }
 
 func (b *BsJClass) ClassFullName() string {
-	return b.Package + "." + b.Class
+	return b.Package + "." + b.NodeName
 }

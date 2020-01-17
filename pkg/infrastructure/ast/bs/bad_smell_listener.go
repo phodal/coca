@@ -41,15 +41,18 @@ type BadSmellListener struct {
 }
 
 func (s *BadSmellListener) GetNodeInfo() bs_domain.BsJClass {
-	return bs_domain.BsJClass{
+	dataStruct := core_domain.CodeDataStruct{
 		Package:       currentPkg,
 		NodeName:      currentClz,
 		Type:          currentClzType,
 		Extend:        currentClzExtends,
 		Implements:    currentClzImplements,
-		Functions:     methods,
 		FunctionCalls: methodCalls,
-		ClassBS:       currentClassBs,
+	}
+	return bs_domain.BsJClass{
+		CodeDataStruct: dataStruct,
+		Functions:      methods,
+		ClassBS:        currentClassBs,
 	}
 }
 
@@ -134,14 +137,18 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		StopLinePosition:  stopLinePosition,
 	}
 
-	method := &bs_domain.BsJMethod{
+	function := core_domain.CodeFunction{
 		Name:       name,
 		ReturnType: typeType,
-		MethodBody: methodBody,
-		Modifier:   modifiers,
+		Modifiers:  modifiers,
 		Parameters: methodParams,
-		MethodBs:   methodBSInfo,
 		Position:   position,
+	}
+
+	method := &bs_domain.BsJMethod{
+		CodeFunction: function,
+		MethodBody:   methodBody,
+		MethodBs:     methodBSInfo,
 	}
 
 	methods = append(methods, *method)
@@ -209,14 +216,18 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	var modifiers []string = nil
 	modifiers = append(modifiers, modifier)
 
-	method := &bs_domain.BsJMethod{
+	function := core_domain.CodeFunction{
 		Name:       name,
 		ReturnType: typeType,
-		MethodBody: methodBody,
-		Modifier:   modifiers,
+		Modifiers:  modifiers,
 		Parameters: methodParams,
-		MethodBs:   methodBadSmellInfo,
 		Position:   position,
+	}
+
+	method := &bs_domain.BsJMethod{
+		CodeFunction: function,
+		MethodBody:   methodBody,
+		MethodBs:     methodBadSmellInfo,
 	}
 	methods = append(methods, *method)
 }

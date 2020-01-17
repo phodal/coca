@@ -2,27 +2,17 @@ package bs_domain
 
 import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"strings"
 )
 
 type BsJClass struct {
-	Package       string
-	Type          string
-	NodeName      string
-	FilePath      string
-	Extend        string
-	Implements    []string
-	Functions     []BsJMethod
-	FunctionCalls []core_domain.CodeCall
-	ClassBS       ClassBadSmellInfo
+	core_domain.CodeDataStruct
+
+	Functions []BsJMethod
+	ClassBS   ClassBadSmellInfo
 }
 
 type BsJMethod struct {
-	Name       string
-	ReturnType string
-	Modifier   []string
-	Parameters []core_domain.CodeProperty
-	Position   core_domain.CodePosition
+	core_domain.CodeFunction
 
 	MethodBody string
 	MethodBs   MethodBadSmellInfo
@@ -60,21 +50,10 @@ type ClassBadSmellInfo struct {
 }
 
 func NewJFullClassNode() BsJClass {
-	info := &ClassBadSmellInfo{0, 0}
+	info := ClassBadSmellInfo{0, 0}
 	return BsJClass{
-		"",
-		"",
-		"",
-		"",
-		"",
-		nil,
-		nil,
-		nil,
-		*info}
-}
-
-func (b *BsJMethod) IsGetterSetter() bool {
-	return strings.HasPrefix(b.Name, "set") || strings.HasPrefix(b.Name, "get")
+		ClassBS: info,
+	}
 }
 
 func (b *BsJClass) HaveCallParent() bool {

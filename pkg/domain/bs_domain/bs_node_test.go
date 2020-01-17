@@ -17,14 +17,18 @@ func Test_IsGetter(t *testing.T) {
 		StopLinePosition:  0,
 	}
 
-	bs := &BsJMethod{
+	function := core_domain.CodeFunction{
 		Name:       "getHome",
 		ReturnType: "",
-		MethodBody: "",
-		Modifier:   nil,
-		Parameters: nil,
-		MethodBs:   MethodBadSmellInfo{},
 		Position:   position,
+		Modifiers:  nil,
+		Parameters: nil,
+	}
+
+	bs := &BsJMethod{
+		CodeFunction: function,
+		MethodBody:   "",
+		MethodBs:     MethodBadSmellInfo{},
 	}
 
 	g.Expect(bs.IsGetterSetter()).To(Equal(true))
@@ -41,14 +45,18 @@ func Test_IsSetter(t *testing.T) {
 		StopLinePosition:  0,
 	}
 
-	bs := &BsJMethod{
+	function := core_domain.CodeFunction{
 		Name:       "setHome",
 		ReturnType: "",
-		MethodBody: "",
-		Modifier:   nil,
-		Parameters: nil,
-		MethodBs:   MethodBadSmellInfo{},
 		Position:   position,
+		Modifiers:  nil,
+		Parameters: nil,
+	}
+
+	bs := &BsJMethod{
+		CodeFunction: function,
+		MethodBody:   "",
+		MethodBs:     MethodBadSmellInfo{},
 	}
 
 	g.Expect(bs.IsGetterSetter()).To(Equal(true))

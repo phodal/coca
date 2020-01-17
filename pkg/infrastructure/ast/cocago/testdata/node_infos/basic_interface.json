@@ -114,6 +114,7 @@
       "Type": ""
     }
   ],
+  "Fields": null,
   "FullName": "testdata/node_infos/basic_interface.code",
   "Imports": null,
   "Members": [

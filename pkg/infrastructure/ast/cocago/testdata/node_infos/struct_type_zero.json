@@ -40,6 +40,7 @@
       "Type": ""
     }
   ],
+  "Fields": null,
   "FullName": "testdata/node_infos/struct_type_zero.code",
   "Imports": null,
   "Members": [

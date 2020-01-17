@@ -59,6 +59,7 @@
       "Type": ""
     }
   ],
+  "Fields": null,
   "FullName": "testdata/node_infos/data_struct_property.code",
   "Imports": [
     {

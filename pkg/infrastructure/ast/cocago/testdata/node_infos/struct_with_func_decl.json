@@ -88,6 +88,7 @@
       "Type": ""
     }
   ],
+  "Fields": null,
   "FullName": "testdata/node_infos/struct_with_func_decl.code",
   "Imports": [
     {

@@ -71,7 +71,7 @@ func getStarExprName(starExpr ast.StarExpr) string {
 	}
 }
 
-func BuildFunction(x *ast.FuncDecl) *core_domain.CodeFunction {
+func BuildFunction(x *ast.FuncDecl, file *core_domain.CodeFile) *core_domain.CodeFunction {
 	codeFunc := &core_domain.CodeFunction{
 		Name: x.Name.String(),
 	}

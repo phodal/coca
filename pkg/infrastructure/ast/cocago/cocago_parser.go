@@ -183,7 +183,7 @@ func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_
 	if x.Recv != nil {
 		recv = BuildReceiver(x, recv)
 	}
-	codeFunc := BuildFunction(x)
+	codeFunc := BuildFunction(x, currentFile)
 
 	if recv == "" {
 		member := GetMemberFromFile(*currentFile, "default")

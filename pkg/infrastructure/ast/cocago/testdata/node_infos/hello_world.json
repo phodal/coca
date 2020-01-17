@@ -23,7 +23,7 @@
             {
               "MethodName": "Println",
               "NodeName": "fmt",
-              "Package": "main",
+              "Package": "fmt",
               "Parameters": [
                 {
                   "Modifiers": null,
@@ -40,7 +40,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": ""
+              "Type": "fmt"
             }
           ],
           "InnerFunctions": null,

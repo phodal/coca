@@ -147,5 +147,6 @@ func main() {
 	fmt.Println(calls)
 	g.Expect(calls[0].Package).To(Equal("sync"))
 	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
+	g.Expect(calls[2].Package).To(Equal("fmt"))
 	g.Expect(len(calls)).To(Equal(3))
 }

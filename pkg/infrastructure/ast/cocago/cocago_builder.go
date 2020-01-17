@@ -110,24 +110,7 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 		call := BuildCallFromExpr(it.Call, fields, imports, packageName, localVars)
 		codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
 	case *ast.AssignStmt:
-		var vars []CodeProperty
-		for _, lh := range it.Lhs {
-			var left string
-			switch lhx := lh.(type) {
-			case *ast.Ident:
-				left = lhx.Name
-			}
-
-			for _, expr := range it.Rhs {
-				_, _, kind := BuildExpr(expr)
-				property := CodeProperty{
-					TypeValue: left,
-					TypeType:  kind,
-				}
-
-				vars = append(vars, property)
-			}
-		}
+		vars := BuildLocalVars(it)
 
 		localVars = vars
 	default:
@@ -135,6 +118,28 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 	}
 
 	return localVars
+}
+
+func BuildLocalVars(it *ast.AssignStmt) []CodeProperty {
+	var vars []CodeProperty
+	for _, lh := range it.Lhs {
+		var left string
+		switch lhx := lh.(type) {
+		case *ast.Ident:
+			left = lhx.Name
+		}
+
+		for _, expr := range it.Rhs {
+			_, _, kind := BuildExpr(expr)
+			property := CodeProperty{
+				TypeValue: left,
+				TypeType:  kind,
+			}
+
+			vars = append(vars, property)
+		}
+	}
+	return vars
 }
 
 func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport, currentPackage string, localVars []CodeProperty) {
@@ -151,7 +156,6 @@ func BuildCallFromExpr(expr *ast.CallExpr, fields []CodeField, imports []CodeImp
 	_, selector, selName := BuildExpr(expr.Fun.(ast.Expr))
 	target := ParseTarget(selector, fields, localVars)
 	packageName := getPackageName(target, imports)
-	//fmt.Println(packageName)
 	if packageName == "" {
 		packageName = currentPackage
 	}
@@ -185,6 +189,12 @@ func getPackageName(target string, imports []CodeImport) string {
 			}
 		}
 	}
+
+	for _, imp := range imports {
+		if imp.Source == target {
+			return target
+		}
+	}
 	return packageName
 }
 
@@ -200,5 +210,6 @@ func ParseTarget(selector string, fields []CodeField, localVars []CodeProperty) 
 			return field.TypeType
 		}
 	}
-	return ""
+
+	return selector
 }

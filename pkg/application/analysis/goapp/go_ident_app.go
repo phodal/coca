@@ -6,10 +6,23 @@ import (
 )
 
 type GoIdentApp struct {
+	Extensions interface{}
 }
 
 func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	parser := cocago.NewCocagoParser()
-	return 	*parser.ProcessString(code, fileName)
+	var imports []core_domain.CodeImport
+	if g.Extensions != nil {
+		imports = g.Extensions.([]core_domain.CodeImport)
+	}
+	return 	*parser.ProcessString(code, fileName, imports)
+}
 
+func (g *GoIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
+	parser := cocago.NewCocagoParser()
+	return 	parser.ProcessImports(code, fileName)
+}
+
+func (g *GoIdentApp) SetExtensions(extension interface{})  {
+	g.Extensions = extension
 }

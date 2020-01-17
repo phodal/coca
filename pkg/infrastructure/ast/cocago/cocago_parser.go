@@ -18,6 +18,7 @@ import (
 var currentPackage *core_domain.CodePackage
 
 type CocagoParser struct {
+	Imports []core_domain.CodeImport
 }
 
 var output io.Writer
@@ -41,11 +42,12 @@ func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
 
 	code := string(content)
 
-	codeFile := n.ProcessString(code, fileName)
+	codeFile := n.ProcessString(code, fileName, nil)
 	return *codeFile
 }
 
-func (n *CocagoParser) ProcessString(code string, fileName string) *core_domain.CodeFile {
+func (n *CocagoParser) ProcessString(code string, fileName string, codeImports []core_domain.CodeImport) *core_domain.CodeFile {
+	n.Imports = codeImports
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, code, 0)
 	if err != nil {
@@ -55,6 +57,31 @@ func (n *CocagoParser) ProcessString(code string, fileName string) *core_domain.
 	codeFile := n.Visitor(f, fset, fileName)
 	currentPackage.CodeFiles = append(currentPackage.CodeFiles, *codeFile)
 	return codeFile
+}
+
+func (n *CocagoParser) ProcessImports(code string, fileName string) []core_domain.CodeImport {
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, fileName, code, 0)
+	if err != nil {
+		panic(err)
+	}
+
+	imports := n.VisitorImport(f, fset, fileName)
+	return imports
+}
+
+func (n *CocagoParser) VisitorImport(f *ast.File, fset *token.FileSet, fileName string) []core_domain.CodeImport {
+	var imports []core_domain.CodeImport
+	ast.Inspect(f, func(n ast.Node) bool {
+		switch x := n.(type) {
+		case *ast.ImportSpec:
+			imp := BuildImport(x)
+			imports = append(imports, *imp)
+		}
+		return true
+	})
+
+	return imports
 }
 
 func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *core_domain.CodeFile {
@@ -246,7 +273,7 @@ func BuildExpr(expr ast.Expr) (string, string, string) {
 		for _, arg := range x.Args {
 			argType, argValue, argKind := BuildExpr(arg)
 			if argType == "selector" {
-				callArgs = append(callArgs, argValue + "." + argKind)
+				callArgs = append(callArgs, argValue+"."+argKind)
 			}
 		}
 		return "call", value, strings.Join(callArgs, ",")
@@ -290,7 +317,7 @@ func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_
 		ioproperties = append(ioproperties, *property)
 	}
 
-    // todo : when dsMap key-value create it
+	// todo : when dsMap key-value create it
 	if dsMap[currentNodeName] != nil {
 		dsMap[currentNodeName].InOutProperties = ioproperties
 	}

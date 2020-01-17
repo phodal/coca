@@ -22,7 +22,7 @@ type PythonIdentApp struct {
 
 }
 
-func (j *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Root()
 
@@ -30,4 +30,12 @@ func (j *PythonIdentApp) Analysis(code string, fileName string) core_domain.Code
 	antlr.NewParseTreeWalker().Walk(listener, context)
 
 	return listener.GetCodeFileInfo()
+}
+
+func (p *PythonIdentApp) SetExtensions(extension interface{})  {
+
+}
+
+func (p *PythonIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
+	return nil
 }

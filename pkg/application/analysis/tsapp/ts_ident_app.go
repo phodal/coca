@@ -19,10 +19,9 @@ func ProcessTsString(code string) *parser.TypeScriptParser {
 }
 
 type TypeScriptIdentApp struct {
-
 }
 
-func (j *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (t *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Program()
 
@@ -30,4 +29,12 @@ func (j *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.
 	antlr.NewParseTreeWalker().Walk(listener, context)
 
 	return listener.GetNodeInfo()
+}
+
+func (t *TypeScriptIdentApp) SetExtensions(extension interface{}) {
+
+}
+
+func (t *TypeScriptIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
+	return nil
 }

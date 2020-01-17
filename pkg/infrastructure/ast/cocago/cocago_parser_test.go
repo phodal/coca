@@ -113,7 +113,7 @@ func main() {
 	defer l.Unlock()
 	fmt.Println("1")
 }
-`, "call")
+`, "call", nil)
 	calls := results.Members[0].FunctionNodes[0].FunctionCalls
 	fmt.Println(calls)
 	g.Expect(len(results.Fields)).To(Equal(1))
@@ -142,7 +142,7 @@ func main() {
 	defer l.Unlock()
 	fmt.Println("1")
 }
-`, "call")
+`, "call", nil)
 	calls := results.Members[0].FunctionNodes[0].FunctionCalls
 	fmt.Println(calls)
 	g.Expect(calls[0].Package).To(Equal("sync"))

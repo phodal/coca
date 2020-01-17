@@ -68,10 +68,18 @@ func AnalysisGo() []core_domain.CodeDataStruct {
 func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter func(path string) bool, isFunctionBase bool) []core_domain.CodeDataStruct {
 	var results []core_domain.CodeFile
 	files := cocafile.GetFilesWithFilter(path, filter)
-	fmt.Println(files)
+
+	var imports []core_domain.CodeImport
+	for _, file := range files {
+		content, _ := ioutil.ReadFile(file)
+		codeImports := app.AnalysisImport(string(content), file)
+		imports = append(imports, codeImports...)
+	}
+
 	for _, file := range files {
 		fmt.Fprintf(output, "Process file: %s\n", file)
 		content, _ := ioutil.ReadFile(file)
+		app.SetExtensions(imports)
 		result := app.Analysis(string(content), file)
 		results = append(results, result)
 	}

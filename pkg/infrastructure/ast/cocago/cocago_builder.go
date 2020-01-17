@@ -88,7 +88,7 @@ func BuildFunction(x *ast.FuncDecl, file *CodeFile) *CodeFunction {
 	fields := file.Fields
 	var localVars []CodeProperty
 	for _, item := range x.Body.List {
-		BuildMethodCall(codeFunc, item, fields, localVars, file.Imports)
+		BuildMethodCall(codeFunc, item, fields, localVars, file.Imports, file.PackageName)
 	}
 	return codeFunc
 }
@@ -102,22 +102,26 @@ func BuildFieldToProperty(fieldList []*ast.Field) []CodeProperty {
 	return properties
 }
 
-func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty, imports []CodeImport) {
+func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty, imports []CodeImport, packageName string) {
 	switch it := item.(type) {
 	case *ast.ExprStmt:
-		BuildMethodCallExprStmt(it, codeFunc, fields, imports)
+		BuildMethodCallExprStmt(it, codeFunc, fields, imports, packageName)
 	default:
 		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
 	}
 }
 
-func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport) {
+func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport, currentPackage string) {
 	switch expr := it.X.(type) {
 	case *ast.CallExpr:
 		selector, selName := BuildExpr(expr.Fun.(ast.Expr))
 		target := ParseTarget(selector, fields)
 
 		packageName := getCallPackageAndTarget(target, imports)
+		if packageName == "" {
+			packageName = currentPackage
+		}
+
 		call := CodeCall{
 			Package:    packageName,
 			Type:       target,

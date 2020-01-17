@@ -89,6 +89,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.TypeSpec:
 			currentStruct = core_domain.CodeDataStruct{}
 			currentStruct.NodeName = x.Name.Name
+			currentStruct.Package = currentFile.PackageName
 			dsMap[currentStruct.NodeName] = &currentStruct
 		case *ast.StructType:
 			AddStructType(currentStruct.NodeName, x, &currentFile, dsMap)

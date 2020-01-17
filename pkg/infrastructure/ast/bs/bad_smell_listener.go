@@ -19,7 +19,7 @@ var currentClzExtends string
 var currentClzImplements []string
 
 var methods []bs_domain.BsJMethod
-var methodCalls []bs_domain.BsJMethodCall
+var methodCalls []core_domain.CodeCall
 
 var fields = make(map[string]string)
 var localVars = make(map[string]string)
@@ -317,14 +317,14 @@ func (s *BadSmellListener) EnterMethodCall(ctx *MethodCallContext) {
 		targetType = currentClzExtends
 	}
 	if fullType != "" {
-		jMethodCall := bs_domain.BsJMethodCall{Package: removeTarget(fullType), Class: targetType, MethodName: callee, Position: position}
+		jMethodCall := core_domain.CodeCall{Package: removeTarget(fullType), NodeName: targetType, MethodName: callee, Position: position}
 		methodCalls = append(methodCalls, jMethodCall)
 	} else {
 		if ctx.GetText() == targetType {
-			jMethodCall := bs_domain.BsJMethodCall{Package: currentPkg, Class: currentClz, MethodName: callee, Position: position}
+			jMethodCall := core_domain.CodeCall{Package: currentPkg, NodeName: currentClz, MethodName: callee, Position: position}
 			methodCalls = append(methodCalls, jMethodCall)
 		} else {
-			jMethodCall := bs_domain.BsJMethodCall{Package: currentPkg, Type: "NEEDFIX", Class: targetType, MethodName: callee, Position: position}
+			jMethodCall := core_domain.CodeCall{Package: currentPkg, Type: "NEEDFIX", NodeName: targetType, MethodName: callee, Position: position}
 			methodCalls = append(methodCalls, jMethodCall)
 		}
 	}
@@ -345,8 +345,8 @@ func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 			StopLinePosition:  ctx.GetStart().GetColumn() + len(text),
 		}
 
-		jMethodCall := &bs_domain.BsJMethodCall{Package: removeTarget(fullType), Class: targetType, MethodName: methodName, Position: position}
-		methodCalls = append(methodCalls, *jMethodCall)
+		jMethodCall := core_domain.CodeCall{Package: removeTarget(fullType), NodeName: targetType, MethodName: methodName, Position: position}
+		methodCalls = append(methodCalls, jMethodCall)
 	}
 }
 

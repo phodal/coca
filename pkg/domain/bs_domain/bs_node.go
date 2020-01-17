@@ -13,16 +13,8 @@ type BsJClass struct {
 	Extends     string
 	Implements  []string
 	Methods     []BsJMethod
-	MethodCalls []BsJMethodCall
+	MethodCalls []core_domain.CodeCall
 	ClassBS     ClassBadSmellInfo
-}
-
-type BsJMethodCall struct {
-	Package    string
-	Type       string
-	Class      string
-	MethodName string
-	Position   core_domain.CodePosition
 }
 
 type BsJMethod struct {
@@ -87,7 +79,7 @@ func (b *BsJMethod) IsGetterSetter() bool {
 func (b *BsJClass) HaveCallParent() bool {
 	hasCallParentMethod := false
 	for _, methodCall := range b.MethodCalls {
-		if methodCall.Class == b.Extends {
+		if methodCall.NodeName == b.Extends {
 			hasCallParentMethod = true
 		}
 	}
@@ -96,8 +88,4 @@ func (b *BsJClass) HaveCallParent() bool {
 
 func (b *BsJClass) ClassFullName() string {
 	return b.Package + "." + b.Class
-}
-
-func (c *BsJMethodCall) ClassFullName() string {
-	return c.Package + "." + c.Class
 }

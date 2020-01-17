@@ -62,10 +62,10 @@ func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
 	var calledClassesMap = make(map[string]struct{})
 	var calledClasses []string
 	for _, methodCalled := range class.MethodCalls {
-		if methodCalled.Class == "" || !maps[methodCalled.ClassFullName()] || class.ClassFullName() == methodCalled.ClassFullName() {
+		if methodCalled.NodeName == "" || !maps[methodCalled.BuildClassFullName()] || class.ClassFullName() == methodCalled.BuildClassFullName() {
 			continue
 		}
-		calledClassesMap[methodCalled.ClassFullName()] = struct{}{}
+		calledClassesMap[methodCalled.BuildClassFullName()] = struct{}{}
 	}
 	for key := range calledClassesMap {
 		calledClasses = append(calledClasses, key)

@@ -195,24 +195,14 @@ func (s *JavaFullListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBo
 }
 
 func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
 	name := ctx.IDENTIFIER().GetText()
-	stopLinePosition := startLinePosition + len(name)
-
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
 		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
-	position := core_domain.CodePosition{
-		StartLine:         startLine,
-		StartLinePosition: startLinePosition,
-		StopLine:          stopLine,
-		StopLinePosition:  stopLinePosition,
-	}
+	position := BuildPosition(ctx.BaseParserRuleContext, name)
 
 	method := &core_domain.CodeFunction{Name: name, ReturnType: typeType, Position: position}
 	updateMethod(method)
@@ -289,15 +279,11 @@ func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 }
 
 func (s *JavaFullListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	position := core_domain.CodePosition{
-		StartLine:         ctx.GetStart().GetLine(),
-		StartLinePosition: ctx.GetStart().GetColumn(),
-		StopLine:          ctx.GetStop().GetLine(),
-		StopLinePosition:  ctx.GetStop().GetColumn(),
-	}
+	name := ctx.IDENTIFIER().GetText()
+	position := BuildPosition(ctx.BaseParserRuleContext, name)
 
 	method := &core_domain.CodeFunction{
-		Name:          ctx.IDENTIFIER().GetText(),
+		Name:          name,
 		ReturnType:    "",
 		Override:      isOverrideMethod,
 		Parameters:    nil,
@@ -320,23 +306,19 @@ func (s *JavaFullListener) ExitConstructorDeclaration(ctx *parser.ConstructorDec
 }
 
 func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
 	name := ctx.IDENTIFIER().GetText()
-	stopLinePosition := startLinePosition + len(name)
-
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
 		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
+	// check, before your refactor
 	position := core_domain.CodePosition{
-		StartLine:         startLine,
-		StartLinePosition: startLinePosition,
-		StopLine:          stopLine,
-		StopLinePosition:  stopLinePosition,
+		StartLine:         ctx.GetStart().GetLine(),
+		StartLinePosition: ctx.IDENTIFIER().GetSymbol().GetColumn(), // different
+		StopLine:          ctx.GetStop().GetLine(),
+		StopLinePosition:  ctx.IDENTIFIER().GetSymbol().GetColumn() + len(name),
 	}
 
 	method := &core_domain.CodeFunction{
@@ -483,12 +465,7 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType, _ := WarpTargetFullType(createdName)
 
-	position := core_domain.CodePosition{
-		StartLine:         ctx.GetStart().GetLine(),
-		StartLinePosition: ctx.GetStart().GetColumn(),
-		StopLine:          ctx.GetStop().GetLine(),
-		StopLinePosition:  ctx.GetStop().GetColumn(),
-	}
+	position := BuildPosition(ctx.BaseParserRuleContext, createdName)
 
 	jMethodCall := &core_domain.CodeCall{
 		Package:  RemoveTarget(fullType),
@@ -499,6 +476,17 @@ func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
 
 	method.MethodCalls = append(method.MethodCalls, *jMethodCall)
 	methodMap[getMethodMapName(currentMethod)] = method
+}
+
+func BuildPosition(ctx *antlr.BaseParserRuleContext, nodeName string) core_domain.CodePosition {
+	position := core_domain.CodePosition{
+		StartLine:         ctx.GetStart().GetLine(),
+		StartLinePosition: ctx.GetStart().GetColumn(),
+		StopLine:          ctx.GetStop().GetLine(),
+		StopLinePosition:  ctx.GetStop().GetColumn() + len(nodeName),
+	}
+
+	return position
 }
 
 func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
@@ -561,14 +549,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 
 		fullType, _ := WarpTargetFullType(targetType)
 
-		startLinePosition := ctx.GetStart().GetColumn()
-
-		position := core_domain.CodePosition{
-			StartLine:         ctx.GetStart().GetLine(),
-			StartLinePosition: startLinePosition,
-			StopLine:          ctx.GetStop().GetLine(),
-			StopLinePosition:  startLinePosition + len(text),
-		}
+		position := BuildPosition(ctx.BaseParserRuleContext, text)
 
 		jMethodCall := &core_domain.CodeCall{
 			Package:    RemoveTarget(fullType),
@@ -595,12 +576,7 @@ func buildExtend(extendName string) {
 func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 	target, _ := WarpTargetFullType(typeType)
 	if target != "" {
-		position := core_domain.CodePosition{
-			StartLine:         ctx.GetStart().GetLine(),
-			StartLinePosition: ctx.GetStart().GetColumn(),
-			StopLine:          ctx.GetStop().GetLine(),
-			StopLinePosition:  ctx.GetStop().GetColumn(),
-		}
+		position := BuildPosition(ctx.BaseParserRuleContext, target)
 
 		jMethodCall := &core_domain.CodeCall{
 			Package:  RemoveTarget(target),

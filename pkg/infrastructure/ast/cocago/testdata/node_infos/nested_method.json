@@ -1,11 +1,11 @@
 {
   "DataStructures": null,
   "Fields": null,
-  "FullName": "testdata/node_infos/nested_method.code",
+  "FullName": "testdata.node_infos",
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
       "Source": "fmt",
       "UsageName": null
@@ -23,7 +23,7 @@
             {
               "MethodName": "var",
               "NodeName": "foo",
-              "Package": "testdata",
+              "Package": "testdata.node_infos",
               "Parameters": [
                 {
                   "Modifiers": null,
@@ -74,5 +74,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "testdata"
+  "PackageName": "testdata.node_infos"
 }

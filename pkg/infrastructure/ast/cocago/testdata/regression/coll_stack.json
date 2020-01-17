@@ -15,7 +15,7 @@
             {
               "MethodName": "Lock",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -28,7 +28,7 @@
             {
               "MethodName": "Unlock",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -41,7 +41,7 @@
             {
               "MethodName": "PushFront",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": [
                 {
                   "Modifiers": null,
@@ -94,7 +94,7 @@
             {
               "MethodName": "Lock",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -107,7 +107,7 @@
             {
               "MethodName": "Unlock",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -151,7 +151,7 @@
             {
               "MethodName": "Lock",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -164,7 +164,7 @@
             {
               "MethodName": "Unlock",
               "NodeName": "",
-              "Package": "container",
+              "Package": "testdata.regression",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -285,23 +285,23 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "Stack",
-      "Package": "container",
+      "Package": "testdata.regression",
       "Type": ""
     }
   ],
   "Fields": null,
-  "FullName": "testdata/regression/coll_stack.code",
+  "FullName": "testdata.regression",
   "Imports": [
     {
       "AsName": "l",
-      "ImportName": "testdata/regression",
+      "ImportName": "",
       "Scope": "",
-      "Source": "container/list",
+      "Source": "container.list",
       "UsageName": null
     },
     {
       "AsName": "",
-      "ImportName": "testdata/regression",
+      "ImportName": "",
       "Scope": "",
       "Source": "sync",
       "UsageName": null
@@ -310,7 +310,7 @@
   "Members": [
     {
       "DataStructID": "Stack",
-      "FileID": "testdata/regression/coll_stack.code",
+      "FileID": "testdata.regression",
       "FunctionNodes": null,
       "ID": "",
       "Name": "",
@@ -372,5 +372,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "container"
+  "PackageName": "testdata.regression"
 }

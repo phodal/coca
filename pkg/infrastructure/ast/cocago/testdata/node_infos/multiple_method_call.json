@@ -12,18 +12,18 @@
       "TypeValue": "c"
     }
   ],
-  "FullName": "testdata/node_infos/multiple_method_call.code",
+  "FullName": "testdata.node_infos",
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
       "Source": "fmt",
       "UsageName": null
     },
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
       "Source": "time",
       "UsageName": null
@@ -92,5 +92,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "samples"
+  "PackageName": "testdata.node_infos"
 }

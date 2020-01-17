@@ -1,11 +1,11 @@
 {
   "DataStructures": null,
   "Fields": null,
-  "FullName": "testdata/node_infos/hello_world.code",
+  "FullName": "testdata.node_infos",
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
       "Source": "fmt",
       "UsageName": null
@@ -74,5 +74,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "main"
+  "PackageName": "testdata.node_infos"
 }

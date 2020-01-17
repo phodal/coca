@@ -84,16 +84,16 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "person",
-      "Package": "testdata",
+      "Package": "testdata.node_infos",
       "Type": ""
     }
   ],
   "Fields": null,
-  "FullName": "testdata/node_infos/struct_with_func_decl.code",
+  "FullName": "testdata.node_infos",
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
       "Source": "fmt",
       "UsageName": null
@@ -102,7 +102,7 @@
   "Members": [
     {
       "DataStructID": "person",
-      "FileID": "testdata/node_infos/struct_with_func_decl.code",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": null,
       "ID": "",
       "Name": "",
@@ -117,5 +117,5 @@
       "Type": "struct"
     }
   ],
-  "PackageName": "testdata"
+  "PackageName": "testdata.node_infos"
 }

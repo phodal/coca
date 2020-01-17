@@ -154,6 +154,28 @@ func main() {
 	g.Expect(len(calls)).To(Equal(3))
 }
 
+// todo: should get
+func Test_ShouldSetParameterInterfaceToCallNodes(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	results := testParser.ProcessString(`
+package api_domain
+
+import "sort"
+
+func SortAPIs(callAPIs []CallAPI) {
+	sort.Slice(callAPIs, func(i, j int) bool {
+		return callAPIs[i].Size < callAPIs[j].Size
+	})
+}
+
+`, "call", nil)
+	fmt.Println(results)
+	g.Expect(len(results.PackageName)).To(Equal(0))
+}
+
+// todo:
 func Test_RelatedImport(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)

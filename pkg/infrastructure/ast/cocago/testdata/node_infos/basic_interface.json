@@ -115,7 +115,7 @@
     }
   ],
   "Fields": null,
-  "FullName": "testdata/node_infos/basic_interface.code",
+  "FullName": "testdata.node_infos",
   "Imports": null,
   "Members": [
     {
@@ -167,5 +167,5 @@
       "Type": "interface"
     }
   ],
-  "PackageName": "testdata"
+  "PackageName": "testdata.node_infos"
 }

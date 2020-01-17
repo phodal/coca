@@ -55,25 +55,25 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "CodeFile",
-      "Package": "trial",
+      "Package": "testdata.node_infos",
       "Type": ""
     }
   ],
   "Fields": null,
-  "FullName": "testdata/node_infos/data_struct_property.code",
+  "FullName": "testdata.node_infos",
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
-      "Source": "github.com/phodal/coca/pkg/domain",
+      "Source": ".pkg.domain",
       "UsageName": null
     }
   ],
   "Members": [
     {
       "DataStructID": "CodeFile",
-      "FileID": "testdata/node_infos/data_struct_property.code",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": null,
       "ID": "",
       "Name": "",
@@ -88,5 +88,5 @@
       "Type": "struct"
     }
   ],
-  "PackageName": "trial"
+  "PackageName": "testdata.node_infos"
 }

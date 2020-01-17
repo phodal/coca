@@ -1,20 +1,20 @@
 {
   "DataStructures": null,
   "Fields": null,
-  "FullName": "testdata/node_infos/normal_method.code",
+  "FullName": "testdata.node_infos",
   "Imports": [
     {
       "AsName": "",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
-      "Source": "github.com/antlr/antlr4/runtime/Go/antlr",
+      "Source": "github.com.antlr.antlr4.runtime.Go.antlr",
       "UsageName": null
     },
     {
       "AsName": "parser",
-      "ImportName": "testdata/node_infos",
+      "ImportName": "",
       "Scope": "",
-      "Source": "github.com/phodal/coca/languages/ts",
+      "Source": ".languages.ts",
       "UsageName": null
     }
   ],
@@ -242,5 +242,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "testdata"
+  "PackageName": "testdata.node_infos"
 }

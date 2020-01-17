@@ -36,12 +36,12 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "O",
-      "Package": "testdata",
+      "Package": "testdata.node_infos",
       "Type": ""
     }
   ],
   "Fields": null,
-  "FullName": "testdata/node_infos/struct_type_zero.code",
+  "FullName": "testdata.node_infos",
   "Imports": null,
   "Members": [
     {
@@ -61,5 +61,5 @@
       "Type": "struct"
     }
   ],
-  "PackageName": "testdata"
+  "PackageName": "testdata.node_infos"
 }

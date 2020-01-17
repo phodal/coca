@@ -17,6 +17,12 @@ Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)
 
+ - [ ] Languages Support
+    - [x] Java (full features)
+    - [x] Golang (support: analysis, todo, concept, git, suggest)
+    - [x] TypeScript (antlr4 performance issue)
+    - [x] Python (support: analysis, todo, concept, git, suggest)
+
 Features List:
 
 ```
@@ -549,11 +555,7 @@ results:
     - [x] Groovy Support
       - [x] migrate to Golang Styles
  - [ ] Story Cmd
- - [ ] Languages Support
-    - [x] Java (full features)
-    - [x] Golang (analysis API)
-    - [x] TypeScript (antlr4 performance issue)
-    - [x] Python (analysis API)
+
 
 Documents Todo:
 

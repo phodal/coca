@@ -3,13 +3,14 @@ package todo
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
+	. "github.com/phodal/coca/languages/comment"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/adapter/shell"
 	"github.com/phodal/coca/pkg/application/git"
 	"github.com/phodal/coca/pkg/application/todo/astitodo"
-	. "github.com/phodal/coca/languages/java"
 	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 type TodoApp struct {
@@ -64,7 +65,11 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 
 func buildComments(path string) []*astitodo.TODO {
 	var todos []*astitodo.TODO
-	files := cocafile.GetJavaFiles(path)
+	var CodeFileFilter = func(path string) bool {
+		return strings.HasSuffix(path, ".go") || strings.HasSuffix(path, ".py") || strings.HasSuffix(path, ".js") || strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".java")
+	}
+
+	files := cocafile.GetFilesWithFilter(path, CodeFileFilter)
 	for index := range files {
 		file := files[index]
 
@@ -72,13 +77,18 @@ func buildComments(path string) []*astitodo.TODO {
 		fmt.Println("Refactoring parse java call: " + displayName)
 
 		is, _ := antlr.NewFileStream(file)
-		lexer := NewJavaLexer(is)
+		lexer := NewCommentLexer(is)
 
 		for _, token := range lexer.GetAllTokens() {
-			COMMENT_TOKEN_INDEX := 109
-			COMMENT_LINE_TOKNE_INDEX := 110
+			COMMENT := 1
+			LINE_COMMENT := 2
+			PYTHON_COMMENT := 3
+
 			// based on `JavaLexer.tokens` file
-			if token.GetTokenType() == COMMENT_TOKEN_INDEX || token.GetTokenType() == COMMENT_LINE_TOKNE_INDEX {
+			if token.GetTokenType() == COMMENT ||
+				token.GetTokenType() == LINE_COMMENT ||
+				token.GetTokenType() == PYTHON_COMMENT {
+
 				todo := astitodo.ParseComment(token, file)
 				if todo != nil {
 					todos = append(todos, todo)

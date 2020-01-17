@@ -26,3 +26,14 @@ func Test_Analysis_Python(t *testing.T) {
 	}}
 	RunTestCmd(t, analysis)
 }
+
+func Test_Analysis_TypeScript(t *testing.T) {
+	path := "../_fixtures/grammar/typescript"
+
+	analysis := []testcase.CmdTestCase{{
+		Name:   "analysis",
+		Cmd:    "analysis -l ts -p " + path,
+		Golden: "testdata/analysis_typescript.txt",
+	}}
+	RunTestCmd(t, analysis)
+}

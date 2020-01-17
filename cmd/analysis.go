@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/application/pyapp"
+	"github.com/phodal/coca/pkg/application/tsapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 	"github.com/spf13/cobra"
@@ -31,13 +32,37 @@ var analysisCmd = &cobra.Command{
 		switch analysisCmdConfig.Lang {
 		case "go":
 			analysisGo()
-		case "py":
-		case "python":
+		case "py", "python":
 			analysisPython()
+		case "ts", "typescript":
+			analysisTypeScript()
 		default:
 			analysisJava()
 		}
 	},
+}
+
+func analysisTypeScript() {
+	importPath := analysisCmdConfig.Path
+
+	var results []core_domain.CodeFile
+	files := cocafile.GetFilesWithFilter(importPath, cocafile.TypeScriptFileFilter)
+	fmt.Println(files)
+	for _, file := range files {
+		fmt.Fprintf(output, "Process TypeScript file: %s\n", file)
+		app := new(tsapp.TypeScriptApiApp)
+		content, _ := ioutil.ReadFile(file)
+		result := app.Analysis(string(content), "")
+		results = append(results, result)
+	}
+
+	var ds []core_domain.CodeDataStruct
+	for _, result := range results {
+		ds = append(ds, result.DataStructures...)
+	}
+
+	cModel, _ := json.MarshalIndent(ds, "", "\t")
+	cmd_util.WriteToCocaFile("tsdeps.json", string(cModel))
 }
 
 func analysisPython() {

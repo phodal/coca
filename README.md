@@ -550,10 +550,10 @@ results:
       - [x] migrate to Golang Styles
  - [ ] Story Cmd
  - [ ] Languages Support
-    - [x] Java
-    - [ ] Golang (ongoing)
-    - [ ] TypeScript (ongoing)
-    - [ ] Python
+    - [x] Java (full features)
+    - [x] Golang (analysis API)
+    - [x] TypeScript (antlr4 performance issue)
+    - [x] Python (analysis API)
 
 Documents Todo:
 

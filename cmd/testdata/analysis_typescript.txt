@@ -1,0 +1,1 @@
+Process TypeScript file: ../_fixtures/grammar/typescript/Class.ts

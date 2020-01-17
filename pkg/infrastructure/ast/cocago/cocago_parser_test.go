@@ -117,6 +117,7 @@ func main() {
 	calls := results.Members[0].FunctionNodes[0].MethodCalls
 	fmt.Println(calls)
 	g.Expect(len(results.Fields)).To(Equal(1))
-	g.Expect(calls[0].Package).To(Equal("sync.Mutex"))
+	g.Expect(calls[0].Package).To(Equal("sync"))
+	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
 	g.Expect(len(calls)).To(Equal(2))
 }

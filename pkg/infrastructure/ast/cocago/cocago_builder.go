@@ -5,6 +5,7 @@ import (
 	. "github.com/phodal/coca/pkg/domain/core_domain"
 	"go/ast"
 	"reflect"
+	"strings"
 )
 
 func BuildPropertyField(name string, field *ast.Field) *CodeProperty {
@@ -87,7 +88,7 @@ func BuildFunction(x *ast.FuncDecl, file *CodeFile) *CodeFunction {
 	fields := file.Fields
 	var localVars []CodeProperty
 	for _, item := range x.Body.List {
-		BuildMethodCall(codeFunc, item, fields, localVars)
+		BuildMethodCall(codeFunc, item, fields, localVars, file.Imports)
 	}
 	return codeFunc
 }
@@ -101,24 +102,25 @@ func BuildFieldToProperty(fieldList []*ast.Field) []CodeProperty {
 	return properties
 }
 
-func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty) {
+func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty, imports []CodeImport) {
 	switch it := item.(type) {
 	case *ast.ExprStmt:
-		BuildMethodCallExprStmt(it, codeFunc, fields)
+		BuildMethodCallExprStmt(it, codeFunc, fields, imports)
 	default:
 		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
 	}
 }
 
-func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField) {
+func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport) {
 	switch expr := it.X.(type) {
 	case *ast.CallExpr:
 		selector, selName := BuildExpr(expr.Fun.(ast.Expr))
 		target := ParseTarget(selector, fields)
-		fmt.Println(target)
+
+		packageName := getCallPackageAndTarget(target, imports)
 		call := CodeCall{
-			Package:    target,
-			Type:       "",
+			Package:    packageName,
+			Type:       target,
 			NodeName:   selector,
 			MethodName: selName,
 		}
@@ -135,6 +137,19 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []
 
 		codeFunc.MethodCalls = append(codeFunc.MethodCalls, call)
 	}
+}
+
+func getCallPackageAndTarget(target string, imports []CodeImport) string {
+	packageName := ""
+	if strings.Contains(target, ".") {
+		split := strings.Split(target, ".")
+		for _, imp := range imports {
+			if strings.HasSuffix(imp.Source, split[0]) {
+				packageName = imp.Source
+			}
+		}
+	}
+	return packageName
 }
 
 func ParseTarget(selector string, fields []CodeField) string {

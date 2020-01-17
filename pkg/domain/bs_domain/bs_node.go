@@ -30,7 +30,7 @@ type BsJMethod struct {
 	Type       string
 	MethodBody string
 	Modifier   string
-	Parameters []JFullParameter
+	Parameters []core_domain.CodeProperty
 	MethodBs   MethodBadSmellInfo
 	Position   core_domain.CodePosition
 }
@@ -64,11 +64,6 @@ func NewMethodBadSmellInfo() MethodBadSmellInfo {
 type ClassBadSmellInfo struct {
 	OverrideSize  int
 	PublicVarSize int
-}
-
-type JFullParameter struct {
-	Name string
-	Type string
 }
 
 func NewJFullClassNode() BsJClass {

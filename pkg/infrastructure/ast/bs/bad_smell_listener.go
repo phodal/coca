@@ -115,7 +115,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
-	var methodParams []bs_domain.JFullParameter = nil
+	var methodParams []core_domain.CodeProperty = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
 		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
@@ -125,7 +125,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, bs_domain.JFullParameter{Name: paramType, Type: paramValue})
+				methodParams = append(methodParams, core_domain.CodeProperty{TypeValue: paramType, TypeType: paramValue})
 			}
 		}
 	}
@@ -184,7 +184,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 	typeType := ctx.TypeTypeOrVoid().GetText()
 	methodBody := ctx.MethodBody().GetText()
 
-	var methodParams []bs_domain.JFullParameter = nil
+	var methodParams []core_domain.CodeProperty = nil
 	parameters := ctx.FormalParameters()
 	if parameters != nil {
 		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
@@ -194,7 +194,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
 				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
-				methodParams = append(methodParams, bs_domain.JFullParameter{Name: paramType, Type: paramValue})
+				methodParams = append(methodParams, core_domain.CodeProperty{TypeValue: paramType, TypeType: paramValue})
 
 				localVars[paramValue] = paramType
 			}

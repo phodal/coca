@@ -295,8 +295,6 @@ func BuildExpr(expr ast.Expr) (string, string, string) {
 	case *ast.FuncLit:
 		// inner function
 		fmt.Println(x.Body.List)
-	case *ast.BinaryExpr:
-		//fmt.Println(x.Op)
 	default:
 		fmt.Fprintf(output, "BuildExpr %s\n", reflect.TypeOf(x))
 	}

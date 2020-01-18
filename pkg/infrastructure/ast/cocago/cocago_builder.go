@@ -238,6 +238,12 @@ func getPackageName(target string, selector string, imports []CodeImport) string
 		}
 	}
 
+	for _, member := range identCodeMembers {
+		if member.DataStructID == target {
+			return member.AliasPackage
+		}
+	}
+
 	packageName = currentPackage.Name
 	return packageName
 }

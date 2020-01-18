@@ -15,7 +15,7 @@
     {
       "AliasPackage": "main",
       "DataStructID": "default",
-      "FileID": "main",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": [
         {
           "Annotations": null,

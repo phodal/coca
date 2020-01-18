@@ -6,7 +6,47 @@
       "Extension": null,
       "Fields": null,
       "FilePath": "",
-      "FunctionCalls": null,
+      "FunctionCalls": [
+        {
+          "MethodName": "",
+          "NodeName": "string",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "int",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "func",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        }
+      ],
       "Functions": [
         {
           "Annotations": null,
@@ -105,7 +145,7 @@
       "DataStructID": "person",
       "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "testdata::person",
+      "ID": "testdata.node_infos|testdata::person",
       "Name": "",
       "Namespace": null,
       "Position": {

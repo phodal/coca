@@ -6,7 +6,34 @@
       "Extension": null,
       "Fields": null,
       "FilePath": "",
-      "FunctionCalls": null,
+      "FunctionCalls": [
+        {
+          "MethodName": "",
+          "NodeName": "l.List",
+          "Package": "testdata.regression",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "sync.Mutex",
+          "Package": "sync",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        }
+      ],
       "Functions": [
         {
           "Annotations": null,
@@ -313,7 +340,7 @@
       "DataStructID": "Stack",
       "FileID": "testdata.regression",
       "FunctionNodes": null,
-      "ID": "container::Stack",
+      "ID": "testdata.regression|container::Stack",
       "Name": "",
       "Namespace": null,
       "Position": {
@@ -328,7 +355,7 @@
     {
       "AliasPackage": "container",
       "DataStructID": "default",
-      "FileID": "container",
+      "FileID": "testdata.regression",
       "FunctionNodes": [
         {
           "Annotations": null,

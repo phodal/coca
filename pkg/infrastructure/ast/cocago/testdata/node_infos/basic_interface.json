@@ -121,9 +121,9 @@
     {
       "AliasPackage": "testdata",
       "DataStructID": "Shape",
-      "FileID": "testdata",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "testdata::Shape",
+      "ID": "testdata.node_infos|testdata::Shape",
       "Name": "",
       "Namespace": null,
       "Position": {
@@ -138,9 +138,9 @@
     {
       "AliasPackage": "testdata",
       "DataStructID": "Object",
-      "FileID": "testdata",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "testdata::Object",
+      "ID": "testdata.node_infos|testdata::Object",
       "Name": "",
       "Namespace": null,
       "Position": {
@@ -155,9 +155,9 @@
     {
       "AliasPackage": "testdata",
       "DataStructID": "Material",
-      "FileID": "testdata",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "testdata::Material",
+      "ID": "testdata.node_infos|testdata::Material",
       "Name": "",
       "Namespace": null,
       "Position": {

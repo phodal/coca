@@ -16,6 +16,7 @@ import (
 )
 
 var currentPackage *core_domain.CodePackage
+var identCodeMembers []core_domain.CodeMember
 
 type CocagoParser struct {
 	CodeMembers []core_domain.CodeMember
@@ -47,6 +48,7 @@ func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
 }
 
 func (n *CocagoParser) ProcessString(code string, fileName string, codeMembers []core_domain.CodeMember) *core_domain.CodeFile {
+	identCodeMembers = codeMembers
 	n.CodeMembers = codeMembers
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, code, 0)
@@ -337,15 +339,23 @@ func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_
 	setMemberPackageInfo(member, currentFile)
 
 	var ioproperties []core_domain.CodeProperty
+	var calls []core_domain.CodeCall
 	for _, field := range x.Fields.List {
 		property := BuildPropertyField(getFieldName(field), field)
 		member.FileID = currentFile.FullName
 		ioproperties = append(ioproperties, *property)
+
+		call := core_domain.CodeCall{
+			Package:  getPackageName(property.TypeValue, "", currentFile.Imports),
+			NodeName: property.TypeValue,
+		}
+		calls = append(calls, call)
 	}
 
 	// todo : when dsMap key-value create it
 	if dsMap[currentNodeName] != nil {
 		dsMap[currentNodeName].InOutProperties = ioproperties
+		dsMap[currentNodeName].FunctionCalls = append(dsMap[currentNodeName].FunctionCalls, calls...)
 	}
 	currentFile.Members = append(currentFile.Members, *member)
 }

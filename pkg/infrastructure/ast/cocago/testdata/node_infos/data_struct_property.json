@@ -6,7 +6,73 @@
       "Extension": null,
       "Fields": null,
       "FilePath": "",
-      "FunctionCalls": null,
+      "FunctionCalls": [
+        {
+          "MethodName": "",
+          "NodeName": "string",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "string",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "string",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "CodeMember",
+          "Package": "testdata.node_infos",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        },
+        {
+          "MethodName": "",
+          "NodeName": "domain.JClassNode",
+          "Package": "domain",
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "Type": ""
+        }
+      ],
       "Functions": null,
       "Implements": null,
       "Imports": null,
@@ -76,7 +142,7 @@
       "DataStructID": "CodeFile",
       "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "trial::CodeFile",
+      "ID": "testdata.node_infos|trial::CodeFile",
       "Name": "",
       "Namespace": null,
       "Position": {

@@ -47,9 +47,9 @@
     {
       "AliasPackage": "testdata",
       "DataStructID": "O",
-      "FileID": "testdata",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "testdata::O",
+      "ID": "testdata.node_infos|testdata::O",
       "Name": "",
       "Namespace": null,
       "Position": {

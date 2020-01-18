@@ -33,7 +33,7 @@
     {
       "AliasPackage": "samples",
       "DataStructID": "default",
-      "FileID": "samples",
+      "FileID": "testdata.node_infos",
       "FunctionNodes": [
         {
           "Annotations": null,

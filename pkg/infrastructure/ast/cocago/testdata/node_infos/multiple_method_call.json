@@ -45,11 +45,11 @@
               "Parameters": [
                 {
                   "Modifiers": null,
-                  "Name": "",
+                  "ParamName": "",
                   "Parameters": null,
                   "ReturnTypes": null,
-                  "TypeType": "",
-                  "TypeValue": ""
+                  "TypeType": "Second",
+                  "TypeValue": "time"
                 }
               ],
               "Position": {

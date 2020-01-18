@@ -19,7 +19,7 @@
               "Parameters": [
                 {
                   "Modifiers": null,
-                  "Name": "",
+                  "ParamName": "",
                   "Parameters": null,
                   "ReturnTypes": null,
                   "TypeType": "STRING",
@@ -58,7 +58,7 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "name",
+          "ParamName": "name",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -66,7 +66,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "age",
+          "ParamName": "age",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -74,7 +74,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "personfunc",
+          "ParamName": "personfunc",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Function",

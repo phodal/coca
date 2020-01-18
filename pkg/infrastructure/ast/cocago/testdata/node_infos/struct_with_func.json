@@ -13,7 +13,7 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "work",
+          "ParamName": "work",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Function",
@@ -21,7 +21,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "name",
+          "ParamName": "name",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -29,7 +29,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "age",
+          "ParamName": "age",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",

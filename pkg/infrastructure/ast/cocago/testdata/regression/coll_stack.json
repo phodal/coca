@@ -23,7 +23,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": "t"
+              "Type": "interface{}"
             },
             {
               "MethodName": "Unlock",
@@ -45,7 +45,7 @@
               "Parameters": [
                 {
                   "Modifiers": null,
-                  "Name": "",
+                  "ParamName": "",
                   "Parameters": null,
                   "ReturnTypes": null,
                   "TypeType": "var",
@@ -58,7 +58,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": "t"
+              "Type": "interface{}"
             }
           ],
           "InnerFunctions": null,
@@ -72,7 +72,7 @@
           "Parameters": [
             {
               "Modifiers": null,
-              "Name": "t",
+              "ParamName": "t",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "interface{}",
@@ -126,7 +126,7 @@
           "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "interface{}",
@@ -183,7 +183,7 @@
           "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "interface{}",
@@ -213,7 +213,7 @@
           "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "Identify",
@@ -243,7 +243,7 @@
           "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "Identify",
@@ -267,7 +267,7 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "list",
+          "ParamName": "list",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Star",
@@ -275,7 +275,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "mu",
+          "ParamName": "mu",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "",
@@ -340,7 +340,7 @@
           "MultipleReturns": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "Star",

@@ -47,7 +47,7 @@ func addClocConfigs() {
 	flags.IntVar(&processor.MinifiedGeneratedLineByteLength, "min-gen-line-length", 255, "number of bytes per average line for file to be considered minified or generated", )
 	flags.StringArrayVarP(&processor.Exclude, "not-match", "M", []string{}, "ignore files and directories matching regular expression", )
 	flags.StringVarP(&processor.FileOutput, "output", "o", "", "output filename (default stdout)", )
-	flags.StringVarP(&processor.SortBy, "sort", "s", "files", "column to sort by [files, Name, lines, blanks, code, comments, complexity]", )
+	flags.StringVarP(&processor.SortBy, "sort", "s", "files", "column to sort by [files, ParamName, lines, blanks, code, comments, complexity]", )
 	flags.BoolVarP(&processor.Trace, "trace", "t", false, "enable trace output (not recommended when processing multiple files)", )
 	flags.BoolVarP(&processor.Verbose, "verbose", "v", false, "verbose output", )
 	flags.BoolVarP(&processor.More, "wide", "w", false, "wider output with additional statistics (implies --complexity)", )

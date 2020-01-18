@@ -100,7 +100,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 			lastIdent = x.Name
 		case *ast.File:
 			currentFile.PackageName = BuildImportName(fileName)
-			//currentFile.PackageName = x.Name.String()
+			//currentFile.PackageName = x.ParamName.String()
 		case *ast.ImportSpec:
 			imp := BuildImport(x, fileName)
 			currentFile.Imports = append(currentFile.Imports, *imp)
@@ -276,6 +276,11 @@ func BuildExpr(expr ast.Expr) (string, string, string) {
 		switch sele := x.X.(type) {
 		case *ast.Ident:
 			selector = sele.String()
+		case *ast.IndexExpr:
+			_, indexVar, _ := BuildExpr(sele.X)
+			selector = indexVar
+		default:
+			fmt.Println("BuildExpr selector", reflect.TypeOf(sele))
 		}
 
 		selName := x.Sel.Name
@@ -302,6 +307,8 @@ func BuildExpr(expr ast.Expr) (string, string, string) {
 		// inner function
 	case *ast.TypeAssertExpr:
 	case *ast.BinaryExpr:
+		_, val, s2 := BuildExpr(x.X)
+		return "call", val, s2
 	default:
 		fmt.Fprintf(output, "BuildExpr %s\n", reflect.TypeOf(x))
 	}

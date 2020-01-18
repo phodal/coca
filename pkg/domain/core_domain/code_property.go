@@ -2,7 +2,7 @@ package core_domain
 
 type CodeProperty struct {
 	Modifiers   []string
-	Name        string
+	ParamName   string
 	TypeValue   string
 	TypeType    string
 	ReturnTypes []CodeProperty

@@ -171,7 +171,9 @@ func SortAPIs(callAPIs []CallAPI) {
 
 `, "call", nil)
 	fmt.Println(results)
+	fmt.Println(results.Members[0].FunctionNodes[0].FunctionCalls)
 	g.Expect(len(results.PackageName)).To(Equal(0))
+	g.Expect(len(results.Members[0].FunctionNodes[0].FunctionCalls)).To(Equal(3))
 }
 
 // todo:

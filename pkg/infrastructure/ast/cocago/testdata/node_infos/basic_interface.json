@@ -13,7 +13,7 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "",
+          "ParamName": "",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -21,7 +21,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "",
+          "ParamName": "",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -47,12 +47,12 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "Volume",
+          "ParamName": "Volume",
           "Parameters": null,
           "ReturnTypes": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "Identify",
@@ -82,11 +82,11 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "Area",
+          "ParamName": "Area",
           "Parameters": [
             {
               "Modifiers": null,
-              "Name": "a",
+              "ParamName": "a",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "Identify",
@@ -96,7 +96,7 @@
           "ReturnTypes": [
             {
               "Modifiers": null,
-              "Name": "",
+              "ParamName": "",
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "Identify",

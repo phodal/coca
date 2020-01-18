@@ -13,7 +13,7 @@
       "InOutProperties": [
         {
           "Modifiers": null,
-          "Name": "FullName",
+          "ParamName": "FullName",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -21,7 +21,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "PackageName",
+          "ParamName": "PackageName",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "Identify",
@@ -29,7 +29,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "Imports",
+          "ParamName": "Imports",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "ArrayType",
@@ -37,7 +37,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "Members",
+          "ParamName": "Members",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "ArrayType",
@@ -45,7 +45,7 @@
         },
         {
           "Modifiers": null,
-          "Name": "ClassNodes",
+          "ParamName": "ClassNodes",
           "Parameters": null,
           "ReturnTypes": null,
           "TypeType": "ArrayType",

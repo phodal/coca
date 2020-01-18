@@ -123,6 +123,8 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 	case *ast.AssignStmt:
 		vars := BuildLocalVars(it)
 		localVars = vars
+	case *ast.IfStmt:
+	case *ast.ReturnStmt:
 	default:
 		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
 	}
@@ -183,9 +185,7 @@ func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []Code
 			for _, item := range funcLit.Body.List {
 				_, methodCall := BuildMethodCall(codeFunc, item, fields, localVars, imports, packageName)
 
-				fmt.Println("...", methodCall)
 				if methodCall.NodeName != "" {
-					fmt.Println(methodCall.NodeName)
 					codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, methodCall)
 				}
 			}

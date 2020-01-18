@@ -16,12 +16,12 @@ func Test_ProcessPackage(t *testing.T) {
 	g.Expect(len(results.DataStructures)).To(Equal(1))
 }
 
-func Test_IdentApp(t *testing.T) {
+func Test_IdentDSMember(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
 
 	code, _ := ioutil.ReadFile("../../../../pkg/domain/core_domain/code_data_struct.go")
 	app := &GoIdentApp{}
-	results := app.IdentAnalysis(string(code), "domain")
-	g.Expect(len(results[0].ID)).To(Equal(0))
+	results := app.IdentAnalysis(string(code), "core_domain:CodeDataStruct")
+	g.Expect(results[0].ID).To(Equal(0))
 }

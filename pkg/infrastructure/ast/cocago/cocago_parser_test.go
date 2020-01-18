@@ -4,6 +4,7 @@ import (
 	"fmt"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cocatest"
+	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -94,6 +95,15 @@ func Test_basic_interface(t *testing.T) {
 	filePath := getFilePath("basic_interface")
 	results := testParser.ProcessFile(filePath + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, filePath+".json")).To(Equal(true))
+}
+
+func Test_IdentFuncMember(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	code, _ := ioutil.ReadFile("testdata/node_infos/normal_method.code")
+	results := testParser.IdentAnalysis(string(code), "core_domain:CodeDataStruct")
+	g.Expect(results.Members[0]).To(Equal(0))
 }
 
 // todo: support it

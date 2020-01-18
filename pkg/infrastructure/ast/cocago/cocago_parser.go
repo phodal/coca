@@ -143,9 +143,6 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		currentFile.DataStructures = append(currentFile.DataStructures, *ds)
 	}
 	SortInterface(currentFile.DataStructures)
-	for _, member := range currentFile.Members {
-		member.BuildMemberId()
-	}
 
 	return &currentFile
 }
@@ -211,11 +208,17 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 	member := core_domain.NewCodeMember()
 	member.DataStructID = ident
 	member.Type = "interface"
-	member.AliasPackage = codeFile.PackageName
+	setMemberPackageInfo(member, codeFile)
 
 	codeFile.Members = append(codeFile.Members, *member)
 
 	return dataStruct
+}
+
+func setMemberPackageInfo(member *core_domain.CodeMember, codeFile *core_domain.CodeFile) {
+	member.AliasPackage = codeFile.PackageName
+	member.FileID = codeFile.PackageName
+	member.BuildMemberId()
 }
 
 func AddNestedFunction(currentFunc *core_domain.CodeFunction, x *ast.FuncType) {
@@ -330,7 +333,7 @@ func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_
 	member := core_domain.NewCodeMember()
 	member.DataStructID = currentNodeName
 	member.Type = "struct"
-	member.AliasPackage = currentFile.PackageName
+	setMemberPackageInfo(member, currentFile)
 
 	var ioproperties []core_domain.CodeProperty
 	for _, field := range x.Fields.List {

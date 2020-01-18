@@ -23,7 +23,11 @@ func (c *CodeMember) BuildMemberId() {
 		for _, function := range c.FunctionNodes {
 			c.ID = c.AliasPackage + "::" + function.Name
 		}
+	} else {
+		packageName := c.FileID
+		if c.FileID != c.AliasPackage {
+			packageName = c.FileID + "|" + c.AliasPackage
+		}
+		c.ID = packageName + ":" + c.DataStructID
 	}
-
-	//if c.DataStructID
 }

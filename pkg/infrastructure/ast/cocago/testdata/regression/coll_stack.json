@@ -23,7 +23,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": ""
+              "Type": "t"
             },
             {
               "MethodName": "Unlock",
@@ -36,7 +36,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": ""
+              "Type": "interface{}"
             },
             {
               "MethodName": "PushFront",
@@ -58,7 +58,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": ""
+              "Type": "t"
             }
           ],
           "InnerFunctions": null,
@@ -75,7 +75,7 @@
               "Name": "t",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeType": "",
+              "TypeType": "interface{}",
               "TypeValue": ""
             }
           ],
@@ -129,7 +129,7 @@
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeType": "",
+              "TypeType": "interface{}",
               "TypeValue": ""
             }
           ],
@@ -186,7 +186,7 @@
               "Name": "",
               "Parameters": null,
               "ReturnTypes": null,
-              "TypeType": "",
+              "TypeType": "interface{}",
               "TypeValue": ""
             }
           ],

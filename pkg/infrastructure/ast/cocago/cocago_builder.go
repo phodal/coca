@@ -41,6 +41,9 @@ func BuildPropertyField(name string, field *ast.Field) *CodeProperty {
 		typeType = "Star"
 	case *ast.SelectorExpr:
 		typeName = getSelectorName(*x)
+	case *ast.InterfaceType:
+		typeType = "interface"
+		typeType = "interface{}" // todo: need check for all interface
 	default:
 		fmt.Fprintf(output, "BuildPropertyField %s\n", reflect.TypeOf(x))
 	}
@@ -161,7 +164,7 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []
 
 func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport, currentPackage string, localVars []CodeProperty) CodeCall {
 	_, selector, selName := BuildExpr(expr.Fun.(ast.Expr))
-	target := ParseTarget(selector, fields, localVars)
+	target := ParseTarget(selector, fields, localVars, codeFunc)
 	packageName := getPackageName(target, imports)
 	if packageName == "" {
 		packageName = currentPackage
@@ -218,7 +221,14 @@ func getPackageName(target string, imports []CodeImport) string {
 	return packageName
 }
 
-func ParseTarget(selector string, fields []CodeField, localVars []CodeProperty) string {
+func ParseTarget(selector string, fields []CodeField, localVars []CodeProperty, codeFunc *CodeFunction) string {
+	if codeFunc != nil {
+		for _, param := range codeFunc.Parameters {
+			if param.TypeValue == selector {
+				return param.TypeType
+			}
+		}
+	}
 	for _, localVar := range localVars {
 		if selector == localVar.TypeValue {
 			return localVar.TypeType

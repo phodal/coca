@@ -119,6 +119,7 @@
   "Imports": null,
   "Members": [
     {
+      "AliasPackage": "testdata",
       "DataStructID": "Shape",
       "FileID": "",
       "FunctionNodes": null,
@@ -135,6 +136,7 @@
       "Type": "interface"
     },
     {
+      "AliasPackage": "testdata",
       "DataStructID": "Object",
       "FileID": "",
       "FunctionNodes": null,
@@ -151,6 +153,7 @@
       "Type": "interface"
     },
     {
+      "AliasPackage": "testdata",
       "DataStructID": "Material",
       "FileID": "",
       "FunctionNodes": null,
@@ -167,5 +170,5 @@
       "Type": "interface"
     }
   ],
-  "PackageName": "testdata.node_infos"
+  "PackageName": "testdata"
 }

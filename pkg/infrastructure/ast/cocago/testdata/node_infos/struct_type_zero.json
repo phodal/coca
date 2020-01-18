@@ -36,7 +36,7 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "O",
-      "Package": "testdata.node_infos",
+      "Package": "testdata",
       "Type": ""
     }
   ],
@@ -45,6 +45,7 @@
   "Imports": null,
   "Members": [
     {
+      "AliasPackage": "testdata",
       "DataStructID": "O",
       "FileID": "",
       "FunctionNodes": null,
@@ -61,5 +62,5 @@
       "Type": "struct"
     }
   ],
-  "PackageName": "testdata.node_infos"
+  "PackageName": "testdata"
 }

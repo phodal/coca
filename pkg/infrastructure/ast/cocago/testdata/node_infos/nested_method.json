@@ -13,6 +13,7 @@
   ],
   "Members": [
     {
+      "AliasPackage": "",
       "DataStructID": "default",
       "FileID": "",
       "FunctionNodes": [
@@ -74,5 +75,5 @@
       "Type": "method"
     }
   ],
-  "PackageName": "testdata.node_infos"
+  "PackageName": "testdata"
 }

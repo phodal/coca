@@ -75,7 +75,6 @@ func getFilePath(name string) string {
 	return "testdata/node_infos/" + name
 }
 
-
 func Test_MemberFunctionNodesForTwoMethod(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
@@ -83,8 +82,9 @@ func Test_MemberFunctionNodesForTwoMethod(t *testing.T) {
 	filePath := getFilePath("normal_method")
 	results := testParser.ProcessFile(filePath + ".code")
 	fmt.Println(results)
-	g.Expect(len(results.Members)).To(Equal(1))
-	g.Expect(len(results.Members[0].FunctionNodes)).To(Equal(2))
+	g.Expect(len(results.Members)).To(Equal(2))
+	g.Expect(len(results.Members[0].FunctionNodes)).To(Equal(1))
+	g.Expect(len(results.Members[1].FunctionNodes)).To(Equal(1))
 }
 
 func Test_basic_interface(t *testing.T) {
@@ -182,10 +182,7 @@ func SortAPIs(callAPIs []CallAPI) {
 }
 
 `, "call", nil)
-	fmt.Println(results.Members[0].FunctionNodes[0].FunctionCalls)
-	g.Expect(len(results.PackageName)).To(Equal(0))
-
-	fmt.Println(results.Members[0].FunctionNodes[0].FunctionCalls)
+	g.Expect(results.PackageName).To(Equal("api_domain"))
 	g.Expect(len(results.Members[0].FunctionNodes[0].FunctionCalls)).To(Equal(3))
 }
 

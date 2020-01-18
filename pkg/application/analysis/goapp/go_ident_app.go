@@ -1,7 +1,6 @@
 package goapp
 
 import (
-	"fmt"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 )
@@ -22,7 +21,6 @@ func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile
 func (g *GoIdentApp) IdentAnalysis(code string, fileName string) []core_domain.CodeMember {
 	parser := cocago.NewCocagoParser()
 	codeFile := parser.IdentAnalysis(code, fileName)
-	fmt.Println(codeFile)
 	return codeFile.Members
 }
 

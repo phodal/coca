@@ -55,7 +55,7 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "CodeFile",
-      "Package": "testdata.node_infos",
+      "Package": "trial",
       "Type": ""
     }
   ],
@@ -72,6 +72,7 @@
   ],
   "Members": [
     {
+      "AliasPackage": "trial",
       "DataStructID": "CodeFile",
       "FileID": "testdata.node_infos",
       "FunctionNodes": null,
@@ -88,5 +89,5 @@
       "Type": "struct"
     }
   ],
-  "PackageName": "testdata.node_infos"
+  "PackageName": "trial"
 }

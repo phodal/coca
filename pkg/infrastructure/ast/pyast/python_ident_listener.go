@@ -107,9 +107,8 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 		function.Annotations = decorators
 	}
 
-	member := &core_domain.CodeMember{
-		Name: ctx.Name().GetText(),
-	}
+	member := core_domain.NewCodeMember()
+	member.Name = ctx.Name().GetText()
 
 	if currentDataStruct != nil {
 		currentDataStruct.Functions = append(currentDataStruct.Functions, function)
@@ -158,7 +157,7 @@ func BuildArgList(context *parser.ArglistContext) []core_domain.AnnotationKeyVal
 	for _, arg := range context.AllArgument() {
 		argContext := arg.(*parser.ArgumentContext)
 		argument := &core_domain.AnnotationKeyValue{
-			Key:     "",
+			Key:   "",
 			Value: argContext.GetText(),
 		}
 		arguments = append(arguments, *argument)

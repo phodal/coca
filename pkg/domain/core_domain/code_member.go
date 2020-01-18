@@ -2,6 +2,7 @@ package core_domain
 
 type CodeMember struct {
 	ID            string
+	AliasPackage  string
 	Name          string
 	Type          string
 	Structures    []CodeDataStruct
@@ -12,9 +13,17 @@ type CodeMember struct {
 	Position      CodePosition
 }
 
+func NewCodeMember() *CodeMember {
+	return &CodeMember{}
+}
+
 func (c *CodeMember) BuildMemberId() {
 	IsDefaultFunction := c.Name == "default"
 	if IsDefaultFunction {
-		//c.ID = c.
+		for _, function := range c.FunctionNodes {
+			c.ID = c.AliasPackage + "::" + function.Name
+		}
 	}
+
+	//if c.DataStructID
 }

@@ -78,7 +78,6 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 
 	packageName := BuildImportName(fileName)
 	currentFile.FullName = packageName
-	currentFile.PackageName = packageName
 	currentPackage.Name = packageName
 
 	var funcType = ""
@@ -89,7 +88,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.Ident:
 			lastIdent = x.Name
 		case *ast.File:
-			//currentFile.PackageName = x.ParamName.String()
+			currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
 			imp := BuildImport(x, fileName)
 			currentFile.Imports = append(currentFile.Imports, *imp)
@@ -140,11 +139,13 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	})
 
 	currentFile.DataStructures = nil
-
 	for _, ds := range dsMap {
 		currentFile.DataStructures = append(currentFile.DataStructures, *ds)
 	}
 	SortInterface(currentFile.DataStructures)
+	for _, member := range currentFile.Members {
+		member.BuildMemberId()
+	}
 
 	return &currentFile
 }
@@ -207,12 +208,12 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 		InOutProperties: properties,
 	}
 
-	member := core_domain.CodeMember{
-		DataStructID: ident,
-		Type:         "interface",
-	}
+	member := core_domain.NewCodeMember()
+	member.DataStructID = ident
+	member.Type = "interface"
+	member.AliasPackage = codeFile.PackageName
 
-	codeFile.Members = append(codeFile.Members, member)
+	codeFile.Members = append(codeFile.Members, *member)
 
 	return dataStruct
 }
@@ -229,31 +230,16 @@ func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_
 	codeFunc := BuildFunction(x, currentFile)
 
 	if recv == "" {
-		member, memberIndex := GetMemberFromFile(*currentFile, "default")
-		if member == nil {
-			member = &core_domain.CodeMember{
-				DataStructID: "default",
-				Type:         "method",
-			}
-
-			member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
-			currentFile.Members = append(currentFile.Members, *member)
-		} else {
-			member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
-			UpdateCurrentMemberByIndex(currentFile, memberIndex, member)
+		member := &core_domain.CodeMember{
+			DataStructID: "default",
+			Type:         "method",
 		}
+
+		member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
+		currentFile.Members = append(currentFile.Members, *member)
 	}
 
 	return codeFunc, recv
-}
-
-func UpdateCurrentMemberByIndex(currentFile *core_domain.CodeFile, memberIndex int, member *core_domain.CodeMember) {
-	var updateMembers []core_domain.CodeMember
-	updateMembers = currentFile.Members
-	if len(updateMembers) > memberIndex {
-		updateMembers[memberIndex] = *member
-	}
-	currentFile.Members = updateMembers
 }
 
 func BuildReceiver(x *ast.FuncDecl, recv string) string {
@@ -341,10 +327,10 @@ func getFieldName(field *ast.Field) string {
 }
 
 func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_domain.CodeFile, dsMap map[string]*core_domain.CodeDataStruct) {
-	member := core_domain.CodeMember{
-		DataStructID: currentNodeName,
-		Type:         "struct",
-	}
+	member := core_domain.NewCodeMember()
+	member.DataStructID = currentNodeName
+	member.Type = "struct"
+	member.AliasPackage = currentFile.PackageName
 
 	var ioproperties []core_domain.CodeProperty
 	for _, field := range x.Fields.List {
@@ -357,5 +343,5 @@ func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_
 	if dsMap[currentNodeName] != nil {
 		dsMap[currentNodeName].InOutProperties = ioproperties
 	}
-	currentFile.Members = append(currentFile.Members, member)
+	currentFile.Members = append(currentFile.Members, *member)
 }

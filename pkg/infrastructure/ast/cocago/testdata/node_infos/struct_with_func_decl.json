@@ -84,7 +84,7 @@
       "InnerStructures": null,
       "MultipleExtend": null,
       "NodeName": "person",
-      "Package": "testdata.node_infos",
+      "Package": "testdata",
       "Type": ""
     }
   ],
@@ -101,6 +101,7 @@
   ],
   "Members": [
     {
+      "AliasPackage": "testdata",
       "DataStructID": "person",
       "FileID": "testdata.node_infos",
       "FunctionNodes": null,
@@ -117,5 +118,5 @@
       "Type": "struct"
     }
   ],
-  "PackageName": "testdata.node_infos"
+  "PackageName": "testdata"
 }

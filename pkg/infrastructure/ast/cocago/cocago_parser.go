@@ -90,7 +90,11 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	var currentFunc *core_domain.CodeFunction
 	var dsMap = make(map[string]*core_domain.CodeDataStruct)
 
-	currentFile.FullName = BuildImportName(fileName)
+	packageName := BuildImportName(fileName)
+	currentFile.FullName = packageName
+	currentFile.PackageName = packageName
+	currentPackage.Name = packageName
+
 	var funcType = ""
 	var lastIdent = ""
 
@@ -99,7 +103,6 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 		case *ast.Ident:
 			lastIdent = x.Name
 		case *ast.File:
-			currentFile.PackageName = BuildImportName(fileName)
 			//currentFile.PackageName = x.ParamName.String()
 		case *ast.ImportSpec:
 			imp := BuildImport(x, fileName)

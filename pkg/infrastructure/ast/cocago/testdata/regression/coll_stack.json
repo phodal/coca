@@ -23,7 +23,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": "interface{}"
+              "Type": ""
             },
             {
               "MethodName": "Unlock",
@@ -36,7 +36,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": "interface{}"
+              "Type": ""
             },
             {
               "MethodName": "PushFront",
@@ -58,7 +58,7 @@
                 "StopLine": 0,
                 "StopLinePosition": 0
               },
-              "Type": "interface{}"
+              "Type": ""
             }
           ],
           "InnerFunctions": null,
@@ -76,7 +76,7 @@
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "interface{}",
-              "TypeValue": ""
+              "TypeValue": "interface{}"
             }
           ],
           "Position": {
@@ -130,7 +130,7 @@
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "interface{}",
-              "TypeValue": ""
+              "TypeValue": "interface{}"
             }
           ],
           "Name": "Pop",
@@ -187,7 +187,7 @@
               "Parameters": null,
               "ReturnTypes": null,
               "TypeType": "interface{}",
-              "TypeValue": ""
+              "TypeValue": "interface{}"
             }
           ],
           "Name": "Peak",

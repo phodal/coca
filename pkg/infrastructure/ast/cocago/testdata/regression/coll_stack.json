@@ -42,7 +42,7 @@
             {
               "MethodName": "Lock",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -55,7 +55,7 @@
             {
               "MethodName": "Unlock",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -68,7 +68,7 @@
             {
               "MethodName": "PushFront",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": [
                 {
                   "Modifiers": null,
@@ -121,7 +121,7 @@
             {
               "MethodName": "Lock",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -134,7 +134,7 @@
             {
               "MethodName": "Unlock",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -178,7 +178,7 @@
             {
               "MethodName": "Lock",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,
@@ -191,7 +191,7 @@
             {
               "MethodName": "Unlock",
               "NodeName": "",
-              "Package": "testdata.regression",
+              "Package": "container",
               "Parameters": null,
               "Position": {
                 "StartLine": 0,

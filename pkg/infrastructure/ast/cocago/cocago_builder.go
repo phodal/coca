@@ -121,7 +121,7 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 		call = BuildCallFromExpr(it.Call, codeFunc, fields, imports, packageName, localVars)
 		codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
 	case *ast.AssignStmt:
-		vars := BuildLocalVars(it)
+		vars := BuildLocalVars(it, codeFunc, imports)
 		localVars = vars
 	case *ast.IfStmt:
 	case *ast.ReturnStmt:
@@ -151,7 +151,7 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 	return localVars, call
 }
 
-func BuildLocalVars(it *ast.AssignStmt) []CodeProperty {
+func BuildLocalVars(it *ast.AssignStmt, codeFunc *CodeFunction, imports []CodeImport) []CodeProperty {
 	var vars []CodeProperty
 	for _, lh := range it.Lhs {
 		var left string
@@ -161,13 +161,26 @@ func BuildLocalVars(it *ast.AssignStmt) []CodeProperty {
 		}
 
 		for _, expr := range it.Rhs {
-			_, _, kind := BuildExpr(expr)
+			typ, exprName, kind := BuildExpr(expr)
 			property := CodeProperty{
 				TypeValue: left,
 				TypeType:  kind,
 			}
 
 			vars = append(vars, property)
+
+			if typ == "call" {
+				packageName := getPackageName(exprName, "", imports)
+				if packageName != "" {
+					call := CodeCall{
+						Package:  packageName,
+						Type:     "",
+						NodeName: exprName,
+					}
+
+					codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
+				}
+			}
 		}
 	}
 	return vars

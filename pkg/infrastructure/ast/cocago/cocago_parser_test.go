@@ -168,14 +168,12 @@ func main() {
 }
 `, "call", nil)
 	calls := results.Members[0].FunctionNodes[0].FunctionCalls
-	fmt.Println(calls)
 	g.Expect(calls[0].Package).To(Equal("sync"))
 	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
 	g.Expect(calls[2].Package).To(Equal("fmt"))
 	g.Expect(len(calls)).To(Equal(3))
 }
 
-// todo: should get
 func Test_ShouldSetParameterInterfaceToCallNodes(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
@@ -196,7 +194,6 @@ func SortAPIs(callAPIs []CallAPI) {
 	g.Expect(len(results.Members[0].FunctionNodes[0].FunctionCalls)).To(Equal(3))
 }
 
-// todo:
 func Test_RelatedImport(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)
@@ -225,4 +222,27 @@ func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile
 
 	fmt.Println(results)
 	g.Expect(len(results.DataStructures)).To(Equal(1))
+}
+func Test_ShowShowSelfMethodCall(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	results := testParser.ProcessString(`
+package node_infos
+
+import "fmpt"
+
+func ShowChangeLogSummary() {
+	changeMap := BuildChangeMap(commits)
+	fmt.Println(changeMap)
+}
+
+func BuildChangeMap() {
+	UpdateMessageForChange()
+}
+
+`, "self_method_call.go", nil)
+
+	g.Expect(len(results.Members)).To(Equal(2))
+	g.Expect(len(results.Members[0].FunctionNodes[0].FunctionCalls)).To(Equal(1))
 }

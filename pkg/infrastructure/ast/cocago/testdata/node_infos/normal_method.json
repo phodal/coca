@@ -27,7 +27,21 @@
         {
           "Annotations": null,
           "Extension": null,
-          "FunctionCalls": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "",
+              "NodeName": "antlr",
+              "Package": "testdata.node_infos",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
           "InnerFunctions": null,
           "InnerStructures": null,
           "IsConstructor": false,
@@ -92,7 +106,47 @@
         {
           "Annotations": null,
           "Extension": null,
-          "FunctionCalls": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "",
+              "NodeName": "parser",
+              "Package": "testdata.node_infos",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "",
+              "NodeName": "antlr",
+              "Package": "testdata.node_infos",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "",
+              "NodeName": "parser",
+              "Package": "testdata.node_infos",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
           "InnerFunctions": null,
           "InnerStructures": null,
           "IsConstructor": false,

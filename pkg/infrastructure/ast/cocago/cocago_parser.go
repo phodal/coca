@@ -184,6 +184,9 @@ func BuildImport(x *ast.ImportSpec, fileName string) *core_domain.CodeImport {
 	moduleName := "github.com/phodal/coca"
 	withOutModuleName := strings.ReplaceAll(cleanPath, moduleName, "")
 	all := strings.ReplaceAll(withOutModuleName, "/", ".")
+	if strings.HasPrefix(all, ".") {
+		all = all[1:]
+	}
 	imp := &core_domain.CodeImport{
 		Source:     all,
 		AsName:     asName,
@@ -200,6 +203,9 @@ func BuildImportName(fileName string) string {
 	importName := ""
 	if len(splitFileName) > 2 {
 		importName = strings.Join(splitFileName[:len(splitFileName)-1], ".")
+	}
+	if strings.HasPrefix(importName, ".") {
+		importName = importName[1:]
 	}
 	return importName
 }

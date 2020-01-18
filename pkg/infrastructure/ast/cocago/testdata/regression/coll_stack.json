@@ -1,0 +1,378 @@
+{
+  "DataStructures": [
+    {
+      "Annotations": null,
+      "Extend": "",
+      "Extension": null,
+      "Fields": null,
+      "FilePath": "",
+      "FunctionCalls": null,
+      "Functions": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "Lock",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "Unlock",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "PushFront",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "ParamName": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeType": "var",
+                  "TypeValue": "t"
+                }
+              ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": null,
+          "Name": "Push",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "ParamName": "t",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "interface{}",
+              "TypeValue": "interface{}"
+            }
+          ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "Lock",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "Unlock",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "ParamName": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "interface{}",
+              "TypeValue": "interface{}"
+            }
+          ],
+          "Name": "Pop",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "Lock",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "Unlock",
+              "NodeName": "",
+              "Package": "testdata.regression",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            }
+          ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "ParamName": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "interface{}",
+              "TypeValue": "interface{}"
+            }
+          ],
+          "Name": "Peak",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "ParamName": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "int"
+            }
+          ],
+          "Name": "Len",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        },
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "ParamName": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Identify",
+              "TypeValue": "bool"
+            }
+          ],
+          "Name": "IsEmpty",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
+      "Implements": null,
+      "Imports": null,
+      "InOutProperties": [
+        {
+          "Modifiers": null,
+          "ParamName": "list",
+          "Parameters": null,
+          "ReturnTypes": null,
+          "TypeType": "Star",
+          "TypeValue": "l.List"
+        },
+        {
+          "Modifiers": null,
+          "ParamName": "mu",
+          "Parameters": null,
+          "ReturnTypes": null,
+          "TypeType": "",
+          "TypeValue": "sync.Mutex"
+        }
+      ],
+      "InnerStructures": null,
+      "MultipleExtend": null,
+      "NodeName": "Stack",
+      "Package": "container",
+      "Type": ""
+    }
+  ],
+  "Fields": null,
+  "FullName": "testdata.regression",
+  "Imports": [
+    {
+      "AsName": "l",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "container.list",
+      "UsageName": null
+    },
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "sync",
+      "UsageName": null
+    }
+  ],
+  "Members": [
+    {
+      "AliasPackage": "container",
+      "DataStructID": "Stack",
+      "FileID": "testdata.regression",
+      "FunctionNodes": null,
+      "ID": "container::Stack",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Structures": null,
+      "Type": "struct"
+    },
+    {
+      "AliasPackage": "container",
+      "DataStructID": "default",
+      "FileID": "container",
+      "FunctionNodes": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": null,
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": [
+            {
+              "Modifiers": null,
+              "ParamName": "",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "Star",
+              "TypeValue": "Stack"
+            }
+          ],
+          "Name": "NewStack",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
+      "ID": "container:NewStack",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Structures": null,
+      "Type": "method"
+    }
+  ],
+  "PackageName": "container"
+}

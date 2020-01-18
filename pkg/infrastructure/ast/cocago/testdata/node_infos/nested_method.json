@@ -13,9 +13,9 @@
   ],
   "Members": [
     {
-      "AliasPackage": "",
+      "AliasPackage": "testdata",
       "DataStructID": "default",
-      "FileID": "",
+      "FileID": "testdata",
       "FunctionNodes": [
         {
           "Annotations": null,
@@ -62,7 +62,7 @@
           "ReturnType": ""
         }
       ],
-      "ID": "",
+      "ID": "testdata:f",
       "Name": "",
       "Namespace": null,
       "Position": {

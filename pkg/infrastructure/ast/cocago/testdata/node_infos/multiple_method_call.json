@@ -31,9 +31,9 @@
   ],
   "Members": [
     {
-      "AliasPackage": "",
+      "AliasPackage": "samples",
       "DataStructID": "default",
-      "FileID": "",
+      "FileID": "samples",
       "FunctionNodes": [
         {
           "Annotations": null,
@@ -80,7 +80,7 @@
           "ReturnType": ""
         }
       ],
-      "ID": "",
+      "ID": "samples:Ch",
       "Name": "",
       "Namespace": null,
       "Position": {

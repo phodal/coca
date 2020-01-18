@@ -239,6 +239,7 @@ func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_
 		}
 
 		member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
+		setMemberPackageInfo(member, currentFile)
 		currentFile.Members = append(currentFile.Members, *member)
 	}
 

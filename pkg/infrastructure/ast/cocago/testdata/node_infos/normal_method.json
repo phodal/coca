@@ -20,9 +20,9 @@
   ],
   "Members": [
     {
-      "AliasPackage": "",
+      "AliasPackage": "testdata",
       "DataStructID": "default",
-      "FileID": "",
+      "FileID": "testdata",
       "FunctionNodes": [
         {
           "Annotations": null,
@@ -72,7 +72,7 @@
           "ReturnType": ""
         }
       ],
-      "ID": "",
+      "ID": "testdata:ProcessTsString",
       "Name": "",
       "Namespace": null,
       "Position": {
@@ -85,9 +85,9 @@
       "Type": "method"
     },
     {
-      "AliasPackage": "",
+      "AliasPackage": "testdata",
       "DataStructID": "default",
-      "FileID": "",
+      "FileID": "testdata",
       "FunctionNodes": [
         {
           "Annotations": null,
@@ -137,7 +137,7 @@
           "ReturnType": ""
         }
       ],
-      "ID": "",
+      "ID": "testdata:processStream",
       "Name": "",
       "Namespace": null,
       "Position": {

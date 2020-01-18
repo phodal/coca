@@ -76,7 +76,7 @@
       "DataStructID": "CodeFile",
       "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "",
+      "ID": "trial::CodeFile",
       "Name": "",
       "Namespace": null,
       "Position": {

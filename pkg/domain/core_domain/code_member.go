@@ -18,16 +18,16 @@ func NewCodeMember() *CodeMember {
 }
 
 func (c *CodeMember) BuildMemberId() {
-	IsDefaultFunction := c.Name == "default"
+	IsDefaultFunction := c.DataStructID == "default"
 	if IsDefaultFunction {
 		for _, function := range c.FunctionNodes {
-			c.ID = c.AliasPackage + "::" + function.Name
+			c.ID = c.AliasPackage + ":" + function.Name
 		}
 	} else {
 		packageName := c.FileID
 		if c.FileID != c.AliasPackage {
 			packageName = c.FileID + "|" + c.AliasPackage
 		}
-		c.ID = packageName + ":" + c.DataStructID
+		c.ID = packageName + "::" + c.DataStructID
 	}
 }

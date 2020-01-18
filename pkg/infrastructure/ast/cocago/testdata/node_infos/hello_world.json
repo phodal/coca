@@ -13,9 +13,9 @@
   ],
   "Members": [
     {
-      "AliasPackage": "",
+      "AliasPackage": "main",
       "DataStructID": "default",
-      "FileID": "",
+      "FileID": "main",
       "FunctionNodes": [
         {
           "Annotations": null,
@@ -62,7 +62,7 @@
           "ReturnType": ""
         }
       ],
-      "ID": "",
+      "ID": "main:main",
       "Name": "",
       "Namespace": null,
       "Position": {

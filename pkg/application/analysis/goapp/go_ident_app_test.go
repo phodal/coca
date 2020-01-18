@@ -22,6 +22,6 @@ func Test_IdentDSMember(t *testing.T) {
 
 	code, _ := ioutil.ReadFile("../../../../pkg/domain/core_domain/code_data_struct.go")
 	app := &GoIdentApp{}
-	results := app.IdentAnalysis(string(code), "core_domain:CodeDataStruct")
-	g.Expect(results[0].ID).To(Equal(0))
+	results := app.IdentAnalysis(string(code), "file")
+	g.Expect(results[0].ID).To(Equal("core_domain::CodeDataStruct"))
 }

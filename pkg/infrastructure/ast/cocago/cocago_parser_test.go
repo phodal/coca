@@ -103,7 +103,7 @@ func Test_IdentFuncMember(t *testing.T) {
 
 	code, _ := ioutil.ReadFile("testdata/node_infos/normal_method.code")
 	results := testParser.IdentAnalysis(string(code), "core_domain:CodeDataStruct")
-	g.Expect(results.Members[0]).To(Equal(0))
+	g.Expect(results.Members[0].ID).To(Equal("testdata:ProcessTsString"))
 }
 
 // todo: support it

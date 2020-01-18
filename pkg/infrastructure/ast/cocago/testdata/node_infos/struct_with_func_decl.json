@@ -105,7 +105,7 @@
       "DataStructID": "person",
       "FileID": "testdata.node_infos",
       "FunctionNodes": null,
-      "ID": "",
+      "ID": "testdata::person",
       "Name": "",
       "Namespace": null,
       "Position": {

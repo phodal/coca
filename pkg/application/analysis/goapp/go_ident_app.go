@@ -11,14 +11,14 @@ type GoIdentApp struct {
 
 func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	parser := cocago.NewCocagoParser()
-	var imports []core_domain.CodeImport
+	var codeMembers []core_domain.CodeMember
 	if g.Extensions != nil {
-		imports = g.Extensions.([]core_domain.CodeImport)
+		codeMembers = g.Extensions.([]core_domain.CodeMember)
 	}
-	return 	*parser.ProcessString(code, fileName, imports)
+	return 	*parser.ProcessString(code, fileName, codeMembers)
 }
 
-func (g *GoIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
+func (g *GoIdentApp) IdentAnalysis(s string, file string) []core_domain.CodeMember {
 	//parser := cocago.NewCocagoParser()
 	//return 	parser.ProcessImports(code, fileName)
 	return nil

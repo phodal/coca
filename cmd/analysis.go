@@ -69,17 +69,17 @@ func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter fu
 	var results []core_domain.CodeFile
 	files := cocafile.GetFilesWithFilter(path, filter)
 
-	//var imports []core_domain.CodeImport
-	//for _, file := range files {
-	//	content, _ := ioutil.ReadFile(file)
-	//	codeImports := app.AnalysisImport(string(content), file)
-	//	imports = append(imports, codeImports...)
-	//}
+	var codeMembers []core_domain.CodeMember
+	for _, file := range files {
+		content, _ := ioutil.ReadFile(file)
+		members := app.IdentAnalysis(string(content), file)
+		codeMembers = append(codeMembers, members...)
+	}
 
 	for _, file := range files {
 		fmt.Fprintf(output, "Process file: %s\n", file)
 		content, _ := ioutil.ReadFile(file)
-		//app.SetExtensions(imports)
+		app.SetExtensions(codeMembers)
 		result := app.Analysis(string(content), file)
 		results = append(results, result)
 	}

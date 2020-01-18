@@ -36,6 +36,6 @@ func (p *PythonIdentApp) SetExtensions(extension interface{})  {
 
 }
 
-func (p *PythonIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
+func (p *PythonIdentApp) IdentAnalysis(s string, file string) []core_domain.CodeMember {
 	return nil
 }

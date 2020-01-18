@@ -35,6 +35,6 @@ func (t *TypeScriptIdentApp) SetExtensions(extension interface{}) {
 
 }
 
-func (t *TypeScriptIdentApp) AnalysisImport(code string, fileName string) []core_domain.CodeImport {
+func (t *TypeScriptIdentApp) IdentAnalysis(s string, file string) []core_domain.CodeMember {
 	return nil
 }

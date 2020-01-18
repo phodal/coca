@@ -18,7 +18,7 @@ import (
 var currentPackage *core_domain.CodePackage
 
 type CocagoParser struct {
-	Imports []core_domain.CodeImport
+	CodeMembers []core_domain.CodeMember
 }
 
 var output io.Writer
@@ -46,8 +46,8 @@ func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
 	return *codeFile
 }
 
-func (n *CocagoParser) ProcessString(code string, fileName string, codeImports []core_domain.CodeImport) *core_domain.CodeFile {
-	n.Imports = codeImports
+func (n *CocagoParser) ProcessString(code string, fileName string, codeMembers []core_domain.CodeMember) *core_domain.CodeFile {
+	n.CodeMembers = codeMembers
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, code, 0)
 	if err != nil {

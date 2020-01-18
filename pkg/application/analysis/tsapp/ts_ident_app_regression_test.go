@@ -26,5 +26,5 @@ func Test_Regression(t *testing.T) {
 //
 //	results := app.Analysis(string(code), "")
 //
-//	g.Expect(len(results.Imports)).To(Equal(0))
+//	g.Expect(len(results.CodeMembers)).To(Equal(0))
 //}

@@ -128,8 +128,8 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 		for _, resultExpr := range it.Results {
 			typ, caller, callee := BuildExpr(resultExpr)
 			if typ == "call" {
+				var calls []CodeCall
 				for _, param := range codeFunc.Parameters {
-					fmt.Println(param.TypeValue, param.ParamName)
 					if param.ParamName == caller {
 						target := ParseTarget(caller, fields, localVars, codeFunc)
 						packageName := getPackageName(target, imports)
@@ -137,9 +137,11 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 						call.Package = packageName
 						call.MethodName = callee
 						call.NodeName = target
-						codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
+						calls = append(calls, call)
 					}
 				}
+
+				codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, calls...)
 			}
 		}
 	default:

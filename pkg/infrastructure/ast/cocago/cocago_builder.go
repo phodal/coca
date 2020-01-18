@@ -78,7 +78,8 @@ func BuildFunction(x *ast.FuncDecl, file *CodeFile) *CodeFunction {
 	}
 
 	if x.Type.Params != nil {
-		codeFunc.Parameters = append(codeFunc.Parameters, BuildFieldToProperty(x.Type.Params.List)...)
+		parameters := BuildFieldToProperty(x.Type.Params.List)
+		codeFunc.Parameters = append(codeFunc.Parameters, parameters...)
 	}
 
 	if x.Type.Results != nil {
@@ -87,8 +88,14 @@ func BuildFunction(x *ast.FuncDecl, file *CodeFile) *CodeFunction {
 
 	fields := file.Fields
 	var localVars []CodeProperty
+	for _, param := range codeFunc.Parameters {
+		localVars = append(localVars, CodeProperty{
+			TypeType:  param.Name,
+			TypeValue: param.TypeValue,
+		})
+	}
 	for _, item := range x.Body.List {
-		localVars = BuildMethodCall(codeFunc, item, fields, localVars, file.Imports, file.PackageName)
+		localVars, _ = BuildMethodCall(codeFunc, item, fields, localVars, file.Imports, file.PackageName)
 	}
 	return codeFunc
 }
@@ -102,22 +109,22 @@ func BuildFieldToProperty(fieldList []*ast.Field) []CodeProperty {
 	return properties
 }
 
-func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty, imports []CodeImport, packageName string) []CodeProperty {
+func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, localVars []CodeProperty, imports []CodeImport, packageName string) ([]CodeProperty, CodeCall) {
+	var call CodeCall
 	switch it := item.(type) {
 	case *ast.ExprStmt:
 		BuildMethodCallExprStmt(it, codeFunc, fields, imports, packageName, localVars)
 	case *ast.DeferStmt:
-		call := BuildCallFromExpr(it.Call, fields, imports, packageName, localVars)
+		call = BuildCallFromExpr(it.Call, codeFunc, fields, imports, packageName, localVars)
 		codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
 	case *ast.AssignStmt:
 		vars := BuildLocalVars(it)
-
 		localVars = vars
 	default:
 		fmt.Fprintf(output, "methodCall %s\n", reflect.TypeOf(it))
 	}
 
-	return localVars
+	return localVars, call
 }
 
 func BuildLocalVars(it *ast.AssignStmt) []CodeProperty {
@@ -145,14 +152,14 @@ func BuildLocalVars(it *ast.AssignStmt) []CodeProperty {
 func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport, currentPackage string, localVars []CodeProperty) {
 	switch expr := it.X.(type) {
 	case *ast.CallExpr:
-		call := BuildCallFromExpr(expr, fields, imports, currentPackage, localVars)
+		call := BuildCallFromExpr(expr, nil, fields, imports, currentPackage, localVars)
 		codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, call)
 	default:
 		fmt.Fprintf(output, "BuildMethodCallExprStmt: %s\n", reflect.TypeOf(expr))
 	}
 }
 
-func BuildCallFromExpr(expr *ast.CallExpr, fields []CodeField, imports []CodeImport, currentPackage string, localVars []CodeProperty) CodeCall {
+func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport, currentPackage string, localVars []CodeProperty) CodeCall {
 	_, selector, selName := BuildExpr(expr.Fun.(ast.Expr))
 	target := ParseTarget(selector, fields, localVars)
 	packageName := getPackageName(target, imports)
@@ -168,6 +175,19 @@ func BuildCallFromExpr(expr *ast.CallExpr, fields []CodeField, imports []CodeImp
 	}
 
 	for _, arg := range expr.Args {
+		if reflect.TypeOf(arg.(ast.Expr)).String() == "*ast.FuncLit" {
+			funcLit := arg.(ast.Expr).(*ast.FuncLit)
+			for _, item := range funcLit.Body.List {
+				_, methodCall := BuildMethodCall(codeFunc, item, fields, localVars, imports, packageName)
+
+				fmt.Println("...", methodCall)
+				if methodCall.NodeName != "" {
+					fmt.Println(methodCall.NodeName)
+					codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, methodCall)
+				}
+			}
+		} 
+
 		_, value, kind := BuildExpr(arg.(ast.Expr))
 		property := &CodeProperty{
 			TypeValue: value,

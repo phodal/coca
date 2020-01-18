@@ -292,6 +292,9 @@ func BuildExpr(expr ast.Expr) (string, string, string) {
 			}
 		}
 		return "call", value, strings.Join(callArgs, ",")
+	case *ast.FuncLit:
+		// inner function
+		fmt.Println(x.Body.List)
 	default:
 		fmt.Fprintf(output, "BuildExpr %s\n", reflect.TypeOf(x))
 	}

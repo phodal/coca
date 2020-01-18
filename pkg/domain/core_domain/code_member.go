@@ -11,3 +11,10 @@ type CodeMember struct {
 	DataStructID  string
 	Position      CodePosition
 }
+
+func (c *CodeMember) BuildMemberId() {
+	IsDefaultFunction := c.Name == "default"
+	if IsDefaultFunction {
+		//c.ID = c.
+	}
+}

@@ -229,19 +229,31 @@ func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_
 	codeFunc := BuildFunction(x, currentFile)
 
 	if recv == "" {
-		member := GetMemberFromFile(*currentFile, "default")
+		member, memberIndex := GetMemberFromFile(*currentFile, "default")
 		if member == nil {
 			member = &core_domain.CodeMember{
 				DataStructID: "default",
 				Type:         "method",
 			}
-		}
 
-		member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
-		currentFile.Members = append(currentFile.Members, *member)
+			member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
+			currentFile.Members = append(currentFile.Members, *member)
+		} else {
+			member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
+			UpdateCurrentMemberByIndex(currentFile, memberIndex, member)
+		}
 	}
 
 	return codeFunc, recv
+}
+
+func UpdateCurrentMemberByIndex(currentFile *core_domain.CodeFile, memberIndex int, member *core_domain.CodeMember) {
+	var updateMembers []core_domain.CodeMember
+	updateMembers = currentFile.Members
+	if len(updateMembers) > memberIndex {
+		updateMembers[memberIndex] = *member
+	}
+	currentFile.Members = updateMembers
 }
 
 func BuildReceiver(x *ast.FuncDecl, recv string) string {
@@ -308,14 +320,17 @@ func createMember(codeDataStruct core_domain.CodeDataStruct) {
 
 }
 
-func GetMemberFromFile(file core_domain.CodeFile, recv string) *core_domain.CodeMember {
+func GetMemberFromFile(file core_domain.CodeFile, recv string) (*core_domain.CodeMember, int) {
 	var identMember *core_domain.CodeMember
-	for _, member := range file.Members {
+	var memberIndex = 0
+	for index, member := range file.Members {
 		if member.DataStructID == recv {
 			identMember = &member
+			memberIndex = index
 		}
 	}
-	return identMember
+
+	return identMember, memberIndex
 }
 
 func getFieldName(field *ast.Field) string {

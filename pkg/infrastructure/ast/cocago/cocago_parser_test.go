@@ -75,6 +75,18 @@ func getFilePath(name string) string {
 	return "testdata/node_infos/" + name
 }
 
+
+func Test_MemberFunctionNodesForTwoMethod(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	filePath := getFilePath("normal_method")
+	results := testParser.ProcessFile(filePath + ".code")
+	fmt.Println(results)
+	g.Expect(len(results.Members)).To(Equal(1))
+	g.Expect(len(results.Members[0].FunctionNodes)).To(Equal(2))
+}
+
 func Test_basic_interface(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)

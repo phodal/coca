@@ -132,7 +132,7 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 				for _, param := range codeFunc.Parameters {
 					if param.ParamName == caller {
 						target := ParseTarget(caller, fields, localVars, codeFunc)
-						packageName := getPackageName(target, imports)
+						packageName := getPackageName(target, callee, imports)
 
 						call.Package = packageName
 						call.MethodName = callee
@@ -186,7 +186,7 @@ func BuildMethodCallExprStmt(it *ast.ExprStmt, codeFunc *CodeFunction, fields []
 func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []CodeField, imports []CodeImport, currentPackage string, localVars []CodeProperty) CodeCall {
 	_, selector, selName := BuildExpr(expr.Fun.(ast.Expr))
 	target := ParseTarget(selector, fields, localVars, codeFunc)
-	packageName := getPackageName(target, imports)
+	packageName := getPackageName(target, selector, imports)
 	if packageName == "" {
 		packageName = currentPackage
 	}
@@ -221,7 +221,7 @@ func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []Code
 	return call
 }
 
-func getPackageName(target string, imports []CodeImport) string {
+func getPackageName(target string, selector string, imports []CodeImport) string {
 	packageName := ""
 	if strings.Contains(target, ".") {
 		split := strings.Split(target, ".")

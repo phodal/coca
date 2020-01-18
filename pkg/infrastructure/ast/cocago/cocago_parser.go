@@ -217,7 +217,7 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 
 func setMemberPackageInfo(member *core_domain.CodeMember, codeFile *core_domain.CodeFile) {
 	member.AliasPackage = codeFile.PackageName
-	member.FileID = codeFile.PackageName
+	member.FileID = codeFile.FullName
 	member.BuildMemberId()
 }
 

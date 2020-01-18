@@ -74,6 +74,9 @@ func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter fu
 		content, _ := ioutil.ReadFile(file)
 		members := app.IdentAnalysis(string(content), file)
 		codeMembers = append(codeMembers, members...)
+
+		identModel, _ := json.MarshalIndent(codeMembers, "", "\t")
+		cmd_util.WriteToCocaFile("members.json", string(identModel))
 	}
 
 	for _, file := range files {

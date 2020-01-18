@@ -4,7 +4,7 @@ type CodeFile struct {
 	FullName       string
 	PackageName    string
 	Imports        []CodeImport
-	Members        []*CodeMember
+	Members        []CodeMember
 	DataStructures []CodeDataStruct
 	Fields         []CodeField
 }

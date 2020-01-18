@@ -59,29 +59,15 @@ func (n *CocagoParser) ProcessString(code string, fileName string, codeMembers [
 	return codeFile
 }
 
-func (n *CocagoParser) ProcessImports(code string, fileName string) []core_domain.CodeImport {
+func (n *CocagoParser) IdentAnalysis(code string, fileName string) *core_domain.CodeFile {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, code, 0)
 	if err != nil {
 		panic(err)
 	}
 
-	imports := n.VisitorImport(f, fset, fileName)
-	return imports
-}
-
-func (n *CocagoParser) VisitorImport(f *ast.File, fset *token.FileSet, fileName string) []core_domain.CodeImport {
-	var imports []core_domain.CodeImport
-	ast.Inspect(f, func(n ast.Node) bool {
-		switch x := n.(type) {
-		case *ast.ImportSpec:
-			imp := BuildImport(x, fileName)
-			imports = append(imports, *imp)
-		}
-		return true
-	})
-
-	return imports
+	codeFile := n.Visitor(f, fset, fileName)
+	return codeFile
 }
 
 func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *core_domain.CodeFile {
@@ -226,7 +212,7 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 		Type:         "interface",
 	}
 
-	codeFile.Members = append(codeFile.Members, &member)
+	codeFile.Members = append(codeFile.Members, member)
 
 	return dataStruct
 }
@@ -252,7 +238,7 @@ func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_
 		}
 
 		member.FunctionNodes = append(member.FunctionNodes, *codeFunc)
-		currentFile.Members = append(currentFile.Members, member)
+		currentFile.Members = append(currentFile.Members, *member)
 	}
 
 	return codeFunc, recv
@@ -326,7 +312,7 @@ func GetMemberFromFile(file core_domain.CodeFile, recv string) *core_domain.Code
 	var identMember *core_domain.CodeMember
 	for _, member := range file.Members {
 		if member.DataStructID == recv {
-			identMember = member
+			identMember = &member
 		}
 	}
 	return identMember
@@ -356,5 +342,5 @@ func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_
 	if dsMap[currentNodeName] != nil {
 		dsMap[currentNodeName].InOutProperties = ioproperties
 	}
-	currentFile.Members = append(currentFile.Members, &member)
+	currentFile.Members = append(currentFile.Members, member)
 }

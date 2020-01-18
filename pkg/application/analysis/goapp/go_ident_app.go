@@ -1,6 +1,7 @@
 package goapp
 
 import (
+	"fmt"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
 )
@@ -18,10 +19,11 @@ func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile
 	return 	*parser.ProcessString(code, fileName, codeMembers)
 }
 
-func (g *GoIdentApp) IdentAnalysis(s string, file string) []core_domain.CodeMember {
-	//parser := cocago.NewCocagoParser()
-	//return 	parser.ProcessImports(code, fileName)
-	return nil
+func (g *GoIdentApp) IdentAnalysis(code string, fileName string) []core_domain.CodeMember {
+	parser := cocago.NewCocagoParser()
+	codeFile := parser.IdentAnalysis(code, fileName)
+	fmt.Println(codeFile)
+	return codeFile.Members
 }
 
 func (g *GoIdentApp) SetExtensions(extension interface{})  {

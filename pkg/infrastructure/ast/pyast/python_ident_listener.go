@@ -115,7 +115,7 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 		currentDataStruct.Functions = append(currentDataStruct.Functions, function)
 	} else {
 		member.FunctionNodes = append(member.FunctionNodes, function)
-		currentCodeFile.Members = append(currentCodeFile.Members, member)
+		currentCodeFile.Members = append(currentCodeFile.Members, *member)
 	}
 }
 

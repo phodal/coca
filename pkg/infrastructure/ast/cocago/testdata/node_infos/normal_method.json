@@ -69,53 +69,6 @@
             "StopLinePosition": 0
           },
           "ReturnType": ""
-        },
-        {
-          "Annotations": null,
-          "Extension": null,
-          "FunctionCalls": null,
-          "InnerFunctions": null,
-          "InnerStructures": null,
-          "IsConstructor": false,
-          "IsReturnNull": false,
-          "Modifiers": null,
-          "MultipleReturns": [
-            {
-              "Modifiers": null,
-              "ParamName": "is",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "",
-              "TypeValue": "antlr.CharStream"
-            },
-            {
-              "Modifiers": null,
-              "ParamName": "",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "Star",
-              "TypeValue": "parser.TypeScriptParser"
-            }
-          ],
-          "Name": "processStream",
-          "Override": false,
-          "Parameters": [
-            {
-              "Modifiers": null,
-              "ParamName": "is",
-              "Parameters": null,
-              "ReturnTypes": null,
-              "TypeType": "",
-              "TypeValue": "antlr.CharStream"
-            }
-          ],
-          "Position": {
-            "StartLine": 0,
-            "StartLinePosition": 0,
-            "StopLine": 0,
-            "StopLinePosition": 0
-          },
-          "ReturnType": ""
         }
       ],
       "ID": "",

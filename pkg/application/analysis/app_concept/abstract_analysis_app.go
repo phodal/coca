@@ -6,4 +6,5 @@ type AbstractAnalysisApp interface {
 	Analysis(code string, path string) core_domain.CodeFile
 	IdentAnalysis(s string, file string) []core_domain.CodeMember
 	SetExtensions(extension interface{})
+	AnalysisPackageManager(path string) core_domain.CodePackageManagerInfo
 }

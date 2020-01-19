@@ -70,6 +70,9 @@ func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter fu
 	files := cocafile.GetFilesWithFilter(path, filter)
 
 	var codeMembers []core_domain.CodeMember
+
+	app.AnalysisPackageManager(path)
+
 	for _, file := range files {
 		content, _ := ioutil.ReadFile(file)
 		members := app.IdentAnalysis(string(content), file)

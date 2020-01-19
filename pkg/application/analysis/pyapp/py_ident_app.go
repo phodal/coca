@@ -22,6 +22,10 @@ type PythonIdentApp struct {
 
 }
 
+func (p *PythonIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageManagerInfo  {
+	return core_domain.CodePackageManagerInfo{}
+}
+
 func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Root()

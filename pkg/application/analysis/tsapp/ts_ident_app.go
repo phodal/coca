@@ -19,6 +19,11 @@ func ProcessTsString(code string) *parser.TypeScriptParser {
 }
 
 type TypeScriptIdentApp struct {
+
+}
+
+func (t *TypeScriptIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageManagerInfo  {
+	return core_domain.CodePackageManagerInfo{}
 }
 
 func (t *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {

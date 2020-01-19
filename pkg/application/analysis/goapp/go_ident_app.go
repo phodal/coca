@@ -9,6 +9,10 @@ type GoIdentApp struct {
 	Extensions interface{}
 }
 
+func (g *GoIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageManagerInfo  {
+	return core_domain.CodePackageManagerInfo{}
+}
+
 func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
 	parser := cocago.NewCocagoParser()
 	var codeMembers []core_domain.CodeMember

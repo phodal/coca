@@ -11,7 +11,7 @@ type ConceptSegmenter struct {
 
 var strMap map[string]int
 
-func SegmentConceptCamelcase(methodsName []string) map[string]int {
+func SegmentCamelcase(methodsName []string) map[string]int {
 	strMap = make(map[string]int)
 	for _, name := range methodsName {
 		// get, set

@@ -80,7 +80,6 @@ func checkAssert(hasAssert bool, clz core_domain.CodeDataStruct, method core_dom
 		}
 
 		*results = append(*results, tbs)
-
 	}
 }
 

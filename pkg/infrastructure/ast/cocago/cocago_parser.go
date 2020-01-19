@@ -1,6 +1,8 @@
 package cocago
 
 import (
+	"bytes"
+	"flag"
 	"fmt"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/yourbasic/radix"
@@ -27,6 +29,9 @@ var output io.Writer
 func NewCocagoParser() *CocagoParser {
 	currentPackage = &core_domain.CodePackage{}
 	output = os.Stdout
+	if flag.Lookup("test") == nil {
+		output = new(bytes.Buffer)
+	}
 	return &CocagoParser{}
 }
 
@@ -188,6 +193,7 @@ func BuildImport(x *ast.ImportSpec, fileName string) *core_domain.CodeImport {
 }
 
 func BuildImportName(fileName string) string {
+	fileName = filepath.FromSlash(fileName)
 	splitFileName := strings.Split(fileName, string(filepath.Separator))
 	importName := ""
 	if len(splitFileName) > 2 {

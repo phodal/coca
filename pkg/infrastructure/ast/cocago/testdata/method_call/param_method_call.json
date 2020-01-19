@@ -1,0 +1,122 @@
+{
+  "DataStructures": null,
+  "Fields": null,
+  "FullName": "testdata.method_call",
+  "Imports": [
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "sort",
+      "UsageName": null
+    }
+  ],
+  "Members": [
+    {
+      "AliasPackage": "api_domain",
+      "DataStructID": "default",
+      "FileID": "testdata.method_call",
+      "FunctionNodes": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "Size",
+              "NodeName": "CallAPI",
+              "Package": "testdata.method_call",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "Size",
+              "NodeName": "CallAPI",
+              "Package": "testdata.method_call",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "Slice",
+              "NodeName": "sort",
+              "Package": "sort",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "ParamName": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeType": "var",
+                  "TypeValue": "callAPIs"
+                },
+                {
+                  "Modifiers": null,
+                  "ParamName": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeType": "",
+                  "TypeValue": ""
+                }
+              ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": "sort"
+            }
+          ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": null,
+          "Name": "SortAPIs",
+          "Override": false,
+          "Parameters": [
+            {
+              "Modifiers": null,
+              "ParamName": "callAPIs",
+              "Parameters": null,
+              "ReturnTypes": null,
+              "TypeType": "ArrayType",
+              "TypeValue": "CallAPI"
+            }
+          ],
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
+      "ID": "api_domain:SortAPIs",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Structures": null,
+      "Type": "method"
+    }
+  ],
+  "PackageName": "api_domain"
+}

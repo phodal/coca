@@ -72,6 +72,34 @@ func TestCocagoParser_ProcessFile(t *testing.T) {
 	}
 }
 
+func Test_Method_Call(t *testing.T) {
+	tests := []struct {
+		name     string
+		fileName string
+	}{
+		{
+			"local_var_method_call",
+			"local_var_method_call",
+		},
+		{
+			"param_method_call",
+			"param_method_call",
+		},
+		{
+			"var_inside_method_with_call",
+			"var_inside_method_with_call",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			filePath := "testdata/method_call/" + tt.fileName
+			if got := testParser.ProcessFile(filePath + ".code"); !cocatest.JSONFileBytesEqual(got, filePath+".json") {
+				t.Errorf("ProcessFile() = %v, want %v", got, tt.fileName)
+			}
+		})
+	}
+}
+
 func getFilePath(name string) string {
 	return "testdata/node_infos/" + name
 }
@@ -114,84 +142,6 @@ func Test_NestedMethod(t *testing.T) {
 	filePath := getFilePath("nested_method")
 	results := testParser.ProcessFile(filePath + ".code")
 	g.Expect(cocatest.JSONFileBytesEqual(results, filePath+".json")).To(Equal(true))
-}
-
-// var call
-func Test_VarMethodCall(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	results := testParser.ProcessString(`
-
-package main
- 
-import (
-	"fmt"
-	"sync"
-)
-
-var l *sync.Mutex
- 
-func main() {
-	l = new(sync.Mutex)
-	l.Lock()
-	defer l.Unlock()
-	fmt.Println("1")
-}
-`, "call", nil)
-	calls := results.Members[0].FunctionNodes[0].FunctionCalls
-	fmt.Println(calls)
-	g.Expect(len(results.Fields)).To(Equal(1))
-	g.Expect(calls[0].Package).To(Equal("sync"))
-	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
-	g.Expect(len(calls)).To(Equal(3))
-}
-
-// should call local
-func Test_LocalMethodCall(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	results := testParser.ProcessString(`
-package main
- 
-import (
-	"fmt"
-	"sync"
-)
-
-func main() {
-	l := new(sync.Mutex)
-	l.Lock()
-	defer l.Unlock()
-	fmt.Println("1")
-}
-`, "call", nil)
-	calls := results.Members[0].FunctionNodes[0].FunctionCalls
-	g.Expect(calls[0].Package).To(Equal("sync"))
-	g.Expect(calls[0].Type).To(Equal("sync.Mutex"))
-	g.Expect(calls[2].Package).To(Equal("fmt"))
-	g.Expect(len(calls)).To(Equal(3))
-}
-
-func Test_ShouldSetParameterInterfaceToCallNodes(t *testing.T) {
-	t.Parallel()
-	g := NewGomegaWithT(t)
-
-	results := testParser.ProcessString(`
-package api_domain
-
-import "sort"
-
-func SortAPIs(callAPIs []CallAPI) {
-	sort.Slice(callAPIs, func(i, j int) bool {
-		return callAPIs[i].Size < callAPIs[j].Size
-	})
-}
-
-`, "call", nil)
-	g.Expect(results.PackageName).To(Equal("api_domain"))
-	g.Expect(len(results.Members[0].FunctionNodes[0].FunctionCalls)).To(Equal(3))
 }
 
 func Test_RelatedImport(t *testing.T) {

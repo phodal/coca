@@ -1,0 +1,13 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	l := new(sync.Mutex)
+	l.Lock()
+	defer l.Unlock()
+	fmt.Println("1")
+}

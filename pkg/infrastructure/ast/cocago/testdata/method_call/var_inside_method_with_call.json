@@ -1,0 +1,125 @@
+{
+  "DataStructures": null,
+  "Fields": null,
+  "FullName": "testdata.method_call",
+  "Imports": [
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "fmt",
+      "UsageName": null
+    },
+    {
+      "AsName": "",
+      "ImportName": "",
+      "Scope": "",
+      "Source": "sync",
+      "UsageName": null
+    }
+  ],
+  "Members": [
+    {
+      "AliasPackage": "main",
+      "DataStructID": "default",
+      "FileID": "testdata.method_call",
+      "FunctionNodes": [
+        {
+          "Annotations": null,
+          "Extension": null,
+          "FunctionCalls": [
+            {
+              "MethodName": "",
+              "NodeName": "new",
+              "Package": "testdata.method_call",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": ""
+            },
+            {
+              "MethodName": "Lock",
+              "NodeName": "l",
+              "Package": "sync",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": "sync.Mutex"
+            },
+            {
+              "MethodName": "Unlock",
+              "NodeName": "l",
+              "Package": "sync",
+              "Parameters": null,
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": "sync.Mutex"
+            },
+            {
+              "MethodName": "Println",
+              "NodeName": "fmt",
+              "Package": "fmt",
+              "Parameters": [
+                {
+                  "Modifiers": null,
+                  "ParamName": "",
+                  "Parameters": null,
+                  "ReturnTypes": null,
+                  "TypeType": "STRING",
+                  "TypeValue": "\"1\""
+                }
+              ],
+              "Position": {
+                "StartLine": 0,
+                "StartLinePosition": 0,
+                "StopLine": 0,
+                "StopLinePosition": 0
+              },
+              "Type": "fmt"
+            }
+          ],
+          "InnerFunctions": null,
+          "InnerStructures": null,
+          "IsConstructor": false,
+          "IsReturnNull": false,
+          "Modifiers": null,
+          "MultipleReturns": null,
+          "Name": "main",
+          "Override": false,
+          "Parameters": null,
+          "Position": {
+            "StartLine": 0,
+            "StartLinePosition": 0,
+            "StopLine": 0,
+            "StopLinePosition": 0
+          },
+          "ReturnType": ""
+        }
+      ],
+      "ID": "main:main",
+      "Name": "",
+      "Namespace": null,
+      "Position": {
+        "StartLine": 0,
+        "StartLinePosition": 0,
+        "StopLine": 0,
+        "StopLinePosition": 0
+      },
+      "Structures": null,
+      "Type": "method"
+    }
+  ],
+  "PackageName": "main"
+}

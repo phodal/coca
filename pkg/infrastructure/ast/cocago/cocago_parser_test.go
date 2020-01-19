@@ -180,7 +180,7 @@ func Test_ShowShowSelfMethodCall(t *testing.T) {
 	results := testParser.ProcessString(`
 package node_infos
 
-import "fmpt"
+import "fmt"
 
 func ShowChangeLogSummary() {
 	changeMap := BuildChangeMap(commits)

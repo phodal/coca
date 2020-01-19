@@ -28,6 +28,9 @@ func (c *CodeMember) BuildMemberId() {
 		if c.FileID != c.AliasPackage {
 			packageName = c.FileID + "|" + c.AliasPackage
 		}
+		if c.FileID == "" && c.AliasPackage != "" {
+			packageName = c.AliasPackage
+		}
 		c.ID = packageName + "::" + c.DataStructID
 	}
 }

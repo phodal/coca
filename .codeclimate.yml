@@ -3,3 +3,4 @@ exclude_patterns:
   - "languages/"
   - "_fixtures/"
   - "wasm/"
+  - "**/testdata/**"

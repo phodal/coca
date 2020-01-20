@@ -21,7 +21,8 @@ var currentPackage *core_domain.CodePackage
 var identCodeMembers []core_domain.CodeMember
 
 type CocagoParser struct {
-	CodeMembers []core_domain.CodeMember
+	CodeMembers    []core_domain.CodeMember
+	PackageManager core_domain.CodePackageManagerInfo
 }
 
 var output io.Writer
@@ -90,14 +91,14 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	var funcType = ""
 	var lastIdent = ""
 
-	ast.Inspect(f, func(n ast.Node) bool {
-		switch x := n.(type) {
+	ast.Inspect(f, func(node ast.Node) bool {
+		switch x := node.(type) {
 		case *ast.Ident:
 			lastIdent = x.Name
 		case *ast.File:
 			currentFile.PackageName = x.Name.String()
 		case *ast.ImportSpec:
-			imp := BuildImport(x, fileName)
+			imp := BuildImport(x, fileName, n.PackageManager)
 			currentFile.Imports = append(currentFile.Imports, *imp)
 		case *ast.ValueSpec:
 			names := x.Names
@@ -154,6 +155,10 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
+func (n *CocagoParser) SetPackageManager(manager core_domain.CodePackageManagerInfo) {
+	n.PackageManager = manager
+}
+
 func BuildValSpec(expr ast.Expr) (string, string, string) {
 	switch x := expr.(type) {
 	case *ast.StarExpr:
@@ -168,14 +173,17 @@ func SortInterface(slice []core_domain.CodeDataStruct) {
 	radix.SortSlice(slice, func(i int) string { return slice[i].NodeName })
 }
 
-func BuildImport(x *ast.ImportSpec, fileName string) *core_domain.CodeImport {
+func BuildImport(x *ast.ImportSpec, fileName string, manager core_domain.CodePackageManagerInfo) *core_domain.CodeImport {
 	path := x.Path.Value
 	cleanPath := path[1 : len(path)-1]
 	asName := ""
 	if x.Name != nil {
 		asName = x.Name.String()
 	}
-	moduleName := "github.com/phodal/coca"
+	moduleName := manager.ProjectName
+	if moduleName == "" {
+		moduleName = "github.com/phodal/coca"
+	}
 	withOutModuleName := strings.ReplaceAll(cleanPath, moduleName, "")
 	all := strings.ReplaceAll(withOutModuleName, "/", ".")
 	if strings.HasPrefix(all, ".") {

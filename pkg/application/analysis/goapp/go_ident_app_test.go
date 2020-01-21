@@ -25,3 +25,13 @@ func Test_IdentDSMember(t *testing.T) {
 	results := app.IdentAnalysis(string(code), "file")
 	g.Expect(results[0].ID).To(Equal("core_domain::CodeDataStruct"))
 }
+
+func Test_ShouldGetModuleNameFromModFile(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	app := &GoIdentApp{}
+	packageManager := app.AnalysisPackageManager("../../../..")
+
+	g.Expect(packageManager.ProjectName).To(Equal("github.com/phodal/coca"))
+}

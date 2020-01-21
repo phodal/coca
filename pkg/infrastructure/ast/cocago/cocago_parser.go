@@ -322,23 +322,6 @@ func BuildExpr(expr ast.Expr) (string, string, string) {
 	return "", "", ""
 }
 
-func createMember(codeDataStruct core_domain.CodeDataStruct) {
-
-}
-
-func GetMemberFromFile(file core_domain.CodeFile, recv string) (*core_domain.CodeMember, int) {
-	var identMember *core_domain.CodeMember
-	var memberIndex = 0
-	for index, member := range file.Members {
-		if member.DataStructID == recv {
-			identMember = &member
-			memberIndex = index
-		}
-	}
-
-	return identMember, memberIndex
-}
-
 func getFieldName(field *ast.Field) string {
 	if len(field.Names) < 1 {
 		return ""

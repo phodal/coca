@@ -23,7 +23,7 @@ func (g *GoIdentApp) AnalysisPackageManager(path string) core_domain.CodePackage
 		modLine := splitContent[0]
 
 		moduleName := modLine[len("module "):]
-		pmInfo.ProjectName = moduleName
+		pmInfo.ProjectName = strings.TrimSpace(moduleName)
 	}
 	g.PackageManager = *pmInfo
 	return *pmInfo

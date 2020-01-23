@@ -1,4 +1,4 @@
-package api_domain
+package core_domain
 
 type JDependency struct {
 	GroupId    string

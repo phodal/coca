@@ -1,12 +1,12 @@
 package deps
 
 import (
-	"github.com/phodal/coca/pkg/domain/support_domain"
+	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/xmlparse"
 	"os"
 )
 
-func AnalysisMaven(xmlPath string) []api_domain.JDependency {
+func AnalysisMaven(xmlPath string) []core_domain.JDependency {
 	xmlFile, _ := os.Open(xmlPath)
 	parseXml := xmlparse.ParseXML(xmlFile)
 	for _, element := range parseXml.Elements {
@@ -18,11 +18,11 @@ func AnalysisMaven(xmlPath string) []api_domain.JDependency {
 	return nil
 }
 
-func BuildDeps(val xmlparse.XMLNode) []api_domain.JDependency {
-	var deps []api_domain.JDependency = nil
+func BuildDeps(val xmlparse.XMLNode) []core_domain.JDependency {
+	var deps []core_domain.JDependency = nil
 	for _, depElement := range val.Elements {
 		depNode := depElement.Val.(xmlparse.XMLNode)
-		dependency := api_domain.NewJDependency("", "")
+		dependency := core_domain.NewJDependency("", "")
 
 		for _, depValue := range depNode.Elements {
 			node := depValue.Val.(xmlparse.XMLNode)

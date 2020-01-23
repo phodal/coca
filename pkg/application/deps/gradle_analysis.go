@@ -8,12 +8,12 @@ import (
 	"github.com/phodal/coca/pkg/infrastructure/ast/groovy"
 )
 
-func AnalysisGradleFile(path string) []core_domain.JDependency {
+func AnalysisGradleFile(path string) []core_domain.CodeDependency {
 	bytes := cmd_util.ReadFile(path)
 	return AnalysisGradleString(string(bytes))
 }
 
-func AnalysisGradleString(str string) []core_domain.JDependency {
+func AnalysisGradleString(str string) []core_domain.CodeDependency {
 	parser := ast.ProcessGroovyString(str)
 	context := parser.CompilationUnit()
 	listener := groovy.NewGroovyIdentListener()

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var nodeDeps []core_domain.JDependency
+var nodeDeps []core_domain.CodeDependency
 
 type GroovyIdentifierListener struct {
 	parser.BaseGroovyParserListener
@@ -35,11 +35,11 @@ func (s *GroovyIdentifierListener) EnterScriptStatement(ctx *parser.ScriptStatem
 	}
 }
 
-func (s *GroovyIdentifierListener) GetDepsInfo() []core_domain.JDependency {
+func (s *GroovyIdentifierListener) GetDepsInfo() []core_domain.CodeDependency {
 	return nodeDeps
 }
 
-func buildGroovyMap(pathExprCtx *parser.PathExpressionContext) []core_domain.JDependency {
+func buildGroovyMap(pathExprCtx *parser.PathExpressionContext) []core_domain.CodeDependency {
 	if reflect.TypeOf(pathExprCtx.GetChild(0)).String() == "*parser.IdentifierPrmrAltContext" {
 		if pathExprCtx.GetChild(0).(antlr.ParseTree).GetText() != "dependencies" {
 			return nil
@@ -61,11 +61,11 @@ func buildGroovyMap(pathExprCtx *parser.PathExpressionContext) []core_domain.JDe
 	return nil
 }
 
-func buildBlockStatements(closureContext *parser.ClosureContext) []core_domain.JDependency {
-	var results []core_domain.JDependency
+func buildBlockStatements(closureContext *parser.ClosureContext) []core_domain.CodeDependency {
+	var results []core_domain.CodeDependency
 	statementsContext := closureContext.BlockStatementsOpt().(*parser.BlockStatementsOptContext).BlockStatements().(*parser.BlockStatementsContext)
 	for _, blockStatement := range statementsContext.AllBlockStatement() {
-		var result *core_domain.JDependency = nil
+		var result *core_domain.CodeDependency = nil
 
 		commandExprCtx := blockStatement.GetChild(0).GetChild(0).GetChild(0).(*parser.CommandExpressionContext)
 		pathExpression := commandExprCtx.GetChild(0).(*parser.PostfixExprAltForExprContext).GetChild(0).(*parser.PostfixExpressionContext).PathExpression()
@@ -96,8 +96,8 @@ func buildBlockStatements(closureContext *parser.ClosureContext) []core_domain.J
 	return results
 }
 
-func BuildDependency(argumentListContext *parser.ArgumentListContext) *core_domain.JDependency {
-	var result *core_domain.JDependency = nil
+func BuildDependency(argumentListContext *parser.ArgumentListContext) *core_domain.CodeDependency {
+	var result *core_domain.CodeDependency = nil
 	for _, arg := range argumentListContext.AllArgumentListElement() {
 		if reflect.TypeOf(arg.(*parser.ArgumentListElementContext).GetChild(0)).String() == "*parser.ExpressionListElementContext" {
 			listElementContext := arg.(*parser.ArgumentListElementContext).GetChild(0).(*parser.ExpressionListElementContext)
@@ -115,8 +115,8 @@ func BuildDependency(argumentListContext *parser.ArgumentListContext) *core_doma
 	return result
 }
 
-func ConvertToJDep(result string) *core_domain.JDependency {
+func ConvertToJDep(result string) *core_domain.CodeDependency {
 	withQuote := strings.ReplaceAll(result, "'", "")
 	split := strings.Split(withQuote, ":")
-	return core_domain.NewJDependency(split[0], split[1])
+	return core_domain.NewCodeDependency(split[0], split[1])
 }

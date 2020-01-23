@@ -1,6 +1,6 @@
 package core_domain
 
-type JDependency struct {
+type CodeDependency struct {
 	GroupId    string
 	ArtifactId string
 	Scope      string
@@ -9,13 +9,10 @@ type JDependency struct {
 	Optional   bool
 }
 
-func NewJDependency(group string, artifact string) *JDependency {
-	return &JDependency{
+func NewCodeDependency(group string, artifact string) *CodeDependency {
+	return &CodeDependency{
 		GroupId:    group,
 		ArtifactId: artifact,
-		Scope:      "",
-		Type:       "",
-		Version:    "",
 		Optional:   false,
 	}
 }

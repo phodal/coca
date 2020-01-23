@@ -25,12 +25,12 @@ func (d *DepAnalysisApp) BuildImportMap(deps []core_domain.CodeDataStruct) map[s
 	return impMap
 }
 
-func (d *DepAnalysisApp) AnalysisPath(path string, nodes []core_domain.CodeDataStruct) []core_domain.JDependency {
+func (d *DepAnalysisApp) AnalysisPath(path string, nodes []core_domain.CodeDataStruct) []core_domain.CodeDependency {
 	path, _ = filepath.Abs(path)
 	pomXmls := cocafile.GetFilesWithFilter(path, cocafile.PomXmlFilter)
 	gradleFiles := cocafile.GetFilesWithFilter(path, cocafile.BuildGradleFilter)
 
-	var mavenDeps []core_domain.JDependency = nil
+	var mavenDeps []core_domain.CodeDependency = nil
 	for _, pomFile := range pomXmls {
 		currentMavenDeps := AnalysisMaven(pomFile)
 		mavenDeps = append(mavenDeps, currentMavenDeps...)
@@ -52,7 +52,7 @@ func (d *DepAnalysisApp) AnalysisPath(path string, nodes []core_domain.CodeDataS
 		}
 	}
 
-	var results []core_domain.JDependency = nil
+	var results []core_domain.CodeDependency = nil
 	for index, dep := range mavenDeps {
 		if _, ok := needRemoveMap[index]; !ok {
 			results = append(results, dep)

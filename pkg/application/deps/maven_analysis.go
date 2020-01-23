@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func AnalysisMaven(xmlPath string) []core_domain.JDependency {
+func AnalysisMaven(xmlPath string) []core_domain.CodeDependency {
 	xmlFile, _ := os.Open(xmlPath)
 	parseXml := xmlparse.ParseXML(xmlFile)
 	for _, element := range parseXml.Elements {
@@ -18,11 +18,11 @@ func AnalysisMaven(xmlPath string) []core_domain.JDependency {
 	return nil
 }
 
-func BuildDeps(val xmlparse.XMLNode) []core_domain.JDependency {
-	var deps []core_domain.JDependency = nil
+func BuildDeps(val xmlparse.XMLNode) []core_domain.CodeDependency {
+	var deps []core_domain.CodeDependency = nil
 	for _, depElement := range val.Elements {
 		depNode := depElement.Val.(xmlparse.XMLNode)
-		dependency := core_domain.NewJDependency("", "")
+		dependency := core_domain.NewCodeDependency("", "")
 
 		for _, depValue := range depNode.Elements {
 			node := depValue.Val.(xmlparse.XMLNode)

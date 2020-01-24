@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
+	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/support_domain"
 	"reflect"
 	"strings"
 )
@@ -17,8 +17,8 @@ var hasEnterRestController = false
 var baseApiUrl string
 var localVars = make(map[string]string)
 
-var currentRestAPI api_domain.RestAPI
-var restAPIs []api_domain.RestAPI
+var currentRestAPI api_domain2.RestAPI
+var restAPIs []api_domain2.RestAPI
 var currentClz string
 var currentPkg string
 
@@ -38,7 +38,7 @@ func NewJavaAPIListener(jIdentMap map[string]core_domain.CodeDataStruct, diMap m
 	identMap = jIdentMap
 
 	params := make(map[string]string)
-	currentRestAPI = api_domain.RestAPI{MethodParams: params}
+	currentRestAPI = api_domain2.RestAPI{MethodParams: params}
 	return &JavaAPIListener{}
 }
 
@@ -99,7 +99,7 @@ func (s *JavaAPIListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 
 	uriRemoveQuote := strings.ReplaceAll(uri, "\"", "")
 
-	currentRestAPI = api_domain.RestAPI{Uri: uriRemoveQuote}
+	currentRestAPI = api_domain2.RestAPI{Uri: uriRemoveQuote}
 	if annotationName != "RequestMapping" {
 		if hasEnterClass {
 			addApiMethod(annotationName)
@@ -304,6 +304,6 @@ func (s *JavaAPIListener) AppendClasses(classes []core_domain.CodeDataStruct) {
 	jClassNodes = classes
 }
 
-func (s *JavaAPIListener) GetClassApis() []api_domain.RestAPI {
+func (s *JavaAPIListener) GetClassApis() []api_domain2.RestAPI {
 	return restAPIs
 }

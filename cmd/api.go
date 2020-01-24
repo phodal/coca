@@ -6,8 +6,8 @@ import (
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
+	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/spf13/cobra"
 	"log"
 	"path/filepath"
@@ -28,7 +28,7 @@ type ApiCmdConfig struct {
 
 var (
 	apiCmdConfig ApiCmdConfig
-	restApis     []api_domain.RestAPI
+	restApis     []api_domain2.RestAPI
 
 	identifiers    = cmd_util.LoadIdentify(apiCmdConfig.DependencePath)
 	identifiersMap = core_domain.BuildIdentifierMap(identifiers)
@@ -63,13 +63,13 @@ var apiCmd = &cobra.Command{
 
 		parsedDeps := cmd_util.GetDepsFromJson(depPath)
 
-		filterAPIs := api_domain.FilterApiByPrefix(apiPrefix, restApis)
+		filterAPIs := api_domain2.FilterApiByPrefix(apiPrefix, restApis)
 
 		analyser := call.NewCallGraph()
 		dotContent, counts := analyser.AnalysisByFiles(filterAPIs, parsedDeps, diMap)
 
 		if apiCmdConfig.Sort {
-			api_domain.SortAPIs(counts)
+			api_domain2.SortAPIs(counts)
 		}
 
 		if apiCmdConfig.ShowCount {

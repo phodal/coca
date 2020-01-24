@@ -4,19 +4,19 @@ import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
+	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/support_domain"
 	"github.com/phodal/coca/pkg/infrastructure/ast"
 	"github.com/phodal/coca/pkg/infrastructure/ast/api"
 	"path/filepath"
 )
 
-var allApis []api_domain.RestAPI
+var allApis []api_domain2.RestAPI
 
 type JavaApiApp struct {
 }
 
-func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.CodeDataStruct, diMap map[string]string) []api_domain.RestAPI {
+func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []core_domain.CodeDataStruct, identifiersMap map[string]core_domain.CodeDataStruct, diMap map[string]string) []api_domain2.RestAPI {
 	files := cocafile.GetJavaFiles(codeDir)
 	allApis = nil
 	for index := range files {

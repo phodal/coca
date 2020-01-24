@@ -7,8 +7,8 @@ import (
 	"github.com/phodal/coca/cocatest/testhelper"
 	"github.com/phodal/coca/pkg/application/api"
 	"github.com/phodal/coca/pkg/application/call"
+	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/support_domain"
 	"path/filepath"
 	"testing"
 )
@@ -51,7 +51,7 @@ func Test_ShouldBuildSuccessDataFromSourceData(t *testing.T) {
 	analyser := call.NewCallGraph()
 	dotContent, apis := analyser.AnalysisByFiles(restApis, callNodes, diMap)
 
-	api_domain.SortAPIs(apis)
+	api_domain2.SortAPIs(apis)
 	g.Expect(len(apis)).To(Equal(4))
 	g.Expect(apis[0].Size).To(Equal(4))
 	g.Expect(apis[1].Size).To(Equal(7))

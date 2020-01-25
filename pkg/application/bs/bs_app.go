@@ -84,15 +84,15 @@ func checkLongMethod(method bs_domain.BSFunction, node bs_domain.BSDataStruct, b
 
 	if methodLength > BS_METHOD_LENGTH {
 		description := "method length: " + strconv.Itoa(methodLength)
-		longMethod := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "longMethod", Description: description, Size: methodLength}
-		*badSmellList = append(*badSmellList, *longMethod)
+		longMethod := bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "longMethod", Description: description, Size: methodLength}
+		*badSmellList = append(*badSmellList, longMethod)
 	}
 }
 
 func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if onlyHaveGetterAndSetter && node.Type == "NodeName" && len(node.Functions) > 0 {
-		dataClass := &bs_domain.BadSmellModel{File: node.FilePath, Bs: "dataClass", Size: len(node.Functions)}
-		*badSmellList = append(*badSmellList, *dataClass)
+		dataClass := bs_domain.BadSmellModel{File: node.FilePath, Bs: "dataClass", Size: len(node.Functions)}
+		*badSmellList = append(*badSmellList, dataClass)
 	}
 }
 
@@ -115,21 +115,21 @@ func checkLargeClass(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadS
 func checkComplexIf(method bs_domain.BSFunction, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	for _, info := range method.FunctionBS.IfInfo {
 		if info.EndLine-info.StartLine >= BS_IF_LINES_LENGTH {
-			longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(info.StartLine), Bs: "complexCondition", Description: "complexCondition"}
-			*badSmellList = append(*badSmellList, *longParams)
+			longParams := bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(info.StartLine), Bs: "complexCondition", Description: "complexCondition"}
+			*badSmellList = append(*badSmellList, longParams)
 		}
 	}
 }
 
 func checkRepeatedSwitches(method bs_domain.BSFunction, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if method.FunctionBS.IfSize >= BS_IF_SWITCH_LENGTH {
-		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "ifSize", Size: method.FunctionBS.IfSize}
-		*badSmellList = append(*badSmellList, *longParams)
+		longParams := bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "ifSize", Size: method.FunctionBS.IfSize}
+		*badSmellList = append(*badSmellList, longParams)
 	}
 
 	if method.FunctionBS.SwitchSize >= BS_IF_SWITCH_LENGTH {
-		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "switchSize", Size: method.FunctionBS.SwitchSize}
-		*badSmellList = append(*badSmellList, *longParams)
+		longParams := bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "switchSize", Size: method.FunctionBS.SwitchSize}
+		*badSmellList = append(*badSmellList, longParams)
 	}
 }
 
@@ -137,8 +137,8 @@ func checkLongParameterList(method bs_domain.BSFunction, node bs_domain.BSDataSt
 	if len(method.Parameters) > BS_LONG_PARAS_LENGTH {
 		paramsJson, _ := json.Marshal(method.Parameters)
 		str := string(paramsJson[:])
-		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "longParameterList", Description: str, Size: len(method.Parameters)}
-		*badSmellList = append(*badSmellList, *longParams)
+		longParams := bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "longParameterList", Description: str, Size: len(method.Parameters)}
+		*badSmellList = append(*badSmellList, longParams)
 	}
 }
 

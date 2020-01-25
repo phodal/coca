@@ -15,7 +15,7 @@ var (
 	BS_IF_LINES_LENGTH   = 3
 )
 
-func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
+func AnalysisBadSmell(nodes []bs_domain.BSDataStruct) []bs_domain.BadSmellModel {
 	var badSmellList []bs_domain.BadSmellModel
 	for _, node := range nodes {
 		checkLazyElement(node, &badSmellList)
@@ -41,7 +41,7 @@ func AnalysisBadSmell(nodes []bs_domain.BsJClass) []bs_domain.BadSmellModel {
 	return badSmellList
 }
 
-func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkConnectedGraphCall(nodes []bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	var classNodes = map[string][]string{}
 	var classNodeMaps = map[string]bool{}
 	for _, node := range nodes {
@@ -58,7 +58,7 @@ func checkConnectedGraphCall(nodes []bs_domain.BsJClass, badSmellList *[]bs_doma
 }
 
 //fixme java lambda & recursive
-func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
+func getCalledClasses(class bs_domain.BSDataStruct, maps map[string]bool) []string {
 	var calledClassesMap = make(map[string]struct{})
 	var calledClasses []string
 	for _, methodCalled := range class.FunctionCalls {
@@ -73,13 +73,13 @@ func getCalledClasses(class bs_domain.BsJClass, maps map[string]bool) []string {
 	return calledClasses
 }
 
-func checkLazyElement(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkLazyElement(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if node.Type == "NodeName" && len(node.Functions) < 1 {
 		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.FilePath, Bs: "lazyElement"})
 	}
 }
 
-func checkLongMethod(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkLongMethod(method bs_domain.BSFunction, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	methodLength := method.Position.StopLine - method.Position.StartLine
 
 	if methodLength > BS_METHOD_LENGTH {
@@ -89,14 +89,14 @@ func checkLongMethod(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSme
 	}
 }
 
-func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if onlyHaveGetterAndSetter && node.Type == "NodeName" && len(node.Functions) > 0 {
 		dataClass := &bs_domain.BadSmellModel{File: node.FilePath, Bs: "dataClass", Size: len(node.Functions)}
 		*badSmellList = append(*badSmellList, *dataClass)
 	}
 }
 
-func checkRefusedBequest(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkRefusedBequest(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if node.Extend != "" {
 		if node.HaveCallParent() {
 			*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.FilePath, Bs: "refusedBequest"})
@@ -104,7 +104,7 @@ func checkRefusedBequest(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadS
 	}
 }
 
-func checkLargeClass(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkLargeClass(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	normalClassLength := withOutGetterSetterClass(node.Functions)
 	if node.Type == "NodeName" && normalClassLength >= BS_LARGE_LENGTH {
 		description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
@@ -112,8 +112,8 @@ func checkLargeClass(node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmell
 	}
 }
 
-func checkComplexIf(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
-	for _, info := range method.MethodBs.IfInfo {
+func checkComplexIf(method bs_domain.BSFunction, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
+	for _, info := range method.FunctionBS.IfInfo {
 		if info.EndLine-info.StartLine >= BS_IF_LINES_LENGTH {
 			longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(info.StartLine), Bs: "complexCondition", Description: "complexCondition"}
 			*badSmellList = append(*badSmellList, *longParams)
@@ -121,19 +121,19 @@ func checkComplexIf(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmel
 	}
 }
 
-func checkRepeatedSwitches(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
-	if method.MethodBs.IfSize >= BS_IF_SWITCH_LENGTH {
-		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "ifSize", Size: method.MethodBs.IfSize}
+func checkRepeatedSwitches(method bs_domain.BSFunction, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
+	if method.FunctionBS.IfSize >= BS_IF_SWITCH_LENGTH {
+		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "ifSize", Size: method.FunctionBS.IfSize}
 		*badSmellList = append(*badSmellList, *longParams)
 	}
 
-	if method.MethodBs.SwitchSize >= BS_IF_SWITCH_LENGTH {
-		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "switchSize", Size: method.MethodBs.SwitchSize}
+	if method.FunctionBS.SwitchSize >= BS_IF_SWITCH_LENGTH {
+		longParams := &bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: "repeatedSwitches", Description: "switchSize", Size: method.FunctionBS.SwitchSize}
 		*badSmellList = append(*badSmellList, *longParams)
 	}
 }
 
-func checkLongParameterList(method bs_domain.BsJMethod, node bs_domain.BsJClass, badSmellList *[]bs_domain.BadSmellModel) {
+func checkLongParameterList(method bs_domain.BSFunction, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if len(method.Parameters) > BS_LONG_PARAS_LENGTH {
 		paramsJson, _ := json.Marshal(method.Parameters)
 		str := string(paramsJson[:])
@@ -142,7 +142,7 @@ func checkLongParameterList(method bs_domain.BsJMethod, node bs_domain.BsJClass,
 	}
 }
 
-func withOutGetterSetterClass(fullMethods []bs_domain.BsJMethod) int {
+func withOutGetterSetterClass(fullMethods []bs_domain.BSFunction) int {
 	var normalMethodSize = 0
 	for _, method := range fullMethods {
 		if !(method.IsGetterSetter()) {

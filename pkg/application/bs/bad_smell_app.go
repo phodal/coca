@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 )
 
-var nodeInfos []bs_domain.BsJClass
+var nodeInfos []bs_domain.BSDataStruct
 
 type BadSmellApp struct {
 }
@@ -19,7 +19,7 @@ func NewBadSmellApp() *BadSmellApp {
 	return &BadSmellApp{}
 }
 
-func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
+func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BSDataStruct {
 	nodeInfos = nil
 	files := cocafile.GetJavaFiles(codeDir)
 	for index := range files {
@@ -44,7 +44,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BsJClass {
 	return &nodeInfos
 }
 
-func (j *BadSmellApp) IdentifyBadSmell(nodeInfos *[]bs_domain.BsJClass, ignoreRules []string) []bs_domain.BadSmellModel {
+func (j *BadSmellApp) IdentifyBadSmell(nodeInfos *[]bs_domain.BSDataStruct, ignoreRules []string) []bs_domain.BadSmellModel {
 	bsList := AnalysisBadSmell(*nodeInfos)
 
 	mapIgnoreRules := make(map[string]bool)

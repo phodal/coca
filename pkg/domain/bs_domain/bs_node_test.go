@@ -25,10 +25,10 @@ func Test_IsGetter(t *testing.T) {
 		Parameters: nil,
 	}
 
-	bs := &BsJMethod{
+	bs := &BSFunction{
 		CodeFunction: function,
-		MethodBody:   "",
-		MethodBs:     MethodBadSmellInfo{},
+		FunctionBody: "",
+		FunctionBS:   FunctionBSInfo{},
 	}
 
 	g.Expect(bs.IsGetterSetter()).To(Equal(true))
@@ -53,10 +53,10 @@ func Test_IsSetter(t *testing.T) {
 		Parameters: nil,
 	}
 
-	bs := &BsJMethod{
+	bs := &BSFunction{
 		CodeFunction: function,
-		MethodBody:   "",
-		MethodBs:     MethodBadSmellInfo{},
+		FunctionBody: "",
+		FunctionBS:   FunctionBSInfo{},
 	}
 
 	g.Expect(bs.IsGetterSetter()).To(Equal(true))

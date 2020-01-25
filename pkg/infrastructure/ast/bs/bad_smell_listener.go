@@ -18,7 +18,7 @@ var currentClzType string
 var currentClzExtends string
 var currentClzImplements []string
 
-var methods []bs_domain.BsJMethod
+var methods []bs_domain.BSFunction
 var methodCalls []core_domain.CodeCall
 
 var fields = make(map[string]string)
@@ -40,7 +40,7 @@ type BadSmellListener struct {
 	BaseJavaParserListener
 }
 
-func (s *BadSmellListener) GetNodeInfo() bs_domain.BsJClass {
+func (s *BadSmellListener) GetNodeInfo() bs_domain.BSDataStruct {
 	dataStruct := core_domain.CodeDataStruct{
 		Package:       currentPkg,
 		NodeName:      currentClz,
@@ -49,10 +49,10 @@ func (s *BadSmellListener) GetNodeInfo() bs_domain.BsJClass {
 		Implements:    currentClzImplements,
 		FunctionCalls: methodCalls,
 	}
-	return bs_domain.BsJClass{
+	return bs_domain.BSDataStruct{
 		CodeDataStruct: dataStruct,
 		Functions:      methods,
-		ClassBS:        currentClassBs,
+		DataStructBS:   currentClassBs,
 	}
 }
 
@@ -145,10 +145,10 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 		Position:   position,
 	}
 
-	method := &bs_domain.BsJMethod{
+	method := &bs_domain.BSFunction{
 		CodeFunction: function,
-		MethodBody:   methodBody,
-		MethodBs:     methodBSInfo,
+		FunctionBody: methodBody,
+		FunctionBS:   methodBSInfo,
 	}
 
 	methods = append(methods, *method)
@@ -224,10 +224,10 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 		Position:   position,
 	}
 
-	method := &bs_domain.BsJMethod{
+	method := &bs_domain.BSFunction{
 		CodeFunction: function,
-		MethodBody:   methodBody,
-		MethodBs:     methodBadSmellInfo,
+		FunctionBody: methodBody,
+		FunctionBS:   methodBadSmellInfo,
 	}
 	methods = append(methods, *method)
 }
@@ -247,7 +247,7 @@ func getModifier(ctx *MethodDeclarationContext) string {
 	return modifier
 }
 
-func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo bs_domain.MethodBadSmellInfo) bs_domain.MethodBadSmellInfo {
+func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo bs_domain.FunctionBSInfo) bs_domain.FunctionBSInfo {
 	methodBody := context.MethodBody()
 	blockContext := methodBody.GetChild(0)
 	if reflect.TypeOf(blockContext).String() == "*parser.BlockContext" {
@@ -266,7 +266,7 @@ func buildMethodBSInfo(context *MethodDeclarationContext, bsInfo bs_domain.Metho
 	return bsInfo
 }
 
-func countMethodIfSwitch(statement IBlockStatementContext, bsInfo *bs_domain.MethodBadSmellInfo) {
+func countMethodIfSwitch(statement IBlockStatementContext, bsInfo *bs_domain.FunctionBSInfo) {
 	statementCtx := statement.GetChild(0).(*StatementContext)
 	if (reflect.TypeOf(statementCtx.GetChild(1)).String()) == "*parser.ParExpressionContext" {
 		if statementCtx.GetChild(0).(antlr.ParseTree).GetText() == "if" {

@@ -4,21 +4,21 @@ import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
-type BsJClass struct {
+type BSDataStruct struct {
 	core_domain.CodeDataStruct
 
-	Functions []BsJMethod
-	ClassBS   ClassBadSmellInfo
+	Functions    []BSFunction
+	DataStructBS ClassBadSmellInfo
 }
 
-type BsJMethod struct {
+type BSFunction struct {
 	core_domain.CodeFunction
 
-	MethodBody string
-	MethodBs   MethodBadSmellInfo
+	FunctionBody string
+	FunctionBS   FunctionBSInfo
 }
 
-type MethodBadSmellInfo struct {
+type FunctionBSInfo struct {
 	IfSize     int
 	SwitchSize int
 	IfInfo     []IfParInfo
@@ -36,8 +36,8 @@ func NewIfPairInfo() IfParInfo {
 	}
 }
 
-func NewMethodBadSmellInfo() MethodBadSmellInfo {
-	return MethodBadSmellInfo{
+func NewMethodBadSmellInfo() FunctionBSInfo {
+	return FunctionBSInfo{
 		IfSize:     0,
 		SwitchSize: 0,
 		IfInfo:     nil,
@@ -49,14 +49,14 @@ type ClassBadSmellInfo struct {
 	PublicVarSize int
 }
 
-func NewJFullClassNode() BsJClass {
+func NewJFullClassNode() BSDataStruct {
 	info := ClassBadSmellInfo{0, 0}
-	return BsJClass{
-		ClassBS: info,
+	return BSDataStruct{
+		DataStructBS: info,
 	}
 }
 
-func (b *BsJClass) HaveCallParent() bool {
+func (b *BSDataStruct) HaveCallParent() bool {
 	hasCallParentMethod := false
 	for _, methodCall := range b.FunctionCalls {
 		if methodCall.NodeName == b.Extend {

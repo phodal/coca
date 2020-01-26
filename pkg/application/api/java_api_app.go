@@ -6,8 +6,8 @@ import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/api"
 	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/ast_api_java"
 	"path/filepath"
 )
 
@@ -28,7 +28,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []core_domain.CodeD
 		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
-		listener := api.NewJavaAPIListener(identifiersMap, diMap)
+		listener := ast_api_java.NewJavaAPIListener(identifiersMap, diMap)
 		listener.AppendClasses(parsedDeps)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

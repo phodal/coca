@@ -3,14 +3,14 @@ package cocafile
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/pkg/infrastructure/ast"
-	"github.com/phodal/coca/pkg/infrastructure/ast/identifier"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/java_identify"
 	"testing"
 )
 
 func TestJavaCallApp_ProcessStringWorks(t *testing.T) {
 	g := NewGomegaWithT(t)
-	parser := ast.ProcessJavaString(`
+	parser := ast_java.ProcessJavaString(`
 package com.phodal.coca.analysis.identifier.model;
 
 public class DataClass {
@@ -24,7 +24,7 @@ public class DataClass {
 `)
 
 	context := parser.CompilationUnit()
-	listener := identifier.NewJavaIdentifierListener()
+	listener := java_identify.NewJavaIdentifierListener()
 
 	antlr.NewParseTreeWalker().Walk(listener, context)
 

@@ -4,7 +4,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ts"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_typescript"
 )
 
 func processStream(is antlr.CharStream) *parser.TypeScriptParser {
@@ -30,7 +30,7 @@ func (t *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Program()
 
-	listener := ts.NewTypeScriptIdentListener(fileName)
+	listener := ast_typescript.NewTypeScriptIdentListener(fileName)
 	antlr.NewParseTreeWalker().Walk(listener, context)
 
 	return listener.GetNodeInfo()

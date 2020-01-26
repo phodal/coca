@@ -7,7 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	base2 "github.com/phodal/coca/pkg/application/refactor/base"
 	models2 "github.com/phodal/coca/pkg/application/refactor/base/models"
-	"github.com/phodal/coca/pkg/infrastructure/ast"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
 	"io"
 	"io/ioutil"
 	"log"
@@ -41,7 +41,7 @@ func (j *MoveClassApp) Analysis() []models2.JMoveStruct {
 
 		currentFile, _ = filepath.Abs(file)
 
-		parser := ast.ProcessJavaFile(file)
+		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

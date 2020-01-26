@@ -3,7 +3,7 @@ package sql
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/infrastructure/ast/sql"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_sql"
 	"github.com/phodal/coca/pkg/infrastructure/xmlparse"
 	parser2 "github.com/phodal/coca/languages/sql"
 	"os"
@@ -19,7 +19,7 @@ func NewSqlIdentifierApp() SqlIdentifierApp {
 	return SqlIdentifierApp{}
 }
 
-func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SQLNode {
+func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []ast_sql.SQLNode {
 	xmlFiles := (*SqlIdentifierApp)(nil).xmlFiles(codeDir)
 	for _, xmlFile := range xmlFiles {
 		xmlFile, err := os.Open(xmlFile)
@@ -35,7 +35,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SQLNode {
 		}
 	}
 
-	var infos []sql.SQLNode
+	var infos []ast_sql.SQLNode
 	files := (*SqlIdentifierApp)(nil).sqlFiles(codeDir)
 	for index := range files {
 		file := files[index]
@@ -43,7 +43,7 @@ func (j *SqlIdentifierApp) AnalysisPath(codeDir string) []sql.SQLNode {
 		parser := (*SqlIdentifierApp)(nil).processFile(file)
 		context := parser.Parse()
 
-		listener := sql.NewSqlIdentifierListener()
+		listener := ast_sql.NewSqlIdentifierListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

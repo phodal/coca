@@ -1,11 +1,11 @@
-package pyast
+package ast_python
 
 import (
 	"bytes"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/python"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_util"
+	"github.com/phodal/coca/pkg/infrastructure/ast/astutil"
 	"io"
 	"os"
 	"strings"
@@ -80,7 +80,7 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 		InOutProperties: nil,
 	}
 
-	ctxIndex := ast_util.GetNodeIndex(ctx)
+	ctxIndex := astutil.GetNodeIndex(ctx)
 	if ctxIndex > 0 {
 		decorators := BuildDecoratorsByIndex(ctx, ctxIndex)
 		dataStruct.Annotations = decorators
@@ -101,7 +101,7 @@ func (s *PythonIdentListener) EnterFuncdef(ctx *parser.FuncdefContext) {
 		Name: ctx.Name().GetText(),
 	}
 
-	ctxIndex := ast_util.GetNodeIndex(ctx)
+	ctxIndex := astutil.GetNodeIndex(ctx)
 	if ctxIndex > 0 {
 		decorators := BuildDecoratorsByIndex(ctx, ctxIndex)
 		function.Annotations = decorators

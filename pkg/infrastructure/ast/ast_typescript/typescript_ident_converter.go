@@ -1,10 +1,10 @@
-package ts
+package ast_typescript
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_util"
+	"github.com/phodal/coca/pkg/infrastructure/ast/astutil"
 )
 
 func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *core_domain.CodeFunction {
@@ -12,7 +12,7 @@ func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *core_dom
 		Name: "constructor",
 	}
 
-	ast_util.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+	astutil.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if ctx.AccessibilityModifier() != nil {
 		modifier := ctx.AccessibilityModifier().GetText()

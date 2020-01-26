@@ -1,4 +1,4 @@
-package cocago
+package ast_go
 
 import (
 	"fmt"

@@ -5,8 +5,8 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain/bs_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast"
-	"github.com/phodal/coca/pkg/infrastructure/ast/bs"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/phodal/coca/pkg/infrastructure/ast/bs_java"
 	"path/filepath"
 )
 
@@ -29,10 +29,10 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BSDataStruct {
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := ast.ProcessJavaFile(file)
+		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
-		listener := bs.NewBadSmellListener()
+		listener := bs_java.NewBadSmellListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

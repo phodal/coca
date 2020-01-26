@@ -1,4 +1,4 @@
-package ast
+package ast_java
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"

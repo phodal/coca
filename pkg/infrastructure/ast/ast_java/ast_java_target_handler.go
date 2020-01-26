@@ -1,4 +1,4 @@
-package full
+package ast_java
 
 import (
 	"github.com/phodal/coca/languages/java"

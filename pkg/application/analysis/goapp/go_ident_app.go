@@ -2,7 +2,7 @@ package goapp
 
 import (
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_go"
 	"io/ioutil"
 	"strings"
 )
@@ -30,7 +30,7 @@ func (g *GoIdentApp) AnalysisPackageManager(path string) core_domain.CodePackage
 }
 
 func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
-	parser := cocago.NewCocagoParser()
+	parser := ast_go.NewCocagoParser()
 	var codeMembers []core_domain.CodeMember
 	if g.Extensions != nil {
 		codeMembers = g.Extensions.([]core_domain.CodeMember)
@@ -42,7 +42,7 @@ func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile
 }
 
 func (g *GoIdentApp) IdentAnalysis(code string, fileName string) []core_domain.CodeMember {
-	parser := cocago.NewCocagoParser()
+	parser := ast_go.NewCocagoParser()
 	codeFile := parser.IdentAnalysis(code, fileName)
 	return codeFile.Members
 }

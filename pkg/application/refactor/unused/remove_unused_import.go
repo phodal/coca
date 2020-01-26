@@ -6,7 +6,7 @@ import (
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	base2 "github.com/phodal/coca/pkg/application/refactor/base"
 	models2 "github.com/phodal/coca/pkg/application/refactor/base/models"
-	"github.com/phodal/coca/pkg/infrastructure/ast"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -36,7 +36,7 @@ func (j *RemoveUnusedImportApp) Analysis() []models2.JFullIdentifier {
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := ast.ProcessJavaFile(file)
+		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
 		node := models2.NewJFullIdentifier()

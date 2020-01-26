@@ -1,4 +1,4 @@
-package bs
+package bs_java
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"

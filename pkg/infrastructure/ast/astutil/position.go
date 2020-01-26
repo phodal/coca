@@ -1,4 +1,4 @@
-package ast_util
+package astutil
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"

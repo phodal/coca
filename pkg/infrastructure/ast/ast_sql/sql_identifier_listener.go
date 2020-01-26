@@ -1,4 +1,4 @@
-package sql
+package ast_sql
 
 import (
 	"fmt"

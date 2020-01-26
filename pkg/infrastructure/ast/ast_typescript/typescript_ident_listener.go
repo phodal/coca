@@ -1,10 +1,10 @@
-package ts
+package ast_typescript
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	parser "github.com/phodal/coca/languages/ts"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_util"
+	"github.com/phodal/coca/pkg/infrastructure/ast/astutil"
 	"strings"
 )
 
@@ -235,7 +235,7 @@ func (s *TypeScriptIdentListener) EnterFunctionDeclaration(ctx *parser.FunctionD
 	callSignatureContext := ctx.CallSignature().(*parser.CallSignatureContext)
 	FillMethodFromCallSignature(callSignatureContext, function)
 
-	ast_util.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
+	astutil.AddFunctionPosition(function, ctx.GetChild(0).GetParent().(*antlr.BaseParserRuleContext))
 
 	if s.currentDataStruct == nil {
 		s.currentDataStruct = &core_domain.CodeDataStruct{}

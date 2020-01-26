@@ -5,8 +5,7 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast"
-	"github.com/phodal/coca/pkg/infrastructure/ast/full"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
 	"path/filepath"
 )
 
@@ -34,10 +33,10 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
 
-		parser := ast.ProcessJavaFile(file)
+		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
-		listener := full.NewJavaFullListener(identMap, file)
+		listener := ast_java.NewJavaFullListener(identMap, file)
 		listener.AppendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)

@@ -1,4 +1,4 @@
-package cocago
+package ast_go
 
 func getRegressionFile(name string) string {
 	return "testdata/regression/" + name

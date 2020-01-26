@@ -4,8 +4,8 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast"
-	"github.com/phodal/coca/pkg/infrastructure/ast/identifier"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/java_identify"
 )
 
 
@@ -25,10 +25,10 @@ func (j *JavaIdentifierApp) AnalysisFiles(files []string) []core_domain.CodeData
 	var nodeInfos []core_domain.CodeDataStruct = nil
 
 	for _, file := range files {
-		parser := ast.ProcessJavaFile(file)
+		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()
 
-		listener := identifier.NewJavaIdentifierListener()
+		listener := java_identify.NewJavaIdentifierListener()
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

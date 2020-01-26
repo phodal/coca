@@ -1,10 +1,10 @@
-package identifier
+package java_identify
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"github.com/phodal/coca/languages/java"
 	"github.com/phodal/coca/pkg/domain/core_domain"
-	common_listener2 "github.com/phodal/coca/pkg/infrastructure/ast/common_listener"
+	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/common_listener"
 	"reflect"
 	"strings"
 )
@@ -115,7 +115,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
-		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
 	position := core_domain.CodePosition{
@@ -153,7 +153,7 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
-		common_listener2.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
 	}
 
 	position := core_domain.CodePosition{
@@ -195,7 +195,7 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 	}
 
 	if !hasEnterClass {
-		annotation := common_listener2.BuildAnnotation(ctx)
+		annotation := common_listener.BuildAnnotation(ctx)
 		currentNode.Annotations = append(currentNode.Annotations, annotation)
 	}
 }

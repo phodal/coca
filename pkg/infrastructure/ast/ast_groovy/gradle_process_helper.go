@@ -1,4 +1,4 @@
-package ast
+package ast_groovy
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"

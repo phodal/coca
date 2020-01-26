@@ -65,3 +65,20 @@ func (b *BSDataStruct) HaveCallParent() bool {
 	}
 	return hasCallParentMethod
 }
+
+//fixme java lambda & recursive
+func GetCalledClasses(class BSDataStruct, maps map[string]bool) []string {
+	var calledClassesMap = make(map[string]struct{})
+	var calledClasses []string
+	for _, methodCalled := range class.FunctionCalls {
+		if methodCalled.NodeName == "" || !maps[methodCalled.BuildClassFullName()] || class.GetClassFullName() == methodCalled.BuildClassFullName() {
+			continue
+		}
+		calledClassesMap[methodCalled.BuildClassFullName()] = struct{}{}
+	}
+	for key := range calledClassesMap {
+		calledClasses = append(calledClasses, key)
+	}
+	return calledClasses
+}
+

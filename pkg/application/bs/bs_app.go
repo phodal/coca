@@ -92,14 +92,14 @@ func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BSDataStruct, b
 
 func checkRefusedBequest(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	if node.Extend != "" {
-		if node.HaveCallParent() {
+		if node.HasCallSuper() {
 			*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.FilePath, Bs: SMELL_REFUSED_BEQUEST})
 		}
 	}
 }
 
 func checkLargeClass(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
-	normalClassLength := withOutGetterSetterClass(node.Functions)
+	normalClassLength := bs_domain.WithoutGetterSetterClass(node.Functions)
 	if node.Type == "NodeName" && normalClassLength >= BS_LARGE_LENGTH {
 		description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
 		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.FilePath, Bs: SMELL_LARGE_CLASS, Description: description, Size: normalClassLength})
@@ -134,15 +134,4 @@ func checkLongParameterList(method bs_domain.BSFunction, node bs_domain.BSDataSt
 		longParams := bs_domain.BadSmellModel{File: node.FilePath, Line: strconv.Itoa(method.Position.StartLine), Bs: SMELL_LONG_PARAMETER_LIST, Description: str, Size: len(method.Parameters)}
 		*badSmellList = append(*badSmellList, longParams)
 	}
-}
-
-func withOutGetterSetterClass(fullMethods []bs_domain.BSFunction) int {
-	var normalMethodSize = 0
-	for _, method := range fullMethods {
-		if !(method.IsGetterSetter()) {
-			normalMethodSize++
-		}
-	}
-
-	return normalMethodSize
 }

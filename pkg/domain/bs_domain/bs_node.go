@@ -56,14 +56,15 @@ func NewJFullClassNode() BSDataStruct {
 	}
 }
 
-func (b *BSDataStruct) HaveCallParent() bool {
-	hasCallParentMethod := false
+func (b *BSDataStruct) HasCallSuper() bool {
+	hasCallSuperMethod := false
 	for _, methodCall := range b.FunctionCalls {
 		if methodCall.NodeName == b.Extend {
-			hasCallParentMethod = true
+			hasCallSuperMethod = true
 		}
 	}
-	return hasCallParentMethod
+
+	return hasCallSuperMethod
 }
 
 //fixme java lambda & recursive
@@ -79,6 +80,17 @@ func GetCalledClasses(class BSDataStruct, maps map[string]bool) []string {
 	for key := range calledClassesMap {
 		calledClasses = append(calledClasses, key)
 	}
+
 	return calledClasses
 }
 
+func WithoutGetterSetterClass(fullMethods []BSFunction) int {
+	var normalMethodSize = 0
+	for _, method := range fullMethods {
+		if !(method.IsGetterSetter()) {
+			normalMethodSize++
+		}
+	}
+
+	return normalMethodSize
+}

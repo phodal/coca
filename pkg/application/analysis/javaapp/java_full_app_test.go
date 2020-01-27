@@ -53,7 +53,7 @@ func getCallNodes(codePath string) []core_domain.CodeDataStruct {
 func TestLambda_Express(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/lambda"
+	codePath := "../../../../_fixtures/java/lambda"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)

@@ -8,7 +8,7 @@ import (
 func TestEvaluate(t *testing.T) {
 	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
-		Cmd:    "analysis -p ../_fixtures/arch",
+		Cmd:    "analysis -p ../_fixtures/java/arch",
 		Golden: "",
 	}}
 	RunTestCmd(t, analysis)

@@ -209,7 +209,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 func Test_BuilderCallSplitIssue(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/abug/BuilderCallSplitIssue.java"
+	codePath := "../../../../_fixtures/java/regression/BuilderCallSplitIssue.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -228,7 +228,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 func Test_InnerClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/abug/InnerClass.java"
+	codePath := "../../../../_fixtures/java/regression/InnerClass.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -241,7 +241,7 @@ func Test_InnerClass(t *testing.T) {
 func Test_DoubleClass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/abug/DoubleClass.java"
+	codePath := "../../../../_fixtures/java/regression/DoubleClass.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)

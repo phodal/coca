@@ -38,9 +38,8 @@ func ParseXML(r io.Reader) *XMLNode {
 		}
 		switch t := token.(type) {
 		case xml.StartElement: //tag start
-			elmt := xml.StartElement(t)
-			name := elmt.Name.Local
-			attr := elmt.Attr
+			name := t.Name.Local
+			attr := t.Attr
 			attrMap := make(map[string]xml.Attr)
 			for _, val := range attr {
 				attrMap[val.Name.Local] = val
@@ -79,9 +78,7 @@ func ParseXML(r io.Reader) *XMLNode {
 		case xml.CharData: //tag content
 			if st.Len() > 0 {
 				n := st.Pop().(XMLNode)
-
-				bytes := xml.CharData(t)
-				content := strings.TrimSpace(string(bytes))
+				content := strings.TrimSpace(string(t))
 				if content != "" {
 					e := element{
 						ElementType: eleTpText,

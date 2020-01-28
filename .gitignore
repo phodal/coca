@@ -64,7 +64,7 @@ api.svg
 coca_reporter
 *.coverprofile
 bug
-_fixtures/tbs/tbs
+_fixtures/tbs/demo-tbs-java-project
 _fixtures/refactor/move/b/ImportForB.java
 !wasm/demo
 wasm/demo/coca.wasm

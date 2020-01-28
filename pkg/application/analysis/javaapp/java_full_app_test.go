@@ -174,7 +174,7 @@ func Test_ShouldGetMethodCreators(t *testing.T) {
 func Test_ShouldNotGetCreators(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath := "../../../../_fixtures/tbs/usecases/RedundantAssertionTest.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -190,7 +190,7 @@ func Test_ShouldNotGetCreators(t *testing.T) {
 func Test_ShouldGetMethodCallParameters(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/tbs/code/RedundantAssertionTest.java"
+	codePath := "../../../../_fixtures/tbs/usecases/RedundantAssertionTest.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)

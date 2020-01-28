@@ -16,13 +16,16 @@ func TestNewTodoApp(t *testing.T) {
 	stodos := app.AnalysisPath(codePath)
 	todos := app.BuildWithGitHistory(stodos)
 
-	g.Expect(todos[0].Line).To(Equal("6"))
+	// todo: add suport for python
+	g.Expect(len(todos)).To(Equal(3))
+	//fmt.Println(todos)
+	g.Expect(todos[0].Line).To(Equal("3"))
 	//g.Expect(todos[0].Date).To(Equal("2019-12-28")) test: will failure in CI
-	g.Expect(todos[0].FileName).To(ContainSubstring(filepath.FromSlash("_fixtures/todo/Toodo.java")))
-	g.Expect(todos[0].Author).To(ContainSubstring("Phodal Huang"))
-	g.Expect(todos[1].Line).To(Equal("13"))
-	g.Expect(todos[1].Message[0]).To(Equal("add more content"))
-	g.Expect(todos[1].Assignee).To(Equal("phodal"))
+	g.Expect(todos[1].FileName).To(ContainSubstring(filepath.FromSlash("_fixtures/todo/Todo.java")))
+	g.Expect(todos[1].Author).To(ContainSubstring("Phodal Huang"))
+	g.Expect(todos[1].Line).To(Equal("6"))
+	g.Expect(todos[2].Message[0]).To(Equal("add more content"))
+	g.Expect(todos[2].Assignee).To(Equal("phodal"))
 }
 
 func Test_ShouldReturnNullWhenNotTodo(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 func TestConcept(t *testing.T) {
 	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
-		Cmd:    "analysis -p ../_fixtures/java/examples/api",
+		Cmd:    "analysis -p ../_fixtures/grammar/java/examples/api",
 		Golden: "",
 	}}
 	RunTestCmd(t, analysis)

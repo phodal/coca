@@ -3,7 +3,7 @@
     "Package": "com.phodal.coca.analysis",
     "NodeName": "JavaCallApp",
     "Type": "",
-    "Path": "_fixtures/java/examples/poly/poly.java",
+    "Path": "_fixtures/grammar/java/examples/poly/poly.java",
     "Fields": [
       {
         "Type": "JavaDaoParser",

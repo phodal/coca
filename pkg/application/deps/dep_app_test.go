@@ -70,7 +70,7 @@ func Test_ShouldReturnNilWhenErrorPath(t *testing.T) {
 func Test_ShouldCountDeps_WhenHadClassNodes(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../_fixtures/java/examples/api/"
+	codePath := "../../../_fixtures/grammar/java/examples/api/"
 	classNodes, _, _ := testhelper.BuildAnalysisDeps(codePath)
 
 	depApp := NewDepApp()

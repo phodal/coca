@@ -10,7 +10,7 @@ func TestJavaIdentifierApp_AnalysisPath(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	identApp := NewSqlIdentifierApp()
-	results := identApp.AnalysisPath(filepath.FromSlash("../../../_fixtures/sql"))
+	results := identApp.AnalysisPath(filepath.FromSlash("../../../_fixtures/grammar/sql"))
 
 	g.Expect(len(results)).To(Equal(1))
 }

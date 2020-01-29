@@ -70,7 +70,7 @@ func TestLambda_Express(t *testing.T) {
 func TestInterface(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/grammar/interface"
+	codePath := "../../../../_fixtures/grammar/java/interface"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -88,7 +88,7 @@ func TestInterface(t *testing.T) {
 func TestAnnotation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath := "../../../../_fixtures/grammar/java/regression/HostDependentDownloadableContribution.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -142,7 +142,7 @@ func Test_ShouldHaveOnlyOneAnnotationWithMultipleSame(t *testing.T) {
 func Test_CreatorAnnotation(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath := "../../../../_fixtures/grammar/java/regression/HostDependentDownloadableContribution.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)
@@ -158,7 +158,7 @@ func Test_CreatorAnnotation(t *testing.T) {
 func Test_ShouldGetMethodCreators(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	codePath := "../../../../_fixtures/grammar/HostDependentDownloadableContribution.java"
+	codePath := "../../../../_fixtures/grammar/java/regression/HostDependentDownloadableContribution.java"
 	codePath = filepath.FromSlash(codePath)
 
 	callNodes := getCallNodes(codePath)

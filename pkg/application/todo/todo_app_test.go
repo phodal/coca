@@ -17,8 +17,7 @@ func TestNewTodoApp(t *testing.T) {
 	todos := app.BuildWithGitHistory(stodos)
 
 	// todo: add suport for python
-	g.Expect(len(todos)).To(Equal(3))
-	//fmt.Println(todos)
+	g.Expect(len(todos)).To(Equal(4))
 	g.Expect(todos[0].Line).To(Equal("3"))
 	//g.Expect(todos[0].Date).To(Equal("2019-12-28")) test: will failure in CI
 	g.Expect(todos[1].FileName).To(ContainSubstring(filepath.FromSlash("_fixtures/todo/Todo.java")))

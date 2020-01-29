@@ -24,7 +24,8 @@ func ParseComment(token antlr.Token, filename string) *TODO {
 	comment := token.GetText()
 
 	var t = strings.TrimSpace(comment)
-	if strings.HasPrefix(t, "//") || strings.HasPrefix(t, "/*") || strings.HasPrefix(t, "*/") {
+	// todo: add todo list
+	if strings.HasPrefix(t, "//") || strings.HasPrefix(t, "/*") || strings.HasPrefix(t, "*/") || strings.HasPrefix(t, "#") {
 		t = strings.TrimSpace(t[2:])
 	}
 

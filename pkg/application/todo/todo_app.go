@@ -89,6 +89,7 @@ func buildComments(path string) []*astitodo.TODO {
 				token.GetTokenType() == LINE_COMMENT ||
 				token.GetTokenType() == PYTHON_COMMENT {
 
+				fmt.Println(token)
 				todo := astitodo.ParseComment(token, file)
 				if todo != nil {
 					todos = append(todos, todo)

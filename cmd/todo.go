@@ -7,7 +7,6 @@ import (
 	"github.com/phodal/coca/pkg/application/todo"
 	"github.com/spf13/cobra"
 	"strconv"
-	"strings"
 )
 
 type RootCmdConfig struct {
@@ -42,7 +41,7 @@ var todoCmd = &cobra.Command{
 			table := cmd_util.NewOutput(output)
 			table.SetHeader([]string{"Date", "Author", "Messages", "FileName", "Line"})
 			for _, todo := range gitTodos {
-				table.Append([]string{todo.Date, todo.Author, strings.Join(todo.Message, "\n"), todo.FileName, todo.Line})
+				table.Append([]string{todo.Date, todo.Author, todo.Message, todo.FileName, todo.Line})
 			}
 
 			table.Render()
@@ -50,7 +49,7 @@ var todoCmd = &cobra.Command{
 			table := cmd_util.NewOutput(output)
 			table.SetHeader([]string{"Filename", "Messages", "Assignee", "Line"})
 			for _, todo := range todos {
-				table.Append([]string{todo.Filename, todo.Message[0], todo.Assignee, strconv.Itoa(todo.Line)})
+				table.Append([]string{todo.Filename, todo.Message, todo.Assignee, strconv.Itoa(todo.Line)})
 			}
 
 			table.Render()

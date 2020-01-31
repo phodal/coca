@@ -28,7 +28,7 @@ type TodoDetail struct {
 	Author   string
 	Line     string
 	Assignee string
-	Message  []string
+	Message  string
 }
 
 func (a TodoApp) AnalysisPath(path string) []*astitodo.TODO {

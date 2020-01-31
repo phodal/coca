@@ -3,7 +3,5 @@ Todos Count 4
 |-----------------------------|--------------------------|----------|------|
 | ../_fixtures/todo/Todo.go   | add todo test for golang |          |    3 |
 | ../_fixtures/todo/Todo.java | update                   |          |    6 |
-|                             |     *                    |          |      |
-|                             |    */                    |          |      |
 | ../_fixtures/todo/Todo.java | add more content         | phodal   |   13 |
 | ../_fixtures/todo/todo.py   | add todo for python      |          |    1 |

@@ -1,6 +1,7 @@
 package astitodo
 
 import (
+	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"regexp"
 	"strings"
@@ -12,7 +13,7 @@ type TODO struct {
 	Assignee string
 	Filename string
 	Line     int
-	Message  []string
+	Message  string
 }
 
 var (
@@ -48,12 +49,21 @@ func ParseComment(token antlr.Token, filename string) *TODO {
 		}
 
 		// Append text
-		todo.Message = append(todo.Message, t)
+		todo.Message = handleForMultipleLine(t)
 
 		return todo
 	}
 
 	return nil
+}
+
+// todo: handle for letter
+func handleForMultipleLine(t string) string {
+	fmt.Println(t)
+	t = strings.ReplaceAll(t, "*/", " ")
+	t = strings.ReplaceAll(t, "*", " ")
+	t = strings.ReplaceAll(t, "\n", " ")
+	return t
 }
 
 func IsTodoIdentifier(s string) (int, bool) {

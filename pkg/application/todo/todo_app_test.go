@@ -23,7 +23,7 @@ func TestNewTodoApp(t *testing.T) {
 	g.Expect(todos[1].FileName).To(ContainSubstring(filepath.FromSlash("_fixtures/todo/Todo.java")))
 	g.Expect(todos[1].Author).To(ContainSubstring("Phodal Huang"))
 	g.Expect(todos[1].Line).To(Equal("6"))
-	g.Expect(todos[2].Message[0]).To(Equal("add more content"))
+	g.Expect(todos[2].Message).To(Equal("add more content"))
 	g.Expect(todos[2].Assignee).To(Equal("phodal"))
 }
 

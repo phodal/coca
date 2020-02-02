@@ -1,7 +1,6 @@
 package astitodo
 
 import (
-	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	"regexp"
 	"strings"
@@ -59,7 +58,6 @@ func ParseComment(token antlr.Token, filename string) *TODO {
 
 // todo: handle for letter
 func handleForMultipleLine(t string) string {
-	fmt.Println(t)
 	t = strings.ReplaceAll(t, "*/", " ")
 	t = strings.ReplaceAll(t, "*", " ")
 	t = strings.ReplaceAll(t, "\n", " ")

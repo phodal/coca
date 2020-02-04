@@ -501,7 +501,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	callee := ctx.GetChild(0).(antlr.ParseTree).GetText()
 
 	BuildMethodCallLocation(&jMethodCall, ctx, callee)
-	BuildMethodCallMethods(&jMethodCall, callee, targetType, ctx)
+	BuildMethodCallMethod(&jMethodCall, callee, targetType, ctx)
 	BuildMethodCallParameters(&jMethodCall, ctx)
 
 	sendResultToMethodCallMap(jMethodCall)

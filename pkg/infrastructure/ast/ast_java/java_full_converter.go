@@ -22,7 +22,7 @@ func BuildMethodParameters(parameters parser.IFormalParametersContext) []core_do
 	return methodParams
 }
 
-func BuildMethodCallMethods(jMethodCall *core_domain.CodeCall, callee string, targetType string, ctx *parser.MethodCallContext) {
+func BuildMethodCallMethod(jMethodCall *core_domain.CodeCall, callee string, targetType string, ctx *parser.MethodCallContext) {
 	methodName := callee
 	packageName := currentPkg
 

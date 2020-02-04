@@ -16,7 +16,7 @@ func BuildMethodParameters(parameters parser.IFormalParametersContext) []core_do
 		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 
 		localVars[paramValue] = paramType
-		parameter := core_domain.NewCodeParameter(paramValue, paramType)
+		parameter := core_domain.NewCodeParameter(paramType, paramValue)
 		methodParams = append(methodParams, parameter)
 	}
 	return methodParams
@@ -65,7 +65,7 @@ func BuildMethodCallParameters(jMethodCall *core_domain.CodeCall, ctx *parser.Me
 		for _, expression := range ctx.ExpressionList().(*parser.ExpressionListContext).AllExpression() {
 			expressionCtx := expression.(*parser.ExpressionContext)
 
-			parameter := core_domain.NewCodeParameter(expressionCtx.GetText(), "")
+			parameter := core_domain.NewCodeParameter("", expressionCtx.GetText())
 			parameters = append(parameters, parameter)
 		}
 		jMethodCall.Parameters = parameters

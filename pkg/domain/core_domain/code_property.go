@@ -9,7 +9,7 @@ type CodeProperty struct {
 	Parameters  []CodeProperty
 }
 
-func NewCodeParameter(typeValue string, typeType string) CodeProperty {
+func NewCodeParameter(typeType string, typeValue string) CodeProperty {
 	return CodeProperty{
 		TypeValue: typeValue,
 		TypeType:  typeType,

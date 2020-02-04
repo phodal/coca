@@ -208,10 +208,6 @@ func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.Interface
 	updateMethod(method)
 }
 
-func (s *JavaFullListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
-
-}
-
 func (s *JavaFullListener) EnterFormalParameter(ctx *parser.FormalParameterContext) {
 	formalParameters[ctx.VariableDeclaratorId().GetText()] = ctx.TypeType().GetText()
 }

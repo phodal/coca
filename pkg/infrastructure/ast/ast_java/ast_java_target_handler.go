@@ -7,17 +7,16 @@ import (
 )
 
 func ParseTargetType(targetCtx string) string {
-	targetVar := targetCtx
-	targetType := targetVar
+	targetType := targetCtx
 
 	//TODO: update this reflect
 	typeOf := reflect.TypeOf(targetCtx).String()
 	if strings.HasSuffix(typeOf, "MethodCallContext") {
 		targetType = currentClz
 	} else {
-		fieldType := mapFields[targetVar]
-		formalType := formalParameters[targetVar]
-		localVarType := localVars[targetVar]
+		fieldType := mapFields[targetCtx]
+		formalType := formalParameters[targetCtx]
+		localVarType := localVars[targetCtx]
 		if fieldType != "" {
 			targetType = fieldType
 		} else if formalType != "" {

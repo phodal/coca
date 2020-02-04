@@ -6,7 +6,7 @@ type CodeField struct {
 	Modifiers []string
 }
 
-func NewJField(typeValue string, typeType string, modifier string) CodeField {
+func NewJField(typeType string, typeValue string, modifier string) CodeField {
 	property := CodeField{
 		TypeValue: typeValue,
 		TypeType:  typeType,

@@ -217,9 +217,7 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 	declarators := ctx.VariableDeclarators()
 	typeType := declarators.GetParent().GetChild(0).(*parser.TypeTypeContext)
 	for _, declarator := range declarators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
-		var typeCtx *parser.ClassOrInterfaceTypeContext = nil
-
-		typeCtx = BuildTypeCtxByIndex(typeType, typeCtx, 0)
+		var typeCtx = BuildTypeCtxByIndex(typeType, nil, 0)
 		if typeType.GetChildCount() > 1 {
 			typeCtx = BuildTypeCtxByIndex(typeType, typeCtx, 1)
 		}
@@ -231,7 +229,7 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
 		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
 		mapFields[value] = typeTypeText
-		field := core_domain.NewJField(value, typeTypeText, "")
+		field := core_domain.NewJField(typeTypeText, value, "")
 		fields = append(fields, field)
 
 		buildFieldCall(typeTypeText, ctx)

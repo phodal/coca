@@ -137,7 +137,6 @@ func (s *JavaFullListener) EnterImportDeclaration(ctx *parser.ImportDeclarationC
 }
 
 func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
-	// TODO: support inner class
 	if currentNode.NodeName != "" {
 		classNodeQueue = append(classNodeQueue, *currentNode)
 		currentType = "InnerStructures"

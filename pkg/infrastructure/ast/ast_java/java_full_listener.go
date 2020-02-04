@@ -21,6 +21,7 @@ var currentType string
 var mapFields = make(map[string]string)
 var localVars = make(map[string]string)
 var formalParameters = make(map[string]string)
+
 var currentClzExtend = ""
 var currentMethod core_domain.CodeFunction
 var methodMap = make(map[string]core_domain.CodeFunction)
@@ -213,9 +214,9 @@ func (s *JavaFullListener) EnterFormalParameter(ctx *parser.FormalParameterConte
 }
 
 func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationContext) {
-	decelerators := ctx.VariableDeclarators()
-	typeType := decelerators.GetParent().GetChild(0).(*parser.TypeTypeContext)
-	for _, declarator := range decelerators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
+	declarators := ctx.VariableDeclarators()
+	typeType := declarators.GetParent().GetChild(0).(*parser.TypeTypeContext)
+	for _, declarator := range declarators.(*parser.VariableDeclaratorsContext).AllVariableDeclarator() {
 		var typeCtx *parser.ClassOrInterfaceTypeContext = nil
 
 		typeCtx = BuildTypeCtxByIndex(typeType, typeCtx, 0)

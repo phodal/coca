@@ -66,7 +66,7 @@ func (s *BadSmellListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 }
 
 func (s *BadSmellListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
-	currentClzType = "NodeName"
+	currentClzType = "Class"
 	currentClz = ctx.IDENTIFIER().GetText()
 
 	if ctx.EXTENDS() != nil {
@@ -292,7 +292,7 @@ func countMethodIfSwitch(statement IBlockStatementContext, bsInfo *bs_domain.Fun
 }
 
 func (s *BadSmellListener) EnterAnnotation(ctx *AnnotationContext) {
-	if currentClzType == "NodeName" && ctx.QualifiedName().GetText() == "Override" {
+	if currentClzType == "Class" && ctx.QualifiedName().GetText() == "Override" {
 		currentClassBs.OverrideSize++
 	}
 }

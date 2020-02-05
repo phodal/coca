@@ -68,7 +68,7 @@ func checkConnectedGraphCall(nodes []bs_domain.BSDataStruct, badSmellList *[]bs_
 }
 
 func checkLazyElement(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
-	if node.Type == "NodeName" && len(node.Functions) < 1 {
+	if node.Type == "Class" && len(node.Functions) < 1 {
 		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.FilePath, Bs: SMELL_LAZY_ELEMENT})
 	}
 }
@@ -84,7 +84,7 @@ func checkLongMethod(method bs_domain.BSFunction, node bs_domain.BSDataStruct, b
 }
 
 func checkDataClass(onlyHaveGetterAndSetter bool, node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
-	if onlyHaveGetterAndSetter && node.Type == "NodeName" && len(node.Functions) > 0 {
+	if onlyHaveGetterAndSetter && node.Type == "Class" && len(node.Functions) > 0 {
 		dataClass := bs_domain.BadSmellModel{File: node.FilePath, Bs: SMELL_DATA_CLASS, Size: len(node.Functions)}
 		*badSmellList = append(*badSmellList, dataClass)
 	}
@@ -100,7 +100,7 @@ func checkRefusedBequest(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.
 
 func checkLargeClass(node bs_domain.BSDataStruct, badSmellList *[]bs_domain.BadSmellModel) {
 	normalClassLength := bs_domain.WithoutGetterSetterClass(node.Functions)
-	if node.Type == "NodeName" && normalClassLength >= BS_LARGE_LENGTH {
+	if node.Type == "Class" && normalClassLength >= BS_LARGE_LENGTH {
 		description := "methods number (without getter/setter): " + strconv.Itoa(normalClassLength)
 		*badSmellList = append(*badSmellList, bs_domain.BadSmellModel{File: node.FilePath, Bs: SMELL_LARGE_CLASS, Description: description, Size: normalClassLength})
 	}

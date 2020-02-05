@@ -15,7 +15,7 @@ func NewSuggestApp() SuggestApp {
 func (a SuggestApp) AnalysisPath(deps []core_domain.CodeDataStruct) []api_domain.Suggest {
 	var suggests []api_domain.Suggest
 	for _, clz := range deps {
-		if clz.Type == "NodeName" {
+		if clz.Type == "Class" {
 			// TODO: DSL => class constructor.len > 3
 			if len(clz.Functions) > 0 {
 				suggests = factorySuggest(clz, suggests)

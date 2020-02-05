@@ -2,7 +2,7 @@
   {
     "Package": "com.phodal.pholedge.book",
     "NodeName": "BookService",
-    "Type": "NodeName",
+    "Type": "Class",
     "Path": "examples/api/BookService.java",
     "Fields": [
       {
@@ -59,7 +59,7 @@
   {
     "Package": "com.phodal.pholedge.book.model",
     "NodeName": "BookBService",
-    "Type": "NodeName",
+    "Type": "Class",
     "Path": "examples/api/model/BookRepresentaion.java",
     "Fields": [
       {
@@ -113,7 +113,7 @@
   {
     "Package": "com.phodal.pholedge.book.model",
     "NodeName": "BookCService",
-    "Type": "NodeName",
+    "Type": "Class",
     "Path": "examples/api/model/BookRepresentaion.java",
     "Fields": [
       {

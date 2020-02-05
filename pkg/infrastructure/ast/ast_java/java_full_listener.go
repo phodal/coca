@@ -141,7 +141,7 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 		classNodeQueue = append(classNodeQueue, *currentNode)
 		currentType = "InnerStructures"
 	} else {
-		currentType = "NodeName"
+		currentType = "Class"
 	}
 
 	hasEnterClass = true

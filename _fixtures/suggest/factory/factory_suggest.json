@@ -2,7 +2,7 @@
 	{
 		"Package": "factory",
 		"NodeName": "Insect",
-		"Type": "NodeName",
+		"Type": "Class",
 		"FilePath": "_fixtures/suggest/factory/Bee.java",
 		"Fields": null,
 		"Functions": [
@@ -221,7 +221,7 @@
 	{
 		"Package": "",
 		"NodeName": "Bee",
-		"Type": "NodeName",
+		"Type": "Class",
 		"FilePath": "_fixtures/suggest/factory/Bee.java",
 		"Fields": null,
 		"Functions": [

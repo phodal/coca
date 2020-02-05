@@ -150,7 +150,7 @@ func (s *TypeScriptIdentListener) ExitInterfaceDeclaration(ctx *parser.Interface
 
 func (s *TypeScriptIdentListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	s.currentDataStruct = &core_domain.CodeDataStruct{
-		Type:     "NodeName",
+		Type:     "Class",
 		NodeName: ctx.Identifier().GetText(),
 	}
 

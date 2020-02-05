@@ -39,7 +39,7 @@ func (s *JavaIdentifierListener) EnterPackageDeclaration(ctx *parser.PackageDecl
 func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
 
-	currentNode.Type = "NodeName"
+	currentNode.Type = "Class"
 	if ctx.IDENTIFIER() != nil {
 		currentNode.NodeName = ctx.IDENTIFIER().GetText()
 	}

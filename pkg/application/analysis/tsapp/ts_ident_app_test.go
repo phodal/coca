@@ -58,7 +58,7 @@ func Test_TypeScriptAbstractClass(t *testing.T) {
 	codeFile := app.Analysis(string(code), "")
 
 	g.Expect(len(codeFile.DataStructures)).To(Equal(3))
-	g.Expect(codeFile.DataStructures[0].Type).To(Equal("NodeName"))
+	g.Expect(codeFile.DataStructures[0].Type).To(Equal("Class"))
 	g.Expect(codeFile.DataStructures[1].NodeName).To(Equal("Employee"))
 	g.Expect(codeFile.DataStructures[1].Extend).To(Equal("Person"))
 }

@@ -14,7 +14,6 @@ func BuildAnnotation(ctx *parser.AnnotationContext) core_domain.CodeAnnotation {
 		pairs := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
 		for _, pair := range pairs {
 			pairCtx := pair.(*parser.ElementValuePairContext)
-			pairCtx.ElementValue()
 
 			key := pairCtx.IDENTIFIER().GetText()
 			value := pairCtx.ElementValue().GetText()
@@ -38,4 +37,3 @@ func BuildAnnotationForMethod(context *parser.ModifierContext, method *core_doma
 		}
 	}
 }
-

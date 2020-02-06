@@ -263,3 +263,18 @@ func Test_InnerJavaClass(t *testing.T) {
 	g.Expect(callNodes[0].NodeName).To(Equal("Outer"))
 	g.Expect(callNodes[0].InnerStructures[0].NodeName).To(Equal("Inner"))
 }
+
+func Test_FormalParameterCall(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../../_fixtures/grammar/java/regression/FormalParameterCall.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	calls := callNodes[0].Functions[0].FunctionCalls
+	g.Expect(len(calls)).To(Equal(1))
+	g.Expect(calls[0].MethodName).To(Equal("getIsbn"))
+	g.Expect(calls[0].Package).To(Equal("hello"))
+	g.Expect(calls[0].NodeName).To(Equal("CreateBookCommand"))
+}

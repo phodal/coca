@@ -93,19 +93,19 @@ func HandleEmptyFullType(ctx *parser.MethodCallContext, targetType string, metho
 		targetType = clz
 	} else {
 		targetType = buildSelfThisTarget(targetType)
-		targetType = BuildMethodNameForBuilder(ctx, targetType)
+		targetType = buildMethodNameForBuilder(ctx, targetType)
 	}
 	return targetType, packageName
 }
 
-func BuildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
+func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
 	switch parentCtx := ctx.GetParent().(type) {
 	case *parser.ExpressionContext:
 		switch parentParentCtx := parentCtx.GetParent().(type) {
 		case *parser.VariableInitializerContext:
 			switch varDeclCtx := parentParentCtx.GetParent().(type) {
 			case *parser.VariableDeclaratorContext:
-				targetType = GetTargetFromVarDecl(varDeclCtx, targetType)
+				targetType = getTargetFromVarDecl(varDeclCtx, targetType)
 			}
 		}
 	}
@@ -113,7 +113,7 @@ func BuildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string)
 	return targetType
 }
 
-func GetTargetFromVarDecl(ctx *parser.VariableDeclaratorContext, targetType string) string {
+func getTargetFromVarDecl(ctx *parser.VariableDeclaratorContext, targetType string) string {
 	switch x := ctx.GetParent().(type) {
 	case *parser.VariableDeclaratorsContext:
 		switch parentType := x.GetParent().(type) {

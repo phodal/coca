@@ -71,4 +71,3 @@ func BuildMethodCallParameters(jMethodCall *core_domain.CodeCall, ctx *parser.Me
 		jMethodCall.Parameters = parameters
 	}
 }
-

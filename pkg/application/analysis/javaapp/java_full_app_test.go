@@ -221,7 +221,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 		}
 	}
 
-	g.Expect(methodCallMap["assertThat"].NodeName).To(Equal(""))
+	g.Expect(methodCallMap["assertThat"].NodeName).To(Equal("assertThat"))
 	g.Expect(methodCallMap["isFalse"].NodeName).To(Equal("assertThat"))
 }
 
@@ -277,4 +277,18 @@ func Test_FormalParameterCall(t *testing.T) {
 	g.Expect(calls[0].MethodName).To(Equal("getIsbn"))
 	g.Expect(calls[0].Package).To(Equal("hello"))
 	g.Expect(calls[0].NodeName).To(Equal("CreateBookCommand"))
+}
+
+func Test_NormalChainCall(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../../_fixtures/grammar/java/regression/NormalChainCall.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	calls := callNodes[0].Functions[0].FunctionCalls
+	g.Expect(len(calls)).To(Equal(2))
+	//g.Expect(calls[1].NodeName).To(Equal("UriComponentsBuilder"))
+	//g.Expect(calls[1].MethodName).To(Equal("buildAndExpand"))
 }

@@ -45,6 +45,7 @@ func BuildMethodCallMethod(jMethodCall *core_domain.CodeCall, callee string, tar
 	if isChainCall(targetType) {
 		split := strings.Split(targetType, ".")
 		targetType = split[0]
+		targetType = ParseTargetType(targetType)
 	}
 
 	jMethodCall.Package = packageName

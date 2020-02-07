@@ -92,37 +92,39 @@ func HandleEmptyFullType(ctx *parser.MethodCallContext, targetType string, metho
 
 		targetType = clz
 	} else {
-		targetType = buildSelfThisTarget(targetType)
-		targetType = buildMethodNameForBuilder(ctx, targetType)
+		if strings.Contains(targetType, "this.") {
+			targetType = buildSelfThisTarget(targetType)
+		}
+		//targetType = buildMethodNameForBuilder(ctx, targetType)
 	}
 	return targetType, packageName
 }
-
-func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
-	switch parentCtx := ctx.GetParent().(type) {
-	case *parser.ExpressionContext:
-		switch parentParentCtx := parentCtx.GetParent().(type) {
-		case *parser.VariableInitializerContext:
-			switch varDeclCtx := parentParentCtx.GetParent().(type) {
-			case *parser.VariableDeclaratorContext:
-				targetType = getTargetFromVarDecl(varDeclCtx, targetType)
-			}
-		}
-	}
-
-	return targetType
-}
-
-func getTargetFromVarDecl(ctx *parser.VariableDeclaratorContext, targetType string) string {
-	switch x := ctx.GetParent().(type) {
-	case *parser.VariableDeclaratorsContext:
-		switch parentType := x.GetParent().(type) {
-		case *parser.LocalVariableDeclarationContext:
-			{
-				targetType = parentType.TypeType().GetText()
-			}
-		}
-	}
-	return targetType
-}
+// todo: check usecases
+//func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
+//	switch parentCtx := ctx.GetParent().(type) {
+//	case *parser.ExpressionContext:
+//		switch parentParentCtx := parentCtx.GetParent().(type) {
+//		case *parser.VariableInitializerContext:
+//			switch varDeclCtx := parentParentCtx.GetParent().(type) {
+//			case *parser.VariableDeclaratorContext:
+//				targetType = getTargetFromVarDecl(varDeclCtx, targetType)
+//			}
+//		}
+//	}
+//
+//	return targetType
+//}
+//
+//func getTargetFromVarDecl(ctx *parser.VariableDeclaratorContext, targetType string) string {
+//	switch x := ctx.GetParent().(type) {
+//	case *parser.VariableDeclaratorsContext:
+//		switch parentType := x.GetParent().(type) {
+//		case *parser.LocalVariableDeclarationContext:
+//			{
+//				targetType = parentType.TypeType().GetText()
+//			}
+//		}
+//	}
+//	return targetType
+//}
 

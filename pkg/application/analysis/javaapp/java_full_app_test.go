@@ -221,7 +221,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 		}
 	}
 
-	g.Expect(methodCallMap["assertThat"].NodeName).To(Equal("assertThat"))
+	g.Expect(methodCallMap["assertThat"].NodeName).To(Equal(""))
 	g.Expect(methodCallMap["isFalse"].NodeName).To(Equal("assertThat"))
 }
 
@@ -289,6 +289,6 @@ func Test_NormalChainCall(t *testing.T) {
 
 	calls := callNodes[0].Functions[0].FunctionCalls
 	g.Expect(len(calls)).To(Equal(2))
-	//g.Expect(calls[1].NodeName).To(Equal("UriComponentsBuilder"))
-	//g.Expect(calls[1].MethodName).To(Equal("buildAndExpand"))
+	g.Expect(calls[1].NodeName).To(Equal("UriComponentsBuilder"))
+	g.Expect(calls[1].MethodName).To(Equal("buildAndExpand"))
 }

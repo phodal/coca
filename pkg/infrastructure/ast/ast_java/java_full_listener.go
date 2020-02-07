@@ -518,15 +518,13 @@ func isChainCall(targetType string) bool {
 }
 
 func buildSelfThisTarget(targetType string) string {
-	isSelfFieldCall := strings.Contains(targetType, "this.")
-	if isSelfFieldCall {
-		targetType = strings.ReplaceAll(targetType, "this.", "")
-		for _, field := range fields {
-			if field.TypeValue == targetType {
-				targetType = field.TypeType
-			}
+	targetType = strings.ReplaceAll(targetType, "this.", "")
+	for _, field := range fields {
+		if field.TypeValue == targetType {
+			targetType = field.TypeType
 		}
 	}
+
 	return targetType
 }
 

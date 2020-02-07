@@ -37,7 +37,6 @@ var classNodeQueue []core_domain.CodeDataStruct
 
 var currentNode *core_domain.CodeDataStruct
 var classNodes []core_domain.CodeDataStruct
-var creatorNodes []core_domain.CodeDataStruct
 var currentCreatorNode core_domain.CodeDataStruct
 var fileName = ""
 var hasEnterClass = false
@@ -434,7 +433,6 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 		}
 
 		currentCreatorNode = *creatorNode
-		creatorNodes = append(creatorNodes, *creatorNode)
 	}
 }
 

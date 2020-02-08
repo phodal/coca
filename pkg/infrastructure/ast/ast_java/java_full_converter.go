@@ -49,7 +49,7 @@ func BuildMethodCallMethod(jMethodCall *core_domain.CodeCall, callee string, tar
 	}
 
 	jMethodCall.Package = packageName
-	jMethodCall.MethodName = methodName
+	jMethodCall.FunctionName = methodName
 	jMethodCall.NodeName = targetType
 }
 

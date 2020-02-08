@@ -29,7 +29,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "",
+              "FunctionName": "",
               "NodeName": "antlr",
               "Package": "testdata.node_infos",
               "Parameters": null,
@@ -108,7 +108,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "",
+              "FunctionName": "",
               "NodeName": "parser",
               "Package": "testdata.node_infos",
               "Parameters": null,
@@ -121,7 +121,7 @@
               "Type": ""
             },
             {
-              "MethodName": "",
+              "FunctionName": "",
               "NodeName": "antlr",
               "Package": "testdata.node_infos",
               "Parameters": null,
@@ -134,7 +134,7 @@
               "Type": ""
             },
             {
-              "MethodName": "",
+              "FunctionName": "",
               "NodeName": "parser",
               "Package": "testdata.node_infos",
               "Parameters": null,

@@ -8,7 +8,7 @@
       "FilePath": "",
       "FunctionCalls": [
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "l.List",
           "Package": "testdata.regression",
           "Parameters": null,
@@ -21,7 +21,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "sync.Mutex",
           "Package": "sync",
           "Parameters": null,
@@ -40,7 +40,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Lock",
+              "FunctionName": "Lock",
               "NodeName": "",
               "Package": "container",
               "Parameters": null,
@@ -53,7 +53,7 @@
               "Type": ""
             },
             {
-              "MethodName": "Unlock",
+              "FunctionName": "Unlock",
               "NodeName": "",
               "Package": "container",
               "Parameters": null,
@@ -66,7 +66,7 @@
               "Type": ""
             },
             {
-              "MethodName": "PushFront",
+              "FunctionName": "PushFront",
               "NodeName": "",
               "Package": "container",
               "Parameters": [
@@ -119,7 +119,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Lock",
+              "FunctionName": "Lock",
               "NodeName": "",
               "Package": "container",
               "Parameters": null,
@@ -132,7 +132,7 @@
               "Type": ""
             },
             {
-              "MethodName": "Unlock",
+              "FunctionName": "Unlock",
               "NodeName": "",
               "Package": "container",
               "Parameters": null,
@@ -176,7 +176,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Lock",
+              "FunctionName": "Lock",
               "NodeName": "",
               "Package": "container",
               "Parameters": null,
@@ -189,7 +189,7 @@
               "Type": ""
             },
             {
-              "MethodName": "Unlock",
+              "FunctionName": "Unlock",
               "NodeName": "",
               "Package": "container",
               "Parameters": null,

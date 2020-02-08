@@ -22,7 +22,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Size",
+              "FunctionName": "Size",
               "NodeName": "CallAPI",
               "Package": "testdata.method_call",
               "Parameters": null,
@@ -35,7 +35,7 @@
               "Type": ""
             },
             {
-              "MethodName": "Size",
+              "FunctionName": "Size",
               "NodeName": "CallAPI",
               "Package": "testdata.method_call",
               "Parameters": null,
@@ -48,7 +48,7 @@
               "Type": ""
             },
             {
-              "MethodName": "Slice",
+              "FunctionName": "Slice",
               "NodeName": "sort",
               "Package": "sort",
               "Parameters": [

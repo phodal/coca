@@ -35,7 +35,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "",
+              "FunctionName": "",
               "NodeName": "new",
               "Package": "testdata.method_call",
               "Parameters": null,
@@ -48,7 +48,7 @@
               "Type": ""
             },
             {
-              "MethodName": "Lock",
+              "FunctionName": "Lock",
               "NodeName": "l",
               "Package": "sync",
               "Parameters": null,
@@ -61,7 +61,7 @@
               "Type": "sync.Mutex"
             },
             {
-              "MethodName": "Unlock",
+              "FunctionName": "Unlock",
               "NodeName": "l",
               "Package": "sync",
               "Parameters": null,
@@ -74,7 +74,7 @@
               "Type": "sync.Mutex"
             },
             {
-              "MethodName": "Println",
+              "FunctionName": "Println",
               "NodeName": "fmt",
               "Package": "fmt",
               "Parameters": [

@@ -135,7 +135,7 @@ func BuildMethodCall(codeFunc *CodeFunction, item ast.Stmt, fields []CodeField, 
 						packageName := getPackageName(target, callee, imports)
 
 						call.Package = packageName
-						call.MethodName = callee
+						call.FunctionName = callee
 						call.NodeName = target
 						calls = append(calls, call)
 					}
@@ -205,10 +205,10 @@ func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []Code
 	}
 
 	call := CodeCall{
-		Package:    packageName,
-		Type:       target,
-		NodeName:   selector,
-		MethodName: selName,
+		Package:      packageName,
+		Type:         target,
+		NodeName:     selector,
+		FunctionName: selName,
 	}
 
 	for _, arg := range expr.Args {

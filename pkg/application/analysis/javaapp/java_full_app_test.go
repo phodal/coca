@@ -63,8 +63,8 @@ func TestLambda_Express(t *testing.T) {
 		methodMap[c.Name] = c
 	}
 
-	g.Expect(methodMap["save"].FunctionCalls[0].MethodName).To(Equal("of"))
-	g.Expect(methodMap["findById"].FunctionCalls[3].MethodName).To(Equal("toDomainModel"))
+	g.Expect(methodMap["save"].FunctionCalls[0].FunctionName).To(Equal("of"))
+	g.Expect(methodMap["findById"].FunctionCalls[3].FunctionName).To(Equal("toDomainModel"))
 }
 
 func TestInterface(t *testing.T) {
@@ -198,7 +198,7 @@ func Test_ShouldGetMethodCallParameters(t *testing.T) {
 	methodCallMap := make(map[string]core_domain.CodeCall)
 	for _, method := range callNodes[0].Functions {
 		for _, call := range method.FunctionCalls {
-			methodCallMap[call.MethodName] = call
+			methodCallMap[call.FunctionName] = call
 		}
 	}
 
@@ -217,7 +217,7 @@ func Test_BuilderCallSplitIssue(t *testing.T) {
 	methodCallMap := make(map[string]core_domain.CodeCall)
 	for _, method := range callNodes[0].Functions {
 		for _, call := range method.FunctionCalls {
-			methodCallMap[call.MethodName] = call
+			methodCallMap[call.FunctionName] = call
 		}
 	}
 
@@ -274,7 +274,7 @@ func Test_FormalParameterCall(t *testing.T) {
 
 	calls := callNodes[0].Functions[0].FunctionCalls
 	g.Expect(len(calls)).To(Equal(1))
-	g.Expect(calls[0].MethodName).To(Equal("getIsbn"))
+	g.Expect(calls[0].FunctionName).To(Equal("getIsbn"))
 	g.Expect(calls[0].Package).To(Equal("hello"))
 	g.Expect(calls[0].NodeName).To(Equal("CreateBookCommand"))
 }
@@ -290,5 +290,5 @@ func Test_NormalChainCall(t *testing.T) {
 	calls := callNodes[0].Functions[0].FunctionCalls
 	g.Expect(len(calls)).To(Equal(2))
 	g.Expect(calls[1].NodeName).To(Equal("UriComponentsBuilder"))
-	g.Expect(calls[1].MethodName).To(Equal("buildAndExpand"))
+	g.Expect(calls[1].FunctionName).To(Equal("buildAndExpand"))
 }

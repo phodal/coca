@@ -22,7 +22,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Println",
+              "FunctionName": "Println",
               "NodeName": "fmt",
               "Package": "fmt",
               "Parameters": [

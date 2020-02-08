@@ -28,7 +28,7 @@
             "Package": "com.phodal.pholedge.book",
             "Type": "same package",
             "NodeName": "BookRepository",
-            "MethodName": "list",
+            "FunctionName": "list",
             "StartLine": 32,
             "StartLinePosition": 30,
             "StopLine": 32,

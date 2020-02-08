@@ -22,7 +22,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "var",
+              "FunctionName": "var",
               "NodeName": "foo",
               "Package": "testdata.node_infos",
               "Parameters": [

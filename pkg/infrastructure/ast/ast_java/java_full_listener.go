@@ -539,11 +539,11 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 		position := BuildPosition(ctx.BaseParserRuleContext, text)
 
 		jMethodCall := &core_domain.CodeCall{
-			Package:    RemoveTarget(fullType),
-			Type:       "lambda",
-			NodeName:   targetType,
-			MethodName: methodName,
-			Position:   position,
+			Package:      RemoveTarget(fullType),
+			Type:         "lambda",
+			NodeName:     targetType,
+			FunctionName: methodName,
+			Position:     position,
 		}
 		sendResultToMethodCallMap(*jMethodCall)
 	}

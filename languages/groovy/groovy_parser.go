@@ -878,7 +878,7 @@ var ruleNames = []string{
 	"variableModifier", "variableModifiersOpt", "variableModifiers", "typeParameters",
 	"typeParameter", "typeBound", "typeList", "classDeclaration", "classBody",
 	"enumConstants", "enumConstant", "classBodyDeclaration", "memberDeclaration",
-	"methodDeclaration", "methodName", "returnType", "fieldDeclaration", "variableDeclarators",
+	"methodDeclaration", "FunctionName", "returnType", "fieldDeclaration", "variableDeclarators",
 	"variableDeclarator", "variableDeclaratorId", "variableInitializer", "variableInitializers",
 	"dims", "dimsOpt", "standardType", "typeType", "classOrInterfaceType",
 	"generalClassOrInterfaceType", "standardClassOrInterfaceType", "primitiveType",

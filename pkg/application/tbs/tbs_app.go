@@ -40,7 +40,7 @@ func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap m
 			var methodCallMap = make(map[string][]core_domain.CodeCall)
 			var hasAssert = false
 			for index, methodCall := range currentMethodCalls {
-				if methodCall.MethodName == "" {
+				if methodCall.FunctionName == "" {
 					if index == len(currentMethodCalls)-1 {
 						checkAssert(hasAssert, clz, method, &results, &testType)
 					}

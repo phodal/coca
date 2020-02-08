@@ -40,7 +40,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Sleep",
+              "FunctionName": "Sleep",
               "NodeName": "time",
               "Package": "time",
               "Parameters": [

@@ -33,7 +33,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "System.out",
-            "MethodName": "println",
+            "FunctionName": "println",
             "Parameters": [
               "\"Start parse java call: \"+path.getFileName()"
             ],
@@ -46,7 +46,7 @@
             "Package": "java.nio.file",
             "Type": "chain",
             "NodeName": "Path",
-            "MethodName": "getFileName",
+            "FunctionName": "getFileName",
             "Parameters": null,
             "StartLine": 58,
             "StartLinePosition": 60,
@@ -57,7 +57,7 @@
             "Package": "com.phodal.coca.analysis.identifier",
             "Type": "chain",
             "NodeName": "JavaFileParser",
-            "MethodName": "parse",
+            "FunctionName": "parse",
             "Parameters": [
               "path"
             ],
@@ -70,7 +70,7 @@
             "Package": "java.util",
             "Type": "CreatorClass",
             "NodeName": "ArrayList",
-            "MethodName": "",
+            "FunctionName": "",
             "Parameters": null,
             "StartLine": 60,
             "StartLinePosition": 38,
@@ -81,7 +81,7 @@
             "Package": "com.phodal.coca.analysis.calls",
             "Type": "CreatorClass",
             "NodeName": "JavaCallVisitor",
-            "MethodName": "",
+            "FunctionName": "",
             "Parameters": null,
             "StartLine": 61,
             "StartLinePosition": 44,
@@ -92,7 +92,7 @@
             "Package": "com.phodal.coca.java",
             "Type": "chain",
             "NodeName": "JavaParserBaseVisitor",
-            "MethodName": "visit",
+            "FunctionName": "visit",
             "Parameters": [
               "tree"
             ],
@@ -152,7 +152,7 @@
             "Package": "java.nio.file",
             "Type": "chain",
             "NodeName": "Paths",
-            "MethodName": "get",
+            "FunctionName": "get",
             "Parameters": [
               "dir"
             ],
@@ -165,7 +165,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "JavaCallApp",
-            "MethodName": "parse",
+            "FunctionName": "parse",
             "Parameters": [
               "clzs"
             ],
@@ -178,7 +178,7 @@
             "Package": "java.util.concurrent",
             "Type": "chain",
             "NodeName": "Executors",
-            "MethodName": "newFixedThreadPool",
+            "FunctionName": "newFixedThreadPool",
             "Parameters": [
               "poolSize"
             ],
@@ -191,7 +191,7 @@
             "Package": "java.util",
             "Type": "CreatorClass",
             "NodeName": "ArrayList",
-            "MethodName": "",
+            "FunctionName": "",
             "Parameters": null,
             "StartLine": 35,
             "StartLinePosition": 35,
@@ -202,7 +202,7 @@
             "Package": "com.phodal.coca.analysis.utils",
             "Type": "CreatorClass",
             "NodeName": "ProcessFiles",
-            "MethodName": "",
+            "FunctionName": "",
             "Parameters": null,
             "StartLine": 36,
             "StartLinePosition": 30,
@@ -213,7 +213,7 @@
             "Package": "com.phodal.coca.analysis.utils",
             "Type": "chain",
             "NodeName": "Files",
-            "MethodName": "walkFileTree",
+            "FunctionName": "walkFileTree",
             "Parameters": [
               "startingDir",
               "pf"
@@ -227,7 +227,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "f",
-            "MethodName": "get",
+            "FunctionName": "get",
             "Parameters": null,
             "StartLine": 39,
             "StartLinePosition": 14,
@@ -238,7 +238,7 @@
             "Package": "java.util.concurrent",
             "Type": "chain",
             "NodeName": "ExecutorService",
-            "MethodName": "shutdown",
+            "FunctionName": "shutdown",
             "Parameters": null,
             "StartLine": 41,
             "StartLinePosition": 13,
@@ -271,7 +271,7 @@
             "Package": "java.nio.file",
             "Type": "chain",
             "NodeName": "Path",
-            "MethodName": "toString",
+            "FunctionName": "toString",
             "Parameters": null,
             "StartLine": 47,
             "StartLinePosition": 48,
@@ -282,7 +282,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "path",
-            "MethodName": "endsWith",
+            "FunctionName": "endsWith",
             "Parameters": [
               "\"Tests.java\""
             ],
@@ -295,7 +295,7 @@
             "Package": "java.nio.file",
             "Type": "chain",
             "NodeName": "Path",
-            "MethodName": "toString",
+            "FunctionName": "toString",
             "Parameters": null,
             "StartLine": 47,
             "StartLinePosition": 91,
@@ -306,7 +306,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "path",
-            "MethodName": "endsWith",
+            "FunctionName": "endsWith",
             "Parameters": [
               "\"Test.java\""
             ],
@@ -319,7 +319,7 @@
             "Package": "java.nio.file",
             "Type": "chain",
             "NodeName": "Path",
-            "MethodName": "toString",
+            "FunctionName": "toString",
             "Parameters": null,
             "StartLine": 47,
             "StartLinePosition": 132,
@@ -330,7 +330,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "path",
-            "MethodName": "endsWith",
+            "FunctionName": "endsWith",
             "Parameters": [
               "\".java\""
             ],
@@ -343,7 +343,7 @@
             "Package": "com.phodal.coca.analysis",
             "Type": "",
             "NodeName": "JavaCallApp",
-            "MethodName": "parse",
+            "FunctionName": "parse",
             "Parameters": [
               "path",
               "clzs"
@@ -357,7 +357,7 @@
             "Package": "org.antlr.v4.runtime.tree",
             "Type": "chain",
             "NodeName": "e",
-            "MethodName": "printStackTrace",
+            "FunctionName": "printStackTrace",
             "Parameters": null,
             "StartLine": 52,
             "StartLinePosition": 18,
@@ -378,7 +378,7 @@
         "Package": "com.phodal.coca.analysis.calls",
         "Type": "field",
         "NodeName": "JavaDaoParser",
-        "MethodName": "",
+        "FunctionName": "",
         "Parameters": null,
         "StartLine": 24,
         "StartLinePosition": 12,

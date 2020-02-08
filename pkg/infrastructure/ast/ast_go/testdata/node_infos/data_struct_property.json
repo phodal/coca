@@ -8,7 +8,7 @@
       "FilePath": "",
       "FunctionCalls": [
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "string",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -21,7 +21,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "string",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -34,7 +34,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "string",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -47,7 +47,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "CodeMember",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -60,7 +60,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "domain.JClassNode",
           "Package": "domain",
           "Parameters": null,

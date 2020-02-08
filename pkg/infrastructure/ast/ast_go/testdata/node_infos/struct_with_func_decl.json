@@ -8,7 +8,7 @@
       "FilePath": "",
       "FunctionCalls": [
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "string",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -21,7 +21,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "int",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -34,7 +34,7 @@
           "Type": ""
         },
         {
-          "MethodName": "",
+          "FunctionName": "",
           "NodeName": "func",
           "Package": "testdata.node_infos",
           "Parameters": null,
@@ -53,7 +53,7 @@
           "Extension": null,
           "FunctionCalls": [
             {
-              "MethodName": "Println",
+              "FunctionName": "Println",
               "NodeName": "fmt",
               "Package": "fmt",
               "Parameters": [

@@ -71,14 +71,6 @@ func (s *JavaIdentifierListener) ExitClassBody(ctx *parser.ClassBodyContext) {
 	currentNode = core_domain.NewDataStruct()
 }
 
-func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
-	hasEnterClass = false
-	if currentNode.NodeName != "" {
-		nodes = append(nodes, *currentNode)
-	}
-	currentNode = core_domain.NewDataStruct()
-}
-
 func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 	position := core_domain.CodePosition{
 		StartLine:         ctx.GetStart().GetLine(),
@@ -99,44 +91,6 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 
 func (s *JavaIdentifierListener) ExitConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
 	currentNode.Functions = append(currentNode.Functions, currentMethod)
-}
-
-func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
-	hasEnterClass = true
-}
-
-func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.GetStart().GetColumn()
-	stopLine := ctx.GetStop().GetLine()
-	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.IDENTIFIER().GetText()
-	//XXX: find the start position of {, not public
-	typeType := ctx.TypeTypeOrVoid().GetText()
-
-	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
-		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
-	}
-
-	position := core_domain.CodePosition{
-		StartLine:         startLine,
-		StartLinePosition: startLinePosition,
-		StopLine:          stopLine,
-		StopLinePosition:  stopLinePosition,
-	}
-
-	currentMethod = core_domain.CodeFunction{
-		Name:        name,
-		ReturnType:  typeType,
-		Override:    isOverrideMethod,
-		Annotations: currentMethod.Annotations,
-		Position:    position,
-	}
-}
-
-func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	currentNode.Functions = append(currentNode.Functions, currentMethod)
-	currentMethod = core_domain.NewJMethod()
 }
 
 var isOverrideMethod = false
@@ -204,6 +158,52 @@ func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.Interface
 	hasEnterClass = true
 	currentNode.Type = "Interface"
 	currentNode.NodeName = ctx.IDENTIFIER().GetText()
+}
+
+func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
+	hasEnterClass = false
+	if currentNode.NodeName != "" {
+		nodes = append(nodes, *currentNode)
+	}
+	currentNode = core_domain.NewDataStruct()
+}
+
+func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
+	hasEnterClass = true
+}
+
+func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
+	startLine := ctx.GetStart().GetLine()
+	startLinePosition := ctx.GetStart().GetColumn()
+	stopLine := ctx.GetStop().GetLine()
+	stopLinePosition := ctx.GetStop().GetColumn()
+	name := ctx.IDENTIFIER().GetText()
+	//XXX: find the start position of {, not public
+	typeType := ctx.TypeTypeOrVoid().GetText()
+
+	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
+		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
+	}
+
+	position := core_domain.CodePosition{
+		StartLine:         startLine,
+		StartLinePosition: startLinePosition,
+		StopLine:          stopLine,
+		StopLinePosition:  stopLinePosition,
+	}
+
+	currentMethod = core_domain.CodeFunction{
+		Name:        name,
+		ReturnType:  typeType,
+		Override:    isOverrideMethod,
+		Annotations: currentMethod.Annotations,
+		Position:    position,
+	}
+}
+
+func (s *JavaIdentifierListener) ExitInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
+	currentNode.Functions = append(currentNode.Functions, currentMethod)
+	currentMethod = core_domain.NewJMethod()
 }
 
 func (s *JavaIdentifierListener) EnterExpression(ctx *parser.ExpressionContext) {

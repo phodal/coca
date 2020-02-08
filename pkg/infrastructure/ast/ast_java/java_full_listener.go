@@ -400,7 +400,7 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 		createdName := identifier.GetText()
 		localVars[variableName] = createdName
 
-		buildCreatedCall(createdName, ctx)
+		buildCreatorCall(createdName, ctx)
 
 		if currentMethod.Name == "" {
 			return
@@ -450,7 +450,7 @@ func (s *JavaFullListener) ExitCreator(ctx *parser.CreatorContext) {
 	}
 }
 
-func buildCreatedCall(createdName string, ctx *parser.CreatorContext) {
+func buildCreatorCall(createdName string, ctx *parser.CreatorContext) {
 	method := methodMap[getMethodMapName(currentMethod)]
 	fullType, _ := WarpTargetFullType(createdName)
 

@@ -152,14 +152,13 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 
 	if ctx.EXTENDS() != nil {
 		currentClzExtend = ctx.TypeType().GetText()
-		buildExtend(currentClzExtend)
+		currentNode.Extend = buildExtend(currentClzExtend)
 	}
 
 	if ctx.IMPLEMENTS() != nil {
 		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
 		for _, typ := range types {
-			typeText := typ.GetText()
-			buildImplement(typeText)
+			currentNode.Implements = append(currentNode.Implements, buildImplement(typ.GetText()))
 		}
 	}
 
@@ -175,7 +174,7 @@ func (s *JavaFullListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclar
 	if ctx.EXTENDS() != nil {
 		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
 		for _, typ := range types {
-			buildExtend(typ.GetText())
+			currentNode.Extend = buildExtend(typ.GetText())
 		}
 	}
 
@@ -415,8 +414,6 @@ func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 			return
 		}
 
-		//classNodeQueue = append(classNodeQueue, *currentNode)
-
 		currentType = "CreatorClass"
 		text := ctx.CreatedName().GetText()
 		creatorNode := &core_domain.CodeDataStruct{
@@ -556,11 +553,14 @@ func (s *JavaFullListener) AppendClasses(classes []string) {
 	clzs = classes
 }
 
-func buildExtend(extendName string) {
+func buildExtend(extendName string) string {
+	var extend = extendName
 	target, _ := WarpTargetFullType(extendName)
 	if target != "" {
-		currentNode.Extend = target
+		extend = target
 	}
+
+	return extend
 }
 
 func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
@@ -579,7 +579,7 @@ func buildFieldCall(typeType string, ctx *parser.FieldDeclarationContext) {
 	}
 }
 
-func buildImplement(text string) {
+func buildImplement(text string) string {
 	target, _ := WarpTargetFullType(text)
-	currentNode.Implements = append(currentNode.Implements, target)
+	return target
 }

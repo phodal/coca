@@ -168,10 +168,6 @@ func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceD
 	currentNode = core_domain.NewDataStruct()
 }
 
-func (s *JavaIdentifierListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBodyDeclarationContext) {
-	hasEnterClass = true
-}
-
 func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
 	startLinePosition := ctx.GetStart().GetColumn()

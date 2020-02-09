@@ -29,6 +29,11 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 		identMap[ident.GetClassFullName()] = ident
 	}
 
+	var classes []string = nil
+	for _, node := range identNodes {
+		classes = append(classes, node.Package+"."+node.NodeName)
+	}
+
 	for _, file := range files {
 		displayName := filepath.Base(file)
 		fmt.Println("Refactoring parse java call: " + displayName)
@@ -37,6 +42,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 		context := parser.CompilationUnit()
 
 		listener := ast_java.NewJavaFullListener(identMap, file)
+		listener.AppendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

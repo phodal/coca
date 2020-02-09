@@ -129,15 +129,9 @@ func AnalysisJava() []core_domain.CodeDataStruct {
 	identModel, _ := json.MarshalIndent(iNodes, "", "\t")
 	cmd_util.WriteToCocaFile("identify.json", string(identModel))
 
-	var classes []string = nil
-
-	for _, node := range iNodes {
-		classes = append(classes, node.Package+"."+node.NodeName)
-	}
-
 	callApp := javaapp.NewJavaFullApp()
 
-	callNodes := callApp.AnalysisPath(importPath, classes, iNodes)
+	callNodes := callApp.AnalysisPath(importPath, iNodes)
 	return callNodes
 }
 

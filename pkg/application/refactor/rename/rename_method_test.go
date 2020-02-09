@@ -25,12 +25,12 @@ func TestRenameMethodApp(t *testing.T) {
 	}
 
 	callApp := javaapp.NewJavaFullApp()
-	callNodes := callApp.AnalysisPath(codePath, classes, identifiers)
+	callNodes := callApp.AnalysisPath(codePath, identifiers)
 
 	configBytes := cmd_util.ReadFile(configPath)
 	RenameMethodApp(callNodes).Refactoring(string(configBytes))
 
-	newnodes := callApp.AnalysisPath(codePath, classes, identifiers)
+	newnodes := callApp.AnalysisPath(codePath, identifiers)
 	g.Expect(newnodes[0].Functions[0].Name).To(Equal("demo"))
 
 	testhelper.ResetGitDir(codePath)

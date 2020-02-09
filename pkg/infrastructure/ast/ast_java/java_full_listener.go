@@ -52,6 +52,11 @@ func NewJavaFullListener(nodes map[string]core_domain.CodeDataStruct, file strin
 	classNodeQueue = nil
 	methodQueue = nil
 
+	var classes []string = nil
+	for _, node := range nodes {
+		classes = append(classes, node.Package+"."+node.NodeName)
+	}
+
 	initClass()
 	return &JavaFullListener{}
 }

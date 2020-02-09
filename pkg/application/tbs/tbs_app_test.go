@@ -151,6 +151,6 @@ func BuildTestAnalysisResultsByPath(codePath string) (map[string]core_domain.Cod
 	}
 
 	analysisApp := javaapp.NewJavaFullApp()
-	classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
+	classNodes := analysisApp.AnalysisFiles(identifiers, files)
 	return identifiersMap, classNodes
 }

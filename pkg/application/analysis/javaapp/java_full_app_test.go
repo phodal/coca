@@ -21,7 +21,7 @@ func TestJavaCallApp_AnalysisPath(t *testing.T) {
 	}
 
 	callApp := NewJavaFullApp()
-	callNodes := callApp.AnalysisPath(codePath, classes, iNodes)
+	callNodes := callApp.AnalysisPath(codePath, iNodes)
 
 	g.Expect(len(callNodes)).To(Equal(1))
 }
@@ -46,7 +46,7 @@ func getCallNodes(codePath string) []core_domain.CodeDataStruct {
 
 	callApp := NewJavaFullApp()
 
-	callNodes := callApp.AnalysisPath(codePath, classes, iNodes)
+	callNodes := callApp.AnalysisPath(codePath, iNodes)
 	return callNodes
 }
 

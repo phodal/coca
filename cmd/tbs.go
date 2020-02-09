@@ -37,7 +37,7 @@ var tbsCmd = &cobra.Command{
 		}
 
 		analysisApp := javaapp.NewJavaFullApp()
-		classNodes := analysisApp.AnalysisFiles(identifiers, files, classes)
+		classNodes := analysisApp.AnalysisFiles(identifiers, files)
 
 		nodeContent, _ := json.MarshalIndent(classNodes, "", "\t")
 		cmd_util.WriteToCocaFile("tdeps.json", string(nodeContent))

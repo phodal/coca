@@ -16,12 +16,12 @@ func NewJavaFullApp() JavaFullApp {
 	return JavaFullApp{}
 }
 
-func (j *JavaFullApp) AnalysisPath(codeDir string, classes []string, identNodes []core_domain.CodeDataStruct) []core_domain.CodeDataStruct {
+func (j *JavaFullApp) AnalysisPath(codeDir string, identNodes []core_domain.CodeDataStruct) []core_domain.CodeDataStruct {
 	files := cocafile.GetJavaFiles(codeDir)
-	return j.AnalysisFiles(identNodes, files, classes)
+	return j.AnalysisFiles(identNodes, files)
 }
 
-func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, files []string, classes []string) []core_domain.CodeDataStruct {
+func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, files []string) []core_domain.CodeDataStruct {
 	var nodeInfos []core_domain.CodeDataStruct
 
 	var identMap = make(map[string]core_domain.CodeDataStruct)
@@ -37,7 +37,6 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 		context := parser.CompilationUnit()
 
 		listener := ast_java.NewJavaFullListener(identMap, file)
-		listener.AppendClasses(classes)
 
 		antlr.NewParseTreeWalker().Walk(listener, context)
 

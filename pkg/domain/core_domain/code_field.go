@@ -11,7 +11,10 @@ func NewJField(typeType string, typeValue string, modifier string) CodeField {
 		TypeValue: typeValue,
 		TypeType:  typeType,
 	}
-	property.Modifiers = append(property.Modifiers, modifier)
+
+	if modifier != "" {
+		property.Modifiers = append(property.Modifiers, modifier)
+	}
 
 	return property
 }

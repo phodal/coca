@@ -31,7 +31,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 
 	var classes []string = nil
 	for _, node := range identNodes {
-		classes = append(classes, node.Package+"."+node.NodeName)
+		classes = append(classes, node.GetClassFullName())
 	}
 
 	for _, file := range files {

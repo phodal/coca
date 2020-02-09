@@ -31,11 +31,6 @@ var tbsCmd = &cobra.Command{
 		identifiers := cmd_util.LoadTestIdentify(files)
 		identifiersMap := core_domain.BuildIdentifierMap(identifiers)
 
-		var classes []string = nil
-		for _, node := range identifiers {
-			classes = append(classes, node.Package+"."+node.NodeName)
-		}
-
 		analysisApp := javaapp.NewJavaFullApp()
 		classNodes := analysisApp.AnalysisFiles(identifiers, files)
 

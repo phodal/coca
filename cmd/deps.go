@@ -36,12 +36,6 @@ var depsCmd = &cobra.Command{
 		identifierApp := javaapp.NewJavaIdentifierApp()
 		iNodes := identifierApp.AnalysisFiles(files)
 
-		var classes []string = nil
-
-		for _, node := range iNodes {
-			classes = append(classes, node.Package+"."+node.NodeName)
-		}
-
 		callApp := javaapp.NewJavaFullApp()
 		classNodes := callApp.AnalysisFiles(iNodes, files)
 

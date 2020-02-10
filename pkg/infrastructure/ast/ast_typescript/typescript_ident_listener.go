@@ -99,9 +99,6 @@ func BuildInterfaceTypeBody(ctx *parser.TypeMemberListContext, dataStruct *core_
 		case *parser.PropertySignatureContext:
 			BuildInterfacePropertySignature(x, dataStruct)
 		case *parser.MethodSignatureContext:
-			method := core_domain.NewJMethod()
-			method.Name = x.PropertyName().GetText()
-
 			function := core_domain.CodeFunction{
 				Name: x.PropertyName().GetText(),
 			}

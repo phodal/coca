@@ -78,9 +78,8 @@ func (s *TypeScriptIdentListener) EnterInterfaceDeclaration(ctx *parser.Interfac
 
 	if ctx.InterfaceExtendsClause() != nil {
 		extendsContext := ctx.InterfaceExtendsClause().(*parser.InterfaceExtendsClauseContext)
-		implements := BuildImplements(extendsContext.ClassOrInterfaceTypeList())
-
-		s.currentDataStruct.Extend = implements[0]
+		elements := BuildImplements(extendsContext.ClassOrInterfaceTypeList())
+		s.currentDataStruct.Extend = elements[0]
 	}
 
 	objectTypeCtx := ctx.ObjectType().(*parser.ObjectTypeContext)

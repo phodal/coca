@@ -2,7 +2,7 @@
 GitLogs
 
 ```
-git log --all --date=short --pretty="format:[%h] %aN %ad %s" --numstat --reverse
+git log --all --date=short --pretty="format:[%h] %aN %ad %s" --numstat --reverse --summary
 ```
 
 Delete

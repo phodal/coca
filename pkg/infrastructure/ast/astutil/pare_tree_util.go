@@ -15,11 +15,3 @@ func GetNodeIndex(node antlr.ParseTree) int {
 	}
 	return 0
 }
-
-func GetLeftSibling(ctx antlr.ParseTree) antlr.Tree {
-	index := GetNodeIndex(ctx)
-	if index < 1 {
-		return nil
-	}
-	return ctx.GetParent().GetChild(index - 1)
-}

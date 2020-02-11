@@ -13,7 +13,7 @@ func streamToParser(is antlr.CharStream) *parser.PythonParser {
 	return parser.NewPythonParser(tokens)
 }
 
-func ProcessTsString(code string) *parser.PythonParser {
+func ProcessPythonString(code string) *parser.PythonParser {
 	is := antlr.NewInputStream(code)
 	return streamToParser(is)
 }
@@ -27,7 +27,7 @@ func (p *PythonIdentApp) AnalysisPackageManager(path string) core_domain.CodePac
 }
 
 func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
-	scriptParser := ProcessTsString(code)
+	scriptParser := ProcessPythonString(code)
 	context := scriptParser.Root()
 
 	listener := ast_python.NewPythonIdentListener(fileName)

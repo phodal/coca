@@ -27,12 +27,11 @@ type ApiCmdConfig struct {
 }
 
 var (
-	apiCmdConfig ApiCmdConfig
-	restApis     []api_domain2.RestAPI
-
-	identifiers    = cmd_util.LoadIdentify(apiCmdConfig.DependencePath)
-	identifiersMap = core_domain.BuildIdentifierMap(identifiers)
-	diMap          = core_domain.BuildDIMap(identifiers, identifiersMap)
+	apiCmdConfig   ApiCmdConfig
+	restApis       []api_domain2.RestAPI
+	identifiers    []core_domain.CodeDataStruct
+	identifiersMap map[string]core_domain.CodeDataStruct
+	diMap          map[string]string
 )
 
 var apiCmd = &cobra.Command{
@@ -40,6 +39,10 @@ var apiCmd = &cobra.Command{
 	Short: "scan HTTP api from annotation",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
+		identifiers = cmd_util.LoadIdentify(apiCmdConfig.DependencePath)
+		identifiersMap = core_domain.BuildIdentifierMap(identifiers)
+		diMap = core_domain.BuildDIMap(identifiers, identifiersMap)
+
 		depPath := apiCmdConfig.DependencePath
 		apiPrefix := apiCmdConfig.AggregateApi
 

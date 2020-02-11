@@ -77,7 +77,6 @@ func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = true
 	dataStruct := &core_domain.CodeDataStruct{
 		NodeName:        ctx.Name().GetText(),
-		InOutProperties: nil,
 	}
 
 	ctxIndex := astutil.GetNodeIndex(ctx)

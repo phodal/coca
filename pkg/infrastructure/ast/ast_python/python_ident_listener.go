@@ -15,14 +15,14 @@ type PythonIdentListener struct {
 	parser.BasePythonParserListener
 }
 
-var currentCodeFile *core_domain.CodeFile
+var currentCodeFile *core_domain.CodeContainer
 var currentDataStruct *core_domain.CodeDataStruct
 var debug = false
 var output io.Writer
 var hasEnterMember = false
 
 func NewPythonIdentListener(fileName string) *PythonIdentListener {
-	currentCodeFile = &core_domain.CodeFile{}
+	currentCodeFile = &core_domain.CodeContainer{}
 	currentCodeFile.FullName = fileName
 	output = os.Stdout
 
@@ -165,6 +165,6 @@ func BuildArgList(context *parser.ArglistContext) []core_domain.AnnotationKeyVal
 	return arguments
 }
 
-func (s *PythonIdentListener) GetCodeFileInfo() core_domain.CodeFile {
+func (s *PythonIdentListener) GetCodeFileInfo() core_domain.CodeContainer {
 	return *currentCodeFile
 }

@@ -26,7 +26,7 @@ func (t *TypeScriptIdentApp) AnalysisPackageManager(path string) core_domain.Cod
 	return core_domain.CodePackageManagerInfo{}
 }
 
-func (t *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (t *TypeScriptIdentApp) Analysis(code string, fileName string) core_domain.CodeContainer {
 	scriptParser := ProcessTsString(code)
 	context := scriptParser.Program()
 

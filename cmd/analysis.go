@@ -66,7 +66,7 @@ func AnalysisGo() []core_domain.CodeDataStruct {
 }
 
 func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter func(path string) bool, isFunctionBase bool) []core_domain.CodeDataStruct {
-	var results []core_domain.CodeFile
+	var results []core_domain.CodeContainer
 	files := cocafile.GetFilesWithFilter(path, filter)
 
 	var codeMembers []core_domain.CodeMember
@@ -103,7 +103,7 @@ func CommentAnalysis(path string, app app_concept.AbstractAnalysisApp, filter fu
 	return ds
 }
 
-func BuildMethodDs(result core_domain.CodeFile) []core_domain.CodeDataStruct {
+func BuildMethodDs(result core_domain.CodeContainer) []core_domain.CodeDataStruct {
 	var methodsDs []core_domain.CodeDataStruct
 	for _, member := range result.Members {
 		for _, node := range member.FunctionNodes {

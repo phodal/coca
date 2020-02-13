@@ -41,7 +41,7 @@ func (n *CocagoParser) SetOutput(out io.Writer) io.Writer {
 	return output
 }
 
-func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
+func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeContainer {
 	absPath, _ := filepath.Abs(fileName)
 	content, _ := ioutil.ReadFile(absPath)
 
@@ -53,7 +53,7 @@ func (n *CocagoParser) ProcessFile(fileName string) core_domain.CodeFile {
 	return *codeFile
 }
 
-func (n *CocagoParser) ProcessString(code string, fileName string, codeMembers []core_domain.CodeMember) *core_domain.CodeFile {
+func (n *CocagoParser) ProcessString(code string, fileName string, codeMembers []core_domain.CodeMember) *core_domain.CodeContainer {
 	identCodeMembers = codeMembers
 	n.CodeMembers = codeMembers
 	fset := token.NewFileSet()
@@ -67,7 +67,7 @@ func (n *CocagoParser) ProcessString(code string, fileName string, codeMembers [
 	return codeFile
 }
 
-func (n *CocagoParser) IdentAnalysis(code string, fileName string) *core_domain.CodeFile {
+func (n *CocagoParser) IdentAnalysis(code string, fileName string) *core_domain.CodeContainer {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, fileName, code, 0)
 	if err != nil {
@@ -78,9 +78,9 @@ func (n *CocagoParser) IdentAnalysis(code string, fileName string) *core_domain.
 	return codeFile
 }
 
-func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *core_domain.CodeFile {
+func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string) *core_domain.CodeContainer {
 	var currentStruct core_domain.CodeDataStruct
-	var currentFile core_domain.CodeFile
+	var currentFile core_domain.CodeContainer
 	var currentFunc *core_domain.CodeFunction
 	var dsMap = make(map[string]*core_domain.CodeDataStruct)
 
@@ -213,7 +213,7 @@ func BuildImportName(fileName string) string {
 	return importName
 }
 
-func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.CodeFile) core_domain.CodeDataStruct {
+func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.CodeContainer) core_domain.CodeDataStruct {
 	properties := BuildFieldToProperty(x.Methods.List)
 
 	dataStruct := core_domain.CodeDataStruct{
@@ -231,7 +231,7 @@ func AddInterface(x *ast.InterfaceType, ident string, codeFile *core_domain.Code
 	return dataStruct
 }
 
-func setMemberPackageInfo(member *core_domain.CodeMember, codeFile *core_domain.CodeFile) {
+func setMemberPackageInfo(member *core_domain.CodeMember, codeFile *core_domain.CodeContainer) {
 	member.AliasPackage = codeFile.PackageName
 	member.FileID = codeFile.FullName
 	member.BuildMemberId()
@@ -241,7 +241,7 @@ func AddNestedFunction(currentFunc *core_domain.CodeFunction, x *ast.FuncType) {
 
 }
 
-func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeFile) (*core_domain.CodeFunction, string) {
+func AddFunctionDecl(x *ast.FuncDecl, currentFile *core_domain.CodeContainer) (*core_domain.CodeFunction, string) {
 	recv := ""
 	if x.Recv != nil {
 		recv = BuildReceiver(x, recv)
@@ -329,7 +329,7 @@ func getFieldName(field *ast.Field) string {
 	return field.Names[0].Name
 }
 
-func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_domain.CodeFile, dsMap map[string]*core_domain.CodeDataStruct) {
+func AddStructType(currentNodeName string, x *ast.StructType, currentFile *core_domain.CodeContainer, dsMap map[string]*core_domain.CodeDataStruct) {
 	member := core_domain.NewCodeMember()
 	member.DataStructID = currentNodeName
 	member.Type = "struct"

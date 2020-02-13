@@ -26,7 +26,7 @@ func (p *PythonIdentApp) AnalysisPackageManager(path string) core_domain.CodePac
 	return core_domain.CodePackageManagerInfo{}
 }
 
-func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeContainer {
 	scriptParser := ProcessPythonString(code)
 	context := scriptParser.Root()
 

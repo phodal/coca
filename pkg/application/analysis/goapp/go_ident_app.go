@@ -29,7 +29,7 @@ func (g *GoIdentApp) AnalysisPackageManager(path string) core_domain.CodePackage
 	return *pmInfo
 }
 
-func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile {
+func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeContainer {
 	parser := ast_go.NewCocagoParser()
 	var codeMembers []core_domain.CodeMember
 	if g.Extensions != nil {

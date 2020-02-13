@@ -15,7 +15,7 @@ type TypeScriptIdentListener struct {
 	dataStructures    []core_domain.CodeDataStruct
 	dataStructQueue   []core_domain.CodeDataStruct
 	filePath          string
-	codeFile          core_domain.CodeFile
+	codeFile          core_domain.CodeContainer
 
 	parser.BaseTypeScriptParserListener
 }
@@ -26,7 +26,7 @@ func NewTypeScriptIdentListener(fileName string) *TypeScriptIdentListener {
 	return listener
 }
 
-func (s *TypeScriptIdentListener) GetNodeInfo() core_domain.CodeFile {
+func (s *TypeScriptIdentListener) GetNodeInfo() core_domain.CodeContainer {
 	isScriptCalls := s.currentDataStruct != nil && s.currentDataStruct.IsNotEmpty()
 	if isScriptCalls {
 		if len(s.currentDataStruct.Functions) < 1 {

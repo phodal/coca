@@ -557,6 +557,8 @@ results:
  - [ ] Story Cmd
  - [ ] Clean Code Suggest
     - [ ] JavaScript Version [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+ - [ ] More CodeSmells
+    - [ ] Source [DesigniteJava](https://github.com/tushartushar/DesigniteJava)
 
 Documents Todo:
 

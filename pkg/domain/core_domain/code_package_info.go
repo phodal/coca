@@ -1,5 +1,6 @@
 package core_domain
 
-type CodePackageManagerInfo struct {
+type CodePackageInfo struct {
 	ProjectName string
+	Dependencies []CodeDependency
 }

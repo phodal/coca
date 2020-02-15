@@ -16,6 +16,7 @@ type CodeDataStruct struct {
 	Annotations     []CodeAnnotation
 	FunctionCalls   []CodeCall     // for field call
 	InOutProperties []CodeProperty //for golang interface
+	//Parameters      []CodeProperty
 	Extension       interface{}
 	Imports         []CodeImport // deprecated: should get from code file
 }

@@ -9,13 +9,13 @@ import (
 
 type GoIdentApp struct {
 	Extensions     interface{}
-	PackageManager core_domain.CodePackageManagerInfo
+	PackageManager core_domain.CodePackageInfo
 }
 
 // todo: support multiple project
-func (g *GoIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageManagerInfo {
+func (g *GoIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageInfo {
 	content, _ := ioutil.ReadFile(path + "/" + "go.mod")
-	pmInfo := &core_domain.CodePackageManagerInfo{}
+	pmInfo := &core_domain.CodePackageInfo{}
 
 	if content != nil {
 		mod := string(content)

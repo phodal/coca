@@ -1,5 +1,6 @@
 package core_domain
 
 type CodeModule struct {
-	Packages []CodePackage
+	Packages    []CodePackage
+	PackageInfo CodePackageInfo
 }

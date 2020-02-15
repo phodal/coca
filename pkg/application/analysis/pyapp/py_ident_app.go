@@ -22,8 +22,8 @@ type PythonIdentApp struct {
 
 }
 
-func (p *PythonIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageManagerInfo  {
-	return core_domain.CodePackageManagerInfo{}
+func (p *PythonIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageInfo {
+	return core_domain.CodePackageInfo{}
 }
 
 func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.CodeContainer {

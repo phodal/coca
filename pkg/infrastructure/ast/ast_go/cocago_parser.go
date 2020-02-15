@@ -22,7 +22,7 @@ var identCodeMembers []core_domain.CodeMember
 
 type CocagoParser struct {
 	CodeMembers    []core_domain.CodeMember
-	PackageManager core_domain.CodePackageManagerInfo
+	PackageManager core_domain.CodePackageInfo
 }
 
 var output io.Writer
@@ -155,7 +155,7 @@ func (n *CocagoParser) Visitor(f *ast.File, fset *token.FileSet, fileName string
 	return &currentFile
 }
 
-func (n *CocagoParser) SetPackageManager(manager core_domain.CodePackageManagerInfo) {
+func (n *CocagoParser) SetPackageManager(manager core_domain.CodePackageInfo) {
 	n.PackageManager = manager
 }
 
@@ -173,7 +173,7 @@ func SortInterface(slice []core_domain.CodeDataStruct) {
 	radix.SortSlice(slice, func(i int) string { return slice[i].NodeName })
 }
 
-func BuildImport(x *ast.ImportSpec, fileName string, manager core_domain.CodePackageManagerInfo) *core_domain.CodeImport {
+func BuildImport(x *ast.ImportSpec, fileName string, manager core_domain.CodePackageInfo) *core_domain.CodeImport {
 	path := x.Path.Value
 	cleanPath := path[1 : len(path)-1]
 	asName := ""

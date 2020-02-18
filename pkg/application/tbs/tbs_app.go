@@ -42,7 +42,7 @@ func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap m
 			for index, methodCall := range currentMethodCalls {
 				if methodCall.FunctionName == "" {
 					if index == len(currentMethodCalls)-1 {
-						checkAssert(hasAssert, clz, method, &results, &testType)
+						checkAssert(hasAssert, clz.FilePath, method, &results, &testType)
 					}
 					continue
 				}
@@ -58,7 +58,7 @@ func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap m
 				}
 
 				if index == len(currentMethodCalls)-1 {
-					checkAssert(hasAssert, clz, method, &results, &testType)
+					checkAssert(hasAssert, clz.FilePath, method, &results, &testType)
 				}
 			}
 
@@ -69,11 +69,11 @@ func (a TbsApp) AnalysisPath(deps []core_domain.CodeDataStruct, identifiersMap m
 	return results
 }
 
-func checkAssert(hasAssert bool, clz core_domain.CodeDataStruct, method core_domain.CodeFunction, results *[]TestBadSmell, testType *string) {
+func checkAssert(hasAssert bool, filePath string, method core_domain.CodeFunction, results *[]TestBadSmell, testType *string) {
 	if !hasAssert {
 		*testType = "UnknownTest"
 		tbs := TestBadSmell{
-			FileName:    clz.FilePath,
+			FileName:    filePath,
 			Type:        *testType,
 			Description: "",
 			Line:        method.Position.StartLine,

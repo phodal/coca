@@ -61,10 +61,10 @@
             <tspan x="201" y="423">Make Static - Instance Method</tspan>
         </text>
         <text id="Behavior-Drivent" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
-            <tspan x="268" y="177">Behavior Drivent</tspan>
+            <tspan x="268" y="177">Behavior Driven</tspan>
         </text>
         <text id="TypeTypet" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
-            <tspan x="252" y="208">TypeTypet</tspan>
+            <tspan x="252" y="208">TypeType ...</tspan>
         </text>
         <text id="Parameters" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="240" y="243">Parameters </tspan>
@@ -78,8 +78,8 @@
         <text id="Observer" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#000000">
             <tspan x="556" y="413">Observer</tspan>
         </text>
-        <text id="REST-API-Designt" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#D0021B">
-            <tspan x="711" y="32">REST API Designt</tspan>
+        <text id="REST-API-Design" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#D0021B">
+            <tspan x="711" y="32">REST API Design</tspan>
         </text>
         <text id="Big-ball-of-mud" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#D0021B">
             <tspan x="723" y="67">Big ball of mud</tspan>
@@ -94,7 +94,7 @@
             <tspan x="753" y="519">by Exp…</tspan>
         </text>
         <text id="common-common" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#D0021B">
-            <tspan x="49" y="282">common common</tspan>
+            <tspan x="49" y="282">common's common</tspan>
         </text>
         <text id="God-Class" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#D0021B">
             <tspan x="381" y="519">God Class</tspan>

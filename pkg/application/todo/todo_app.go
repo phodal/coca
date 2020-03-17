@@ -74,7 +74,7 @@ func buildComments(path string) []*astitodo.TODO {
 		file := files[index]
 
 		displayName := filepath.Base(file)
-		fmt.Println("Refactoring parse java call: " + displayName)
+		fmt.Println("parse java call: " + displayName)
 
 		is, _ := antlr.NewFileStream(file)
 		lexer := NewCommentLexer(is)

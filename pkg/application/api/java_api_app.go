@@ -23,7 +23,7 @@ func (j *JavaApiApp) AnalysisPath(codeDir string, parsedDeps []core_domain.CodeD
 		file := files[index]
 
 		displayName := filepath.Base(file)
-		fmt.Println("Refactoring parse java call: " + displayName)
+		fmt.Println("parse java call: " + displayName)
 
 		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()

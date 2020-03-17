@@ -36,7 +36,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 
 	for _, file := range files {
 		displayName := filepath.Base(file)
-		fmt.Println("Refactoring parse java call: " + displayName)
+		fmt.Println("parse java call: " + displayName)
 
 		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()

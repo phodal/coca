@@ -27,7 +27,7 @@ func (j *BadSmellApp) AnalysisPath(codeDir string) *[]bs_domain.BSDataStruct {
 		file := files[index]
 
 		displayName := filepath.Base(file)
-		fmt.Println("Refactoring parse java call: " + displayName)
+		fmt.Println("parse java call: " + displayName)
 
 		parser := ast_java.ProcessJavaFile(file)
 		context := parser.CompilationUnit()

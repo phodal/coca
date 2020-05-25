@@ -18,13 +18,13 @@ func Test_Regression(t *testing.T) {
 }
 
 // todo: ignore this test for fast CI
-//func Test_ProcessErrorGrammar(t *testing.T) {
-//	g := NewGomegaWithT(t)
-//
-//	app := new(TypeScriptIdentApp)
-//	code, _ := ioutil.ReadFile("../../../../../_fixtures/ts/regressions/callback_hell.ts")
-//
-//	results := app.Analysis(string(code), "")
-//
-//	g.Expect(len(results.CodeMembers)).To(Equal(0))
-//}
+func Test_ProcessErrorGrammar(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	app := new(TypeScriptIdentApp)
+	code, _ := ioutil.ReadFile("../../../../../_fixtures/ts/regressions/callback_hell.ts")
+
+	results := app.Analysis(string(code), "")
+
+	g.Expect(len(results.Members)).To(Equal(0))
+}

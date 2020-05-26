@@ -132,16 +132,6 @@ func Test_IdentFuncMember(t *testing.T) {
 	g.Expect(results.Members[0].ID).To(Equal("testdata:ProcessTsString"))
 }
 
-// todo: support it
-//func Test_NestedMethod(t *testing.T) {
-//	t.Parallel()
-//	g := NewGomegaWithT(t)
-//
-//	filePath := getFilePath("nested_method")
-//	results := testParser.ProcessFile(filePath + ".code")
-//	g.Expect(cocatest.JSONFileBytesEqual(results, filePath+".json")).To(Equal(true))
-//}
-
 func Test_RelatedImport(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)

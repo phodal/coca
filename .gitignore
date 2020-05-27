@@ -69,3 +69,4 @@ _fixtures/refactor/move/b/ImportForB.java
 !wasm/demo
 wasm/demo/coca.wasm
 coverage.txt
+gen/

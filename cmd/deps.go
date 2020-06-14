@@ -52,35 +52,6 @@ var depsCmd = &cobra.Command{
 		table.Render()
 	},
 }
-//
-//func loadPlugins() DepApp {
-//	mod := "plugins/dep.so"
-//	fmt.Println(os.Args)
-//	if strings.HasSuffix(os.Args[0], ".test") || strings.Contains(os.Args[0], "/_test/") || strings.Contains(os.Args[1], "-test.v") {
-//		mod = "../plugins/dep.so"
-//	}
-//
-//	plug, err := plugin.Open(mod)
-//	if err != nil {
-//		fmt.Println(err)
-//		os.Exit(1)
-//	}
-//
-//	depApp, err := plug.Lookup("DepApp")
-//	if err != nil {
-//		fmt.Println(err)
-//		os.Exit(1)
-//	}
-//
-//	var convertApp DepApp
-//	convertApp, ok := depApp.(DepApp)
-//	if !ok {
-//		fmt.Println("unexpected type from module symbol")
-//		os.Exit(1)
-//	}
-//
-//	return convertApp
-//}
 
 func init() {
 	rootCmd.AddCommand(depsCmd)

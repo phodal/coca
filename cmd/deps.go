@@ -39,7 +39,6 @@ var depsCmd = &cobra.Command{
 		callApp := javaapp.NewJavaFullApp()
 		classNodes := callApp.AnalysisFiles(iNodes, files)
 
-		//app := loadPlugins()
 		app := deps.NewDepApp()
 
 		results := app.AnalysisPath(path, classNodes)

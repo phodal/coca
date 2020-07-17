@@ -15,6 +15,7 @@ import (
 type ArchCmdConfig struct {
 	DependencePath string
 	IsMergePackage bool
+	FilterString   string
 }
 
 var (
@@ -33,14 +34,14 @@ var archCmd = &cobra.Command{
 		archApp := arch.NewArchApp()
 		result := archApp.Analysis(parsedDeps, identifiersMap)
 
-		ignores := strings.Split("", ",")
+		filter := strings.Split(archCmdConfig.FilterString, ",")
 		var nodeFilter = func(key string) bool {
-			for _, f := range ignores {
-				if key == f {
-					return true
+			for _, f := range filter {
+				if strings.Contains(key, f) {
+					return false
 				}
 			}
-			return false
+			return true
 		}
 
 
@@ -63,4 +64,5 @@ func init() {
 
 	archCmd.PersistentFlags().StringVarP(&archCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergePackage, "mergePackage", "P", false, "merge package/folder for include dependencies")
+	archCmd.PersistentFlags().StringVarP(&archCmdConfig.FilterString, "filter", "x", "", "filter -x com.phodal")
 }

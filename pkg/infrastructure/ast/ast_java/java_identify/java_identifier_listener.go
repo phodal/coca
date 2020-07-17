@@ -102,7 +102,10 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.IDENTIFIER().GetText()
+	name := ""
+	if ctx.IDENTIFIER() != nil {
+		name = ctx.IDENTIFIER().GetText()
+	}
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
 

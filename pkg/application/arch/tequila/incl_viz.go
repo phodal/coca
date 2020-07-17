@@ -1,6 +1,7 @@
 package tequila
 
 import (
+	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"sort"
 	"strconv"
@@ -77,7 +78,7 @@ func (f *FullGraph) SortedByFan(merge func(string) string) []*Fan {
 	return result
 }
 
-func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gographviz.Graph {
+func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
 
@@ -88,7 +89,7 @@ func (fullGraph *FullGraph) ToDot(split string, filter func(string) bool) *gogra
 	layerMap := make(map[string][]string)
 
 	for nodeKey := range fullGraph.NodeList {
-		if filter(nodeKey) {
+		if !include(nodeKey) && !include(fullGraph.NodeList[nodeKey]) {
 			continue
 		}
 

@@ -38,10 +38,10 @@ var archCmd = &cobra.Command{
 		var nodeFilter = func(key string) bool {
 			for _, f := range filter {
 				if strings.Contains(key, f) {
-					return false
+					return true
 				}
 			}
-			return true
+			return false
 		}
 
 

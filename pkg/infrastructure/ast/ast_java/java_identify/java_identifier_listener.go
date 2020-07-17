@@ -49,15 +49,22 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	}
 
 	if ctx.IMPLEMENTS() != nil {
-		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
-		for _, typ := range types {
-			typeText := typ.GetText()
-			for _, imp := range imports {
-				if strings.HasSuffix(imp, "."+typeText) {
-					currentNode.Implements = append(currentNode.Implements, imp)
+		list := ctx.TypeList()
+		switch x := list.(type) {
+		case *parser.TypeListContext:
+			{
+				types := x.AllTypeType()
+				for _, typ := range types {
+					typeText := typ.GetText()
+					for _, imp := range imports {
+						if strings.HasSuffix(imp, "."+typeText) {
+							currentNode.Implements = append(currentNode.Implements, imp)
+						}
+					}
 				}
 			}
 		}
+
 	}
 
 	currentMethod = core_domain.NewJMethod()

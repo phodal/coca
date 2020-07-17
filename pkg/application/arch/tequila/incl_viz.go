@@ -88,23 +88,21 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	layerMap := make(map[string][]string)
 
 	for nodeKey := range fullGraph.NodeList {
-		if !include(nodeKey) && !include(fullGraph.NodeList[nodeKey]) {
-			continue
-		}
+		if include(nodeKey) || include(fullGraph.NodeList[nodeKey]) {
+			tmp := strings.Split(nodeKey, split)
+			packageName := tmp[0]
+			if packageName == nodeKey {
+				packageName = "main"
+			}
+			if len(tmp) > 2 {
+				packageName = strings.Join(tmp[0:len(tmp)-1], split)
+			}
 
-		tmp := strings.Split(nodeKey, split)
-		packageName := tmp[0]
-		if packageName == nodeKey {
-			packageName = "main"
+			if _, ok := layerMap[packageName]; !ok {
+				layerMap[packageName] = make([]string, 0)
+			}
+			layerMap[packageName] = append(layerMap[packageName], nodeKey)
 		}
-		if len(tmp) > 2 {
-			packageName = strings.Join(tmp[0:len(tmp)-1], split)
-		}
-
-		if _, ok := layerMap[packageName]; !ok {
-			layerMap[packageName] = make([]string, 0)
-		}
-		layerMap[packageName] = append(layerMap[packageName], nodeKey)
 	}
 
 	for layer := range layerMap {

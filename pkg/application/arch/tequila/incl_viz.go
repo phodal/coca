@@ -1,7 +1,6 @@
 package tequila
 
 import (
-	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"sort"
 	"strconv"

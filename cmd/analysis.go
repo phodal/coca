@@ -17,9 +17,9 @@ import (
 )
 
 type AnalysisCmdConfig struct {
-	Path        string
-	ForceUpdate bool
-	Lang        string
+	Path           string
+	UpdateIdentify bool
+	Lang           string
 }
 
 var (
@@ -123,11 +123,19 @@ func BuildMethodDs(result core_domain.CodeContainer) []core_domain.CodeDataStruc
 
 func AnalysisJava() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path
-	identifierApp := javaapp.NewJavaIdentifierApp()
-	iNodes := identifierApp.AnalysisPath(importPath)
+	var iNodes []core_domain.CodeDataStruct
 
-	identModel, _ := json.MarshalIndent(iNodes, "", "\t")
-	cmd_util.WriteToCocaFile("identify.json", string(identModel))
+	if analysisCmdConfig.UpdateIdentify {
+		identifierApp := javaapp.NewJavaIdentifierApp()
+		iNodes := identifierApp.AnalysisPath(importPath)
+
+		identModel, _ := json.MarshalIndent(iNodes, "", "\t")
+		cmd_util.WriteToCocaFile("identify.json", string(identModel))
+	} else {
+		fmt.Println("use local identify");
+		identContent := cmd_util.ReadCocaFile("identify.json")
+		_ = json.Unmarshal(identContent, &iNodes)
+	}
 
 	callApp := javaapp.NewJavaFullApp()
 
@@ -140,5 +148,5 @@ func init() {
 
 	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Path, "path", "p", ".", "example -p core/main")
 	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Lang, "lang", "l", "java", "example coca analysis -l java, typescript, python")
-	analysisCmd.PersistentFlags().BoolVarP(&analysisCmdConfig.ForceUpdate, "force", "f", false, "force update -f")
+	analysisCmd.PersistentFlags().BoolVarP(&analysisCmdConfig.UpdateIdentify, "identify", "i", true, "use current identify")
 }

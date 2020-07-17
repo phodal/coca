@@ -298,7 +298,11 @@ func (s *JavaFullListener) ExitConstructorDeclaration(ctx *parser.ConstructorDec
 }
 
 func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	name := ctx.IDENTIFIER().GetText()
+	name := ""
+
+	if ctx.IDENTIFIER() != nil {
+		name = ctx.IDENTIFIER().GetText()
+	}
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {

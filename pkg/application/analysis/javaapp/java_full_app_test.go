@@ -292,3 +292,14 @@ func Test_NormalChainCall(t *testing.T) {
 	g.Expect(calls[1].NodeName).To(Equal("UriComponentsBuilder"))
 	g.Expect(calls[1].FunctionName).To(Equal("buildAndExpand"))
 }
+
+func Test_ShouldSupportForGenericsInCode(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../../_fixtures/grammar/java/regression/DummyActivity.java"
+	codePath = filepath.FromSlash(codePath)
+
+	callNodes := getCallNodes(codePath)
+
+	g.Expect(callNodes[0].NodeName).To(Equal("Dummy"))
+}

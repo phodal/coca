@@ -5,6 +5,7 @@ import (
 	ignore "github.com/sabhiram/go-gitignore"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func GetJavaFiles(codeDir string) []string {
@@ -34,6 +35,10 @@ func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string 
 			if gitIgnore.MatchesPath(path) {
 				return nil
 			}
+		}
+
+		if strings.Contains(path ,"testdata") {
+			return nil;
 		}
 
 		if filter(path) {

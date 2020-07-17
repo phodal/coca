@@ -483,7 +483,7 @@ results:
 
 Android Studio Analysis Examples
 
-![Call Examples](showcaes/android-studio-call.svg)
+![Call Examples](showcases/android-studio-call.svg)
 
 ## Roadmap
 

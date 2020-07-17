@@ -45,7 +45,9 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	}
 
 	if ctx.EXTENDS() != nil {
-		currentNode.Extend = ctx.TypeType().GetText()
+		if ctx.TypeType() != nil {
+			currentNode.Extend = ctx.TypeType().GetText()
+		}
 	}
 
 	if ctx.IMPLEMENTS() != nil {

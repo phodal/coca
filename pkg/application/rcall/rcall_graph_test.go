@@ -29,9 +29,7 @@ func TestRCallGraph_Analysis(t *testing.T) {
 	content := analyser.Analysis("com.phodal.pholedge.book.BookService.createBook", parsedDeps, MockWriteCallMap)
 
 	g.Expect(content).To(Equal(`digraph G {
-rankdir = LR;
-edge [dir="back"];
-"com.phodal.pholedge.book.BookService.createBook" -> "com.phodal.pholedge.book.BookController.createBook";
+"com.phodal.pholedge.book.BookController.createBook" -> "com.phodal.pholedge.book.BookService.createBook";
 }
 `))
 }
@@ -52,9 +50,7 @@ func TestRCallGraph_Constructor(t *testing.T) {
 
 	// Todo bug: to be fix
 	g.Expect(content).To(Equal(`digraph G {
-rankdir = LR;
-edge [dir="back"];
-"com.phodal.coca.analysis.JavaCallApp.parse" -> "com.phodal.coca.analysis.JavaCallApp.analysisDir";
+"com.phodal.coca.analysis.JavaCallApp.analysisDir" -> "com.phodal.coca.analysis.JavaCallApp.parse";
 }
 `))
 }

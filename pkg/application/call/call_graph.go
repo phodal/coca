@@ -25,6 +25,7 @@ func (c CallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct) 
 func ToGraphviz(chain string) string {
 	//rankdir = LR;
 	var result = "digraph G {\n"
+	result += "rankdir = LR;\n"
 	result = result + chain
 	result = result + "}\n"
 	return result

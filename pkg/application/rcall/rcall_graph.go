@@ -19,9 +19,6 @@ func (c RCallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct,
 	writeCallback(rcallMap)
 
 	chain := c.buildRCallChain(funcName, rcallMap)
-
-	graphvizReverse := "rankdir = LR;\nedge [dir=\"back\"];\n"
-	chain = graphvizReverse + chain
 	dotContent := call.ToGraphviz(chain)
 	return dotContent
 }
@@ -79,7 +76,7 @@ func (c RCallGraph) buildRCallChain(funcName string, methodMap map[string][]stri
 			if funcName == child {
 				continue
 			}
-			newCall := "\"" + funcName + "\" -> \"" + child + "\";\n"
+			newCall := "\"" + child + "\" -> \"" + funcName + "\";\n"
 			arrayResult = arrayResult + newCall
 		}
 

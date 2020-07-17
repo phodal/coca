@@ -12,7 +12,9 @@ import (
 )
 
 type CallCmdConfig struct {
-	Path string
+	Path       string
+	ClassName  string
+	RemoveName string
 }
 
 var (
@@ -27,9 +29,6 @@ var callGraphCmd = &cobra.Command{
 		var parsedDeps []core_domain.CodeDataStruct
 		dependence := callCmdConfig.Path
 
-		className := cmd.Flag("className").Value.String()
-		remove := cmd.Flag("remove").Value.String()
-
 		if dependence != "" {
 			analyser := NewCallGraph()
 			file := cmd_util.ReadFile(dependence)
@@ -39,9 +38,9 @@ var callGraphCmd = &cobra.Command{
 
 			_ = json.Unmarshal(file, &parsedDeps)
 
-			content := analyser.Analysis(className, parsedDeps)
-			if remove != "" {
-				content = strings.ReplaceAll(content, remove, "")
+			content := analyser.Analysis(callCmdConfig.ClassName, parsedDeps)
+			if callCmdConfig.RemoveName != "" {
+				content = strings.ReplaceAll(content, callCmdConfig.RemoveName, "")
 			}
 
 			cmd_util.WriteToCocaFile("call.dot", content)
@@ -53,7 +52,7 @@ var callGraphCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(callGraphCmd)
 
-	callGraphCmd.PersistentFlags().StringP("className", "c", "", "path")
+	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.ClassName, "className", "c", "", "class")
 	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.Path, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
-	callGraphCmd.PersistentFlags().StringP("remove", "r", "", "remove package ParamName")
+	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.RemoveName, "remove", "r", "", "remove package ParamName")
 }

@@ -479,6 +479,12 @@ results:
 +---------------------------+----------------------------------------+---------+
 ```
 
+## Showcases
+
+Android Studio Analysis Examples
+
+![Call Examples](showcaes/android-studio-call.svg)
+
 ## Roadmap
 
  - bad smell support

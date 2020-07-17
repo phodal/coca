@@ -27,7 +27,7 @@ func TestArch_Analysis(t *testing.T) {
 	g.Expect(results.RelationList["domain.AggregateRootA->domain.AggregateRoot"].To).To(Equal("domain.AggregateRoot"))
 
 	graph := results.ToDot(".", func(key string) bool {
-		return false
+		return true
 	})
 
 	g.Expect(len(graph.Nodes.Lookup)).To(Equal(13))

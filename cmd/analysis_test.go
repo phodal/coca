@@ -10,7 +10,7 @@ func Test_Analysis_Go(t *testing.T) {
 
 	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
-		Cmd:    "analysis -f -l go -p " + path,
+		Cmd:    "analysis -l go -p " + path,
 		Golden: "testdata/analysis_go.txt",
 	}}
 	RunTestCmd(t, analysis)
@@ -21,7 +21,7 @@ func Test_Analysis_Python(t *testing.T) {
 
 	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
-		Cmd:    "analysis -f -l py -p " + path,
+		Cmd:    "analysis -l py -p " + path,
 		Golden: "testdata/analysis_python.txt",
 	}}
 	RunTestCmd(t, analysis)

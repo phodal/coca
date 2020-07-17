@@ -37,8 +37,8 @@ func GetFilesWithFilter(codeDir string, filter func(path string) bool) []string 
 			}
 		}
 
-		if strings.Contains(path ,"testdata") {
-			return nil;
+		if strings.Contains(path, "testData") {
+			return nil
 		}
 
 		if filter(path) {

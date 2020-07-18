@@ -6,6 +6,14 @@ import (
 
 var Level = 7
 
+var MergeHeaderFunc = func(input string) string {
+	tmp := strings.Split(input, ".")
+	if len(tmp) > 1 {
+		return strings.Join(tmp[0:len(tmp)-1], ".")
+	}
+	return input
+}
+
 var MergePackageFunc = func(input string) string {
 	split := "/"
 	if !strings.Contains(input, split) {

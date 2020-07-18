@@ -10,8 +10,6 @@ os:
 
 jobs:
   include:
-    - go: 1.12.x
-      os: linux
     - go: tip
       os: linux
 

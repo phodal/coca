@@ -21,4 +21,11 @@ func TestArch(t *testing.T) {
 		Golden: "",
 	}}
 	RunTestCmd(t, tests)
+
+	header := []testcase.CmdTestCase{{
+		Name:   "arch",
+		Cmd:    "arch -H -x \"com.phodal\"",
+		Golden: "",
+	}}
+	RunTestCmd(t, header)
 }

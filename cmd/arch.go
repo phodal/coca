@@ -16,6 +16,7 @@ type ArchCmdConfig struct {
 	DependencePath string
 	IsMergePackage bool
 	FilterString   string
+	IsMergeHeader  bool
 }
 
 var (
@@ -44,6 +45,9 @@ var archCmd = &cobra.Command{
 			return false
 		}
 
+		if archCmdConfig.IsMergeHeader {
+			result = result.MergeHeaderFile(tequila.MergeHeaderFunc)
+		}
 
 		if archCmdConfig.IsMergePackage {
 			result = result.MergeHeaderFile(tequila.MergePackageFunc)
@@ -63,6 +67,7 @@ func init() {
 	rootCmd.AddCommand(archCmd)
 
 	archCmd.PersistentFlags().StringVarP(&archCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
-	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergePackage, "mergePackage", "P", false, "merge package/folder for include dependencies")
+	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergePackage, "mergePackage", "P", false, "merge package")
+	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergeHeader, "mergeHeader", "H", false, "merge header")
 	archCmd.PersistentFlags().StringVarP(&archCmdConfig.FilterString, "filter", "x", "", "filter -x com.phodal")
 }

@@ -1,7 +1,6 @@
 package rcall
 
 import (
-	"github.com/phodal/coca/pkg/application/call"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 )
 
@@ -18,9 +17,18 @@ func (c RCallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct,
 
 	writeCallback(rcallMap)
 
-	chain := c.buildRCallChain(funcName, rcallMap)
-	dotContent := call.ToGraphviz(chain)
+	chain := c.BuildRCallChain(funcName, rcallMap)
+	dotContent := ToGraphviz(chain)
 	return dotContent
+}
+
+// TODO: be a utils
+func ToGraphviz(chain string) string {
+	var result = "digraph G {\n"
+	//result += "rankdir = LR;\n"
+	result = result + chain
+	result = result + "}\n"
+	return result
 }
 
 func BuildProjectMethodMap(clzs []core_domain.CodeDataStruct) map[string]int {
@@ -57,7 +65,7 @@ func BuildRCallMethodMap(parserDeps []core_domain.CodeDataStruct, projectMaps ma
 var loopCount = 0
 var lastChild = ""
 
-func (c RCallGraph) buildRCallChain(funcName string, methodMap map[string][]string) string {
+func (c RCallGraph) BuildRCallChain(funcName string, methodMap map[string][]string) string {
 	if loopCount >= 6 {
 		return "\n"
 	}
@@ -71,7 +79,7 @@ func (c RCallGraph) buildRCallChain(funcName string, methodMap map[string][]stri
 			}
 			if len(methodMap[child]) > 0 {
 				lastChild = child
-				arrayResult = arrayResult + c.buildRCallChain(child, methodMap)
+				arrayResult = arrayResult + c.BuildRCallChain(child, methodMap)
 			}
 			if funcName == child {
 				continue

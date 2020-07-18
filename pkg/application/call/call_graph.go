@@ -1,7 +1,8 @@
 package call
 
 import (
-	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
+	"github.com/phodal/coca/pkg/application/rcall"
+	apidomain2 "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/jpackage"
 	"strings"
@@ -14,9 +15,18 @@ func NewCallGraph() CallGraph {
 	return CallGraph{}
 }
 
-func (c CallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct) string {
+func (c CallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct, lookup bool) string {
 	methodMap := BuildMethodMap(clzs)
 	chain := BuildCallChain(funcName, methodMap, nil)
+
+	if lookup {
+		var projectMethodMap = rcall.BuildProjectMethodMap(clzs)
+		rcallMap := rcall.BuildRCallMethodMap(clzs, projectMethodMap)
+		graph := rcall.NewRCallGraph()
+		rCallChain := graph.BuildRCallChain(funcName, rcallMap)
+		chain = chain + rCallChain
+	}
+
 	dotContent := ToGraphviz(chain)
 	return dotContent
 }
@@ -25,7 +35,7 @@ func (c CallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct) 
 func ToGraphviz(chain string) string {
 	//rankdir = LR;
 	var result = "digraph G {\n"
-	//result += "rankdir = LR;\n"
+	result += "rankdir = LR;\n"
 	result = result + chain
 	result = result + "}\n"
 	return result
@@ -57,9 +67,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []api_domain2.RestAPI, deps []core_domain.CodeDataStruct, diMap map[string]string) (string, []api_domain2.CallAPI) {
+func (c CallGraph) AnalysisByFiles(restApis []apidomain2.RestAPI, deps []core_domain.CodeDataStruct, diMap map[string]string) (string, []apidomain2.CallAPI) {
 	methodMap := BuildMethodMap(deps)
-	var apiCallSCounts []api_domain2.CallAPI
+	var apiCallSCounts []apidomain2.CallAPI
 
 	results := "digraph G { \n"
 
@@ -71,7 +81,7 @@ func (c CallGraph) AnalysisByFiles(restApis []api_domain2.RestAPI, deps []core_d
 		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
-		count := &api_domain2.CallAPI{
+		count := &apidomain2.CallAPI{
 			HTTPMethod: restApi.HttpMethod,
 			Caller:     caller,
 			URI:        restApi.Uri,

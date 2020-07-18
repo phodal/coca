@@ -15,6 +15,7 @@ type CallCmdConfig struct {
 	Path       string
 	ClassName  string
 	RemoveName string
+	Lookup     bool
 }
 
 var (
@@ -38,7 +39,7 @@ var callGraphCmd = &cobra.Command{
 
 			_ = json.Unmarshal(file, &parsedDeps)
 
-			content := analyser.Analysis(callCmdConfig.ClassName, parsedDeps)
+			content := analyser.Analysis(callCmdConfig.ClassName, parsedDeps, callCmdConfig.Lookup)
 			if callCmdConfig.RemoveName != "" {
 				content = strings.ReplaceAll(content, callCmdConfig.RemoveName, "")
 			}
@@ -55,4 +56,5 @@ func init() {
 	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.ClassName, "className", "c", "", "class")
 	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.Path, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	callGraphCmd.PersistentFlags().StringVarP(&callCmdConfig.RemoveName, "remove", "r", "", "remove package ParamName")
+	callGraphCmd.PersistentFlags().BoolVarP(&callCmdConfig.Lookup, "lookup", "l", false, "call with rcall")
 }

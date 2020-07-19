@@ -1,7 +1,6 @@
 package tequila
 
 import (
-	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"sort"
 	"strconv"
@@ -141,24 +140,41 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	return graph
 }
 
-func (fullGraph *FullGraph) ToMapDot(split string, include func(key string) bool) {
+type GraphNode struct {
+	text     string
+	children []*GraphNode
+}
+
+func (fullGraph *FullGraph) ToMapDot(split string, include func(key string) bool) *GraphNode {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
 
-	//nodeIndex := 1
-	//layerIndex := 1
-	//nodes := make(map[string]string)
-
-	layerMap := make(map[string][]string)
+	graphNode := &GraphNode{}
 
 	for nodeKey := range fullGraph.NodeList {
 		tmp := strings.Split(nodeKey, split)
-		packageName := tmp[0]
-		if _, ok := layerMap[packageName]; !ok {
-			layerMap[packageName] = make([]string, 0)
-		}
-		layerMap[packageName] = append(layerMap[packageName], nodeKey)
+		graphNode.text = tmp[0]
+		graphNode = buildNode(tmp[1:], graphNode)
 	}
 
-	fmt.Println(layerMap)
+	return graphNode
+}
+
+func buildNode(arr []string, node *GraphNode) *GraphNode {
+	if node.text == arr[0] {
+
+		return node
+	}
+
+	child := &GraphNode{}
+	if len(arr) == 1 {
+		child.text = arr[0]
+		node.children = append(node.children, child)
+	} else {
+		child.text = arr[0]
+		graphNode := buildNode(arr[1:], child)
+		node.children = append(node.children, graphNode)
+	}
+
+	return node
 }

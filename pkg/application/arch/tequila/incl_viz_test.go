@@ -28,7 +28,11 @@ func Test_VisualDemo(t *testing.T) {
 		return true
 	}
 
-	fullGraph.ToMapDot(".", nodeFilter)
+	node := fullGraph.ToMapDot(".", nodeFilter)
 
-	g.Expect(true).To(Equal(true))
+	g.Expect(node.text).To(Equal("com"))
+	children := node.children
+	g.Expect(len(children)).To(Equal(2))
+	g.Expect(children[0].text).To(Equal("phodal"))
+	g.Expect(children[1].text).To(Equal("spring"))
 }

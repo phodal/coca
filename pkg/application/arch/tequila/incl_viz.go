@@ -146,9 +146,6 @@ type GraphNode struct {
 }
 
 func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) bool) *GraphNode {
-	graph := gographviz.NewGraph()
-	_ = graph.SetName("G")
-
 	graphNode := &GraphNode{}
 
 	for nodeKey := range fullGraph.NodeList {
@@ -160,11 +157,45 @@ func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) 
 	return graphNode
 }
 
-func (f *FullGraph) ToMapDot(node *GraphNode) {
+func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
+	graph := gographviz.NewGraph()
+	_ = graph.SetName("G")
 
+	nodes := make(map[string]string)
+	layerIndex := 1
+	nodeIndex := 1
+
+	layerAttr := make(map[string]string)
+	layerAttr["label"] = "\"" + node.text + "\""
+	layerName := "cluster" + strconv.Itoa(layerIndex)
+	_ = graph.AddSubGraph("G", layerName, layerAttr)
+	layerIndex++
+	for _, child := range node.children {
+		attrs := make(map[string]string)
+		attrs["label"] = "\"" + child.text + "\""
+		attrs["shape"] = "box"
+		_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), attrs)
+		nodes[node.text] = "node" + strconv.Itoa(nodeIndex)
+		nodeIndex++
+	}
+
+	cross := make(map[string]bool) // mapping from strings to ints
+	for key := range fullGraph.RelationList {
+		relation := fullGraph.RelationList[key]
+		if nodes[relation.From] != "" && nodes[relation.To] != "" {
+			fromNode := nodes[relation.From]
+			toNode := nodes[relation.To]
+
+			cross[fromNode+toNode] = true
+			attrs := make(map[string]string)
+			attrs["style"] = relation.Style
+
+			_ = graph.AddEdge(fromNode, toNode, true, attrs)
+		}
+	}
+
+	return graph
 }
-
-
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {
 	if node.text == arr[0] {

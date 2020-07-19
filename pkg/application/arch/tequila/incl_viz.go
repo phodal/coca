@@ -1,6 +1,7 @@
 package tequila
 
 import (
+	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"sort"
 	"strconv"
@@ -138,4 +139,26 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	}
 
 	return graph
+}
+
+func (fullGraph *FullGraph) ToMapDot(split string, include func(key string) bool) {
+	graph := gographviz.NewGraph()
+	_ = graph.SetName("G")
+
+	//nodeIndex := 1
+	//layerIndex := 1
+	//nodes := make(map[string]string)
+
+	layerMap := make(map[string][]string)
+
+	for nodeKey := range fullGraph.NodeList {
+		tmp := strings.Split(nodeKey, split)
+		packageName := tmp[0]
+		if _, ok := layerMap[packageName]; !ok {
+			layerMap[packageName] = make([]string, 0)
+		}
+		layerMap[packageName] = append(layerMap[packageName], nodeKey)
+	}
+
+	fmt.Println(layerMap)
 }

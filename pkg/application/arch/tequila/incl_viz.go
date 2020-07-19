@@ -165,28 +165,14 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	layerIndex := 1
 	nodeIndex := 1
 
-	layerAttr := make(map[string]string)
-	layerAttr["label"] = "\"" + node.text + "\""
-	layerName := "cluster" + strconv.Itoa(layerIndex)
-	_ = graph.AddSubGraph("G", layerName, layerAttr)
-	layerIndex++
-	for _, child := range node.children {
-		attrs := make(map[string]string)
-		attrs["label"] = "\"" + child.text + "\""
-		attrs["shape"] = "box"
-		_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), attrs)
-		nodes[node.text] = "node" + strconv.Itoa(nodeIndex)
-		nodeIndex++
-	}
+	fullGraph.buildGraphNode(node, layerIndex, graph, nodeIndex, nodes)
 
-	cross := make(map[string]bool) // mapping from strings to ints
 	for key := range fullGraph.RelationList {
 		relation := fullGraph.RelationList[key]
 		if nodes[relation.From] != "" && nodes[relation.To] != "" {
 			fromNode := nodes[relation.From]
 			toNode := nodes[relation.To]
 
-			cross[fromNode+toNode] = true
 			attrs := make(map[string]string)
 			attrs["style"] = relation.Style
 
@@ -195,6 +181,31 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	}
 
 	return graph
+}
+
+func (fullGraph *FullGraph) buildGraphNode(node *GraphNode, layerIndex int, graph *gographviz.Graph, nodeIndex int, nodes map[string]string) {
+	layerAttr, layerName := buildLayerAttr(node, layerIndex)
+	_ = graph.AddSubGraph("G", layerName, layerAttr)
+	layerIndex++
+	for _, child := range node.children {
+		_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), fullGraph.buildRelationAttr(child))
+		nodes[node.text] = "node" + strconv.Itoa(nodeIndex)
+		nodeIndex++
+	}
+}
+
+func buildLayerAttr(node *GraphNode, layerIndex int) (map[string]string, string) {
+	layerAttr := make(map[string]string)
+	layerAttr["label"] = "\"" + node.text + "\""
+	layerName := "cluster" + strconv.Itoa(layerIndex)
+	return layerAttr, layerName
+}
+
+func (fullGraph *FullGraph) buildRelationAttr(child *GraphNode) map[string]string {
+	attrs := make(map[string]string)
+	attrs["label"] = "\"" + child.text + "\""
+	attrs["shape"] = "box"
+	return attrs
 }
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {

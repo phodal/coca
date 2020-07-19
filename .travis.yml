@@ -24,8 +24,6 @@ addons:
       - graphviz
 
 before_script:
-#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
-#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install graphviz; fi
   - go get github.com/onsi/gomega
   - go get github.com/onsi/ginkgo/ginkgo
   - go get github.com/modocache/gover
@@ -37,11 +35,9 @@ git:
 install: true
 
 before_install:
-#  - go build -buildmode=plugin -o plugins/dep.so core/context/deps/*.go
   - go get -t -v  $(go list ./... | grep -v /languages/)
 
 script:
-#  - go build -buildmode=plugin -o plugins/dep.so core/context/deps/*.go
   - go test -v  $(go list ./... | grep -v /languages/) -coverprofile=coverage.txt -covermode=atomic -coverpkg=./...
 
 after_success:

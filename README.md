@@ -552,18 +552,19 @@ Android Studio Analysis Examples
  - TBD
     - Comment Analysis
       - [ ] incorrect comment ? http://das.encs.concordia.ca/uploads/2018/02/Maldonado_thesis.pdf
- - Online Code Analysis
-    - [x] WASM support
-    - [ ] expose WASM API
-    - [ ] GitHub search code
- - [ ] Pluggable
-    - [ ] plugin support (Windows Issues)
+ - ~~Online Code Analysis~~
+    - [x] ~~WASM support~~
+    - [ ] ~~expose WASM API~~
+    - [ ] ~~GitHub search code~~
+ - [ ] ~~Pluggable~~
+    - [ ] ~~plugin support (Windows Issues)~~
  - [x] Dependence Analysis
     - [ ] Deps Related Counts
     - [x] 3rd-party analysis XML or Groovy Scripts
     - [x] Groovy Support
       - [x] migrate to Golang Styles
  - [ ] Story Cmd
+    - [ ] Auto create refactor story
  - [ ] Clean Code Suggest
     - [ ] JavaScript Version [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
  - [ ] More CodeSmells

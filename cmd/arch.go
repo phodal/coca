@@ -45,6 +45,10 @@ var archCmd = &cobra.Command{
 			return false
 		}
 
+		//output := visual.FromDeps(parsedDeps)
+		//out, _ := json.Marshal(output)
+		//cmd_util.WriteToCocaFile("visual.json", string(out))
+
 		if archCmdConfig.IsMergeHeader {
 			result = result.MergeHeaderFile(tequila.MergeHeaderFunc)
 		}

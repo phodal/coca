@@ -11,4 +11,6 @@ digraph G {
                 node20 [ label="Spring", shape=box ];
             }
     }
+
+    node19 -> node20
 }

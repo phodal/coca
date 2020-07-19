@@ -1,7 +1,6 @@
 package tequila
 
 import (
-	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"sort"
 	"strconv"
@@ -203,12 +202,10 @@ func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *GraphNode, 
 
 	if len(current.children) > 0 {
 		for _, child := range current.children {
-			fmt.Println(current.text)
 			fullGraph.buildGraphNode(layerName, child, graph, nodes)
 		}
 	} else {
-		fmt.Println(layerName, current.text, fullGraph.nodeIndex)
-		_ = graph.AddNode(layerName, "node"+strconv.Itoa(fullGraph.nodeIndex), fullGraph.buildRelationAttr(current.text))
+		_ = graph.AddNode(subgraph, "node"+strconv.Itoa(fullGraph.nodeIndex), fullGraph.buildRelationAttr(current.text))
 		nodes[current.text] = "node" + strconv.Itoa(fullGraph.nodeIndex)
 		fullGraph.nodeIndex++
 	}

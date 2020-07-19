@@ -1,6 +1,7 @@
 package tequila
 
 import (
+	"fmt"
 	"github.com/awalterschulze/gographviz"
 	"sort"
 	"strconv"
@@ -14,6 +15,8 @@ type Relation struct {
 }
 
 type FullGraph struct {
+	layerIndex   int
+	nodeIndex    int
 	NodeList     map[string]string
 	RelationList map[string]*Relation
 }
@@ -172,10 +175,10 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	_ = graph.SetName("G")
 
 	nodes := make(map[string]string)
-	layerIndex := 1
-	nodeIndex := 1
+	fullGraph.layerIndex = 1
+	fullGraph.nodeIndex = 1
 
-	fullGraph.buildGraphNode(node, layerIndex, graph, nodeIndex, nodes)
+	fullGraph.buildGraphNode("G", node, graph, nodes)
 
 	for key := range fullGraph.RelationList {
 		relation := fullGraph.RelationList[key]
@@ -193,20 +196,26 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	return graph
 }
 
-func (fullGraph *FullGraph) buildGraphNode(node *GraphNode, layerIndex int, graph *gographviz.Graph, nodeIndex int, nodes map[string]string) {
-	layerAttr, layerName := buildLayerAttr(node.text, layerIndex)
-	_ = graph.AddSubGraph("G", layerName, layerAttr)
-	layerIndex++
-	for _, child := range node.children {
-		_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), fullGraph.buildRelationAttr(child.text))
-		nodes[node.text] = "node" + strconv.Itoa(nodeIndex)
-		nodeIndex++
+func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *GraphNode, graph *gographviz.Graph, nodes map[string]string) {
+	layerAttr, layerName := buildLayerAttr(current.text, fullGraph.layerIndex)
+	_ = graph.AddSubGraph(subgraph, layerName, layerAttr)
+	fullGraph.layerIndex++
+
+	if len(current.children) > 0 {
+		for _, child := range current.children {
+			fmt.Println(current.text)
+			fullGraph.buildGraphNode(layerName, child, graph, nodes)
+		}
+	} else {
+		fmt.Println(layerName, current.text, fullGraph.nodeIndex)
+		_ = graph.AddNode(layerName, "node"+strconv.Itoa(fullGraph.nodeIndex), fullGraph.buildRelationAttr(current.text))
+		nodes[current.text] = "node" + strconv.Itoa(fullGraph.nodeIndex)
+		fullGraph.nodeIndex++
 	}
 }
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {
 	if node.text == arr[0] {
-
 		return node
 	}
 

@@ -1,8 +1,8 @@
 package tequila
 
 import (
-	"fmt"
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"testing"
 )
 
@@ -48,7 +48,8 @@ func Test_BuildNodeDot(t *testing.T) {
 	node, graph := createBasicMap()
 	dot := graph.ToMapDot(node)
 
-	fmt.Println(dot.String())
+	result := dot.String()
+	cmd_util.WriteToCocaFile("demo.dot", result)
 
 	g.Expect(true).To(Equal(true))
 }

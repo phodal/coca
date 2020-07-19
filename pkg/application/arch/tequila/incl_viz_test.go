@@ -6,6 +6,13 @@ import (
 )
 
 func createBasicMap() (*GraphNode, *FullGraph) {
+	fullGraph, nodeFilter := createGraph()
+
+	node := fullGraph.BuildMapTree(".", nodeFilter)
+	return node, fullGraph
+}
+
+func createGraph() (*FullGraph, func(key string) bool) {
 	fullGraph := &FullGraph{
 		NodeList:     make(map[string]string),
 		RelationList: make(map[string]*Relation),
@@ -26,9 +33,7 @@ func createBasicMap() (*GraphNode, *FullGraph) {
 	var nodeFilter = func(key string) bool {
 		return true
 	}
-
-	node := fullGraph.BuildMapTree(".", nodeFilter)
-	return node, fullGraph
+	return fullGraph, nodeFilter
 }
 
 func Test_BuildGraphNode(t *testing.T) {
@@ -38,8 +43,17 @@ func Test_BuildGraphNode(t *testing.T) {
 	g.Expect(node.text).To(Equal("com"))
 	children := node.children
 	g.Expect(len(children)).To(Equal(2))
-	//g.Expect(children[0].text).To(Equal("phodal"))
-	//g.Expect(children[1].text).To(Equal("spring"))
+}
+
+func Test_ShouldMergeSameMap(t *testing.T) {
+	g := NewGomegaWithT(t)
+	fullGraph, nodeFilter := createGraph()
+	fullGraph.NodeList["com.phodal.coca"] = "com.phodal.coca"
+	node := fullGraph.BuildMapTree(".", nodeFilter)
+
+	g.Expect(node.text).To(Equal("com"))
+	children := node.children
+	g.Expect(len(children)).To(Equal(3))
 }
 
 func Test_BuildNodeDot(t *testing.T) {

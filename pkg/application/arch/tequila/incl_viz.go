@@ -152,23 +152,6 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	return graph
 }
 
-type GraphNode struct {
-	text     string
-	children []*GraphNode
-}
-
-func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) bool) *GraphNode {
-	graphNode := &GraphNode{}
-
-	for nodeKey := range fullGraph.NodeList {
-		tmp := strings.Split(nodeKey, split)
-		graphNode.text = tmp[0]
-		graphNode = buildNode(tmp[1:], graphNode)
-	}
-
-	return graphNode
-}
-
 func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
@@ -209,6 +192,23 @@ func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *GraphNode, 
 		nodes[current.text] = "node" + strconv.Itoa(fullGraph.nodeIndex)
 		fullGraph.nodeIndex++
 	}
+}
+
+type GraphNode struct {
+	text     string
+	children []*GraphNode
+}
+
+func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) bool) *GraphNode {
+	graphNode := &GraphNode{}
+
+	for nodeKey := range fullGraph.NodeList {
+		tmp := strings.Split(nodeKey, split)
+		graphNode.text = tmp[0]
+		graphNode = buildNode(tmp[1:], graphNode)
+	}
+
+	return graphNode
 }
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {

@@ -145,7 +145,7 @@ type GraphNode struct {
 	children []*GraphNode
 }
 
-func (fullGraph *FullGraph) ToMapDot(split string, include func(key string) bool) *GraphNode {
+func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) bool) *GraphNode {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
 
@@ -159,6 +159,12 @@ func (fullGraph *FullGraph) ToMapDot(split string, include func(key string) bool
 
 	return graphNode
 }
+
+func (f *FullGraph) ToMapDot(node *GraphNode) {
+
+}
+
+
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {
 	if node.text == arr[0] {

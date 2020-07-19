@@ -77,6 +77,20 @@ func (f *FullGraph) SortedByFan(merge func(string) string) []*Fan {
 	return result
 }
 
+func buildLayerAttr(layer string, layerIndex int) (map[string]string, string) {
+	layerAttr := make(map[string]string)
+	layerAttr["label"] = "\"" + layer + "\""
+	layerName := "cluster" + strconv.Itoa(layerIndex)
+	return layerAttr, layerName
+}
+
+func (fullGraph *FullGraph) buildRelationAttr(text string) map[string]string {
+	attrs := make(map[string]string)
+	attrs["label"] = "\"" + text + "\""
+	attrs["shape"] = "box"
+	return attrs
+}
+
 func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
@@ -106,16 +120,12 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	}
 
 	for layer := range layerMap {
-		layerAttr := make(map[string]string)
-		layerAttr["label"] = "\"" + layer + "\""
-		layerName := "cluster" + strconv.Itoa(layerIndex)
+		layerAttr, layerName := buildLayerAttr(layer, layerIndex)
 		_ = graph.AddSubGraph("G", layerName, layerAttr)
 		layerIndex++
 		for _, node := range layerMap[layer] {
-			attrs := make(map[string]string)
 			fileName := strings.Replace(node, layer+split, "", -1)
-			attrs["label"] = "\"" + fileName + "\""
-			attrs["shape"] = "box"
+			attrs := fullGraph.buildRelationAttr(fileName)
 			_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), attrs)
 			nodes[node] = "node" + strconv.Itoa(nodeIndex)
 			nodeIndex++
@@ -184,28 +194,14 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 }
 
 func (fullGraph *FullGraph) buildGraphNode(node *GraphNode, layerIndex int, graph *gographviz.Graph, nodeIndex int, nodes map[string]string) {
-	layerAttr, layerName := buildLayerAttr(node, layerIndex)
+	layerAttr, layerName := buildLayerAttr(node.text, layerIndex)
 	_ = graph.AddSubGraph("G", layerName, layerAttr)
 	layerIndex++
 	for _, child := range node.children {
-		_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), fullGraph.buildRelationAttr(child))
+		_ = graph.AddNode(layerName, "node"+strconv.Itoa(nodeIndex), fullGraph.buildRelationAttr(child.text))
 		nodes[node.text] = "node" + strconv.Itoa(nodeIndex)
 		nodeIndex++
 	}
-}
-
-func buildLayerAttr(node *GraphNode, layerIndex int) (map[string]string, string) {
-	layerAttr := make(map[string]string)
-	layerAttr["label"] = "\"" + node.text + "\""
-	layerName := "cluster" + strconv.Itoa(layerIndex)
-	return layerAttr, layerName
-}
-
-func (fullGraph *FullGraph) buildRelationAttr(child *GraphNode) map[string]string {
-	attrs := make(map[string]string)
-	attrs["label"] = "\"" + child.text + "\""
-	attrs["shape"] = "box"
-	return attrs
 }
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {

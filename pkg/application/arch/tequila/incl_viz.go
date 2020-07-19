@@ -2,6 +2,7 @@ package tequila
 
 import (
 	"github.com/awalterschulze/gographviz"
+	"github.com/dghubble/trie"
 	"sort"
 	"strconv"
 	"strings"
@@ -202,6 +203,11 @@ type GraphNode struct {
 func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) bool) *GraphNode {
 	graphNode := &GraphNode{}
 
+	pkgTrie := trie.NewPathTrie()
+	for nodeKey := range fullGraph.NodeList {
+		pkgTrie.Put(strings.ReplaceAll(nodeKey, ".", "/"), 0)
+	}
+
 	for nodeKey := range fullGraph.NodeList {
 		tmp := strings.Split(nodeKey, split)
 		graphNode.text = tmp[0]
@@ -210,6 +216,7 @@ func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) 
 
 	return graphNode
 }
+
 
 func buildNode(arr []string, node *GraphNode) *GraphNode {
 	if node.text == arr[0] {

@@ -22,6 +22,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dbaggerman/cuba v0.3.2 h1:6ZbQX3FNvkocR222YyoAIZ8wi4avrb7JcJkPvVI2AS4=
 github.com/dbaggerman/cuba v0.3.2/go.mod h1:t9Oo05XRZGcjaVqsA/gFeNAOm7DYZYNhI17unI5FlwY=
+github.com/dghubble/trie v0.0.0-20200716043226-5a94efb202d5 h1:euE/xPG0HIg6XiNXYrAHxX9aVwD1gw/yM2kptLOOj6k=
+github.com/dghubble/trie v0.0.0-20200716043226-5a94efb202d5/go.mod h1:xNBeoT4V92/aNvuC3IJ2g59uxuKP4/kzvkpoHrb7v4A=
 github.com/fogleman/gg v1.2.1-0.20190220221249-0403632d5b90/go.mod h1:R/bRT+9gY/C5z7JzPU0zXsXHKM4/ayA+zqcVNZzPa1k=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=

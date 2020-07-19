@@ -1,0 +1,14 @@
+digraph G {
+    subgraph cluster1 {
+        label = "com"
+
+            subgraph cluster2 {
+                label = "phodal"
+                node19 [ label="Ledge", shape=box ];
+            }
+            subgraph cluster3 {
+                label = "hug"
+                node20 [ label="Spring", shape=box ];
+            }
+    }
+}

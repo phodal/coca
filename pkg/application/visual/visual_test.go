@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
+	"github.com/phodal/coca/pkg/application/analysis/javaapp"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"path/filepath"
 	"testing"
 )
 
-func TestNewTodoApp(t *testing.T) {
+func Test_BasicVisualSupport(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	var parsedDeps []core_domain.CodeDataStruct
@@ -22,4 +23,26 @@ func TestNewTodoApp(t *testing.T) {
 
 	g.Expect(len(ddata.Links)).To(Equal(0))
 	g.Expect(len(ddata.Nodes)).To(Equal(3))
+}
+
+func Test_LinkedVisual(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/grammar/java/arch/step2-java"
+	codePath = filepath.FromSlash(codePath)
+
+	identifierApp := new(javaapp.JavaIdentifierApp)
+	iNodes := identifierApp.AnalysisPath(codePath)
+	var classes []string = nil
+	for _, node := range iNodes {
+		classes = append(classes, node.Package+"."+node.NodeName)
+	}
+
+	callApp := javaapp.NewJavaFullApp()
+	callNodes := callApp.AnalysisPath(codePath, iNodes)
+
+	ddata := FromDeps(callNodes)
+
+	g.Expect(len(ddata.Links)).To(Equal(7))
+	g.Expect(len(ddata.Nodes)).To(Equal(14))
 }

@@ -59,12 +59,10 @@ func Test_BuildNodeDot(t *testing.T) {
 	graph, nodeFilter := createGraph()
 	graph.NodeList["com.phodal.coca"] = "com.phodal.coca"
 	node := graph.BuildMapTree(nodeFilter)
-
-	dot := graph.ToMapDot(node)
+	dot := graph.MapToGraph(node)
 
 	result := dot.String()
 	cmd_util.WriteToCocaFile("demo.dot", result)
 
 	g.Expect(len(dot.SubGraphs.SubGraphs)).To(Equal(6))
-	g.Expect(len(dot.Nodes.Nodes)).To(Equal(2))
 }

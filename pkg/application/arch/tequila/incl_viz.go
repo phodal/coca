@@ -27,20 +27,20 @@ type Fan struct {
 	FanOut int
 }
 
-func (f *FullGraph) MergeHeaderFile(merge func(string) string) *FullGraph {
+func (fullGraph *FullGraph) MergeHeaderFile(merge func(string) string) *FullGraph {
 	result := &FullGraph{
 		NodeList:     make(map[string]string),
 		RelationList: make(map[string]*Relation),
 	}
 	nodes := make(map[string]string)
 
-	for key := range f.NodeList {
+	for key := range fullGraph.NodeList {
 		mergedKey := merge(key)
 		nodes[key] = mergedKey
 		result.NodeList[mergedKey] = mergedKey
 	}
-	for key := range f.RelationList {
-		relation := f.RelationList[key]
+	for key := range fullGraph.RelationList {
+		relation := fullGraph.RelationList[key]
 		mergedFrom := merge(relation.From)
 		mergedTo := merge(relation.To)
 		if mergedFrom == mergedTo {
@@ -58,8 +58,8 @@ func (f *FullGraph) MergeHeaderFile(merge func(string) string) *FullGraph {
 	return result
 }
 
-func (f *FullGraph) SortedByFan(merge func(string) string) []*Fan {
-	mergedGraph := f.MergeHeaderFile(merge)
+func (fullGraph *FullGraph) SortedByFan(merge func(string) string) []*Fan {
+	mergedGraph := fullGraph.MergeHeaderFile(merge)
 	result := make([]*Fan, len(mergedGraph.NodeList))
 	index := 0
 	fanMap := make(map[string]*Fan)
@@ -153,7 +153,13 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	return graph
 }
 
-func (fullGraph *FullGraph) ToMapDot(trie *trie.PathTrie) *gographviz.Graph {
+func (fullGraph *FullGraph) ToMapDot(include func(string) bool) *gographviz.Graph {
+	node := fullGraph.BuildMapTree(include)
+	dot := fullGraph.MapToGraph(node)
+	return dot
+}
+
+func (fullGraph *FullGraph) MapToGraph(trie *trie.PathTrie) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
 
@@ -162,7 +168,7 @@ func (fullGraph *FullGraph) ToMapDot(trie *trie.PathTrie) *gographviz.Graph {
 	fullGraph.nodeIndex = 1
 
 	for _, child := range trie.Children {
-		fullGraph.buildGraphNode("G", child, graph, nodes)
+		fullGraph.buildGraphNode("G", child, graph, nodes, "")
 	}
 
 	for key := range fullGraph.RelationList {
@@ -181,51 +187,35 @@ func (fullGraph *FullGraph) ToMapDot(trie *trie.PathTrie) *gographviz.Graph {
 	return graph
 }
 
-func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *trie.PathTrie, graph *gographviz.Graph, nodes map[string]string) {
+func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *trie.PathTrie, graph *gographviz.Graph, nodes map[string]string, s string) {
+	if s != "" {
+		s = s + "." + current.Value
+	} else {
+		s = s + current.Value
+	}
+
 	layerAttr, layerName := buildLayerAttr(current.Value, fullGraph.layerIndex)
 	_ = graph.AddSubGraph(subgraph, layerName, layerAttr)
 	fullGraph.layerIndex++
 
 	if len(current.Children) > 0 {
 		for _, child := range current.Children {
-			fullGraph.buildGraphNode(layerName, child, graph, nodes)
+			fullGraph.buildGraphNode(layerName, child, graph, nodes, s)
 		}
 	} else {
 		_ = graph.AddNode(subgraph, "node"+strconv.Itoa(fullGraph.nodeIndex), fullGraph.buildRelationAttr(current.Value))
-		nodes[current.Value] = "node" + strconv.Itoa(fullGraph.nodeIndex)
+		nodes[s] = "node" + strconv.Itoa(fullGraph.nodeIndex)
 		fullGraph.nodeIndex++
 	}
-}
-
-type GraphNode struct {
-	text     string
-	children []*GraphNode
 }
 
 func (fullGraph *FullGraph) BuildMapTree(include func(key string) bool) *trie.PathTrie {
 	pkgTrie := trie.NewPathTrie()
 	for nodeKey := range fullGraph.NodeList {
-		pkgTrie.Put(strings.ReplaceAll(nodeKey, ".", "/"))
+		if include(nodeKey) || include(fullGraph.NodeList[nodeKey]) {
+			pkgTrie.Put(strings.ReplaceAll(nodeKey, ".", "/"))
+		}
 	}
 
 	return pkgTrie
-}
-
-
-func buildNode(arr []string, node *GraphNode) *GraphNode {
-	if node.text == arr[0] {
-		return node
-	}
-
-	child := &GraphNode{}
-	if len(arr) == 1 {
-		child.text = arr[0]
-		node.children = append(node.children, child)
-	} else {
-		child.text = arr[0]
-		graphNode := buildNode(arr[1:], child)
-		node.children = append(node.children, graphNode)
-	}
-
-	return node
 }

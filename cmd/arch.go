@@ -57,7 +57,7 @@ var archCmd = &cobra.Command{
 			result = result.MergeHeaderFile(tequila.MergePackageFunc)
 		}
 
-		graph := result.ToDot(".", nodeFilter)
+		graph := result.ToMapDot(nodeFilter)
 		f, _ := os.Create("coca_reporter/arch.dot")
 		w := bufio.NewWriter(f)
 		_, _ = w.WriteString("di" + graph.String())

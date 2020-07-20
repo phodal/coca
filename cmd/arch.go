@@ -2,10 +2,12 @@ package cmd
 
 import (
 	"bufio"
+	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/application/arch"
 	"github.com/phodal/coca/pkg/application/arch/tequila"
+	"github.com/phodal/coca/pkg/application/visual"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"os"
@@ -17,6 +19,7 @@ type ArchCmdConfig struct {
 	IsMergePackage bool
 	FilterString   string
 	IsMergeHeader  bool
+	WithVisual  bool
 }
 
 var (
@@ -45,9 +48,11 @@ var archCmd = &cobra.Command{
 			return false
 		}
 
-		//output := visual.FromDeps(parsedDeps)
-		//out, _ := json.Marshal(output)
-		//cmd_util.WriteToCocaFile("visual.json", string(out))
+		if archCmdConfig.WithVisual {
+			output := visual.FromDeps(parsedDeps)
+			out, _ := json.Marshal(output)
+			cmd_util.WriteToCocaFile("visual.json", string(out))
+		}
 
 		if archCmdConfig.IsMergeHeader {
 			result = result.MergeHeaderFile(tequila.MergeHeaderFunc)
@@ -73,5 +78,6 @@ func init() {
 	archCmd.PersistentFlags().StringVarP(&archCmdConfig.DependencePath, "dependence", "d", config.CocaConfig.ReporterPath+"/deps.json", "get dependence file")
 	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergePackage, "mergePackage", "P", false, "merge package")
 	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.IsMergeHeader, "mergeHeader", "H", false, "merge header")
+	archCmd.PersistentFlags().BoolVarP(&archCmdConfig.WithVisual, "showVisual", "v", false, "build visual json")
 	archCmd.PersistentFlags().StringVarP(&archCmdConfig.FilterString, "filter", "x", "", "filter -x com.phodal")
 }

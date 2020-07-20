@@ -3,6 +3,7 @@ package tequila
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
+	"strings"
 	"testing"
 )
 
@@ -64,4 +65,38 @@ func Test_BuildNodeDot(t *testing.T) {
 	cmd_util.WriteToCocaFile("demo.dot", result)
 
 	g.Expect(len(dot.SubGraphs.SubGraphs)).To(Equal(6))
+}
+
+func Test_ShouldShowPackageOnly(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	fullGraph, nodeFilter := createGraph()
+
+	fullGraph= fullGraph.MergeHeaderFile(MergeHeaderFunc)
+	node := fullGraph.ToMapDot(nodeFilter)
+
+	g.Expect(strings.Contains(node.String(), "Ledge")).To(Equal(false))
+	g.Expect(strings.Contains(node.String(), "Boot")).To(Equal(false))
+}
+
+func Test_ShouldShowMergePackage(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	fullGraph, nodeFilter := createGraph()
+
+	fullGraph= fullGraph.MergeHeaderFile(MergePackageFunc)
+	node := fullGraph.ToMapDot(nodeFilter)
+
+	g.Expect(strings.Contains(node.String(), "Ledge")).To(Equal(false))
+	g.Expect(strings.Contains(node.String(), "Boot")).To(Equal(false))
+}
+
+func Test_ShouldConvertDot(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	fullGraph, nodeFilter := createGraph()
+
+	node := fullGraph.ToDot(".", nodeFilter)
+
+	g.Expect(strings.Contains(node.String(), "Ledge")).To(Equal(true))
 }

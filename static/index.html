@@ -8,11 +8,68 @@
 </head>
 <body>
 
-<div id="main" style="width: 600px;height:400px;"></div>
+<div id="main" style="width: 1440px;height:768px;"></div>
 <script>
 var myChart = echarts.init(document.getElementById('main'));
-console.log($('disk.tree.json'));
-$.get('disk.tree.json', function (diskData) {
+$.get('visual.json', function (diskData) {
+    function hierarchy(data, delimiter = ".") {
+        let root;
+        const map = new Map;
+        data.forEach(function find(data) {
+            const {name} = data;
+            if (map.has(name)) return map.get(name);
+            const i = name.lastIndexOf(delimiter);
+            map.set(name, data);
+            if (i >= 0) {
+                let found = find({name: name.substring(0, i), children: []});
+                if (found.children) {
+                    found.children.push(data);
+                } else {
+                    return data
+                }
+                data.name = name.substring(i + 1);
+            } else {
+                root = data;
+            }
+            return data;
+        });
+
+        return root;
+    }
+
+    var dMap = {}
+
+    for (let node of diskData.nodes) {
+        dMap[node.id] = {
+            name: "root." + node.id,
+            value: 1
+        }
+    }
+
+    for (let link of diskData.links) {
+        if (link.source === link.target) {
+            continue
+        }
+        if (!dMap[link.source]) {
+            dMap[link.source] = {
+                name: "root." + link.source,
+                value: 1
+            }
+        } else {
+            dMap[link.source].value++
+        }
+    }
+
+    console.log(dMap);
+    var jdata = Object.values(dMap)
+    let data = hierarchy(jdata);
+    data.children.forEach(function(item, index, object) {
+        if (item.name === '') {
+            object.splice(index, 1);
+        }
+    });
+
+    console.log(data);
     var formatUtil = echarts.format;
     function getLevelOption() {
         return [
@@ -38,7 +95,7 @@ $.get('disk.tree.json', function (diskData) {
     }
     myChart.setOption({
         title: {
-            text: 'Disk Usage',
+            text: 'Call',
             left: 'center'
         },
         tooltip: {
@@ -53,14 +110,14 @@ $.get('disk.tree.json', function (diskData) {
 
                 return [
                     '<div class="tooltip-title">' + formatUtil.encodeHTML(treePath.join('/')) + '</div>',
-                    'Disk Usage: ' + formatUtil.addCommas(value) + ' KB',
+                    'Call' + formatUtil.addCommas(value) + ' ',
                 ].join('');
             }
         },
 
         series: [
             {
-                name: 'Disk Usage',
+                name: 'Code city',
                 type: 'treemap',
                 visibleMin: 300,
                 label: {
@@ -71,7 +128,7 @@ $.get('disk.tree.json', function (diskData) {
                     borderColor: '#fff'
                 },
                 levels: getLevelOption(),
-                data: diskData
+                data: data.children
             }
         ]
     });

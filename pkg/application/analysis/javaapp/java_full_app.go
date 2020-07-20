@@ -22,7 +22,7 @@ func (j *JavaFullApp) AnalysisPath(codeDir string, identNodes []core_domain.Code
 }
 
 func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, files []string) []core_domain.CodeDataStruct {
-	//var nodeInfos []core_domain.CodeDataStruct
+	nodeInfos := make([]core_domain.CodeDataStruct, len(files))
 
 	var identMap = make(map[string]core_domain.CodeDataStruct)
 	for _, ident := range identNodes {
@@ -34,7 +34,6 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 		classes = append(classes, node.GetClassFullName())
 	}
 
-	dict := make([]core_domain.CodeDataStruct, len(files))
 	done := make(chan bool, len(files))
 
 	go func() {
@@ -51,9 +50,7 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 			antlr.NewParseTreeWalker().Walk(listener, context)
 
 			nodes := listener.GetNodeInfo()
-			//marshal, _ := json.Marshal(nodes)
-			//_, _ = fi.Write(marshal)
-			dict = append(dict, nodes...)
+			nodeInfos = append(nodeInfos, nodes...)
 			done <- true
 		}
 	}()
@@ -64,5 +61,5 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 
 	close(done)
 
-	return dict
+	return nodeInfos
 }

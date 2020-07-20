@@ -62,6 +62,7 @@ api.dot
 api.svg
 !docs/sample/api.svg
 coca_reporter
+coca_reporter_android
 *.coverprofile
 bug
 _fixtures/tbs/demo-tbs-java-project

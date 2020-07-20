@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coca Code City</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.8.0/echarts.min.js"></script>
+</head>
+<body>
+
+<div id="main" style="width: 600px;height:400px;"></div>
+<script>
+var myChart = echarts.init(document.getElementById('main'));
+console.log($('disk.tree.json'));
+$.get('disk.tree.json', function (diskData) {
+    var formatUtil = echarts.format;
+    function getLevelOption() {
+        return [
+            {
+                itemStyle: {
+                    borderWidth: 0,
+                    gapWidth: 5
+                }
+            },
+            {
+                itemStyle: {
+                    gapWidth: 1
+                }
+            },
+            {
+                colorSaturation: [0.35, 0.5],
+                itemStyle: {
+                    gapWidth: 1,
+                    borderColorSaturation: 0.6
+                }
+            }
+        ];
+    }
+    myChart.setOption({
+        title: {
+            text: 'Disk Usage',
+            left: 'center'
+        },
+        tooltip: {
+            formatter: function (info) {
+                var value = info.value;
+                var treePathInfo = info.treePathInfo;
+                var treePath = [];
+
+                for (var i = 1; i < treePathInfo.length; i++) {
+                    treePath.push(treePathInfo[i].name);
+                }
+
+                return [
+                    '<div class="tooltip-title">' + formatUtil.encodeHTML(treePath.join('/')) + '</div>',
+                    'Disk Usage: ' + formatUtil.addCommas(value) + ' KB',
+                ].join('');
+            }
+        },
+
+        series: [
+            {
+                name: 'Disk Usage',
+                type: 'treemap',
+                visibleMin: 300,
+                label: {
+                    show: true,
+                    formatter: '{b}'
+                },
+                itemStyle: {
+                    borderColor: '#fff'
+                },
+                levels: getLevelOption(),
+                data: diskData
+            }
+        ]
+    });
+
+});
+</script>
+</body>
+</html>

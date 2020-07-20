@@ -22,7 +22,7 @@ func (j *JavaFullApp) AnalysisPath(codeDir string, identNodes []core_domain.Code
 }
 
 func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, files []string) []core_domain.CodeDataStruct {
-	nodeInfos := make([]core_domain.CodeDataStruct, len(files))
+	var nodeInfos []core_domain.CodeDataStruct
 
 	var identMap = make(map[string]core_domain.CodeDataStruct)
 	for _, ident := range identNodes {
@@ -34,32 +34,21 @@ func (j *JavaFullApp) AnalysisFiles(identNodes []core_domain.CodeDataStruct, fil
 		classes = append(classes, node.GetClassFullName())
 	}
 
-	done := make(chan bool, len(files))
+	for _, file := range files {
+		displayName := filepath.Base(file)
+		fmt.Println("parse java call: " + displayName)
 
-	go func() {
-		for i := range files {
-			displayName := filepath.Base(files[i])
-			fmt.Println("parse java call: " + displayName)
+		parser := ast_java.ProcessJavaFile(file)
+		context := parser.CompilationUnit()
 
-			parser := ast_java.ProcessJavaFile(files[i])
-			context := parser.CompilationUnit()
+		listener := ast_java.NewJavaFullListener(identMap, file)
+		listener.AppendClasses(classes)
 
-			listener := ast_java.NewJavaFullListener(identMap, files[i])
-			listener.AppendClasses(classes)
+		antlr.NewParseTreeWalker().Walk(listener, context)
 
-			antlr.NewParseTreeWalker().Walk(listener, context)
-
-			nodes := listener.GetNodeInfo()
-			nodeInfos = append(nodeInfos, nodes...)
-			done <- true
-		}
-	}()
-
-	for i := 0; i < len(files); i++ {
-		<-done
+		nodes := listener.GetNodeInfo()
+		nodeInfos = append(nodeInfos, nodes...)
 	}
-
-	close(done)
 
 	return nodeInfos
 }

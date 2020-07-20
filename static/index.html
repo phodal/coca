@@ -58,7 +58,6 @@ $.get('visual.json', function (diskData) {
         }
     }
 
-    console.log(dMap);
     var jdata = Object.values(dMap)
     let data = hierarchy(jdata);
     data.children.forEach(function(item, index, object) {
@@ -67,9 +66,8 @@ $.get('visual.json', function (diskData) {
         }
     });
 
-    console.log(data);
     var formatUtil = echarts.format;
-    function getLevelOption(mode) {
+    function getLevelOption(value) {
         return [
             {
                 colorMappingBy: 'id',
@@ -152,7 +150,6 @@ $.get('visual.json', function (diskData) {
                 label: {
                     position: 'insideTopLeft',
                     formatter: function (params) {
-                        console.log(params);
                         var arr = [
                             '{name|' + params.name + '}',
                         ];

@@ -2,13 +2,15 @@ package tequila
 
 import (
 	. "github.com/onsi/gomega"
+	"github.com/phodal/coca/cmd/cmd_util"
+	"github.com/phodal/coca/pkg/application/arch/tequila/trie"
 	"testing"
 )
 
-func createBasicMap() (*GraphNode, *FullGraph) {
+func createBasicMap() (*trie.PathTrie, *FullGraph) {
 	fullGraph, nodeFilter := createGraph()
 
-	node := fullGraph.BuildMapTree(".", nodeFilter)
+	node := fullGraph.BuildMapTree(nodeFilter)
 	return node, fullGraph
 }
 
@@ -40,30 +42,29 @@ func Test_BuildGraphNode(t *testing.T) {
 	g := NewGomegaWithT(t)
 	node, _ := createBasicMap()
 
-	g.Expect(node.text).To(Equal("com"))
-	children := node.children
-	g.Expect(len(children)).To(Equal(2))
+	g.Expect(len(node.Children["com"].Children)).To(Equal(2))
 }
 
 func Test_ShouldMergeSameMap(t *testing.T) {
 	g := NewGomegaWithT(t)
 	fullGraph, nodeFilter := createGraph()
 	fullGraph.NodeList["com.phodal.coca"] = "com.phodal.coca"
-	node := fullGraph.BuildMapTree(".", nodeFilter)
+	node := fullGraph.BuildMapTree(nodeFilter)
 
-	g.Expect(node.text).To(Equal("com"))
-	children := node.children
-	g.Expect(len(children)).To(Equal(3))
+	g.Expect(len(node.Children["com"].Children)).To(Equal(2))
 }
 
 func Test_BuildNodeDot(t *testing.T) {
 	g := NewGomegaWithT(t)
-	node, graph := createBasicMap()
+	graph, nodeFilter := createGraph()
+	graph.NodeList["com.phodal.coca"] = "com.phodal.coca"
+	node := graph.BuildMapTree(nodeFilter)
+
 	dot := graph.ToMapDot(node)
 
-	//result := dot.String()
-	//cmd_util.WriteToCocaFile("demo.dot", result)
+	result := dot.String()
+	cmd_util.WriteToCocaFile("demo.dot", result)
 
-	g.Expect(len(dot.SubGraphs.SubGraphs)).To(Equal(5))
+	g.Expect(len(dot.SubGraphs.SubGraphs)).To(Equal(6))
 	g.Expect(len(dot.Nodes.Nodes)).To(Equal(2))
 }

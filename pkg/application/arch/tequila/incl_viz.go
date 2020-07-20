@@ -2,7 +2,7 @@ package tequila
 
 import (
 	"github.com/awalterschulze/gographviz"
-	"github.com/dghubble/trie"
+	"github.com/phodal/coca/pkg/application/arch/tequila/trie"
 	"sort"
 	"strconv"
 	"strings"
@@ -153,7 +153,7 @@ func (fullGraph *FullGraph) ToDot(split string, include func(string) bool) *gogr
 	return graph
 }
 
-func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
+func (fullGraph *FullGraph) ToMapDot(trie *trie.PathTrie) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
 
@@ -161,7 +161,9 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	fullGraph.layerIndex = 1
 	fullGraph.nodeIndex = 1
 
-	fullGraph.buildGraphNode("G", node, graph, nodes)
+	for _, child := range trie.Children {
+		fullGraph.buildGraphNode("G", child, graph, nodes)
+	}
 
 	for key := range fullGraph.RelationList {
 		relation := fullGraph.RelationList[key]
@@ -179,18 +181,18 @@ func (fullGraph *FullGraph) ToMapDot(node *GraphNode) *gographviz.Graph {
 	return graph
 }
 
-func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *GraphNode, graph *gographviz.Graph, nodes map[string]string) {
-	layerAttr, layerName := buildLayerAttr(current.text, fullGraph.layerIndex)
+func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *trie.PathTrie, graph *gographviz.Graph, nodes map[string]string) {
+	layerAttr, layerName := buildLayerAttr(current.Value, fullGraph.layerIndex)
 	_ = graph.AddSubGraph(subgraph, layerName, layerAttr)
 	fullGraph.layerIndex++
 
-	if len(current.children) > 0 {
-		for _, child := range current.children {
+	if len(current.Children) > 0 {
+		for _, child := range current.Children {
 			fullGraph.buildGraphNode(layerName, child, graph, nodes)
 		}
 	} else {
-		_ = graph.AddNode(subgraph, "node"+strconv.Itoa(fullGraph.nodeIndex), fullGraph.buildRelationAttr(current.text))
-		nodes[current.text] = "node" + strconv.Itoa(fullGraph.nodeIndex)
+		_ = graph.AddNode(subgraph, "node"+strconv.Itoa(fullGraph.nodeIndex), fullGraph.buildRelationAttr(current.Value))
+		nodes[current.Value] = "node" + strconv.Itoa(fullGraph.nodeIndex)
 		fullGraph.nodeIndex++
 	}
 }
@@ -200,21 +202,13 @@ type GraphNode struct {
 	children []*GraphNode
 }
 
-func (fullGraph *FullGraph) BuildMapTree(split string, include func(key string) bool) *GraphNode {
-	graphNode := &GraphNode{}
-
+func (fullGraph *FullGraph) BuildMapTree(include func(key string) bool) *trie.PathTrie {
 	pkgTrie := trie.NewPathTrie()
 	for nodeKey := range fullGraph.NodeList {
-		pkgTrie.Put(strings.ReplaceAll(nodeKey, ".", "/"), 0)
+		pkgTrie.Put(strings.ReplaceAll(nodeKey, ".", "/"))
 	}
 
-	for nodeKey := range fullGraph.NodeList {
-		tmp := strings.Split(nodeKey, split)
-		graphNode.text = tmp[0]
-		graphNode = buildNode(tmp[1:], graphNode)
-	}
-
-	return graphNode
+	return pkgTrie
 }
 
 

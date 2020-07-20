@@ -55,6 +55,8 @@
                     name: "root." + link.source,
                     value: 1
                 }
+            } else {
+                dMap[link.source].value++
             }
         }
 
@@ -158,6 +160,7 @@
 
                     return [
                         '<div class="tooltip-title">' + formatUtil.encodeHTML(treePath.join('.')) + '</div>',
+                        'Call ' + formatUtil.addCommas(value) + ' ',
                     ].join('');
                 }
             },

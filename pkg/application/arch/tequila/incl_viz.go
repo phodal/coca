@@ -2,7 +2,6 @@ package tequila
 
 import (
 	"github.com/awalterschulze/gographviz"
-	"github.com/phodal/coca/pkg/application/arch/tequila/trie"
 	"sort"
 	"strconv"
 	"strings"
@@ -159,7 +158,7 @@ func (fullGraph *FullGraph) ToMapDot(include func(string) bool) *gographviz.Grap
 	return dot
 }
 
-func (fullGraph *FullGraph) MapToGraph(trie *trie.PathTrie) *gographviz.Graph {
+func (fullGraph *FullGraph) MapToGraph(trie *PathTrie) *gographviz.Graph {
 	graph := gographviz.NewGraph()
 	_ = graph.SetName("G")
 
@@ -187,7 +186,7 @@ func (fullGraph *FullGraph) MapToGraph(trie *trie.PathTrie) *gographviz.Graph {
 	return graph
 }
 
-func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *trie.PathTrie, graph *gographviz.Graph, nodes map[string]string, s string) {
+func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *PathTrie, graph *gographviz.Graph, nodes map[string]string, s string) {
 	if s != "" {
 		s = s + "." + current.Value
 	} else {
@@ -209,8 +208,8 @@ func (fullGraph *FullGraph) buildGraphNode(subgraph string, current *trie.PathTr
 	}
 }
 
-func (fullGraph *FullGraph) BuildMapTree(include func(key string) bool) *trie.PathTrie {
-	pkgTrie := trie.NewPathTrie()
+func (fullGraph *FullGraph) BuildMapTree(include func(key string) bool) *PathTrie {
+	pkgTrie := NewPathTrie()
 	for nodeKey := range fullGraph.NodeList {
 		if include(nodeKey) || include(fullGraph.NodeList[nodeKey]) {
 			pkgTrie.Put(strings.ReplaceAll(nodeKey, ".", "/"))

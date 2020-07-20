@@ -21,37 +21,32 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
 
-package trie
+package tequila
 
 import "strings"
 
+type StringSegmenter func(key string, start int) (segment string, nextIndex int)
+
+func PathSegmenter(path string, start int) (segment string, next int) {
+	if len(path) == 0 || start < 0 || start > len(path)-1 {
+		return "", -1
+	}
+	end := strings.IndexRune(path[start+1:], '/') // next '/' after 0th rune
+	if end == -1 {
+		return path[start:], -1
+	}
+	return path[start : start+end+1], start + end + 1
+}
+
 type PathTrie struct {
-	segmenter StringSegmenter // key segmenter, must not cause heap allocs
+	segmenter StringSegmenter
 	Value     string
 	Children  map[string]*PathTrie
 }
 
-// PathTrieConfig for building a path trie with different segmenter
-type PathTrieConfig struct {
-	Segmenter StringSegmenter
-}
-
-// NewPathTrie allocates and returns a new *PathTrie.
 func NewPathTrie() *PathTrie {
 	return &PathTrie{
 		segmenter: PathSegmenter,
-	}
-}
-
-// NewPathTrieWithConfig allocates and returns a new *PathTrie with the given *PathTrieConfig
-func NewPathTrieWithConfig(config *PathTrieConfig) *PathTrie {
-	segmenter := PathSegmenter
-	if config != nil && config.Segmenter != nil {
-		segmenter = config.Segmenter
-	}
-
-	return &PathTrie{
-		segmenter: segmenter,
 	}
 }
 
@@ -70,7 +65,4 @@ func (trie *PathTrie) Put(key string) {
 		child.Value = strings.ReplaceAll(part, "/", "")
 		node = child
 	}
-	// does node have an existing Value?
-	//isNewVal := node.Value == nil
-	//return isNewVal
 }

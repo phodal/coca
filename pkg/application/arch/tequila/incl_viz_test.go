@@ -3,11 +3,10 @@ package tequila
 import (
 	. "github.com/onsi/gomega"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/application/arch/tequila/trie"
 	"testing"
 )
 
-func createBasicMap() (*trie.PathTrie, *FullGraph) {
+func createBasicMap() (*PathTrie, *FullGraph) {
 	fullGraph, nodeFilter := createGraph()
 
 	node := fullGraph.BuildMapTree(nodeFilter)

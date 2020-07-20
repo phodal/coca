@@ -77,17 +77,17 @@ coca analysis
 coca arch
 ```
 
-Examples Results 1:
+Android Studio Gradle DSL Module (merge header)
 
-![Architecture demo 2](docs/sample/ddd.svg)
+command: `coca arch -x "com.android.tools.idea.gradle.dsl" -H true`
 
-from: [https://github.com/newlee/tequila](https://github.com/newlee/tequila/tree/master/examples/step2-Java)
+![Gradle Demo](showcases/android-gradle-dsl.svg)
 
-Examples Results 2:
+Android Studio Gradle DSL Module Elements Part:
 
-![Architecture demo](docs/sample/arch.svg)
+command: `coca arch -x "com.android.tools.idea.gradle.dsl.parser.elements"`
 
-from: [https://github.com/howiehu/ddd-architecture-samples](https://github.com/howiehu/ddd-architecture-samples)
+![Gradle Demo](showcases/android-gradle-elements.svg)
 
 ### Find Bad Smells
 

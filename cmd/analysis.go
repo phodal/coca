@@ -4,12 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis/goapp"
 	"github.com/phodal/coca/pkg/application/analysis/javaapp"
-	"github.com/phodal/coca/pkg/application/analysis/pyapp"
-	"github.com/phodal/coca/pkg/application/analysis/tsapp"
-	"github.com/phodal/coca/pkg/appliction/analysis"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 )
@@ -32,15 +27,15 @@ var analysisCmd = &cobra.Command{
 		var outputName string
 		var ds []core_domain.CodeDataStruct
 		switch analysisCmdConfig.Lang {
-		case "go":
-			ds = AnalysisGo()
-			outputName = "godeps.json"
-		case "py", "python":
-			ds = AnalysisPython()
-			outputName = "pydeps.json"
-		case "ts", "typescript":
-			ds = AnalysisTypeScript()
-			outputName = "tsdeps.json"
+		//case "go":
+		//	ds = AnalysisGo()
+		//	outputName = "godeps.json"
+		//case "py", "python":
+		//	ds = AnalysisPython()
+		//	outputName = "pydeps.json"
+		//case "ts", "typescript":
+		//	ds = AnalysisTypeScript()
+		//	outputName = "tsdeps.json"
 		default:
 			ds = AnalysisJava()
 			outputName = "deps.json"
@@ -50,18 +45,18 @@ var analysisCmd = &cobra.Command{
 		cmd_util.WriteToCocaFile(outputName, string(cModel))
 	},
 }
-
-func AnalysisTypeScript() []core_domain.CodeDataStruct {
-	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(tsapp.TypeScriptIdentApp), cocafile.TypeScriptFileFilter, true)
-}
-
-func AnalysisPython() []core_domain.CodeDataStruct {
-	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.PythonFileFilter, true)
-}
-
-func AnalysisGo() []core_domain.CodeDataStruct {
-	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter, true)
-}
+//
+//func AnalysisTypeScript() []core_domain.CodeDataStruct {
+//	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(tsapp.TypeScriptIdentApp), cocafile.TypeScriptFileFilter, true)
+//}
+//
+//func AnalysisPython() []core_domain.CodeDataStruct {
+//	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.PythonFileFilter, true)
+//}
+//
+//func AnalysisGo() []core_domain.CodeDataStruct {
+//	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter, true)
+//}
 
 func AnalysisJava() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path

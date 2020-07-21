@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis/goapp"
-	"github.com/phodal/coca/pkg/application/analysis/javaapp"
+	"github.com/phodal/coca/pkg/application/analysis/pyapp"
 	"github.com/phodal/coca/pkg/appliction/analysis"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
@@ -29,26 +28,12 @@ var analysisCmd = &cobra.Command{
 		var outputName string
 		var ds []core_domain.CodeDataStruct
 
-		ds = analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter, true)
-		outputName = "godeps.json"
+		ds = analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.GoFileFilter, true)
+		outputName = "pydeps.json"
 
 		cModel, _ := json.MarshalIndent(ds, "", "\t")
 		cmd_util.WriteToCocaFile(outputName, string(cModel))
 	},
-}
-
-func AnalysisJava() []core_domain.CodeDataStruct {
-	importPath := analysisCmdConfig.Path
-	identifierApp := javaapp.NewJavaIdentifierApp()
-	iNodes := identifierApp.AnalysisPath(importPath)
-
-	identModel, _ := json.MarshalIndent(iNodes, "", "\t")
-	cmd_util.WriteToCocaFile("identify.json", string(identModel))
-
-	callApp := javaapp.NewJavaFullApp()
-
-	callNodes := callApp.AnalysisPath(importPath, iNodes)
-	return callNodes
 }
 
 func init() {

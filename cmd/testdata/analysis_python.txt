@@ -1,1 +1,0 @@
-Process file: ../_fixtures/grammar/python/blog_entity.py

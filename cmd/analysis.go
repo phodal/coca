@@ -12,7 +12,6 @@ import (
 type AnalysisCmdConfig struct {
 	Path           string
 	UpdateIdentify bool
-	Lang           string
 }
 
 var (
@@ -26,37 +25,14 @@ var analysisCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		var outputName string
 		var ds []core_domain.CodeDataStruct
-		switch analysisCmdConfig.Lang {
-		//case "go":
-		//	ds = AnalysisGo()
-		//	outputName = "godeps.json"
-		//case "py", "python":
-		//	ds = AnalysisPython()
-		//	outputName = "pydeps.json"
-		//case "ts", "typescript":
-		//	ds = AnalysisTypeScript()
-		//	outputName = "tsdeps.json"
-		default:
-			ds = AnalysisJava()
-			outputName = "deps.json"
-		}
+
+		ds = AnalysisJava()
+		outputName = "deps.json"
 
 		cModel, _ := json.MarshalIndent(ds, "", "\t")
 		cmd_util.WriteToCocaFile(outputName, string(cModel))
 	},
 }
-//
-//func AnalysisTypeScript() []core_domain.CodeDataStruct {
-//	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(tsapp.TypeScriptIdentApp), cocafile.TypeScriptFileFilter, true)
-//}
-//
-//func AnalysisPython() []core_domain.CodeDataStruct {
-//	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(pyapp.PythonIdentApp), cocafile.PythonFileFilter, true)
-//}
-//
-//func AnalysisGo() []core_domain.CodeDataStruct {
-//	return analysis.CommonAnalysis(output, analysisCmdConfig.Path, new(goapp.GoIdentApp), cocafile.GoFileFilter, true)
-//}
 
 func AnalysisJava() []core_domain.CodeDataStruct {
 	importPath := analysisCmdConfig.Path
@@ -84,6 +60,6 @@ func init() {
 	rootCmd.AddCommand(analysisCmd)
 
 	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Path, "path", "p", ".", "example -p core/main")
-	analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Lang, "lang", "l", "java", "example coca analysis -l java, typescript, python")
+	//analysisCmd.PersistentFlags().StringVarP(&analysisCmdConfig.Lang, "lang", "l", "java", "example coca analysis -l java, typescript, python")
 	analysisCmd.PersistentFlags().BoolVarP(&analysisCmdConfig.UpdateIdentify, "identify", "i", true, "use current identify")
 }

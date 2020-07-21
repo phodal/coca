@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/antlr/antlr4 v0.0.0-20200503195918-621b933c7a7f
 	github.com/awalterschulze/gographviz v0.0.0-20190522210029-fa59802746ab
-	github.com/boyter/scc v2.10.1+incompatible
+	github.com/boyter/scc v2.12.0+incompatible
 	github.com/dbaggerman/cuba v0.3.2 // indirect
 	github.com/huleTW/bad-smell-analysis v0.1.0
 	github.com/iancoleman/strcase v0.0.0-20191112232945-16388991a334

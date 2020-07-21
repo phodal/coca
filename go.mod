@@ -12,7 +12,7 @@ require (
 	github.com/jondot/goweight v1.0.5 // indirect
 	github.com/mattn/go-shellwords v1.0.6
 	github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1 // indirect
-	github.com/monochromegane/go-gitignore v0.0.0-20160105113617-38717d0a108c // indirect
+	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
 	github.com/olekukonko/tablewriter v0.0.4
 	github.com/onsi/ginkgo v1.10.3 // indirect
 	github.com/onsi/gomega v1.7.1

@@ -56,7 +56,9 @@ func ParseLog(text string) {
 		str = strings.Split(str, auth[1])[1]
 		dat := dateReg.FindStringSubmatch(str)
 		msg := strings.Split(str, dat[0])[1]
-		msg = msg[1:]
+		if len(msg) > 1 {
+			msg = msg[1:]
+		}
 
 		currentCommitMessage = CommitMessage{id[1], auth[1][1:], dat[0], msg, nil}
 	} else if changesReg.MatchString(text) {

@@ -5,13 +5,11 @@ go 1.13
 require (
 	github.com/antlr/antlr4 v0.0.0-20200503195918-621b933c7a7f
 	github.com/awalterschulze/gographviz v0.0.0-20190522210029-fa59802746ab
-	github.com/boyter/scc v2.12.0+incompatible
-	github.com/dbaggerman/cuba v0.3.2 // indirect
+	github.com/boyter/scc v0.0.0-20200907020550-91af61dfda0d
 	github.com/huleTW/bad-smell-analysis v0.1.0
 	github.com/iancoleman/strcase v0.0.0-20191112232945-16388991a334
 	github.com/jondot/goweight v1.0.5 // indirect
 	github.com/mattn/go-shellwords v1.0.6
-	github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1 // indirect
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
 	github.com/olekukonko/tablewriter v0.0.4
 	github.com/onsi/ginkgo v1.10.3 // indirect

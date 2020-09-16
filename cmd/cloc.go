@@ -99,7 +99,7 @@ func process_dirs(dirs []string) []string {
 
 	for _, dir := range dirs {
 		baseName := filepath.Base(dir)
-		if baseName == ".git" || baseName == ".svn" || baseName == ".hg" {
+		if baseName == ".git" || baseName == ".svn" || baseName == ".hg" || baseName == ".idea" {
 			continue
 		}
 		processor.DirFilePaths = []string{dir}

@@ -33,7 +33,7 @@ func TestClocByDirectory(t *testing.T) {
 
 	tests := []testcase.CmdTestCase{{
 		Name:   "cloc",
-		Cmd:    "cloc " + abs + " --by-directory --include-ext=java",
+		Cmd:    "cloc " + abs + " --by-directory --include-ext=java,kt",
 		Golden: "testdata/cloc_directory.txt",
 	}}
 	RunTestCmd(t, tests)

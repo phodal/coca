@@ -12,7 +12,7 @@ os:
 jobs:
   include:
     - go: tip
-      os: linux
+      os: osx
 
 env:
   global:

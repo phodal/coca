@@ -3,9 +3,11 @@ package cmd
 import (
 	"fmt"
 	"github.com/boyter/scc/processor"
+	"github.com/phodal/coca/cmd/config"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 )
 
@@ -25,21 +27,25 @@ var clocCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		if clocConfig.ByDirectory {
 			var dirs []string
-			first_file, err := ioutil.ReadDir(args[0])
+			firstFile, err := ioutil.ReadDir(args[0])
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			for _, f := range first_file {
+			for _, f := range firstFile {
 				if f.IsDir() {
 					dirs = append(dirs, filepath.FromSlash(args[0] + "/" + f.Name()))
 				}
 			}
 
+			os.Mkdir(config.CocaConfig.ReporterPath + "/cloc/", os.ModePerm)
+
 			processor.Format = "cloc-yaml"
 
 			for _, dir := range dirs {
+				baseName := filepath.Base(dir)
 				processor.DirFilePaths = []string{dir}
+				processor.FileOutput = filepath.FromSlash(config.CocaConfig.ReporterPath + "/cloc/" + baseName + ".yaml")
 				processor.ConfigureGc()
 				processor.ConfigureLazy(true)
 				processor.Process()

@@ -2,12 +2,12 @@ package cmd
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"github.com/boyter/scc/processor"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/phodal/coca/pkg/domain/cloc"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
@@ -47,10 +47,11 @@ var clocCmd = &cobra.Command{
 
 			_ = createClocDir()
 			baseCloc := config.CocaConfig.ReporterPath + "/base_cloc.json"
-			processBaseCloc(baseCloc)
+			processBaseCloc(filepath.FromSlash(args[0]), baseCloc)
+			keys := buildBaseKey(baseCloc)
 
 			outputFiles := process_dirs(dirs)
-			convertToCsv(outputFiles)
+			convertToCsv(outputFiles, keys)
 
 			return
 		} else {
@@ -66,8 +67,25 @@ var clocCmd = &cobra.Command{
 	},
 }
 
-func processBaseCloc(baseCloc string) {
-	processor.FileOutput = filepath.FromSlash(baseCloc)
+func buildBaseKey(baseDir string) []string {
+	contents, _ := ioutil.ReadFile(baseDir)
+	var languages []processor.LanguageSummary
+	err := json.Unmarshal(contents, &languages)
+	if err != nil {
+		fmt.Println("Error parsing JSON: ", err)
+	}
+
+	var keys []string
+	for _, data := range languages {
+		keys = append(keys, data.Name)
+	}
+
+	return keys
+}
+
+func processBaseCloc(input string, output string) {
+	processor.DirFilePaths= []string{input}
+	processor.FileOutput = filepath.FromSlash(output)
 	processor.ConfigureGc()
 	processor.ConfigureLazy(true)
 	processor.Process()
@@ -97,28 +115,21 @@ func process_dirs(dirs []string) []string {
 	return outputFiles
 }
 
-func convertToCsv(outputFiles []string) {
+func convertToCsv(outputFiles []string, keys []string) {
 	var data = [][]string{{"module", "summary", "java", "kotlin"}}
 	var summaryMap = make(map[string]cloc.ClocSummary)
 	for _, file := range outputFiles {
 		var summary = cloc.ClocSummary{}
 		contents, _ := ioutil.ReadFile(file)
 		baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-		err := yaml.Unmarshal(contents, &summary)
+		err := json.Unmarshal(contents, &summary)
 		if err != nil {
 			fmt.Println("handle file error: " + file + ", maybe no code!")
-			//panic(err)
 			data = append(data, []string{baseName, "", "", ""})
 			continue
 		}
 		var javaCode = ""
-		//if summary.Java.Code != 0 {
-		//	javaCode = strconv.Itoa(int(summary.Java.Code))
-		//}
 		var kotlinCode = ""
-		//if summary.Kotlin.Code != 0 {
-		//	kotlinCode = strconv.Itoa(int(summary.Kotlin.Code))
-		//}
 
 		summaryMap[baseName] = summary
 		data = append(data, []string{baseName, strconv.Itoa(int(summary.Sum.Code)), javaCode, kotlinCode})

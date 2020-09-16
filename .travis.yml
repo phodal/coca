@@ -9,11 +9,6 @@ os:
   - osx
   - windows
 
-jobs:
-  include:
-    - go: tip
-      os: osx
-
 env:
   global:
     - GO111MODULE=on

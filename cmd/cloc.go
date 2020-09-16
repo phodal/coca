@@ -49,7 +49,7 @@ var clocCmd = &cobra.Command{
 			processBaseCloc(filepath.FromSlash(args[0]), baseCloc)
 			keys := buildBaseKey(baseCloc)
 
-			outputFiles := process_dirs(dirs)
+			outputFiles := processDirs(dirs)
 			convertToCsv(outputFiles, keys)
 
 			return
@@ -95,7 +95,7 @@ func createClocDir() error {
 	return os.Mkdir(config.CocaConfig.ReporterPath+"/cloc/", os.ModePerm)
 }
 
-func process_dirs(dirs []string) []string {
+func processDirs(dirs []string) []string {
 	var outputFiles []string
 
 	for _, dir := range dirs {
@@ -123,26 +123,26 @@ func convertToCsv(outputFiles []string, keys []string) {
 
 	var languageMap = make(map[string]map[string]processor.LanguageSummary)
 	for _, file := range outputFiles {
-		var f []processor.LanguageSummary
+		var dirLangSummary []processor.LanguageSummary
 		contents, _ := ioutil.ReadFile(file)
-		err := json.Unmarshal(contents, &f)
+		err := json.Unmarshal(contents, &dirLangSummary)
 		if err != nil {
 			fmt.Println("Error parsing JSON: ", err)
 		}
 
-		baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-		languageMap[baseName] = make(map[string]processor.LanguageSummary)
+		dirName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
+		languageMap[dirName] = make(map[string]processor.LanguageSummary)
 
 		for _, key := range keys {
 			var hasSet = false
-			for _, lang := range f {
-				if key == lang.Name {
+			for _, langSummary := range dirLangSummary {
+				if key == langSummary.Name {
 					hasSet = true
-					languageMap[baseName][key] = lang
+					languageMap[dirName][key] = langSummary
 				}
 			}
 			if !hasSet {
-				languageMap[baseName][key] = processor.LanguageSummary{};
+				languageMap[dirName][key] = processor.LanguageSummary{};
 			}
 		}
 	}
@@ -151,13 +151,13 @@ func convertToCsv(outputFiles []string, keys []string) {
 	baseKey := []string{"package", "summary"}
 	data = append(data, append(baseKey, keys...))
 
-	for baseName, langSummary := range languageMap {
+	for dirName, dirSummary := range languageMap {
 		var column []string
-		column = append(column, baseName)
+		column = append(column, dirName)
 
 		var codes []string
 		var summary int64
-		for _, lang := range langSummary {
+		for _, lang := range dirSummary {
 			summary = summary + lang.Code
 			codes = append(codes, strconv.Itoa(int(lang.Code)))
 		}

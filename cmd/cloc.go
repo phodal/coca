@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/boyter/scc/processor"
 	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/domain/cloc"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
@@ -116,23 +115,55 @@ func process_dirs(dirs []string) []string {
 }
 
 func convertToCsv(outputFiles []string, keys []string) {
-	var data = [][]string{{"module", "summary", "java", "kotlin"}}
-	var summaryMap = make(map[string]cloc.ClocSummary)
-	for _, file := range outputFiles {
-		var summary = cloc.ClocSummary{}
-		contents, _ := ioutil.ReadFile(file)
-		baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-		err := json.Unmarshal(contents, &summary)
-		if err != nil {
-			fmt.Println("handle file error: " + file + ", maybe no code!")
-			data = append(data, []string{baseName, "", "", ""})
-			continue
-		}
-		var javaCode = ""
-		var kotlinCode = ""
+	var basemap = make(map[string]processor.LanguageSummary)
+	for _, key := range keys {
+		basemap[key] = processor.LanguageSummary{}
+	}
 
-		summaryMap[baseName] = summary
-		data = append(data, []string{baseName, strconv.Itoa(int(summary.Sum.Code)), javaCode, kotlinCode})
+	var languageMap = make(map[string]map[string]processor.LanguageSummary)
+	for _, file := range outputFiles {
+		var f []processor.LanguageSummary
+		contents, _ := ioutil.ReadFile(file)
+		err := json.Unmarshal(contents, &f)
+		if err != nil {
+			fmt.Println("Error parsing JSON: ", err)
+		}
+
+		baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
+		languageMap[baseName] = make(map[string]processor.LanguageSummary)
+
+		for _, key := range keys {
+			var hasSet = false
+			for _, lang := range f {
+				if key == lang.Name {
+					hasSet = true
+					languageMap[baseName][key] = lang
+				}
+			}
+			if !hasSet {
+				languageMap[baseName][key] = processor.LanguageSummary{};
+			}
+		}
+	}
+
+	var data [][]string
+	baseKey := []string{"package", "summary"}
+	data = append(data, append(baseKey, keys...))
+
+	for baseName, langSummary := range languageMap {
+		var column []string
+		column = append(column, baseName)
+
+		var codes []string
+		var summary int64
+		for _, lang := range langSummary {
+			summary = summary + lang.Code
+			codes = append(codes, strconv.Itoa(int(lang.Code)))
+		}
+
+		column = append(column, strconv.Itoa(int(summary)));
+		column = append(column, codes...)
+		data = append(data, column);
 	}
 
 	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))

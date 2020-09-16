@@ -36,12 +36,16 @@ var clocCmd = &cobra.Command{
 				}
 			}
 
-			for range dirs {
-				//processor.DirFilePaths =
+			processor.Format = "cloc-yaml"
+
+			for _, dir := range dirs {
+				processor.DirFilePaths = []string{dir}
 				processor.ConfigureGc()
 				processor.ConfigureLazy(true)
 				processor.Process()
 			}
+
+			return
 		} else {
 			processor.DirFilePaths = args
 		}

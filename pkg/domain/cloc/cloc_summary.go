@@ -36,4 +36,5 @@ type LanguageReportEnd struct {
 
 type ClocSummary struct {
 	Header HeaderStruct
+	Sum    SummaryStruct `yaml:"SUM"`
 }

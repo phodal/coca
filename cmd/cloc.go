@@ -79,7 +79,7 @@ var clocCmd = &cobra.Command{
 }
 
 func convertToCsv(outputFiles []string) {
-	var data = [][]string{{"module", "summary"}}
+	var data = [][]string{{"module", "summary", "java", "kotlin"}}
 	var summaryMap = make(map[string]cloc.ClocSummary)
 	for _, file := range outputFiles {
 		var summary = cloc.ClocSummary{}
@@ -89,9 +89,20 @@ func convertToCsv(outputFiles []string) {
 		if err != nil {
 			fmt.Println("handle file error: " + file + ", maybe no code!")
 			//panic(err)
+			data = append(data, []string{baseName, "", "", ""})
+			continue
 		}
+		var javaCode = ""
+		//if summary.Java.Code != 0 {
+		//	javaCode = strconv.Itoa(int(summary.Java.Code))
+		//}
+		var kotlinCode = ""
+		//if summary.Kotlin.Code != 0 {
+		//	kotlinCode = strconv.Itoa(int(summary.Kotlin.Code))
+		//}
+
 		summaryMap[baseName] = summary
-		data = append(data, []string{baseName, strconv.Itoa(int(summary.Sum.Code))})
+		data = append(data, []string{baseName, strconv.Itoa(int(summary.Sum.Code)), javaCode, kotlinCode})
 	}
 
 	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))

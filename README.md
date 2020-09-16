@@ -152,6 +152,31 @@ Results to json
 coca cloc --by-file --format json
 ```
 
+#### Cloc by directory
+
+```
+coca cloc /Users/fdhuang/android/intellij-community/android/ --by-directory --include-ext=java,kt --not-match=".*(Test|Tests)\.(kt|java)"
+```
+
+results csv:
+
+```
+module,summary
+adt-branding,169
+adt-testutils,257
+adt-ui,21987
+adt-ui-model,3450
+android,361270
+android-adb,497
+android-common,3280
+android-debuggers,3030
+android-kotlin,8816
+android-lang,24796
+android-lang-databinding,6392
+android-layout-inspector,2533
+...
+```
+
 ### Build Deps Tree
 
 ```

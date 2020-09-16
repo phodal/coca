@@ -36,5 +36,8 @@ type LanguageReportEnd struct {
 
 type ClocSummary struct {
 	Header HeaderStruct
-	Sum    SummaryStruct `yaml:"SUM"`
+	Sum    SummaryStruct `yaml:"SUM,omitempty"`
+	Java   *LanguageSummaryCloc `yaml:"Java,omitempty"`
+	Kotlin *LanguageSummaryCloc `yaml:"Kotlin,omitempty"`
+	Groovy *LanguageSummaryCloc `yaml:"Groovy,omitempty"`
 }

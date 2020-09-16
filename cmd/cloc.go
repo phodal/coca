@@ -42,7 +42,7 @@ var clocCmd = &cobra.Command{
 					dirs = append(dirs, filepath.FromSlash(args[0] + "/" + f.Name()))
 				}
 			}
-			os.Mkdir(config.CocaConfig.ReporterPath + "/cloc/", os.ModePerm)
+			createClocDir()
 
 			processor.Format = "json"
 
@@ -61,6 +61,10 @@ var clocCmd = &cobra.Command{
 		processor.ConfigureLazy(true)
 		processor.Process()
 	},
+}
+
+func createClocDir() error {
+	return os.Mkdir(config.CocaConfig.ReporterPath+"/cloc/", os.ModePerm)
 }
 
 func process_dirs(dirs []string) []string {

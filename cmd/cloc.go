@@ -87,7 +87,8 @@ func convertToCsv(outputFiles []string) {
 		baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
 		err := yaml.Unmarshal(contents, &summary)
 		if err != nil {
-			panic(err)
+			fmt.Println("handle file error: " + file + ", maybe no code!")
+			//panic(err)
 		}
 		summaryMap[baseName] = summary
 		data = append(data, []string{baseName, strconv.Itoa(int(summary.Sum.Code))})

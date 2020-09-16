@@ -2,3 +2,4 @@ ignore:
  - "languages"
  - "bughunt"
  - "cocatest"
+ - "analysis"

@@ -42,26 +42,11 @@ var clocCmd = &cobra.Command{
 					dirs = append(dirs, filepath.FromSlash(args[0] + "/" + f.Name()))
 				}
 			}
-
 			os.Mkdir(config.CocaConfig.ReporterPath + "/cloc/", os.ModePerm)
 
-			processor.Format = "cloc-yaml"
+			processor.Format = "json"
 
-			var outputFiles []string
-			for _, dir := range dirs {
-				baseName := filepath.Base(dir)
-				if baseName == ".git" || baseName == ".svn" || baseName == ".hg" {
-					continue
-				}
-				processor.DirFilePaths = []string{dir}
-				outputFile := filepath.FromSlash(config.CocaConfig.ReporterPath + "/cloc/" + baseName + ".yaml")
-				outputFiles = append(outputFiles, outputFile)
-				processor.FileOutput = outputFile
-				processor.ConfigureGc()
-				processor.ConfigureLazy(true)
-				processor.Process()
-			}
-
+			outputFiles := process_dirs(dirs)
 			convertToCsv(outputFiles)
 
 			return
@@ -76,6 +61,26 @@ var clocCmd = &cobra.Command{
 		processor.ConfigureLazy(true)
 		processor.Process()
 	},
+}
+
+func process_dirs(dirs []string) []string {
+	var outputFiles []string
+
+	for _, dir := range dirs {
+		baseName := filepath.Base(dir)
+		if baseName == ".git" || baseName == ".svn" || baseName == ".hg" {
+			continue
+		}
+		processor.DirFilePaths = []string{dir}
+		outputFile := filepath.FromSlash(config.CocaConfig.ReporterPath + "/cloc/" + baseName + ".json")
+		outputFiles = append(outputFiles, outputFile)
+		processor.FileOutput = outputFile
+		processor.ConfigureGc()
+		processor.ConfigureLazy(true)
+		processor.Process()
+	}
+
+	return outputFiles
 }
 
 func convertToCsv(outputFiles []string) {

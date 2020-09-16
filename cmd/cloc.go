@@ -174,6 +174,7 @@ func convertToCsv(outputFiles []string, keys []string) {
 	defer writer.Flush()
 
 	for _, value := range data {
+		fmt.Fprintln(output, strings.Join(value, ","))
 		err := writer.Write(value)
 		checkError("Cannot write to file", err)
 	}

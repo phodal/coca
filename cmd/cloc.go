@@ -42,9 +42,12 @@ var clocCmd = &cobra.Command{
 					dirs = append(dirs, filepath.FromSlash(args[0] + "/" + f.Name()))
 				}
 			}
-			createClocDir()
 
 			processor.Format = "json"
+
+			_ = createClocDir()
+			baseCloc := config.CocaConfig.ReporterPath + "/base_cloc.json"
+			processBaseCloc(baseCloc)
 
 			outputFiles := process_dirs(dirs)
 			convertToCsv(outputFiles)
@@ -61,6 +64,13 @@ var clocCmd = &cobra.Command{
 		processor.ConfigureLazy(true)
 		processor.Process()
 	},
+}
+
+func processBaseCloc(baseCloc string) {
+	processor.FileOutput = filepath.FromSlash(baseCloc)
+	processor.ConfigureGc()
+	processor.ConfigureLazy(true)
+	processor.Process()
 }
 
 func createClocDir() error {

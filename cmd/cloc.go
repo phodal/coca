@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"github.com/boyter/scc/processor"
 	"github.com/phodal/coca/cmd/config"
+	"github.com/phodal/coca/pkg/domain/cloc"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type CocaClocConfig struct {
@@ -42,14 +45,34 @@ var clocCmd = &cobra.Command{
 
 			processor.Format = "cloc-yaml"
 
+			var outputFiles []string
 			for _, dir := range dirs {
 				baseName := filepath.Base(dir)
+				if baseName == ".git" || baseName == ".svn" || baseName == ".hg" {
+					continue
+				}
 				processor.DirFilePaths = []string{dir}
-				processor.FileOutput = filepath.FromSlash(config.CocaConfig.ReporterPath + "/cloc/" + baseName + ".yaml")
+				outputFile := filepath.FromSlash(config.CocaConfig.ReporterPath + "/cloc/" + baseName + ".yaml")
+				outputFiles = append(outputFiles, outputFile)
+				processor.FileOutput = outputFile
 				processor.ConfigureGc()
 				processor.ConfigureLazy(true)
 				processor.Process()
 			}
+
+			var summaryMap = make(map[string]cloc.ClocSummary)
+			for _, file := range outputFiles {
+				var summary = cloc.ClocSummary{}
+				contents, _ := ioutil.ReadFile(file)
+				baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
+				err := yaml.Unmarshal(contents, &summary)
+				if err != nil {
+					panic(err);
+				}
+				summaryMap[baseName] = summary
+			}
+
+			fmt.Println(summaryMap)
 
 			return
 		} else {

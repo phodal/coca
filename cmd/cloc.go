@@ -91,6 +91,7 @@ func processBaseCloc(input string, output string) {
 }
 
 func createClocDir() error {
+	os.Mkdir(config.CocaConfig.ReporterPath, os.ModePerm)
 	return os.Mkdir(config.CocaConfig.ReporterPath+"/cloc/", os.ModePerm)
 }
 

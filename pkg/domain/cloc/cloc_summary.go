@@ -1,5 +1,8 @@
 package cloc
 
+
+
+
 // LanguageSummary to generate output like cloc
 type LanguageSummaryCloc struct {
 	Name    string `yaml:"name"`
@@ -37,7 +40,4 @@ type LanguageReportEnd struct {
 type ClocSummary struct {
 	Header HeaderStruct
 	Sum    SummaryStruct `yaml:"SUM,omitempty"`
-	Java   *LanguageSummaryCloc `yaml:"Java,omitempty"`
-	Kotlin *LanguageSummaryCloc `yaml:"Kotlin,omitempty"`
-	Groovy *LanguageSummaryCloc `yaml:"Groovy,omitempty"`
 }

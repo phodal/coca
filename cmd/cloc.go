@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/csv"
 	"fmt"
 	"github.com/boyter/scc/processor"
 	"github.com/phodal/coca/cmd/config"
@@ -11,6 +12,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -60,19 +62,7 @@ var clocCmd = &cobra.Command{
 				processor.Process()
 			}
 
-			var summaryMap = make(map[string]cloc.ClocSummary)
-			for _, file := range outputFiles {
-				var summary = cloc.ClocSummary{}
-				contents, _ := ioutil.ReadFile(file)
-				baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-				err := yaml.Unmarshal(contents, &summary)
-				if err != nil {
-					panic(err);
-				}
-				summaryMap[baseName] = summary
-			}
-
-			fmt.Println(summaryMap)
+			convertToCsv(outputFiles)
 
 			return
 		} else {
@@ -86,6 +76,40 @@ var clocCmd = &cobra.Command{
 		processor.ConfigureLazy(true)
 		processor.Process()
 	},
+}
+
+func convertToCsv(outputFiles []string) {
+	var data = [][]string{{"module", "summary"}}
+	var summaryMap = make(map[string]cloc.ClocSummary)
+	for _, file := range outputFiles {
+		var summary = cloc.ClocSummary{}
+		contents, _ := ioutil.ReadFile(file)
+		baseName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
+		err := yaml.Unmarshal(contents, &summary)
+		if err != nil {
+			panic(err)
+		}
+		summaryMap[baseName] = summary
+		data = append(data, []string{baseName, strconv.Itoa(int(summary.Sum.Code))})
+	}
+
+	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))
+	checkError("Cannot create file", err)
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	for _, value := range data {
+		err := writer.Write(value)
+		checkError("Cannot write to file", err)
+	}
+}
+
+func checkError(message string, err error) {
+	if err != nil {
+		log.Fatal(message, err)
+	}
 }
 
 func init() {

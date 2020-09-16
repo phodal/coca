@@ -25,4 +25,5 @@ require (
 	github.com/yudai/pp v2.0.1+incompatible // indirect
 	golang.org/x/exp v0.0.0-20191224044220-1fea468a75e9 // indirect
 	gonum.org/v1/gonum v0.6.2
+	gopkg.in/yaml.v2 v2.3.0
 )

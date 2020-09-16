@@ -13,6 +13,9 @@ var clocCmd = &cobra.Command{
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {
 		processor.DirFilePaths = args
+		if processor.ConfigureLimits != nil {
+			processor.ConfigureLimits()
+		}
 		processor.ConfigureGc()
 		processor.ConfigureLazy(true)
 		processor.Process()

@@ -4,6 +4,17 @@ import (
 	"fmt"
 	"github.com/boyter/scc/processor"
 	"github.com/spf13/cobra"
+	"io/ioutil"
+	"log"
+	"path/filepath"
+)
+
+type CocaClocConfig struct {
+	ByDirectory bool
+}
+
+var (
+	clocConfig CocaClocConfig
 )
 
 var clocCmd = &cobra.Command{
@@ -12,7 +23,29 @@ var clocCmd = &cobra.Command{
 	Long:    fmt.Sprintf("Sloc, Cloc and Code. Count lines of code in a directory with complexity estimation.\nVersion %s\nBen Boyter <ben@boyter.org> + Contributors", processor.Version),
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {
-		processor.DirFilePaths = args
+		if clocConfig.ByDirectory {
+			var dirs []string
+			first_file, err := ioutil.ReadDir(args[0])
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			for _, f := range first_file {
+				if f.IsDir() {
+					dirs = append(dirs, filepath.FromSlash(args[0] + "/" + f.Name()))
+				}
+			}
+
+			for range dirs {
+				//processor.DirFilePaths =
+				processor.ConfigureGc()
+				processor.ConfigureLazy(true)
+				processor.Process()
+			}
+		} else {
+			processor.DirFilePaths = args
+		}
+
 		if processor.ConfigureLimits != nil {
 			processor.ConfigureLimits()
 		}
@@ -30,6 +63,8 @@ func init() {
 
 func addClocConfigs() {
 	flags := clocCmd.PersistentFlags()
+
+	flags.BoolVar(&clocConfig.ByDirectory, "by-directory", false, "list directory and out csv")
 
 	flags.Int64Var(&processor.AverageWage, "avg-wage", 56286, "average wage value used for basic COCOMO calculation")
 	flags.BoolVar(&processor.DisableCheckBinary, "binary", false, "disable binary file detection")

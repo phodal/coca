@@ -31,28 +31,7 @@ var clocCmd = &cobra.Command{
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {
 		if clocConfig.ByDirectory {
-			var dirs []string
-			firstFile, err := ioutil.ReadDir(args[0])
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			for _, f := range firstFile {
-				if f.IsDir() {
-					dirs = append(dirs, filepath.FromSlash(args[0] + "/" + f.Name()))
-				}
-			}
-
-			processor.Format = "json"
-
-			_ = createClocDir()
-			baseCloc := config.CocaConfig.ReporterPath + "/base_cloc.json"
-			processBaseCloc(filepath.FromSlash(args[0]), baseCloc)
-			keys := buildBaseKey(baseCloc)
-
-			outputFiles := processDirs(dirs)
-			convertToCsv(outputFiles, keys)
-
+			processByDirectory(args[0])
 			return
 		} else {
 			processor.DirFilePaths = args
@@ -65,6 +44,30 @@ var clocCmd = &cobra.Command{
 		processor.ConfigureLazy(true)
 		processor.Process()
 	},
+}
+
+func processByDirectory(firstDir string) {
+	var dirs []string
+	firstFile, err := ioutil.ReadDir(firstDir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range firstFile {
+		if f.IsDir() {
+			dirs = append(dirs, filepath.FromSlash(firstDir+"/"+f.Name()))
+		}
+	}
+
+	processor.Format = "json"
+
+	_ = createClocDir()
+	baseCloc := config.CocaConfig.ReporterPath + "/base_cloc.json"
+	processBaseCloc(filepath.FromSlash(firstDir), baseCloc)
+	keys := buildBaseKey(baseCloc)
+
+	outputFiles := processDirs(dirs)
+	convertToCsv(outputFiles, keys)
 }
 
 func buildBaseKey(baseDir string) []string {

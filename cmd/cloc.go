@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type CocaClocConfig struct {
@@ -31,7 +32,12 @@ var clocCmd = &cobra.Command{
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {
 		if clocConfig.ByDirectory {
+			_ = createClocDir()
 			processByDirectory(args[0])
+			return
+		} else if clocConfig.TopFile {
+			_ = createClocDir()
+			processTopFile(args[0])
 			return
 		} else {
 			processor.DirFilePaths = args
@@ -50,6 +56,17 @@ func runProcessor() {
 	processor.Process()
 }
 
+func processTopFile(dir string) {
+	processor.DirFilePaths = []string{dir}
+	processor.Format = "json"
+	processor.Files = true
+	processor.FileOutput = filepath.FromSlash(config.CocaConfig.ReporterPath + "/top_cloc.json")
+
+	runProcessor()
+
+	//content := cmd_util.ReadCocaFile("top_cloc.json")
+}
+
 func processByDirectory(firstDir string) {
 	var dirs []string
 	firstFile, err := ioutil.ReadDir(firstDir)
@@ -65,7 +82,6 @@ func processByDirectory(firstDir string) {
 
 	processor.Format = "json"
 
-	_ = createClocDir()
 	baseCloc := config.CocaConfig.ReporterPath + "/base_cloc.json"
 	processBaseCloc(filepath.FromSlash(firstDir), baseCloc)
 	keys := buildBaseKey(baseCloc)
@@ -146,6 +162,7 @@ func writeToCsv(data [][]string) {
 	defer writer.Flush()
 
 	for _, value := range data {
+		fmt.Fprintln(output, strings.Join(value, ","))
 		err := writer.Write(value)
 		checkError("Cannot write to file", err)
 	}

@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
@@ -64,7 +65,22 @@ func processTopFile(dir string) {
 
 	runProcessor()
 
-	//content := cmd_util.ReadCocaFile("top_cloc.json")
+	var languageSummaries []processor.LanguageSummary
+	content := cmd_util.ReadCocaFile("top_cloc.json")
+	err := json.Unmarshal(content, &languageSummaries)
+	checkError("no a valid language languageSummaries", err)
+
+	for _, langSummary := range languageSummaries {
+		files := langSummary.Files
+		sort.Slice(files, func(i, j int) bool {
+			return files[i].Code > files[j].Code
+		})
+
+		langSummary.Files = files
+	}
+
+	sortContent, _ := json.Marshal(languageSummaries)
+	cmd_util.WriteToCocaFile("sort_cloc.json", string(sortContent))
 }
 
 func processByDirectory(firstDir string) {

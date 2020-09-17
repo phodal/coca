@@ -56,3 +56,21 @@ func TestShouldReturnNullWhenIgnoreDir(t *testing.T) {
 	}}
 	RunTestCmd(t, tests)
 }
+
+func TestShouldByFileSize(t *testing.T) {
+	abs := "../_fixtures"
+
+	analysis := []testcase.CmdTestCase{{
+		Name:   "analysis",
+		Cmd:    "analysis -p " + abs,
+		Golden: "",
+	}}
+	RunTestCmd(t, analysis)
+
+	tests := []testcase.CmdTestCase{{
+		Name:   "cloc",
+		Cmd:    "cloc " + abs + " --top-file",
+		Golden: "",
+	}}
+	RunTestCmd(t, tests)
+}

@@ -127,22 +127,17 @@ func convertToCsv(outputFiles []string, keys []string) {
 
 	var languageMap = make(map[string]map[string]processor.LanguageSummary)
 	for _, file := range outputFiles {
-		var dirLangSummary []processor.LanguageSummary
-		contents, _ := ioutil.ReadFile(file)
-		err := json.Unmarshal(contents, &dirLangSummary)
-		if err != nil {
-			fmt.Println("Error parsing JSON: ", err)
-		}
-
-		dirName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-		buildLanguageMap(languageMap, dirName, keys, dirLangSummary)
+		BuildLanguageMap(languageMap, keys, file)
 	}
 
 	deb, _ := json.Marshal(languageMap)
 	cmd_util.WriteToCocaFile("debug_cloc.json", string(deb))
 
-	data := cloc.BuildClocCsvData(languageMap, keys)
+	csvData := cloc.BuildClocCsvData(languageMap, keys)
+	writeToCsv(csvData)
+}
 
+func writeToCsv(data [][]string) {
 	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))
 	checkError("Cannot create file", err)
 	defer file.Close()
@@ -157,7 +152,16 @@ func convertToCsv(outputFiles []string, keys []string) {
 	}
 }
 
-func buildLanguageMap(languageMap map[string]map[string]processor.LanguageSummary, dirName string, keys []string, dirLangSummary []processor.LanguageSummary) {
+func BuildLanguageMap(languageMap map[string]map[string]processor.LanguageSummary, keys []string, file string) {
+	var dirLangSummary []processor.LanguageSummary
+	contents, _ := ioutil.ReadFile(file)
+	err := json.Unmarshal(contents, &dirLangSummary)
+	if err != nil {
+		fmt.Println("Error parsing JSON: ", err)
+	}
+
+	dirName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
+
 	languageMap[dirName] = make(map[string]processor.LanguageSummary)
 
 	for _, key := range keys {

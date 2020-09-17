@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/boyter/scc/processor"
+	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
 	"github.com/spf13/cobra"
 	"io/ioutil"
@@ -138,7 +139,9 @@ func convertToCsv(outputFiles []string, keys []string) {
 			for _, langSummary := range dirLangSummary {
 				if key == langSummary.Name {
 					hasSet = true
+					langSummary.Name = key
 					languageMap[dirName][key] = langSummary
+					break
 				}
 			}
 			if !hasSet {
@@ -151,17 +154,23 @@ func convertToCsv(outputFiles []string, keys []string) {
 	baseKey := []string{"package", "summary"}
 	data = append(data, append(baseKey, keys...))
 
+	deb, _ := json.Marshal(languageMap)
+	cmd_util.WriteToCocaFile("debug_cloc.json", string(deb))
+
 	for dirName, dirSummary := range languageMap {
 		var column []string
 		column = append(column, dirName)
 
 		var codes []string
 		var summary int64
-		for _, lang := range dirSummary {
+
+		for _, key := range keys {
+			lang := dirSummary[key]
 			summary = summary + lang.Code
 			codes = append(codes, strconv.Itoa(int(lang.Code)))
 		}
 
+		fmt.Println(codes)
 		column = append(column, strconv.Itoa(int(summary)));
 		column = append(column, codes...)
 		data = append(data, column);

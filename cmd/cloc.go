@@ -7,13 +7,12 @@ import (
 	"github.com/boyter/scc/processor"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/domain/cloc"
+	cloc_app "github.com/phodal/coca/pkg/application/cloc"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 )
 
@@ -33,11 +32,11 @@ var clocCmd = &cobra.Command{
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {
 		if clocConfig.ByDirectory {
-			_ = createClocDir()
+			_ = cloc_app.CreateClocDir()
 			processByDirectory(args[0])
 			return
 		} else if clocConfig.TopFile {
-			_ = createClocDir()
+			_ = cloc_app.CreateClocDir()
 			processTopFile(args[0])
 			return
 		} else {
@@ -70,14 +69,7 @@ func processTopFile(dir string) {
 	err := json.Unmarshal(content, &languageSummaries)
 	checkError("no a valid language languageSummaries", err)
 
-	for _, langSummary := range languageSummaries {
-		files := langSummary.Files
-		sort.Slice(files, func(i, j int) bool {
-			return files[i].Code > files[j].Code
-		})
-
-		langSummary.Files = files
-	}
+	cloc_app.SortLangeByCode(languageSummaries)
 
 	sortContent, _ := json.MarshalIndent(languageSummaries, "", "\t")
 	cmd_util.WriteToCocaFile("sort_cloc.json", string(sortContent))
@@ -100,26 +92,11 @@ func processByDirectory(firstDir string) {
 
 	baseCloc := config.CocaConfig.ReporterPath + "/base_cloc.json"
 	processBaseCloc(filepath.FromSlash(firstDir), baseCloc)
-	keys := buildBaseKey(baseCloc)
+	keys := cloc_app.BuildBaseKey(baseCloc)
 
 	outputFiles := processDirs(dirs)
-	convertToCsv(outputFiles, keys)
-}
-
-func buildBaseKey(baseDir string) []string {
-	contents, _ := ioutil.ReadFile(baseDir)
-	var languages []processor.LanguageSummary
-	err := json.Unmarshal(contents, &languages)
-	if err != nil {
-		fmt.Println("Error parsing JSON: ", err)
-	}
-
-	var keys []string
-	for _, data := range languages {
-		keys = append(keys, data.Name)
-	}
-
-	return keys
+	toCsv := cloc_app.ConvertToCsv(outputFiles, keys)
+	writeToCsv(toCsv)
 }
 
 func processBaseCloc(input string, output string) {
@@ -128,17 +105,12 @@ func processBaseCloc(input string, output string) {
 	runProcessor()
 }
 
-func createClocDir() error {
-	os.Mkdir(config.CocaConfig.ReporterPath, os.ModePerm)
-	return os.Mkdir(config.CocaConfig.ReporterPath+"/cloc/", os.ModePerm)
-}
-
 func processDirs(dirs []string) []string {
 	var outputFiles []string
 
 	for _, dir := range dirs {
 		baseName := filepath.Base(dir)
-		if IsIgnoreDir(baseName) {
+		if cloc_app.IsIgnoreDir(baseName) {
 			continue
 		}
 		processor.DirFilePaths = []string{dir}
@@ -149,34 +121,6 @@ func processDirs(dirs []string) []string {
 	}
 
 	return outputFiles
-}
-
-func IsIgnoreDir(baseName string) bool {
-	dirs := []string{".git", ".svn", ".hg", ".idea"}
-	for _, dir := range dirs {
-		if dir == baseName {
-			return true
-		}
-	}
-	return false
-}
-
-func convertToCsv(outputFiles []string, keys []string) {
-	var basemap = make(map[string]processor.LanguageSummary)
-	for _, key := range keys {
-		basemap[key] = processor.LanguageSummary{}
-	}
-
-	var languageMap = make(map[string]map[string]processor.LanguageSummary)
-	for _, filePath := range outputFiles {
-		cloc.BuildLanguageMap(languageMap, keys, filePath)
-	}
-
-	deb, _ := json.Marshal(languageMap)
-	cmd_util.WriteToCocaFile("debug_cloc.json", string(deb))
-
-	csvData := cloc.BuildClocCsvData(languageMap, keys)
-	writeToCsv(csvData)
 }
 
 func writeToCsv(data [][]string) {

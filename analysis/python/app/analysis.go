@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/pkg/adapter/cocafile"
+	"github.com/phodal/coca/pkg/application/analysis"
 	"github.com/phodal/coca/pkg/application/analysis/pyapp"
-	"github.com/phodal/coca/pkg/appliction/analysis"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 )

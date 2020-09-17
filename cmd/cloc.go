@@ -67,7 +67,7 @@ func processTopFile(dir string) {
 	var languageSummaries []processor.LanguageSummary
 	content := cmd_util.ReadCocaFile("top_cloc.json")
 	err := json.Unmarshal(content, &languageSummaries)
-	checkError("no a valid language languageSummaries", err)
+	CheckError("no a valid language languageSummaries", err)
 
 	cloc_app.SortLangeByCode(languageSummaries)
 
@@ -96,7 +96,7 @@ func processByDirectory(firstDir string) {
 
 	outputFiles := processDirs(dirs)
 	toCsv := cloc_app.ConvertToCsv(outputFiles, keys)
-	writeToCsv(toCsv)
+	WriteToCsv(toCsv, "cloc.csv")
 }
 
 func processBaseCloc(input string, output string) {
@@ -123,9 +123,9 @@ func processDirs(dirs []string) []string {
 	return outputFiles
 }
 
-func writeToCsv(data [][]string) {
-	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))
-	checkError("Cannot create file", err)
+func WriteToCsv(data [][]string, fileName string) {
+	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + fileName))
+	CheckError("Cannot create file", err)
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
@@ -134,11 +134,11 @@ func writeToCsv(data [][]string) {
 	for _, value := range data {
 		fmt.Fprintln(output, strings.Join(value, ","))
 		err := writer.Write(value)
-		checkError("Cannot write to file", err)
+		CheckError("Cannot write to file", err)
 	}
 }
 
-func checkError(message string, err error) {
+func CheckError(message string, err error) {
 	if err != nil {
 		log.Fatal(message, err)
 	}

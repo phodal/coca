@@ -13,11 +13,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 type CocaClocConfig struct {
 	ByDirectory bool
+	TopFile     bool
 }
 
 var (
@@ -40,10 +40,14 @@ var clocCmd = &cobra.Command{
 		if processor.ConfigureLimits != nil {
 			processor.ConfigureLimits()
 		}
-		processor.ConfigureGc()
-		processor.ConfigureLazy(true)
-		processor.Process()
+		runProcessor()
 	},
+}
+
+func runProcessor() {
+	processor.ConfigureGc()
+	processor.ConfigureLazy(true)
+	processor.Process()
 }
 
 func processByDirectory(firstDir string) {
@@ -89,9 +93,7 @@ func buildBaseKey(baseDir string) []string {
 func processBaseCloc(input string, output string) {
 	processor.DirFilePaths = []string{input}
 	processor.FileOutput = filepath.FromSlash(output)
-	processor.ConfigureGc()
-	processor.ConfigureLazy(true)
-	processor.Process()
+	runProcessor()
 }
 
 func createClocDir() error {
@@ -111,9 +113,7 @@ func processDirs(dirs []string) []string {
 		outputFile := filepath.FromSlash(config.CocaConfig.ReporterPath + "/cloc/" + baseName + ".json")
 		outputFiles = append(outputFiles, outputFile)
 		processor.FileOutput = outputFile
-		processor.ConfigureGc()
-		processor.ConfigureLazy(true)
-		processor.Process()
+		runProcessor()
 	}
 
 	return outputFiles
@@ -146,7 +146,6 @@ func writeToCsv(data [][]string) {
 	defer writer.Flush()
 
 	for _, value := range data {
-		fmt.Fprintln(output, strings.Join(value, ","))
 		err := writer.Write(value)
 		checkError("Cannot write to file", err)
 	}
@@ -168,6 +167,7 @@ func addClocConfigs() {
 	flags := clocCmd.PersistentFlags()
 
 	flags.BoolVar(&clocConfig.ByDirectory, "by-directory", false, "list directory and out csv")
+	flags.BoolVar(&clocConfig.TopFile, "top-file", false, "list top change file")
 
 	flags.Int64Var(&processor.AverageWage, "avg-wage", 56286, "average wage value used for basic COCOMO calculation")
 	flags.BoolVar(&processor.DisableCheckBinary, "binary", false, "disable binary file detection")

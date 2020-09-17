@@ -87,7 +87,7 @@ func buildBaseKey(baseDir string) []string {
 }
 
 func processBaseCloc(input string, output string) {
-	processor.DirFilePaths= []string{input}
+	processor.DirFilePaths = []string{input}
 	processor.FileOutput = filepath.FromSlash(output)
 	processor.ConfigureGc()
 	processor.ConfigureLazy(true)
@@ -135,22 +135,7 @@ func convertToCsv(outputFiles []string, keys []string) {
 		}
 
 		dirName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-		languageMap[dirName] = make(map[string]processor.LanguageSummary)
-
-		for _, key := range keys {
-			var hasSet = false
-			for _, langSummary := range dirLangSummary {
-				if key == langSummary.Name {
-					hasSet = true
-					langSummary.Name = key
-					languageMap[dirName][key] = langSummary
-					break
-				}
-			}
-			if !hasSet {
-				languageMap[dirName][key] = processor.LanguageSummary{};
-			}
-		}
+		buildLanguageMap(languageMap, dirName, keys, dirLangSummary)
 	}
 
 	var data [][]string
@@ -160,6 +145,23 @@ func convertToCsv(outputFiles []string, keys []string) {
 	deb, _ := json.Marshal(languageMap)
 	cmd_util.WriteToCocaFile("debug_cloc.json", string(deb))
 
+	data = buildClocCsv(languageMap, keys, data)
+
+	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))
+	checkError("Cannot create file", err)
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	for _, value := range data {
+		fmt.Fprintln(output, strings.Join(value, ","))
+		err := writer.Write(value)
+		checkError("Cannot write to file", err)
+	}
+}
+
+func buildClocCsv(languageMap map[string]map[string]processor.LanguageSummary, keys []string, data [][]string) [][]string {
 	for dirName, dirSummary := range languageMap {
 		var column []string
 		column = append(column, dirName)
@@ -173,22 +175,29 @@ func convertToCsv(outputFiles []string, keys []string) {
 			codes = append(codes, strconv.Itoa(int(lang.Code)))
 		}
 
-		column = append(column, strconv.Itoa(int(summary)));
+		column = append(column, strconv.Itoa(int(summary)))
 		column = append(column, codes...)
-		data = append(data, column);
+		data = append(data, column)
 	}
+	return data
+}
 
-	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))
-	checkError("Cannot create file", err)
-	defer file.Close()
+func buildLanguageMap(languageMap map[string]map[string]processor.LanguageSummary, dirName string, keys []string, dirLangSummary []processor.LanguageSummary) {
+	languageMap[dirName] = make(map[string]processor.LanguageSummary)
 
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
-	for _, value := range data {
-		fmt.Fprintln(output, strings.Join(value, ","))
-		err := writer.Write(value)
-		checkError("Cannot write to file", err)
+	for _, key := range keys {
+		var hasSet = false
+		for _, langSummary := range dirLangSummary {
+			if key == langSummary.Name {
+				hasSet = true
+				langSummary.Name = key
+				languageMap[dirName][key] = langSummary
+				break
+			}
+		}
+		if !hasSet {
+			languageMap[dirName][key] = processor.LanguageSummary{}
+		}
 	}
 }
 

@@ -173,7 +173,6 @@ func convertToCsv(outputFiles []string, keys []string) {
 			codes = append(codes, strconv.Itoa(int(lang.Code)))
 		}
 
-		fmt.Println(codes)
 		column = append(column, strconv.Itoa(int(summary)));
 		column = append(column, codes...)
 		data = append(data, column);

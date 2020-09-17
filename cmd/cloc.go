@@ -79,7 +79,7 @@ func processTopFile(dir string) {
 		langSummary.Files = files
 	}
 
-	sortContent, _ := json.Marshal(languageSummaries)
+	sortContent, _ := json.MarshalIndent(languageSummaries, "", "\t")
 	cmd_util.WriteToCocaFile("sort_cloc.json", string(sortContent))
 }
 

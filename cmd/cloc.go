@@ -126,8 +126,8 @@ func convertToCsv(outputFiles []string, keys []string) {
 	}
 
 	var languageMap = make(map[string]map[string]processor.LanguageSummary)
-	for _, file := range outputFiles {
-		BuildLanguageMap(languageMap, keys, file)
+	for _, filePath := range outputFiles {
+		cloc.BuildLanguageMap(languageMap, keys, filePath)
 	}
 
 	deb, _ := json.Marshal(languageMap)
@@ -149,34 +149,6 @@ func writeToCsv(data [][]string) {
 		fmt.Fprintln(output, strings.Join(value, ","))
 		err := writer.Write(value)
 		checkError("Cannot write to file", err)
-	}
-}
-
-func BuildLanguageMap(languageMap map[string]map[string]processor.LanguageSummary, keys []string, file string) {
-	var dirLangSummary []processor.LanguageSummary
-	contents, _ := ioutil.ReadFile(file)
-	err := json.Unmarshal(contents, &dirLangSummary)
-	if err != nil {
-		fmt.Println("Error parsing JSON: ", err)
-	}
-
-	dirName := strings.TrimSuffix(filepath.Base(file), filepath.Ext(file))
-
-	languageMap[dirName] = make(map[string]processor.LanguageSummary)
-
-	for _, key := range keys {
-		var hasSet = false
-		for _, langSummary := range dirLangSummary {
-			if key == langSummary.Name {
-				hasSet = true
-				langSummary.Name = key
-				languageMap[dirName][key] = langSummary
-				break
-			}
-		}
-		if !hasSet {
-			languageMap[dirName][key] = processor.LanguageSummary{}
-		}
 	}
 }
 

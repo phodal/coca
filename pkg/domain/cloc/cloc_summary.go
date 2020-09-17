@@ -44,7 +44,6 @@ func BuildLanguageMap(languageMap map[string]map[string]processor.LanguageSummar
 	}
 
 	dirName := strings.TrimSuffix(filepath.Base(filePath), filepath.Ext(filePath))
-
 	languageMap[dirName] = make(map[string]processor.LanguageSummary)
 
 	for _, key := range keys {

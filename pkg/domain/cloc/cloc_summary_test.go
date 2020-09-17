@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/boyter/scc/processor"
 	. "github.com/onsi/gomega"
+	"path/filepath"
 	"testing"
 )
 
@@ -33,7 +34,7 @@ func TestGenerateCsv(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	var languageMap = make(map[string]map[string]processor.LanguageSummary)
-	var keys = []string{"Java", "Kotlin"};
+	var keys = []string{"Java", "Kotlin"}
 	languageMap["home"] = make(map[string]processor.LanguageSummary)
 	languageMap["home"]["Java"] = processor.LanguageSummary{}
 
@@ -41,4 +42,22 @@ func TestGenerateCsv(t *testing.T) {
 
 	g.Expect(data[0]).To(Equal([]string{"package", "summary", "Java", "Kotlin"}))
 	g.Expect(data[1]).To(Equal([]string{"home", "0", "0", "0"}))
+}
+
+func TestShouldBuildLanguageMap(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	codePath := "../../../_fixtures/cloc/summary/android.json"
+	codePath = filepath.FromSlash(codePath)
+
+	var keys = []string{"Java", "Kotlin", "Phodal"}
+	languageMap := make(map[string]map[string]processor.LanguageSummary)
+
+	BuildLanguageMap(languageMap, keys, codePath)
+
+	g.Expect(len(languageMap["android"])).To(Equal(3))
+	g.Expect(languageMap["android"]["Java"].Code).To(Equal(int64(381639)))
+	g.Expect(languageMap["android"]["Kotlin"].Code).To(Equal(int64(123963)))
+	g.Expect(languageMap["android"]["Phodal"].Code).To(Equal(int64(0)))
 }

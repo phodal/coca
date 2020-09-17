@@ -154,13 +154,13 @@ coca cloc --by-file --format json
 
 #### Cloc by directory
 
-```
-coca cloc /Users/fdhuang/android/intellij-community/android/ --by-directory --include-ext=java,kt --not-match=".*(Test|Tests)\.(kt|java)"
+```bash
+coca cloc ~/intellij-community/android/ --by-directory --include-ext=java,kt --not-match=".*(Test|Tests)\.(kt|java)"
 ```
 
 results csv:
 
-```
+```csv
 module,summary
 adt-branding,169
 adt-testutils,257
@@ -176,6 +176,14 @@ android-lang-databinding,6392
 android-layout-inspector,2533
 ...
 ```
+
+#### Cloc Top File
+
+```bash
+coca cloc ~/intellij-community/android/designer/src/com/android/tools/idea --top-file
+```
+
+output to: `coca_reporter/sort_cloc.json`
 
 ### Build Deps Tree
 

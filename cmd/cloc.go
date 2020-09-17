@@ -138,7 +138,7 @@ func processDirs(dirs []string) []string {
 
 	for _, dir := range dirs {
 		baseName := filepath.Base(dir)
-		if baseName == ".git" || baseName == ".svn" || baseName == ".hg" || baseName == ".idea" {
+		if IsIgnoreDir(baseName) {
 			continue
 		}
 		processor.DirFilePaths = []string{dir}
@@ -149,6 +149,16 @@ func processDirs(dirs []string) []string {
 	}
 
 	return outputFiles
+}
+
+func IsIgnoreDir(baseName string) bool {
+	dirs := []string{".git", ".svn", ".hg", ".idea"}
+	for _, dir := range dirs {
+		if dir == baseName {
+			return true
+		}
+	}
+	return false
 }
 
 func convertToCsv(outputFiles []string, keys []string) {

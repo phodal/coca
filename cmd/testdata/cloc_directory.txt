@@ -1,2 +1,2 @@
 package,summary,Java,Kotlin
-pkg2,20,17,3
+pkg,20,17,3

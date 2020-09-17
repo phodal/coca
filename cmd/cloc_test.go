@@ -22,7 +22,7 @@ func TestCloc(t *testing.T) {
 }
 
 func TestClocByDirectory(t *testing.T) {
-	abs := "../_fixtures/cloc"
+	abs := "../_fixtures/cloc/normal"
 
 	analysis := []testcase.CmdTestCase{{
 		Name:   "analysis",
@@ -35,6 +35,24 @@ func TestClocByDirectory(t *testing.T) {
 		Name:   "cloc",
 		Cmd:    "cloc " + abs + " --by-directory --include-ext=java,kt",
 		Golden: "testdata/cloc_directory.txt",
+	}}
+	RunTestCmd(t, tests)
+}
+
+func TestShouldReturnNullWhenIgnoreDir(t *testing.T) {
+	abs := "../_fixtures/cloc/someignore"
+
+	analysis := []testcase.CmdTestCase{{
+		Name:   "analysis",
+		Cmd:    "analysis -p " + abs,
+		Golden: "",
+	}}
+	RunTestCmd(t, analysis)
+
+	tests := []testcase.CmdTestCase{{
+		Name:   "cloc",
+		Cmd:    "cloc " + abs + " --by-directory",
+		Golden: "testdata/cloc_ignore.txt",
 	}}
 	RunTestCmd(t, tests)
 }

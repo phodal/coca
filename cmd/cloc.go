@@ -7,12 +7,12 @@ import (
 	"github.com/boyter/scc/processor"
 	"github.com/phodal/coca/cmd/cmd_util"
 	"github.com/phodal/coca/cmd/config"
+	"github.com/phodal/coca/pkg/domain/cloc"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -138,14 +138,10 @@ func convertToCsv(outputFiles []string, keys []string) {
 		buildLanguageMap(languageMap, dirName, keys, dirLangSummary)
 	}
 
-	var data [][]string
-	baseKey := []string{"package", "summary"}
-	data = append(data, append(baseKey, keys...))
-
 	deb, _ := json.Marshal(languageMap)
 	cmd_util.WriteToCocaFile("debug_cloc.json", string(deb))
 
-	data = buildClocCsv(languageMap, keys, data)
+	data := cloc.BuildClocCsvData(languageMap, keys)
 
 	file, err := os.Create(filepath.FromSlash(config.CocaConfig.ReporterPath + "/" + "cloc.csv"))
 	checkError("Cannot create file", err)
@@ -159,27 +155,6 @@ func convertToCsv(outputFiles []string, keys []string) {
 		err := writer.Write(value)
 		checkError("Cannot write to file", err)
 	}
-}
-
-func buildClocCsv(languageMap map[string]map[string]processor.LanguageSummary, keys []string, data [][]string) [][]string {
-	for dirName, dirSummary := range languageMap {
-		var column []string
-		column = append(column, dirName)
-
-		var codes []string
-		var summary int64
-
-		for _, key := range keys {
-			lang := dirSummary[key]
-			summary = summary + lang.Code
-			codes = append(codes, strconv.Itoa(int(lang.Code)))
-		}
-
-		column = append(column, strconv.Itoa(int(summary)))
-		column = append(column, codes...)
-		data = append(data, column)
-	}
-	return data
 }
 
 func buildLanguageMap(languageMap map[string]map[string]processor.LanguageSummary, dirName string, keys []string, dirLangSummary []processor.LanguageSummary) {

@@ -27,3 +27,18 @@ func Test_parser_json_languages(t *testing.T) {
 
 	g.Expect(len(f)).To(Equal(2))
 }
+
+func TestGenerateCsv(t *testing.T) {
+	t.Parallel()
+	g := NewGomegaWithT(t)
+
+	var languageMap = make(map[string]map[string]processor.LanguageSummary)
+	var keys = []string{"Java", "Kotlin"};
+	languageMap["home"] = make(map[string]processor.LanguageSummary)
+	languageMap["home"]["Java"] = processor.LanguageSummary{}
+
+	data := BuildClocCsvData(languageMap, keys)
+
+	g.Expect(data[0]).To(Equal([]string{"package", "summary", "Java", "Kotlin"}))
+	g.Expect(data[1]).To(Equal([]string{"home", "0", "0", "0"}))
+}

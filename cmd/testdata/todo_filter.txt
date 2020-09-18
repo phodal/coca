@@ -1,0 +1,4 @@
+Todos Count 1
+|           FILENAME            |              MESSAGES               | ASSIGNEE | LINE |
+|-------------------------------|-------------------------------------|----------|------|
+| ../_fixtures/todo/todo.phodal | add todo for other text like phodal |          |    1 |

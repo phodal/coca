@@ -7,6 +7,7 @@ import (
 	"github.com/phodal/coca/pkg/application/todo"
 	"github.com/spf13/cobra"
 	"strconv"
+	"strings"
 )
 
 type RootCmdConfig struct {
@@ -26,7 +27,8 @@ var todoCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path := cmd.Flag("path").Value.String()
 		app := todo.NewTodoApp()
-		filters := []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"}
+
+		filters := strings.Split(todoCmdConfig.Extensions, ",")
 		todos := app.AnalysisPath(path, filters)
 
 		simple, _ := json.MarshalIndent(todos, "", "\t")
@@ -61,7 +63,7 @@ var todoCmd = &cobra.Command{
 
 func init() {
 	todoCmd.SetOut(output)
-	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Extensions, "ext", "e", ".java,.py,.go,.ts,.js", "ext=\".java,.go\"")
+	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Extensions, "ext", "e", ".java,.py,.go,.ts,.js,.kt,.groovy,.gradle", "ext=\".java,.go\"")
 	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Path, "path", "p", ".", "path")
 	todoCmd.PersistentFlags().BoolVarP(&todoCmdConfig.WithGit, "git", "g", false, "is with git info")
 

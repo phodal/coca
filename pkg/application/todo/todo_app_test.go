@@ -13,7 +13,7 @@ func TestNewTodoApp(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	app := NewTodoApp()
 
-	stodos := app.AnalysisPath(codePath)
+	stodos := app.AnalysisPath(codePath, []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"})
 	todos := app.BuildWithGitHistory(stodos)
 
 	// todo: add suport for python
@@ -34,7 +34,7 @@ func Test_ShouldReturnNullWhenNotTodo(t *testing.T) {
 	codePath = filepath.FromSlash(codePath)
 	app := NewTodoApp()
 
-	stodos := app.AnalysisPath(codePath)
+	stodos := app.AnalysisPath(codePath, []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"})
 	todos := app.BuildWithGitHistory(stodos)
 
 	g.Expect(len(todos)).To(Equal(0))

@@ -10,8 +10,9 @@ import (
 )
 
 type RootCmdConfig struct {
-	Path    string
-	WithGit bool
+	Path       string
+	WithGit    bool
+	Extensions string
 }
 
 var (
@@ -25,7 +26,8 @@ var todoCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path := cmd.Flag("path").Value.String()
 		app := todo.NewTodoApp()
-		todos := app.AnalysisPath(path)
+		filters := []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"}
+		todos := app.AnalysisPath(path, filters)
 
 		simple, _ := json.MarshalIndent(todos, "", "\t")
 		cmd_util.WriteToCocaFile("simple-todos.json", string(simple))
@@ -59,8 +61,9 @@ var todoCmd = &cobra.Command{
 
 func init() {
 	todoCmd.SetOut(output)
+	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Extensions, "ext", "e", ".java,.py,.go,.ts,.js", "ext=\".java,.go\"")
 	todoCmd.PersistentFlags().StringVarP(&todoCmdConfig.Path, "path", "p", ".", "path")
-	todoCmd.PersistentFlags().BoolVarP(&todoCmdConfig.WithGit, "git", "g", false, "path")
+	todoCmd.PersistentFlags().BoolVarP(&todoCmdConfig.WithGit, "git", "g", false, "is with git info")
 
 	rootCmd.AddCommand(todoCmd)
 }

@@ -31,8 +31,19 @@ type TodoDetail struct {
 	Message  string
 }
 
-func (a TodoApp) AnalysisPath(path string) []*astitodo.TODO {
-	todos := buildComments(path)
+func (a TodoApp) AnalysisPath(path string, filters []string) []*astitodo.TODO {
+	var CodeFileFilter = func(path string) bool {
+		extensions := filters
+		for _, ext := range extensions {
+			if strings.HasSuffix(path, ext) {
+				return true
+			}
+		}
+
+		return false
+	}
+
+	todos := BuildComments(path, CodeFileFilter)
 	return todos
 }
 
@@ -63,19 +74,10 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 	return todoList
 }
 
-func buildComments(path string) []*astitodo.TODO {
+func BuildComments(path string, fileFilters func(path string) bool) []*astitodo.TODO {
 	var todos []*astitodo.TODO
-	var CodeFileFilter = func(path string) bool {
-		extensions := []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"}
-		for _, ext := range extensions {
-			if strings.HasSuffix(path, ext) {
-				return true
-			}
-		}
-		return false
-	}
 
-	files := cocafile.GetFilesWithFilter(path, CodeFileFilter)
+	files := cocafile.GetFilesWithFilter(path, fileFilters)
 	for index := range files {
 		file := files[index]
 

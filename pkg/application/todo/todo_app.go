@@ -66,7 +66,13 @@ func (a TodoApp) BuildWithGitHistory(todos []*astitodo.TODO) []TodoDetail {
 func buildComments(path string) []*astitodo.TODO {
 	var todos []*astitodo.TODO
 	var CodeFileFilter = func(path string) bool {
-		return strings.HasSuffix(path, ".go") || strings.HasSuffix(path, ".py") || strings.HasSuffix(path, ".js") || strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".java")
+		extensions := []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"}
+		for _, ext := range extensions {
+			if strings.HasSuffix(path, ext) {
+				return true
+			}
+		}
+		return false
 	}
 
 	files := cocafile.GetFilesWithFilter(path, CodeFileFilter)

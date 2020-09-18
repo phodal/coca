@@ -33,17 +33,19 @@ var clocCmd = &cobra.Command{
 	Long:    fmt.Sprintf("Sloc, Cloc and Code. Count lines of code in a directory with complexity estimation.\nVersion %s\nBen Boyter <ben@boyter.org> + Contributors", processor.Version),
 	Version: processor.Version,
 	Run: func(cmd *cobra.Command, args []string) {
+		if clocConfig.TopFile {
+			_ = cloc_app.CreateClocDir()
+			processTopFile(args[0])
+			return
+		}
+
 		if clocConfig.ByDirectory {
 			_ = cloc_app.CreateClocDir()
 			processByDirectory(args[0])
 			return
-		} else if clocConfig.TopFile {
-			_ = cloc_app.CreateClocDir()
-			processTopFile(args[0])
-			return
-		} else {
-			processor.DirFilePaths = args
 		}
+
+		processor.DirFilePaths = args
 
 		if processor.ConfigureLimits != nil {
 			processor.ConfigureLimits()
@@ -75,7 +77,7 @@ func processTopFile(dir string) {
 
 	if len(languageSummaries) <= 3 {
 		for _, summary := range languageSummaries {
-			fmt.Fprintln(output, "Language: " + summary.Name)
+			fmt.Fprintln(output, "Language: "+summary.Name)
 			table := cmd_util.NewOutput(output)
 			table.SetHeader([]string{"Length", "File", "Complexity", "WeightedComplexity"})
 			sizes := len(summary.Files)
@@ -84,7 +86,7 @@ func processTopFile(dir string) {
 			}
 
 			for _, file := range summary.Files[:sizes] {
-				table.Append([]string{strconv.Itoa(int(file.Code)), file.Language, strconv.Itoa(int(file.Complexity)),strconv.Itoa(int(file.WeightedComplexity)) })
+				table.Append([]string{strconv.Itoa(int(file.Code)), file.Language, strconv.Itoa(int(file.Complexity)), strconv.Itoa(int(file.WeightedComplexity))})
 			}
 			table.Render()
 		}

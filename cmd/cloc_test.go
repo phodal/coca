@@ -48,7 +48,7 @@ func TestShouldByFileSize(t *testing.T) {
 
 	tests := []testcase.CmdTestCase{{
 		Name:   "cloc",
-		Cmd:    "cloc " + abs + " --top-file --top-size=10",
+		Cmd:    "cloc " + abs + " --top-size=10 --top-file",
 		Golden: "testdata/top_file.txt",
 	}}
 	RunTestCmd(t, tests)

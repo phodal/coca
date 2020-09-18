@@ -75,18 +75,19 @@ func processTopFile(dir string) {
 
 	cloc_app.SortLangeByCode(languageSummaries)
 
-	if len(languageSummaries) <= 3 {
+	if len(languageSummaries) <= 5 {
 		for _, summary := range languageSummaries {
 			fmt.Fprintln(output, "Language: "+summary.Name)
 			table := cmd_util.NewOutput(output)
-			table.SetHeader([]string{"Length", "File", "Complexity", "WeightedComplexity"})
+			table.SetHeader([]string{"Length", "Complexity", "Location"})
 			sizes := len(summary.Files)
 			if sizes >= clocConfig.TopSizes {
 				sizes = clocConfig.TopSizes
 			}
 
 			for _, file := range summary.Files[:sizes] {
-				table.Append([]string{strconv.Itoa(int(file.Code)), file.Language, strconv.Itoa(int(file.Complexity)), strconv.Itoa(int(file.WeightedComplexity))})
+				location := strings.TrimLeft(file.Location, dir)
+				table.Append([]string{strconv.Itoa(int(file.Code)), strconv.Itoa(int(file.Complexity)), location})
 			}
 			table.Render()
 		}

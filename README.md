@@ -180,10 +180,14 @@ android-layout-inspector,2533
 #### Cloc Top File
 
 ```bash
-coca cloc ~/intellij-community/android/designer/src/com/android/tools/idea --top-file
+coca cloc ~/intellij-community/android/designer/src/com/android/tools/idea --top-file --top-size 10
 ```
 
-output to: `coca_reporter/sort_cloc.json`
+output to: `coca_reporter/sort_cloc.json` and also:
+
+```
+
+```
 
 ### Build Deps Tree
 

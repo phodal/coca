@@ -13,12 +13,14 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
 type CocaClocConfig struct {
 	ByDirectory bool
 	TopFile     bool
+	TopSizes    int
 }
 
 var (
@@ -70,6 +72,23 @@ func processTopFile(dir string) {
 	CheckError("no a valid language languageSummaries", err)
 
 	cloc_app.SortLangeByCode(languageSummaries)
+
+	if len(languageSummaries) <= 3 {
+		for _, summary := range languageSummaries {
+			fmt.Fprintln(output, "Language: " + summary.Name)
+			table := cmd_util.NewOutput(output)
+			table.SetHeader([]string{"Length", "File", "Complexity", "WeightedComplexity"})
+			sizes := len(summary.Files)
+			if sizes >= clocConfig.TopSizes {
+				sizes = clocConfig.TopSizes
+			}
+
+			for _, file := range summary.Files[:sizes] {
+				table.Append([]string{strconv.Itoa(int(file.Code)), file.Language, strconv.Itoa(int(file.Complexity)),strconv.Itoa(int(file.WeightedComplexity)) })
+			}
+			table.Render()
+		}
+	}
 
 	sortContent, _ := json.MarshalIndent(languageSummaries, "", "\t")
 	cmd_util.WriteToCocaFile("sort_cloc.json", string(sortContent))
@@ -155,6 +174,7 @@ func addClocConfigs() {
 
 	flags.BoolVar(&clocConfig.ByDirectory, "by-directory", false, "list directory and out csv")
 	flags.BoolVar(&clocConfig.TopFile, "top-file", false, "list top change file")
+	flags.IntVar(&clocConfig.TopSizes, "top-size", 30, "top file sizes")
 
 	flags.Int64Var(&processor.AverageWage, "avg-wage", 56286, "average wage value used for basic COCOMO calculation")
 	flags.BoolVar(&processor.DisableCheckBinary, "binary", false, "disable binary file detection")

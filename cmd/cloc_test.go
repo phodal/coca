@@ -24,13 +24,6 @@ func TestCloc(t *testing.T) {
 func TestClocByDirectory(t *testing.T) {
 	abs := "../_fixtures/cloc/normal"
 
-	analysis := []testcase.CmdTestCase{{
-		Name:   "analysis",
-		Cmd:    "analysis -p " + abs,
-		Golden: "",
-	}}
-	RunTestCmd(t, analysis)
-
 	tests := []testcase.CmdTestCase{{
 		Name:   "cloc",
 		Cmd:    "cloc " + abs + " --by-directory --include-ext=java,kt",
@@ -42,13 +35,6 @@ func TestClocByDirectory(t *testing.T) {
 func TestShouldReturnNullWhenIgnoreDir(t *testing.T) {
 	abs := "../_fixtures/cloc/someignore"
 
-	analysis := []testcase.CmdTestCase{{
-		Name:   "analysis",
-		Cmd:    "analysis -p " + abs,
-		Golden: "",
-	}}
-	RunTestCmd(t, analysis)
-
 	tests := []testcase.CmdTestCase{{
 		Name:   "cloc",
 		Cmd:    "cloc " + abs + " --by-directory",
@@ -58,19 +44,12 @@ func TestShouldReturnNullWhenIgnoreDir(t *testing.T) {
 }
 
 func TestShouldByFileSize(t *testing.T) {
-	abs := "../_fixtures"
-
-	analysis := []testcase.CmdTestCase{{
-		Name:   "analysis",
-		Cmd:    "analysis -p " + abs,
-		Golden: "",
-	}}
-	RunTestCmd(t, analysis)
+	abs := "../_fixtures/suggest"
 
 	tests := []testcase.CmdTestCase{{
 		Name:   "cloc",
-		Cmd:    "cloc " + abs + " --top-file",
-		Golden: "",
+		Cmd:    "cloc " + abs + " --top-file --top-size=10",
+		Golden: "testdata/top_file.txt",
 	}}
 	RunTestCmd(t, tests)
 }

@@ -185,8 +185,19 @@ coca cloc ~/intellij-community/android/designer/src/com/android/tools/idea --top
 
 output to: `coca_reporter/sort_cloc.json` and also:
 
-```
-
+```bash
+| LENGTH | COMPLEXITY |             LOCATION              |
+|--------|------------|-----------------------------------|
+|   1642 |        236 | ConstraintLayoutHandler.java      |
+|   1492 |        375 | ConstraintComponentUtilities.java |
+|   1189 |        166 | CommonActions.java                |
+|   1184 |        325 | ConstraintWidget.java             |
+|   1169 |        129 | SingleWidgetView.java             |
+|   1115 |        213 | ScoutArrange.java                 |
+|   1097 |        281 | ScoutWidget.java                  |
+|   1081 |        224 | 3d/Rasterize.java                 |
+|   1016 |        159 | LayoutlibSceneManager.java        |
+|   1014 |        220 | TimeLinePanel.java                |
 ```
 
 ### Build Deps Tree

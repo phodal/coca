@@ -1,4 +1,4 @@
-// Code generated from CommentLexer.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from CommentLexer.g4 by ANTLR 4.8. DO NOT EDIT.
 
 package parser
 

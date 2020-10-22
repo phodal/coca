@@ -1,4 +1,4 @@
-// Code generated from JavaParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from JavaParser.g4 by ANTLR 4.8. DO NOT EDIT.
 
 package parser // JavaParser
 
@@ -52,7 +52,8 @@ func (s *BaseJavaParserListener) EnterModifier(ctx *ModifierContext) {}
 func (s *BaseJavaParserListener) ExitModifier(ctx *ModifierContext) {}
 
 // EnterClassOrInterfaceModifier is called when production classOrInterfaceModifier is entered.
-func (s *BaseJavaParserListener) EnterClassOrInterfaceModifier(ctx *ClassOrInterfaceModifierContext) {}
+func (s *BaseJavaParserListener) EnterClassOrInterfaceModifier(ctx *ClassOrInterfaceModifierContext) {
+}
 
 // ExitClassOrInterfaceModifier is called when production classOrInterfaceModifier is exited.
 func (s *BaseJavaParserListener) ExitClassOrInterfaceModifier(ctx *ClassOrInterfaceModifierContext) {}
@@ -160,7 +161,8 @@ func (s *BaseJavaParserListener) EnterTypeTypeOrVoid(ctx *TypeTypeOrVoidContext)
 func (s *BaseJavaParserListener) ExitTypeTypeOrVoid(ctx *TypeTypeOrVoidContext) {}
 
 // EnterGenericMethodDeclaration is called when production genericMethodDeclaration is entered.
-func (s *BaseJavaParserListener) EnterGenericMethodDeclaration(ctx *GenericMethodDeclarationContext) {}
+func (s *BaseJavaParserListener) EnterGenericMethodDeclaration(ctx *GenericMethodDeclarationContext) {
+}
 
 // ExitGenericMethodDeclaration is called when production genericMethodDeclaration is exited.
 func (s *BaseJavaParserListener) ExitGenericMethodDeclaration(ctx *GenericMethodDeclarationContext) {}
@@ -186,7 +188,8 @@ func (s *BaseJavaParserListener) EnterFieldDeclaration(ctx *FieldDeclarationCont
 func (s *BaseJavaParserListener) ExitFieldDeclaration(ctx *FieldDeclarationContext) {}
 
 // EnterInterfaceBodyDeclaration is called when production interfaceBodyDeclaration is entered.
-func (s *BaseJavaParserListener) EnterInterfaceBodyDeclaration(ctx *InterfaceBodyDeclarationContext) {}
+func (s *BaseJavaParserListener) EnterInterfaceBodyDeclaration(ctx *InterfaceBodyDeclarationContext) {
+}
 
 // ExitInterfaceBodyDeclaration is called when production interfaceBodyDeclaration is exited.
 func (s *BaseJavaParserListener) ExitInterfaceBodyDeclaration(ctx *InterfaceBodyDeclarationContext) {}
@@ -329,6 +332,14 @@ func (s *BaseJavaParserListener) EnterFloatLiteral(ctx *FloatLiteralContext) {}
 // ExitFloatLiteral is called when production floatLiteral is exited.
 func (s *BaseJavaParserListener) ExitFloatLiteral(ctx *FloatLiteralContext) {}
 
+// EnterAltAnnotationQualifiedName is called when production altAnnotationQualifiedName is entered.
+func (s *BaseJavaParserListener) EnterAltAnnotationQualifiedName(ctx *AltAnnotationQualifiedNameContext) {
+}
+
+// ExitAltAnnotationQualifiedName is called when production altAnnotationQualifiedName is exited.
+func (s *BaseJavaParserListener) ExitAltAnnotationQualifiedName(ctx *AltAnnotationQualifiedNameContext) {
+}
+
 // EnterAnnotation is called when production annotation is entered.
 func (s *BaseJavaParserListener) EnterAnnotation(ctx *AnnotationContext) {}
 
@@ -430,7 +441,8 @@ func (s *BaseJavaParserListener) EnterBlockStatement(ctx *BlockStatementContext)
 func (s *BaseJavaParserListener) ExitBlockStatement(ctx *BlockStatementContext) {}
 
 // EnterLocalVariableDeclaration is called when production localVariableDeclaration is entered.
-func (s *BaseJavaParserListener) EnterLocalVariableDeclaration(ctx *LocalVariableDeclarationContext) {}
+func (s *BaseJavaParserListener) EnterLocalVariableDeclaration(ctx *LocalVariableDeclarationContext) {
+}
 
 // ExitLocalVariableDeclaration is called when production localVariableDeclaration is exited.
 func (s *BaseJavaParserListener) ExitLocalVariableDeclaration(ctx *LocalVariableDeclarationContext) {}
@@ -622,7 +634,8 @@ func (s *BaseJavaParserListener) ExitNonWildcardTypeArgumentsOrDiamond(ctx *NonW
 }
 
 // EnterNonWildcardTypeArguments is called when production nonWildcardTypeArguments is entered.
-func (s *BaseJavaParserListener) EnterNonWildcardTypeArguments(ctx *NonWildcardTypeArgumentsContext) {}
+func (s *BaseJavaParserListener) EnterNonWildcardTypeArguments(ctx *NonWildcardTypeArgumentsContext) {
+}
 
 // ExitNonWildcardTypeArguments is called when production nonWildcardTypeArguments is exited.
 func (s *BaseJavaParserListener) ExitNonWildcardTypeArguments(ctx *NonWildcardTypeArgumentsContext) {}

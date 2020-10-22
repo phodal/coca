@@ -1,4 +1,4 @@
-// Code generated from JavaParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from JavaParser.g4 by ANTLR 4.8. DO NOT EDIT.
 
 package parser // JavaParser
 
@@ -157,6 +157,9 @@ type JavaParserListener interface {
 
 	// EnterFloatLiteral is called when entering the floatLiteral production.
 	EnterFloatLiteral(c *FloatLiteralContext)
+
+	// EnterAltAnnotationQualifiedName is called when entering the altAnnotationQualifiedName production.
+	EnterAltAnnotationQualifiedName(c *AltAnnotationQualifiedNameContext)
 
 	// EnterAnnotation is called when entering the annotation production.
 	EnterAnnotation(c *AnnotationContext)
@@ -469,6 +472,9 @@ type JavaParserListener interface {
 
 	// ExitFloatLiteral is called when exiting the floatLiteral production.
 	ExitFloatLiteral(c *FloatLiteralContext)
+
+	// ExitAltAnnotationQualifiedName is called when exiting the altAnnotationQualifiedName production.
+	ExitAltAnnotationQualifiedName(c *AltAnnotationQualifiedNameContext)
 
 	// ExitAnnotation is called when exiting the annotation production.
 	ExitAnnotation(c *AnnotationContext)

@@ -1,3 +1,45 @@
+# [](https://github.com/phodal/coca/compare/v2.0.0...v) (2020-11-04)
+
+
+### Bug Fixes
+
+* add .idea to ignore for [#14](https://github.com/phodal/coca/issues/14) ([d8d8dec](https://github.com/phodal/coca/commit/d8d8dec03eecd2f5cf8165175479c66bc344723e))
+* fix analysis lost issue ([0143d3f](https://github.com/phodal/coca/commit/0143d3fb90cb8d2ee54e0a44ac9b8859c402e8f5))
+* fix build error for empty merge ([8022527](https://github.com/phodal/coca/commit/802252701e0f0544056b893429bd74d7cf31cf2b))
+* fix code empty issues ([5e788e9](https://github.com/phodal/coca/commit/5e788e927d45ab6152fc5198785d2c7d9dd81ba9))
+* fix line issues ([b833373](https://github.com/phodal/coca/commit/b8333732f28baafe88f9627758f46f5f6a148175))
+* fix no parents issues for [#14](https://github.com/phodal/coca/issues/14) ([d80797a](https://github.com/phodal/coca/commit/d80797a9bba6d7ce50767c98d9f54080060b7de2))
+* fix tests in go15 ([29c73d9](https://github.com/phodal/coca/commit/29c73d92ef53fbbb0dec5a4c172f05c879634fee))
+* fix top file fail tests ([34a6380](https://github.com/phodal/coca/commit/34a6380163bf3cac0030df635293361454dac1e4))
+* make ignore coca_reports ([9f9fa31](https://github.com/phodal/coca/commit/9f9fa3168537d936c70253baf89dc7402dd37c61))
+* make ranking by keys && fixed [#14](https://github.com/phodal/coca/issues/14) ([644538f](https://github.com/phodal/coca/commit/644538ff8f0f1ff830581907138dd81f1d2f219d))
+
+
+### Features
+
+* add basic xml parser ([6a309cd](https://github.com/phodal/coca/commit/6a309cd271d70f7cae6a3cda1ab2c1d4ec317a98))
+* add coloc by directory for testing ([b0ef944](https://github.com/phodal/coca/commit/b0ef944f1798f2655a620a871f61e634d4bb503d))
+* add filter support ([ed69884](https://github.com/phodal/coca/commit/ed69884478f9a1286d0f0b9536616e905e98ae7b))
+* add map for summary ([8efd270](https://github.com/phodal/coca/commit/8efd2703d9e3f5e818b6be50c13ebe5d3a5440ae))
+* add sort cloc support ([4b63a21](https://github.com/phodal/coca/commit/4b63a21c864fb9b16bcf5345cc5318f911b4294e))
+* add support for file display ([7d01a89](https://github.com/phodal/coca/commit/7d01a89babc98721dbdedb03e4018114b31ec351))
+* add test for cloc by dir ([609a5d8](https://github.com/phodal/coca/commit/609a5d896ee3673eca7034897e7fae404c61db51))
+* add test for ignore cases ([0a8ccb7](https://github.com/phodal/coca/commit/0a8ccb74e81b4af2ad5194d7e94f560046a80151))
+* add test for summary ([31a925d](https://github.com/phodal/coca/commit/31a925db3f46f81b2064a85ab397318f89bfbab1))
+* add test for top fie ([1f30752](https://github.com/phodal/coca/commit/1f30752375f3cd42db4b1d94d8f88a50abd63f05))
+* create cloc dir ([1277209](https://github.com/phodal/coca/commit/1277209b11efd996e2d1c1ed4f9b0788e6fcedac))
+* create process base cloc func ([4222c63](https://github.com/phodal/coca/commit/4222c637ddc989c4ffd30b8ab9dfa3284d055d90))
+* create summary for cloc ([3450099](https://github.com/phodal/coca/commit/3450099c501b516720000f07ab4bdd550fc3e97d))
+* fix .git dir erro issues ([562fcd8](https://github.com/phodal/coca/commit/562fcd82d5f3ca7ab2234c335e1e3c445db97b58))
+* init by files ([decb12a](https://github.com/phodal/coca/commit/decb12a5253c4d9196087fc4a5603d5aa4246006))
+* it works ([54c1631](https://github.com/phodal/coca/commit/54c1631eb311b0482fcb8bdf6fd839e0a5f497b2))
+* make output change to indent json ([9464b95](https://github.com/phodal/coca/commit/9464b95c74f9004b094ab4b5b0341be929bfabb5))
+* make output csv ([d8cc503](https://github.com/phodal/coca/commit/d8cc5039b8e2e0b3a362838553179be986ea5507))
+* output dir to dirs ([3acfea3](https://github.com/phodal/coca/commit/3acfea3e77ce19d9cf82d215413ccfd35c595221))
+* upgrade antl4 java parser to antl 4.8 ([f63d7f9](https://github.com/phodal/coca/commit/f63d7f96269f8f4c3d8e31bbb7eb8085c0165fab))
+
+
+
 # [](https://github.com/phodal/coca/compare/v1.9.9-beta...v) (2020-01-16)
 
 

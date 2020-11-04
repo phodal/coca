@@ -52,7 +52,7 @@ func CreateClocDir() error {
 }
 
 func IsIgnoreDir(baseName string) bool {
-	dirs := []string{".git", ".svn", ".hg", ".idea"}
+	dirs := []string{".git", ".svn", ".hg", ".idea", "coca_reporter"}
 	for _, dir := range dirs {
 		if dir == baseName {
 			return true

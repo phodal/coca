@@ -1,3 +1,6 @@
 # Java Coca Define
 asserts: assertThat, assert
-
+prints:
+  - System.out::println
+  - System.out::printf
+  - System.out::print

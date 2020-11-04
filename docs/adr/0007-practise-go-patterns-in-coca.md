@@ -6,6 +6,8 @@ Date: 2019-12-23
 
 2019-12-23 proposed
 
+2020-11-04 done
+
 ## Context
 
 A curated collection of idiomatic design & application patterns for Go language.

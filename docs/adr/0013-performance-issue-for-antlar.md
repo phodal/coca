@@ -1,10 +1,12 @@
-# 13. performance issue for antlar
+# 13. performance issue for antlr
 
 Date: 2020-01-12
 
 ## Status
 
 2020-01-12 proposed
+
+2020-11-04 deprecated
 
 ## Context
 

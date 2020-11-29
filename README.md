@@ -54,16 +54,21 @@ Requirements:
 
 1. [graphviz](https://www.graphviz.org/) for dot file to images (such as svg, png)
 
-## Usage
 
-install
+
+## Getting started
+
+The easiest way to get coca is to use one of the pre-built release binaries which are available for OSX, Linux, Windows on the [release page](https://github.com/phodal/coca/releases). 
+
+You can also install yourself : 
 
 ```bash
 go get -u github.com/phodal/coca
 ```
 
-1. Run `coca analysis`
-2. Run Command
+
+
+## Usage
 
 ### Analysis
 
@@ -222,7 +227,7 @@ With Count
 
 ```
 coca api -r com.phodal.pholedge. -c 
-``` 
+```
 
 or multi package:
 
@@ -486,7 +491,7 @@ results:
 
 ```
 coca tbs
-``` 
+```
 
 results
 

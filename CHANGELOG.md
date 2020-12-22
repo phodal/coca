@@ -1,4 +1,17 @@
-# [](https://github.com/phodal/coca/compare/v2.0.0...v) (2020-11-04)
+# [](https://github.com/phodal/coca/compare/v2.1.1...v) (2020-12-22)
+
+
+
+## [2.1.1](https://github.com/phodal/coca/compare/v2.1.0...v2.1.1) (2020-12-22)
+
+
+### Bug Fixes
+
+* fix total length output issues ([a4a3d47](https://github.com/phodal/coca/commit/a4a3d47dd3d43c7c6b91330e904b3f7743eb305f))
+
+
+
+# [2.1.0](https://github.com/phodal/coca/compare/v2.0.0...v2.1.0) (2020-11-04)
 
 
 ### Bug Fixes
@@ -40,15 +53,68 @@
 
 
 
-# [](https://github.com/phodal/coca/compare/v1.9.9-beta...v) (2020-01-16)
-
-
-
-## [1.9.9-beta](https://github.com/phodal/coca/compare/v1.3.2...v1.9.9-beta) (2020-01-16)
+# [2.0.0](https://github.com/phodal/coca/compare/v1.9.10...v2.0.0) (2020-07-21)
 
 
 ### Bug Fixes
 
+* fix change parameter issue ([94b91c6](https://github.com/phodal/coca/commit/94b91c6ef3454d69f99dc016ea1bd806fcff9426))
+* fix some method lost identify issue ([1157c4c](https://github.com/phodal/coca/commit/1157c4c7da50a28b9cc84d83cc6eaa4bdb8ac9e8))
+* fix some value emtpy issue ([71384cf](https://github.com/phodal/coca/commit/71384cf8824dd90bb59c1987538e0eeeaf487144))
+* fix testing ([57db72e](https://github.com/phodal/coca/commit/57db72e5cd77a39ed97cef717caa78811f755402))
+* fix typelist lost issue ([0e3867a](https://github.com/phodal/coca/commit/0e3867a980e616ee66d753972c7c5b181c68e1d6))
+* fix typo ([3bde650](https://github.com/phodal/coca/commit/3bde6500fb8366862161bc1f0c88d1704b868183))
+* fix typo ([3af471c](https://github.com/phodal/coca/commit/3af471caedb4f5a1082465e22b02e8291afed34e))
+* remove unused print ([1a34d65](https://github.com/phodal/coca/commit/1a34d651e1983a3c1b17400f8a234b25bc89d973))
+
+
+### Features
+
+* add arch ignore rueles ([ff9ff86](https://github.com/phodal/coca/commit/ff9ff86e493e8888fc3a0e4ab5c074f0782c2e5b))
+* add basic map for array ([fcefeba](https://github.com/phodal/coca/commit/fcefebad989917df96764d53bd4dbe441789a045))
+* add basic visual map ([d4f177d](https://github.com/phodal/coca/commit/d4f177de5f0a9cf1f879e8647632e5f35e208d71))
+* add count beanch ([56d8e0a](https://github.com/phodal/coca/commit/56d8e0a153db00dad1eacab011a2f17f4a3ba9f2))
+* add merge examples ([3ba080a](https://github.com/phodal/coca/commit/3ba080aa73d6b2d26aad740aba0ef7bf01970f2a))
+* add showcases for elements ([d51e276](https://github.com/phodal/coca/commit/d51e2762db6d5b5c14c37bdc137e54809254df15))
+* add simple code city ([92efab1](https://github.com/phodal/coca/commit/92efab1f83a1fb85bf43ef988ea2cfd3456b89fb))
+* add simple convert for visual images ([df3ecbd](https://github.com/phodal/coca/commit/df3ecbda2b5046583662bf7d55b8906bf6e6c308))
+* add simple test ([04d5d3b](https://github.com/phodal/coca/commit/04d5d3b9dc0b7f9f1330d9acd9a988552fc5157b))
+* add support for generics in code ([433d8fd](https://github.com/phodal/coca/commit/433d8fdd1a4bc89b5b4ee5192767732fb95b96d2))
+* add test for package merge ([9b33751](https://github.com/phodal/coca/commit/9b33751b6f82aef4deb2bc8c73ff83051267aad0))
+* add upperlbael for display ([58f9c78](https://github.com/phodal/coca/commit/58f9c78282e38e3f63e538fe8d26c60032e79436))
+* align call api ([b320fdc](https://github.com/phodal/coca/commit/b320fdcdff96d1de1a0b063a1d9dd47576527814))
+* fix call lookup position issue ([4d41a2d](https://github.com/phodal/coca/commit/4d41a2d9565293dfb6b3b588557437bbdf9cbd9e))
+* init disk tree json ([fe05188](https://github.com/phodal/coca/commit/fe05188dc9f349ff58714f20936df28486c47eb9))
+* make first string ([eeb1757](https://github.com/phodal/coca/commit/eeb1757f04450cb2995923ec838118263a2278a4))
+* make graphs works ([842ac70](https://github.com/phodal/coca/commit/842ac70531f578a83213811cdcb63a9f22880d5f))
+* make it works ([fc97088](https://github.com/phodal/coca/commit/fc970889b8e5e958bf9e3a412c5315370114937a))
+* mkae code city works ([e2d9f4b](https://github.com/phodal/coca/commit/e2d9f4baac45419b66a1ba4329a4cd62b2f488c5))
+* rejust some parameters ([12cfbc5](https://github.com/phodal/coca/commit/12cfbc5e1dd37d56832cd01b699b8c3939fa8bf5))
+* support local identify ([a31c878](https://github.com/phodal/coca/commit/a31c87870f9237124d1b646ce74f37ae16ab4595))
+* try to add map dot ([0b61dc8](https://github.com/phodal/coca/commit/0b61dc892b8cd36b005711691e381fec561c073a))
+* try to add test for node merge ([9b9742b](https://github.com/phodal/coca/commit/9b9742bdb82677a9e57948e6019142d2af7204e6))
+* try to add trhead support ([fee3e94](https://github.com/phodal/coca/commit/fee3e9489fb1f4fced94e4099b8273720b8dea3e))
+* use new graph for render ([2190c19](https://github.com/phodal/coca/commit/2190c19607189640dfa311c70e29e993ca021b06))
+* use trie ([8a19030](https://github.com/phodal/coca/commit/8a19030f9695cdb387c002799f5665c23f5572b2))
+* use trie for render ([e1d0f10](https://github.com/phodal/coca/commit/e1d0f108c2e0a268465bb1f05f9ef6aa6549c4bb))
+
+
+### Reverts
+
+* revert full app change ([14ece42](https://github.com/phodal/coca/commit/14ece421bd7b202b8518f424f6c442679e6642b1))
+
+
+
+## [1.9.10](https://github.com/phodal/coca/compare/v1.3.2...v1.9.10) (2020-03-17)
+
+
+### Bug Fixes
+
+* [go] add dirty fix for return interface ([c720e43](https://github.com/phodal/coca/commit/c720e435c5a36ea5b3d19c4ae9028582cc54257b))
+* [go] fix import equal source issue ([272e057](https://github.com/phodal/coca/commit/272e057ec7a3077e4d269dde07f78f585970ae2d))
+* [go] fix import name start with dot issue ([f12e17b](https://github.com/phodal/coca/commit/f12e17bb179b6a73a614d177e90711512f8e3f13))
+* [go] fix interface{} as param issues ([e74582c](https://github.com/phodal/coca/commit/e74582ccddc877eedc639f739d12432710651f31))
+* [go] rethinking in go ast ([cd61261](https://github.com/phodal/coca/commit/cd61261272e80d0addb6256ae13148a3a4860a49))
 * [python] add py2 & py3 testing ([2d414df](https://github.com/phodal/coca/commit/2d414dfe82b5d163554dcb9e44de8b5e4f80d679))
 * [python] fix version typo issues ([cce510e](https://github.com/phodal/coca/commit/cce510e298c8d00128dd61a917cfca002d85cf52))
 * [python] update version logic ([5c8d4fc](https://github.com/phodal/coca/commit/5c8d4fc4f21f11db200d6ae6edc072025e97a205))
@@ -56,60 +122,96 @@
 * [ts] quick fix test ([3e730b9](https://github.com/phodal/coca/commit/3e730b974359dddaffc84e3c7d22084d38ccd5ab))
 * [ts] value not align issues ([fd36da2](https://github.com/phodal/coca/commit/fd36da237066972ba1572a09a29ac69cc197cb56))
 * change git reset throw error issue ([e041f41](https://github.com/phodal/coca/commit/e041f4140a68a648286173e21902b735a7bad73a))
+* current member nill issues ([8cf9f3b](https://github.com/phodal/coca/commit/8cf9f3b8940d52cf382d11f91b394704f6223b39))
 * fix [ts] return two class issues ([9856d2b](https://github.com/phodal/coca/commit/9856d2b48c8e0e7adbdcc865339223bcd376ab58))
 * fix [ts] status issues ([a07737e](https://github.com/phodal/coca/commit/a07737e9cbccaacf7cad6da50a2b2966205b5dc6))
+* fix api cause log issue ([d06f9ee](https://github.com/phodal/coca/commit/d06f9ee57c7850d1e15f9b47f776e926f7570b18))
 * fix buffer not init issues ([460ebbe](https://github.com/phodal/coca/commit/460ebbe1c920953f9bce18866fce3f8fa6f45e35))
+* fix chain call issue ([595ead4](https://github.com/phodal/coca/commit/595ead425e90aeefc7e40189cc62243923f075af))
 * fix default not class issues ([fcf4659](https://github.com/phodal/coca/commit/fcf465939a9c1dfca35bfc1911c5f20c9a2d328b))
 * fix empty self function issues ([9296a41](https://github.com/phodal/coca/commit/9296a41d9e6ce3e26394b9046ae6d72780a5f0d8))
+* fix filename id issues ([ddd7d71](https://github.com/phodal/coca/commit/ddd7d71be7d03b3a67d15f1e9d226493fdd18a4d))
 * fix for golangci ([9496bfa](https://github.com/phodal/coca/commit/9496bfa2569d23dd8662233d4d8144176b7d723c))
 * fix for golangci ([3ada354](https://github.com/phodal/coca/commit/3ada354264ce3c86f6bc3f6a4c58ab2cd1d98066))
 * fix for golangci for old syntax issues ([7f04fe9](https://github.com/phodal/coca/commit/7f04fe93a637435f1604749ebef1a1b4ae6b0912))
 * fix ignores issue ([708fb41](https://github.com/phodal/coca/commit/708fb41525045fc0562604c4746b881ab9a552ab))
+* fix import issues ([f989cfe](https://github.com/phodal/coca/commit/f989cfeb85ad7539f52e602ca145a7c94b966946))
 * fix import issues ([081671e](https://github.com/phodal/coca/commit/081671e5aeb5ef14c1ac23db7cf388160f0ca5b1))
 * fix import issues for xx from ([0477342](https://github.com/phodal/coca/commit/04773423fc3352a9543a54bccd3182f49f3dc795))
 * fix interface extends issue ([f5423a3](https://github.com/phodal/coca/commit/f5423a3b9792e27a316c8ef92172a0bb1fa3490b))
+* fix interface sort issues ([39b683a](https://github.com/phodal/coca/commit/39b683a650604e4748540fc4511c8d7a90c16552))
 * fix lint issue ([8ef9fa6](https://github.com/phodal/coca/commit/8ef9fa62e89dbdf4e73138364267638a645e1c0d))
 * fix lint issues for *& ([100281a](https://github.com/phodal/coca/commit/100281a8e8bc3b8c7390408641f3648bae3fe029))
 * fix lint issues for uppercase ([4b05484](https://github.com/phodal/coca/commit/4b05484c08064e8f296be0f59f8ffaef54fdd9b9))
-* fix more lint issues ([3caaa09](https://github.com/phodal/coca/commit/3caaa0968fe42e2d658ceac5995babb0c6609b4c))
+* fix logic issues ([bc6af6d](https://github.com/phodal/coca/commit/bc6af6d4b4630c12cfc4d6b7a39030e83e85b6c5))
+* fix lost python comment support issues ([7f9a685](https://github.com/phodal/coca/commit/7f9a685478a3eb149d7da37f2adf1762b650e31e))
+* fix modifier empty str issue ([293e954](https://github.com/phodal/coca/commit/293e954736feda0cdd983a150020ee863c19a0a8))
 * fix more lint issues ([86b4863](https://github.com/phodal/coca/commit/86b48638dd9cedd86b42facd082270e9c7b08874))
+* fix more lint issues ([3caaa09](https://github.com/phodal/coca/commit/3caaa0968fe42e2d658ceac5995babb0c6609b4c))
+* fix multiple default node issues ([3513798](https://github.com/phodal/coca/commit/351379856017ab9ccc40e3d0f4d7319cfe440dbc))
+* fix naming issue ([e2ba209](https://github.com/phodal/coca/commit/e2ba209e311c178a4d1f9bbf147b723ac9be8e09))
+* fix nodename typoo ([baa04f5](https://github.com/phodal/coca/commit/baa04f530690787718091831880067fb01b03704))
+* fix param order issue ([fd23a1b](https://github.com/phodal/coca/commit/fd23a1be3be974f6e7c5c3afb5b6bc8be0272b4d))
 * fix some syntax issue ([6bc6ea0](https://github.com/phodal/coca/commit/6bc6ea0f9d600eda5931ce9b94354c84628bdc5f))
 * fix test ([750ce13](https://github.com/phodal/coca/commit/750ce13630d2cf5c17fe33bf8255869506371124))
 * fix test ([0fed327](https://github.com/phodal/coca/commit/0fed3276e3a7c87e0a046ddfb6e9573251476fd4))
 * fix test data issues ([c62ec27](https://github.com/phodal/coca/commit/c62ec27fbba3ab01268cf8b0d2eb0bd90b7ff89b))
 * fix test data issues ([5cf08af](https://github.com/phodal/coca/commit/5cf08af8f81036338d13e4dc4e9a63cca5f574aa))
 * fix test lost issues ([2feb92e](https://github.com/phodal/coca/commit/2feb92e87d6c4408ad853bf4bef7dbf96e6da384))
+* fix testing ([aa4c6e7](https://github.com/phodal/coca/commit/aa4c6e7af91ae200f5db8d26244c1969ee00a8c3))
 * fix to fix python syntax issue ([b34394d](https://github.com/phodal/coca/commit/b34394de37a486193b42e3a0910f49fd969cdec7))
 * fix ts compile issues ([f72c409](https://github.com/phodal/coca/commit/f72c409c2524feecbde5464a8a515c7067116c6f))
-* fix typo ([390eaf3](https://github.com/phodal/coca/commit/390eaf3d0d9d97d3a93f27ec4885e34a4393fe3f))
-* fix typo ([e71bf99](https://github.com/phodal/coca/commit/e71bf99009c8744974dc0c8179484be0f98c7b1b))
+* fix typo ([1380659](https://github.com/phodal/coca/commit/1380659bc7bb4f3bcb633bb0786f612a0aa7012e))
+* fix typo ([5bb5405](https://github.com/phodal/coca/commit/5bb5405cf0ace6cd36521fc663db6367e8927063))
 * fix typo ([4e8b8b6](https://github.com/phodal/coca/commit/4e8b8b6c3c1c2bbb9b922f3e159e72cd54c6c9ce))
-* fix typo ([0333bb9](https://github.com/phodal/coca/commit/0333bb98c24de07cc321fda0f6b3178563c7dba3))
+* fix typo ([e71bf99](https://github.com/phodal/coca/commit/e71bf99009c8744974dc0c8179484be0f98c7b1b))
 * fix typo ([99d3632](https://github.com/phodal/coca/commit/99d363241318b3367b1e174feac0e1f054da9f41))
+* fix typo ([390eaf3](https://github.com/phodal/coca/commit/390eaf3d0d9d97d3a93f27ec4885e34a4393fe3f))
+* fix typo ([0333bb9](https://github.com/phodal/coca/commit/0333bb98c24de07cc321fda0f6b3178563c7dba3))
+* remove unused code ([bec5f9b](https://github.com/phodal/coca/commit/bec5f9b10c4a0fba3db4d3510bbd4ddb33076d99))
+* remove unused code ([39e2fe6](https://github.com/phodal/coca/commit/39e2fe6ad2da95f3f2e9f4186c91f493c3e23837))
+* remove unused method ([5375bec](https://github.com/phodal/coca/commit/5375bec4bb1f541bd7cb60c219e2d521373c6b48))
+* remove unused vars ([33390a3](https://github.com/phodal/coca/commit/33390a3978e32385dde0f2cfb4e52dafe6ce3d5b))
+* ttry to fix go package issues ([3fae76a](https://github.com/phodal/coca/commit/3fae76a7f95f11f24aee57465dbf452c06a3ecf2))
 * update grammar ([f194377](https://github.com/phodal/coca/commit/f194377a6ce489cf0d78299c6850876870ca4d29))
 
 
 ### Features
 
+* [cmd] add golang analysis api support ([f5f1b2e](https://github.com/phodal/coca/commit/f5f1b2ea4d9e313c6020ef29b3a595421cb48150))
+* [cmd] add python analysis api support ([8a0c5fe](https://github.com/phodal/coca/commit/8a0c5fe454becfdf2bfb2527954fbbb2ecfd0b07))
+* [cmd] add typescript analysis api integration ([7aba19f](https://github.com/phodal/coca/commit/7aba19f1af0bba06604e5c3308765d68e5f31344))
 * [domain] add module, package, project defined ([1694e99](https://github.com/phodal/coca/commit/1694e9951f1a498c13a703f12142ed75a88ca19f))
 * [go] add analysis api portal ([ba02a5e](https://github.com/phodal/coca/commit/ba02a5ec0445a6c94fb56f8d8703ef989ca7ae72))
+* [go] add basic call field target support ([6377a43](https://github.com/phodal/coca/commit/6377a431d2fd09e3feea50459c3a88f4c71be867))
 * [go] add basic handle for params & return type ([9cb87dd](https://github.com/phodal/coca/commit/9cb87ddd2b76110d574e01be75c8c7349f0c9c97))
 * [go] add basic procee package support ([51b0c4e](https://github.com/phodal/coca/commit/51b0c4e71fa86146ca3543698ce7ceef888b370f))
-* [go] add file name to items ([698e7cd](https://github.com/phodal/coca/commit/698e7cd7bc23a161676537b297264f0f094922e2))
+* [go] add field to package for share fields in package ([d90e142](https://github.com/phodal/coca/commit/d90e142dcaf7a68d8aeef72a6aef93e193e0bf0c))
 * [go] add file name to items ([4f46068](https://github.com/phodal/coca/commit/4f460682a612e40e66d9c1f719741604e5050a24))
+* [go] add file name to items ([698e7cd](https://github.com/phodal/coca/commit/698e7cd7bc23a161676537b297264f0f094922e2))
 * [go] add imports support ([8cc7c4b](https://github.com/phodal/coca/commit/8cc7c4b7fb153063f5e6c9cd28c95fb0e71fef42))
+* [go] add lost package name to class node ([6380efd](https://github.com/phodal/coca/commit/6380efd5210ca4f88b6a51734ef0f016d58ea580))
 * [go] add method call support ([d40c6bf](https://github.com/phodal/coca/commit/d40c6bff19ba2011bf5502117492766131770cc7))
 * [go] add normal method build support ([98fb95e](https://github.com/phodal/coca/commit/98fb95e94e94050b0a28ff8c03e4fe60a6d5870e))
 * [go] add parameters to method call ([e342dba](https://github.com/phodal/coca/commit/e342dba159c070a73d919a25f55b698baa0df47c))
+* [go] add pre extentions ([5191789](https://github.com/phodal/coca/commit/5191789115ef54fefa34409c46ba7723035401d4))
+* [go] add return call support ([bd1c929](https://github.com/phodal/coca/commit/bd1c929a1d6dd0da3aaef0a704f6932dd314363e))
+* [go] add simple ident apis ([0a65743](https://github.com/phodal/coca/commit/0a65743b1540e487e29d393e01ac51e35b0a854e))
 * [go] add struct zero ([f324ab1](https://github.com/phodal/coca/commit/f324ab1cea21371ddcd085ea1a74dc144c89d829))
 * [go] align function to struct ([53e638b](https://github.com/phodal/coca/commit/53e638bc8f05b4235313cee0758c862407414757))
+* [go] change import for compare thinking ([29e5dba](https://github.com/phodal/coca/commit/29e5dba416ff472d5969725c3496ef27cab4b8ac))
 * [go] init normal method ([a3a5eb5](https://github.com/phodal/coca/commit/a3a5eb54f010d71c20d3f73c68f0f53fe929b173))
+* [go] make enable get target ([870eb12](https://github.com/phodal/coca/commit/870eb1263dc38ef04d0008b50717b0e9990f09e9))
 * [go] make export code file ([a845410](https://github.com/phodal/coca/commit/a845410a3f4449384f57374fcf5998400fe5e472))
 * [go] make first compile code for ts ([626dc59](https://github.com/phodal/coca/commit/626dc59fc2ce07d435afc97d0420b36c07871aa1))
 * [go] make struct to member ([e1787a5](https://github.com/phodal/coca/commit/e1787a580162b9ecdbb16dd9b94091464e6ee557))
+* [go] make var local var works ([a91aac1](https://github.com/phodal/coca/commit/a91aac1a2482ae96af4ab91ac5641144a3cc315c))
 * [go] thinking in data struct ([101060a](https://github.com/phodal/coca/commit/101060adedef3b76fcfc8dce9dbe49bcd7bc913f))
 * [go] try to add for inner method call ([350b13b](https://github.com/phodal/coca/commit/350b13b55f68ed637b609c6b83e7ebb6207f5908))
+* [go] try to handle it & go home ([5344f68](https://github.com/phodal/coca/commit/5344f6818d9273c7c7b39a7e971a3aa7d9984ebe))
+* [go] try to use java api ([0137644](https://github.com/phodal/coca/commit/0137644185144c8e1978659c88b3056852bf4a31))
 * [go] update test framework ([cb948e8](https://github.com/phodal/coca/commit/cb948e8dc254a585d6ef252f43bb1f3f04eae5ed))
+* [go]-call make enable get field for files ([56331ea](https://github.com/phodal/coca/commit/56331ea430b1eec9c51b89ea2b6f843815e091fa))
 * [js] add grammers ([d73b971](https://github.com/phodal/coca/commit/d73b97169de536e3c61baa2b4e2095f04d8789e5))
 * [js] make antlr compiler success ([38868b9](https://github.com/phodal/coca/commit/38868b999067890132398d894f0b6b2d51bdb180))
 * [js] make first console log hell world ([f8a9378](https://github.com/phodal/coca/commit/f8a9378cd91bf7732625bddf2be3ca95eb4a6267))
@@ -161,17 +263,27 @@
 * [ts] make first class identfier ([a45f6f1](https://github.com/phodal/coca/commit/a45f6f178ca57da7797afc8e8d10d61ae6daf7d1))
 * [ts] make first grammer compile ([e97f76f](https://github.com/phodal/coca/commit/e97f76fa648a0aa0fbe851b7ae9ca09fe65532bd))
 * add basic interface support ([e37d065](https://github.com/phodal/coca/commit/e37d065a026165104d1632d8a96ce8a8d64e325b))
+* add basic multiple line todo support ([d3282d9](https://github.com/phodal/coca/commit/d3282d95895406b05f9fca0799cac6bb2502c023))
+* add detail for normal todo ([9ae118c](https://github.com/phodal/coca/commit/9ae118c05d7e1db5beb6789e06a06550dfe11a9c))
 * add graph call bad smell ([2778652](https://github.com/phodal/coca/commit/27786520e6e95f084b8c29b7001b78b7a8664b06))
+* add package manager info ([86eb97c](https://github.com/phodal/coca/commit/86eb97cd11290fe4dc30f50907c2ff852b3de6fe))
+* add package manager info for go build ([4a4a2cb](https://github.com/phodal/coca/commit/4a4a2cb1a99be9f16873339dce3dfbabe8677784))
+* add support for func member ([ad83146](https://github.com/phodal/coca/commit/ad83146e63b4f68122e50cd6e1e2279d367becfe))
 * enable parallel to fast test ([023a19b](https://github.com/phodal/coca/commit/023a19b42f087ee590a78896c823169d73a04ba8))
+* go add analyssis function pass code ([aebb83e](https://github.com/phodal/coca/commit/aebb83e8393cd3b3dc635ab4fa9ff85e551c0523))
 * init data struct method call ([15d09a4](https://github.com/phodal/coca/commit/15d09a4da81951a804cd55c1c459915218f5ac88))
 * init golang cli ([2402529](https://github.com/phodal/coca/commit/2402529926c9dc1eb56ea38cbdfe7ad87dd8c880))
 * init python grammar ([15606f3](https://github.com/phodal/coca/commit/15606f385fbc2f914cd60f2c9a00747147c4d18b))
 * init ts modules ([a6a6497](https://github.com/phodal/coca/commit/a6a6497f3f60d45ced1c1be385f2942cb1442e38))
+* redesign members id ([5079a1b](https://github.com/phodal/coca/commit/5079a1ba1cd6ca8b518a1937deaec6f24c1e8b1c))
 * remove plugins code, because windows go not support plugins https://github.com/golang/go/issues/19282 ([81b0929](https://github.com/phodal/coca/commit/81b0929e7431c25bf53248c0c3f26d1b1aa813d8))
+* rename codefile to codecontainer for c# ([5721d74](https://github.com/phodal/coca/commit/5721d74bce5a0b2b554f736324c1852654eaf080))
+* support for ds member id ([66d6ac0](https://github.com/phodal/coca/commit/66d6ac0dfbb6040508026492741f65d4b7a9cb3d))
 
 
 ### Reverts
 
+* Revert "test: [go] add to add property supporT" ([eea0444](https://github.com/phodal/coca/commit/eea0444807e1b573a039ead8263e1c33e8d9adce))
 * Revert "ci: update config for version" ([137eed9](https://github.com/phodal/coca/commit/137eed9bead74e6bd9253d63e603a905787f4c7f))
 
 

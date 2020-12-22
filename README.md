@@ -38,7 +38,6 @@ Available Commands:
   cloc        count lines of code with complexity estimation
   concept     build domain concept from source code
   count       count most refs function
-  deps        evaluate dependencies
   evaluate    evaluate code situation and refactor effort
   git         analysis git commit history for revs count, summary and suggest
   help        Help about any command

@@ -72,7 +72,7 @@ func buildOutput(result evaluator.EvaluateModel) {
 	normalMethodCount := result.Summary.NormalMethodCount
 	table.Append([]string{"Average Method Length", strconv.Itoa(totalLength), "Without Getter/Setter", strconv.Itoa(normalMethodCount), Rate(totalLength, normalMethodCount)})
 
-	table.Append([]string{"Method Length Std Dev / 标准差", strconv.Itoa(methodCount), "Method", "-", fmt.Sprintf("%f", result.Summary.MethodLengthStdDeviation)})
+	table.Append([]string{"Method Length Std Dev / 标准差", strconv.Itoa(totalLength), "Method", "-", fmt.Sprintf("%f", result.Summary.MethodLengthStdDeviation)})
 
 	table.Render()
 }

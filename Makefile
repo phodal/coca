@@ -14,7 +14,7 @@ all: clean build
 build: build-linux build-windows build-macos
 test:
 #	make build-plugins
-	$(GOTEST) -v ./...
+	CGO_ENABLED=0 $(GOTEST) -v ./...
 clean:
 	$(GOCLEAN)
 	rm -rf $(BINARY_DIR)

@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-var currentCommitMessage CommitMessage
+var currentCommit CommitMessage
 var currentFileChangeMap map[string]FileChange
-var commitMessages []CommitMessage
+var commits []CommitMessage
 var currentFileChanges []FileChange
 
 func BuildMessageByInput(inputStr string) []CommitMessage {
 	currentFileChangeMap = make(map[string]FileChange)
-	commitMessages = nil
+	commits = nil
 	currentFileChanges = nil
 
 	splitStr := strings.Split(inputStr, "\n")
@@ -25,7 +25,7 @@ func BuildMessageByInput(inputStr string) []CommitMessage {
 		ParseLog(str)
 	}
 
-	return commitMessages
+	return commits
 }
 
 func CalculateCodeAge(messages []CommitMessage) []ProjectInfo {

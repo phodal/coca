@@ -97,14 +97,14 @@ func buildChangeMode(text string) {
 			change.Mode = mode
 			currentFileChangeMap[matches[CHANGE_MODE_INDEX]] = change
 		} else if mode == "delete" {
-			deleteFile := FileChange{
+			change := FileChange{
 				Added:   0,
 				Deleted: 0,
 				File:    matches[CHANGE_MODE_INDEX],
 				Mode:    "delete",
 			}
 
-			currentFileChanges = append(currentFileChanges, deleteFile)
+			currentFileChanges = append(currentFileChanges, change)
 		}
 	}
 }

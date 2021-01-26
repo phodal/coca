@@ -46,7 +46,6 @@ func UpdateMessageForChange(changedFile string) (string, string, string) {
 }
 
 func ParseLog(text string) {
-	changeModel = ""
 	allString := revReg.FindAllString(text, -1)
 	if len(allString) == 1 {
 		str := ""

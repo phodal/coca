@@ -51,7 +51,7 @@ var evaluateCmd = &cobra.Command{
 
 func buildOutput(result evaluator.EvaluateModel) {
 	table := cmd_util.NewOutput(output)
-	table.SetHeader([]string{"Type", "Count", "Level", "Total", "Rate"})
+	table.SetHeader([]string{"Type", "Type Count", "Level", "Level Total", "Value = Count / Total"})
 
 	classCount := result.Summary.ClassCount
 	methodCount := result.Summary.MethodCount

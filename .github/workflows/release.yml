@@ -38,8 +38,26 @@ jobs:
     - name: Release
       run: make build
 
-    - name: Upload assets
-      uses: actions/upload-artifact@v2
+    - name: upload GNU/Linux coca to release
+      uses: svenstaro/upload-release-action@v1-release
       with:
-        name: coco
-        path: output/*
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: output/coca_linux
+        asset_name: coca_linux
+        tag: ${{ github.ref }}
+
+    - name: upload macOS coca to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: output/coca_macos
+        asset_name: coca_macos
+        tag: ${{ github.ref }}
+
+    - name: upload Windows coca to release
+      uses: svenstaro/upload-release-action@v1-release
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: output/coca_windows.exe
+        asset_name: coca_windows.exe
+        tag: ${{ github.ref }}

@@ -383,7 +383,7 @@ coca refactor -m move.config -p .
 coca evaluate
 ```
 
-Arduino Results:
+Arduino Results(Old Version):
 
 ```
 +--------------------------------+-------+-----------------------+-------+-----------+
@@ -397,6 +397,20 @@ Arduino Results:
 | Average Method Length          | 13654 | Without Getter/Setter |  1100 | 12.412727 |
 | Method Length Std Dev / 标准差 |  1615 | Method                | -     | 20.047092 |
 +--------------------------------+-------+-----------------------+-------+-----------+
+```
+
+New Version:
+
+```
+|              TYPE              | TYPE COUNT |         LEVEL         | LEVEL TOTAL | VALUE = COUNT / TOTAL |
+|--------------------------------|------------|-----------------------|-------------|-----------------------|
+| Nullable / Return Null         |          0 | Method                |           6 | 0.00%                 |
+| Utils                          |          0 | Class                 |          14 | 0.00%                 |
+| Static Method                  |          1 | Method                |           6 | 0.00%                 |
+| Average Method Num.            |          6 | Method/Class          |          14 |              0.428571 |
+| Method Num. Std Dev / 标准差   |          6 | Class                 | -           |              0.646206 |
+| Average Method Length          |          0 | Without Getter/Setter |           0 | NaN                   |
+| Method Length Std Dev / 标准差 |          0 | Method                | -           | NaN                   |
 ```
 
 Evaluate.json examples

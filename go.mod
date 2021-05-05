@@ -3,7 +3,7 @@ module github.com/phodal/coca
 go 1.16
 
 require (
-	github.com/antlr/antlr4 v0.0.0-20201020194047-0a7eaede42b0
+	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20210504221506-38ddc28e6e15
 	github.com/awalterschulze/gographviz v0.0.0-20190522210029-fa59802746ab
 	github.com/boyter/scc v0.0.0-20200907020550-91af61dfda0d
 	github.com/huleTW/bad-smell-analysis v0.1.0

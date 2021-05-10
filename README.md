@@ -25,7 +25,7 @@ Refactoring Modeling:
  - [ ] Languages Support
     - [x] Java (full features)
     - [x] Golang (support: analysis, todo, concept, git, suggest)
-    - [x] TypeScript (TBC)
+    - [x] TypeScript / JavaScript (TBC)
     - [x] Python (support: analysis, todo, concept, git, suggest)
 
 Features List:

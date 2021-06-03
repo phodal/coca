@@ -8,7 +8,7 @@
 ![Go](https://github.com/phodal/coca/workflows/Go/badge.svg)
 
 > [Coca](https://coca.migration.ink/) is a toolbox which is design for legacy system refactoring and analysis, includes call graph, concept analysis, api tree, design patterns suggest.
-[Coca](https://coca.migration.ink/) 是一个用于系统重构、系统迁移和系统分析的瑞士军刀。它可以分析代码中的测试坏味道、模块化分析、行数统计、分析调用与依赖、Git 分析以及自动化重构等。
+[Coca](https://coca.migration.ink/) 是一个用于系统重构、系统迁移和系统分析的工具箱。它可以分析代码中的测试坏味道、模块化分析、行数统计、分析调用与依赖、Git 分析以及自动化重构等。
 
 Related Tools: [Coco](https://github.com/inherd/coco) is an effective DevOps analysis and auto-suggest tool.
 

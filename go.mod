@@ -8,6 +8,7 @@ require (
 	github.com/boyter/scc v0.0.0-20200907020550-91af61dfda0d
 	github.com/huleTW/bad-smell-analysis v0.1.0
 	github.com/iancoleman/strcase v0.0.0-20191112232945-16388991a334
+	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/mattn/go-shellwords v1.0.6

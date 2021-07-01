@@ -160,6 +160,7 @@ func (g *GoIdentApp) Analysis(code string, fileName string) core_domain.CodeFile
 
 	g.Expect(len(results.DataStructures)).To(Equal(1))
 }
+
 func Test_ShowShowSelfMethodCall(t *testing.T) {
 	t.Parallel()
 	g := NewGomegaWithT(t)

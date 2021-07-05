@@ -1,4 +1,35 @@
-# [](https://github.com/phodal/coca/compare/v2.1.2...v) (2021-03-02)
+# [](https://github.com/phodal/coca/compare/v2.2.1...v) (2021-07-05)
+
+
+
+## [2.2.1](https://github.com/phodal/coca/compare/v2.2.0...v2.2.1) (2021-07-05)
+
+
+### Bug Fixes
+
+* fix version issue ([6e85bee](https://github.com/phodal/coca/commit/6e85beeca2da92d8a92ad4a8fa652f3a95da69af))
+
+
+### Features
+
+* add csv for output support ([f987231](https://github.com/phodal/coca/commit/f9872313b422a15c9dbf4d6d9993fdcf86b00cc9))
+
+
+
+# [2.2.0](https://github.com/phodal/coca/compare/v2.1.4...v2.2.0) (2021-05-11)
+
+
+### Bug Fixes
+
+* fix codecov in old url issue ([64f3901](https://github.com/phodal/coca/commit/64f3901d89118d493baf7ea9dfe136430f74506a))
+
+
+
+## [2.1.4](https://github.com/phodal/coca/compare/v2.1.3...v2.1.4) (2021-03-02)
+
+
+
+## [2.1.3](https://github.com/phodal/coca/compare/v2.1.2...v2.1.3) (2021-03-02)
 
 
 

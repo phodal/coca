@@ -86,6 +86,8 @@ var apiCmd = &cobra.Command{
 			table.Render()
 		}
 
+		writeCsv(counts)
+
 		if apiCmdConfig.RemovePackageNames != "" {
 			dotContent = replacePackage(dotContent)
 		}
@@ -93,6 +95,18 @@ var apiCmd = &cobra.Command{
 		cmd_util.WriteToCocaFile("api.dot", dotContent)
 		cmd_util.ConvertToSvg("api")
 	},
+}
+
+func writeCsv(counts []api_domain2.CallAPI) {
+	csvTable, tableString := cmd_util.NewCsv()
+	csvTable.SetHeader([]string{"Size", "Method", "URI", "Caller"})
+
+	for _, v := range counts {
+		csvTable.Append([]string{strconv.Itoa(v.Size), v.HTTPMethod, v.URI, replacePackage(v.Caller)})
+	}
+	csvTable.Render()
+
+	cmd_util.WriteToCocaFile("api.csv", tableString.String())
 }
 
 func forceUpdateApi() {

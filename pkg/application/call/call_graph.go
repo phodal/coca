@@ -42,9 +42,10 @@ func ToGraphviz(chain string) string {
 }
 
 var loopCount = 0
+var maxLoopCount = 6
 
 func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[string]string) string {
-	if loopCount > 6 {
+	if loopCount > maxLoopCount {
 		return "\n"
 	}
 	loopCount++

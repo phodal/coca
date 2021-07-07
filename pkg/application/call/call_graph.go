@@ -2,7 +2,7 @@ package call
 
 import (
 	"github.com/phodal/coca/pkg/application/rcall"
-	apidomain2 "github.com/phodal/coca/pkg/domain/api_domain"
+	apidomain "github.com/phodal/coca/pkg/domain/api_domain"
 	"github.com/phodal/coca/pkg/domain/core_domain"
 	"github.com/phodal/coca/pkg/infrastructure/jpackage"
 	"strings"
@@ -33,7 +33,7 @@ func (c CallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct, 
 
 // TODO: be a utils
 func ToGraphviz(chain string) string {
-	//rankdir = LR;
+	// rankdir = LR;
 	var result = "digraph G {\n"
 	result += "rankdir = LR;\n"
 	result = result + chain
@@ -67,9 +67,9 @@ func BuildCallChain(funcName string, methodMap map[string][]string, diMap map[st
 	return "\n"
 }
 
-func (c CallGraph) AnalysisByFiles(restApis []apidomain2.RestAPI, deps []core_domain.CodeDataStruct, diMap map[string]string) (string, []apidomain2.CallAPI) {
+func (c CallGraph) AnalysisByFiles(restApis []apidomain.RestAPI, deps []core_domain.CodeDataStruct, diMap map[string]string) (string, []apidomain.CallAPI) {
 	methodMap := BuildMethodMap(deps)
-	var apiCallSCounts []apidomain2.CallAPI
+	var apiCallSCounts []apidomain.CallAPI
 
 	results := "digraph G { \n"
 
@@ -81,7 +81,7 @@ func (c CallGraph) AnalysisByFiles(restApis []apidomain2.RestAPI, deps []core_do
 		apiCallChain := BuildCallChain(caller, methodMap, diMap)
 		chain = chain + apiCallChain
 
-		count := &apidomain2.CallAPI{
+		count := &apidomain.CallAPI{
 			HTTPMethod: restApi.HttpMethod,
 			Caller:     caller,
 			URI:        restApi.Uri,
@@ -99,9 +99,9 @@ func escapeStr(caller string) string {
 	return strings.ReplaceAll(caller, "\"", "\\\"")
 }
 
-func BuildMethodMap(clzs []core_domain.CodeDataStruct) map[string][]string {
+func BuildMethodMap(structs []core_domain.CodeDataStruct) map[string][]string {
 	var methodMap = make(map[string][]string)
-	for _, clz := range clzs {
+	for _, clz := range structs {
 		for _, method := range clz.Functions {
 			methodName := method.BuildFullMethodName(clz)
 			methodMap[methodName] = method.GetAllCallString()

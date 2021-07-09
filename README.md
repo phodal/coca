@@ -532,7 +532,7 @@ results
 ### Find unused deps
 
 ```
-coca  deps -p _fixtures/deps/maven_sample
+coca deps -p _fixtures/deps/maven_sample
 ```
 
 results:
@@ -549,7 +549,7 @@ results:
 
 ## Showcases
 
-Android Studio Analysis Examples
+Android Studio Analysis Examples. Call with `lookup`: `coca call -l`
 
 ![Call Examples](showcases/android-studio-call.svg)
 

@@ -155,6 +155,10 @@ func (s *JavaIdentifierListener) ExitMethodDeclaration(ctx *parser.MethodDeclara
 }
 
 func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+	if ctx.QualifiedName() == nil {
+		return
+	}
+
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "Override" {
 		isOverrideMethod = true

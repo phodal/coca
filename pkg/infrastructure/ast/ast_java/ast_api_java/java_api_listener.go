@@ -71,6 +71,10 @@ func (s *JavaAPIListener) ExitClassDeclaration(ctx *parser.ClassDeclarationConte
 }
 
 func (s *JavaAPIListener) EnterAnnotation(ctx *parser.AnnotationContext) {
+	if ctx.QualifiedName() == nil {
+		return
+	}
+
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "RestController" || annotationName == "Controller" {
 		isSpringRestController = true

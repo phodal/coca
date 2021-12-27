@@ -253,6 +253,10 @@ func (s *JavaFullListener) EnterLocalVariableDeclaration(ctx *parser.LocalVariab
 
 func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 	// Todo: support override method
+	if ctx.QualifiedName() == nil {
+		return
+	}
+
 	annotationName := ctx.QualifiedName().GetText()
 	if annotationName == "Override" {
 		isOverrideMethod = true

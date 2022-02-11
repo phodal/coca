@@ -16,17 +16,15 @@ Migration Guide (Chinese Version): 《[系统重构与迁移指南](https://gith
 
 Inspired by: [newlee](https://github.com/newlee) & [Tequila](https://github.com/newlee/tequila)
 
-Ant To Maven: [Merry](https://github.com/phodal/merry)
-
 Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)
 
- - [ ] Languages Support
-    - [x] Java (full features)
-    - [x] Golang (support: analysis, todo, concept, git, suggest)
-    - [x] TypeScript / JavaScript (TBC)
-    - [x] Python (support: analysis, todo, concept, git, suggest)
+ - Languages Support
+    - Java (full features)
+    - Golang (support: analysis, todo, concept, git, suggest)
+    - TypeScript / JavaScript (TBC)
+    - Python (support: analysis, todo, concept, git, suggest)
 
 Features List:
 
@@ -51,11 +49,7 @@ Available Commands:
   version     version
 ```
 
-Requirements:
-
-1. [graphviz](https://www.graphviz.org/) for dot file to images (such as svg, png)
-
-
+Requirements: [graphviz](https://www.graphviz.org/) for dot file to image (such as svg, png)
 
 ## Getting started
 
@@ -66,7 +60,6 @@ You can also install yourself :
 ```bash
 go get -u github.com/phodal/coca
 ```
-
 
 
 ## Usage

@@ -3,7 +3,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/phodal/coca)
 [![Build Status](https://travis-ci.org/phodal/coca.svg?branch=master)](https://travis-ci.org/phodal/coca)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d5a5e060522403b1f79b/maintainability)](https://codeclimate.com/github/phodal/coca/maintainability)
-[![codecov](https://codecov.io/gh/inherd/coca/branch/master/graph/badge.svg)](https://codecov.io/gh/inherd/coca)
+[![codecov](https://codecov.io/gh/modernizing/coca/branch/master/graph/badge.svg)](https://codecov.io/gh/modernizing/coca)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/phodal/coca)
 ![Go](https://github.com/phodal/coca/workflows/Go/badge.svg)
 

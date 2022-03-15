@@ -1,6 +1,0 @@
-# Java Coca Define
-asserts: assertThat, assert, AssertPanic
-prints:
-  - fmt::Println
-  - fmt::Fprintln
-  - fmt::Sprintf

@@ -16,7 +16,7 @@ func TestNewTodoApp(t *testing.T) {
 	stodos := app.AnalysisPath(codePath, []string{".go", ".py", ".js", ".ts", ".java", ".kotlin", ".groovy"})
 	todos := app.BuildWithGitHistory(stodos)
 
-	// todo: add suport for python
+	// todo: add support for python
 	g.Expect(len(todos)).To(Equal(4))
 	g.Expect(todos[0].Line).To(Equal("3"))
 	g.Expect(todos[1].FileName).To(ContainSubstring(filepath.FromSlash("_fixtures/todo/Todo.java")))

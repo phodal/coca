@@ -58,7 +58,7 @@ The easiest way to get coca is to use one of the pre-built release binaries whic
 You can also install yourself : 
 
 ```bash
-go get -u github.com/phodal/coca
+go install github.com/phodal/coca@latest
 ```
 
 

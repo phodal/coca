@@ -5,7 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d5a5e060522403b1f79b/maintainability)](https://codeclimate.com/github/phodal/coca/maintainability)
 [![codecov](https://codecov.io/gh/modernizing/coca/branch/master/graph/badge.svg)](https://codecov.io/gh/modernizing/coca)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/phodal/coca)
-![Go](https://github.com/phodal/coca/workflows/Go/badge.svg)
+![Go](https://github.com/modernizing/coca/workflows/Go/badge.svg)
 
 > [Coca](https://coca.migration.ink/) is a toolbox which is design for legacy system refactoring and analysis, includes call graph, concept analysis, api tree, design patterns suggest.
 [Coca](https://coca.migration.ink/) 是一个用于系统重构、系统迁移和系统分析的工具箱。它可以分析代码中的测试坏味道、模块化分析、行数统计、分析调用与依赖、Git 分析以及自动化重构等。
@@ -53,12 +53,12 @@ Requirements: [graphviz](https://www.graphviz.org/) for dot file to image (such 
 
 ## Getting started
 
-The easiest way to get coca is to use one of the pre-built release binaries which are available for OSX, Linux, Windows on the [release page](https://github.com/phodal/coca/releases). 
+The easiest way to get coca is to use one of the pre-built release binaries which are available for OSX, Linux, Windows on the [release page](https://github.com/modernizing/coca/releases). 
 
 You can also install yourself : 
 
 ```bash
-go install github.com/phodal/coca@latest
+go install github.com/modernizing/coca@latest
 ```
 
 
@@ -665,7 +665,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 clone
 
 ```
-git clone https://github.com/phodal/coca
+git clone https://github.com/modernizing/coca
 ```
 
 Test Frameworks

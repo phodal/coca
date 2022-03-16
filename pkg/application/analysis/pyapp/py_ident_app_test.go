@@ -1,9 +1,9 @@
 package pyapp
 
 import (
+	"github.com/modernizing/coca/cocatest"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cocatest"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
 	"io/ioutil"
 	"strings"
 	"testing"

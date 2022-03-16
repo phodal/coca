@@ -1,8 +1,8 @@
 package arch
 
 import (
-	"github.com/phodal/coca/pkg/application/arch/tequila"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/application/arch/tequila"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 type ArchApp struct {

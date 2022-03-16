@@ -2,9 +2,9 @@ package ast_typescript
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/astutil"
+	"github.com/modernizing/coca/languages/ts"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/astutil"
 )
 
 func BuildConstructorMethod(ctx *parser.ConstructorDeclarationContext) *core_domain.CodeFunction {
@@ -47,7 +47,7 @@ func BuildImplements(typeList parser.IClassOrInterfaceTypeListContext) []string 
 	return implements
 }
 
-func BuildMethodParameter(context *parser.ParameterListContext) ([]core_domain.CodeProperty) {
+func BuildMethodParameter(context *parser.ParameterListContext) []core_domain.CodeProperty {
 	childNode := context.GetChild(0)
 	var parameters []core_domain.CodeProperty = nil
 

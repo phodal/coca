@@ -1,7 +1,7 @@
 package core_domain
 
 import (
-	"github.com/phodal/coca/pkg/infrastructure/constants"
+	"github.com/modernizing/coca/pkg/infrastructure/constants"
 	"strings"
 )
 

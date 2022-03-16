@@ -2,9 +2,9 @@ package pyapp
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/python"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_python"
+	parser "github.com/modernizing/coca/languages/python"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_python"
 )
 
 func streamToParser(is antlr.CharStream) *parser.PythonParser {
@@ -19,7 +19,6 @@ func ProcessPythonString(code string) *parser.PythonParser {
 }
 
 type PythonIdentApp struct {
-
 }
 
 func (p *PythonIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageInfo {
@@ -36,7 +35,7 @@ func (p *PythonIdentApp) Analysis(code string, fileName string) core_domain.Code
 	return listener.GetCodeFileInfo()
 }
 
-func (p *PythonIdentApp) SetExtensions(extension interface{})  {
+func (p *PythonIdentApp) SetExtensions(extension interface{}) {
 
 }
 

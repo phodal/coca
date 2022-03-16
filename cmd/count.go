@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/application/count"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/string_helper"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/cmd/config"
+	"github.com/modernizing/coca/pkg/application/count"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"strconv"
 )

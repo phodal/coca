@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/phodal/coca/cmd"
+	"github.com/modernizing/coca/cmd"
 	"github.com/pkg/profile"
 	"os"
 	"time"

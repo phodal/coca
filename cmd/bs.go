@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
-	bs2 "github.com/phodal/coca/pkg/application/bs"
-	"github.com/phodal/coca/pkg/domain/bs_domain"
-	"github.com/phodal/coca/pkg/infrastructure/string_helper"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	bs2 "github.com/modernizing/coca/pkg/application/bs"
+	"github.com/modernizing/coca/pkg/domain/bs_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/string_helper"
 	"github.com/spf13/cobra"
 	"strings"
 )

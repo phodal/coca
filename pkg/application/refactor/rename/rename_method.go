@@ -1,8 +1,8 @@
 package unused
 
 import (
-	"github.com/phodal/coca/pkg/application/refactor/rename/support"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/application/refactor/rename/support"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"io/ioutil"
 	"log"
 	"strings"

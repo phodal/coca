@@ -3,15 +3,14 @@ package unusedclasses
 import (
 	"encoding/json"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"path/filepath"
 	"testing"
 )
 
 func TestRefactoring(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 
 	var parsedDeps []core_domain.CodeDataStruct
 	codePath := "../../../../_fixtures/count/call.json"

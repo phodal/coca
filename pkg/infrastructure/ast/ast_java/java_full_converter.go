@@ -1,8 +1,8 @@
 package ast_java
 
 import (
-	"github.com/phodal/coca/languages/java"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/languages/java"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"strings"
 )
 

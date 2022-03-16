@@ -1,7 +1,7 @@
 package count
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 func BuildCallMap(parserDeps []core_domain.CodeDataStruct) map[string]int {

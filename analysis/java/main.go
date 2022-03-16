@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/phodal/coca/analysis/java/app"
+	"github.com/modernizing/coca/analysis/java/app"
 	"os"
 )
 

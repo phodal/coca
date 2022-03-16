@@ -3,11 +3,11 @@ package api
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/ast_api_java"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	api_domain2 "github.com/modernizing/coca/pkg/domain/api_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java/ast_api_java"
 	"path/filepath"
 )
 

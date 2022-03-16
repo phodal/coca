@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/phodal/coca/analysis/golang/app"
+	"github.com/modernizing/coca/analysis/golang/app"
 	"os"
 )
 

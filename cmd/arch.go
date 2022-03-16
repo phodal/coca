@@ -3,12 +3,12 @@ package cmd
 import (
 	"bufio"
 	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/application/arch"
-	"github.com/phodal/coca/pkg/application/arch/tequila"
-	"github.com/phodal/coca/pkg/application/visual"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/cmd/config"
+	"github.com/modernizing/coca/pkg/application/arch"
+	"github.com/modernizing/coca/pkg/application/arch/tequila"
+	"github.com/modernizing/coca/pkg/application/visual"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"os"
 	"strings"
@@ -19,7 +19,7 @@ type ArchCmdConfig struct {
 	IsMergePackage bool
 	FilterString   string
 	IsMergeHeader  bool
-	WithVisual  bool
+	WithVisual     bool
 }
 
 var (

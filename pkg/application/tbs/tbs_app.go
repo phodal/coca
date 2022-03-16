@@ -1,8 +1,8 @@
 package tbs
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/constants"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/constants"
 )
 
 type TbsApp struct {

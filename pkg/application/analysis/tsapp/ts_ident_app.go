@@ -2,9 +2,9 @@ package tsapp
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_typescript"
+	parser "github.com/modernizing/coca/languages/ts"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_typescript"
 )
 
 func processStream(is antlr.CharStream) *parser.TypeScriptParser {
@@ -19,7 +19,6 @@ func ProcessTsString(code string) *parser.TypeScriptParser {
 }
 
 type TypeScriptIdentApp struct {
-
 }
 
 func (t *TypeScriptIdentApp) AnalysisPackageManager(path string) core_domain.CodePackageInfo {

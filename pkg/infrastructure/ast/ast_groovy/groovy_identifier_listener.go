@@ -2,8 +2,8 @@ package ast_groovy
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/groovy"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	parser "github.com/modernizing/coca/languages/groovy"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"reflect"
 	"strings"
 )

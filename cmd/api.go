@@ -2,12 +2,12 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/application/api"
-	"github.com/phodal/coca/pkg/application/call"
-	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/cmd/config"
+	"github.com/modernizing/coca/pkg/application/api"
+	"github.com/modernizing/coca/pkg/application/call"
+	api_domain2 "github.com/modernizing/coca/pkg/domain/api_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"log"
 	"path/filepath"

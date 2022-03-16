@@ -2,8 +2,8 @@ package rcall
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"log"
 	"testing"
 

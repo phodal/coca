@@ -2,9 +2,9 @@ package bs_java
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "github.com/phodal/coca/languages/java"
-	"github.com/phodal/coca/pkg/domain/bs_domain"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	. "github.com/modernizing/coca/languages/java"
+	"github.com/modernizing/coca/pkg/domain/bs_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"reflect"
 	"strings"
 )

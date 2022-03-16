@@ -2,7 +2,7 @@ package ast_sql
 
 import (
 	"fmt"
-	"github.com/phodal/coca/languages/sql"
+	"github.com/modernizing/coca/languages/sql"
 )
 
 type SQLIdentifierListener struct {

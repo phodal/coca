@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/infrastructure/container"
+	"github.com/modernizing/coca/pkg/infrastructure/container"
 )
 
 var scopeStrictModes *container.Stack

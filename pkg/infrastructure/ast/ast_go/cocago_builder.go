@@ -2,7 +2,7 @@ package ast_go
 
 import (
 	"fmt"
-	. "github.com/phodal/coca/pkg/domain/core_domain"
+	. "github.com/modernizing/coca/pkg/domain/core_domain"
 	"go/ast"
 	"reflect"
 	"strings"
@@ -221,7 +221,7 @@ func BuildCallFromExpr(expr *ast.CallExpr, codeFunc *CodeFunction, fields []Code
 					codeFunc.FunctionCalls = append(codeFunc.FunctionCalls, methodCall)
 				}
 			}
-		} 
+		}
 
 		_, value, kind := BuildExpr(arg.(ast.Expr))
 		property := &CodeProperty{

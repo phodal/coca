@@ -1,8 +1,8 @@
 package ast_go
 
 import (
+	"github.com/modernizing/coca/cocatest"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cocatest"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -140,8 +140,8 @@ func Test_RelatedImport(t *testing.T) {
 package goapp
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/cocago"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/cocago"
 )
 
 type GoIdentApp struct {

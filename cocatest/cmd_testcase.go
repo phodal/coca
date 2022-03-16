@@ -3,7 +3,7 @@ package cocatest
 import (
 	"bytes"
 	"github.com/mattn/go-shellwords"
-	"github.com/phodal/coca/cocatest/testcase"
+	"github.com/modernizing/coca/cocatest/testcase"
 	"github.com/spf13/cobra"
 	"io"
 	"os"

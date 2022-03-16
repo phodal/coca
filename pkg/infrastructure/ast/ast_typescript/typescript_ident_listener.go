@@ -2,9 +2,9 @@ package ast_typescript
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/ts"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/astutil"
+	parser "github.com/modernizing/coca/languages/ts"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/astutil"
 	"strings"
 )
 

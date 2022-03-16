@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/yourbasic/radix"
 	"go/ast"
 	"go/parser"
@@ -182,7 +182,7 @@ func BuildImport(x *ast.ImportSpec, fileName string, manager core_domain.CodePac
 	}
 	moduleName := manager.ProjectName
 	if moduleName == "" {
-		moduleName = "github.com/phodal/coca"
+		moduleName = "github.com/modernizing/coca"
 	}
 	withOutModuleName := strings.ReplaceAll(cleanPath, moduleName, "")
 	all := strings.ReplaceAll(withOutModuleName, "/", ".")

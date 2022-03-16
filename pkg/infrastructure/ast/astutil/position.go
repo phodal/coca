@@ -2,7 +2,7 @@ package astutil
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 func AddFunctionPosition(m *core_domain.CodeFunction, ctx *antlr.BaseParserRuleContext) {

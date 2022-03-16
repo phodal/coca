@@ -3,8 +3,8 @@ package cocafile
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/java_identify"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java/java_identify"
 	"testing"
 )
 

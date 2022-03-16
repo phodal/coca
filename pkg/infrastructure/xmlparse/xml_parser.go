@@ -2,7 +2,7 @@ package xmlparse
 
 import (
 	"encoding/xml"
-	"github.com/phodal/coca/pkg/infrastructure/container"
+	"github.com/modernizing/coca/pkg/infrastructure/container"
 	"io"
 	"strings"
 )
@@ -10,7 +10,7 @@ import (
 type ElemType string
 
 const (
-	eleTpText ElemType = "text" // 静态文本节点
+	eleTpText ElemType = "text"    // 静态文本节点
 	eleTpNode ElemType = "XMLNode" // 节点子节点
 )
 

@@ -1,7 +1,7 @@
-	package evaluator
+package evaluator
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 type NullPointException struct {
@@ -21,7 +21,7 @@ func (n NullPointException) EvaluateList(evaluateModel *EvaluateModel, nodes []c
 				nullableMap[methodName] = methodName
 			} else {
 				for _, annotation := range method.Annotations {
-					if annotation.Name == "Nullable" || annotation.Name == "CheckForNull"  {
+					if annotation.Name == "Nullable" || annotation.Name == "CheckForNull" {
 						nullableMap[methodName] = methodName
 					}
 				}

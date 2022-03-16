@@ -3,8 +3,8 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/phodal/coca/cmd/cmd_util"
-	. "github.com/phodal/coca/pkg/application/git"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	. "github.com/modernizing/coca/pkg/application/git"
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"log"

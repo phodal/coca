@@ -3,11 +3,11 @@ package todo
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "github.com/phodal/coca/languages/comment"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/adapter/shell"
-	"github.com/phodal/coca/pkg/application/git"
-	"github.com/phodal/coca/pkg/application/todo/astitodo"
+	. "github.com/modernizing/coca/languages/comment"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	"github.com/modernizing/coca/pkg/adapter/shell"
+	"github.com/modernizing/coca/pkg/application/git"
+	"github.com/modernizing/coca/pkg/application/todo/astitodo"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -17,9 +17,7 @@ type TodoApp struct {
 }
 
 func NewTodoApp() TodoApp {
-	return TodoApp{
-
-	}
+	return TodoApp{}
 }
 
 type TodoDetail struct {

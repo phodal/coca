@@ -2,12 +2,11 @@ package javaapp
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java/java_identify"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java/java_identify"
 )
-
 
 type JavaIdentifierApp struct {
 }

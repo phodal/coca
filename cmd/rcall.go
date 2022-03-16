@@ -3,9 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cmd/config"
-	"github.com/phodal/coca/pkg/application/rcall"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/cmd/config"
+	"github.com/modernizing/coca/pkg/application/rcall"
 	"github.com/spf13/cobra"
 	"log"
 	"strings"
@@ -39,7 +39,7 @@ var reverseCmd = &cobra.Command{
 
 		_ = json.Unmarshal(file, &parsedDeps)
 
-		fmt.Fprintf(output,"start rcall class: %s\n", className)
+		fmt.Fprintf(output, "start rcall class: %s\n", className)
 		content := analyser.Analysis(className, parsedDeps, WriteCallMap)
 
 		if remove != "" {

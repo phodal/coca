@@ -1,8 +1,8 @@
 package deps
 
 import (
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"path/filepath"
 	"strings"
 )

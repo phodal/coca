@@ -1,7 +1,7 @@
 package api_domain
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"strings"
 )
 

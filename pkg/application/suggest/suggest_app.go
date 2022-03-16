@@ -1,8 +1,8 @@
 package suggest
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/domain/support_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/support_domain"
 )
 
 type SuggestApp struct {

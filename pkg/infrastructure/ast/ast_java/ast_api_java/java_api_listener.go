@@ -2,9 +2,9 @@ package ast_api_java
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/languages/java"
-	api_domain2 "github.com/phodal/coca/pkg/domain/api_domain"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/languages/java"
+	api_domain2 "github.com/modernizing/coca/pkg/domain/api_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"reflect"
 	"strings"
 )

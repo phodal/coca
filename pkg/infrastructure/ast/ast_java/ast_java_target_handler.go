@@ -1,7 +1,7 @@
 package ast_java
 
 import (
-	"github.com/phodal/coca/languages/java"
+	"github.com/modernizing/coca/languages/java"
 	"reflect"
 	"strings"
 )
@@ -99,6 +99,7 @@ func HandleEmptyFullType(ctx *parser.MethodCallContext, targetType string, metho
 	}
 	return targetType, packageName
 }
+
 // todo: check usecases
 //func buildMethodNameForBuilder(ctx *parser.MethodCallContext, targetType string) string {
 //	switch parentCtx := ctx.GetParent().(type) {

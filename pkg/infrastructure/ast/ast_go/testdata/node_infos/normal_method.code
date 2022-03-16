@@ -2,7 +2,7 @@ package testdata
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/ts"
+	parser "github.com/modernizing/coca/languages/ts"
 )
 
 func ProcessTsString(code string) *parser.TypeScriptParser {

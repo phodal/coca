@@ -1,7 +1,7 @@
 package bs_domain
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 type BSDataStruct struct {

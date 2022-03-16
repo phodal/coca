@@ -3,8 +3,8 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/application/todo"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/pkg/application/todo"
 	"github.com/spf13/cobra"
 	"strconv"
 	"strings"

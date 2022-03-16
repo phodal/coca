@@ -3,10 +3,10 @@ package analysis
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis/app_concept"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	"github.com/modernizing/coca/pkg/application/analysis/app_concept"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"io"
 	"io/ioutil"
 	"unicode"
@@ -67,4 +67,3 @@ func BuildMethodDs(result core_domain.CodeContainer) []core_domain.CodeDataStruc
 
 	return methodsDs
 }
-

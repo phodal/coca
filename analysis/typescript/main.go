@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/phodal/coca/analysis/typescript/app"
+	"github.com/modernizing/coca/analysis/typescript/app"
 	"os"
 )
 

@@ -1,8 +1,8 @@
 package deps
 
 import (
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/xmlparse"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/xmlparse"
 	"os"
 )
 
@@ -50,4 +50,3 @@ func BuildDeps(val xmlparse.XMLNode) []core_domain.CodeDependency {
 
 	return deps
 }
-

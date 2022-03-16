@@ -3,9 +3,9 @@ package ast_python
 import (
 	"bytes"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	parser "github.com/phodal/coca/languages/python"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/astutil"
+	parser "github.com/modernizing/coca/languages/python"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/astutil"
 	"io"
 	"os"
 	"strings"
@@ -76,7 +76,7 @@ func (s *PythonIdentListener) EnterFrom_stmt(ctx *parser.From_stmtContext) {
 func (s *PythonIdentListener) EnterClassdef(ctx *parser.ClassdefContext) {
 	hasEnterMember = true
 	dataStruct := &core_domain.CodeDataStruct{
-		NodeName:        ctx.Name().GetText(),
+		NodeName: ctx.Name().GetText(),
 	}
 
 	ctxIndex := astutil.GetNodeIndex(ctx)

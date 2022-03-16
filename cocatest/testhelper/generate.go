@@ -1,8 +1,8 @@
 package testhelper
 
 import (
-	"github.com/phodal/coca/pkg/application/analysis/javaapp"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/application/analysis/javaapp"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"path/filepath"
 )
 

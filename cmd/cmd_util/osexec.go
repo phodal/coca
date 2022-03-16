@@ -2,7 +2,7 @@ package cmd_util
 
 import (
 	"fmt"
-	"github.com/phodal/coca/cmd/config"
+	"github.com/modernizing/coca/cmd/config"
 	"os/exec"
 )
 

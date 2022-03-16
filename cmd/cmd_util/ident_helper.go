@@ -2,8 +2,8 @@ package cmd_util
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/pkg/application/analysis/javaapp"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/application/analysis/javaapp"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 func LoadIdentify(importPath string) []core_domain.CodeDataStruct {

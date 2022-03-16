@@ -1,6 +1,6 @@
 package visual
 
-import "github.com/phodal/coca/pkg/domain/core_domain"
+import "github.com/modernizing/coca/pkg/domain/core_domain"
 
 type DData struct {
 	Nodes []DNode `json:"nodes,omitempty"`

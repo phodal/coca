@@ -3,10 +3,10 @@ package bs
 import (
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/domain/bs_domain"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
-	"github.com/phodal/coca/pkg/infrastructure/ast/bs_java"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	"github.com/modernizing/coca/pkg/domain/bs_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/bs_java"
 	"path/filepath"
 )
 

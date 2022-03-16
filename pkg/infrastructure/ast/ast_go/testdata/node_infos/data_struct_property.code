@@ -1,6 +1,6 @@
 package trial
 
-import "github.com/phodal/coca/pkg/domain"
+import "github.com/modernizing/coca/pkg/domain"
 
 type CodeFile struct {
 	FullName    string

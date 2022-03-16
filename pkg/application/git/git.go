@@ -3,7 +3,7 @@ package git
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/phodal/coca/pkg/infrastructure/apriori"
+	"github.com/modernizing/coca/pkg/infrastructure/apriori"
 	"log"
 	"sort"
 	"strings"

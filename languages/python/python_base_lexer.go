@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/infrastructure/container"
+	"github.com/modernizing/coca/pkg/infrastructure/container"
 )
 
 var TabSize = 8
@@ -139,7 +139,7 @@ func (l *PythonBaseLexer) HandleSpaces() {
 		indent := 0
 		text := l.GetText()
 
-		for i := 0; i < len(text);i++ {
+		for i := 0; i < len(text); i++ {
 			if text[i] == '\t' {
 				indent = indent + TabSize - indent%TabSize
 			} else {

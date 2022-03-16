@@ -2,11 +2,11 @@ package arch
 
 import (
 	"encoding/json"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/cocatest"
+	"github.com/modernizing/coca/cocatest/testhelper"
+	"github.com/modernizing/coca/pkg/application/arch/tequila"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cocatest"
-	"github.com/phodal/coca/cocatest/testhelper"
-	"github.com/phodal/coca/pkg/application/arch/tequila"
 	"path/filepath"
 	"testing"
 )
@@ -51,7 +51,7 @@ func TestArch_AnalysisWithFans(t *testing.T) {
 	fans := result.SortedByFan(tequila.MergePackageFunc)
 
 	g.Expect(len(fans)).To(Equal(3))
-	var fanPackage []string;
+	var fanPackage []string
 	for _, fan := range fans {
 		fanPackage = append(fanPackage, fan.Name)
 	}

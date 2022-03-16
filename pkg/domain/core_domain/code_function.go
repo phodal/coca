@@ -1,7 +1,7 @@
 package core_domain
 
 import (
-	"github.com/phodal/coca/pkg/infrastructure/string_helper"
+	"github.com/modernizing/coca/pkg/infrastructure/string_helper"
 	"strings"
 )
 

@@ -1,10 +1,10 @@
 package concept
 
 import (
-	languages2 "github.com/phodal/coca/pkg/application/call/stop_words/languages"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/constants"
-	"github.com/phodal/coca/pkg/infrastructure/string_helper"
+	languages2 "github.com/modernizing/coca/pkg/application/call/stop_words/languages"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/constants"
+	"github.com/modernizing/coca/pkg/infrastructure/string_helper"
 )
 
 type ConceptAnalyser struct {

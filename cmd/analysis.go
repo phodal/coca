@@ -3,9 +3,9 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/application/analysis/javaapp"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/pkg/application/analysis/javaapp"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 )
 
@@ -45,7 +45,7 @@ func AnalysisJava() []core_domain.CodeDataStruct {
 		identModel, _ := json.MarshalIndent(iNodes, "", "\t")
 		cmd_util.WriteToCocaFile("identify.json", string(identModel))
 	} else {
-		fmt.Println("use local identify");
+		fmt.Println("use local identify")
 		identContent := cmd_util.ReadCocaFile("identify.json")
 		_ = json.Unmarshal(identContent, &iNodes)
 	}

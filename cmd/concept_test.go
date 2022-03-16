@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/phodal/coca/cocatest/testcase"
+	"github.com/modernizing/coca/cocatest/testcase"
 	"testing"
 )
 

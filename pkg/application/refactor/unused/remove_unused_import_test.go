@@ -2,7 +2,7 @@ package unused
 
 import (
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cocatest/testhelper"
+	"github.com/modernizing/coca/cocatest/testhelper"
 	"path/filepath"
 	"testing"
 )
@@ -23,7 +23,7 @@ func TestRemoveUnusedImportApp_Analysis(t *testing.T) {
 	g.Expect(len(results)).To(Equal(1))
 
 	errorLines := BuildErrorLines(results[0])
-	g.Expect(errorLines).To(Equal([]int{3,4,5}))
+	g.Expect(errorLines).To(Equal([]int{3, 4, 5}))
 
 	app.Refactoring(results)
 

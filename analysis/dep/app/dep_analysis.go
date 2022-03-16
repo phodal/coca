@@ -2,11 +2,11 @@ package app
 
 import (
 	"fmt"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	"github.com/phodal/coca/pkg/application/analysis/javaapp"
-	"github.com/phodal/coca/pkg/application/deps"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	"github.com/modernizing/coca/pkg/application/analysis/javaapp"
+	"github.com/modernizing/coca/pkg/application/deps"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/spf13/cobra"
 	"path/filepath"
 )

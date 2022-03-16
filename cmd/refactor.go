@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/cmd/cmd_util"
-	"github.com/phodal/coca/cmd/config"
-	. "github.com/phodal/coca/pkg/application/refactor/moveclass"
-	. "github.com/phodal/coca/pkg/application/refactor/rename"
-	. "github.com/phodal/coca/pkg/application/refactor/unused"
+	"github.com/modernizing/coca/cmd/cmd_util"
+	"github.com/modernizing/coca/cmd/config"
+	. "github.com/modernizing/coca/pkg/application/refactor/moveclass"
+	. "github.com/modernizing/coca/pkg/application/refactor/rename"
+	. "github.com/modernizing/coca/pkg/application/refactor/unused"
 	"github.com/spf13/cobra"
 )
 

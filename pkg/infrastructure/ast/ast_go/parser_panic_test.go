@@ -1,7 +1,7 @@
 package ast_go
 
 import (
-	"github.com/phodal/coca/cocatest"
+	"github.com/modernizing/coca/cocatest"
 	"path/filepath"
 	"testing"
 )

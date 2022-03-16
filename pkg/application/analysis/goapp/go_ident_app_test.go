@@ -33,5 +33,5 @@ func Test_ShouldGetModuleNameFromModFile(t *testing.T) {
 	app := &GoIdentApp{}
 	packageManager := app.AnalysisPackageManager("../../../..")
 
-	g.Expect(packageManager.ProjectName).To(Equal("github.com/phodal/coca"))
+	g.Expect(packageManager.ProjectName).To(Equal("github.com/modernizing/coca"))
 }

@@ -4,10 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/pkg/adapter/cocafile"
-	base2 "github.com/phodal/coca/pkg/application/refactor/base"
-	models2 "github.com/phodal/coca/pkg/application/refactor/base/models"
-	"github.com/phodal/coca/pkg/infrastructure/ast/ast_java"
+	"github.com/modernizing/coca/pkg/adapter/cocafile"
+	base2 "github.com/modernizing/coca/pkg/application/refactor/base"
+	models2 "github.com/modernizing/coca/pkg/application/refactor/base/models"
+	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java"
 	"io"
 	"io/ioutil"
 	"log"
@@ -75,7 +75,7 @@ func (j *MoveClassApp) Refactoring() {
 		originImport := splitStr[0]
 		newImport := splitStr[1]
 
-		originFile  := buildJavaPath(configPath, originImport)
+		originFile := buildJavaPath(configPath, originImport)
 		newFile := buildJavaPath(configPath, newImport)
 
 		// for travis test

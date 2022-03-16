@@ -1,10 +1,10 @@
 package call
 
 import (
-	"github.com/phodal/coca/pkg/application/rcall"
-	apidomain "github.com/phodal/coca/pkg/domain/api_domain"
-	"github.com/phodal/coca/pkg/domain/core_domain"
-	"github.com/phodal/coca/pkg/infrastructure/jpackage"
+	"github.com/modernizing/coca/pkg/application/rcall"
+	apidomain "github.com/modernizing/coca/pkg/domain/api_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/infrastructure/jpackage"
 	"strings"
 )
 

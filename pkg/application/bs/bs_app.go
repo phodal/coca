@@ -3,7 +3,7 @@ package bs
 import (
 	"encoding/json"
 	"github.com/huleTW/bad-smell-analysis/graphcall"
-	"github.com/phodal/coca/pkg/domain/bs_domain"
+	"github.com/modernizing/coca/pkg/domain/bs_domain"
 	"strconv"
 )
 

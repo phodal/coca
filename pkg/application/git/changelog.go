@@ -2,7 +2,7 @@ package git
 
 import (
 	"fmt"
-	"github.com/phodal/coca/pkg/infrastructure/string_helper"
+	"github.com/modernizing/coca/pkg/infrastructure/string_helper"
 	"io"
 	"regexp"
 )
@@ -43,7 +43,7 @@ func BuildChangeMap(commits []CommitMessage) map[string]map[string]int {
 				keyword := matches[1]
 				//message := matches[3]
 
-				if _, ok := czMap[keyword];!ok {
+				if _, ok := czMap[keyword]; !ok {
 					czMap[keyword] = make(map[string]int)
 				}
 

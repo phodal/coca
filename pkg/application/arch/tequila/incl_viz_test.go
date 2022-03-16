@@ -1,8 +1,8 @@
 package tequila
 
 import (
+	"github.com/modernizing/coca/cmd/cmd_util"
 	. "github.com/onsi/gomega"
-	"github.com/phodal/coca/cmd/cmd_util"
 	"strings"
 	"testing"
 )
@@ -72,7 +72,7 @@ func Test_ShouldShowPackageOnly(t *testing.T) {
 
 	fullGraph, nodeFilter := createGraph()
 
-	fullGraph= fullGraph.MergeHeaderFile(MergeHeaderFunc)
+	fullGraph = fullGraph.MergeHeaderFile(MergeHeaderFunc)
 	node := fullGraph.ToMapDot(nodeFilter)
 
 	g.Expect(strings.Contains(node.String(), "Ledge")).To(Equal(false))
@@ -84,7 +84,7 @@ func Test_ShouldShowMergePackage(t *testing.T) {
 
 	fullGraph, nodeFilter := createGraph()
 
-	fullGraph= fullGraph.MergeHeaderFile(MergePackageFunc)
+	fullGraph = fullGraph.MergeHeaderFile(MergePackageFunc)
 	node := fullGraph.ToMapDot(nodeFilter)
 
 	g.Expect(strings.Contains(node.String(), "Ledge")).To(Equal(false))

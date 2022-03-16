@@ -2,7 +2,7 @@ package cmd_util
 
 import (
 	"encoding/json"
-	"github.com/phodal/coca/pkg/domain/core_domain"
+	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
 func GetDepsFromJson(depPath string) []core_domain.CodeDataStruct {

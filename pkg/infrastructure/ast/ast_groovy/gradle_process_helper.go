@@ -2,7 +2,7 @@ package ast_groovy
 
 import (
 	"github.com/antlr/antlr4/runtime/Go/antlr"
-	"github.com/phodal/coca/languages/groovy"
+	"github.com/modernizing/coca/languages/groovy"
 )
 
 func ProcessGroovyString(code string) *parser.GroovyParser {

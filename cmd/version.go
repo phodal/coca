@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/phodal/coca/cmd/config"
+	"github.com/modernizing/coca/cmd/config"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +15,6 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Fprintf(output, "Coca Version: " + config.VERSION + " -- HEAD")
+		fmt.Fprintf(output, "Coca Version: "+config.VERSION+" -- HEAD")
 	},
 }

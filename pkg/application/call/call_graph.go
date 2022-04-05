@@ -21,7 +21,7 @@ func (c CallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct, 
 
 	if lookup {
 		var projectMethodMap = rcall.BuildProjectMethodMap(clzs)
-		rcallMap := rcall.BuildRCallMethodMap(clzs, projectMethodMap)
+		rcallMap := rcall.BuildMethodCallMap(clzs, projectMethodMap)
 		graph := rcall.NewRCallGraph()
 		rCallChain := graph.BuildRCallChain(funcName, rcallMap)
 		chain = chain + rCallChain

@@ -13,11 +13,11 @@ func NewRCallGraph() RCallGraph {
 
 func (c RCallGraph) Analysis(funcName string, clzs []core_domain.CodeDataStruct, writeCallback func(rcallMap map[string][]string)) string {
 	var projectMethodMap = BuildProjectMethodMap(clzs)
-	rcallMap := BuildRCallMethodMap(clzs, projectMethodMap)
+	methodCallMap := BuildMethodCallMap(clzs, projectMethodMap)
 
-	writeCallback(rcallMap)
+	writeCallback(methodCallMap)
 
-	chain := c.BuildRCallChain(funcName, rcallMap)
+	chain := c.BuildRCallChain(funcName, methodCallMap)
 	dotContent := ToGraphviz(chain)
 	return dotContent
 }
@@ -42,9 +42,9 @@ func BuildProjectMethodMap(clzs []core_domain.CodeDataStruct) map[string]int {
 	return maps
 }
 
-func BuildRCallMethodMap(parserDeps []core_domain.CodeDataStruct, projectMaps map[string]int) map[string][]string {
-	var methodMap = make(map[string][]string)
-	for _, clz := range parserDeps {
+func BuildMethodCallMap(dataStructs []core_domain.CodeDataStruct, projectMaps map[string]int) map[string][]string {
+	var methodCallMap = make(map[string][]string)
+	for _, clz := range dataStructs {
 		for _, method := range clz.Functions {
 			var caller = method.BuildFullMethodName(clz)
 			for _, jMethodCall := range method.FunctionCalls {
@@ -53,13 +53,13 @@ func BuildRCallMethodMap(parserDeps []core_domain.CodeDataStruct, projectMaps ma
 					if projectMaps[callee] < 1 {
 						continue
 					}
-					methodMap[callee] = append(methodMap[callee], caller)
+					methodCallMap[callee] = append(methodCallMap[callee], caller)
 				}
 			}
 		}
 	}
 
-	return methodMap
+	return methodCallMap
 }
 
 var loopCount = 0

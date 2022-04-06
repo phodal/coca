@@ -64,9 +64,10 @@ func BuildMethodCallMap(dataStructs []core_domain.CodeDataStruct, projectMaps ma
 
 var loopCount = 0
 var lastChild = ""
+var loopDepth = 6
 
 func (c RCallGraph) BuildRCallChain(funcName string, methodMap map[string][]string) string {
-	if loopCount >= 6 {
+	if loopCount >= loopDepth {
 		return "\n"
 	}
 	loopCount++

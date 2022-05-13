@@ -7,7 +7,7 @@ type TypeCocaConfig struct {
 
 var CocaConfig = &TypeCocaConfig{
 	ReporterPath: "coca_reporter",
-	ClocDir: "/cloc",
+	ClocDir:      "/cloc",
 }
 
-const VERSION = "2.1.1"
+const VERSION = "2.3.0"

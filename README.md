@@ -49,9 +49,9 @@ Available Commands:
   version     version
 ```
 
-Requirements: [graphviz](https://www.graphviz.org/) for dot file to image (such as svg, png)
-
 ## Getting started
+
+Requirements: [graphviz](https://www.graphviz.org/) for dot file to image (such as svg, png)
 
 The easiest way to get coca is to use one of the pre-built release binaries which are available for OSX, Linux, Windows on the [release page](https://github.com/modernizing/coca/releases). 
 

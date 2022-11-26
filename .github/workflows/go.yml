@@ -19,6 +19,9 @@ jobs:
         go-version: ^1.18
       id: go
 
+    - name: Setup Graphviz
+      uses: ts-graphviz/setup-graphviz@v1
+
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 

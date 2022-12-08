@@ -104,6 +104,19 @@ func TestBadSmellApp_LargeClass(t *testing.T) {
 	g.Expect(bsList[0].Bs).To(Equal("largeClass"))
 }
 
+func Test_ShouldJobConcurrencyManager(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	bsApp := NewBadSmellApp()
+	codePath := "../../../_fixtures/bs/JobConcurrencyManager.java"
+	codePath = filepath.FromSlash(codePath)
+
+	bs := bsApp.AnalysisPath(codePath)
+	bsList := bsApp.IdentifyBadSmell(bs, nil)
+
+	g.Expect(len(bsList)).To(Equal(0))
+}
+
 func TestBadSmellApp_GraphCall(t *testing.T) {
 	g := NewGomegaWithT(t)
 
@@ -118,4 +131,3 @@ func TestBadSmellApp_GraphCall(t *testing.T) {
 	g.Expect(bsList[0].Bs).To(Equal("graphConnectedCall"))
 	g.Expect(bsList[0].Description).To(Equal("graphcall.GraphCallA->graphcall.GraphCallB->graphcall.GraphCallC;graphcall.GraphCallA->graphcall.GraphCallC"))
 }
-

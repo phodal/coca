@@ -1,8 +1,8 @@
 package javaapp
 
 import (
-	. "github.com/onsi/gomega"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
+	. "github.com/onsi/gomega"
 	"path/filepath"
 	"testing"
 )

@@ -2,7 +2,7 @@
 
 package parser // Sql
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // SqlListener is a complete listener for a parse tree produced by SqlParser.
 type SqlListener interface {

@@ -3,7 +3,7 @@ package parser
 import (
 	"strings"
 
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
 // JavaScriptBaseParser implementation.

@@ -2,7 +2,7 @@
 
 package parser // Sql
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 type BaseSqlVisitor struct {
 	*antlr.BaseParseTreeVisitor

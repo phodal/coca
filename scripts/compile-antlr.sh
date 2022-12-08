@@ -7,8 +7,6 @@ antlr -Dlanguage=Go -listener JavaParser.g4
 
 cd ../g4
 
-#antlr -Dlanguage=Go -listener Sql.g4 -o ../sql
-
 antlr -Dlanguage=Go -listener GroovyLexer.g4 -o ../groovy
 antlr -Dlanguage=Go -listener GroovyParser.g4 -o ../groovy
 

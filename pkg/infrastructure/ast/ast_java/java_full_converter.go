@@ -13,7 +13,7 @@ func BuildMethodParameters(parameters parser.IFormalParametersContext) []core_do
 	for _, param := range formalParameter {
 		paramContext := param.(*parser.FormalParameterContext)
 		paramType := paramContext.TypeType().GetText()
-		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).Identifier().GetText()
 
 		localVars[paramValue] = paramType
 		parameter := core_domain.NewCodeParameter(paramType, paramValue)

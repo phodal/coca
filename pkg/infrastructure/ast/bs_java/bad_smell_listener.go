@@ -74,7 +74,7 @@ func (s *BadSmellListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	}
 
 	if ctx.IMPLEMENTS() != nil {
-		typeList := ctx.TypeList().(*TypeListContext)
+		typeList := ctx.TypeList(0).(*TypeListContext)
 		for _, typ := range typeList.AllTypeType() {
 			typeData := getTypeData(typ.(*TypeTypeContext))
 			currentClzImplements = append(currentClzImplements, typeData)
@@ -100,21 +100,21 @@ func (s *BadSmellListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationCo
 
 func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.Identifier().GetSymbol().GetColumn()
+	startLinePosition := ctx.InterfaceCommonBodyDeclaration().GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	name := ctx.Identifier().GetText()
+	name := ctx.InterfaceCommonBodyDeclaration().(*InterfaceCommonBodyDeclarationContext).Identifier().GetText()
 	stopLinePosition := startLinePosition + len(name)
-	methodBody := ctx.MethodBody().GetText()
+	methodBody := ctx.InterfaceCommonBodyDeclaration().GetText()
 
 	var modifiers []string
 	for _, mo := range ctx.AllInterfaceMethodModifier() {
 		modifiers = append(modifiers, mo.GetText())
 	}
 
-	typeType := ctx.TypeTypeOrVoid().GetText()
+	typeType :=  ctx.InterfaceCommonBodyDeclaration().(*InterfaceCommonBodyDeclarationContext).TypeTypeOrVoid().GetText()
 
 	var methodParams []core_domain.CodeProperty = nil
-	parameters := ctx.FormalParameters()
+	parameters := ctx.InterfaceCommonBodyDeclaration().(*InterfaceCommonBodyDeclarationContext).FormalParameters()
 	if parameters != nil {
 		if reflect.TypeOf(parameters.GetChild(1)).String() == "*parser.FormalParameterListContext" {
 			allFormal := parameters.GetChild(1).(*FormalParameterListContext)
@@ -176,7 +176,7 @@ func (s *BadSmellListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 
 func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.Identifier().GetSymbol().GetColumn()
+	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
 	name := ctx.Identifier().GetText()
 	stopLinePosition := startLinePosition + len(name)

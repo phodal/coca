@@ -156,7 +156,7 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 	}
 
 	if ctx.IMPLEMENTS() != nil {
-		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
+		types := ctx.TypeList(0).(*parser.TypeListContext).AllTypeType()
 		for _, typ := range types {
 			currentNode.Implements = append(currentNode.Implements, buildImplement(typ.GetText()))
 		}
@@ -172,7 +172,7 @@ func (s *JavaFullListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclar
 	currentNode.NodeName = ctx.Identifier().GetText()
 
 	if ctx.EXTENDS() != nil {
-		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
+		types := ctx.TypeList(0).(*parser.TypeListContext).AllTypeType()
 		for _, typ := range types {
 			currentNode.Extend = buildExtend(typ.GetText())
 		}
@@ -193,8 +193,9 @@ func (s *JavaFullListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBo
 }
 
 func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	name := ctx.Identifier().GetText()
-	typeType := ctx.TypeTypeOrVoid().GetText()
+	bodyDecl := ctx.InterfaceCommonBodyDeclaration().(*parser.InterfaceCommonBodyDeclarationContext)
+	name := bodyDecl.Identifier().GetText()
+	typeType := bodyDecl.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
 		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)
@@ -316,9 +317,9 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	// check, before your refactor
 	position := core_domain.CodePosition{
 		StartLine:         ctx.GetStart().GetLine(),
-		StartLinePosition: ctx.Identifier().GetSymbol().GetColumn(), // different
+		StartLinePosition: ctx.Identifier().GetStart().GetColumn(), // different
 		StopLine:          ctx.GetStop().GetLine(),
-		StopLinePosition:  ctx.Identifier().GetSymbol().GetColumn() + len(name),
+		StopLinePosition:  ctx.Identifier().GetStart().GetColumn() + len(name),
 	}
 
 	method := &core_domain.CodeFunction{

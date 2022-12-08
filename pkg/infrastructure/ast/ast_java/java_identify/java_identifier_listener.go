@@ -51,7 +51,7 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	}
 
 	if ctx.IMPLEMENTS() != nil {
-		list := ctx.TypeList()
+		list := ctx.TypeList(0)
 		switch x := list.(type) {
 		case *parser.TypeListContext:
 			{
@@ -189,9 +189,9 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.Identifier().GetText()
+	name := ctx.InterfaceCommonBodyDeclaration().(*parser.InterfaceCommonBodyDeclarationContext).Identifier().GetText()
 	//XXX: find the start position of {, not public
-	typeType := ctx.TypeTypeOrVoid().GetText()
+	typeType := ctx.InterfaceCommonBodyDeclaration().(*parser.InterfaceCommonBodyDeclarationContext).TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
 		common_listener.BuildAnnotationForMethod(ctx.GetParent().GetParent().GetChild(0).(*parser.ModifierContext), &currentMethod)

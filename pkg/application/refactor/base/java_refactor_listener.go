@@ -65,7 +65,7 @@ func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMet
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.Identifier().GetText()
+	name := ctx.InterfaceCommonBodyDeclaration().(*InterfaceCommonBodyDeclarationContext).Identifier().GetText()
 	method := model.JFullMethod{Name: name, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
 	node.AddMethod(method)
 }

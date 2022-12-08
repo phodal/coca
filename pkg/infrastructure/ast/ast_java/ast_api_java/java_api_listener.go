@@ -62,7 +62,7 @@ func (s *JavaAPIListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCont
 	}
 
 	if ctx.IMPLEMENTS() != nil {
-		currentImplements = ctx.TypeList().GetText()
+		currentImplements = ctx.TypeList(0).GetText()
 	}
 }
 

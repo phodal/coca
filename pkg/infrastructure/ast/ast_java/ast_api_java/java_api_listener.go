@@ -1,7 +1,7 @@
 package ast_api_java
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/languages/java"
 	api_domain2 "github.com/modernizing/coca/pkg/domain/api_domain"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
@@ -57,8 +57,8 @@ func (s *JavaAPIListener) EnterPackageDeclaration(ctx *parser.PackageDeclaration
 
 func (s *JavaAPIListener) EnterClassDeclaration(ctx *parser.ClassDeclarationContext) {
 	hasEnterClass = true
-	if ctx.IDENTIFIER() != nil {
-		currentClz = ctx.IDENTIFIER().GetText()
+	if ctx.Identifier() != nil {
+		currentClz = ctx.Identifier().GetText()
 	}
 
 	if ctx.IMPLEMENTS() != nil {
@@ -116,10 +116,10 @@ func (s *JavaAPIListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 		allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
 		for _, valuePair := range allValuePair {
 			pair := valuePair.(*parser.ElementValuePairContext)
-			if pair.IDENTIFIER().GetText() == "method" {
+			if pair.Identifier().GetText() == "method" {
 				addApiMethod(pair.ElementValue().GetText())
 			}
-			if pair.IDENTIFIER().GetText() == "value" {
+			if pair.Identifier().GetText() == "value" {
 				text := pair.ElementValue().GetText()
 				currentRestAPI.Uri = baseApiUrl + text[1:len(text)-1]
 			}
@@ -134,7 +134,7 @@ func buildBaseApiUrlString(annotationName string, ctx *parser.AnnotationContext)
 			allValuePair := ctx.ElementValuePairs().(*parser.ElementValuePairsContext).AllElementValuePair()
 			for _, valuePair := range allValuePair {
 				pair := valuePair.(*parser.ElementValuePairContext)
-				if pair.IDENTIFIER().GetText() == "value" {
+				if pair.Identifier().GetText() == "value" {
 					text := pair.ElementValue().GetText()
 					baseApiUrl = text[1 : len(text)-1]
 				}
@@ -180,7 +180,7 @@ func addApiMethod(annotationName string) {
 var requestBodyClass string
 
 func (s *JavaAPIListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
-	methodName := ctx.IDENTIFIER().GetText()
+	methodName := ctx.Identifier().GetText()
 
 	if currentImplements != "" {
 		if buildApiForInterfaceAnnotation(methodName) {
@@ -274,7 +274,7 @@ func buildRestApiWithParameters(ctx *parser.MethodDeclarationContext) {
 		}
 
 		paramType := paramContext.TypeType().GetText()
-		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		paramValue := paramContext.VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).Identifier().GetText()
 
 		if hasRequestBody {
 			requestBodyClass = paramType

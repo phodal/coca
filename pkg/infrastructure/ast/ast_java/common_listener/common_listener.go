@@ -15,7 +15,7 @@ func BuildAnnotation(ctx *parser.AnnotationContext) core_domain.CodeAnnotation {
 		for _, pair := range pairs {
 			pairCtx := pair.(*parser.ElementValuePairContext)
 
-			key := pairCtx.IDENTIFIER().GetText()
+			key := pairCtx.Identifier().GetText()
 			value := pairCtx.ElementValue().GetText()
 			annotation.KeyValues = append(annotation.KeyValues, core_domain.NewAnnotationKeyValue(key, value))
 		}

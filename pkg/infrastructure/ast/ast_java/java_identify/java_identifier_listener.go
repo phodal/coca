@@ -1,7 +1,7 @@
 package java_identify
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/languages/java"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java/common_listener"
@@ -40,8 +40,8 @@ func (s *JavaIdentifierListener) EnterClassDeclaration(ctx *parser.ClassDeclarat
 	hasEnterClass = true
 
 	currentNode.Type = "Class"
-	if ctx.IDENTIFIER() != nil {
-		currentNode.NodeName = ctx.IDENTIFIER().GetText()
+	if ctx.Identifier() != nil {
+		currentNode.NodeName = ctx.Identifier().GetText()
 	}
 
 	if ctx.EXTENDS() != nil {
@@ -89,7 +89,7 @@ func (s *JavaIdentifierListener) EnterConstructorDeclaration(ctx *parser.Constru
 	}
 
 	currentMethod = core_domain.CodeFunction{
-		Name:          ctx.IDENTIFIER().GetText(),
+		Name:          ctx.Identifier().GetText(),
 		ReturnType:    "",
 		Override:      isOverrideMethod,
 		Annotations:   currentMethod.Annotations,
@@ -112,8 +112,8 @@ func (s *JavaIdentifierListener) EnterMethodDeclaration(ctx *parser.MethodDeclar
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
 	name := ""
-	if ctx.IDENTIFIER() != nil {
-		name = ctx.IDENTIFIER().GetText()
+	if ctx.Identifier() != nil {
+		name = ctx.Identifier().GetText()
 	}
 
 	typeType := ctx.TypeTypeOrVoid().GetText()
@@ -173,7 +173,7 @@ func (s *JavaIdentifierListener) EnterAnnotation(ctx *parser.AnnotationContext) 
 func (s *JavaIdentifierListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = true
 	currentNode.Type = "Interface"
-	currentNode.NodeName = ctx.IDENTIFIER().GetText()
+	currentNode.NodeName = ctx.Identifier().GetText()
 }
 
 func (s *JavaIdentifierListener) ExitInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
@@ -189,7 +189,7 @@ func (s *JavaIdentifierListener) EnterInterfaceMethodDeclaration(ctx *parser.Int
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.IDENTIFIER().GetText()
+	name := ctx.Identifier().GetText()
 	//XXX: find the start position of {, not public
 	typeType := ctx.TypeTypeOrVoid().GetText()
 

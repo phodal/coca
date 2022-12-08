@@ -1,10 +1,10 @@
 package cocafile
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
-	. "github.com/onsi/gomega"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java/java_identify"
+	. "github.com/onsi/gomega"
 	"testing"
 )
 

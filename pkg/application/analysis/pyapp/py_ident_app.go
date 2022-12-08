@@ -1,7 +1,7 @@
 package pyapp
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	parser "github.com/modernizing/coca/languages/python"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_python"

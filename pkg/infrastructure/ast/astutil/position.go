@@ -1,7 +1,7 @@
 package astutil
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
 )
 
@@ -11,4 +11,3 @@ func AddFunctionPosition(m *core_domain.CodeFunction, ctx *antlr.BaseParserRuleC
 	m.Position.StopLine = ctx.GetStop().GetLine()
 	m.Position.StopLinePosition = ctx.GetStop().GetColumn()
 }
-

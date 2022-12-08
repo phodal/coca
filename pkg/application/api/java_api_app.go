@@ -2,7 +2,7 @@ package api
 
 import (
 	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/pkg/adapter/cocafile"
 	api_domain2 "github.com/modernizing/coca/pkg/domain/api_domain"
 	"github.com/modernizing/coca/pkg/domain/core_domain"

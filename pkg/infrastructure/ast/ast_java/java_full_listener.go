@@ -1,7 +1,7 @@
 package ast_java
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/languages/java"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_java/common_listener"
@@ -145,8 +145,8 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 
 	hasEnterClass = true
 	currentClzExtend = ""
-	if ctx.IDENTIFIER() != nil {
-		currentClz = ctx.IDENTIFIER().GetText()
+	if ctx.Identifier() != nil {
+		currentClz = ctx.Identifier().GetText()
 		currentNode.NodeName = currentClz
 	}
 
@@ -169,7 +169,7 @@ func (s *JavaFullListener) EnterClassDeclaration(ctx *parser.ClassDeclarationCon
 func (s *JavaFullListener) EnterInterfaceDeclaration(ctx *parser.InterfaceDeclarationContext) {
 	hasEnterClass = true
 	currentType = "Interface"
-	currentNode.NodeName = ctx.IDENTIFIER().GetText()
+	currentNode.NodeName = ctx.Identifier().GetText()
 
 	if ctx.EXTENDS() != nil {
 		types := ctx.TypeList().(*parser.TypeListContext).AllTypeType()
@@ -193,7 +193,7 @@ func (s *JavaFullListener) EnterInterfaceBodyDeclaration(ctx *parser.InterfaceBo
 }
 
 func (s *JavaFullListener) EnterInterfaceMethodDeclaration(ctx *parser.InterfaceMethodDeclarationContext) {
-	name := ctx.IDENTIFIER().GetText()
+	name := ctx.Identifier().GetText()
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
 	if reflect.TypeOf(ctx.GetParent().GetParent().GetChild(0)).String() == "*parser.ModifierContext" {
@@ -223,8 +223,8 @@ func (s *JavaFullListener) EnterFieldDeclaration(ctx *parser.FieldDeclarationCon
 			continue
 		}
 
-		typeTypeText := typeCtx.IDENTIFIER(0).GetText()
-		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		typeTypeText := typeCtx.Identifier(0).GetText()
+		value := declarator.(*parser.VariableDeclaratorContext).VariableDeclaratorId().(*parser.VariableDeclaratorIdContext).Identifier().GetText()
 		mapFields[value] = typeTypeText
 		field := core_domain.NewJField(typeTypeText, value, "")
 		fields = append(fields, field)
@@ -275,7 +275,7 @@ func (s *JavaFullListener) EnterAnnotation(ctx *parser.AnnotationContext) {
 }
 
 func (s *JavaFullListener) EnterConstructorDeclaration(ctx *parser.ConstructorDeclarationContext) {
-	name := ctx.IDENTIFIER().GetText()
+	name := ctx.Identifier().GetText()
 	position := BuildPosition(ctx.BaseParserRuleContext, name)
 
 	method := &core_domain.CodeFunction{
@@ -304,8 +304,8 @@ func (s *JavaFullListener) ExitConstructorDeclaration(ctx *parser.ConstructorDec
 func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationContext) {
 	name := ""
 
-	if ctx.IDENTIFIER() != nil {
-		name = ctx.IDENTIFIER().GetText()
+	if ctx.Identifier() != nil {
+		name = ctx.Identifier().GetText()
 	}
 	typeType := ctx.TypeTypeOrVoid().GetText()
 
@@ -316,9 +316,9 @@ func (s *JavaFullListener) EnterMethodDeclaration(ctx *parser.MethodDeclarationC
 	// check, before your refactor
 	position := core_domain.CodePosition{
 		StartLine:         ctx.GetStart().GetLine(),
-		StartLinePosition: ctx.IDENTIFIER().GetSymbol().GetColumn(), // different
+		StartLinePosition: ctx.Identifier().GetSymbol().GetColumn(), // different
 		StopLine:          ctx.GetStop().GetLine(),
-		StopLinePosition:  ctx.IDENTIFIER().GetSymbol().GetColumn() + len(name),
+		StopLinePosition:  ctx.Identifier().GetSymbol().GetColumn() + len(name),
 	}
 
 	method := &core_domain.CodeFunction{
@@ -376,8 +376,8 @@ func exitMethod() {
 
 // TODO: add inner creator examples
 func (s *JavaFullListener) EnterInnerCreator(ctx *parser.InnerCreatorContext) {
-	if ctx.IDENTIFIER() != nil {
-		currentClz = ctx.IDENTIFIER().GetText()
+	if ctx.Identifier() != nil {
+		currentClz = ctx.Identifier().GetText()
 		classStringQueue = append(classStringQueue, currentClz)
 	}
 }
@@ -402,7 +402,7 @@ func getMethodMapName(method core_domain.CodeFunction) string {
 
 func (s *JavaFullListener) EnterCreator(ctx *parser.CreatorContext) {
 	variableName := ctx.GetParent().GetParent().GetChild(0).(antlr.ParseTree).GetText()
-	allIdentifiers := ctx.CreatedName().(*parser.CreatedNameContext).AllIDENTIFIER()
+	allIdentifiers := ctx.CreatedName().(*parser.CreatedNameContext).AllIdentifier()
 
 	for _, identifier := range allIdentifiers {
 		createdName := identifier.GetText()
@@ -495,7 +495,7 @@ func (s *JavaFullListener) EnterMethodCall(ctx *parser.MethodCallContext) {
 	if targetCtx.GetChild(0) != nil {
 		switch x := targetCtx.GetChild(0).(type) {
 		case *parser.MethodCallContext:
-			targetType = x.IDENTIFIER().GetText()
+			targetType = x.Identifier().GetText()
 		}
 	}
 
@@ -539,7 +539,7 @@ func (s *JavaFullListener) EnterExpression(ctx *parser.ExpressionContext) {
 		}
 
 		text := ctx.Expression(0).GetText()
-		methodName := ctx.IDENTIFIER().GetText()
+		methodName := ctx.Identifier().GetText()
 		targetType := ParseTargetType(text)
 
 		fullType, _ := WarpTargetFullType(targetType)

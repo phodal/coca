@@ -1,7 +1,7 @@
 package bs_java
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	. "github.com/modernizing/coca/languages/java"
 	"github.com/modernizing/coca/pkg/domain/bs_domain"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
@@ -67,7 +67,7 @@ func (s *BadSmellListener) EnterImportDeclaration(ctx *ImportDeclarationContext)
 
 func (s *BadSmellListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	currentClzType = "Class"
-	currentClz = ctx.IDENTIFIER().GetText()
+	currentClz = ctx.Identifier().GetText()
 
 	if ctx.EXTENDS() != nil {
 		currentClzExtends = ctx.TypeType().GetText()
@@ -86,7 +86,7 @@ func getTypeData(typ *TypeTypeContext) string {
 	var typeData string
 	classOrInterface := typ.ClassOrInterfaceType().(*ClassOrInterfaceTypeContext)
 	if classOrInterface != nil {
-		identifiers := classOrInterface.AllIDENTIFIER()
+		identifiers := classOrInterface.AllIdentifier()
 		typeData = identifiers[len(identifiers)-1].GetText()
 	}
 
@@ -95,14 +95,14 @@ func getTypeData(typ *TypeTypeContext) string {
 
 func (s *BadSmellListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
 	currentClzType = "Interface"
-	currentClz = ctx.IDENTIFIER().GetText()
+	currentClz = ctx.Identifier().GetText()
 }
 
 func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
+	startLinePosition := ctx.Identifier().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	name := ctx.IDENTIFIER().GetText()
+	name := ctx.Identifier().GetText()
 	stopLinePosition := startLinePosition + len(name)
 	methodBody := ctx.MethodBody().GetText()
 
@@ -122,7 +122,7 @@ func (s *BadSmellListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMethodD
 			for _, param := range formalParameter {
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
-				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).Identifier().GetText()
 				methodParams = append(methodParams, core_domain.CodeProperty{TypeValue: paramType, TypeType: paramValue})
 			}
 		}
@@ -163,7 +163,7 @@ func (s *BadSmellListener) EnterFieldDeclaration(ctx *FieldDeclarationContext) {
 	variableName := declarators.GetParent().GetChild(0).(antlr.ParseTree).GetText()
 
 	for _, declarator := range declarators.(*VariableDeclaratorsContext).AllVariableDeclarator() {
-		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+		value := declarator.(*VariableDeclaratorContext).VariableDeclaratorId().(*VariableDeclaratorIdContext).Identifier().GetText()
 		fields[value] = variableName
 	}
 }
@@ -176,9 +176,9 @@ func (s *BadSmellListener) EnterLocalVariableDeclaration(ctx *LocalVariableDecla
 
 func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext) {
 	startLine := ctx.GetStart().GetLine()
-	startLinePosition := ctx.IDENTIFIER().GetSymbol().GetColumn()
+	startLinePosition := ctx.Identifier().GetSymbol().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
-	name := ctx.IDENTIFIER().GetText()
+	name := ctx.Identifier().GetText()
 	stopLinePosition := startLinePosition + len(name)
 
 	modifier := getModifier(ctx)
@@ -195,7 +195,7 @@ func (s *BadSmellListener) EnterMethodDeclaration(ctx *MethodDeclarationContext)
 			for _, param := range formalParameter {
 				paramContext := param.(*FormalParameterContext)
 				paramType := paramContext.TypeType().GetText()
-				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).IDENTIFIER().GetText()
+				paramValue := paramContext.VariableDeclaratorId().(*VariableDeclaratorIdContext).Identifier().GetText()
 				methodParams = append(methodParams, core_domain.CodeProperty{TypeValue: paramType, TypeType: paramValue})
 
 				localVars[paramValue] = paramType
@@ -343,7 +343,7 @@ func (s *BadSmellListener) EnterExpression(ctx *ExpressionContext) {
 	// lambda BlogPO::of
 	if ctx.COLONCOLON() != nil && ctx.Expression(0) != nil {
 		text := ctx.Expression(0).GetText()
-		methodName := ctx.IDENTIFIER().GetText()
+		methodName := ctx.Identifier().GetText()
 		targetType := parseTargetType(text)
 		fullType := warpTargetFullType(targetType)
 

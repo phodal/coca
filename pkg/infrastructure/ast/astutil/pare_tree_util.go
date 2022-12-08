@@ -1,6 +1,6 @@
 package astutil
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 func GetNodeIndex(node antlr.ParseTree) int {
 	if node == nil || node.GetParent() == nil {

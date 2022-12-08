@@ -1,7 +1,7 @@
 package ast_groovy
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	parser "github.com/modernizing/coca/languages/groovy"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"reflect"
@@ -105,8 +105,7 @@ func BuildDependency(argumentListContext *parser.ArgumentListContext) *core_doma
 				GetChild(0).
 				GetChild(0).
 				GetChild(0).
-				GetChild(0).
-			(*parser.LiteralPrmrAltContext)
+				GetChild(0).(*parser.LiteralPrmrAltContext)
 
 			resultStr := literalPrmrAltContext.Literal().GetChild(0).(*parser.StringLiteralContext).StringLiteral().GetText()
 			result = ConvertToJDep(resultStr)

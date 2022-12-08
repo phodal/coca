@@ -1,7 +1,7 @@
 package astitodo
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"regexp"
 	"strings"
 )
@@ -16,7 +16,7 @@ type TODO struct {
 }
 
 var (
-	assignRegStr = "^\\([\\w \\._\\+\\-@]+\\)"
+	assignRegStr   = "^\\([\\w \\._\\+\\-@]+\\)"
 	regexpAssignee = regexp.MustCompile(assignRegStr)
 )
 

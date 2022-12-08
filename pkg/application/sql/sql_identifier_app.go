@@ -2,10 +2,10 @@ package sql
 
 import (
 	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
+	parser2 "github.com/modernizing/coca/languages/sql"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_sql"
 	"github.com/modernizing/coca/pkg/infrastructure/xmlparse"
-	parser2 "github.com/modernizing/coca/languages/sql"
 	"os"
 	"path/filepath"
 	"strings"

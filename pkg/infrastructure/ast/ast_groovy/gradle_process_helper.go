@@ -1,7 +1,7 @@
 package ast_groovy
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/languages/groovy"
 )
 

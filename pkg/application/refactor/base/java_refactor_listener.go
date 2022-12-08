@@ -38,7 +38,7 @@ func (s *JavaRefactorListener) EnterImportDeclaration(ctx *ImportDeclarationCont
 
 func (s *JavaRefactorListener) EnterClassDeclaration(ctx *ClassDeclarationContext) {
 	node.Type = "Class"
-	node.Name = ctx.IDENTIFIER().GetText()
+	node.Name = ctx.Identifier().GetText()
 }
 
 func (s *JavaRefactorListener) EnterQualifiedNameList(ctx *QualifiedNameListContext) {
@@ -65,14 +65,14 @@ func (s *JavaRefactorListener) EnterInterfaceMethodDeclaration(ctx *InterfaceMet
 	startLinePosition := ctx.GetStart().GetColumn()
 	stopLine := ctx.GetStop().GetLine()
 	stopLinePosition := ctx.GetStop().GetColumn()
-	name := ctx.IDENTIFIER().GetText()
+	name := ctx.Identifier().GetText()
 	method := model.JFullMethod{Name: name, StartLine: startLine, StartLinePosition: startLinePosition, StopLine: stopLine, StopLinePosition: stopLinePosition}
 	node.AddMethod(method)
 }
 
 func (s *JavaRefactorListener) EnterInterfaceDeclaration(ctx *InterfaceDeclarationContext) {
 	node.Type = "Interface"
-	node.Name = ctx.IDENTIFIER().GetText()
+	node.Name = ctx.Identifier().GetText()
 }
 
 func (s *JavaRefactorListener) EnterTypeType(ctx *TypeTypeContext) {
@@ -83,9 +83,9 @@ func (s *JavaRefactorListener) EnterTypeType(ctx *TypeTypeContext) {
 }
 
 func (s *JavaRefactorListener) EnterClassOrInterfaceType(ctx *ClassOrInterfaceTypeContext) {
-	identifiers := ctx.AllIDENTIFIER()
+	identifiers := ctx.AllIdentifier()
 	for index := range identifiers {
-		context := ctx.IDENTIFIER(index)
+		context := ctx.Identifier(index)
 		name := context.GetText()
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
@@ -106,9 +106,9 @@ func (s *JavaRefactorListener) EnterAnnotation(ctx *AnnotationContext) {
 }
 
 func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContext) {
-	identifiers := ctx.AllIDENTIFIER()
+	identifiers := ctx.AllIdentifier()
 	for index := range identifiers {
-		context := ctx.IDENTIFIER(index)
+		context := ctx.Identifier(index)
 		name := context.GetText()
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()
@@ -119,7 +119,7 @@ func (s *JavaRefactorListener) EnterLambdaParameters(ctx *LambdaParametersContex
 }
 
 func (s *JavaRefactorListener) EnterMethodCall(ctx *MethodCallContext) {
-	text := ctx.IDENTIFIER().GetText()
+	text := ctx.Identifier().GetText()
 	startLine := ctx.GetStart().GetLine()
 	stopLine := ctx.GetStop().GetLine()
 	field := model.JField{Name: text, Source: node.Pkg, StartLine: startLine, StopLine: stopLine}
@@ -151,9 +151,9 @@ func (s *JavaRefactorListener) EnterStatement(ctx *StatementContext) {
 }
 
 func (s *JavaRefactorListener) EnterCreatedName(ctx *CreatedNameContext) {
-	identifiers := ctx.AllIDENTIFIER()
+	identifiers := ctx.AllIdentifier()
 	for index := range identifiers {
-		context := ctx.IDENTIFIER(index)
+		context := ctx.Identifier(index)
 		name := context.GetText()
 		startLine := ctx.GetStart().GetLine()
 		stopLine := ctx.GetStop().GetLine()

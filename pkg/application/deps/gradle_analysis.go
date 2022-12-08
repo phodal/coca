@@ -1,7 +1,7 @@
 package deps
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/cmd/cmd_util"
 	"github.com/modernizing/coca/pkg/domain/core_domain"
 	"github.com/modernizing/coca/pkg/infrastructure/ast/ast_groovy"

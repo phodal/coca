@@ -3,7 +3,7 @@ package moveclass
 import (
 	"bufio"
 	"fmt"
-	"github.com/antlr/antlr4/runtime/Go/antlr"
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/modernizing/coca/pkg/adapter/cocafile"
 	base2 "github.com/modernizing/coca/pkg/application/refactor/base"
 	models2 "github.com/modernizing/coca/pkg/application/refactor/base/models"

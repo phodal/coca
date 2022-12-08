@@ -1,8 +1,8 @@
-// Code generated from TypeScriptParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
 package parser // TypeScriptParser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // BaseTypeScriptParserListener is a complete listener for a parse tree produced by TypeScriptParser.
 type BaseTypeScriptParserListener struct{}
@@ -118,7 +118,8 @@ func (s *BaseTypeScriptParserListener) EnterArrayPrimType(ctx *ArrayPrimTypeCont
 func (s *BaseTypeScriptParserListener) ExitArrayPrimType(ctx *ArrayPrimTypeContext) {}
 
 // EnterParenthesizedPrimType is called when production ParenthesizedPrimType is entered.
-func (s *BaseTypeScriptParserListener) EnterParenthesizedPrimType(ctx *ParenthesizedPrimTypeContext) {}
+func (s *BaseTypeScriptParserListener) EnterParenthesizedPrimType(ctx *ParenthesizedPrimTypeContext) {
+}
 
 // ExitParenthesizedPrimType is called when production ParenthesizedPrimType is exited.
 func (s *BaseTypeScriptParserListener) ExitParenthesizedPrimType(ctx *ParenthesizedPrimTypeContext) {}
@@ -274,7 +275,8 @@ func (s *BaseTypeScriptParserListener) EnterParameterList(ctx *ParameterListCont
 func (s *BaseTypeScriptParserListener) ExitParameterList(ctx *ParameterListContext) {}
 
 // EnterRequiredParameterList is called when production requiredParameterList is entered.
-func (s *BaseTypeScriptParserListener) EnterRequiredParameterList(ctx *RequiredParameterListContext) {}
+func (s *BaseTypeScriptParserListener) EnterRequiredParameterList(ctx *RequiredParameterListContext) {
+}
 
 // ExitRequiredParameterList is called when production requiredParameterList is exited.
 func (s *BaseTypeScriptParserListener) ExitRequiredParameterList(ctx *RequiredParameterListContext) {}
@@ -286,7 +288,8 @@ func (s *BaseTypeScriptParserListener) EnterRequiredParameter(ctx *RequiredParam
 func (s *BaseTypeScriptParserListener) ExitRequiredParameter(ctx *RequiredParameterContext) {}
 
 // EnterAccessibilityModifier is called when production accessibilityModifier is entered.
-func (s *BaseTypeScriptParserListener) EnterAccessibilityModifier(ctx *AccessibilityModifierContext) {}
+func (s *BaseTypeScriptParserListener) EnterAccessibilityModifier(ctx *AccessibilityModifierContext) {
+}
 
 // ExitAccessibilityModifier is called when production accessibilityModifier is exited.
 func (s *BaseTypeScriptParserListener) ExitAccessibilityModifier(ctx *AccessibilityModifierContext) {}
@@ -298,7 +301,8 @@ func (s *BaseTypeScriptParserListener) EnterIdentifierOrPattern(ctx *IdentifierO
 func (s *BaseTypeScriptParserListener) ExitIdentifierOrPattern(ctx *IdentifierOrPatternContext) {}
 
 // EnterOptionalParameterList is called when production optionalParameterList is entered.
-func (s *BaseTypeScriptParserListener) EnterOptionalParameterList(ctx *OptionalParameterListContext) {}
+func (s *BaseTypeScriptParserListener) EnterOptionalParameterList(ctx *OptionalParameterListContext) {
+}
 
 // ExitOptionalParameterList is called when production optionalParameterList is exited.
 func (s *BaseTypeScriptParserListener) ExitOptionalParameterList(ctx *OptionalParameterListContext) {}
@@ -896,7 +900,8 @@ func (s *BaseTypeScriptParserListener) EnterPropertyShorthand(ctx *PropertyShort
 func (s *BaseTypeScriptParserListener) ExitPropertyShorthand(ctx *PropertyShorthandContext) {}
 
 // EnterRestParameterInObject is called when production RestParameterInObject is entered.
-func (s *BaseTypeScriptParserListener) EnterRestParameterInObject(ctx *RestParameterInObjectContext) {}
+func (s *BaseTypeScriptParserListener) EnterRestParameterInObject(ctx *RestParameterInObjectContext) {
+}
 
 // ExitRestParameterInObject is called when production RestParameterInObject is exited.
 func (s *BaseTypeScriptParserListener) ExitRestParameterInObject(ctx *RestParameterInObjectContext) {}
@@ -1074,7 +1079,8 @@ func (s *BaseTypeScriptParserListener) EnterMemberDotExpression(ctx *MemberDotEx
 func (s *BaseTypeScriptParserListener) ExitMemberDotExpression(ctx *MemberDotExpressionContext) {}
 
 // EnterMemberIndexExpression is called when production MemberIndexExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterMemberIndexExpression(ctx *MemberIndexExpressionContext) {}
+func (s *BaseTypeScriptParserListener) EnterMemberIndexExpression(ctx *MemberIndexExpressionContext) {
+}
 
 // ExitMemberIndexExpression is called when production MemberIndexExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitMemberIndexExpression(ctx *MemberIndexExpressionContext) {}
@@ -1146,7 +1152,8 @@ func (s *BaseTypeScriptParserListener) EnterNotExpression(ctx *NotExpressionCont
 func (s *BaseTypeScriptParserListener) ExitNotExpression(ctx *NotExpressionContext) {}
 
 // EnterPreDecreaseExpression is called when production PreDecreaseExpression is entered.
-func (s *BaseTypeScriptParserListener) EnterPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
+func (s *BaseTypeScriptParserListener) EnterPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {
+}
 
 // ExitPreDecreaseExpression is called when production PreDecreaseExpression is exited.
 func (s *BaseTypeScriptParserListener) ExitPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}

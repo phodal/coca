@@ -1,8 +1,8 @@
-// Code generated from JavaParser.g4 by ANTLR 4.8. DO NOT EDIT.
+// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
 package parser // JavaParser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // BaseJavaParserListener is a complete listener for a parse tree produced by JavaParser.
 type BaseJavaParserListener struct{}
@@ -236,6 +236,14 @@ func (s *BaseJavaParserListener) EnterGenericInterfaceMethodDeclaration(ctx *Gen
 func (s *BaseJavaParserListener) ExitGenericInterfaceMethodDeclaration(ctx *GenericInterfaceMethodDeclarationContext) {
 }
 
+// EnterInterfaceCommonBodyDeclaration is called when production interfaceCommonBodyDeclaration is entered.
+func (s *BaseJavaParserListener) EnterInterfaceCommonBodyDeclaration(ctx *InterfaceCommonBodyDeclarationContext) {
+}
+
+// ExitInterfaceCommonBodyDeclaration is called when production interfaceCommonBodyDeclaration is exited.
+func (s *BaseJavaParserListener) ExitInterfaceCommonBodyDeclaration(ctx *InterfaceCommonBodyDeclarationContext) {
+}
+
 // EnterVariableDeclarators is called when production variableDeclarators is entered.
 func (s *BaseJavaParserListener) EnterVariableDeclarators(ctx *VariableDeclaratorsContext) {}
 
@@ -290,6 +298,12 @@ func (s *BaseJavaParserListener) EnterFormalParameters(ctx *FormalParametersCont
 // ExitFormalParameters is called when production formalParameters is exited.
 func (s *BaseJavaParserListener) ExitFormalParameters(ctx *FormalParametersContext) {}
 
+// EnterReceiverParameter is called when production receiverParameter is entered.
+func (s *BaseJavaParserListener) EnterReceiverParameter(ctx *ReceiverParameterContext) {}
+
+// ExitReceiverParameter is called when production receiverParameter is exited.
+func (s *BaseJavaParserListener) ExitReceiverParameter(ctx *ReceiverParameterContext) {}
+
 // EnterFormalParameterList is called when production formalParameterList is entered.
 func (s *BaseJavaParserListener) EnterFormalParameterList(ctx *FormalParameterListContext) {}
 
@@ -307,6 +321,18 @@ func (s *BaseJavaParserListener) EnterLastFormalParameter(ctx *LastFormalParamet
 
 // ExitLastFormalParameter is called when production lastFormalParameter is exited.
 func (s *BaseJavaParserListener) ExitLastFormalParameter(ctx *LastFormalParameterContext) {}
+
+// EnterLambdaLVTIList is called when production lambdaLVTIList is entered.
+func (s *BaseJavaParserListener) EnterLambdaLVTIList(ctx *LambdaLVTIListContext) {}
+
+// ExitLambdaLVTIList is called when production lambdaLVTIList is exited.
+func (s *BaseJavaParserListener) ExitLambdaLVTIList(ctx *LambdaLVTIListContext) {}
+
+// EnterLambdaLVTIParameter is called when production lambdaLVTIParameter is entered.
+func (s *BaseJavaParserListener) EnterLambdaLVTIParameter(ctx *LambdaLVTIParameterContext) {}
+
+// ExitLambdaLVTIParameter is called when production lambdaLVTIParameter is exited.
+func (s *BaseJavaParserListener) ExitLambdaLVTIParameter(ctx *LambdaLVTIParameterContext) {}
 
 // EnterQualifiedName is called when production qualifiedName is entered.
 func (s *BaseJavaParserListener) EnterQualifiedName(ctx *QualifiedNameContext) {}
@@ -428,6 +454,60 @@ func (s *BaseJavaParserListener) EnterDefaultValue(ctx *DefaultValueContext) {}
 // ExitDefaultValue is called when production defaultValue is exited.
 func (s *BaseJavaParserListener) ExitDefaultValue(ctx *DefaultValueContext) {}
 
+// EnterModuleDeclaration is called when production moduleDeclaration is entered.
+func (s *BaseJavaParserListener) EnterModuleDeclaration(ctx *ModuleDeclarationContext) {}
+
+// ExitModuleDeclaration is called when production moduleDeclaration is exited.
+func (s *BaseJavaParserListener) ExitModuleDeclaration(ctx *ModuleDeclarationContext) {}
+
+// EnterModuleBody is called when production moduleBody is entered.
+func (s *BaseJavaParserListener) EnterModuleBody(ctx *ModuleBodyContext) {}
+
+// ExitModuleBody is called when production moduleBody is exited.
+func (s *BaseJavaParserListener) ExitModuleBody(ctx *ModuleBodyContext) {}
+
+// EnterModuleDirective is called when production moduleDirective is entered.
+func (s *BaseJavaParserListener) EnterModuleDirective(ctx *ModuleDirectiveContext) {}
+
+// ExitModuleDirective is called when production moduleDirective is exited.
+func (s *BaseJavaParserListener) ExitModuleDirective(ctx *ModuleDirectiveContext) {}
+
+// EnterRequiresModifier is called when production requiresModifier is entered.
+func (s *BaseJavaParserListener) EnterRequiresModifier(ctx *RequiresModifierContext) {}
+
+// ExitRequiresModifier is called when production requiresModifier is exited.
+func (s *BaseJavaParserListener) ExitRequiresModifier(ctx *RequiresModifierContext) {}
+
+// EnterRecordDeclaration is called when production recordDeclaration is entered.
+func (s *BaseJavaParserListener) EnterRecordDeclaration(ctx *RecordDeclarationContext) {}
+
+// ExitRecordDeclaration is called when production recordDeclaration is exited.
+func (s *BaseJavaParserListener) ExitRecordDeclaration(ctx *RecordDeclarationContext) {}
+
+// EnterRecordHeader is called when production recordHeader is entered.
+func (s *BaseJavaParserListener) EnterRecordHeader(ctx *RecordHeaderContext) {}
+
+// ExitRecordHeader is called when production recordHeader is exited.
+func (s *BaseJavaParserListener) ExitRecordHeader(ctx *RecordHeaderContext) {}
+
+// EnterRecordComponentList is called when production recordComponentList is entered.
+func (s *BaseJavaParserListener) EnterRecordComponentList(ctx *RecordComponentListContext) {}
+
+// ExitRecordComponentList is called when production recordComponentList is exited.
+func (s *BaseJavaParserListener) ExitRecordComponentList(ctx *RecordComponentListContext) {}
+
+// EnterRecordComponent is called when production recordComponent is entered.
+func (s *BaseJavaParserListener) EnterRecordComponent(ctx *RecordComponentContext) {}
+
+// ExitRecordComponent is called when production recordComponent is exited.
+func (s *BaseJavaParserListener) ExitRecordComponent(ctx *RecordComponentContext) {}
+
+// EnterRecordBody is called when production recordBody is entered.
+func (s *BaseJavaParserListener) EnterRecordBody(ctx *RecordBodyContext) {}
+
+// ExitRecordBody is called when production recordBody is exited.
+func (s *BaseJavaParserListener) ExitRecordBody(ctx *RecordBodyContext) {}
+
 // EnterBlock is called when production block is entered.
 func (s *BaseJavaParserListener) EnterBlock(ctx *BlockContext) {}
 
@@ -446,6 +526,12 @@ func (s *BaseJavaParserListener) EnterLocalVariableDeclaration(ctx *LocalVariabl
 
 // ExitLocalVariableDeclaration is called when production localVariableDeclaration is exited.
 func (s *BaseJavaParserListener) ExitLocalVariableDeclaration(ctx *LocalVariableDeclarationContext) {}
+
+// EnterIdentifier is called when production identifier is entered.
+func (s *BaseJavaParserListener) EnterIdentifier(ctx *IdentifierContext) {}
+
+// ExitIdentifier is called when production identifier is exited.
+func (s *BaseJavaParserListener) ExitIdentifier(ctx *IdentifierContext) {}
 
 // EnterLocalTypeDeclaration is called when production localTypeDeclaration is entered.
 func (s *BaseJavaParserListener) EnterLocalTypeDeclaration(ctx *LocalTypeDeclarationContext) {}
@@ -551,6 +637,12 @@ func (s *BaseJavaParserListener) EnterExpression(ctx *ExpressionContext) {}
 // ExitExpression is called when production expression is exited.
 func (s *BaseJavaParserListener) ExitExpression(ctx *ExpressionContext) {}
 
+// EnterPattern is called when production pattern is entered.
+func (s *BaseJavaParserListener) EnterPattern(ctx *PatternContext) {}
+
+// ExitPattern is called when production pattern is exited.
+func (s *BaseJavaParserListener) ExitPattern(ctx *PatternContext) {}
+
 // EnterLambdaExpression is called when production lambdaExpression is entered.
 func (s *BaseJavaParserListener) EnterLambdaExpression(ctx *LambdaExpressionContext) {}
 
@@ -574,6 +666,30 @@ func (s *BaseJavaParserListener) EnterPrimary(ctx *PrimaryContext) {}
 
 // ExitPrimary is called when production primary is exited.
 func (s *BaseJavaParserListener) ExitPrimary(ctx *PrimaryContext) {}
+
+// EnterSwitchExpression is called when production switchExpression is entered.
+func (s *BaseJavaParserListener) EnterSwitchExpression(ctx *SwitchExpressionContext) {}
+
+// ExitSwitchExpression is called when production switchExpression is exited.
+func (s *BaseJavaParserListener) ExitSwitchExpression(ctx *SwitchExpressionContext) {}
+
+// EnterSwitchLabeledRule is called when production switchLabeledRule is entered.
+func (s *BaseJavaParserListener) EnterSwitchLabeledRule(ctx *SwitchLabeledRuleContext) {}
+
+// ExitSwitchLabeledRule is called when production switchLabeledRule is exited.
+func (s *BaseJavaParserListener) ExitSwitchLabeledRule(ctx *SwitchLabeledRuleContext) {}
+
+// EnterGuardedPattern is called when production guardedPattern is entered.
+func (s *BaseJavaParserListener) EnterGuardedPattern(ctx *GuardedPatternContext) {}
+
+// ExitGuardedPattern is called when production guardedPattern is exited.
+func (s *BaseJavaParserListener) ExitGuardedPattern(ctx *GuardedPatternContext) {}
+
+// EnterSwitchRuleOutcome is called when production switchRuleOutcome is entered.
+func (s *BaseJavaParserListener) EnterSwitchRuleOutcome(ctx *SwitchRuleOutcomeContext) {}
+
+// ExitSwitchRuleOutcome is called when production switchRuleOutcome is exited.
+func (s *BaseJavaParserListener) ExitSwitchRuleOutcome(ctx *SwitchRuleOutcomeContext) {}
 
 // EnterClassType is called when production classType is entered.
 func (s *BaseJavaParserListener) EnterClassType(ctx *ClassTypeContext) {}

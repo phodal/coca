@@ -1,8 +1,8 @@
-// Code generated from JavaScriptParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
 package parser // JavaScriptParser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // BaseJavaScriptParserListener is a complete listener for a parse tree produced by JavaScriptParser.
 type BaseJavaScriptParserListener struct{}
@@ -506,7 +506,8 @@ func (s *BaseJavaScriptParserListener) EnterNotExpression(ctx *NotExpressionCont
 func (s *BaseJavaScriptParserListener) ExitNotExpression(ctx *NotExpressionContext) {}
 
 // EnterPreDecreaseExpression is called when production PreDecreaseExpression is entered.
-func (s *BaseJavaScriptParserListener) EnterPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
+func (s *BaseJavaScriptParserListener) EnterPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {
+}
 
 // ExitPreDecreaseExpression is called when production PreDecreaseExpression is exited.
 func (s *BaseJavaScriptParserListener) ExitPreDecreaseExpression(ctx *PreDecreaseExpressionContext) {}
@@ -690,7 +691,8 @@ func (s *BaseJavaScriptParserListener) EnterClassExpression(ctx *ClassExpression
 func (s *BaseJavaScriptParserListener) ExitClassExpression(ctx *ClassExpressionContext) {}
 
 // EnterMemberIndexExpression is called when production MemberIndexExpression is entered.
-func (s *BaseJavaScriptParserListener) EnterMemberIndexExpression(ctx *MemberIndexExpressionContext) {}
+func (s *BaseJavaScriptParserListener) EnterMemberIndexExpression(ctx *MemberIndexExpressionContext) {
+}
 
 // ExitMemberIndexExpression is called when production MemberIndexExpression is exited.
 func (s *BaseJavaScriptParserListener) ExitMemberIndexExpression(ctx *MemberIndexExpressionContext) {}

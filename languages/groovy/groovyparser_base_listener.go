@@ -1,8 +1,8 @@
-// Code generated from GroovyParser.g4 by ANTLR 4.7.2. DO NOT EDIT.
+// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
 package parser // GroovyParser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // BaseGroovyParserListener is a complete listener for a parse tree produced by GroovyParser.
 type BaseGroovyParserListener struct{}
@@ -378,7 +378,8 @@ func (s *BaseGroovyParserListener) EnterIntegerLiteralAlt(ctx *IntegerLiteralAlt
 func (s *BaseGroovyParserListener) ExitIntegerLiteralAlt(ctx *IntegerLiteralAltContext) {}
 
 // EnterFloatingPointLiteralAlt is called when production floatingPointLiteralAlt is entered.
-func (s *BaseGroovyParserListener) EnterFloatingPointLiteralAlt(ctx *FloatingPointLiteralAltContext) {}
+func (s *BaseGroovyParserListener) EnterFloatingPointLiteralAlt(ctx *FloatingPointLiteralAltContext) {
+}
 
 // ExitFloatingPointLiteralAlt is called when production floatingPointLiteralAlt is exited.
 func (s *BaseGroovyParserListener) ExitFloatingPointLiteralAlt(ctx *FloatingPointLiteralAltContext) {}

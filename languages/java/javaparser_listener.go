@@ -1,8 +1,8 @@
-// Code generated from JavaParser.g4 by ANTLR 4.8. DO NOT EDIT.
+// Code generated from java-escape by ANTLR 4.11.1. DO NOT EDIT.
 
 package parser // JavaParser
 
-import "github.com/antlr/antlr4/runtime/Go/antlr"
+import "github.com/antlr/antlr4/runtime/Go/antlr/v4"
 
 // JavaParserListener is a complete listener for a parse tree produced by JavaParser.
 type JavaParserListener interface {
@@ -110,6 +110,9 @@ type JavaParserListener interface {
 	// EnterGenericInterfaceMethodDeclaration is called when entering the genericInterfaceMethodDeclaration production.
 	EnterGenericInterfaceMethodDeclaration(c *GenericInterfaceMethodDeclarationContext)
 
+	// EnterInterfaceCommonBodyDeclaration is called when entering the interfaceCommonBodyDeclaration production.
+	EnterInterfaceCommonBodyDeclaration(c *InterfaceCommonBodyDeclarationContext)
+
 	// EnterVariableDeclarators is called when entering the variableDeclarators production.
 	EnterVariableDeclarators(c *VariableDeclaratorsContext)
 
@@ -137,6 +140,9 @@ type JavaParserListener interface {
 	// EnterFormalParameters is called when entering the formalParameters production.
 	EnterFormalParameters(c *FormalParametersContext)
 
+	// EnterReceiverParameter is called when entering the receiverParameter production.
+	EnterReceiverParameter(c *ReceiverParameterContext)
+
 	// EnterFormalParameterList is called when entering the formalParameterList production.
 	EnterFormalParameterList(c *FormalParameterListContext)
 
@@ -145,6 +151,12 @@ type JavaParserListener interface {
 
 	// EnterLastFormalParameter is called when entering the lastFormalParameter production.
 	EnterLastFormalParameter(c *LastFormalParameterContext)
+
+	// EnterLambdaLVTIList is called when entering the lambdaLVTIList production.
+	EnterLambdaLVTIList(c *LambdaLVTIListContext)
+
+	// EnterLambdaLVTIParameter is called when entering the lambdaLVTIParameter production.
+	EnterLambdaLVTIParameter(c *LambdaLVTIParameterContext)
 
 	// EnterQualifiedName is called when entering the qualifiedName production.
 	EnterQualifiedName(c *QualifiedNameContext)
@@ -200,6 +212,33 @@ type JavaParserListener interface {
 	// EnterDefaultValue is called when entering the defaultValue production.
 	EnterDefaultValue(c *DefaultValueContext)
 
+	// EnterModuleDeclaration is called when entering the moduleDeclaration production.
+	EnterModuleDeclaration(c *ModuleDeclarationContext)
+
+	// EnterModuleBody is called when entering the moduleBody production.
+	EnterModuleBody(c *ModuleBodyContext)
+
+	// EnterModuleDirective is called when entering the moduleDirective production.
+	EnterModuleDirective(c *ModuleDirectiveContext)
+
+	// EnterRequiresModifier is called when entering the requiresModifier production.
+	EnterRequiresModifier(c *RequiresModifierContext)
+
+	// EnterRecordDeclaration is called when entering the recordDeclaration production.
+	EnterRecordDeclaration(c *RecordDeclarationContext)
+
+	// EnterRecordHeader is called when entering the recordHeader production.
+	EnterRecordHeader(c *RecordHeaderContext)
+
+	// EnterRecordComponentList is called when entering the recordComponentList production.
+	EnterRecordComponentList(c *RecordComponentListContext)
+
+	// EnterRecordComponent is called when entering the recordComponent production.
+	EnterRecordComponent(c *RecordComponentContext)
+
+	// EnterRecordBody is called when entering the recordBody production.
+	EnterRecordBody(c *RecordBodyContext)
+
 	// EnterBlock is called when entering the block production.
 	EnterBlock(c *BlockContext)
 
@@ -208,6 +247,9 @@ type JavaParserListener interface {
 
 	// EnterLocalVariableDeclaration is called when entering the localVariableDeclaration production.
 	EnterLocalVariableDeclaration(c *LocalVariableDeclarationContext)
+
+	// EnterIdentifier is called when entering the identifier production.
+	EnterIdentifier(c *IdentifierContext)
 
 	// EnterLocalTypeDeclaration is called when entering the localTypeDeclaration production.
 	EnterLocalTypeDeclaration(c *LocalTypeDeclarationContext)
@@ -260,6 +302,9 @@ type JavaParserListener interface {
 	// EnterExpression is called when entering the expression production.
 	EnterExpression(c *ExpressionContext)
 
+	// EnterPattern is called when entering the pattern production.
+	EnterPattern(c *PatternContext)
+
 	// EnterLambdaExpression is called when entering the lambdaExpression production.
 	EnterLambdaExpression(c *LambdaExpressionContext)
 
@@ -271,6 +316,18 @@ type JavaParserListener interface {
 
 	// EnterPrimary is called when entering the primary production.
 	EnterPrimary(c *PrimaryContext)
+
+	// EnterSwitchExpression is called when entering the switchExpression production.
+	EnterSwitchExpression(c *SwitchExpressionContext)
+
+	// EnterSwitchLabeledRule is called when entering the switchLabeledRule production.
+	EnterSwitchLabeledRule(c *SwitchLabeledRuleContext)
+
+	// EnterGuardedPattern is called when entering the guardedPattern production.
+	EnterGuardedPattern(c *GuardedPatternContext)
+
+	// EnterSwitchRuleOutcome is called when entering the switchRuleOutcome production.
+	EnterSwitchRuleOutcome(c *SwitchRuleOutcomeContext)
 
 	// EnterClassType is called when entering the classType production.
 	EnterClassType(c *ClassTypeContext)
@@ -425,6 +482,9 @@ type JavaParserListener interface {
 	// ExitGenericInterfaceMethodDeclaration is called when exiting the genericInterfaceMethodDeclaration production.
 	ExitGenericInterfaceMethodDeclaration(c *GenericInterfaceMethodDeclarationContext)
 
+	// ExitInterfaceCommonBodyDeclaration is called when exiting the interfaceCommonBodyDeclaration production.
+	ExitInterfaceCommonBodyDeclaration(c *InterfaceCommonBodyDeclarationContext)
+
 	// ExitVariableDeclarators is called when exiting the variableDeclarators production.
 	ExitVariableDeclarators(c *VariableDeclaratorsContext)
 
@@ -452,6 +512,9 @@ type JavaParserListener interface {
 	// ExitFormalParameters is called when exiting the formalParameters production.
 	ExitFormalParameters(c *FormalParametersContext)
 
+	// ExitReceiverParameter is called when exiting the receiverParameter production.
+	ExitReceiverParameter(c *ReceiverParameterContext)
+
 	// ExitFormalParameterList is called when exiting the formalParameterList production.
 	ExitFormalParameterList(c *FormalParameterListContext)
 
@@ -460,6 +523,12 @@ type JavaParserListener interface {
 
 	// ExitLastFormalParameter is called when exiting the lastFormalParameter production.
 	ExitLastFormalParameter(c *LastFormalParameterContext)
+
+	// ExitLambdaLVTIList is called when exiting the lambdaLVTIList production.
+	ExitLambdaLVTIList(c *LambdaLVTIListContext)
+
+	// ExitLambdaLVTIParameter is called when exiting the lambdaLVTIParameter production.
+	ExitLambdaLVTIParameter(c *LambdaLVTIParameterContext)
 
 	// ExitQualifiedName is called when exiting the qualifiedName production.
 	ExitQualifiedName(c *QualifiedNameContext)
@@ -515,6 +584,33 @@ type JavaParserListener interface {
 	// ExitDefaultValue is called when exiting the defaultValue production.
 	ExitDefaultValue(c *DefaultValueContext)
 
+	// ExitModuleDeclaration is called when exiting the moduleDeclaration production.
+	ExitModuleDeclaration(c *ModuleDeclarationContext)
+
+	// ExitModuleBody is called when exiting the moduleBody production.
+	ExitModuleBody(c *ModuleBodyContext)
+
+	// ExitModuleDirective is called when exiting the moduleDirective production.
+	ExitModuleDirective(c *ModuleDirectiveContext)
+
+	// ExitRequiresModifier is called when exiting the requiresModifier production.
+	ExitRequiresModifier(c *RequiresModifierContext)
+
+	// ExitRecordDeclaration is called when exiting the recordDeclaration production.
+	ExitRecordDeclaration(c *RecordDeclarationContext)
+
+	// ExitRecordHeader is called when exiting the recordHeader production.
+	ExitRecordHeader(c *RecordHeaderContext)
+
+	// ExitRecordComponentList is called when exiting the recordComponentList production.
+	ExitRecordComponentList(c *RecordComponentListContext)
+
+	// ExitRecordComponent is called when exiting the recordComponent production.
+	ExitRecordComponent(c *RecordComponentContext)
+
+	// ExitRecordBody is called when exiting the recordBody production.
+	ExitRecordBody(c *RecordBodyContext)
+
 	// ExitBlock is called when exiting the block production.
 	ExitBlock(c *BlockContext)
 
@@ -523,6 +619,9 @@ type JavaParserListener interface {
 
 	// ExitLocalVariableDeclaration is called when exiting the localVariableDeclaration production.
 	ExitLocalVariableDeclaration(c *LocalVariableDeclarationContext)
+
+	// ExitIdentifier is called when exiting the identifier production.
+	ExitIdentifier(c *IdentifierContext)
 
 	// ExitLocalTypeDeclaration is called when exiting the localTypeDeclaration production.
 	ExitLocalTypeDeclaration(c *LocalTypeDeclarationContext)
@@ -575,6 +674,9 @@ type JavaParserListener interface {
 	// ExitExpression is called when exiting the expression production.
 	ExitExpression(c *ExpressionContext)
 
+	// ExitPattern is called when exiting the pattern production.
+	ExitPattern(c *PatternContext)
+
 	// ExitLambdaExpression is called when exiting the lambdaExpression production.
 	ExitLambdaExpression(c *LambdaExpressionContext)
 
@@ -586,6 +688,18 @@ type JavaParserListener interface {
 
 	// ExitPrimary is called when exiting the primary production.
 	ExitPrimary(c *PrimaryContext)
+
+	// ExitSwitchExpression is called when exiting the switchExpression production.
+	ExitSwitchExpression(c *SwitchExpressionContext)
+
+	// ExitSwitchLabeledRule is called when exiting the switchLabeledRule production.
+	ExitSwitchLabeledRule(c *SwitchLabeledRuleContext)
+
+	// ExitGuardedPattern is called when exiting the guardedPattern production.
+	ExitGuardedPattern(c *GuardedPatternContext)
+
+	// ExitSwitchRuleOutcome is called when exiting the switchRuleOutcome production.
+	ExitSwitchRuleOutcome(c *SwitchRuleOutcomeContext)
 
 	// ExitClassType is called when exiting the classType production.
 	ExitClassType(c *ClassTypeContext)

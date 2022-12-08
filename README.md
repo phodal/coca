@@ -19,11 +19,7 @@ Refactoring Modeling:
 
 ![Refactoring Modeling](docs/images/model.svg)
 
- - Languages Support
-    - Java (full features)
-    - Golang (support: analysis, todo, concept, git, suggest)
-    - TypeScript / JavaScript (TBC)
-    - Python (support: analysis, todo, concept, git, suggest)
+ - Languages Support: Java (full features)
 
 Features List:
 

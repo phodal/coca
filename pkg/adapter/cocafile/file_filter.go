@@ -1,9 +1,21 @@
 package cocafile
 
-import "strings"
+import (
+	"path/filepath"
+	"strings"
+)
+
+var isJavaTestFile = func(path string) bool {
+	return strings.HasSuffix(path, "Test.java") || strings.HasSuffix(path, "Tests.java")
+}
+
+var isJavaTestPackage = func(path string) bool {
+	path = filepath.ToSlash(path)
+	return strings.Contains(path, "src/test/java/")
+}
 
 var JavaTestFileFilter = func(path string) bool {
-	return strings.Contains(path, "Test.java") || strings.Contains(path, "Tests.java")
+        return isJavaTestFile(path) || isJavaTestPackage(path)
 }
 
 var JavaCodeFileFilter = func(path string) bool {

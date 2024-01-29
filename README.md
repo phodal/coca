@@ -4,7 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d5a5e060522403b1f79b/maintainability)](https://codeclimate.com/github/phodal/coca/maintainability)
 [![codecov](https://codecov.io/gh/modernizing/coca/branch/master/graph/badge.svg)](https://codecov.io/gh/modernizing/coca)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/phodal/coca)
-![Go](https://github.com/modernizing/coca/workflows/Go/badge.svg)
+[![Build](https://github.com/phodal/coca/actions/workflows/go.yml/badge.svg)](https://github.com/phodal/coca/actions/workflows/go.yml)
 
 > [Coca](https://coca.migration.ink/) is a toolbox which is design for legacy system refactoring and analysis, includes call graph, concept analysis, api tree, design patterns suggest.
 [Coca](https://coca.migration.ink/) 是一个用于系统重构、系统迁移和系统分析的工具箱。它可以分析代码中的测试坏味道、模块化分析、行数统计、分析调用与依赖、Git 分析以及自动化重构等。

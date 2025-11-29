@@ -39,16 +39,24 @@ areas:
       - "pkg/infrastructure/ast/**/*.go"
     rules:
       - id: "ast_parsing_correctness"
-        description: "Ensure AST parsing handles edge cases correctly. Validate input before processing."
+        description: "Ensure AST parsing handles edge cases correctly. Validate input before processing. Consider all grammar alternatives (e.g., generator expressions, comprehensions)."
         severity: "high"
-      
+
       - id: "analysis_result_validation"
-        description: "Validate analysis results for completeness and correctness before returning."
+        description: "Validate analysis results for completeness and correctness before returning. Ensure no data is dropped or truncated during parsing."
         severity: "medium"
-      
+
       - id: "language_support_consistency"
         description: "Ensure consistent behavior across different language analyzers (Java, Go, Python, etc.)."
         severity: "medium"
+
+      - id: "scope_tracking_correctness"
+        description: "When tracking variable or symbol scope, use proper data structures to avoid misattribution. For nested scopes (e.g., nested classes, functions), use stacks or separate tracking per scope level to prevent outer scope data from being incorrectly assigned to inner scopes."
+        severity: "high"
+
+      - id: "complete_syntax_coverage"
+        description: "When parsing language constructs, ensure all syntax variants are handled. For example, when parsing function arguments, handle positional args, keyword args, unpacking operators (*args, **kwargs), and comprehensions."
+        severity: "high"
 
   domain_model_integrity:
     description: "Domain model and data structure integrity"
@@ -88,14 +96,22 @@ areas:
       - id: "test_isolation"
         description: "Tests should be isolated and not depend on external state or other tests."
         severity: "high"
-      
+
       - id: "test_data_fixtures"
         description: "Use test fixtures from _fixtures directory. Don't create test data in production code paths."
         severity: "medium"
-      
+
       - id: "table_driven_tests"
         description: "Prefer table-driven tests for testing multiple scenarios of the same functionality."
         severity: "low"
+
+      - id: "edge_case_coverage"
+        description: "When adding new features or fixing bugs, ensure tests cover edge cases and corner scenarios. For parsers, test nested structures, special operators, and all syntax variants."
+        severity: "high"
+
+      - id: "test_completeness"
+        description: "Tests should verify the complete behavior, not just the happy path. Check that all expected data is captured and nothing is dropped or misattributed."
+        severity: "medium"
 
   api_compatibility:
     description: "API and CLI compatibility"
@@ -118,18 +134,26 @@ areas:
       - id: "avoid_magic_numbers"
         description: "Define constants for magic numbers and strings. Use meaningful names."
         severity: "low"
-      
+
       - id: "function_complexity"
         description: "Keep functions focused and simple. Break down complex functions into smaller, testable units."
         severity: "medium"
-      
+
       - id: "package_organization"
         description: "Follow the established package structure: domain, application, infrastructure, adapter."
         severity: "medium"
-      
+
       - id: "exported_documentation"
         description: "All exported functions, types, and constants must have documentation comments."
         severity: "medium"
+
+      - id: "data_structure_choice"
+        description: "Choose appropriate data structures for the problem. For nested scopes, use stacks. For shared state across iterations, consider when to use shared vs. per-instance collections."
+        severity: "medium"
+
+      - id: "state_management"
+        description: "Be careful with shared mutable state. When processing hierarchical or nested structures, ensure state is properly scoped and cleared at the right boundaries."
+        severity: "high"
 
   dependency_management:
     description: "Dependency and import management"

@@ -1,8 +1,9 @@
 module github.com/modernizing/coca
 
-go 1.18
+go 1.23
 
 require (
+	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20221202181307-76fa05c21b12
 	github.com/awalterschulze/gographviz v0.0.0-20190522210029-fa59802746ab
 	github.com/boyter/scc v0.0.0-20200907020550-91af61dfda0d
 	github.com/huleTW/bad-smell-analysis v0.1.0
@@ -20,7 +21,6 @@ require (
 )
 
 require (
-	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20221202181307-76fa05c21b12 // indirect
 	github.com/dbaggerman/cuba v0.3.2 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect

@@ -1,0 +1,146 @@
+# Augment Code Review Guidelines for Coca Project
+# This file defines custom code review rules for the Coca codebase analysis tool
+
+areas:
+  error_handling:
+    description: "Error handling and nil safety in Go"
+    globs:
+      - "**/*.go"
+    rules:
+      - id: "proper_error_handling"
+        description: "Always check and handle errors properly. Don't ignore errors with _ unless absolutely necessary and documented."
+        severity: "high"
+      
+      - id: "nil_pointer_checks"
+        description: "Check for nil pointers before dereferencing, especially when working with pointers and interfaces."
+        severity: "high"
+      
+      - id: "error_wrapping"
+        description: "Use error wrapping (fmt.Errorf with %w) to preserve error context in the call chain."
+        severity: "medium"
+
+  concurrency_safety:
+    description: "Concurrency and goroutine safety"
+    globs:
+      - "**/*.go"
+    rules:
+      - id: "goroutine_leaks"
+        description: "Ensure goroutines have proper cleanup mechanisms and don't leak. Use context for cancellation."
+        severity: "high"
+      
+      - id: "race_conditions"
+        description: "Protect shared state with proper synchronization (mutex, channels, or atomic operations)."
+        severity: "high"
+
+  code_analysis_accuracy:
+    description: "Accuracy and correctness of code analysis features"
+    globs:
+      - "pkg/application/**/*.go"
+      - "pkg/infrastructure/ast/**/*.go"
+    rules:
+      - id: "ast_parsing_correctness"
+        description: "Ensure AST parsing handles edge cases correctly. Validate input before processing."
+        severity: "high"
+      
+      - id: "analysis_result_validation"
+        description: "Validate analysis results for completeness and correctness before returning."
+        severity: "medium"
+      
+      - id: "language_support_consistency"
+        description: "Ensure consistent behavior across different language analyzers (Java, Go, Python, etc.)."
+        severity: "medium"
+
+  domain_model_integrity:
+    description: "Domain model and data structure integrity"
+    globs:
+      - "pkg/domain/**/*.go"
+    rules:
+      - id: "immutable_domain_objects"
+        description: "Domain objects should be immutable where possible. Use value objects and avoid exposing internal state."
+        severity: "medium"
+      
+      - id: "domain_validation"
+        description: "Validate domain objects at creation time. Don't allow invalid states."
+        severity: "high"
+
+  performance:
+    description: "Performance and resource management"
+    globs:
+      - "**/*.go"
+    rules:
+      - id: "avoid_unnecessary_allocations"
+        description: "Minimize memory allocations in hot paths. Reuse buffers and objects where appropriate."
+        severity: "medium"
+      
+      - id: "file_handle_cleanup"
+        description: "Always close file handles and other resources using defer immediately after opening."
+        severity: "high"
+      
+      - id: "large_file_handling"
+        description: "Handle large files efficiently using streaming or chunking instead of loading entire files into memory."
+        severity: "medium"
+
+  testing:
+    description: "Test quality and coverage"
+    globs:
+      - "**/*_test.go"
+    rules:
+      - id: "test_isolation"
+        description: "Tests should be isolated and not depend on external state or other tests."
+        severity: "high"
+      
+      - id: "test_data_fixtures"
+        description: "Use test fixtures from _fixtures directory. Don't create test data in production code paths."
+        severity: "medium"
+      
+      - id: "table_driven_tests"
+        description: "Prefer table-driven tests for testing multiple scenarios of the same functionality."
+        severity: "low"
+
+  api_compatibility:
+    description: "API and CLI compatibility"
+    globs:
+      - "cmd/**/*.go"
+    rules:
+      - id: "backward_compatibility"
+        description: "Maintain backward compatibility for CLI commands and flags. Deprecate before removing."
+        severity: "high"
+      
+      - id: "command_output_format"
+        description: "Ensure command output formats (JSON, CSV, table) are consistent and well-documented."
+        severity: "medium"
+
+  code_quality:
+    description: "General code quality and maintainability"
+    globs:
+      - "**/*.go"
+    rules:
+      - id: "avoid_magic_numbers"
+        description: "Define constants for magic numbers and strings. Use meaningful names."
+        severity: "low"
+      
+      - id: "function_complexity"
+        description: "Keep functions focused and simple. Break down complex functions into smaller, testable units."
+        severity: "medium"
+      
+      - id: "package_organization"
+        description: "Follow the established package structure: domain, application, infrastructure, adapter."
+        severity: "medium"
+      
+      - id: "exported_documentation"
+        description: "All exported functions, types, and constants must have documentation comments."
+        severity: "medium"
+
+  dependency_management:
+    description: "Dependency and import management"
+    globs:
+      - "**/*.go"
+    rules:
+      - id: "avoid_circular_dependencies"
+        description: "Avoid circular dependencies between packages. Use interfaces for decoupling."
+        severity: "high"
+      
+      - id: "minimize_external_deps"
+        description: "Minimize external dependencies. Evaluate necessity and maintenance status before adding new dependencies."
+        severity: "medium"
+
